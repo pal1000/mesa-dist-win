@@ -1,7 +1,7 @@
 Usage guidelines for build.cmd
 ------------------------------
 1. Acquire mesa source code, dependencies and build tools
---------------------------------------------------------
+---------------------------------------------------------
 -Visual Studio Community (at this moment Visual Studio 2013 and 2015 are supported, 2015 recommended).
 Only C/C++ compiler and libraries targeting Win32 API are needed.
 -Mesa source code: ftp://ftp.freedesktop.org/pub/mesa/
