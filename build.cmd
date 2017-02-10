@@ -1,10 +1,10 @@
-@for /F "delims=" %%I in ("%~dp0") do @set git_install_root=%%~fI
-@rem Specify Visual Studio installation folder and tolchain. Run cmake with no parametters to find toolchain string matching
+@for /F "delims=" %%I in ("%~dp0") do @set cdir=%%~fI
+@rem Specify Visual Studio installation folder and tolchain. Run cmake --help to find toolchain string matching
 @rem your Visual Studio version.
 @set vstudio=C:\Program Files (x86)\Microsoft Visual Studio 14.0
 @set toolchain=Visual Studio 14
  
-@set mesa=%git_install_root%projects\mesa\
+@set mesa=%cdir%projects\mesa\
 @set mesaunix=%mesa:\=/%
 @set abi=x86
 @set /p x64=Do you want to build for x64? Otherwise build for x86: 
