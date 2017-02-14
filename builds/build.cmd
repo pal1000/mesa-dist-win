@@ -13,7 +13,7 @@
 @if /I %x64%==y @set abi=x64
 @set longabi=%abi%
 @if %abi%==x64 @set longabi=x86_64
-@set toolchain=Visual Studio 14
+@set toolchain=Visual Studio %vsver%
 @if %abi%==x64 @set toolchain=%toolchain% Win64
 @set caller="%vstudio%
 @if %abi%==x86 set caller=%caller%\vcvars32.bat"
