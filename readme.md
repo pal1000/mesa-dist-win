@@ -1,21 +1,22 @@
-## Downloads
+# Downloads
 Mesa 17.0.0 builds are now available:
 - [llvmpipe and softpipe drivers for Windows x86](https://github.com/pal1000/mesa-dist-win/blob/master/builds/17.0.0/x86/opengl32.dll?raw=true);
 - [llvmpipe and softpipe drivers for Windows x64](https://github.com/pal1000/mesa-dist-win/blob/master/builds/17.0.0/x64/opengl32.dll?raw=true);
-- [OpenSWR driver AVX component Windows x86](https://github.com/pal1000/mesa-dist-win/blob/master/builds/17.0.0/x86/swrAVX.dll?raw=true);
-- [OpenSWR driver AVX2 component Windows x86](https://github.com/pal1000/mesa-dist-win/blob/master/builds/17.0.0/x86/swrAVX2.dll?raw=true);
-- [OpenSWR driver AVX component Windows x64](https://github.com/pal1000/mesa-dist-win/blob/master/builds/17.0.0/x64/swrAVX.dll?raw=true);
-- [OpenSWR driver AVX2 component Windows x64](https://github.com/pal1000/mesa-dist-win/blob/master/builds/17.0.0/x64/swrAVX2.dll?raw=true);
+- [OpenSWR driver for AVX capable CPUs for Windows x86](https://github.com/pal1000/mesa-dist-win/blob/master/builds/17.0.0/x86/swrAVX.dll?raw=true);
+- [OpenSWR driver for AVX2 capable CPUs for Windows x86](https://github.com/pal1000/mesa-dist-win/blob/master/builds/17.0.0/x86/swrAVX2.dll?raw=true);
+- [OpenSWR driver for AVX capable CPUs for Windows x64](https://github.com/pal1000/mesa-dist-win/blob/master/builds/17.0.0/x64/swrAVX.dll?raw=true);
+- [OpenSWR driver for AVX2 capable CPUs for Windows x64](https://github.com/pal1000/mesa-dist-win/blob/master/builds/17.0.0/x64/swrAVX2.dll?raw=true);
 
-You need all 3 DLLs for OpenSWR to work regardless of wherever your CPU supports AVX2 or not.  OpenSWR drivers are loaded when requested by llvmpipe/softpipe driver. They can't run on their own. By default mesa uses llvmpipe. You can switch to OpenSWR by setting GALLIUM_DRIVER environment variable value to swr . Mesa environment variables documentation is available [here](https://mesa3d.org/envvars.html). Build instructions are available [here](https://github.com/pal1000/mesa-dist-win/tree/master/builds).
-## Installation
-### 1. Locally for a certain application
+You need both llvmpipe/softpipe and OpenSWR driver files for OpenSWR to work. OpenSWR driver is loaded when requested by llvmpipe/softpipe driver. It can't run on its own. By default mesa uses llvmpipe. You can switch to OpenSWR by setting GALLIUM_DRIVER environment variable value to swr . Mesa environment variables documentation is available [here](https://mesa3d.org/envvars.html). Build instructions, if you want to replicate my builds, are available [here](https://github.com/pal1000/mesa-dist-win/tree/master/builds).
+# Installation
+## 1. Locally for a certain application
 Just drop the DLLs  where your application executable is located.
-### 2. System wide. 
+## 2. System wide. 
 All applications that cannot use the GPU will use mesa automatically.  Examples include Virtualbox, Aida64 system utilities and Java JRE on Windows 10 on SandyBridge or older hardware lacking dGPU or eGPU.
-- rename opengl32.dll from mesa to something unique like opengl32sw.dll or mesadrv.dll. You can do it for both 32-bit and 64-bit DLLs, or just for the one you need;
-- for 64 bit Windows drop the 32-bit DLLs in %SystemRoot%\SysWOW64 and 64-bit DLLs in %SystemRoot%\System32 ;
-- for 32 bit Windows drop the 32-bit DLLs in %SystemRoot%\System32 .
+### Installation procedure:
+- rename downloaded opengl32.dll llvmpipe/softpipe driver to something unique like opengl32sw.dll or mesadrv.dll. You can do it for both 32-bit and 64-bit DLLs, or just for the one you need;
+- for 64 bit Windows drop the 32-bit llvmpipe/softpipe (and OpenSWR if wanted) in %SystemRoot%\SysWOW64 and 64-bit llvmpipe/softpipe (and OpenSWR if wanted) in %SystemRoot%\System32 ;
+- for 32 bit Windows drop the 32-bit llvmpipe/softpipe (and OpenSWR if wanted) in %SystemRoot%\System32 .
 
 The following code assumes you renamed opengl32.dll to opengl32sw.dll. If you named it in other way just make appropriate replacements.
 - Create a new text file with following code:
@@ -58,5 +59,5 @@ Windows Registry Editor Version 5.00
 - Open Registry Editor as administrator (On Windows 7 and 10 simply search for regedit, right click on the result and select Run as administrator);
 - Click/tap on File - Import and browse where you saved the reg file. Click/Tap on Import. Close Registry Editor. You only need to restart applications that use OpenGL for changes to take effect. No system reboot or user re-login is required. 
 
-## Getting 3D acceleration to work in Virtualbox VMs when GPU supplied OpenGL doesn't work, without paying for expensive code signing certificate
+# Getting 3D acceleration to work in Virtualbox VMs when GPU supplied OpenGL doesn't work, without paying for expensive code signing certificate
 Unimplemented
