@@ -10,9 +10,10 @@ Mesa 17.0.0 builds are now available:
 You need both llvmpipe/softpipe and OpenSWR driver files for OpenSWR to work. OpenSWR driver is loaded when requested by llvmpipe/softpipe driver. It can't run on its own. By default mesa uses llvmpipe. You can switch to OpenSWR by setting GALLIUM_DRIVER environment variable value to swr . Mesa environment variables documentation is available [here](https://mesa3d.org/envvars.html). Build instructions, if you want to replicate my builds, are available [here](https://github.com/pal1000/mesa-dist-win/tree/master/builds).
 # Installation
 ## 1. Locally for a certain application
-Just drop the DLLs  where your application executable is located.
+Just drop the DLLs where your application executable is located. Application will use mesa regardless of GPU capabilities. 
 ## 2. System wide. 
-All applications that cannot use the GPU will use mesa automatically.  Examples include Virtualbox, Aida64 system utilities and Java JRE on Windows 10 on SandyBridge or older hardware lacking dGPU or eGPU; PCSX2 on almost all systems with Intel iGPU  lacking dGPU or eGPU, see [pcsx2/pcsx2#345](https://github.com/PCSX2/pcsx2/issues/345), [pcsx2/pcsx2#1716](https://github.com/PCSX2/pcsx2/issues/1716).
+All applications that cannot use the GPU will use mesa automatically.  Examples include Virtualbox, Aida64 system utilities and Java JRE on Windows 10 on SandyBridge or older hardware lacking dGPU or eGPU; PCSX2 on almost all systems with Intel iGPU  lacking dGPU or eGPU, see [pcsx2/pcsx2#345](https://github.com/PCSX2/pcsx2/issues/345) and [pcsx2/pcsx2#1716](https://github.com/PCSX2/pcsx2/issues/1716).
+For PCSX2 use case, at this moment only llvmpipe supplies the required extensions. It is recommended to install llvmpipe system wide to minimize impact of [pcsx2/pcsx2#1817](https://github.com/PCSX2/pcsx2/issues/1817). Note that PCSX2 won't be able to boot anything on first try because of this bug. Try again and it will work. OpenGL software mode is your best bet.   
 ### Installation procedure:
 - rename downloaded opengl32.dll llvmpipe/softpipe driver to something unique like opengl32sw.dll or mesadrv.dll. You can do it for both 32-bit and 64-bit DLLs, or just for the one you need;
 - for 64 bit Windows drop the 32-bit llvmpipe/softpipe (and OpenSWR if wanted) in %SystemRoot%\SysWOW64 and 64-bit llvmpipe/softpipe (and OpenSWR if wanted) in %SystemRoot%\System32 ;
