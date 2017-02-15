@@ -6,6 +6,7 @@
 Only C/C++ compiler and libraries targeting Win32 API are needed.
 - Mesa source code: ftp://ftp.freedesktop.org/pub/mesa/ ;
 - [LLVM source code]( http://llvm.org/);
+
 To build Mesa 13 you have to use LLVM 3.7.1. Newer versions don't work because Mesa attempts to link against the removed llvmipa.lib, [see this forum post](https://www.phoronix.com/forums/forum/linux-graphics-x-org-drivers/opengl-vulkan-mesa-gallium3d/28305-compiling-mesa-with-llvm-on-x86_64-in-windows-7).
 - [CMake 32 and 64 bit](https://cmake.org/download/#latest);
 
@@ -13,14 +14,14 @@ The installer automatically sets the PATH for you. But beware if you want to bui
 - [Flex and Bison](https://sourceforge.net/projects/winflexbison/);
 - m4: [32-bit](https://sourceforge.net/projects/msys2/files/REPOS/MSYS2/i686/), [64-bit](https://sourceforge.net/projects/msys2/files/REPOS/MSYS2/x86_64/);
 
-Just search for it in these huge pages. Your web browser might freeze for a bit. Your need 7-Zip to extract linux archives in which m4 is compressed.
+Just search for m4 in these huge pages. Your web browser might freeze for a bit. Your need 7-Zip to extract linux archives in which m4 is compressed.
 - [Python 32 and 64 bit](https://www.python.org/);
 
 Use Python 2.7. Python 3.x is not supported by Scons. Make sure pip is installed. Sometimes it isn't. If it isn't get it from [here](https://pip.pypa.io/en/stable/installing/).
 - [pywin32 for Python 32 and 64 bit](https://sourceforge.net/projects/pywin32/files/);
 - [Scons for python 32 and 64-bit](https://sourceforge.net/projects/scons/files/scons/);
 
-DO NOT use Scons 2.5.0. It doesn't work as it shipped incomplete as stated in [2.5.1 release notes](https://bitbucket.org/scons/scons/raw/8d7fac5a5e9c9a1de4b81769c7c8c0032c82a9aa/src/CHANGES.txt).
+Get Scons installer executables, ignore the zipped versions. DO NOT use Scons 2.5.0. It doesn't work as it shipped incomplete as stated in [2.5.1 release notes](https://bitbucket.org/scons/scons/raw/8d7fac5a5e9c9a1de4b81769c7c8c0032c82a9aa/src/CHANGES.txt).
 - mako module for Python 32 and 64 bit. Install with pip install mako. build.cmd installs mako automatically. It also attempts to update all Python modules. 
 
 ## 2. Setting environment variables and prepare the build
@@ -68,4 +69,4 @@ Mesa OpenSWR drivers are dropped in:
 - for 32-bit: .\projects\mesa\mesa\build\windows-x86\gallium\drivers\swr
 - for 64-bit: .\projects\mesa\mesa\build\windows-x86_64\gallium\drivers\swr
 
-and are both named swrAVX.dll and swrAVX2.dll. You need both regardless of CPU capabilities. OpenSWR drivers are loaded when requested by llvmpipe/softpipe driver. They can't run on their own.
+and are named swrAVX.dll and swrAVX2.dll after their instruction set requirements. You need both llvmpipe/softpipe and OpenSWR driver suitable to your CPU for OpenSWR to work. OpenSWR drivers are loaded when requested by llvmpipe/softpipe drivers. They can't run on their own.
