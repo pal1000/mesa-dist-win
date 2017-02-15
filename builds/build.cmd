@@ -1,4 +1,3 @@
-@for /F "delims=" %%I in ("%~dp0") do @set cdir=%%~fI
 @rem Specify Visual Studio version in vsver
 @set vsver=14
 @set vsvar=vs%vsver%0COMNTOOLS
@@ -6,7 +5,7 @@
 @set vsct=!%vsvar%!
 @setlocal disabledelayedexpansion
 @set vstudio=%vsct%\..\..\VC\bin
-@set mesa=%cdir%projects\mesa\
+@set mesa=%cd%\
 @set mesaunix=%mesa:\=/%
 @set abi=x86
 @set /p x64=Do you want to build for x64?(y/n) Otherwise build for x86: 

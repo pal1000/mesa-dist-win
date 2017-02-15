@@ -35,15 +35,15 @@ You need to add the location of the following components to PATH:
 
 build.cmd script automates this whole process but you must respect the relative paths between the script and the sources and tools. 
 Assuming the script is located in current folder "." then each tool and code source must be located as follows:
-- m4 32-bit: .\projects\mesa\m4\x86;
-- m4 64-bit: .\projects\mesa\m4\x64;
-- CMake 32-bit: .\projects\mesa\cmake\x86;
-- CMake 64-bit: .\projects\mesa\cmake\x64;
-- Python 32-bit: .\projects\mesa\Python\x86;
-- Python 64-bit: .\projects\mesa\Python\x64;
-- Flex and bison: .\projects\mesa\flexbison;
-- LLVM source code: .\projects\mesa\llvm;
-- Mesa source code: .\projects\mesa\mesa.
+- m4 32-bit: .\m4\x86;
+- m4 64-bit: .\m4\x64;
+- CMake 32-bit: .\cmake\x86;
+- CMake 64-bit: .\cmake\x64;
+- Python 32-bit: .\Python\x86;
+- Python 64-bit: .\Python\x64;
+- Flex and bison: .\flexbison;
+- LLVM source code: .\llvm;
+- Mesa source code: .\mesa.
 
 This way the script would be able to set PATH variable correctly and you'll no longer need to set anything from this point forward.
 
@@ -57,16 +57,16 @@ The script acts like a Wizard asking for the following during execution:
 ## 4. Miscellaneous and build location
 
 CMake build system is created in:
-- for 32 bit: .\projects\mesa\llvm\cmake-x86;
-- for 64-bit: .\projects\mesa\llvm\cmake-x64.
+- for 32 bit: .\llvm\cmake-x86;
+- for 64-bit: .\llvm\cmake-x64.
 
 Mesa llvmpipe and softpipe drivers are dropped in:
-- for 32-bit: .\projects\mesa\mesa\build\windows-x86\gallium\targets\libgl-gdi
-- for 64-bit: .\projects\mesa\mesa\build\windows-x86_64\gallium\targets\libgl-gdi
+- for 32-bit: .\mesa\build\windows-x86\gallium\targets\libgl-gdi
+- for 64-bit: .\mesa\build\windows-x86_64\gallium\targets\libgl-gdi
 
 and are both named opengl32.dll.
 Mesa OpenSWR drivers are dropped in:
-- for 32-bit: .\projects\mesa\mesa\build\windows-x86\gallium\drivers\swr
-- for 64-bit: .\projects\mesa\mesa\build\windows-x86_64\gallium\drivers\swr
+- for 32-bit: .\mesa\build\windows-x86\gallium\drivers\swr
+- for 64-bit: .\mesa\build\windows-x86_64\gallium\drivers\swr
 
 and are named swrAVX.dll and swrAVX2.dll after their instruction set requirements. You need both llvmpipe/softpipe and OpenSWR driver suitable to your CPU for OpenSWR to work. OpenSWR drivers are loaded when requested by llvmpipe/softpipe drivers. They can't run on their own.
