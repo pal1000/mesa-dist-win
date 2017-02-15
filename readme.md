@@ -12,7 +12,7 @@ You need both llvmpipe/softpipe and OpenSWR driver files for OpenSWR to work. Op
 ## 1. Locally for a certain application
 Just drop the DLLs  where your application executable is located.
 ## 2. System wide. 
-All applications that cannot use the GPU will use mesa automatically.  Examples include Virtualbox, Aida64 system utilities and Java JRE on Windows 10 on SandyBridge or older hardware lacking dGPU or eGPU.
+All applications that cannot use the GPU will use mesa automatically.  Examples include Virtualbox, Aida64 system utilities and Java JRE on Windows 10 on SandyBridge or older hardware lacking dGPU or eGPU; PCSX2 on almost all systems with Intel iGPU  lacking dGPU or eGPU, see pcsx2/pcsx2#345, pcsx2/pcsx2#1716.
 ### Installation procedure:
 - rename downloaded opengl32.dll llvmpipe/softpipe driver to something unique like opengl32sw.dll or mesadrv.dll. You can do it for both 32-bit and 64-bit DLLs, or just for the one you need;
 - for 64 bit Windows drop the 32-bit llvmpipe/softpipe (and OpenSWR if wanted) in %SystemRoot%\SysWOW64 and 64-bit llvmpipe/softpipe (and OpenSWR if wanted) in %SystemRoot%\System32 ;
