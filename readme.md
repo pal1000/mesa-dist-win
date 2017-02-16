@@ -1,3 +1,14 @@
+**Table of Contents**
+
+- [Downloads](#downloads)
+- [Installation](#installation)
+	- [1. Locally for a certain application](#1-locally-for-a-certain-application)
+	- [2. System wide](#2-system-wide)
+		- [Installation procedure](#installation-procedure)
+	- [Upgrading mesa](#upgrading-mesa)
+- [Using with PCSX2](#using-with-pcsx2)
+- [Getting 3D acceleration to work in Virtualbox VMs when GPU supplied OpenGL doesn't work, without paying for expensive code signing certificate](#getting-3d-acceleration-to-work-in-virtualbox-vms-when-gpu-supplied-opengl-doesnt-work-without-paying-for-expensive-code-signing-certificate)
+  
 # Downloads
 Mesa 17.0.0 builds are now available:
 - [llvmpipe and softpipe drivers for Windows x86](https://github.com/pal1000/mesa-dist-win/blob/master/builds/17.0.0/x86/opengl32.dll?raw=true);

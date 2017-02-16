@@ -1,5 +1,9 @@
 # Usage guidelines for build.cmd
-
+  * [1. Acquire mesa source code, dependencies and build tools](#1-acquire-mesa-source-code-dependencies-and-build-tools)
+  * [2. Setting environment variables and prepare the build](#2-setting-environment-variables-and-prepare-the-build)
+  * [3. Build process](#3-build-process)
+  * [4. Miscellaneous and build location](#4-miscellaneous-and-build-location)
+  
 ## 1. Acquire mesa source code, dependencies and build tools
 
 - Visual Studio Community (at this moment Visual Studio 2013 and 2015 are supported, 2015 recommended).
