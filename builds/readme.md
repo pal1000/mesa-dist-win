@@ -8,7 +8,7 @@
 
 - Visual Studio Community (at this moment Visual Studio 2013 and 2015 are supported, 2015 recommended).
 Only C/C++ compiler and libraries targeting Win32 API are needed.
-- Mesa source code: ftp://ftp.freedesktop.org/pub/mesa/ ;
+- Mesa source code: ftp://ftp.freedesktop.org/pub/mesa/;
 - [LLVM source code]( http://llvm.org/);
 
 To build Mesa 13 you have to use LLVM 3.7.1. Newer versions don't work because Mesa attempts to link against the removed llvmipa.lib, [see this forum post](https://www.phoronix.com/forums/forum/linux-graphics-x-org-drivers/opengl-vulkan-mesa-gallium3d/28305-compiling-mesa-with-llvm-on-x86_64-in-windows-7).
