@@ -11,12 +11,12 @@
   
 # Downloads
 Mesa 17.0.0 builds are now available:
-- [llvmpipe and softpipe drivers for Windows x86](https://github.com/pal1000/mesa-dist-win/blob/master/builds/17.0.0/x86/opengl32.dll?raw=true);
-- [llvmpipe and softpipe drivers for Windows x64](https://github.com/pal1000/mesa-dist-win/blob/master/builds/17.0.0/x64/opengl32.dll?raw=true);
-- [OpenSWR driver for AVX capable CPUs for Windows x86](https://github.com/pal1000/mesa-dist-win/blob/master/builds/17.0.0/x86/swrAVX.dll?raw=true);
-- [OpenSWR driver for AVX2 capable CPUs for Windows x86](https://github.com/pal1000/mesa-dist-win/blob/master/builds/17.0.0/x86/swrAVX2.dll?raw=true);
-- [OpenSWR driver for AVX capable CPUs for Windows x64](https://github.com/pal1000/mesa-dist-win/blob/master/builds/17.0.0/x64/swrAVX.dll?raw=true);
-- [OpenSWR driver for AVX2 capable CPUs for Windows x64](https://github.com/pal1000/mesa-dist-win/blob/master/builds/17.0.0/x64/swrAVX2.dll?raw=true);
+- [32-bit llvmpipe and softpipe drivers](https://github.com/pal1000/mesa-dist-win/blob/master/builds/17.0.0/x86/opengl32.dll?raw=true);
+- [64-bit llvmpipe and softpipe drivers](https://github.com/pal1000/mesa-dist-win/blob/master/builds/17.0.0/x64/opengl32.dll?raw=true);
+- [32-bit OpenSWR driver for AVX capable CPUs](https://github.com/pal1000/mesa-dist-win/blob/master/builds/17.0.0/x86/swrAVX.dll?raw=true);
+- [64-bit OpenSWR driver for AVX2 capable CPUs](https://github.com/pal1000/mesa-dist-win/blob/master/builds/17.0.0/x86/swrAVX2.dll?raw=true);
+- [32-bit OpenSWR driver for AVX capable CPUs](https://github.com/pal1000/mesa-dist-win/blob/master/builds/17.0.0/x64/swrAVX.dll?raw=true);
+- [64-bit OpenSWR driver for AVX2 capable CPUs](https://github.com/pal1000/mesa-dist-win/blob/master/builds/17.0.0/x64/swrAVX2.dll?raw=true);
 
 You need both llvmpipe/softpipe and OpenSWR driver files for OpenSWR to work. OpenSWR driver is loaded when requested by llvmpipe/softpipe driver. It can't run on its own. By default mesa uses llvmpipe. You can switch to OpenSWR by setting GALLIUM_DRIVER environment variable value to swr . Mesa environment variables documentation is available [here](https://mesa3d.org/envvars.html). Build instructions, if you want to replicate my builds, are available [here](https://github.com/pal1000/mesa-dist-win/tree/master/builds).
 # Installation
