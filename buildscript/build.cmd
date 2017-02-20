@@ -48,5 +48,4 @@
 :build_mesa
 @set LLVM=%mesaunix%llvm/%abi%
 @cd %mesa%mesa
-@rem cmd /k "scons build=release platform=windows machine=%longabi% swr=1 libgl-gdi"
-@cmd /k "scons build=release platform=windows machine=%longabi% graw"
+@cmd /k "scons build=release platform=windows machine=%longabi% swr=1 libgl-gdi"
