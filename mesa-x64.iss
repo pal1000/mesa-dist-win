@@ -33,9 +33,9 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Source: "bin\x86\opengl32sw.dll"; DestDir: "{syswow64}"; Flags: ignoreversion confirmoverwrite
 Source: "bin\x86\swrAVX.dll"; DestDir: "{syswow64}"; Flags: ignoreversion confirmoverwrite
 Source: "bin\x86\swrAVX2.dll"; DestDir: "{syswow64}"; Flags: ignoreversion confirmoverwrite
-Source: "bin\x64\opengl32sw.dll"; DestDir: "{win}\system32"; Flags: ignoreversion confirmoverwrite
-Source: "bin\x64\swrAVX.dll"; DestDir: "{win}\system32"; Flags: ignoreversion confirmoverwrite
-Source: "bin\x64\swrAVX2.dll"; DestDir: "{win}\system32"; Flags: ignoreversion confirmoverwrite
+Source: "bin\x64\opengl32sw.dll"; DestDir: "{win}\system32"; Flags: ignoreversion confirmoverwrite 64bit
+Source: "bin\x64\swrAVX.dll"; DestDir: "{win}\system32"; Flags: ignoreversion confirmoverwrite 64bit
+Source: "bin\x64\swrAVX2.dll"; DestDir: "{win}\system32"; Flags: ignoreversion confirmoverwrite 64bit
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Registry]
