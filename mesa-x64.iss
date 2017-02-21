@@ -33,9 +33,9 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Source: "bin\x86\opengl32sw.dll"; DestDir: "{syswow64}"; Flags: ignoreversion confirmoverwrite
 Source: "bin\x86\swrAVX.dll"; DestDir: "{syswow64}"; Flags: ignoreversion confirmoverwrite
 Source: "bin\x86\swrAVX2.dll"; DestDir: "{syswow64}"; Flags: ignoreversion confirmoverwrite
-Source: "bin\x64\opengl32sw.dll"; DestDir: "{sys}"; Flags: ignoreversion confirmoverwrite
-Source: "bin\x64\swrAVX.dll"; DestDir: "{sys}"; Flags: ignoreversion confirmoverwrite
-Source: "bin\x64\swrAVX2.dll"; DestDir: "{sys}"; Flags: ignoreversion confirmoverwrite
+Source: "bin\x64\opengl32sw.dll"; DestDir: "{win}\system32"; Flags: ignoreversion confirmoverwrite
+Source: "bin\x64\swrAVX.dll"; DestDir: "{win}\system32"; Flags: ignoreversion confirmoverwrite
+Source: "bin\x64\swrAVX2.dll"; DestDir: "{win}\system32"; Flags: ignoreversion confirmoverwrite
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Registry]
@@ -52,6 +52,6 @@ Root: "HKLM32"; Subkey: "SOFTWARE\Microsoft\Windows NT\CurrentVersion\OpenGLDriv
 Type: files; Name: "{syswow64}\opengl32sw.dll"
 Type: files; Name: "{syswow64}\swrAVX.dll"
 Type: files; Name: "{syswow64}\swrAVX2.dll"
-Type: files; Name: "{sys}\opengl32sw.dll"
-Type: files; Name: "{sys}\swrAVX.dll"
-Type: files; Name: "{sys}\swrAVX2.dll"
+Type: files; Name: "{win}\system32\opengl32sw.dll"
+Type: files; Name: "{win}\system32\swrAVX.dll"
+Type: files; Name: "{win}\system32\swrAVX2.dll"

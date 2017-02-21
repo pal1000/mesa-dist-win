@@ -30,9 +30,9 @@ SolidCompression=yes
 Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Files]
-Source: "bin\x86\opengl32sw.dll"; DestDir: "{sys}"; Flags: ignoreversion confirmoverwrite
-Source: "bin\x86\swrAVX.dll"; DestDir: "{sys}"; Flags: ignoreversion confirmoverwrite
-Source: "bin\x86\swrAVX2.dll"; DestDir: "{sys}"; Flags: ignoreversion confirmoverwrite
+Source: "bin\x86\opengl32sw.dll"; DestDir: "{win}\system32"; Flags: ignoreversion confirmoverwrite
+Source: "bin\x86\swrAVX.dll"; DestDir: "{win}\system32"; Flags: ignoreversion confirmoverwrite
+Source: "bin\x86\swrAVX2.dll"; DestDir: "{win}\system32"; Flags: ignoreversion confirmoverwrite
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Registry]
@@ -42,6 +42,6 @@ Root: "HKLM"; Subkey: "SOFTWARE\Microsoft\Windows NT\CurrentVersion\OpenGLDriver
 Root: "HKLM"; Subkey: "SOFTWARE\Microsoft\Windows NT\CurrentVersion\OpenGLDrivers\MSOGL"; ValueType: dword; ValueName: "Version"; ValueData: "2"; Flags: createvalueifdoesntexist
 
 [UninstallDelete]
-Type: files; Name: "{sys}\opengl32sw.dll"
-Type: files; Name: "{sys}\swrAVX.dll"
-Type: files; Name: "{sys}\swrAVX2.dll"
+Type: files; Name: "{win}\system32\opengl32sw.dll"
+Type: files; Name: "{win}\system32\swrAVX.dll"
+Type: files; Name: "{win}\system32\swrAVX2.dll"
