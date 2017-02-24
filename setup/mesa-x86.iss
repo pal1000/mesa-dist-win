@@ -30,9 +30,9 @@ SolidCompression=yes
 Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Files]
-Source: "bin\x86\opengl32sw.dll"; DestDir: "{win}\system32"; Flags: ignoreversion confirmoverwrite
-Source: "bin\x86\swrAVX.dll"; DestDir: "{win}\system32"; Flags: ignoreversion confirmoverwrite
-Source: "bin\x86\swrAVX2.dll"; DestDir: "{win}\system32"; Flags: ignoreversion confirmoverwrite
+Source: "..\bin\x86\opengl32sw.dll"; DestDir: "{win}\system32"; Flags: ignoreversion confirmoverwrite
+Source: "..\bin\x86\swrAVX.dll"; DestDir: "{win}\system32"; Flags: ignoreversion confirmoverwrite
+Source: "..\bin\x86\swrAVX2.dll"; DestDir: "{win}\system32"; Flags: ignoreversion confirmoverwrite
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Registry]
