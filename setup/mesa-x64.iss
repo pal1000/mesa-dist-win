@@ -19,9 +19,9 @@ AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
-CreateAppDir=no
-LicenseFile=.\LICENSE
-OutputDir=.\
+DefaultDirName={pf64}\{#MyAppName}
+LicenseFile=..\LICENSE
+OutputDir=..\bin\
 OutputBaseFilename=mesa-x64-{#MyAppVersion}-setup
 Compression=lzma
 SolidCompression=yes
@@ -36,17 +36,18 @@ Source: "..\bin\x86\swrAVX2.dll"; DestDir: "{syswow64}"; Flags: ignoreversion co
 Source: "..\bin\x64\opengl32sw.dll"; DestDir: "{win}\system32"; Flags: ignoreversion confirmoverwrite 64bit
 Source: "..\bin\x64\swrAVX.dll"; DestDir: "{win}\system32"; Flags: ignoreversion confirmoverwrite 64bit
 Source: "..\bin\x64\swrAVX2.dll"; DestDir: "{win}\system32"; Flags: ignoreversion confirmoverwrite 64bit
+Source: "..\local\localdeploy-x64.cmd"; DestDir: "{app}"
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Registry]
-Root: "HKLM64"; Subkey: "SOFTWARE\Microsoft\Windows NT\CurrentVersion\OpenGLDrivers\MSOGL"; ValueType: string; ValueName: "DLL"; ValueData: "opengl32sw.dll"; Flags: createvalueifdoesntexist
-Root: "HKLM64"; Subkey: "SOFTWARE\Microsoft\Windows NT\CurrentVersion\OpenGLDrivers\MSOGL"; ValueType: dword; ValueName: "DriverVersion"; ValueData: "1"; Flags: createvalueifdoesntexist
-Root: "HKLM64"; Subkey: "SOFTWARE\Microsoft\Windows NT\CurrentVersion\OpenGLDrivers\MSOGL"; ValueType: dword; ValueName: "Flags"; ValueData: "1"; Flags: createvalueifdoesntexist
-Root: "HKLM64"; Subkey: "SOFTWARE\Microsoft\Windows NT\CurrentVersion\OpenGLDrivers\MSOGL"; ValueType: dword; ValueName: "Version"; ValueData: "2"; Flags: createvalueifdoesntexist
-Root: "HKLM32"; Subkey: "SOFTWARE\Microsoft\Windows NT\CurrentVersion\OpenGLDrivers\MSOGL"; ValueType: string; ValueName: "DLL"; ValueData: "opengl32sw.dll"; Flags: createvalueifdoesntexist
-Root: "HKLM32"; Subkey: "SOFTWARE\Microsoft\Windows NT\CurrentVersion\OpenGLDrivers\MSOGL"; ValueType: dword; ValueName: "DriverVersion"; ValueData: "1"; Flags: createvalueifdoesntexist
-Root: "HKLM32"; Subkey: "SOFTWARE\Microsoft\Windows NT\CurrentVersion\OpenGLDrivers\MSOGL"; ValueType: dword; ValueName: "Flags"; ValueData: "1"; Flags: createvalueifdoesntexist
-Root: "HKLM32"; Subkey: "SOFTWARE\Microsoft\Windows NT\CurrentVersion\OpenGLDrivers\MSOGL"; ValueType: dword; ValueName: "Version"; ValueData: "2"; Flags: createvalueifdoesntexist
+Root: "HKLM64"; Subkey: "SOFTWARE\Microsoft\Windows NT\CurrentVersion\OpenGLDrivers\MSOGL"; ValueType: string; ValueName: "DLL"; ValueData: "opengl32sw.dll"; Flags: createvalueifdoesntexist uninsdeletekey
+Root: "HKLM64"; Subkey: "SOFTWARE\Microsoft\Windows NT\CurrentVersion\OpenGLDrivers\MSOGL"; ValueType: dword; ValueName: "DriverVersion"; ValueData: "1"; Flags: createvalueifdoesntexist uninsdeletekey
+Root: "HKLM64"; Subkey: "SOFTWARE\Microsoft\Windows NT\CurrentVersion\OpenGLDrivers\MSOGL"; ValueType: dword; ValueName: "Flags"; ValueData: "1"; Flags: createvalueifdoesntexist uninsdeletekey
+Root: "HKLM64"; Subkey: "SOFTWARE\Microsoft\Windows NT\CurrentVersion\OpenGLDrivers\MSOGL"; ValueType: dword; ValueName: "Version"; ValueData: "2"; Flags: createvalueifdoesntexist uninsdeletekey
+Root: "HKLM32"; Subkey: "SOFTWARE\Microsoft\Windows NT\CurrentVersion\OpenGLDrivers\MSOGL"; ValueType: string; ValueName: "DLL"; ValueData: "opengl32sw.dll"; Flags: createvalueifdoesntexist uninsdeletekey
+Root: "HKLM32"; Subkey: "SOFTWARE\Microsoft\Windows NT\CurrentVersion\OpenGLDrivers\MSOGL"; ValueType: dword; ValueName: "DriverVersion"; ValueData: "1"; Flags: createvalueifdoesntexist uninsdeletekey
+Root: "HKLM32"; Subkey: "SOFTWARE\Microsoft\Windows NT\CurrentVersion\OpenGLDrivers\MSOGL"; ValueType: dword; ValueName: "Flags"; ValueData: "1"; Flags: createvalueifdoesntexist uninsdeletekey
+Root: "HKLM32"; Subkey: "SOFTWARE\Microsoft\Windows NT\CurrentVersion\OpenGLDrivers\MSOGL"; ValueType: dword; ValueName: "Version"; ValueData: "2"; Flags: createvalueifdoesntexist uninsdeletekey
 
 [UninstallDelete]
 Type: files; Name: "{syswow64}\opengl32sw.dll"
@@ -55,3 +56,29 @@ Type: files; Name: "{syswow64}\swrAVX2.dll"
 Type: files; Name: "{win}\system32\opengl32sw.dll"
 Type: files; Name: "{win}\system32\swrAVX.dll"
 Type: files; Name: "{win}\system32\swrAVX2.dll"
+
+[Icons]
+Name: "{commondesktop}\Mesa3D local deployment utility"; Filename: "cmd"; Parameters: "/c ""{app}\localdeploy-x64.cmd"""; AfterInstall: SetElevationBit ('{commondesktop}\Mesa3D local deployment utility.lnk')
+
+[Code]
+
+procedure SetElevationBit(Filename: string);
+var
+  Buffer: string;
+  Stream: TStream;
+begin
+  Filename := ExpandConstant(Filename);
+  Log('Setting elevation bit for ' + Filename);
+
+  Stream := TFileStream.Create(FileName, fmOpenReadWrite);
+  try
+    Stream.Seek(21, soFromBeginning);
+    SetLength(Buffer, 1);
+    Stream.ReadBuffer(Buffer, 1);
+    Buffer[1] := Chr(Ord(Buffer[1]) or $20);
+    Stream.Seek(-1, soFromCurrent);
+    Stream.WriteBuffer(Buffer, 1);
+  finally
+    Stream.Free;
+  end;
+end;
