@@ -48,4 +48,7 @@
 :build_mesa
 @set LLVM=%mesaunix%llvm/%abi%
 @cd %mesa%mesa
-@cmd /k "scons build=release platform=windows machine=%longabi% swr=1 libgl-gdi"
+@set /p openswr=Do you want to build OpenSWR drivers? (y=yes):
+@set buildswr=
+@if /i %openswr%==y @set buildswr=swr=1
+@cmd /k "scons build=release platform=windows machine=%longabi% %buildswr% libgl-gdi"
