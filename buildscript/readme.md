@@ -56,7 +56,10 @@ This way the script would be able to set PATH variable correctly and you'll no l
 The script acts like a Wizard asking for the following during execution:
 - architecture for which you want to build mesa - type "y " for x64, otherwise x86 is selected;
 - if you need to build LLVM.  You only need to do it once for each architecture you target when new version is out and this doesn't happen very often;
-- if you want to build mesa or quit. After mesa build completes, because scons closes Command prompt on finish, I run it via "cmd /k", so after the script completes you are returned to Command Prompt. You'll have to manually close it.
+- if you want to build mesa or quit;
+- if want to build OpenSWR driver. 
+
+After mesa build completes, because scons closes Command prompt on finish, I run it via "cmd /k", so after the script completes you are returned to Command Prompt. You'll have to manually close it.
 
 ## 4. Miscellaneous and build location
 
