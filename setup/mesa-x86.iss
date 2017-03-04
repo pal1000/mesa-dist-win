@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Mesa3D software rendering drivers for Windows"
-#define MyAppVersion "17.0.0"
+#define MyAppVersion "17.0.1"
 #define MyAppPublisher "Pal100x"
 #define MyAppURL "https://github.com/pal1000/mesa-dist-win"
 #define MyAppExeName "mesa-x86-{#MyAppVersion}-setup.exe"
@@ -30,9 +30,9 @@ SolidCompression=yes
 Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Files]
-Source: "..\bin\x86\opengl32sw.dll"; DestDir: "{win}\system32"; Flags: ignoreversion confirmoverwrite
-Source: "..\bin\x86\swrAVX.dll"; DestDir: "{win}\system32"; Flags: ignoreversion confirmoverwrite
-Source: "..\bin\x86\swrAVX2.dll"; DestDir: "{win}\system32"; Flags: ignoreversion confirmoverwrite
+Source: "..\bin\x86\opengl32sw.dll"; DestDir: "{win}\system32"; Flags: ignoreversion
+Source: "..\bin\x86\swrAVX.dll"; DestDir: "{win}\system32"; Flags: ignoreversion
+Source: "..\bin\x86\swrAVX2.dll"; DestDir: "{win}\system32"; Flags: ignoreversion
 Source: "..\local\localdeploy-x86.cmd"; DestDir: "{app}"
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
