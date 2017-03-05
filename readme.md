@@ -5,14 +5,14 @@
 - [Getting 3D acceleration to work in Virtualbox VMs when GPU supplied OpenGL doesn't work, without paying for expensive code signing certificate](#getting-3d-acceleration-to-work-in-virtualbox-vms-when-gpu-supplied-opengl-doesnt-work-without-paying-for-expensive-code-signing-certificate)
 	- [Introduction](#introduction)
 	- [Getting a free 30 days Ascertia certificate](#getting-a-free-30-days-ascertia-certificate)
-  - [Certificate installation and Mesa3D signing](#certificate-installation-and-mesa3d-signing)
+  	- [Certificate installation and Mesa3D signing](#certificate-installation-and-mesa3d-signing)
   
 # Downloads
 Mesa 17.0.1 builds are now available in [releases section](https://github.com/pal1000/mesa-dist-win/releases)
 
 By default mesa uses llvmpipe. You can switch to OpenSWR by setting GALLIUM_DRIVER environment variable value to swr . Mesa environment variables documentation is available [here](https://mesa3d.org/envvars.html). Build instructions, if you want to replicate my builds, are available [here](https://github.com/pal1000/mesa-dist-win/tree/master/buildscript).
 # Installation
-By default Mesa installer performs a system-wide installation. All applications that cannot use the GPU will use mesa automatically - Virtualbox, Aida64 system utilities and Java JRE 8 Update 60 and newer on Windows 10 on SandyBridge or older hardware lacking dGPU or eGPU,  with certain exceptions, when bugs are involved - e.g. PCSX2 due to issue [1817](https://github.com/PCSX2/pcsx2/issues/1817). In this case opt for local deployment instead. The installer has created a shortcut to it on desktop (Mesa3D local deployment utility). It only asks for path to folder containing application executable and if the app is 64-bit or 32-bit. When local deployment is used application will use mesa regardless of GPU capabilities.
+By default Mesa installer performs a system-wide installation. All applications that cannot use the GPU will use mesa automatically - Virtualbox, Aida64 system utilities and Java JRE 8 Update 60 and newer on Windows 10 on SandyBridge or older hardware lacking dGPU or eGPU,  with certain exceptions, when bugs are involved - e.g. PCSX2 due to issue [1817](https://github.com/PCSX2/pcsx2/issues/1817). In this case opt for local deployment instead. The installer has creates a shortcut to it on desktop (Mesa3D local deployment utility). It only asks for path to folder containing application executable and if the app is 64-bit or 32-bit. When local deployment is used application will use mesa regardless of GPU capabilities. Since v17.0.1.391 in-place upgrade is fully supported. The installer does not touch local deployments regardless of task being performed (install, uninstall or upgrade). 
 # Getting 3D acceleration to work in Virtualbox VMs when GPU supplied OpenGL doesn't work, without paying for expensive code signing certificate
 ## Introduction
 Before beginning shutdown all VMs. This is standard practice when updating host OS graphics driver and using Mesa with Virtualbox has same effect. Install Mesa3D with my system-wide installer. To use Mesa as OpenGL driver for Virtualbox we must comply with hardened security requirements: (all requirements are simultaneously mandatory)
