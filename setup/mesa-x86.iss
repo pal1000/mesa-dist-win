@@ -33,6 +33,8 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Source: "..\bin\x86\opengl32sw.dll"; DestDir: "{win}\system32"; Flags: ignoreversion
 Source: "..\bin\x86\swrAVX.dll"; DestDir: "{win}\system32"; Flags: ignoreversion
 Source: "..\bin\x86\swrAVX2.dll"; DestDir: "{win}\system32"; Flags: ignoreversion
+Source: "..\bin\x86\cygwin1.dll"; DestDir: "{win}\system32"; Flags: ignoreversion
+Source: "..\bin\x86\dxtn.dll"; DestDir: "{win}\system32"; Flags: ignoreversion
 Source: "..\local\localdeploy-x86.cmd"; DestDir: "{app}"
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
@@ -46,6 +48,8 @@ Root: "HKLM"; Subkey: "SOFTWARE\Microsoft\Windows NT\CurrentVersion\OpenGLDriver
 Type: files; Name: "{win}\system32\opengl32sw.dll"
 Type: files; Name: "{win}\system32\swrAVX.dll"
 Type: files; Name: "{win}\system32\swrAVX2.dll"
+Type: files; Name: "{win}\system32\cygwin1.dll"
+Type: files; Name: "{win}\system32\dxtn.dll"
 
 [Icons]
 Name: "{commondesktop}\Mesa3D local deployment utility"; Filename: "cmd"; Parameters: "/c ""{app}\localdeploy-x86.cmd"""; AfterInstall: SetElevationBit ('{commondesktop}\Mesa3D local deployment utility.lnk')
