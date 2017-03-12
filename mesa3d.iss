@@ -39,7 +39,7 @@ Source: "..\bin\x64\opengl32sw.dll"; DestDir: "{win}\system32"; Flags: ignorever
 Source: "..\bin\x64\swrAVX.dll"; DestDir: "{win}\system32"; Flags: ignoreversion 64bit; Check: IsWin64
 Source: "..\bin\x64\swrAVX2.dll"; DestDir: "{win}\system32"; Flags: ignoreversion 64bit; Check: IsWin64
 Source: "..\bin\x64\dxtn.dll"; DestDir: "{win}\system32"; Flags: ignoreversion 64bit; Check: IsWin64
-Source: "..\local\localdeploy.cmd"; DestDir: "{app}"
+Source: "..\localdeploy.cmd"; DestDir: "{app}"
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Registry]
