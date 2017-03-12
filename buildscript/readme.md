@@ -11,14 +11,14 @@ Only C/C++ compiler and libraries targeting Win32 API are needed.
 - Mesa source code: ftp://ftp.freedesktop.org/pub/mesa/;
 - [LLVM source code]( http://llvm.org/);
 
-To build Mesa 13 you have to use LLVM 3.7.1. Newer versions don't work because Mesa attempts to link against the removed llvmipa.lib, [see this forum post](https://www.phoronix.com/forums/forum/linux-graphics-x-org-drivers/opengl-vulkan-mesa-gallium3d/28305-compiling-mesa-with-llvm-on-x86_64-in-windows-7).
+To build Mesa 13 you have to use LLVM 3.7.1. Newer versions don't work because Mesa attempts to link against the removed llvmipa.lib, [see this forum post](https://www.phoronix.com/forums/forum/software/programming-compilers/903537-llvm-3-9-0-missing-llvmipa).
 - [CMake 32 and 64 bit](https://cmake.org/download/#latest);
 
 The installer automatically sets the PATH for you. But beware if you want to build for both x86 and x64 you will end up with duplicate entry in PATH. You definitely want to avoid this. I recommend use the zipped version and let build.cmd set PATH at runtime.
 - [Flex and Bison](https://sourceforge.net/projects/winflexbison/);
 - m4: [32-bit](https://sourceforge.net/projects/msys2/files/REPOS/MSYS2/i686/), [64-bit](https://sourceforge.net/projects/msys2/files/REPOS/MSYS2/x86_64/);
 
-Just search for m4 in these huge pages. Your web browser might freeze for a bit. Your need 7-Zip to extract linux archives in which m4 is compressed.
+Just search for m4 in these huge pages. Your web browser might freeze for a bit. You'll need 7-Zip to extract linux archives in which m4 is compressed.
 - [Python 32 and 64 bit](https://www.python.org/);
 
 Use Python 2.7. Python 3.x is not supported by Scons. Make sure pip is installed. Sometimes it isn't. If it isn't get it from [here](https://pip.pypa.io/en/stable/installing/).
@@ -30,7 +30,7 @@ Get Scons installer executables, ignore the zipped versions. DO NOT use Scons 2.
 
 ## 2. Setting environment variables and prepare the build
 
-You must provide Visual Studio major version number in vsver variable. For Visual Studio 2015 this is 14, set by default in this script. The upcoming Visual Studio 2017 major version number is 15. 
+You must provide Visual Studio major version number in vsver variable. For Visual Studio 2015 this is 14, set by default in this script. Visual Studio 2017 major version number is 15. 
 You need to add the location of the following components to PATH:
 - flex and bison;
 - m4;
