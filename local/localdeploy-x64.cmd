@@ -8,6 +8,7 @@
 @echo by the aplication.   
 @echo.
 @pause
+
 :deploy
 @cls
 @echo Mesa3D local deployment utility
@@ -18,11 +19,18 @@
 @echo.  
 @set /p dir=Path to folder holding application executable:
 @echo.
+@set mesadll=system32
+@if %PROCESSOR_ARCHITECTURE%==AMD64 GOTO ask_for_app_abi
+@if NOT %PROCESSOR_ARCHITECTURE%==AMD64 GOTO finish
+
+:ask_for_app_abi
 @set mesadll=syswow64
 @set /p ABI=This is a 64-bit application (y=yes):
 @if /I %ABI%==y @set mesadll=system32
-@cd /d "%dir%"
 @echo.
+
+:finish
+@cd /d "%dir%"
 @mklink opengl32.dll %windir%\%mesadll%\opengl32sw.dll
 @echo.
 @set /p rerun=More local deployment? (y=yes):
