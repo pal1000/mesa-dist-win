@@ -7,14 +7,19 @@
 ## 1. Acquire mesa source code, dependencies and build tools
 
 - Visual Studio Community (at this moment Visual Studio 2013 and 2015 are supported, 2015 recommended).
-Only C/C++ compiler and libraries targeting Win32 API are needed.
+Only C/C++ compiler and libraries targeting Win32 API are needed. For Visual Studio 2017 you need to install Visual Studio 2015 toolchain [as Mesa3D doesn't support Visual Studio 2017 yet](https://bugs.freedesktop.org/show_bug.cgi?id=100202). MFC/ATL libraries and CMake tools may also be necessary with Visual Studio 2017.
 - Mesa source code: ftp://ftp.freedesktop.org/pub/mesa/;
 - [LLVM source code]( http://llvm.org/);
+- [S3 texture compresion library source code](https://cgit.freedesktop.org/~mareko/libtxc_dxtn/)
 
-To build Mesa 13 you have to use LLVM 3.7.1. Newer versions don't work because Mesa attempts to link against the removed llvmipa.lib, [see this forum post](https://www.phoronix.com/forums/forum/software/programming-compilers/903537-llvm-3-9-0-missing-llvmipa).
+You will need [git](https://git-scm.com/) to clone this repository.
+To build Mesa 13 you have to use LLVM 3.7.1. Newer versions don't work because Mesa attempts to link against the removed llvmipa.lib, [see this forum post](https://www.phoronix.com/forums/forum/software/programming-compilers/903537-llvm-3-9-0-missing-llvmipa). Also [LLVM 4.0 is not supported yet with Visual Studio build](https://bugs.freedesktop.org/show_bug.cgi?id=100201).
 - [CMake 32 and 64 bit](https://cmake.org/download/#latest);
 
 The installer automatically sets the PATH for you. But beware if you want to build for both x86 and x64 you will end up with duplicate entry in PATH. You definitely want to avoid this. I recommend use the zipped version and let build.cmd set PATH at runtime.
+- Mingw-w64 i686 and x86_64;
+
+Optional. Only if you want to build S3 texture compression library. Teoretically mesa could be built the same way but [it doesm't work due to a Scons bug](https://bugs.freedesktop.org/show_bug.cgi?id=94072). Download web-installer from [here](https://sourceforge.net/projects/mingw-w64/). You need to run web installer once for each target architecture (i686 means 32-bit, x86_64 means 64-bit). Leave everything else as default.
 - [Flex and Bison](https://sourceforge.net/projects/winflexbison/);
 - m4: [32-bit](https://sourceforge.net/projects/msys2/files/REPOS/MSYS2/i686/), [64-bit](https://sourceforge.net/projects/msys2/files/REPOS/MSYS2/x86_64/);
 
@@ -35,7 +40,8 @@ You need to add the location of the following components to PATH:
 - flex and bison;
 - m4;
 - Python;
-- CMake.
+- CMake;
+- mingw-w64 if used.
 
 build.cmd script automates this whole process but you must respect the relative paths between the script and the sources and tools. 
 Assuming the script is located in current folder "." then each tool and code source must be located as follows:
@@ -47,7 +53,9 @@ Assuming the script is located in current folder "." then each tool and code sou
 - Python 64-bit: .\Python\x64;
 - Flex and bison: .\flexbison;
 - LLVM source code: .\llvm;
-- Mesa source code: .\mesa.
+- Mesa source code: .\mesa;
+- S3 texture compression library .\dxtn
+- Mingw-w64 i686 and x86_64, Visual Studio: default installation folder
 
 This way the script would be able to set PATH variable correctly and you'll no longer need to set anything from this point forward.
 
