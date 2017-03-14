@@ -56,8 +56,9 @@ After such blunder your only option is to rinse and repeat.
 - Open certlm.msc as administrator and remove your personal certificate from there, the wizard screws up this step so we need an extra PFX install step, also that's why we created that shortcut to an elevated Internet Options;
 - Open Internet Options using the shortcut, browse to Content - Certificates - Import and install the PFX again in default store. This time only the personal certificate would be installed as the others are already in place;
 - Finally to sign Mesa3D driver, open an elevated command Prompt and execute:
-``
- %ProgramFiles(x86)%Windows Kits\10\bin\x64\signtool.exe sign /a /t http://timestamp.digicert.com opengl32sw.dll``.
+``%ProgramFiles(x86)%Windows Kits\10\bin\x64\signtool.exe sign /a /t http://timestamp.digicert.com opengl32sw.dll``.
+ - Optionally you get S3 texture compression working by signing dxtn.dll as well:
+ ``%ProgramFiles(x86)%Windows Kits\10\bin\x64\signtool.exe sign /a /t http://timestamp.digicert.com dxtn.dll``.
 
 This concludes the process. Enjoy OpenGL and Direct3D in Virtualbox VMs without GPU support.
 When you upgrade mesa3D, make sure you shutdown all VMs beforehand, sign again using signtool command ensuring the certificate is still valid or order a new one if it's not. You want to keep that elevated Internet Options shortcut as you'll use it every time you replace your personal certificate after expiration.
