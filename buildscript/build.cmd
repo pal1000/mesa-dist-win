@@ -65,7 +65,7 @@
 @MD %abi%
 @set dxtn=gcc -shared
 @if %abi%==x86 set dxtn=%dxtn% -m32
-@set dxtn=%dxtn% -v txc_dxtn.h txc_compress_dxtn.c txc_fetch_dxtn.c -I ..\mesa\include  -Wl,--dll,--dynamicbase,--enable-auto-image-base,--nxcompat -o %abi%\dxtn.dll
+@set dxtn=%dxtn% -v *.c *.h -I ..\mesa\include -Wl,--dll,--dynamicbase,--enable-auto-image-base,--nxcompat -o %abi%\dxtn.dll
 @echo.
 @%dxtn%
 @echo.
