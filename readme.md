@@ -57,7 +57,7 @@ After such blunder your only option is to rinse and repeat.
 - Open Internet Options using the shortcut, browse to Content - Certificates - Import and install the PFX again in default store. This time only the personal certificate would be installed as the others are already in place;
 - Finally to sign Mesa3D driver, open an elevated command Prompt and execute:
 ``%ProgramFiles(x86)%Windows Kits\10\bin\x64\signtool.exe sign /a /t http://timestamp.digicert.com opengl32sw.dll``.
- - Optionally you get S3 texture compression working by signing dxtn.dll as well:
+ - Optionally you can get S3 texture compression working for Virtualbox VMs by signing dxtn.dll as well:
  ``%ProgramFiles(x86)%Windows Kits\10\bin\x64\signtool.exe sign /a /t http://timestamp.digicert.com dxtn.dll``.
 
 This concludes the process. Enjoy OpenGL and Direct3D in Virtualbox VMs without GPU support.
