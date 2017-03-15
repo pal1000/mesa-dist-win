@@ -6,20 +6,22 @@
   
 ## 1. Acquire mesa source code, dependencies and build tools
 
-- Visual Studio Community (at this moment Visual Studio 2013 and 2015 are supported, 2015 recommended).
-Only C/C++ compiler and libraries targeting Win32 API are needed. For Visual Studio 2017 you need to install Visual Studio 2015 toolchain [as Mesa3D doesn't support Visual Studio 2017 yet](https://bugs.freedesktop.org/show_bug.cgi?id=100202). MFC/ATL libraries and CMake tools may also be necessary with Visual Studio 2017.
+- Visual Studio 2017 Community; 
+
+Despite the fact that Visual Studio 2013 and 2015 are supported by Mesa3D, this script has been upgraded for exclusive Visual Studio 2017 compatibility. Due to major changes made by Microsoft to the location of the Native tools I had to drop Visual Studio 2015 support.
+You need to install the following Visual Studio components under Desktop Development with C++: Visual Studio 2015 toolchain [as Mesa3D doesn't support Visual Studio 2017 yet](https://bugs.freedesktop.org/show_bug.cgi?id=100202), MFC and ATL support and CMake tools.
 - Mesa source code: ftp://ftp.freedesktop.org/pub/mesa/;
 - [LLVM source code]( http://llvm.org/);
 - [S3 texture compresion library source code](https://cgit.freedesktop.org/~mareko/libtxc_dxtn/)
 
-You will need [git](https://git-scm.com/) to clone this repository.
+S3 texture compression library is optional. Build it only if you need it. You will need [git](https://git-scm.com/) to download S3 texture compression library source code.
 To build Mesa 13 you have to use LLVM 3.7.1. Newer versions don't work because Mesa attempts to link against the removed llvmipa.lib, [see this forum post](https://www.phoronix.com/forums/forum/software/programming-compilers/903537-llvm-3-9-0-missing-llvmipa). Also [LLVM 4.0 is not supported yet with Visual Studio build](https://bugs.freedesktop.org/show_bug.cgi?id=100201).
 - [CMake 32 and 64 bit](https://cmake.org/download/#latest);
 
 The installer automatically sets the PATH for you. But beware if you want to build for both x86 and x64 you will end up with duplicate entry in PATH. You definitely want to avoid this. I recommend use the zipped version and let build.cmd set PATH at runtime.
 - Mingw-w64 i686 and x86_64;
 
-Optional. Only if you want to build S3 texture compression library. Teoretically mesa could be built the same way but [it doesm't work due to a Scons bug](https://bugs.freedesktop.org/show_bug.cgi?id=94072). Download web-installer from [here](https://sourceforge.net/projects/mingw-w64/). You need to run web installer once for each target architecture (i686 means 32-bit, x86_64 means 64-bit). Leave everything else as default.
+Optional. Only if you want to build S3 texture compression library. Teoretically mesa could be built the same way but [it doesm't work due to a Scons bug](https://bugs.freedesktop.org/show_bug.cgi?id=94072). Download web-installer from [here](https://sourceforge.net/projects/mingw-w64/). You need to run web installer once for each target architecture (i686 means 32-bit, x86_64 means 64-bit). Leave everything else as default. Take note of GCC version, mingw-w64 major version number and revision displayed by the installer. The script needs these set properly in order to find GCC and successfully build S3 texture compresion library.  
 - [Flex and Bison](https://sourceforge.net/projects/winflexbison/);
 - m4: [32-bit](https://sourceforge.net/projects/msys2/files/REPOS/MSYS2/i686/), [64-bit](https://sourceforge.net/projects/msys2/files/REPOS/MSYS2/x86_64/);
 
@@ -35,7 +37,14 @@ Get Scons installer executables, ignore the zipped versions. DO NOT use Scons 2.
 
 ## 2. Setting environment variables and prepare the build
 
-You must provide Visual Studio major version number in vsver variable. For Visual Studio 2015 this is 14, set by default in this script. Visual Studio 2017 major version number is 15. 
+If you want to build S3 texture compression library you must edit the script by tweaking these variables:
+- x86gcc - GCC version included with mingw-w64 for i686 (32-bit), current value - 6.3.0;
+- x64gcc - GCC version included with mingw-w64 for x86_64 (64-bit), current value - 6.3.0;
+- x86mingwver - mingw-w64 for i686 (32-bit) version number, current value - 5;
+- x64mingwver - mingw-w64 for x86_64 (64-bit) version number, current value - 5;
+- x86mingwrev - mingw-w64 for i686 (32-bit) revision number, current value - 1;
+- x64mingwvrev - mingw-w64 for x86_64 (64-bit) revision number, current value - 1.
+
 You need to add the location of the following components to PATH:
 - flex and bison;
 - m4;
@@ -54,8 +63,8 @@ Assuming the script is located in current folder "." then each tool and code sou
 - Flex and bison: .\flexbison;
 - LLVM source code: .\llvm;
 - Mesa source code: .\mesa;
-- S3 texture compression library .\dxtn
-- Mingw-w64 i686 and x86_64, Visual Studio: default installation folder
+- S3 texture compression library .\dxtn;
+- Mingw-w64 i686 and x86_64, Visual Studio: default installation folder.
 
 This way the script would be able to set PATH variable correctly and you'll no longer need to set anything from this point forward.
 
@@ -64,6 +73,9 @@ This way the script would be able to set PATH variable correctly and you'll no l
 The script acts like a Wizard asking for the following during execution:
 - architecture for which you want to build mesa - type "y " for x64, otherwise x86 is selected;
 - if you need to build LLVM.  You only need to do it once for each architecture you target when new version is out and this doesn't happen very often;
+- if you want to build S3 texture compression library;
+
+Only asked if mingw-w64 is detected and library source code is present in the appropriate location
 - if you want to build mesa or quit;
 - if want to build OpenSWR driver. 
 
@@ -76,12 +88,17 @@ CMake build system is created in:
 - for 64-bit: .\llvm\cmake-x64.
 
 Mesa llvmpipe and softpipe drivers are dropped in:
-- for 32-bit: .\mesa\build\windows-x86\gallium\targets\libgl-gdi
-- for 64-bit: .\mesa\build\windows-x86_64\gallium\targets\libgl-gdi
+- for 32-bit: .\mesa\build\windows-x86\gallium\targets\libgl-gdi;
+- for 64-bit: .\mesa\build\windows-x86_64\gallium\targets\libgl-gdi.
 
 and are both named opengl32.dll.
+
 Mesa OpenSWR drivers are dropped in:
-- for 32-bit: .\mesa\build\windows-x86\gallium\drivers\swr
-- for 64-bit: .\mesa\build\windows-x86_64\gallium\drivers\swr
+- for 32-bit: .\mesa\build\windows-x86\gallium\drivers\swr;
+- for 64-bit: .\mesa\build\windows-x86_64\gallium\drivers\swr.
 
 and are named swrAVX.dll and swrAVX2.dll after their instruction set requirements. You need both llvmpipe/softpipe and OpenSWR driver suitable to your CPU for OpenSWR to work. OpenSWR drivers are loaded when requested by llvmpipe/softpipe drivers. They can't run on their own.
+
+S3 texture compresion binaries are dropped in:
+- for 32-bit: .\dxtn\x86;
+- for 64-bit: .\dxtn\x64.
