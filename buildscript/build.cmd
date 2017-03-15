@@ -58,6 +58,7 @@
 
 :build_dxtn
 @if NOT EXIST "%gcc%" GOTO build_mesa
+@if NOT EXIST "%mesa%dxtn" GOTO build_mesa
 @set /p builddxtn=Do you want to build S3 texture compression library? (y/n):
 @if /i NOT %builddxtn%==y GOTO build_mesa
 @cd %mesa%dxtn
@@ -83,6 +84,5 @@
 @set buildswr=
 @if /i %openswr%==y @set buildswr=swr=1
 @cmd /k "scons build=release platform=windows machine=%longabi% %buildmingw% %buildswr% libgl-gdi"
-
 :exit
 exit
