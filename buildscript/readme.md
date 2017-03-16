@@ -21,7 +21,7 @@ To build Mesa 13 you have to use LLVM 3.7.1. Newer versions don't work because M
 The installer automatically sets the PATH for you. But beware if you want to build for both x86 and x64 you will end up with duplicate entry in PATH. You definitely want to avoid this. I recommend use the zipped version and let build.cmd set PATH at runtime.
 - Mingw-w64 i686 and x86_64;
 
-Optional. Only if you want to build S3 texture compression library. Teoretically mesa could be built the same way but [it doesm't work due to a Scons bug](https://bugs.freedesktop.org/show_bug.cgi?id=94072). Download web-installer from [here](https://sourceforge.net/projects/mingw-w64/). You need to run web installer once for each target architecture (i686 means 32-bit, x86_64 means 64-bit). Leave everything else as default. Take note of GCC version, mingw-w64 major version number and revision displayed by the installer. The script needs these set properly in order to find GCC and successfully build S3 texture compresion library.  
+Optional. Only if you want to build S3 texture compression library. Teoretically mesa could be built the same way but [it doesm't work due to a Scons bug](https://bugs.freedesktop.org/show_bug.cgi?id=94072). Download web-installer from [here](https://sourceforge.net/projects/mingw-w64/). You need to run web installer once for each target architecture (i686 means 32-bit, x86_64 means 64-bit). If build script is located in current directory . then change the installation directory to .\mingw-w64-x86 for 32-bit and .\mingw-w64-x64 for 64-bit. Leave everything else as default.
 - [Flex and Bison](https://sourceforge.net/projects/winflexbison/);
 - m4: [32-bit](https://sourceforge.net/projects/msys2/files/REPOS/MSYS2/i686/), [64-bit](https://sourceforge.net/projects/msys2/files/REPOS/MSYS2/x86_64/);
 
@@ -36,15 +36,6 @@ Get Scons installer executables, ignore the zipped versions. DO NOT use Scons 2.
 - mako module for Python 32 and 64 bit. Install with pip install mako. build.cmd installs mako automatically. It also attempts to update all Python modules. 
 
 ## 2. Setting environment variables and prepare the build
-
-If you want to build S3 texture compression library you must edit the script by tweaking these variables:
-- x86gcc - GCC version included with mingw-w64 for i686 (32-bit), current value - 6.3.0;
-- x64gcc - GCC version included with mingw-w64 for x86_64 (64-bit), current value - 6.3.0;
-- x86mingwver - mingw-w64 for i686 (32-bit) version number, current value - 5;
-- x64mingwver - mingw-w64 for x86_64 (64-bit) version number, current value - 5;
-- x86mingwrev - mingw-w64 for i686 (32-bit) revision number, current value - 1;
-- x64mingwvrev - mingw-w64 for x86_64 (64-bit) revision number, current value - 1.
-
 You need to add the location of the following components to PATH:
 - flex and bison;
 - m4;
@@ -64,7 +55,8 @@ Assuming the script is located in current folder "." then each tool and code sou
 - LLVM source code: .\llvm;
 - Mesa source code: .\mesa;
 - S3 texture compression library .\dxtn;
-- Mingw-w64 i686 and x86_64, Visual Studio: default installation folder.
+- Mingw-w64 i686 (32-bit): .\mingw-w64-x86
+- Mingw-w64 x86_64 (64-bit): .\mingw-w64-x64 
 
 This way the script would be able to set PATH variable correctly and you'll no longer need to set anything from this point forward.
 
