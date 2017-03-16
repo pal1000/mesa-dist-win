@@ -55,8 +55,8 @@ Assuming the script is located in current folder "." then each tool and code sou
 - LLVM source code: .\llvm;
 - Mesa source code: .\mesa;
 - S3 texture compression library .\dxtn;
-- Mingw-w64 i686 (32-bit): .\mingw-w64-x86
-- Mingw-w64 x86_64 (64-bit): .\mingw-w64-x64 
+- Mingw-w64 i686 (32-bit): .\mingw-w64-x86;
+- Mingw-w64 x86_64 (64-bit): .\mingw-w64-x64. 
 
 This way the script would be able to set PATH variable correctly and you'll no longer need to set anything from this point forward.
 
