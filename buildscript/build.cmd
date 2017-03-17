@@ -14,10 +14,10 @@
 @set vsenv=%ProgramFiles:\=/%
 @if NOT "%ProgramW6432%"=="" set vsenv=%vsenv% (x86)
 @set vsenv=%vsenv%/Microsoft Visual Studio/2017/Community/VC/Auxiliary/Build/vcvars%minabi%.bat
-@set gcc=%mesa%mingw-w64-%abi%
-@set PATH=%mesa%flexbison/;%mesa%m4/%abi%/bin/;%mesa%Python/%abi%/;%mesa%Python/%abi%/Scripts/;%mesa%cmake/%abi%/bin/;%PATH%
-@if EXIST "%gcc%" set PATH=%gcc%/mingw%minabi%/bin/;%PATH%
-@if EXIST "%gcc%" set gcc=%gcc%/mingw%minabi%/bin
+@set gcc=%mesa%mingw-w64-%abi%/mingw%minabi%/bin
+@set APPENDPATH=%mesa%flexbison/;%mesa%m4/%abi%/bin/;%mesa%Python/%abi%/;%mesa%Python/%abi%/Scripts/;%mesa%cmake/%abi%/bin/;
+@if EXIST "%gcc%" set APPENDPATH=%gcc%/;%APPENDPATH%
+@set PATH=%APPENDPATH:/=\%%PATH%
 
 @pip install -U mako
 @pip freeze > requirements.txt
