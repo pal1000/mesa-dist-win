@@ -60,6 +60,9 @@
 @if /i NOT %buildmesa%==y GOTO exit
 @set LLVM=%mesa%llvm/%abi%
 @cd %mesa%mesa
+@set /p openswr=Do you want to build OpenSWR drivers? (y=yes):
+@set buildswr=
+@if /i %openswr%==y @set buildswr=swr=1
 @set mingw=n
 @rem if EXIST "%gcc%" set /p mingw=Do you want to build with MinGW-W64 instead of Visual Studio? (y=yes):
 @set buildmingw=
@@ -73,9 +76,6 @@
 @call "%vsenv%"
 )
 )
-@set /p openswr=Do you want to build OpenSWR drivers? (y=yes):
-@set buildswr=
-@if /i %openswr%==y @set buildswr=swr=1
 @cmd /k "scons build=release platform=windows machine=%longabi% %buildmingw% %buildswr% libgl-gdi"
 :exit
 exit
