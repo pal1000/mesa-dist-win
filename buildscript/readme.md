@@ -6,16 +6,17 @@
   
 ## 1. Acquire mesa source code, dependencies and build tools
 
-- Visual Studio 2017 Community; 
+- Visual Studio 2015 or 2017 (Visual 2015 Express may not work due to lack of MFC and ATL support); 
 
-Despite the fact that Visual Studio 2013 and 2015 are supported by Mesa3D, this script has been upgraded for exclusive Visual Studio 2017 compatibility. Due to major changes made by Microsoft to the location of the Native tools I had to drop Visual Studio 2015 support.
-You need to install the following Visual Studio components under Desktop Development with C++: Visual Studio 2015 toolchain [as Mesa3D doesn't support Visual Studio 2017 yet](https://bugs.freedesktop.org/show_bug.cgi?id=100202), MFC and ATL support and CMake tools.
+For Visual Studio 2017 you need to install the following components under Desktop Development with C++: Visual Studio 2015 toolchain [as Scons doesn't support Visual Studio 2017 yet](https://bugs.freedesktop.org/show_bug.cgi?id=100202), MFC and ATL support and CMake tools.
 - Mesa source code: ftp://ftp.freedesktop.org/pub/mesa/;
 - [LLVM source code]( http://llvm.org/);
+
+To build Mesa 13 you have to use LLVM 3.7.1. Newer versions don't work because Mesa attempts to link against the removed llvmipa.lib, [see this forum post](https://www.phoronix.com/forums/forum/software/programming-compilers/903537-llvm-3-9-0-missing-llvmipa). Also [LLVM 4.0 is not supported yet with Visual Studio build](https://bugs.freedesktop.org/show_bug.cgi?id=100201).
 - [S3 texture compresion library source code](https://cgit.freedesktop.org/~mareko/libtxc_dxtn/)
 
 S3 texture compression library is optional. Build it only if you need it. You will need [git](https://git-scm.com/) to download S3 texture compression library source code.
-To build Mesa 13 you have to use LLVM 3.7.1. Newer versions don't work because Mesa attempts to link against the removed llvmipa.lib, [see this forum post](https://www.phoronix.com/forums/forum/software/programming-compilers/903537-llvm-3-9-0-missing-llvmipa). Also [LLVM 4.0 is not supported yet with Visual Studio build](https://bugs.freedesktop.org/show_bug.cgi?id=100201).
+
 - [CMake 32 and 64 bit](https://cmake.org/download/#latest);
 
 The installer automatically sets the PATH for you. But beware if you want to build for both x86 and x64 you will end up with duplicate entry in PATH. You definitely want to avoid this. I recommend use the zipped version and let build.cmd set PATH at runtime.
