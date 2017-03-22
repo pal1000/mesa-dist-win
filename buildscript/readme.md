@@ -8,11 +8,11 @@
 
 - Visual Studio 2015 or 2017 (Visual 2015 Express may not work due to lack of MFC and ATL support); 
 
-For Visual Studio 2017 you need to install the following components under Desktop Development with C++: Visual Studio 2015 toolchain [as Scons doesn't support Visual Studio 2017 yet](https://bugs.freedesktop.org/show_bug.cgi?id=100202), MFC and ATL support and CMake tools.
+For Visual Studio 2017 you need to install the following components under Desktop Development with C++: Visual Studio 2015 toolset [as Scons doesn't support Visual Studio 2017 yet](https://bugs.freedesktop.org/show_bug.cgi?id=100202), MFC and ATL, CMake tools, Windows 8.1 and 10 SDKs and Standard library modules. You also have to patch LLVM source code, read below, as LLVM 4.0 is not yet supported.
 - Mesa source code: ftp://ftp.freedesktop.org/pub/mesa/;
 - [LLVM source code]( http://llvm.org/);
 
-To build Mesa 13 you have to use LLVM 3.7.1. Newer versions don't work because Mesa attempts to link against the removed llvmipa.lib, [see this forum post](https://www.phoronix.com/forums/forum/software/programming-compilers/903537-llvm-3-9-0-missing-llvmipa). Also [LLVM 4.0 is not supported yet with Visual Studio build](https://bugs.freedesktop.org/show_bug.cgi?id=100201).
+To build Mesa 13 you have to use LLVM 3.7.1. Newer versions don't work because Mesa attempts to link against the removed llvmipa.lib, [see this forum post](https://www.phoronix.com/forums/forum/software/programming-compilers/903537-llvm-3-9-0-missing-llvmipa). Also [LLVM 4.0 is not supported yet with Visual Studio build of Mesa](https://bugs.freedesktop.org/show_bug.cgi?id=100201). If you have Visual Studio 2017 you have to patch LLVM 3.9.1 by replacing `_MSC_VER == 1900` with `_MSC_VER >= 1900 && _MSC_VER < 2000` in lib\DebugInfo\PDB\DIA\DIASession.cpp inside llvm source code. 
 - [S3 texture compresion library source code](https://cgit.freedesktop.org/~mareko/libtxc_dxtn/)
 
 S3 texture compression library is optional. Build it only if you need it. You will need [git](https://git-scm.com/) to download S3 texture compression library source code.
@@ -26,10 +26,10 @@ Optional. Only if you want to build S3 texture compression library. Teoretically
 - [Flex and Bison](https://sourceforge.net/projects/winflexbison/);
 - m4: [32-bit](https://sourceforge.net/projects/msys2/files/REPOS/MSYS2/i686/), [64-bit](https://sourceforge.net/projects/msys2/files/REPOS/MSYS2/x86_64/);
 
-Just search for m4 in these huge pages. Your web browser might freeze for a bit. You'll need 7-Zip to extract linux archives in which m4 is compressed.
+Just search for m4 in these huge pages. Your web browser might freeze for a bit. You'll need 7-Zip to extract linux archives in which m4 is compressed. Extract the contents of the usr folder on the desired location.
 - [Python 32 and 64 bit](https://www.python.org/);
 
-Use Python 2.7. Python 3.x is not supported by Scons. Make sure pip is installed. Sometimes it isn't. If it isn't get it from [here](https://pip.pypa.io/en/stable/installing/).
+Use Python 2.7. Python 3.x is not fully supported by Scons and leads to Python crash at this moment. Make sure pip is installed. Sometimes it isn't. If it isn't get it from [here](https://pip.pypa.io/en/stable/installing/).
 - [pywin32 for Python 32 and 64 bit](https://sourceforge.net/projects/pywin32/files/);
 - [Scons for python 32 and 64-bit](https://sourceforge.net/projects/scons/files/scons/);
 
@@ -38,11 +38,14 @@ Get Scons installer executables, ignore the zipped versions. DO NOT use Scons 2.
 
 ## 2. Setting environment variables and prepare the build
 You need to add the location of the following components to PATH:
-- flex and bison;
-- m4;
-- Python;
-- CMake;
-- mingw-w64 if used.
+
+Dependency component | Paths relative to their installation directories (you have to convert them to absolute paths)
+-------------------- | ---------------------------------------------------------------------------------------------
+flex and bison | `.\`;
+m4 | `.\bin\;` or `.\usr\bin\;` (if you extracted the whole archive and not just the contents within usr subfolder)
+Python | `.\;` and `.\Scripts\;`
+CMake | `.\bin\;`
+mingw-w64 if used | `.\mingw64\bin\;` for 64-bit and `.\mingw32\bin\;` for 32-bit
 
 build.cmd script automates this whole process but you must respect the relative paths between the script and the sources and tools. 
 Assuming the script is located in current folder "." then each tool and code source must be located as follows:
