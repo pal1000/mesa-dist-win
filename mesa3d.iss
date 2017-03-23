@@ -20,8 +20,8 @@ AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
 DefaultDirName={pf}\{#MyAppName}
-LicenseFile=..\LICENSE
-OutputDir=..\bin\
+LicenseFile=.\LICENSE
+OutputDir=.\bin\
 OutputBaseFilename=mesa-{#MyAppVersion}-setup
 Compression=lzma
 SolidCompression=yes
@@ -30,15 +30,15 @@ SolidCompression=yes
 Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Files]
-Source: "..\bin\x86\opengl32sw.dll"; DestDir: "{win}\system32"; Flags: ignoreversion
-Source: "..\bin\x86\swrAVX.dll"; DestDir: "{win}\system32"; Flags: ignoreversion
-Source: "..\bin\x86\swrAVX2.dll"; DestDir: "{win}\system32"; Flags: ignoreversion
-Source: "..\bin\x86\dxtn.dll"; DestDir: "{win}\system32"; Flags: ignoreversion
-Source: "..\bin\x64\opengl32sw.dll"; DestDir: "{win}\system32"; Flags: ignoreversion 64bit; Check: IsWin64
-Source: "..\bin\x64\swrAVX.dll"; DestDir: "{win}\system32"; Flags: ignoreversion 64bit; Check: IsWin64
-Source: "..\bin\x64\swrAVX2.dll"; DestDir: "{win}\system32"; Flags: ignoreversion 64bit; Check: IsWin64
-Source: "..\bin\x64\dxtn.dll"; DestDir: "{win}\system32"; Flags: ignoreversion 64bit; Check: IsWin64
-Source: "..\localdeploy.cmd"; DestDir: "{app}"
+Source: ".\bin\x86\opengl32sw.dll"; DestDir: "{win}\system32"; Flags: ignoreversion
+Source: ".\bin\x86\swrAVX.dll"; DestDir: "{win}\system32"; Flags: ignoreversion
+Source: ".\bin\x86\swrAVX2.dll"; DestDir: "{win}\system32"; Flags: ignoreversion
+Source: ".\bin\x86\dxtn.dll"; DestDir: "{win}\system32"; Flags: ignoreversion
+Source: ".\bin\x64\opengl32sw.dll"; DestDir: "{win}\system32"; Flags: ignoreversion 64bit; Check: IsWin64
+Source: ".\bin\x64\swrAVX.dll"; DestDir: "{win}\system32"; Flags: ignoreversion 64bit; Check: IsWin64
+Source: ".\bin\x64\swrAVX2.dll"; DestDir: "{win}\system32"; Flags: ignoreversion 64bit; Check: IsWin64
+Source: ".\bin\x64\dxtn.dll"; DestDir: "{win}\system32"; Flags: ignoreversion 64bit; Check: IsWin64
+Source: ".\localdeploy.cmd"; DestDir: "{app}"
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Registry]
