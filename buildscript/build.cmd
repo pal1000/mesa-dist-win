@@ -14,6 +14,7 @@
 @if EXIST "%vsenv%" @set toolchain=Visual Studio 15 2017
 @if NOT EXIST "%vsenv%" @set toolchain=Visual Studio 14
 @if NOT EXIST "%vsenv%" @set vsenv=%VS140COMNTOOLS%..\..\VC\bin\vcvars%minabi%.bat
+@if %abi%==x64 @set toolchain=%toolchain% Win64
 @set gcc=%mesa%mingw-w64-%abi%\mingw%minabi%\bin
 @set vsenvloaded=0
 @set dxtnbuilt=0
