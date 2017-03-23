@@ -19,7 +19,7 @@ AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
-DefaultDirName={pf64}\{#MyAppName}
+DefaultDirName={pf}\{#MyAppName}
 LicenseFile=..\LICENSE
 OutputDir=..\bin\
 OutputBaseFilename=mesa-{#MyAppVersion}-setup
@@ -33,7 +33,6 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Source: "..\bin\x86\opengl32sw.dll"; DestDir: "{win}\system32"; Flags: ignoreversion
 Source: "..\bin\x86\swrAVX.dll"; DestDir: "{win}\system32"; Flags: ignoreversion
 Source: "..\bin\x86\swrAVX2.dll"; DestDir: "{win}\system32"; Flags: ignoreversion
-Source: "..\bin\x86\cygwin1.dll"; DestDir: "{win}\system32"; Flags: ignoreversion
 Source: "..\bin\x86\dxtn.dll"; DestDir: "{win}\system32"; Flags: ignoreversion
 Source: "..\bin\x64\opengl32sw.dll"; DestDir: "{win}\system32"; Flags: ignoreversion 64bit; Check: IsWin64
 Source: "..\bin\x64\swrAVX.dll"; DestDir: "{win}\system32"; Flags: ignoreversion 64bit; Check: IsWin64
@@ -56,13 +55,11 @@ Root: "HKLM"; Subkey: "SOFTWARE\Microsoft\Windows NT\CurrentVersion\OpenGLDriver
 Type: files; Name: "{syswow64}\opengl32sw.dll"; Check: IsWin64
 Type: files; Name: "{syswow64}\swrAVX.dll"; Check: IsWin64
 Type: files; Name: "{syswow64}\swrAVX2.dll"; Check: IsWin64
-Type: files; Name: "{syswow64}\cygwin1.dll"; Check: IsWin64
 Type: files; Name: "{syswow64}\dxtn.dll"; Check: IsWin64
 Type: files; Name: "{win}\system32\opengl32sw.dll"
 Type: files; Name: "{win}\system32\swrAVX.dll"
 Type: files; Name: "{win}\system32\swrAVX2.dll"
 Type: files; Name: "{win}\system32\dxtn.dll"
-Type: files; Name: "{win}\system32\cygwin1.dll"
 
 [Icons]
 Name: "{commondesktop}\Mesa3D local deployment utility"; Filename: "cmd"; Parameters: "/c ""{app}\localdeploy.cmd"""; AfterInstall: SetElevationBit ('{commondesktop}\Mesa3D local deployment utility.lnk')
