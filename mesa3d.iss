@@ -19,6 +19,7 @@ AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
+ArchitecturesInstallIn64BitMode=x64
 DefaultDirName={pf}\{#MyAppName}
 LicenseFile=.\LICENSE
 OutputDir=.\bin\
@@ -30,36 +31,36 @@ SolidCompression=yes
 Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Files]
-Source: ".\bin\x86\opengl32sw.dll"; DestDir: "{win}\system32"; Flags: ignoreversion
-Source: ".\bin\x86\swrAVX.dll"; DestDir: "{win}\system32"; Flags: ignoreversion
-Source: ".\bin\x86\swrAVX2.dll"; DestDir: "{win}\system32"; Flags: ignoreversion
-Source: ".\bin\x86\dxtn.dll"; DestDir: "{win}\system32"; Flags: ignoreversion
-Source: ".\bin\x64\opengl32sw.dll"; DestDir: "{win}\system32"; Flags: ignoreversion 64bit; Check: IsWin64
-Source: ".\bin\x64\swrAVX.dll"; DestDir: "{win}\system32"; Flags: ignoreversion 64bit; Check: IsWin64
-Source: ".\bin\x64\swrAVX2.dll"; DestDir: "{win}\system32"; Flags: ignoreversion 64bit; Check: IsWin64
-Source: ".\bin\x64\dxtn.dll"; DestDir: "{win}\system32"; Flags: ignoreversion 64bit; Check: IsWin64
+Source: ".\bin\x86\opengl32sw.dll"; DestDir: "{syswow64}"; Flags: ignoreversion
+Source: ".\bin\x86\swrAVX.dll"; DestDir: "{syswow64}"; Flags: ignoreversion
+Source: ".\bin\x86\swrAVX2.dll"; DestDir: "{syswow64}"; Flags: ignoreversion
+Source: ".\bin\x86\dxtn.dll"; DestDir: "{syswow64}"; Flags: ignoreversion
+Source: ".\bin\x64\opengl32sw.dll"; DestDir: "{win}\system32"; Flags: ignoreversion; Check: Is64BitInstallMode
+Source: ".\bin\x64\swrAVX.dll"; DestDir: "{win}\system32"; Flags: ignoreversion; Check: Is64BitInstallMode
+Source: ".\bin\x64\swrAVX2.dll"; DestDir: "{win}\system32"; Flags: ignoreversion; Check: Is64BitInstallMode
+Source: ".\bin\x64\dxtn.dll"; DestDir: "{win}\system32"; Flags: ignoreversion; Check: Is64BitInstallMode
 Source: ".\localdeploy.cmd"; DestDir: "{app}"
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Registry]
-Root: "HKLM32"; Subkey: "SOFTWARE\Microsoft\Windows NT\CurrentVersion\OpenGLDrivers\MSOGL"; ValueType: string; ValueName: "DLL"; ValueData: "opengl32sw.dll"; Flags: createvalueifdoesntexist uninsdeletekey; Check: IsWin64
-Root: "HKLM32"; Subkey: "SOFTWARE\Microsoft\Windows NT\CurrentVersion\OpenGLDrivers\MSOGL"; ValueType: dword; ValueName: "DriverVersion"; ValueData: "1"; Flags: createvalueifdoesntexist uninsdeletekey; Check: IsWin64
-Root: "HKLM32"; Subkey: "SOFTWARE\Microsoft\Windows NT\CurrentVersion\OpenGLDrivers\MSOGL"; ValueType: dword; ValueName: "Flags"; ValueData: "1"; Flags: createvalueifdoesntexist uninsdeletekey; Check: IsWin64
-Root: "HKLM32"; Subkey: "SOFTWARE\Microsoft\Windows NT\CurrentVersion\OpenGLDrivers\MSOGL"; ValueType: dword; ValueName: "Version"; ValueData: "2"; Flags: createvalueifdoesntexist uninsdeletekey; Check: IsWin64
-Root: "HKLM"; Subkey: "SOFTWARE\Microsoft\Windows NT\CurrentVersion\OpenGLDrivers\MSOGL"; ValueType: string; ValueName: "DLL"; ValueData: "opengl32sw.dll"; Flags: createvalueifdoesntexist uninsdeletekey
-Root: "HKLM"; Subkey: "SOFTWARE\Microsoft\Windows NT\CurrentVersion\OpenGLDrivers\MSOGL"; ValueType: dword; ValueName: "DriverVersion"; ValueData: "1"; Flags: createvalueifdoesntexist uninsdeletekey
-Root: "HKLM"; Subkey: "SOFTWARE\Microsoft\Windows NT\CurrentVersion\OpenGLDrivers\MSOGL"; ValueType: dword; ValueName: "Flags"; ValueData: "1"; Flags: createvalueifdoesntexist uninsdeletekey
-Root: "HKLM"; Subkey: "SOFTWARE\Microsoft\Windows NT\CurrentVersion\OpenGLDrivers\MSOGL"; ValueType: dword; ValueName: "Version"; ValueData: "2"; Flags: createvalueifdoesntexist uninsdeletekey
+Root: "HKLM32"; Subkey: "SOFTWARE\Microsoft\Windows NT\CurrentVersion\OpenGLDrivers\MSOGL"; ValueType: string; ValueName: "DLL"; ValueData: "opengl32sw.dll"; Flags: createvalueifdoesntexist uninsdeletekey
+Root: "HKLM32"; Subkey: "SOFTWARE\Microsoft\Windows NT\CurrentVersion\OpenGLDrivers\MSOGL"; ValueType: dword; ValueName: "DriverVersion"; ValueData: "1"; Flags: createvalueifdoesntexist uninsdeletekey
+Root: "HKLM32"; Subkey: "SOFTWARE\Microsoft\Windows NT\CurrentVersion\OpenGLDrivers\MSOGL"; ValueType: dword; ValueName: "Flags"; ValueData: "1"; Flags: createvalueifdoesntexist uninsdeletekey
+Root: "HKLM32"; Subkey: "SOFTWARE\Microsoft\Windows NT\CurrentVersion\OpenGLDrivers\MSOGL"; ValueType: dword; ValueName: "Version"; ValueData: "2"; Flags: createvalueifdoesntexist uninsdeletekey
+Root: "HKLM"; Subkey: "SOFTWARE\Microsoft\Windows NT\CurrentVersion\OpenGLDrivers\MSOGL"; ValueType: string; ValueName: "DLL"; ValueData: "opengl32sw.dll"; Flags: createvalueifdoesntexist uninsdeletekey; Check: Is64BitInstallMode
+Root: "HKLM"; Subkey: "SOFTWARE\Microsoft\Windows NT\CurrentVersion\OpenGLDrivers\MSOGL"; ValueType: dword; ValueName: "DriverVersion"; ValueData: "1"; Flags: createvalueifdoesntexist uninsdeletekey; Check: Is64BitInstallMode
+Root: "HKLM"; Subkey: "SOFTWARE\Microsoft\Windows NT\CurrentVersion\OpenGLDrivers\MSOGL"; ValueType: dword; ValueName: "Flags"; ValueData: "1"; Flags: createvalueifdoesntexist uninsdeletekey; Check: Is64BitInstallMode
+Root: "HKLM"; Subkey: "SOFTWARE\Microsoft\Windows NT\CurrentVersion\OpenGLDrivers\MSOGL"; ValueType: dword; ValueName: "Version"; ValueData: "2"; Flags: createvalueifdoesntexist uninsdeletekey; Check: Is64BitInstallMode
 
 [UninstallDelete]
-Type: files; Name: "{syswow64}\opengl32sw.dll"; Check: IsWin64
-Type: files; Name: "{syswow64}\swrAVX.dll"; Check: IsWin64
-Type: files; Name: "{syswow64}\swrAVX2.dll"; Check: IsWin64
-Type: files; Name: "{syswow64}\dxtn.dll"; Check: IsWin64
-Type: files; Name: "{win}\system32\opengl32sw.dll"
-Type: files; Name: "{win}\system32\swrAVX.dll"
-Type: files; Name: "{win}\system32\swrAVX2.dll"
-Type: files; Name: "{win}\system32\dxtn.dll"
+Type: files; Name: "{syswow64}\opengl32sw.dll"
+Type: files; Name: "{syswow64}\swrAVX.dll";
+Type: files; Name: "{syswow64}\swrAVX2.dll"
+Type: files; Name: "{syswow64}\dxtn.dll"
+Type: files; Name: "{win}\system32\opengl32sw.dll"; Check: Is64BitInstallMode
+Type: files; Name: "{win}\system32\swrAVX.dll"; Check: Is64BitInstallMode
+Type: files; Name: "{win}\system32\swrAVX2.dll"; Check: Is64BitInstallMode
+Type: files; Name: "{win}\system32\dxtn.dll"; Check: Is64BitInstallMode
 
 [Icons]
 Name: "{commondesktop}\Mesa3D local deployment utility"; Filename: "cmd"; Parameters: "/c ""{app}\localdeploy.cmd"""; AfterInstall: SetElevationBit ('{commondesktop}\Mesa3D local deployment utility.lnk')
