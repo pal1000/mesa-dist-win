@@ -15,9 +15,8 @@
 @if NOT EXIST "%vsenv%" @set toolchain=Visual Studio 14
 @if NOT EXIST "%vsenv%" @set vsenv=%VS140COMNTOOLS%..\..\VC\bin\vcvars%minabi%.bat
 @set gcc=%mesa%mingw-w64-%abi%\mingw%minabi%\bin
-@set PATH=%mesa%flexbison\;%mesa%m4\%abi%\bin\;%mesa%cmake\%abi%\bin\;%PATH%
-@if EXIST "%gcc%" set PATH=%gcc%\;%PATH%
 @set vsenvloaded=0
+@set dxtnbuilt=0
 @set /p buildllvm=Begin LLVM build. Only needs to run once for each ABI and version. Proceed y/n? 
 @if /I NOT %buildllvm%==y GOTO build_dxtn
 
@@ -29,6 +28,7 @@
 @cd cmake-%abi%
 @set vsenvloaded=1
 @call "%vsenv%"
+@set PATH=%mesa%cmake\%abi%\bin\;%PATH%
 @cmake -G "%toolchain%" -DLLVM_TARGETS_TO_BUILD=X86 -DLLVM_ENABLE_RTTI=1 -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=%mesa:\=/%llvm/%abi% ..
 @pause
 @msbuild /p:Configuration=Release INSTALL.vcxproj
@@ -37,6 +37,7 @@
 :build_dxtn
 @if NOT EXIST "%gcc%" GOTO build_mesa
 @if NOT EXIST "%mesa%dxtn" GOTO build_mesa
+@set PATH=%gcc%\;%PATH%
 @set /p builddxtn=Do you want to build S3 texture compression library? (y/n):
 @if /i NOT %builddxtn%==y GOTO build_mesa
 @cd "%mesa%dxtn"
@@ -48,6 +49,7 @@
 @echo.
 @%dxtn%
 @echo.
+@set dxtnbuilt=1
 
 :build_mesa
 @set /p buildmesa=Begin mesa build. Proceed (y/n):
@@ -61,11 +63,12 @@
 @set mingw=n
 @set mingwtest=0
 @if EXIST "%gcc%" @set mingwtest=1
+@if %dxtnbuilt%==0 set PATH=%gcc%\;%PATH%
 @set msys2=%mesa%msys64\msys2_shell.cmd
 @if EXIST "%msys2%" @set mingwtest=%mingwtest%2
 @rem if %mingwtest%==12 @set /p mingw=Do you want to build with MinGW-W64 instead of Visual Studio (y=yes):
 @set buildmingw=
-@set PATH=%mesa%Python\%abi%\;%mesa%Python\%abi%\Scripts\;%PATH%
+@set PATH=%mesa%Python\%abi%\;%mesa%Python\%abi%\Scripts\;%mesa%flexbison\;%mesa%m4\%abi%\usr\bin\;%PATH%
 @pip install -U mako
 @pip freeze > requirements.txt
 @pip install -r requirements.txt --upgrade
