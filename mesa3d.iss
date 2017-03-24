@@ -21,6 +21,7 @@ AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
 ArchitecturesInstallIn64BitMode=x64
 DefaultDirName={pf}\{#MyAppName}
+DisableProgramGroupPage=auto
 LicenseFile=.\LICENSE
 OutputDir=.\bin\
 OutputBaseFilename=mesa-{#MyAppVersion}-setup
@@ -64,6 +65,9 @@ Type: files; Name: "{win}\system32\dxtn.dll"; Check: Is64BitInstallMode
 
 [Icons]
 Name: "{commondesktop}\Mesa3D local deployment utility"; Filename: "cmd"; Parameters: "/c ""{app}\localdeploy.cmd"""; AfterInstall: SetElevationBit ('{commondesktop}\Mesa3D local deployment utility.lnk')
+
+[InstallDelete]
+Type: files; Name: "{syswow64}\cygwin1.dll"
 
 [Code]
 
