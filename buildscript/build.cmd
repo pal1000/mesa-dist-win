@@ -107,8 +107,8 @@ cd mesa
 )
 
 :build_mesa_exec
-@rem cmd /k "scons build=release platform=windows machine=%longabi% toolchain=%mesatoolchain% swr=%buildswr% libgl-gdi"
-@scons build=release platform=windows machine=%longabi% toolchain=%mesatoolchain% swr=%buildswr% libgl-gdi" ^&^& @pause
+@python "%mesa%Python\%abi%\Scripts\scons.py" build=release platform=windows machine=%longabi% toolchain=%mesatoolchain% swr=%buildswr% libgl-gdi"
+@pause
 
 :exit
 exit
