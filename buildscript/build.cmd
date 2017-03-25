@@ -40,9 +40,9 @@
 :build_dxtn
 @if NOT EXIST "%gcc%" GOTO build_mesa
 @if NOT EXIST "%mesa%dxtn" GOTO build_mesa
-@set PATH=%gcc%\;%PATH%
 @set /p builddxtn=Do you want to build S3 texture compression library? (y/n):
 @if /i NOT %builddxtn%==y GOTO build_mesa
+@set PATH=%gcc%\;%PATH%
 @cd "%mesa%dxtn"
 @RD /S /Q %abi%
 @MD %abi%
@@ -66,7 +66,6 @@
 @set mingw=n
 @set mingwtest=0
 @if EXIST "%gcc%" @set mingwtest=1
-@if %dxtnbuilt%==0 set PATH=%gcc%\;%PATH%
 @set msys2=%mesa%msys64\msys2_shell.cmd
 @if EXIST "%msys2%" @set mingwtest=%mingwtest%2
 @rem if %mingwtest%==12 @set /p mingw=Do you want to build with MinGW-W64 instead of Visual Studio (y=yes):
@@ -80,6 +79,7 @@
 @if /i NOT %mingw%==y GOTO build_with_vs
 
 :build_with_mingw
+@if %dxtnbuilt%==0 set PATH=%gcc%\;%PATH%
 @set mesatoolchain=crossmingw
 @copy "%gcc%\%altabi%-w64-mingw32-gcc-ar.exe" "%gcc%\%altabi%-w64-mingw32-ar.exe"
 @copy "%gcc%\%altabi%-w64-mingw32-gcc-ranlib.exe" "%gcc%\%altabi%-w64-mingw32-ranlib.exe"
@@ -107,7 +107,8 @@ cd mesa
 )
 
 :build_mesa_exec
-@cmd /k "scons build=release platform=windows machine=%longabi% toolchain=%mesatoolchain% swr=%buildswr% libgl-gdi"
+@rem cmd /k "scons build=release platform=windows machine=%longabi% toolchain=%mesatoolchain% swr=%buildswr% libgl-gdi"
+@scons build=release platform=windows machine=%longabi% toolchain=%mesatoolchain% swr=%buildswr% libgl-gdi" ^&^& @pause
 
 :exit
 exit
