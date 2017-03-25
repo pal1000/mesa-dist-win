@@ -16,7 +16,7 @@
 @echo Please provide the path to the folder that contains the application launcher executable, that needs local deployment
 @echo of Mesa. It is recommended to copy-paste it from Windows Explorer using CTRL+V. The right click paste introduced in 
 @echo Windows 10 may lead to unexpected double paste. Also don't worry if path contains spaces, it is enclosed in quotes
-automatically so you don't need to add them.
+@echo automatically so you don't need to add them manually.
 @echo.  
 @set /p dir=Path to folder holding application executable:
 @echo.
