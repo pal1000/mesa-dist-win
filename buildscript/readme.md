@@ -76,8 +76,6 @@ Only asked if mingw-w64 is detected and library source code is present in the ap
 - if you want to build mesa or quit;
 - if want to build OpenSWR driver. 
 
-After mesa build completes, because scons closes Command prompt on finish, I run it via "cmd /k", so after the script completes you are returned to Command Prompt. You'll have to manually close it.
-
 ## 4. Miscellaneous and build location
 
 CMake build system is created in:
