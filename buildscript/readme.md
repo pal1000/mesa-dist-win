@@ -48,7 +48,7 @@ Python | `.\;` and `.\Scripts\;`
 CMake | `.\bin\;`
 mingw-w64 if used | `.\mingw64\bin\;` for 64-bit and `.\mingw32\bin\;` for 32-bit
 
-build.cmd script automates this whole process but you must respect the relative paths between the script and the sources and tools. 
+build.cmd script automates this whole process but you must respect the relative paths between the script and the sources and tools. The script must not be dropped in a location that contains ( or ) in its path.
 Assuming the script is located in current folder "." then each tool and code source must be located as follows:
 - m4 32-bit: .\m4\x86;
 - m4 64-bit: .\m4\x64;
