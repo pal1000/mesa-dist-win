@@ -8,12 +8,12 @@
 @if %abi%==x64 @set altabi=%longabi%
 @set minabi=32
 @if %abi%==x64 set minabi=64
-@set vsenv=%ProgramFiles%
+@set vsenv="%ProgramFiles%
 @if NOT "%ProgramW6432%"=="" set vsenv=%vsenv% (x86)
-@set vsenv=%vsenv%\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars%minabi%.bat
+@set vsenv=%vsenv%\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars%minabi%.bat"
 @set toolchain=Visual Studio 15 2017
-@if NOT EXIST "%vsenv%" (
-@set vsenv=%VS140COMNTOOLS%..\..\VC\bin\vcvars%minabi%.bat
+@if NOT EXIST %vsenv% (
+@set vsenv="%VS140COMNTOOLS%..\..\VC\bin\vcvars%minabi%.bat"
 @set toolchain=Visual Studio 14
 )
 @set gcc=%mesa%mingw-w64-%abi%\mingw%minabi%\bin
@@ -31,7 +31,7 @@
 @echo.
 @md cmake-%abi%
 @cd cmake-%abi%
-@call "%vsenv%"
+@call %vsenv%
 @set vsenvloaded=1
 @if %abi%==x64 @set toolchain=%toolchain% Win64
 @set PATH=%mesa%cmake\%abi%\bin\;%PATH%
@@ -109,7 +109,7 @@ cd mesa
 @del requirements.txt
 @echo.
 @if %vsenvloaded%==0 (
-@call "%vsenv%"
+@call %vsenv%
 @echo.
 )
 
