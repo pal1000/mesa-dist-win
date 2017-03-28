@@ -10,8 +10,12 @@
 @if %abi%==x64 set minabi=64
 @set vsenv=%ProgramFiles%
 @if NOT "%ProgramW6432%"=="" set vsenv=%vsenv% (x86)
-@set vsenv15=%vsenv%\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars%minabi%.bat
-@set vsenv14=%VS140COMNTOOLS%..\..\VC\bin\vcvars%minabi%.bat
+@set vsenv=%vsenv%\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars%minabi%.bat
+@set toolchain=Visual Studio 15 2017
+@if NOT EXIST "%vsenv%" (
+@set vsenv=%VS140COMNTOOLS%..\..\VC\bin\vcvars%minabi%.bat
+@set toolchain=Visual Studio 14
+)
 @set gcc=%mesa%mingw-w64-%abi%\mingw%minabi%\bin
 @set vsenvloaded=0
 @set dxtnbuilt=0
@@ -27,16 +31,8 @@
 @echo.
 @md cmake-%abi%
 @cd cmake-%abi%
-@if EXIST "%vsenv15%" (
-@set vsenvloaded=%vsenvloaded%15
-@set toolchain=Visual Studio 15 2017
-@call "%vsenv15%"
-)
-@if NOT EXIST "%vsenv15%" (
-@set vsenvloaded=%vsenvloaded%14
-@set toolchain=Visual Studio 14
-@call "%vsenv14%"
-)
+@call "%vsenv%"
+@set vsenvloaded=1
 @if %abi%==x64 @set toolchain=%toolchain% Win64
 @set PATH=%mesa%cmake\%abi%\bin\;%PATH%
 @echo.
@@ -111,23 +107,11 @@ cd mesa
 @pip freeze > requirements.txt
 @pip install -r requirements.txt --upgrade
 @del requirements.txt
-@set restartcond=0
-@set vs2017toolset=n
 @echo.
-@if EXIST "%vsenv15%" set /p vs2017toolset=Do you want to build with Visual Studio 2017 toolset (y/n) - WARNING, this is a hack, it will break if Mesa MSVC build gets support for LLVM 4.0 before Scons gets support for MSVC 2017:
-@if /i %vs2017toolset%==y @set vsenvloaded=%vsenvloaded%15
-@if /i NOT %vs2017toolset%==y @set vsenvloaded=%vsenvloaded%14
-@if %vsenvloaded%==01514 set restartcond=1
+@if %vsenvloaded%==0 (
+@call "%vsenv%"
 @echo.
-@if %vsenvloaded%==015 call "%vsenv15%"
-@if %vsenvloaded%==014 call "%vsenv14%"
-@if %restartcond%==1 (
-@echo.
-@echo A Visual Studio build environment is already loaded. The script will now restart to flush loaded environment.
-@pause
-@GOTO exit
 )
-@echo.
 
 :build_mesa_exec
 @python "%mesa%Python\%abi%\Scripts\scons.py" build=release platform=windows machine=%longabi% toolchain=%mesatoolchain% swr=%buildswr% libgl-gdi
