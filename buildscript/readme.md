@@ -10,7 +10,7 @@
 
 For Visual Studio 2017 you need to install the following components under Desktop Development with C++: Visual Studio 2015 toolset [as Scons doesn't support Visual Studio 2017 yet](https://bugs.freedesktop.org/show_bug.cgi?id=100202), MFC and ATL, CMake tools, Windows 8.1 and 10 SDKs and Standard library modules. You also have to patch LLVM source code, read below, as LLVM 4.0 is not yet supported.
 - Mesa source code: ftp://ftp.freedesktop.org/pub/mesa/;
-- [LLVM source code]( http://llvm.org/);
+- [LLVM source code](http://llvm.org/);
 
 To build Mesa 13 you have to use LLVM 3.7.1. Newer versions don't work because Mesa attempts to link against the removed llvmipa.lib, [see this forum post](https://www.phoronix.com/forums/forum/software/programming-compilers/903537-llvm-3-9-0-missing-llvmipa). Also [LLVM 4.0 is not supported yet with Visual Studio build of Mesa](https://bugs.freedesktop.org/show_bug.cgi?id=100201). If you use Visual Studio 2017 you have to patch LLVM 3.9.1 by replacing `_MSC_VER == 1900` with `_MSC_VER >= 1900 && _MSC_VER < 2000` in lib\DebugInfo\PDB\DIA\DIASession.cpp inside llvm source code. 
 LLVM must be built in install mode. You can look at build.cmd source code or [here](https://wiki.qt.io/MesaLlvmpipe).
