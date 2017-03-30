@@ -16,8 +16,7 @@
 @set vsenvloaded=0
 @set dxtnbuilt=0
 @set toolset=14
-@set /p toolset=<toolset.ini
-@echo.
+@if EXIST toolset.ini set /p toolset=<toolset.ini
 @set vsenv=%vsenv14%
 @if %toolset%==15 @set vsenv=%vsenv15%
 
@@ -26,10 +25,8 @@
 @if /I NOT %buildllvm%==y GOTO build_dxtn
 @echo.
 @cd "%mesa%llvm"
-@RD /S /Q %abi%
-@echo.
-@RD /S /Q cmake-%abi%
-@echo.
+@if EXIST %abi% RD /S /Q %abi%
+@if EXIST cmake-%abi% RD /S /Q cmake-%abi%
 @md cmake-%abi%
 @cd cmake-%abi%
 @set toolchain=Visual Studio 14
@@ -70,8 +67,7 @@
 @set PATH=%gcc%\;%PATH%
 @cd "%mesa%dxtn"
 @echo.
-@RD /S /Q %abi%
-@echo.
+@if EXIST %abi% RD /S /Q %abi%
 @MD %abi%
 @set dxtn=gcc -shared
 @if %abi%==x86 set dxtn=%dxtn% -m32
@@ -117,8 +113,7 @@ cd mesa
 
 
 :build_with_vs
-@RD /S /Q build\windows-%longabi%
-@echo.
+@if EXIST build\windows-%longabi% RD /S /Q build\windows-%longabi%
 @set PATH=%mesa%Python\%abi%\;%mesa%Python\%abi%\Scripts\;%mesa%flexbison\;%mesa%m4\%abi%\usr\bin\;%PATH%
 @pip install -U mako
 @pip freeze > requirements.txt
