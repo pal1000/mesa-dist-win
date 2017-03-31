@@ -1,11 +1,11 @@
 @set mesa=%cd%\
 @set abi=x86
 @set /p x64=Do you want to build for x64?(y/n) Otherwise build for x86: 
-@if /I %x64%==y @set abi=x64
+@if /I %x64%==y set abi=x64
 @set longabi=%abi%
-@if %abi%==x64 @set longabi=x86_64
+@if %abi%==x64 set longabi=x86_64
 @set altabi=i686
-@if %abi%==x64 @set altabi=%longabi%
+@if %abi%==x64 set altabi=%longabi%
 @set minabi=32
 @if %abi%==x64 set minabi=64
 @set vsenv="%ProgramFiles%
