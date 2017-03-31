@@ -1,7 +1,7 @@
 @set mesa=%cd%\
 @set abi=x86
 @set /p x64=Do you want to build for x64?(y/n) Otherwise build for x86: 
-@if /I %x64%==y set abi=x64
+@if /I "%x64%"=="y" set abi=x64
 @set longabi=%abi%
 @if %abi%==x64 set longabi=x86_64
 @set altabi=i686
@@ -23,7 +23,7 @@
 
 :build_llvm
 @set /p buildllvm=Begin LLVM build. Only needs to run once for each ABI and version. Proceed (y/n):
-@if /I NOT %buildllvm%==y GOTO build_dxtn
+@if /I NOT "%buildllvm%"=="y" GOTO build_dxtn
 @echo.
 @cd "%mesa%llvm"
 @if EXIST %abi% RD /S /Q %abi%
@@ -40,13 +40,13 @@
 @if EXIST %vsenv15% set ninja=%ninja%2
 @if %ninja%==12 set /p oldtoolset=Build with MSVC 2015 backward compatibility toolset, alternative solution for LLVM 3.9.1 build with Visual Studio 2017 (y/n):
 @if %ninja%==12 echo.
-@if /I %oldtoolset%==y set ninja=y
-@if /I %oldtoolset%==y set toolset=14
+@if /I "%oldtoolset%"=="y" set ninja=y
+@if /I "%oldtoolset%"=="y" set toolset=14
 @if %ninja%==12 set ninja=2
 @if %ninja%==1 set ninja=2
 @if %ninja%==2 set /p ninja=Use Ninja build system instead of MsBuild, there is no requirement to do this with the primary toolset though (y/n):
 @echo.
-@if %ninja%==y set toolchain=Ninja
+@if /I "%ninja%"=="y" set toolchain=Ninja
 @if "%toolchain%"=="Ninja" set PATH=%mesa%ninja\;%PATH%
 @set vsenv=%vsenv14%
 @if %toolset%==15 set vsenv=%vsenv15%
@@ -71,7 +71,7 @@
 @if NOT EXIST "%gcc%" GOTO build_mesa
 @if NOT EXIST "%mesa%dxtn" GOTO build_mesa
 @set /p builddxtn=Do you want to build S3 texture compression library? (y/n):
-@if /i NOT %builddxtn%==y GOTO build_mesa
+@if /i NOT "%builddxtn%"=="y" GOTO build_mesa
 @set PATH=%gcc%\;%PATH%
 @cd "%mesa%dxtn"
 @echo.
@@ -86,7 +86,7 @@
 
 :build_mesa
 @set /p buildmesa=Begin mesa build. Proceed (y/n):
-@if /i NOT %buildmesa%==y GOTO exit
+@if /i NOT "%buildmesa%"=="y" GOTO exit
 @echo.
 @set LLVM=%mesa%llvm\%abi%
 @if NOT EXIST "%LLVM%" (
@@ -98,7 +98,7 @@
 @cd "%mesa%mesa"
 @set /p openswr=Do you want to build OpenSWR drivers? (y=yes):
 @set buildswr=0
-@if /i %openswr%==y @set buildswr=1
+@if /i "%openswr%"=="y" set buildswr=1
 @set mesatoolchain=default
 @echo.
 @GOTO build_with_vs
@@ -106,11 +106,11 @@
 :build_with_mingw
 @set mingw=n
 @set mingwtest=0
-@if EXIST "%gcc%" @set mingwtest=1
+@if EXIST "%gcc%" set mingwtest=1
 @set msys2=%mesa%msys64\msys2_shell.cmd
-@if EXIST "%msys2%" @set mingwtest=%mingwtest%2
-@if %mingwtest%==12 @set /p mingw=Do you want to build with MinGW-W64 instead of Visual Studio (y=yes):
-@if %dxtnbuilt%==0 @set PATH=%gcc%\;%PATH%
+@if EXIST "%msys2%" set mingwtest=%mingwtest%2
+@if %mingwtest%==12 set /p mingw=Do you want to build with MinGW-W64 instead of Visual Studio (y=yes):
+@if %dxtnbuilt%==0 set PATH=%gcc%\;%PATH%
 @set mesatoolchain=crossmingw
 @copy "%gcc%\%altabi%-w64-mingw32-gcc-ar.exe" "%gcc%\%altabi%-w64-mingw32-ar.exe"
 @copy "%gcc%\%altabi%-w64-mingw32-gcc-ranlib.exe" "%gcc%\%altabi%-w64-mingw32-ranlib.exe"
