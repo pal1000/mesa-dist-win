@@ -8,15 +8,15 @@
 
 - Visual Studio 2015 or 2017 (Visual 2015 Express may not work due to lack of MFC and ATL support); 
 
-For Visual Studio 2017 you need to install the following components under Desktop Development with C++: Visual Studio 2015 toolset [as Scons doesn't support Visual Studio 2017 yet](https://bugs.freedesktop.org/show_bug.cgi?id=100202), MFC and ATL, CMake tools, Windows 8.1 and 10 SDKs and Standard library modules. You also have to patch LLVM source code, read below, as LLVM 4.0 is not yet supported.
+For Visual Studio 2017 you need to install the following components under Desktop Development with C++: Visual Studio 2015 toolset [as Scons doesn't support Visual Studio 2017 yet](https://bugs.freedesktop.org/show_bug.cgi?id=100202), MFC and ATL, CMake tools, Windows 8.1 and 10 SDKs and Standard library modules.
 - Mesa source code: ftp://ftp.freedesktop.org/pub/mesa/;
 - [LLVM source code](http://llvm.org/);
 
-To build Mesa 13 you have to use LLVM 3.7.1. Newer versions don't work because Mesa attempts to link against the removed llvmipa.lib, [see this forum post](https://www.phoronix.com/forums/forum/software/programming-compilers/903537-llvm-3-9-0-missing-llvmipa). Also [LLVM 4.0 is not supported yet with Visual Studio build of Mesa](https://bugs.freedesktop.org/show_bug.cgi?id=100201). If you use Visual Studio 2017 you have to patch LLVM 3.9.1 by replacing `_MSC_VER == 1900` with `_MSC_VER >= 1900 && _MSC_VER < 2000` in lib\DebugInfo\PDB\DIA\DIASession.cpp inside llvm source code. 
-LLVM must be built in install mode. You can look at build.cmd source code or [here](https://wiki.qt.io/MesaLlvmpipe).
+To build Mesa 13 you have to use LLVM 3.7.1. Newer versions don't work because Mesa attempts to link against the removed llvmipa.lib, [see this forum post](https://www.phoronix.com/forums/forum/software/programming-compilers/903537-llvm-3-9-0-missing-llvmipa). Also [LLVM 4.0 is not supported yet with Visual Studio build of Mesa](https://bugs.freedesktop.org/show_bug.cgi?id=100201). If you use Visual Studio 2017 you have to patch LLVM 3.9.1 by replacing `_MSC_VER == 1900` with `_MSC_VER >= 1900 && _MSC_VER < 2000` in lib\DebugInfo\PDB\DIA\DIASession.cpp inside llvm source code or build LLVM with MSVC 2015 toolset aided by [Ninja build system](https://github.com/ninja-build/ninja/releases). My script asks if you want to do this before starting LLVM build. You can use Ninja build system regardless of what toolset you use to build LLVM, if you desire so.
+LLVM must be built in install mode. This build script does it automatically or you can look [here](https://wiki.qt.io/MesaLlvmpipe).
 - [S3 texture compresion library source code](https://cgit.freedesktop.org/~mareko/libtxc_dxtn/)
 
-S3 texture compression library is optional. Build it only if you need it. You will need [git](https://git-scm.com/) to download S3 texture compression library source code.
+S3 texture compression library is optional. Build it only if you need it. It implements GL_EXT_texture_compression_s3tc and GL_EXT_texture_compression_DXT1. You will need [git](https://git-scm.com/) to download S3 texture compression library source code.
 
 - [CMake 32 and 64 bit](https://cmake.org/download/#latest);
 
@@ -42,13 +42,18 @@ You need to add the location of the following components to PATH:
 
 Dependency component | Paths relative to their installation directories (you have to convert them to absolute paths)
 -------------------- | ---------------------------------------------------------------------------------------------
-flex and bison | `.\`;
+flex and bison | `.\;`
 m4 | `.\usr\bin\;`
 Python | `.\;` and `.\Scripts\;`
 CMake | `.\bin\;`
 mingw-w64 if used | `.\mingw64\bin\;` for 64-bit and `.\mingw32\bin\;` for 32-bit
+Ninja build system if used | `.\ninja\;`
 
-build.cmd script automates this whole process but you must respect the relative paths between the script and the sources and tools. The script must not be dropped in a location that contains ( or ) in its path.
+build.cmd script automates this whole process but you must respect the relative paths between the script and the sources and tools. The script must not be dropped in a location that contains in its path any character that require enclosing the path in quotes. Scons is completely unable to handle folder paths containing such characters.
+Characters requiring folder path enclosing in quotes:
+
+``space & ( ) [ ] { } ^ = ; ! ' + ,  ~  ` `` 
+
 Assuming the script is located in current folder "." then each tool and code source must be located as follows:
 - m4 32-bit: .\m4\x86;
 - m4 64-bit: .\m4\x64;
@@ -61,7 +66,8 @@ Assuming the script is located in current folder "." then each tool and code sou
 - Mesa source code: .\mesa;
 - S3 texture compression library .\dxtn;
 - Mingw-w64 i686 (32-bit): .\mingw-w64-x86;
-- Mingw-w64 x86_64 (64-bit): .\mingw-w64-x64. 
+- Mingw-w64 x86_64 (64-bit): .\mingw-w64-x64;
+- Ninja build system: .\ninja;
 
 This way the script would be able to set PATH variable correctly and you'll no longer need to set anything from this point forward.
 
@@ -70,9 +76,9 @@ This way the script would be able to set PATH variable correctly and you'll no l
 The script acts like a Wizard asking for the following during execution:
 - architecture for which you want to build mesa - type "y " for x64, otherwise x86 is selected;
 - if you need to build LLVM.  You only need to do it once for each architecture you target when new version is out and this doesn't happen very often;
-- if you want to build S3 texture compression library;
-
-Only asked if mingw-w64 is detected and library source code is present in the appropriate location
+- if you are running Visual Studio 2017 and Ninja build system is installed, if you want to build LLVM with MSVC 2015 toolset;
+- if you want to build LLVM with Ninja build system instead of Msbuild (only if you opted for default toolset, e.g. MSVC 2017 toolset with Visual Studio 2017 or MSVC 2015 toolset with Visual Studio 2015);
+- if you want to build S3 texture compression library (only asked if mingw-w64 is detected and library source code is present in the appropriate location);
 - if you want to build mesa or quit;
 - if want to build OpenSWR driver. 
 
