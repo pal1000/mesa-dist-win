@@ -32,37 +32,26 @@
 @cd cmake-%abi%
 @set toolchain=Visual Studio 14
 @set toolset=14
-@set vs2015toolset=n
 @if EXIST %vsenv15% set toolchain=Visual Studio 15 2017
 @if EXIST %vsenv15% set toolset=15
-@if EXIST %vsenv15% set /p vs2015toolset=Build with MSVC 2015 backward compatibility toolset, alternative solution for LLVM 3.9.1 build with Visual Studio 2017 (y/n):
-@if EXIST %vsenv15% echo.
-
-@set forcedninjatoolchainfail=0
-@if /I %vs2015toolset%==y (
-@set toolset=14
-@set toolchain=Ninja
-@set forcedninjatoolchainfail=1
-)
-@if NOT EXIST "%mesa%ninja" set forcedninjatoolchainfail=%forcedninjatoolchainfail%2
-@if %forcedninjatoolchainfail%==12 echo Ninja build system is required to build LLVM with backward compatibility toolset, aborting LLVM build.
-@if %forcedninjatoolchainfail%==12 echo.
-@if %forcedninjatoolchainfail%==12 GOTO build_dxtn
-@if %forcedninjatoolchainfail%==1 set PATH=%mesa%ninja\;%PATH%
-
-@set ninja=0
-@set useninja=n
+@set ninja=n
+@set oldtoolset=n
 @if EXIST "%mesa%ninja" set ninja=1
-@if /I NOT %vs2015toolset%==y set ninja=%ninja%2
-@if %ninja%==12 set /p useninja=Use Ninja build system instead of MsBuild, there is no requirement to do this with the primary toolset though (y/n):
+@if EXIST %vsenv15% set ninja=%ninja%2
+@if %ninja%==12 set /p oldtoolset=Build with MSVC 2015 backward compatibility toolset, alternative solution for LLVM 3.9.1 build with Visual Studio 2017 (y/n):
+@if %ninja%==12 echo.
+@if /I %oldtoolset%==y set ninja=y
+@if /I %oldtoolset%==y set toolset=14
+@if %ninja%==12 set ninja=2
+@if %ninja%==1 set ninja=2
+@if %ninja%==2 set /p ninja=Use Ninja build system instead of MsBuild, there is no requirement to do this with the primary toolset though (y/n):
 @echo.
-@if /I %useninja%==y set toolchain=Ninja
-@if /I %useninja%==y set PATH=%mesa%ninja\;%PATH%
+@if %ninja%==y set toolchain=Ninja
+@if "%toolchain%"=="Ninja" set PATH=%mesa%ninja\;%PATH%
 @set vsenv=%vsenv14%
 @if %toolset%==15 set vsenv=%vsenv15%
 @call %vsenv%
 @set vsenvloaded=1
-
 @set PATH=%mesa%cmake\%abi%\bin\;%PATH%
 @echo.
 @set modtoolchainabi=0
