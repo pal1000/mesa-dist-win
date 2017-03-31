@@ -16,9 +16,10 @@
 @set vsenvloaded=0
 @set dxtnbuilt=0
 @set toolset=14
-@if EXIST toolset.ini set /p toolset=<toolset.ini
+@if EXIST %vsenv15% set toolset=15
+@if EXIST toolset-%abi%.ini set /p toolset=<toolset-%abi%.ini
 @set vsenv=%vsenv14%
-@if %toolset%==15 @set vsenv=%vsenv15%
+@if %toolset%==15 set vsenv=%vsenv15%
 
 :build_llvm
 @set /p buildllvm=Begin LLVM build. Only needs to run once for each ABI and version. Proceed (y/n):
@@ -30,34 +31,52 @@
 @md cmake-%abi%
 @cd cmake-%abi%
 @set toolchain=Visual Studio 14
-@set vs2017toolset=n
-@if EXIST %vsenv15% @set /p vs2017toolset=Build with MSVC 2017 toolset, not recommended (y/n):
-@echo.
-@if /I %vs2017toolset%==y (
-@set toolchain=Visual Studio 15 2017
-@set toolset=15
+@set toolset=14
+@set vs2015toolset=n
+@if EXIST %vsenv15% set toolchain=Visual Studio 15 2017
+@if EXIST %vsenv15% set toolset=15
+@if EXIST %vsenv15% set /p vs2015toolset=Build with MSVC 2015 backward compatibility toolset, alternative solution for LLVM 3.9.1 build with Visual Studio 2017 (y/n):
+@if EXIST %vsenv15% echo.
+
+@set forcedninjatoolchainfail=0
+@if /I %vs2015toolset%==y (
+@set toolset=14
+@set toolchain=Ninja
+@set forcedninjatoolchainfail=1
 )
-@if %abi%==x64 @set toolchain=%toolchain% Win64
-@set ninja=n
+@if NOT EXIST "%mesa%ninja" set forcedninjatoolchainfail=%forcedninjatoolchainfail%2
+@if %forcedninjatoolchainfail%==12 echo Ninja build system is required to build LLVM with backward compatibility toolset, aborting LLVM build.
+@if %forcedninjatoolchainfail%==12 echo.
+@if %forcedninjatoolchainfail%==12 GOTO build_dxtn
+@if %forcedninjatoolchainfail%==1 set PATH=%mesa%ninja\;%PATH%
+
+@set ninja=0
+@set useninja=n
 @if EXIST "%mesa%ninja" set ninja=1
-@if EXIST "%mesa%ninja" set PATH=%mesa%ninja\;%PATH%
-@if %ninja%==1 set /p ninja=Use Ninja build system, required if building LLVM with MSVC 2015 toolset on Visual Studio 2017 (y/n):
+@if /I NOT %vs2015toolset%==y set ninja=%ninja%2
+@if %ninja%==12 set /p useninja=Use Ninja build system instead of MsBuild, there is no requirement to do this with the primary toolset though (y/n):
 @echo.
-@if /I NOT %ninja%==n set toolchain=Ninja
+@if /I %useninja%==y set toolchain=Ninja
+@if /I %useninja%==y set PATH=%mesa%ninja\;%PATH%
 @set vsenv=%vsenv14%
-@if %toolset%==15 @set vsenv=%vsenv15%
+@if %toolset%==15 set vsenv=%vsenv15%
 @call %vsenv%
 @set vsenvloaded=1
+
 @set PATH=%mesa%cmake\%abi%\bin\;%PATH%
 @echo.
-@cmake -G "%toolchain%" -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=%mesa:\=/%llvm/%abi% ..
+@set modtoolchainabi=0
+@if NOT "%toolchain%"=="Ninja" set modtoolchainabi=1
+@if %abi%==x64 set modtoolchainabi=%modtoolchainabi%2
+@if %modtoolchainabi%==12 set toolchain=%toolchain% Win64
+@cmake -G "%toolchain%" -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../%abi% ..
 @echo.
 @pause
 @echo.
-@if NOT %toolchain%==Ninja msbuild /p:Configuration=Release INSTALL.vcxproj
-@if %toolchain%==Ninja ninja install
+@if NOT "%toolchain%"=="Ninja" msbuild /p:Configuration=Release INSTALL.vcxproj
+@if "%toolchain%"=="Ninja" ninja install
 @echo.
-@echo %toolset% > "%mesa%toolset.ini"
+@echo %toolset% > "%mesa%toolset-%abi%.ini"
 
 :build_dxtn
 @if NOT EXIST "%gcc%" GOTO build_mesa
@@ -79,7 +98,14 @@
 :build_mesa
 @set /p buildmesa=Begin mesa build. Proceed (y/n):
 @if /i NOT %buildmesa%==y GOTO exit
-@set LLVM=%mesa:\=/%llvm/%abi%
+@echo.
+@set LLVM=%mesa%llvm\%abi%
+@if NOT EXIST "%LLVM%" (
+@echo Could not find LLVM, aborting mesa build.
+@echo.
+@pause
+@GOTO exit
+)
 @cd "%mesa%mesa"
 @set /p openswr=Do you want to build OpenSWR drivers? (y=yes):
 @set buildswr=0
@@ -115,9 +141,9 @@ cd mesa
 :build_with_vs
 @if EXIST build\windows-%longabi% RD /S /Q build\windows-%longabi%
 @set PATH=%mesa%Python\%abi%\;%mesa%Python\%abi%\Scripts\;%mesa%flexbison\;%mesa%m4\%abi%\usr\bin\;%PATH%
-@pip install -U mako
-@pip freeze > requirements.txt
-@pip install -r requirements.txt --upgrade
+@python -m pip install -U mako
+@python -m pip freeze > requirements.txt
+@python -m pip install -r requirements.txt --upgrade
 @del requirements.txt
 @echo.
 @if %vsenvloaded%==0 (
