@@ -1,4 +1,5 @@
-@set mesa=%cd%\
+@for %%I in ("%cd%") do @set mesa=%%~sI
+@set mesa=%mesa%\
 @set abi=x86
 @set /p x64=Do you want to build for x64?(y/n) Otherwise build for x86: 
 @if /I "%x64%"=="y" set abi=x64
@@ -25,7 +26,7 @@
 @set /p buildllvm=Begin LLVM build. Only needs to run once for each ABI and version. Proceed (y/n):
 @if /I NOT "%buildllvm%"=="y" GOTO build_dxtn
 @echo.
-@cd "%mesa%llvm"
+@cd %mesa%llvm
 @if EXIST %abi% RD /S /Q %abi%
 @if EXIST cmake-%abi% RD /S /Q cmake-%abi%
 @md cmake-%abi%
@@ -36,7 +37,7 @@
 @if EXIST %vsenv15% set toolset=15
 @set ninja=n
 @set oldtoolset=n
-@if EXIST "%mesa%ninja" set ninja=1
+@if EXIST %mesa%ninja set ninja=1
 @if EXIST %vsenv15% set ninja=%ninja%2
 @if %ninja%==12 set /p oldtoolset=Build with MSVC 2015 backward compatibility toolset, alternative solution for LLVM 3.9.1 build with Visual Studio 2017 (y/n):
 @if %ninja%==12 echo.
@@ -65,15 +66,15 @@
 @if NOT "%toolchain%"=="Ninja" msbuild /p:Configuration=Release INSTALL.vcxproj
 @if "%toolchain%"=="Ninja" ninja install
 @echo.
-@echo %toolset% > "%mesa%toolset-%abi%.ini"
+@echo %toolset% > %mesa%toolset-%abi%.ini
 
 :build_dxtn
-@if NOT EXIST "%gcc%" GOTO build_mesa
-@if NOT EXIST "%mesa%dxtn" GOTO build_mesa
+@if NOT EXIST %gcc% GOTO build_mesa
+@if NOT EXIST %mesa%dxtn GOTO build_mesa
 @set /p builddxtn=Do you want to build S3 texture compression library? (y/n):
 @if /i NOT "%builddxtn%"=="y" GOTO build_mesa
 @set PATH=%gcc%\;%PATH%
-@cd "%mesa%dxtn"
+@cd %mesa%dxtn
 @echo.
 @if EXIST %abi% RD /S /Q %abi%
 @MD %abi%
@@ -89,13 +90,13 @@
 @if /i NOT "%buildmesa%"=="y" GOTO exit
 @echo.
 @set LLVM=%mesa%llvm\%abi%
-@if NOT EXIST "%LLVM%" (
+@if NOT EXIST %LLVM% (
 @echo Could not find LLVM, aborting mesa build.
 @echo.
 @pause
 @GOTO exit
 )
-@cd "%mesa%mesa"
+@cd %mesa%mesa
 @set /p openswr=Do you want to build OpenSWR drivers? (y=yes):
 @set buildswr=0
 @if /i "%openswr%"=="y" set buildswr=1
@@ -106,14 +107,14 @@
 :build_with_mingw
 @set mingw=n
 @set mingwtest=0
-@if EXIST "%gcc%" set mingwtest=1
+@if EXIST %gcc% set mingwtest=1
 @set msys2=%mesa%msys64\msys2_shell.cmd
-@if EXIST "%msys2%" set mingwtest=%mingwtest%2
+@if EXIST %msys2% set mingwtest=%mingwtest%2
 @if %mingwtest%==12 set /p mingw=Do you want to build with MinGW-W64 instead of Visual Studio (y=yes):
 @if %dxtnbuilt%==0 set PATH=%gcc%\;%PATH%
 @set mesatoolchain=crossmingw
-@copy "%gcc%\%altabi%-w64-mingw32-gcc-ar.exe" "%gcc%\%altabi%-w64-mingw32-ar.exe"
-@copy "%gcc%\%altabi%-w64-mingw32-gcc-ranlib.exe" "%gcc%\%altabi%-w64-mingw32-ranlib.exe"
+@copy %gcc%\%altabi%-w64-mingw32-gcc-ar.exe %gcc%\%altabi%-w64-mingw32-ar.exe
+@copy %gcc%\%altabi%-w64-mingw32-gcc-ranlib.exe %gcc%\%altabi%-w64-mingw32-ranlib.exe
 @call "%msys2%" -use-full-path
 pacman -Syu
 pacman -S python2
@@ -141,7 +142,7 @@ cd mesa
 )
 
 :build_mesa_exec
-@python "%mesa%Python\%abi%\Scripts\scons.py" build=release platform=windows machine=%longabi% toolchain=%mesatoolchain% swr=%buildswr% libgl-gdi
+@python %mesa%Python\%abi%\Scripts\scons.py build=release platform=windows machine=%longabi% toolchain=%mesatoolchain% swr=%buildswr% libgl-gdi
 @echo.
 @pause
 
