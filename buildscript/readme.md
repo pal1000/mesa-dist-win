@@ -49,12 +49,7 @@ CMake | `.\bin\;`
 mingw-w64 if used | `.\mingw64\bin\;` for 64-bit and `.\mingw32\bin\;` for 32-bit
 Ninja build system if used | `.\ninja\;`
 
-build.cmd script automates this whole process but you must respect the relative paths between the script and the sources and tools. The script must not be dropped in a location that contains in its path any character that require enclosing the path in quotes. Scons is completely unable to handle folder paths containing such characters.
-Characters requiring folder path enclosing in quotes:
-
-``space & ( ) [ ] { } ^ = ; ! ' + ,  ~  ` `` 
-
-Assuming the script is located in current folder "." then each tool and code source must be located as follows:
+build.cmd script automates this whole process but you must respect the relative paths between the script and the sources and tools. Assuming the script is located in current folder "." then each tool and code source must be located as follows:
 - m4 32-bit: .\m4\x86;
 - m4 64-bit: .\m4\x64;
 - CMake 32-bit: .\cmake\x86;
@@ -74,9 +69,9 @@ This way the script would be able to set PATH variable correctly and you'll no l
 ## 3. Build process
 
 The script acts like a Wizard asking for the following during execution:
-- architecture for which you want to build mesa - type "y " for x64, otherwise x86 is selected;
+- architecture for which you want to build mesa - type "y" for x64, otherwise x86 is selected;
 - if you need to build LLVM.  You only need to do it once for each architecture you target when new version is out and this doesn't happen very often;
-- if you are running Visual Studio 2017 and Ninja build system is installed, if you want to build LLVM with MSVC 2015 toolset;
+- if you are running Visual Studio 2017 and Ninja build system is installed, the script asks if you want to build LLVM with MSVC 2015 toolset instead of 2017;
 - if you want to build LLVM with Ninja build system instead of Msbuild (only if you opted for default toolset, e.g. MSVC 2017 toolset with Visual Studio 2017 or MSVC 2015 toolset with Visual Studio 2015);
 - if you want to build S3 texture compression library (only asked if mingw-w64 is detected and library source code is present in the appropriate location);
 - if you want to build mesa or quit;
