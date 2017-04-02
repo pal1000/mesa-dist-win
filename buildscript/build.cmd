@@ -1,7 +1,7 @@
 @for %%I in ("%cd%") do @set mesa=%%~sI
 @set mesa=%mesa%\
 @set abi=x86
-@set /p x64=Do you want to build for x64?(y/n) Otherwise build for x86: 
+@set /p x64=Do you want to build for x64? (y/n) Otherwise build for x86:
 @if /I "%x64%"=="y" set abi=x64
 @set longabi=%abi%
 @if %abi%==x64 set longabi=x86_64
@@ -97,11 +97,17 @@
 @GOTO exit
 )
 @cd %mesa%mesa
-@set /p openswr=Do you want to build OpenSWR drivers? (y=yes):
-@set buildswr=0
-@if /i "%openswr%"=="y" set buildswr=1
-@set mesatoolchain=default
+@set openswr=n
+@set sconscmd=python %mesa%Python\%abi%\Scripts\scons.py build=release platform=windows machine=%longabi%
+@set /p nostandarddisplay=Don't build standard display drivers - llvmpipe, softpipe? (y=yes):
 @echo.
+@if /I NOT "%nostandarddisplay%"=="y" set sconscmd=%sconscmd% libgl-gdi
+@if /I NOT "%nostandarddisplay%"=="y" set /p openswr=Do you want to build OpenSWR drivers? (y=yes):
+@if /I NOT "%nostandarddisplay%"=="y" echo.
+@if /I "%openswr%"=="y" set sconscmd=%sconscmd% swr=1
+@set /p osmesa-graw=Build Off-screen rendering and graw runtime (graw depends on standard display) (y/n):
+@echo.
+@if /I "%osmesa-graw%"=="y" set sconscmd=%sconscmd% osmesa
 @GOTO build_with_vs
 
 :build_with_mingw
@@ -112,10 +118,11 @@
 @if EXIST %msys2% set mingwtest=%mingwtest%2
 @if %mingwtest%==12 set /p mingw=Do you want to build with MinGW-W64 instead of Visual Studio (y=yes):
 @if %dxtnbuilt%==0 set PATH=%gcc%\;%PATH%
-@set mesatoolchain=crossmingw
-@copy %gcc%\%altabi%-w64-mingw32-gcc-ar.exe %gcc%\%altabi%-w64-mingw32-ar.exe
-@copy %gcc%\%altabi%-w64-mingw32-gcc-ranlib.exe %gcc%\%altabi%-w64-mingw32-ranlib.exe
-@call "%msys2%" -use-full-path
+@if /I "%mingw%"=="y" set sconscmd=%sconscmd% toolchain=crossmingw
+@if /I "%mingw%"=="y" copy %gcc%\%altabi%-w64-mingw32-gcc-ar.exe %gcc%\%altabi%-w64-mingw32-ar.exe
+@if /I "%mingw%"=="y" copy %gcc%\%altabi%-w64-mingw32-gcc-ranlib.exe %gcc%\%altabi%-w64-mingw32-ranlib.exe
+@if /I "%mingw%"=="y" call "%msys2%" -use-full-path
+@if /I "%mingw%"=="y" (
 pacman -Syu
 pacman -S python2
 wget https://bootstrap.pypa.io/get-pip.py
@@ -126,7 +133,7 @@ pip freeze > requirements.txt
 pip install -r requirements.txt --upgrade
 cd $mesa
 cd mesa
-
+)
 
 :build_with_vs
 @if EXIST build\windows-%longabi% RD /S /Q build\windows-%longabi%
@@ -142,7 +149,7 @@ cd mesa
 )
 
 :build_mesa_exec
-@python %mesa%Python\%abi%\Scripts\scons.py build=release platform=windows machine=%longabi% toolchain=%mesatoolchain% swr=%buildswr% libgl-gdi
+@%sconscmd%
 @echo.
 @pause
 
