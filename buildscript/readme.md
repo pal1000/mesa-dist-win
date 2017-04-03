@@ -16,7 +16,11 @@ To build Mesa 13 you have to use LLVM 3.7.1. Newer versions don't work because M
 LLVM must be built in install mode. This build script does it automatically or you can look [here](https://wiki.qt.io/MesaLlvmpipe).
 - [S3 texture compresion library source code](https://cgit.freedesktop.org/~mareko/libtxc_dxtn/)
 
-S3 texture compression library is optional. Build it only if you need it. It implements GL_EXT_texture_compression_s3tc and GL_EXT_texture_compression_DXT1. You will need [git](https://git-scm.com/) to download S3 texture compression library source code.
+S3 texture compression library is optional. Build it only if you need it. It implements GL_EXT_texture_compression_s3tc and GL_EXT_texture_compression_DXT1. You will need [git](https://git-scm.com/) to download S3 texture compression library source code. It is also recommended that before building Mesa to modify inside Mesa source code in src/gallium/drivers/llvmpipe/lp_tex_sample.h the value of LP_USE_TEXTURE_CACHE to 1. It should become
+
+`#define LP_USE_TEXTURE_CACHE 1`
+
+This will improve S3 texture compression performance significantly.
 
 - [CMake 32 and 64 bit](https://cmake.org/download/#latest);
 
@@ -75,9 +79,12 @@ The script acts like a Wizard asking for the following during execution:
 - if you want to build LLVM with Ninja build system instead of Msbuild (only if you opted for default toolset, e.g. MSVC 2017 toolset with Visual Studio 2017 or MSVC 2015 toolset with Visual Studio 2015);
 - if you want to build S3 texture compression library (only asked if mingw-w64 is detected and library source code is present in the appropriate location);
 - if you want to build mesa or quit;
-- if want to build OpenSWR driver. 
+- if want to build OpenSWR driver;
+- if you want to build off-screen rendering drivers;
+- if you want to build graw driver.
 
 ## 4. Miscellaneous and build location
+All paths are relative to script location.
 
 CMake build system is created in:
 - for 32 bit: .\llvm\cmake-x86;
@@ -98,3 +105,17 @@ and are named swrAVX.dll and swrAVX2.dll after their instruction set requirement
 S3 texture compresion binaries are dropped in:
 - for 32-bit: .\dxtn\x86;
 - for 64-bit: .\dxtn\x64.
+
+Mesa3D off-screen renderers are dropped in:
+- 32-bit gallium: .\mesa\build\windows-x86\gallium\targets\osmesa;
+- 64-bit gallium: .\mesa\build\windows-x86_64\gallium\targets\osmesa;
+- 32-bit swrast: .\mesa\build\windows-x86\mesa\drivers\osmesa;
+- 64-bit swrast: .\mesa\build\windows-x86_64\mesa\drivers\osmesa.
+
+Graw libraries are dropped in:
+- 32-bit: .\mesa\build\windows-x86\gallium\targets\graw-gdi;
+- 64-bit: .\mesa\build\windows-x86_64\gallium\targets\graw-gdi.
+
+After Mesa build completes it will deploy all its binaries in: 
+- for 32-bit .\mesa-dist-win\bin\x86;
+- for 64-bit .\mesa-dist-win\bin\x64.
