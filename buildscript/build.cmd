@@ -155,15 +155,21 @@ cd mesa
 @%sconscmd%
 @echo.
 @pause
-@if EXIST %mesa%mesa-dist-win\bin\%abi% RD /S /Q %mesa%mesa-dist-win\bin\%abi%
-@MD %mesa%mesa-dist-win\bin\%abi%
-@copy %mesa%mesa\build\windows-%abi%\gallium\targets\libgl-gdi\opengl32.dll %mesa%mesa-dist-win\bin\%abi%\opengl32sw.dll
-@copy %mesa%mesa\build\windows-%abi%\gallium\drivers\swr\swrAVX.dll %mesa%mesa-dist-win\bin\%abi%\swrAVX.dll
-@copy %mesa%mesa\build\windows-%abi%\gallium\drivers\swr\swrAVX2.dll %mesa%mesa-dist-win\bin\%abi%\swrAVX2.dll
-@copy %mesa%mesa\build\windows-%abi%\mesa\drivers\osmesa\osmesa.dll %mesa%mesa-dist-win\bin\%abi%\osmesa-swrast.dll
-@copy %mesa%mesa\build\windows-%abi%\gallium\targets\osmesa\osmesa.dll %mesa%mesa-dist-win\bin\%abi%\osmesa-gallium.dll
-@copy %mesa%mesa\build\windows-%abi%\gallium\targets\graw-gdi\graw.dll %mesa%mesa-dist-win\bin\%abi%\graw.dll
-@copy %mesa%dxtn\%abi%\dxtn.dll %mesa%mesa-dist-win\bin\%abi%
+@cd %mesa%
+@if NOT EXIST mesa-dist-win MD mesa-dist-win
+@cd mesa-dist-win
+@if NOT EXIST bin MD bin
+@cd bin
+@if EXIST %abi% RD /S /Q %abi%
+@MD %abi%
+@cd %abi%
+@copy %mesa%mesa\build\windows-%abi%\gallium\targets\libgl-gdi\opengl32.dll opengl32sw.dll
+@copy %mesa%mesa\build\windows-%abi%\gallium\drivers\swr\swrAVX.dll swrAVX.dll
+@copy %mesa%mesa\build\windows-%abi%\gallium\drivers\swr\swrAVX2.dll swrAVX2.dll
+@copy %mesa%mesa\build\windows-%abi%\mesa\drivers\osmesa\osmesa.dll osmesa-swrast.dll
+@copy %mesa%mesa\build\windows-%abi%\gallium\targets\osmesa\osmesa.dll osmesa-gallium.dll
+@copy %mesa%mesa\build\windows-%abi%\gallium\targets\graw-gdi\graw.dll graw.dll
+@copy %mesa%dxtn\%abi%\dxtn.dll dxtn.dll
 @echo.
 @pause
 
