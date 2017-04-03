@@ -136,12 +136,10 @@ cd mesa
 )
 
 :build_with_vs
-@set /p cleanbuild=Do you want to clean build (y/n):
-@echo.
-@if /I "%cleanbuild%"=="y" set cleanbuild=1
-@if /I NOT "%cleanbuild%"=="y" set cleanbuild=0
-@if EXIST build\windows-%longabi% set cleanbuild=%cleanbuild%2
-@if %cleanbuild%==12 RD /S /Q build\windows-%longabi%
+@set cleanbuild=n
+@if EXIST build\windows-%longabi% set /p cleanbuild=Do you want to clean build (y/n):
+@if EXIST build\windows-%longabi% echo.
+@if /I "%cleanbuild%"=="y" RD /S /Q build\windows-%longabi%
 @set PATH=%mesa%Python\%abi%\;%mesa%Python\%abi%\Scripts\;%mesa%flexbison\;%mesa%m4\%abi%\usr\bin\;%PATH%
 @python -m pip install -U mako
 @python -m pip freeze > requirements.txt
