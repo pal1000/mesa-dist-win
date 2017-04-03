@@ -98,16 +98,16 @@
 )
 @cd %mesa%mesa
 @set openswr=n
-@set sconscmd=python %mesa%Python\%abi%\Scripts\scons.py build=release platform=windows machine=%longabi%
-@set /p nostandarddisplay=Don't build standard display drivers - llvmpipe, softpipe? (y=yes):
+@set sconscmd=python %mesa%Python\%abi%\Scripts\scons.py build=release platform=windows machine=%longabi% libgl-gdi
+@set /p openswr=Do you want to build OpenSWR drivers? (y=yes):
 @echo.
-@if /I NOT "%nostandarddisplay%"=="y" set sconscmd=%sconscmd% libgl-gdi
-@if /I NOT "%nostandarddisplay%"=="y" set /p openswr=Do you want to build OpenSWR drivers? (y=yes):
-@if /I NOT "%nostandarddisplay%"=="y" echo.
 @if /I "%openswr%"=="y" set sconscmd=%sconscmd% swr=1
-@set /p osmesa-graw=Build Off-screen rendering and graw runtime (graw depends on standard display) (y/n):
+@set /p osmesa=Do you want to build off-screen rendering drivers (y/n):
 @echo.
-@if /I "%osmesa-graw%"=="y" set sconscmd=%sconscmd% osmesa
+@if /I "%osmesa%"=="y" set sconscmd=%sconscmd% osmesa
+@set /p graw=Do you want to build graw library (y/n):
+@echo.
+@if /I "%graw%"=="y" set sconscmd=%sconscmd% graw-gdi
 @GOTO build_with_vs
 
 :build_with_mingw
@@ -150,6 +150,17 @@ cd mesa
 
 :build_mesa_exec
 @%sconscmd%
+@echo.
+@pause
+@if EXIST %mesa%mesa-dist-win\bin\%abi% RD /S /Q %mesa%mesa-dist-win\bin\%abi%
+@copy %mesa%mesa\build\windows-%abi%\gallium\targets\libgl-gdi\opengl32.dll %mesa%mesa-dist-win\bin\%abi%\opengl32sw.dll
+@copy %mesa%mesa\build\windows-%abi%\gallium\drivers\swr\swrAVX.dll %mesa%mesa-dist-win\bin\%abi%
+@copy %mesa%mesa\build\windows-%abi%\gallium\drivers\swr\swrAVX2.dll %mesa%mesa-dist-win\bin\%abi%
+@copy %mesa%mesa\build\windows-%abi%\mesa\drivers\osmesa\osmesa.dll %mesa%mesa-dist-win\bin\%abi%\osmesa-swrast.dll
+@copy %mesa%mesa\build\windows-%abi%\gallium\targets\osmesa\osmesa.dll %mesa%mesa-dist-win\bin\%abi%\osmesa-gallium.dll
+@copy %mesa%mesa\build\windows-%abi%\gallium\targets\graw-gdi\graw.dll %mesa%mesa-dist-win\bin\%abi%\graw-gdi.dll
+@copy %mesa%mesa\build\windows-%abi%\gallium\targets\graw-null\graw.dll %mesa%mesa-dist-win\bin\%abi%\graw-null.dll
+@copy %mesa%dxtn\%abi%\dxtn.dll %mesa%mesa-dist-win\bin\%abi%
 @echo.
 @pause
 
