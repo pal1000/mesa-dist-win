@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Mesa3D software rendering drivers for Windows"
-#define MyAppVersion "17.0.2.391-2"
+#define MyAppVersion "17.0.3.391-1"
 #define MyAppPublisher "Pal100x"
 #define MyAppURL "https://github.com/pal1000/mesa-dist-win"
 #define MyAppExeName "mesa-{#MyAppVersion}-setup.exe"
@@ -22,8 +22,8 @@ AppUpdatesURL={#MyAppURL}
 ArchitecturesInstallIn64BitMode=x64
 DefaultDirName={pf}\{#MyAppName}
 DisableProgramGroupPage=auto
-LicenseFile=.\LICENSE
-OutputDir=.\bin\
+LicenseFile=LICENSE
+OutputDir=bin\
 OutputBaseFilename=mesa-{#MyAppVersion}-setup
 Compression=lzma
 SolidCompression=yes
@@ -32,15 +32,21 @@ SolidCompression=yes
 Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Files]
-Source: ".\bin\x86\opengl32sw.dll"; DestDir: "{syswow64}"; Flags: ignoreversion
-Source: ".\bin\x86\swrAVX.dll"; DestDir: "{syswow64}"; Flags: ignoreversion
-Source: ".\bin\x86\swrAVX2.dll"; DestDir: "{syswow64}"; Flags: ignoreversion
-Source: ".\bin\x86\dxtn.dll"; DestDir: "{syswow64}"; Flags: ignoreversion
-Source: ".\bin\x64\opengl32sw.dll"; DestDir: "{win}\system32"; Flags: ignoreversion; Check: Is64BitInstallMode
-Source: ".\bin\x64\swrAVX.dll"; DestDir: "{win}\system32"; Flags: ignoreversion; Check: Is64BitInstallMode
-Source: ".\bin\x64\swrAVX2.dll"; DestDir: "{win}\system32"; Flags: ignoreversion; Check: Is64BitInstallMode
-Source: ".\bin\x64\dxtn.dll"; DestDir: "{win}\system32"; Flags: ignoreversion; Check: Is64BitInstallMode
-Source: ".\localdeploy.cmd"; DestDir: "{app}"
+Source: "bin\x86\opengl32sw.dll"; DestDir: "{syswow64}"; Flags: ignoreversion
+Source: "bin\x86\swrAVX.dll"; DestDir: "{syswow64}"; Flags: ignoreversion
+Source: "bin\x86\swrAVX2.dll"; DestDir: "{syswow64}"; Flags: ignoreversion
+Source: "bin\x86\dxtn.dll"; DestDir: "{syswow64}"; Flags: ignoreversion
+Source: "bin\x86\osmesa-gallium.dll"; DestDir: "{syswow64}"; Flags: ignoreversion
+Source: "bin\x86\osmesa-swrast.dll"; DestDir: "{syswow64}"; Flags: ignoreversion
+Source: "bin\x86\graw.dll"; DestDir: "{syswow64}"; Flags: ignoreversion
+Source: "bin\x64\opengl32sw.dll"; DestDir: "{win}\system32"; Flags: ignoreversion; Check: Is64BitInstallMode
+Source: "bin\x64\swrAVX.dll"; DestDir: "{win}\system32"; Flags: ignoreversion; Check: Is64BitInstallMode
+Source: "bin\x64\swrAVX2.dll"; DestDir: "{win}\system32"; Flags: ignoreversion; Check: Is64BitInstallMode
+Source: "bin\x64\dxtn.dll"; DestDir: "{win}\system32"; Flags: ignoreversion; Check: Is64BitInstallMode
+Source: "bin\x64\osmesa-gallium.dll"; DestDir: "{win}\system32"; Flags: ignoreversion; Check: Is64BitInstallMode
+Source: "bin\x64\osmesa-swrast.dll"; DestDir: "{win}\system32"; Flags: ignoreversion; Check: Is64BitInstallMode
+Source: "bin\x64\graw.dll"; DestDir: "{win}\system32"; Flags: ignoreversion; Check: Is64BitInstallMode
+Source: "localdeploy.cmd"; DestDir: "{app}"
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Registry]
@@ -58,10 +64,16 @@ Type: files; Name: "{syswow64}\opengl32sw.dll"
 Type: files; Name: "{syswow64}\swrAVX.dll";
 Type: files; Name: "{syswow64}\swrAVX2.dll"
 Type: files; Name: "{syswow64}\dxtn.dll"
+Type: files; Name: "{syswow64}\graw.dll";
+Type: files; Name: "{syswow64}\osmesa-gallium.dll"
+Type: files; Name: "{syswow64}\osmesa-swrast.dll"
 Type: files; Name: "{win}\system32\opengl32sw.dll"; Check: Is64BitInstallMode
 Type: files; Name: "{win}\system32\swrAVX.dll"; Check: Is64BitInstallMode
 Type: files; Name: "{win}\system32\swrAVX2.dll"; Check: Is64BitInstallMode
 Type: files; Name: "{win}\system32\dxtn.dll"; Check: Is64BitInstallMode
+Type: files; Name: "{win}\system32\osmesa-gallium.dll"; Check: Is64BitInstallMode
+Type: files; Name: "{win}\system32\osmesa-swrast.dll"; Check: Is64BitInstallMode
+Type: files; Name: "{win}\system32\graw.dll"; Check: Is64BitInstallMode
 
 [Icons]
 Name: "{commondesktop}\Mesa3D local deployment utility"; Filename: "cmd"; Parameters: "/c ""{app}\localdeploy.cmd"""; AfterInstall: SetElevationBit ('{commondesktop}\Mesa3D local deployment utility.lnk')
