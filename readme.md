@@ -8,7 +8,7 @@
   	- [Certificate installation and Mesa3D signing](#certificate-installation-and-mesa3d-signing)
   
 # Downloads
-Mesa 17.0.2 builds are now available in [releases section](https://github.com/pal1000/mesa-dist-win/releases)
+Mesa 17.0.3 builds are now available in [releases section](https://github.com/pal1000/mesa-dist-win/releases)
 
 By default mesa uses llvmpipe. You can switch to OpenSWR by setting GALLIUM_DRIVER environment variable value to swr . Mesa environment variables documentation is available [here](https://mesa3d.org/envvars.html). Build instructions, if you want to replicate my builds, are available [here](https://github.com/pal1000/mesa-dist-win/tree/master/buildscript).
 # Installation and usage
