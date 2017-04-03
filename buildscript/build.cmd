@@ -163,12 +163,12 @@ cd mesa
 @if EXIST %abi% RD /S /Q %abi%
 @MD %abi%
 @cd %abi%
-@copy %mesa%mesa\build\windows-%abi%\gallium\targets\libgl-gdi\opengl32.dll opengl32sw.dll
-@copy %mesa%mesa\build\windows-%abi%\gallium\drivers\swr\swrAVX.dll swrAVX.dll
-@copy %mesa%mesa\build\windows-%abi%\gallium\drivers\swr\swrAVX2.dll swrAVX2.dll
-@copy %mesa%mesa\build\windows-%abi%\mesa\drivers\osmesa\osmesa.dll osmesa-swrast.dll
-@copy %mesa%mesa\build\windows-%abi%\gallium\targets\osmesa\osmesa.dll osmesa-gallium.dll
-@copy %mesa%mesa\build\windows-%abi%\gallium\targets\graw-gdi\graw.dll graw.dll
+@copy %mesa%mesa\build\windows-%longabi%\gallium\targets\libgl-gdi\opengl32.dll opengl32sw.dll
+@copy %mesa%mesa\build\windows-%longabi%\gallium\drivers\swr\swrAVX.dll swrAVX.dll
+@copy %mesa%mesa\build\windows-%longabi%\gallium\drivers\swr\swrAVX2.dll swrAVX2.dll
+@copy %mesa%mesa\build\windows-%longabi%\mesa\drivers\osmesa\osmesa.dll osmesa-swrast.dll
+@copy %mesa%mesa\build\windows-%longabi%\gallium\targets\osmesa\osmesa.dll osmesa-gallium.dll
+@copy %mesa%mesa\build\windows-%longabi%\gallium\targets\graw-gdi\graw.dll graw.dll
 @copy %mesa%dxtn\%abi%\dxtn.dll dxtn.dll
 @echo.
 @pause
