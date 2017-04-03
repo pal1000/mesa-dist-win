@@ -136,7 +136,12 @@ cd mesa
 )
 
 :build_with_vs
-@if EXIST build\windows-%longabi% RD /S /Q build\windows-%longabi%
+@set /p cleanbuild=Do you want to clean build (y/n):
+@echo.
+@if /I "%cleanbuild%"=="y" set cleanbuild=1
+@if /I NOT "%cleanbuild%"=="y" set cleanbuild=0
+@if EXIST build\windows-%longabi% set cleanbuild=%cleanbuild%2
+@if %cleanbuild%==12 RD /S /Q build\windows-%longabi%
 @set PATH=%mesa%Python\%abi%\;%mesa%Python\%abi%\Scripts\;%mesa%flexbison\;%mesa%m4\%abi%\usr\bin\;%PATH%
 @python -m pip install -U mako
 @python -m pip freeze > requirements.txt
@@ -153,13 +158,13 @@ cd mesa
 @echo.
 @pause
 @if EXIST %mesa%mesa-dist-win\bin\%abi% RD /S /Q %mesa%mesa-dist-win\bin\%abi%
+@MD %mesa%mesa-dist-win\bin\%abi%
 @copy %mesa%mesa\build\windows-%abi%\gallium\targets\libgl-gdi\opengl32.dll %mesa%mesa-dist-win\bin\%abi%\opengl32sw.dll
-@copy %mesa%mesa\build\windows-%abi%\gallium\drivers\swr\swrAVX.dll %mesa%mesa-dist-win\bin\%abi%
-@copy %mesa%mesa\build\windows-%abi%\gallium\drivers\swr\swrAVX2.dll %mesa%mesa-dist-win\bin\%abi%
+@copy %mesa%mesa\build\windows-%abi%\gallium\drivers\swr\swrAVX.dll %mesa%mesa-dist-win\bin\%abi%\swrAVX.dll
+@copy %mesa%mesa\build\windows-%abi%\gallium\drivers\swr\swrAVX2.dll %mesa%mesa-dist-win\bin\%abi%\swrAVX2
 @copy %mesa%mesa\build\windows-%abi%\mesa\drivers\osmesa\osmesa.dll %mesa%mesa-dist-win\bin\%abi%\osmesa-swrast.dll
 @copy %mesa%mesa\build\windows-%abi%\gallium\targets\osmesa\osmesa.dll %mesa%mesa-dist-win\bin\%abi%\osmesa-gallium.dll
-@copy %mesa%mesa\build\windows-%abi%\gallium\targets\graw-gdi\graw.dll %mesa%mesa-dist-win\bin\%abi%\graw-gdi.dll
-@copy %mesa%mesa\build\windows-%abi%\gallium\targets\graw-null\graw.dll %mesa%mesa-dist-win\bin\%abi%\graw-null.dll
+@copy %mesa%mesa\build\windows-%abi%\gallium\targets\graw-gdi\graw.dll %mesa%mesa-dist-win\bin\%abi%\graw.dll
 @copy %mesa%dxtn\%abi%\dxtn.dll %mesa%mesa-dist-win\bin\%abi%
 @echo.
 @pause
