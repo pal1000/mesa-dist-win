@@ -27,12 +27,13 @@
 @echo.
 
 :finish
-mklink /H "%dir%\opengl32.dll" %mesadll%\opengl32.dll
+@set mesaloc=%~dp0
+mklink /H "%dir%\opengl32.dll" "%mesaloc%%mesadll%\opengl32.dll"
 @echo.
 @set s3tc=n
 @set /p s3tc=Do you need S3TC (y/n):
 @echo.
-@if /I "%s3tc%"=="y" mklink /H "%dir%\dxtn.dll" %mesadll%\dxtn.dll
+@if /I "%s3tc%"=="y" mklink /H "%dir%\dxtn.dll" "%mesaloc%%mesadll%\dxtn.dll"
 @if /I "%s3tc%"=="y" echo.
 @set osmesatype=n
 @set /p osmesa=Do you need off-screen rendering (y/n):
@@ -42,13 +43,13 @@ mklink /H "%dir%\opengl32.dll" %mesadll%\opengl32.dll
 @if /I "%osmesa%"=="y" echo 2. Swrast based (slower, but has unique OpenGL 2.1 features);
 @if /I "%osmesa%"=="y" set /p osmesatype=Enter choice:
 @if /I "%osmesa%"=="y" @echo.
-@if "%osmesatype%"=="1" mklink /H %dir%\osmesa.dll" %mesadll%\osmesa-gallium.dll
-@if "%osmesatype%"=="2" mklink /H "%dir%\osmesa.dll" %mesadll%\osmesa-swrast.dll
+@if "%osmesatype%"=="1" mklink /H %dir%\osmesa.dll" "%mesaloc%%mesadll%\osmesa-gallium.dll"
+@if "%osmesatype%"=="2" mklink /H "%dir%\osmesa.dll" "%mesaloc%%mesadll%\osmesa-swrast.dll"
 @if "%osmesatype%"=="1" echo.
 @if "%osmesatype%"=="2" echo.
 @set /p graw=Do you need graw library (y/n):
 @echo.
-@if /I "%graw%"=="y" mklink /H "%dir%\graw.dll" %mesadll%\graw.dll
+@if /I "%graw%"=="y" mklink /H "%dir%\graw.dll" "%mesaloc%%mesadll%\graw.dll"
 @echo.
 @set /p rerun=More Mesa deployment? (y=yes):
 @if /I "%rerun%"=="y" GOTO deploy
