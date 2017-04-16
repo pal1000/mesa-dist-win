@@ -14,7 +14,7 @@
 @echo copy-paste it from Windows Explorer using CTRL+V. The right click paste introduced in Windows 10 may lead to
 @echo unexpected double paste. Also don't worry if path contains spaces, parantheses or other symbols, it is enclosed in
 @echo quotes automatically so you don't need to add them manually.
-@echo.  
+@echo.
 @set /p dir=Path to folder holding application executable:
 @echo.
 @set mesadll=x86

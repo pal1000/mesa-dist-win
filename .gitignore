@@ -1,1 +1,3 @@
-bin/
+bin/x86/
+bin/x64/
+bin/*.exe
