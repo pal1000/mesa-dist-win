@@ -13,8 +13,7 @@
 @if NOT "%ProgramW6432%"=="" set vsenv=%vsenv% (x86)
 @set vsenv15=%vsenv%\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars%minabi%.bat"
 @set vsenv14="%VS140COMNTOOLS%..\..\VC\bin\vcvars%minabi%.bat"
-@set gcc=%mesa%mingw-w64\mingw64\bin
-@if NOT EXIST %gcc% set gcc=%mesa%mingw-w64\mingw32\bin
+@set gcc=%mesa%mingw-w64\%abi%\mingw%minabi%\bin
 @set vsenvloaded=0
 @set dxtnbuilt=0
 @set toolset=14
