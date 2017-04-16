@@ -13,7 +13,8 @@
 @if NOT "%ProgramW6432%"=="" set vsenv=%vsenv% (x86)
 @set vsenv15=%vsenv%\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars%minabi%.bat"
 @set vsenv14="%VS140COMNTOOLS%..\..\VC\bin\vcvars%minabi%.bat"
-@set gcc=%mesa%mingw-w64-%abi%\mingw%minabi%\bin
+@set gcc=%mesa%mingw-w64\mingw64\bin
+@if NOT EXIST %gcc% set gcc=%mesa%mingw-w64\mingw32\bin
 @set vsenvloaded=0
 @set dxtnbuilt=0
 @set toolset=14
@@ -53,7 +54,7 @@
 @if %toolset%==15 set vsenv=%vsenv15%
 @call %vsenv%
 @set vsenvloaded=1
-@set PATH=%mesa%cmake\%abi%\bin\;%PATH%
+@set PATH=%mesa%cmake\bin\;%PATH%
 @echo.
 @set modtoolchainabi=0
 @if NOT "%toolchain%"=="Ninja" set modtoolchainabi=1
@@ -78,9 +79,7 @@
 @echo.
 @if EXIST %abi% RD /S /Q %abi%
 @MD %abi%
-@set dxtn=gcc -shared
-@if %abi%==x86 set dxtn=%dxtn% -m32
-@set dxtn=%dxtn% -v *.c *.h -I ..\mesa\include -Wl,--dll,--dynamicbase,--enable-auto-image-base,--nxcompat -o %abi%\dxtn.dll
+@set dxtn=gcc -shared -m%minabi% -v *.c *.h -I ..\mesa\include -Wl,--dll,--dynamicbase,--enable-auto-image-base,--nxcompat -o %abi%\dxtn.dll
 @%dxtn%
 @echo.
 @set dxtnbuilt=1
@@ -98,7 +97,7 @@
 )
 @cd %mesa%mesa
 @set openswr=n
-@set sconscmd=python %mesa%Python\%abi%\Scripts\scons.py build=release platform=windows machine=%longabi% libgl-gdi
+@set sconscmd=python %mesa%Python\Scripts\scons.py build=release platform=windows machine=%longabi% libgl-gdi
 @set /p openswr=Do you want to build OpenSWR drivers? (y=yes):
 @echo.
 @if /I "%openswr%"=="y" set sconscmd=%sconscmd% swr=1
@@ -140,7 +139,7 @@ cd mesa
 @if EXIST build\windows-%longabi% set /p cleanbuild=Do you want to clean build (y/n):
 @if EXIST build\windows-%longabi% echo.
 @if /I "%cleanbuild%"=="y" RD /S /Q build\windows-%longabi%
-@set PATH=%mesa%Python\%abi%\;%mesa%Python\%abi%\Scripts\;%mesa%flexbison\;%mesa%m4\%abi%\usr\bin\;%PATH%
+@set PATH=%mesa%Python\;%mesa%Python\Scripts\;%mesa%flexbison\;%PATH%
 @python -m pip install -U mako
 @python -m pip freeze > requirements.txt
 @python -m pip install -r requirements.txt --upgrade
