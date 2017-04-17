@@ -21,6 +21,7 @@
 @if EXIST toolset-%abi%.ini set /p toolset=<toolset-%abi%.ini
 @set vsenv=%vsenv14%
 @if %toolset%==15 set vsenv=%vsenv15%
+@set pythonloaded=0
 
 :build_llvm
 @set /p buildllvm=Begin LLVM build. Only needs to run once for each ABI and version. Proceed (y/n):
@@ -53,12 +54,13 @@
 @if %toolset%==15 set vsenv=%vsenv15%
 @call %vsenv%
 @set vsenvloaded=1
-@set PATH=%mesa%cmake\bin\;%PATH%
 @echo.
 @set modtoolchainabi=0
 @if NOT "%toolchain%"=="Ninja" set modtoolchainabi=1
 @if %abi%==x64 set modtoolchainabi=%modtoolchainabi%2
 @if %modtoolchainabi%==12 set toolchain=%toolchain% Win64
+@set PATH=%mesa%cmake\bin\;%mesa%Python\;%mesa%Python\Scripts\;%mesa%flexbison\;%PATH%
+@set pythonloaded=1
 @cmake -G "%toolchain%" -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../%abi% ..
 @echo.
 @pause
@@ -134,11 +136,11 @@ cd mesa
 )
 
 :build_with_vs
+@if %pythonloaded%==0 set PATH=%mesa%Python\;%mesa%Python\Scripts\;%mesa%flexbison\;%PATH%
 @set cleanbuild=n
 @if EXIST build\windows-%longabi% set /p cleanbuild=Do you want to clean build (y/n):
 @if EXIST build\windows-%longabi% echo.
 @if /I "%cleanbuild%"=="y" RD /S /Q build\windows-%longabi%
-@set PATH=%mesa%Python\;%mesa%Python\Scripts\;%mesa%flexbison\;%PATH%
 @python -m pip install -U mako
 @python -m pip freeze > requirements.txt
 @python -m pip install -r requirements.txt --upgrade
