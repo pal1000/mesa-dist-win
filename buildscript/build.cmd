@@ -1,3 +1,5 @@
+@cd "%~dp0"
+@cd ..\..\
 @for %%I in ("%cd%") do @set mesa=%%~sI
 @set mesa=%mesa%\
 @set abi=x86
@@ -163,7 +165,7 @@ cd mesa
 @if EXIST %abi% RD /S /Q %abi%
 @MD %abi%
 @cd %abi%
-@copy %mesa%mesa\build\windows-%longabi%\gallium\targets\libgl-gdi\opengl32.dll opengl32sw.dll
+@copy %mesa%mesa\build\windows-%longabi%\gallium\targets\libgl-gdi\opengl32.dll opengl32.dll
 @copy %mesa%mesa\build\windows-%longabi%\gallium\drivers\swr\swrAVX.dll swrAVX.dll
 @copy %mesa%mesa\build\windows-%longabi%\gallium\drivers\swr\swrAVX2.dll swrAVX2.dll
 @copy %mesa%mesa\build\windows-%longabi%\mesa\drivers\osmesa\osmesa.dll osmesa-swrast.dll
