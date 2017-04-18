@@ -9,14 +9,24 @@
 - Visual Studio 2015 or 2017 (Visual 2015 Express may not work due to lack of MFC and ATL support); 
 
 For Visual Studio 2017 you need to install the following components under Desktop Development with C++: Visual Studio 2015 toolset [as Scons doesn't support Visual Studio 2017 yet](https://bugs.freedesktop.org/show_bug.cgi?id=100202), MFC and ATL, CMake tools, Windows 8.1 and 10 SDKs and Standard library modules.
+
+- [7-zip](http://www.7-zip.org/download.html) or [7-zip portable](https://portableapps.com/apps/utilities/7-zip_portable)
+
+We'll use this to extract all depencies packed in tar.gz or tar.xz archives.
+Before continuing prepare an empty folder to extract the rest of dependencies into. I'll call this `.`.
+
 - Mesa source code: ftp://ftp.freedesktop.org/pub/mesa/;
+
+Extract in `.`. Be warned that the archive is double packed. Rename extracted folder to `mesa`.
 - [LLVM source code](http://llvm.org/);
 
-[LLVM 4.0 is not supported yet with Visual Studio build of Mesa](https://bugs.freedesktop.org/show_bug.cgi?id=100201). If you use Visual Studio 2017 you have to patch LLVM 3.9.1 by replacing `_MSC_VER == 1900` with `_MSC_VER >= 1900 && _MSC_VER < 2000` in lib\DebugInfo\PDB\DIA\DIASession.cpp inside llvm source code or build LLVM with MSVC 2015 toolset aided by [Ninja build system](https://github.com/ninja-build/ninja/releases). My script asks if you want to do this before starting LLVM build. You can use Ninja build system regardless of what toolset you use to build LLVM, if you desire so.
-LLVM must be built in install mode. This build script does it automatically or you can look [here](https://wiki.qt.io/MesaLlvmpipe).
-- [S3 texture compresion library source code](https://cgit.freedesktop.org/~mareko/libtxc_dxtn/)
+[LLVM 4.0 is not supported yet with Visual Studio build of Mesa](https://bugs.freedesktop.org/show_bug.cgi?id=100201). Extract in `.`. Rename extracted folder to `llvm`. If you use Visual Studio 2017 you have to patch LLVM 3.9.1 by replacing `_MSC_VER == 1900` with `_MSC_VER >= 1900 && _MSC_VER < 2000` in lib\DebugInfo\PDB\DIA\DIASession.cpp inside llvm source code or build LLVM with MSVC 2015 toolset aided by [Ninja build system](https://github.com/ninja-build/ninja/releases). If used extract Ninja in `.\ninja`. My script asks if you want to do this before starting LLVM build. You can use Ninja build system regardless of what toolset you use to build LLVM, if you desire so. LLVM must be built in install mode. This build script does it automatically or you can look [here](https://wiki.qt.io/MesaLlvmpipe).
+- [Git for Windows 32 or 64-bit](https://git-scm.com/download/win); 
 
-S3 texture compression library is optional. Build it only if you need it. It implements 5 S3 texture compression extensions. You will need [git](https://git-scm.com/) to download S3 texture compression library source code. It is also recommended that before building Mesa to modify inside Mesa source code in src/gallium/drivers/llvmpipe/lp_tex_sample.h the value of LP_USE_TEXTURE_CACHE to 1. It should become
+You can use the portable version if you don't want to bloat your system too much.
+- S3 texture compression library source code;
+
+S3 texture compression library is optional. Build it only if you need it. It implements 5 S3 texture compression extensions. You will need to clone S3 texture compression library source code repository using git. Go to folder where you installed git and open git-cmd.bat. Change current folder to dependencies dropping folder, the one I called `.`. Execute `git clone git://people.freedesktop.org/~mareko/libtxc_dxtn dxtn`. It is also recommended that before building Mesa to modify inside Mesa source code in src/gallium/drivers/llvmpipe/lp_tex_sample.h the value of LP_USE_TEXTURE_CACHE to 1. It should become
 
 `#define LP_USE_TEXTURE_CACHE 1`
 
@@ -24,14 +34,16 @@ This will improve S3 texture compression performance significantly.
 
 - [CMake 32 or 64 bit](https://cmake.org/download/#latest);
 
-The installer automatically sets the PATH for you. You only need either 32 or 64-bit cmake. This script was tuned to use the zipped version as it sets PATH at runtime.
+This script was tuned to use the zipped version as it sets PATH at runtime. Extract in `.\cmake`.
 - Mingw-w64 i686 and x86_64;
 
-Optional. You need both as each one can only build for their matching architecture. You only need mingw-w64 if you want to build S3 texture compression library. Teoretically mesa could be built the same way but [it doesm't work due to a Scons bug](https://bugs.freedesktop.org/show_bug.cgi?id=94072). Download web-installer from [here](https://sourceforge.net/projects/mingw-w64/). You need to run web installer once for each target architecture (i686 means 32-bit, x86_64 means 64-bit). If build script is located in current directory . then change the installation directory to .\mingw-w64\x86 for 32-bit and .\mingw-w64\x64 for 64-bit. Leave everything else as default.
+Optional. Download web-installer from [here](https://sourceforge.net/projects/mingw-w64/). You need to run web installer once for each target architecture (i686 means 32-bit, x86_64 means 64-bit). Install in `.\mingw-w64\x86` for 32-bit builds and `.\mingw-w64\x64` for 64-bit builds. You need both as each one can only build for their matching architecture. Leave all other setings as default. You only need mingw-w64 if you want to build S3 texture compression library. Teoretically mesa could be built the same way but [it doesm't work due to a Scons bug](https://bugs.freedesktop.org/show_bug.cgi?id=94072).
 - [Flex and Bison](https://sourceforge.net/projects/winflexbison/);
+
+Extract in `.\flexbison`.
 - [Python 32 or 64 bit](https://www.python.org/);
 
-Use Python 2.7. Python 3.x is not fully supported by Scons and leads to Python crash at this moment. Make sure pip is installed. Sometimes it isn't. If it isn't get it from [here](https://pip.pypa.io/en/stable/installing/).
+Use Python 2.7. Python 3.x is not fully supported by Scons and leads to Python crash at this moment. Use the installer and make sure it's dropped in `.\python`. Don't add to PATH as this script does it at runtime. Make sure pip is installed. Sometimes it isn't. If it isn't get it from [here](https://pip.pypa.io/en/stable/installing/).
 - [pywin32 for Python 2.7](https://sourceforge.net/projects/pywin32/files/);
 
 It must match in architecture with Python.
@@ -39,10 +51,13 @@ It must match in architecture with Python.
 
 It must match in architecture with Python.
 Get Scons installer executable, ignore the zipped version. DO NOT use Scons 2.5.0. It doesn't work as it shipped incomplete as stated in [2.5.1 release notes](https://bitbucket.org/scons/scons/raw/8d7fac5a5e9c9a1de4b81769c7c8c0032c82a9aa/src/CHANGES.txt).
-- mako module for Python 2.7. Install with pip install mako. build.cmd installs mako automatically. It also attempts to update all Python modules.
+- mako module for Python 2.7. Install with pip install mako. This script installs mako automatically. It also attempts to update all Python modules.
+- Get this script.
+
+You will need to clone its repository using git. Go to folder where you installed git and open git-cmd.bat. Change current folder to dependencies dropping folder, the one I called `.`. Execute `git clone ttps://github.com/pal1000/mesa-dist-win mesa-dist-win`.
 
 ## 2. Setting environment variables and prepare the build
-You need to add the location of the following components to PATH:
+If you didn't follow my instructions you need to add the location of the following components to PATH:
 
 Dependency component | Paths relative to their installation directories (you have to convert them to absolute paths)
 -------------------- | ---------------------------------------------------------------------------------------------
@@ -52,21 +67,12 @@ CMake | `.\bin\;`
 mingw-w64 if used | `.\mingw64\bin\;` for 64-bit and `.\mingw32\bin\;` for 32-bit
 Ninja build system if used | `.\ninja\;`
 
-build.cmd script automates this whole process but you must respect the relative paths between the script and the sources and tools. Assuming the script is located in current folder "." then each tool and code source must be located as follows:
-- CMake: .\cmake;
-- Python: .\Python;
-- Flex and bison: .\flexbison;
-- LLVM source code: .\llvm;
-- Mesa source code: .\mesa;
-- S3 texture compression library source code: .\dxtn;
-- Mingw-w64 i686 (32-bit): .\mingw-w64\x86;
-- Mingw-w64 x86_64 (64-bit): .\mingw-w64\x64;
-- Ninja build system: .\ninja;
+This build script automates this whole process but you must respect the relative paths between the script and the sources and tools. If you folowed my instructions this should have been accomplished already.
 
 This way the script would be able to set PATH variable correctly and you'll no longer need to set anything from this point forward.
 
 ## 3. Build process
-
+The script is located at `.\mesa-dist-win\buildscript\build.cmd`. Now run it.
 The script acts like a Wizard asking for the following during execution:
 - architecture for which you want to build mesa - type "y" for x64, otherwise x86 is selected;
 - if you need to build LLVM.  You only need to do it once for each architecture you target when new version is out and this doesn't happen very often;
@@ -111,6 +117,6 @@ Graw libraries are dropped in:
 - 32-bit: .\mesa\build\windows-x86\gallium\targets\graw-gdi;
 - 64-bit: .\mesa\build\windows-x86_64\gallium\targets\graw-gdi.
 
-After Mesa build completes it will deploy all its binaries in: 
+After Mesa build completes it will deploy all binaries in: 
 - for 32-bit .\mesa-dist-win\bin\x86;
 - for 64-bit .\mesa-dist-win\bin\x64.
