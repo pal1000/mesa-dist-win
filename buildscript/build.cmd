@@ -67,7 +67,7 @@
 @echo.
 @pause
 @echo.
-@if NOT "%toolchain%"=="Ninja" msbuild INSTALL.vcxproj
+@if NOT "%toolchain%"=="Ninja" cmake --build . --target install
 @if "%toolchain%"=="Ninja" ninja install
 @echo.
 @echo %toolset% > %mesa%toolset-%abi%.ini
