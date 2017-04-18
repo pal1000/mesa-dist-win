@@ -67,7 +67,7 @@
 @echo.
 @pause
 @echo.
-@if NOT "%toolchain%"=="Ninja" msbuild /p:Configuration=Release INSTALL.vcxproj
+@if NOT "%toolchain%"=="Ninja" "msbuild INSTALL.vcxproj"
 @if "%toolchain%"=="Ninja" ninja install
 @echo.
 @echo %toolset% > %mesa%toolset-%abi%.ini
