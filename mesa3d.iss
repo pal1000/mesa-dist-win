@@ -70,7 +70,7 @@ Type: files; Name: "{app}\quickdeploy.cmd"
 Type: files; Name: "{app}\readme.txt"
 
 [Icons]
-Name: "{commondesktop}\Mesa3D quick deployment utility"; Filename: ""{app}\quickdeploy.cmd"";
+Name: "{commondesktop}\Mesa3D quick deployment utility"; Filename: "{app}\quickdeploy.cmd"
 
 [Run]
 Filename: "{app}\readme.txt"; Description: "View the README file"; Flags: postinstall shellexec skipifsilent
