@@ -70,27 +70,7 @@ Type: files; Name: "{app}\quickdeploy.cmd"
 Type: files; Name: "{app}\readme.txt"
 
 [Icons]
-Name: "{commondesktop}\Mesa3D quick deployment utility"; Filename: "cmd"; Parameters: "/c ""{app}\quickdeploy.cmd"""; AfterInstall: SetElevationBit ('{commondesktop}\Mesa3D quick deployment utility.lnk')
+Name: "{commondesktop}\Mesa3D quick deployment utility"; Filename: ""{app}\quickdeploy.cmd"";
 
-[Code]
-
-procedure SetElevationBit(Filename: string);
-var
-  Buffer: string;
-  Stream: TStream;
-begin
-  Filename := ExpandConstant(Filename);
-  Log('Setting elevation bit for ' + Filename);
-
-  Stream := TFileStream.Create(FileName, fmOpenReadWrite);
-  try
-    Stream.Seek(21, soFromBeginning);
-    SetLength(Buffer, 1);
-    Stream.ReadBuffer(Buffer, 1);
-    Buffer[1] := Chr(Ord(Buffer[1]) or $20);
-    Stream.Seek(-1, soFromCurrent);
-    Stream.WriteBuffer(Buffer, 1);
-  finally
-    Stream.Free;
-  end;
-end;
+[Run]
+Filename: "{app}\readme.txt"; Description: "View the README file"; Flags: postinstall shellexec skipifsilent

@@ -1,8 +1,42 @@
+@echo off
+
+:: BatchGotAdmin
+:-------------------------------------
+REM  --> Check for permissions
+    IF "%PROCESSOR_ARCHITECTURE%" EQU "amd64" (
+>nul 2>&1 "%SYSTEMROOT%\SysWOW64\cacls.exe" "%SYSTEMROOT%\SysWOW64\config\system"
+) ELSE (
+>nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\system"
+)
+
+REM --> If error flag set, we do not have admin.
+if '%errorlevel%' NEQ '0' (
+    echo Requesting administrative privileges...
+    goto UACPrompt
+) else ( goto gotAdmin )
+
+:UACPrompt
+    echo Set UAC = CreateObject^("Shell.Application"^) > "%temp%\getadmin.vbs"
+    set params = %*:"=""
+    echo UAC.ShellExecute "cmd.exe", "/c ""%~s0"" %params%", "", "runas", 1 >> "%temp%\getadmin.vbs"
+
+    "%temp%\getadmin.vbs"
+    del "%temp%\getadmin.vbs"
+    exit /B
+
+:gotAdmin
+    pushd "%CD%"
+    CD /D "%~dp0"
+:--------------------------------------
+
+
 @echo Mesa3D quick deployment utility
 @echo -------------------------------
 @echo Quick deployment utility allows for fast Mesa deployment without manual copy-paste. This helps a lot if you have
 @echo many programs that can use Mesa. Some applications still may use the GPU if they are smart enough to only load OpenGL
-@echo. DLL from system directory. Mesa and the applications that need it must be on same partition.
+@echo DLL from system directory. Use Federico Dossena's Mesainjector to workaround this case.
+@echo Build instructions - https://fdossena.com/?p=mesa/injector_build.frag
+@echo VMWare ThinApp capture: http://fdossena.com/mesa/MesaInjector_Capture.7z
 @echo.
 @pause
 
