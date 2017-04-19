@@ -24,12 +24,12 @@
 @set vsenv=%vsenv14%
 @if %toolset%==15 set vsenv=%vsenv15%
 @where /q cmake.exe
-@IF %ERRORLEVEL% NEQ 0 set PATH=%mesa%cmake\bin\;%PATH%
+@IF ERRORLEVEL 1 set PATH=%mesa%cmake\bin\;%PATH%
 @set ERRORLEVEL=0
 @where /q python.exe
-@IF %ERRORLEVEL% NEQ 0 set PATH=%mesa%Python\;%mesa%Python\Scripts\;%PATH%
+@IF ERRORLEVEL 1 set PATH=%mesa%Python\;%mesa%Python\Scripts\;%PATH%
 @set ERRORLEVEL=0
-set PATH=%mesa%flexbison\;%PATH%
+@set PATH=%mesa%flexbison\;%PATH%
 
 :build_llvm
 @set /p buildllvm=Begin LLVM build. Only needs to run once for each ABI and version. Proceed (y/n):
