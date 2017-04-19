@@ -86,7 +86,7 @@ The script acts like a Wizard asking for the following during execution:
 - if you want to build graw driver.
 
 ## 4. Miscellaneous and build location
-All paths are relative to script location.
+All paths are relative to dependencies dropping folder, the one I called `.`.
 
 CMake build system is created in:
 - for 32 bit: .\llvm\cmake-x86;
