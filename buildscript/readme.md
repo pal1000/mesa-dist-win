@@ -6,9 +6,9 @@
   
 ## 1. Acquire mesa source code, dependencies and build tools
 
-- Visual Studio 2015 or 2017 (Visual 2015 Express may not work due to lack of MFC and ATL support); 
+- Visual Studio 2015 or 2017 (Visual 2015 Express may not work due to lack of MFC and ATL support);
 
-For Visual Studio 2017 you need to install the following components under Desktop Development with C++: Visual Studio 2015 toolset [as Scons doesn't support Visual Studio 2017 yet](https://bugs.freedesktop.org/show_bug.cgi?id=100202), MFC and ATL, CMake tools, Windows 8.1 and 10 SDKs and Standard library modules.
+Visual Studio has to be installed in its default location. For Visual Studio 2017 you need to install the following components under Desktop Development with C++: Visual Studio 2015 toolset [as Scons doesn't support Visual Studio 2017 yet](https://bugs.freedesktop.org/show_bug.cgi?id=100202), MFC and ATL, CMake tools, Windows 8.1 and 10 SDKs and Standard library modules.
 
 - [7-zip](http://www.7-zip.org/download.html) or [7-zip portable](https://portableapps.com/apps/utilities/7-zip_portable)
 
@@ -20,7 +20,7 @@ Before continuing prepare an empty folder to extract the rest of dependencies in
 Extract in `.`. Be warned that the archive is double packed. Rename extracted folder to `mesa`.
 - [LLVM source code](http://llvm.org/);
 
-[LLVM 4.0 is not supported yet with Visual Studio build of Mesa](https://bugs.freedesktop.org/show_bug.cgi?id=100201). Extract in `.`. Rename extracted folder to `llvm`. If you use Visual Studio 2017 you have to patch LLVM 3.9.1 by replacing `_MSC_VER == 1900` with `_MSC_VER >= 1900 && _MSC_VER < 2000` in lib\DebugInfo\PDB\DIA\DIASession.cpp inside llvm source code or build LLVM with MSVC 2015 toolset aided by [Ninja build system](https://github.com/ninja-build/ninja/releases). If used extract Ninja in `.\ninja`. My script asks if you want to do this before starting LLVM build. You can use Ninja build system regardless of what toolset you use to build LLVM, if you desire so. LLVM must be built in install mode. This build script does it automatically or you can look [here](https://wiki.qt.io/MesaLlvmpipe).
+[LLVM 4.0 is not supported yet with Visual Studio build of Mesa](https://bugs.freedesktop.org/show_bug.cgi?id=100201). Extract in `.`. Rename extracted folder to `llvm`. If you use Visual Studio 2017 you have to patch LLVM 3.9.1 by replacing `_MSC_VER == 1900` with `_MSC_VER >= 1900 && _MSC_VER < 2000` in lib\DebugInfo\PDB\DIA\DIASession.cpp inside llvm source code or build LLVM with MSVC 2015 toolset aided by [Ninja build system](https://github.com/ninja-build/ninja/releases). If used, extract Ninja in `.\ninja`. My script asks if you want to do this before starting LLVM build. You can use Ninja build system regardless of what toolset you use to build LLVM, if you desire so. LLVM must be built in release mode with install target. This build script does it automatically or you can look [here](https://wiki.qt.io/MesaLlvmpipe).
 - [Git for Windows 32 or 64-bit](https://git-scm.com/download/win); 
 
 You can use the portable version if you don't want to bloat your system too much.
@@ -34,7 +34,7 @@ This will improve S3 texture compression performance significantly.
 
 - [CMake 32 or 64 bit](https://cmake.org/download/#latest);
 
-This script was tuned to use the zipped version as it sets PATH at runtime. Extract in `.\cmake`.
+You may use the installer or you can extract the zipped version in `.\cmake`.
 - Mingw-w64 i686 and x86_64;
 
 Optional. Download web-installer from [here](https://sourceforge.net/projects/mingw-w64/). You need to run web installer once for each target architecture (i686 means 32-bit, x86_64 means 64-bit). Install in `.\mingw-w64\x86` for 32-bit builds and `.\mingw-w64\x64` for 64-bit builds. You need both as each one can only build for their matching architecture. Leave all other setings as default. You only need mingw-w64 if you want to build S3 texture compression library. Teoretically mesa could be built the same way but [it doesm't work due to a Scons bug](https://bugs.freedesktop.org/show_bug.cgi?id=94072).
@@ -43,7 +43,7 @@ Optional. Download web-installer from [here](https://sourceforge.net/projects/mi
 Extract in `.\flexbison`.
 - [Python 32 or 64 bit](https://www.python.org/);
 
-Use Python 2.7. Python 3.x is not fully supported by Scons and leads to Python crash at this moment. Use the installer and make sure it's dropped in `.\python`. Don't add to PATH as this script does it at runtime. Make sure pip is installed. Sometimes it isn't. If it isn't get it from [here](https://pip.pypa.io/en/stable/installing/).
+Use Python 2.7. Python 3.x is not fully supported by Scons and leads to Python crash at this moment. Use the installer. Make sure it's dropped in `.\python` if you don't want to add it to PATH system-wide. Make sure pip is installed. Sometimes it isn't. If it isn't get it from [here](https://pip.pypa.io/en/stable/installing/).
 - [pywin32 for Python 2.7](https://sourceforge.net/projects/pywin32/files/);
 
 It must match in architecture with Python.
@@ -66,8 +66,9 @@ Python | `.\;` and `.\Scripts\;`
 CMake | `.\bin\;`
 mingw-w64 if used | `.\mingw64\bin\;` for 64-bit and `.\mingw32\bin\;` for 32-bit
 Ninja build system if used | `.\ninja\;`
+LLVM | `.\llvm\bin\;`
 
-This build script automates this whole process but you must respect the relative paths between the script and the sources and tools. If you folowed my instructions this should have been accomplished already.
+Python and CMake installers can set PATH automatically during installation. This build script automates this whole process but you must respect the relative paths between the script and the sources and tools. If you folowed my instructions this should have been accomplished already.
 
 This way the script would be able to set PATH variable correctly and you'll no longer need to set anything from this point forward.
 
