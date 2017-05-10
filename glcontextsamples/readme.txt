@@ -19,7 +19,7 @@ Examples:
 Tessellation is not supported by Mesa software renderers so only GL 3.x, GL 2.1 and GL 1.2
 benchmarks can run. Most demos expect GL 3.2. In conclusion we need an OpenGL 3.2 or 3.3
 compatibility context to simultaneously support GL 1.2, GL 2.1 and GL 3.x benchmarks. 
-Again GL 3.3 compatibility context is easier as shown in GPUCapsViewer.
+Again GL 3.3 compatibility context is easier as shown in GPUCapsViewer.cmd.
 
 3. rpcs3 - Playstation 3 emulator.
 System requirements: OpenGL 4.3 with GLSL 4.30 as specified here:
