@@ -1,0 +1,3 @@
+@set MESA_GL_VERSION_OVERRIDE=3.3
+@DeSmuME-VS2017-x64-Release.exe
+
