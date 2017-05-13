@@ -20,7 +20,11 @@ Before continuing prepare an empty folder to extract the rest of dependencies in
 Extract in `.`. Be warned that the archive is double packed. Rename extracted folder to `mesa`.
 - [LLVM source code](http://llvm.org/);
 
-Only Mesa 17.1 supports LLVM 4.0 according to [this bug report](https://bugs.freedesktop.org/show_bug.cgi?id=100201). Extract in `.`. Rename extracted folder to `llvm`. If you use Visual Studio 2017 and LLVM 3.9.1 you have to patch LLVM by replacing `_MSC_VER == 1900` with `_MSC_VER >= 1900 && _MSC_VER < 2000` in lib\DebugInfo\PDB\DIA\DIASession.cpp inside llvm source code or build LLVM with MSVC 2015 toolset aided by [Ninja build system](https://github.com/ninja-build/ninja/releases). If used, extract Ninja in `.\ninja`. My script asks if you want to do this before starting LLVM build. You can use Ninja build system regardless of what toolset you use to build LLVM, if you desire so. LLVM must be built in release mode with install target. This build script does it automatically or you can look [here](https://wiki.qt.io/MesaLlvmpipe).
+Extract in `.`. Rename extracted folder to `llvm`. If you use Visual Studio 2017, LLVM 4.0 is the only version that supports it.
+-[Ninja build system](https://github.com/ninja-build/ninja/releases)
+
+Optional, it reduces LLVM build size as it works with single configuration. Unlike Visual Studio MsBuild which require a Release and a Debug configuration at minimum. 
+If used, extract Ninja in `.\ninja`. My script asks if you want to do this before starting LLVM build. You can use Ninja build system regardless of what toolset you use to build LLVM, if you desire so. LLVM must be built in release mode with install target. This build script does it automatically or you can look [here](https://wiki.qt.io/MesaLlvmpipe).
 - [Git for Windows 32 or 64-bit](https://git-scm.com/download/win); 
 
 You can use the portable version if you don't want to bloat your system too much.
