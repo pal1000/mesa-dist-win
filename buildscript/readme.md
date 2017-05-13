@@ -24,7 +24,7 @@ Extract in `.`. Rename extracted folder to `llvm`. If you use Visual Studio 2017
 - [Ninja build system](https://github.com/ninja-build/ninja/releases)
 
 Optional, it reduces LLVM build size as it works with single configuration. Unlike Visual Studio MsBuild which require a Release and a Debug configuration at minimum. 
-If used, extract Ninja in `.\ninja`. My script asks if you want to do this before starting LLVM build. You can use Ninja build system regardless of what toolset you use to build LLVM, if you desire so. LLVM must be built in release mode with install target. This build script does it automatically or you can look [here](https://wiki.qt.io/MesaLlvmpipe).
+If used, extract Ninja in `.\ninja`. My script asks if you want to do this before starting LLVM build. LLVM must be built in release mode with install target. This build script does it automatically or you can look [here](https://wiki.qt.io/MesaLlvmpipe).
 - [Git for Windows 32 or 64-bit](https://git-scm.com/download/win); 
 
 You can use the portable version if you don't want to bloat your system too much.
