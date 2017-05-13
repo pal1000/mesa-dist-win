@@ -21,7 +21,7 @@ Extract in `.`. Be warned that the archive is double packed. Rename extracted fo
 - [LLVM source code](http://llvm.org/);
 
 Extract in `.`. Rename extracted folder to `llvm`. If you use Visual Studio 2017, LLVM 4.0 is the only version that supports it.
--[Ninja build system](https://github.com/ninja-build/ninja/releases)
+- [Ninja build system](https://github.com/ninja-build/ninja/releases)
 
 Optional, it reduces LLVM build size as it works with single configuration. Unlike Visual Studio MsBuild which require a Release and a Debug configuration at minimum. 
 If used, extract Ninja in `.\ninja`. My script asks if you want to do this before starting LLVM build. You can use Ninja build system regardless of what toolset you use to build LLVM, if you desire so. LLVM must be built in release mode with install target. This build script does it automatically or you can look [here](https://wiki.qt.io/MesaLlvmpipe).
