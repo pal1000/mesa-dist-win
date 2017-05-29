@@ -16,16 +16,22 @@ Because Mesa3D doesn't implement GL_ARB_compatibility, OpenGL contexts above 3.0
 - MESA_GL_VERSION_OVERRIDE
 
 It is used to specify OpenGL context version and type.
-It expects a value in the following format - OpenGLMajorVersion.OpenGLMinorVersion{FC|COMPAT].
+It expects a value in the following format
+
+OpenGLMajorVersion.OpenGLMinorVersion{FC|COMPAT].
+
 FC means a core+forward compatible context, COMPAT means a compatibility context, absence of any string after version number means a core profile context. Examples: 3.3FC means OpenGL 3.3 core+forward compatible context, 3.1COMPAT means OpenGL 3.1 compatibility context, 3.2 means OpenGL 3.2 core profile. The default value is 3.0COMPAT.
+
+A very important feature provided by this variable is the posibility to configure an incomplete OpenGL context. Programs can only request up to the highest OpenGL context with Khronos certification as complete from Mesa3D driver in use. Currently both llvmpipe and OpenSWR are certified for OpenGL 3.3, yet the rpcs3 context configuration sample uses OpenGL 4.3 and it works. This is because despite the context not being complete, the required extensions by rpcs3 are in place.
+
 - MESA_GLSL_VERSION_OVERRIDE
 
 Used to specify shading language version.
 Supported values are version numbers converted to integer: 110, 120, 130, 140. 150, 330, 400, 410, 420, 430, 440, 450.
-130 for example matches GLSL 1.30. It is always a good idea to keep OpenGL context and shading language versions in sync. [Here](https://en.wikipedia.org/wiki/OpenGL_Shading_Language#Versions) is the OpenGL - GLSL correlation table.
-Default values: 130 if MESA_GL_VERSION_OVERRIDE value isn't specified or 330 otherwise. 
+130 for example matches GLSL 1.30. It is always a good idea to keep OpenGL context and shading language versions in sync to avoid programs confusion which may result in crashes or glitches. This can happen because most applications rely on proprietary drivers behavior of having OpenGL and GLSL versions in sync. [Here](https://en.wikipedia.org/wiki/OpenGL_Shading_Language#Versions) is the OpenGL - GLSL correlation table.
+Default values: 130 if MESA_GL_VERSION_OVERRIDE is undefined or 330 otherwise. 
 
-Umder Windows the easiest way to set these 2 environment variables is by writing batch files for every application requiring OpenGL >= 3.1 that is using Mesa. 
+Under Windows the easiest way to set these 2 environment variables is by writing batch files for every application requiring OpenGL >= 3.1 that is using Mesa. 
 Simply open Notepad, write the batch script, When saving end the file name with .bat or .cmd, change save as type to all files and change save location to where the application executable is located. If you have some skill with batch scripts you can change the current directory during script execution using CD command openning the posibility to save the script anywhere you want as shown in [rpcs3](https://github.com/pal1000/mesa-dist-win/blob/master/glcontextsamples/rpcs3.cmd) and [GPU Caps Viewr](https://github.com/pal1000/mesa-dist-win/blob/master/glcontextsamples/GPUCapsViewer.cmd) examples.
 
 Complete examples are available [here](https://github.com/pal1000/mesa-dist-win/tree/master/glcontextsamples).
