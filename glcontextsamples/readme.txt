@@ -1,6 +1,6 @@
 Here are some examples on how to manually configure GL context. This is required for most
 applications using OpenGL 3.1 and higher on Windows as GL_ARB_compatibility implemented
-by all proprietary drivers is missing on Mesa. Probably as a side-effect shading language
+by all proprietary drivers is not exposed on Mesa3D. Probably as a side-effect shading language
 and OpenGL version don't sync by default for most OpenGL versions except 3.3 and default
 3.0.
 
