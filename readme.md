@@ -39,7 +39,7 @@ A very important feature provided by this variable is the posibility to configur
 Used to specify shading language version.
 Supported values are version numbers converted to integer: 110, 120, 130, 140. 150, 330, 400, 410, 420, 430, 440, 450.
 130 for example matches GLSL 1.30. It is always a good idea to keep OpenGL context and shading language versions in sync to avoid programs confusion which may result in crashes or glitches. This can happen because most applications rely on proprietary drivers behavior of having OpenGL and GLSL versions in sync. [Here](https://en.wikipedia.org/wiki/OpenGL_Shading_Language#Versions) is the OpenGL - GLSL correlation table.
-Default values: 130 if MESA_GL_VERSION_OVERRIDE is undefined or 330 otherwise. 
+Default values: 130 if MESA_GL_VERSION_OVERRIDE is undefined or 330 otherwise. Value 460 refering GLSL 4.60 would be supported at some point in the future. It is expected to be available with Mesa 17.3.
 
 Under Windows the easiest way to set these 2 environment variables is by writing batch files for every application requiring OpenGL >= 3.1 that is using Mesa. 
 Simply open Notepad, write the batch script, When saving end the file name with .bat or .cmd, change save as type to all files and change save location to where the application executable is located. If you have some skill with batch scripts you can change the current directory during script execution using CD command openning the posibility to save the script anywhere you want as shown in [rpcs3](https://github.com/pal1000/mesa-dist-win/blob/master/glcontextsamples/rpcs3.cmd) and [GPU Caps Viewr](https://github.com/pal1000/mesa-dist-win/blob/master/glcontextsamples/GPUCapsViewer.cmd) examples.
