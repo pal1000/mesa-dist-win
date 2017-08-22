@@ -30,6 +30,11 @@
 @IF ERRORLEVEL 1 set PATH=%mesa%Python\;%mesa%Python\Scripts\;%PATH%
 @set ERRORLEVEL=0
 @set PATH=%mesa%flexbison\;%PATH%
+@python -m pip install -U mako
+@python -m pip freeze > requirements.txt
+@python -m pip install -r requirements.txt --upgrade
+@del requirements.txt
+@echo.
 
 :build_llvm
 @set /p buildllvm=Begin LLVM build. Only needs to run once for each ABI and version. Proceed (y/n):
@@ -146,11 +151,6 @@ cd mesa
 @if EXIST build\windows-%longabi% set /p cleanbuild=Do you want to clean build (y/n):
 @if EXIST build\windows-%longabi% echo.
 @if /I "%cleanbuild%"=="y" RD /S /Q build\windows-%longabi%
-@python -m pip install -U mako
-@python -m pip freeze > requirements.txt
-@python -m pip install -r requirements.txt --upgrade
-@del requirements.txt
-@echo.
 @if %vsenvloaded%==0 (
 @call %vsenv%
 @echo.
