@@ -65,6 +65,7 @@
 @if "%toolchain%"=="Ninja" set PATH=%mesa%ninja\;%PATH%
 @set vsenv=%vsenv14%
 @if %toolset%==15 set vsenv=%vsenv15%
+@set llvmbuildsys=%CD%
 @call %vsenv%
 @set vsenvloaded=1
 @echo.
@@ -72,6 +73,7 @@
 @if NOT "%toolchain%"=="Ninja" set modtoolchainabi=1
 @if %abi%==x64 set modtoolchainabi=%modtoolchainabi%2
 @if %modtoolchainabi%==12 set toolchain=%toolchain% Win64
+@cd %llvmbuildsys%
 @cmake -G "%toolchain%" -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../%abi% ..
 @echo.
 @pause
@@ -153,6 +155,7 @@ cd mesa
 @if /I "%cleanbuild%"=="y" RD /S /Q build\windows-%longabi%
 @if %vsenvloaded%==0 (
 @call %vsenv%
+@cd %mesa%mesa
 @echo.
 )
 
