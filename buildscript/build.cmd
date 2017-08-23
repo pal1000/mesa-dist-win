@@ -98,7 +98,7 @@
 
 :build_mesa
 @set /p buildmesa=Begin mesa build. Proceed (y/n):
-@if /i NOT "%buildmesa%"=="y" GOTO exit
+@if /i NOT "%buildmesa%"=="y" GOTO distcreate
 @echo.
 @set LLVM=%mesa%llvm\%abi%
 @if NOT EXIST %LLVM% (
@@ -160,6 +160,11 @@ cd mesa
 @%sconscmd%
 @echo.
 @pause
+
+:distcreate
+@set /p dist=Create or update Mesa3D distribution package (y/n):
+@echo.
+@if /I NOT "%dist%"=="y" GOTO exit
 @cd %mesa%
 @if NOT EXIST mesa-dist-win MD mesa-dist-win
 @cd mesa-dist-win
