@@ -146,6 +146,7 @@ pip freeze > requirements.txt
 pip install -r requirements.txt --upgrade
 cd $mesa
 cd mesa
+GOTO build_mesa_exec
 )
 
 :build_with_vs
@@ -162,7 +163,6 @@ cd mesa
 :build_mesa_exec
 @%sconscmd%
 @echo.
-@pause
 
 :distcreate
 @set /p dist=Create or update Mesa3D distribution package (y/n):
