@@ -2,6 +2,17 @@
 @cd ..\..\
 @for %%I in ("%cd%") do @set mesa=%%~sI
 @set mesa=%mesa%\
+@where /q cmake.exe
+@IF ERRORLEVEL 1 set PATH=%mesa%cmake\bin\;%PATH%
+@set ERRORLEVEL=0
+@where /q python.exe
+@IF ERRORLEVEL 1 set PATH=%mesa%Python\;%mesa%Python\Scripts\;%PATH%
+@set ERRORLEVEL=0
+@python -m pip install -U mako
+@python -m pip freeze > requirements.txt
+@python -m pip install -r requirements.txt --upgrade
+@del requirements.txt
+@echo.
 @set abi=x86
 @set /p x64=Do you want to build for x64? (y/n) Otherwise build for x86:
 @if /I "%x64%"=="y" set abi=x64
@@ -23,18 +34,7 @@
 @if EXIST toolset-%abi%.ini set /p toolset=<toolset-%abi%.ini
 @set vsenv=%vsenv14%
 @if %toolset%==15 set vsenv=%vsenv15%
-@where /q cmake.exe
-@IF ERRORLEVEL 1 set PATH=%mesa%cmake\bin\;%PATH%
-@set ERRORLEVEL=0
-@where /q python.exe
-@IF ERRORLEVEL 1 set PATH=%mesa%Python\;%mesa%Python\Scripts\;%PATH%
-@set ERRORLEVEL=0
 @set PATH=%mesa%flexbison\;%PATH%
-@python -m pip install -U mako
-@python -m pip freeze > requirements.txt
-@python -m pip install -r requirements.txt --upgrade
-@del requirements.txt
-@echo.
 
 :build_llvm
 @set /p buildllvm=Begin LLVM build. Only needs to run once for each ABI and version. Proceed (y/n):
