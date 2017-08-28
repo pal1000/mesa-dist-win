@@ -11,6 +11,7 @@
 @set pyupd=y
 @set pyfrstupd=1
 @if EXIST pyupd.ini set /p pyfrstupd=<pyupd.ini
+@if %pyfrstupd%==0 set pyupd=n
 @if %pyfrstupd%==0 set /p pyupd=Install/update python modules (y/n):
 @if "%pyupd%"=="y" (
 @python -m pip install -U mako
