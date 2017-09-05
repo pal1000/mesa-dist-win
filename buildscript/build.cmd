@@ -1,3 +1,4 @@
+@TITLE Building Mesa3D
 @cd "%~dp0"
 @cd ..\..\
 @for %%I in ("%cd%") do @set mesa=%%~sI
@@ -30,6 +31,7 @@
 @if %abi%==x64 set altabi=%longabi%
 @set minabi=32
 @if %abi%==x64 set minabi=64
+@TITLE Building Mesa3D %abi%
 @set vsenv="%ProgramFiles%
 @if NOT "%ProgramW6432%"=="" set vsenv=%vsenv% (x86)
 @set vsenv15=%vsenv%\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars%minabi%.bat"
