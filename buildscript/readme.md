@@ -15,7 +15,7 @@ Visual Studio has to be installed in its default location. For Visual Studio 201
 We'll use this to extract all depencies packed in tar.gz or tar.xz archives.
 Before continuing prepare an empty folder to extract the rest of dependencies into. I'll call this `.`.
 
-- Mesa source code: ftp://ftp.freedesktop.org/pub/mesa/;
+- Mesa source code: [Mirror 1](https://www.mesa3d.org/archive/), [Mirror 2](https://mesa.freedesktop.org/archive/);
 
 Extract in `.`. Be warned that the archive is double packed. Rename extracted folder to `mesa`.
 - [LLVM source code](http://llvm.org/);
