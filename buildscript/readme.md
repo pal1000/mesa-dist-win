@@ -20,7 +20,7 @@ Before continuing prepare an empty folder to extract the rest of dependencies in
 Extract in `.`. Be warned that the archive is double packed. Rename extracted folder to `mesa`.
 - [LLVM source code](http://llvm.org/);
 
-Extract in `.`. Rename extracted folder to `llvm`. If you use Visual Studio 2017, LLVM 4.0 is the only version that supports it.
+LLVM 5.0 is not yet supported. See [Mesa bug 102318](https://bugs.freedesktop.org/show_bug.cgi?id=102318). Extract LLVM code in `.`. Rename extracted folder to `llvm`. If you use Visual Studio 2017, LLVM 4.0 is the only version that supports it.
 - [Ninja build system](https://github.com/ninja-build/ninja/releases)
 
 Optional, it reduces LLVM build size as it works with single configuration. Unlike Visual Studio MsBuild which require a Release and a Debug configuration at minimum. 
@@ -58,7 +58,7 @@ Get Scons installer executable, ignore the zipped version. DO NOT use Scons 2.5.
 - mako module for Python 2.7. Install with pip install mako. This script installs mako automatically. It also attempts to update all Python modules.
 - Get this script.
 
-You will need to clone its repository using git. Go to folder where you installed git and open git-cmd.bat. Change current folder to dependencies dropping folder, the one I called `.`. Execute `git clone ttps://github.com/pal1000/mesa-dist-win mesa-dist-win`.
+You will need to clone its repository using git. Go to folder where you installed git and open git-cmd.bat. Change current folder to dependencies dropping folder, the one I called `.`. Execute `git clone https://github.com/pal1000/mesa-dist-win mesa-dist-win`.
 
 ## 2. Setting environment variables and prepare the build
 If you didn't follow my instructions you need to add the location of the following components to PATH:
