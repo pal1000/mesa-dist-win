@@ -31,8 +31,9 @@
 @if %abi%==x64 set altabi=%longabi%
 @set minabi=32
 @if %abi%==x64 set minabi=64
-@TITLE Building Mesa3D %abi%
+@set hostabi=x86
 @set vsenv="%ProgramFiles%
+@if NOT "%ProgramW6432%"=="" set hostabi=x64
 @if NOT "%ProgramW6432%"=="" set vsenv=%vsenv% (x86)
 @set vsenv15=%vsenv%\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars%minabi%.bat"
 @set vsenv14="%VS140COMNTOOLS%..\..\VC\bin\vcvars%minabi%.bat"
@@ -45,6 +46,7 @@
 @set vsenv=%vsenv14%
 @if %toolset%==15 set vsenv=%vsenv15%
 @set PATH=%mesa%flexbison\;%PATH%
+@TITLE Building Mesa3D %abi%
 
 :build_llvm
 @set /p buildllvm=Begin LLVM build. Only needs to run once for each ABI and version. Proceed (y/n):
@@ -84,7 +86,10 @@
 @if %abi%==x64 set modtoolchainabi=%modtoolchainabi%2
 @if %modtoolchainabi%==12 set toolchain=%toolchain% Win64
 @cd %llvmbuildsys%
-@cmake -G "%toolchain%" -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../%abi% ..
+@set cmakecmd=cmake -G "%toolchain%"
+@if %hostabi%==x64 set cmakecmd=%cmakecmd% -Thost=x64
+@set cmakecmd=%cmakecmd% -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../%abi% ..
+@%cmakecmd%
 @echo.
 @pause
 @echo.
