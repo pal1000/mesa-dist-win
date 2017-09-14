@@ -124,7 +124,15 @@
 @pause
 @GOTO exit
 )
-@cd %mesa%mesa
+@cd %mesa%
+@if NOT EXIST mesa echo Mesa3D source code not found. Attempting to download it using git as long as it is in PATH...
+@if NOT EXIST mesa set /p branch=Enter Mesa source code branch name - defaults to master:
+@if "%branch%"=="" set branch=master
+@if NOT EXIST mesa echo.
+@if NOT EXIST mesa git clone --depth=1 --branch=%branch% git://anongit.freedesktop.org/mesa/mesa mesa
+@cd mesa
+git apply ..\mesa-dist-win\patches\scons-llvm5.patch
+git apply ..\mesa-dist-win\patches\s3tc.patch
 @set openswr=n
 @set sconscmd=python %mesa%Python\Scripts\scons.py build=release platform=windows machine=%longabi% libgl-gdi
 @set /p openswr=Do you want to build OpenSWR drivers? (y=yes):
