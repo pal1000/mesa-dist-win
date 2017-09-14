@@ -18,21 +18,25 @@ Before continuing prepare an empty folder to extract the rest of dependencies in
 - Mesa source code: [Mirror 1](https://www.mesa3d.org/archive/), [Mirror 2](https://mesa.freedesktop.org/archive/);
 
 Extract in `.`. Be warned that the archive is double packed. Rename extracted folder to `mesa`.
+- [Git for Windows 32 or 64-bit](https://git-scm.com/download/win); 
+
+You can use the portable version if you don't want to bloat your system too much.
 - [LLVM source code](http://llvm.org/);
 
-LLVM 5.0 is not yet supported. See [Mesa bug 102318](https://bugs.freedesktop.org/show_bug.cgi?id=102318). Extract LLVM code in `.`. Rename extracted folder to `llvm`. If you use Visual Studio 2017, LLVM 4.0 is the only version that supports it.
+LLVM 5.0 is not yet supported. See [Mesa bug 102318](https://bugs.freedesktop.org/show_bug.cgi?id=102318). A patch is included in this repository in `patches/scons-llvm5.patch` for Mesa3D source code to make it work which requires git in order to apply. Browse in Command Prompt to Mesa3D source code, then use `git apply` command with the location of the patch file as parametter. 
+
+Extract LLVM code in `.`. Rename extracted folder to `llvm`. If you use Visual Studio 2017, LLVM 4.0 is the only version that supports it.
 - [Ninja build system](https://github.com/ninja-build/ninja/releases)
 
 Optional, it reduces LLVM build size as it works with single configuration. Unlike Visual Studio MsBuild which require a Release and a Debug configuration at minimum. 
 If used, extract Ninja in `.\ninja`. My script asks if you want to do this before starting LLVM build. LLVM must be built in release mode with install target. This build script does it automatically or you can look [here](https://wiki.qt.io/MesaLlvmpipe).
-- [Git for Windows 32 or 64-bit](https://git-scm.com/download/win); 
-
-You can use the portable version if you don't want to bloat your system too much.
 - S3 texture compression library source code;
 
-S3 texture compression library is optional. Build it only if you need it. It implements 5 S3 texture compression extensions. You will need to clone S3 texture compression library source code repository using git. Go to folder where you installed git and open git-cmd.bat. Change current folder to dependencies dropping folder, the one I called `.`. Execute `git clone git://people.freedesktop.org/~mareko/libtxc_dxtn dxtn`. It is also recommended that before building Mesa to modify inside Mesa source code in src/gallium/drivers/llvmpipe/lp_tex_sample.h the value of LP_USE_TEXTURE_CACHE to 1. It should become
+S3 texture compression library is optional. Build it only if you need it. It implements 5 S3 texture compression extensions. You will need to clone S3 texture compression library source code repository using git. Go to folder where you installed git and open git-cmd.bat. Change current folder to dependencies dropping folder, the one I called `.`. Execute `git clone git://people.freedesktop.org/~mareko/libtxc_dxtn dxtn`. It is also recommended that before building Mesa to enable S3TC texture cache by modifying inside Mesa source code in src/gallium/drivers/llvmpipe/lp_tex_sample.h the value of LP_USE_TEXTURE_CACHE to 1. It should become
 
 `#define LP_USE_TEXTURE_CACHE 1`
+
+You can also enable S3TC texture cache by applying a patch included in this repository in `patches/s3tc.patch` to Mesa3D source code if you have git installed. Browse in Command Prompt to Mesa3D source code, then use `git apply` command with the location of the patch file as parametter.
 
 This will improve S3 texture compression performance significantly.
 
