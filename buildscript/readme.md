@@ -23,7 +23,7 @@ Extract in `.`. Be warned that the archive is double packed. Rename extracted fo
 You can use the portable version if you don't want to bloat your system too much.
 - [LLVM source code](http://llvm.org/);
 
-LLVM 5.0 is not yet supported. See [Mesa bug 102318](https://bugs.freedesktop.org/show_bug.cgi?id=102318). A patch is included in this repository in `patches/scons-llvm5.patch` for Mesa3D source code to make it work which requires git in order to apply. Browse in Command Prompt to Mesa3D source code, then use `git apply` command with the location of the patch file as parametter. 
+LLVM 5.0 is not yet supported. See [Mesa bug 102318](https://bugs.freedesktop.org/show_bug.cgi?id=102318). A patch is included in this repository in `patches/scons-llvm5.patch` for Mesa3D source code to make it work which requires git in order to apply. This build script will try to apply it automatically. To apply manually, browse in Command Prompt to Mesa3D source code, then use `git apply` command with the location of the patch file as parametter. 
 
 Extract LLVM code in `.`. Rename extracted folder to `llvm`. If you use Visual Studio 2017, LLVM 4.0 is the only version that supports it.
 - [Ninja build system](https://github.com/ninja-build/ninja/releases)
@@ -36,7 +36,7 @@ S3 texture compression library is optional. Build it only if you need it. It imp
 
 `#define LP_USE_TEXTURE_CACHE 1`
 
-You can also enable S3TC texture cache by applying a patch included in this repository in `patches/s3tc.patch` to Mesa3D source code if you have git installed. Browse in Command Prompt to Mesa3D source code, then use `git apply` command with the location of the patch file as parametter.
+You can also enable S3TC texture cache by applying a patch included in this repository in `patches/s3tc.patch` to Mesa3D source code if you have git installed. This build script will try to apply it automatically. To apply manually, browse in Command Prompt to Mesa3D source code, then use `git apply` command with the location of the patch file as parametter.
 
 This will improve S3 texture compression performance significantly.
 
