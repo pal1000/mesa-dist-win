@@ -1,0 +1,28 @@
+diff --git a/scons/llvm.py b/scons/llvm.py
+index 928fc97..ab3184a 100644
+--- a/scons/llvm.py
++++ b/scons/llvm.py
+@@ -104,7 +104,22 @@ def generate(env):
+         ])
+         env.Prepend(LIBPATH = [os.path.join(llvm_dir, 'lib')])
+         # LIBS should match the output of `llvm-config --libs engine mcjit bitwriter x86asmprinter irreader`
+-        if llvm_version >= distutils.version.LooseVersion('4.0'):
++        if llvm_version >= distutils.version.LooseVersion('5.0'):
++            env.Prepend(LIBS = [
++                'LLVMIRReader', 'LLVMAsmParser', 'LLVMX86Disassembler',
++                'LLVMX86AsmParser', 'LLVMX86CodeGen', 'LLVMGlobalISel',
++                'LLVMSelectionDAG', 'LLVMAsmPrinter', 'LLVMDebugInfoCodeView',
++                'LLVMDebugInfoMSF', 'LLVMCodeGen', 'LLVMScalarOpts',
++                'LLVMInstCombine', 'LLVMTransformUtils', 'LLVMBitWriter',
++                'LLVMX86Desc', 'LLVMMCDisassembler', 'LLVMX86Info',
++                'LLVMX86AsmPrinter', 'LLVMX86Utils', 'LLVMMCJIT',
++                'LLVMExecutionEngine', 'LLVMTarget', 'LLVMAnalysis',
++                'LLVMProfileData', 'LLVMRuntimeDyld', 'LLVMObject',
++                'LLVMMCParser', 'LLVMBitReader', 'LLVMMC', 'LLVMCore',
++                'LLVMBinaryFormat', 'LLVMSupport', 'LLVMDemangle',
++            ])
++
++        elif llvm_version >= distutils.version.LooseVersion('4.0'):
+             env.Prepend(LIBS = [
+                 'LLVMX86Disassembler', 'LLVMX86AsmParser',
+                 'LLVMX86CodeGen', 'LLVMSelectionDAG', 'LLVMAsmPrinter',
