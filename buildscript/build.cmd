@@ -63,6 +63,7 @@
 @if EXIST %vsenv15% set toolset=15
 @set ninja=n
 @set oldtoolset=n
+@set x64compiler= -Thost=x64
 @if EXIST %mesa%ninja set ninja=1
 @if EXIST %vsenv15% set ninja=%ninja%2
 @if %ninja%==12 set /p oldtoolset=Build with MSVC 2015 backward compatibility toolset, alternative solution for LLVM 3.9.1 build with Visual Studio 2017 (y/n):
@@ -74,6 +75,7 @@
 @if %ninja%==2 set /p ninja=Use Ninja build system instead of MsBuild, there is no requirement to do this with the primary toolset though (y/n):
 @echo.
 @if /I "%ninja%"=="y" set toolchain=Ninja
+@if /I "%ninja%"=="y" set x64compiler=
 @if "%toolchain%"=="Ninja" set PATH=%mesa%ninja\;%PATH%
 @set vsenv=%vsenv14%
 @if %toolset%==15 set vsenv=%vsenv15%
@@ -86,10 +88,8 @@
 @if %abi%==x64 set modtoolchainabi=%modtoolchainabi%2
 @if %modtoolchainabi%==12 set toolchain=%toolchain% Win64
 @cd %llvmbuildsys%
-@set cmakecmd=cmake -G "%toolchain%"
-@if %hostabi%==x64 set cmakecmd=%cmakecmd% -Thost=x64
-@set cmakecmd=%cmakecmd% -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../%abi% ..
-@%cmakecmd%
+@if NOT %hostabi%==x64 set x64compiler=
+@cmake -G "%toolchain%"%x64compiler% -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../%abi% ..
 @echo.
 @pause
 @echo.
