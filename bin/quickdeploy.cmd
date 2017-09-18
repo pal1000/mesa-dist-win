@@ -63,8 +63,8 @@ if '%errorlevel%' NEQ '0' (
 :finish
 @set mesaloc=%~dp0
 @mklink "%dir%\opengl32.dll" "%mesaloc%%mesadll%\opengl32.dll"
-@mklink "%dir%\swrAVX.dll" "%mesaloc%%mesadll%\swrAVX.dll"
-@mklink "%dir%\swrAVX2.dll" "%mesaloc%%mesadll%\swrAVX2.dll"
+@if %mesadll%==x64 mklink "%dir%\swrAVX.dll" "%mesaloc%x64\swrAVX.dll"
+@if %mesadll%==x64 mklink "%dir%\swrAVX2.dll" "%mesaloc%x64\swrAVX2.dll"
 @echo.
 @set s3tc=n
 @set /p s3tc=Do you need S3TC (y/n):
