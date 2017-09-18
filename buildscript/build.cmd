@@ -40,8 +40,8 @@
 @if NOT %targetabi%==%hostabi% set vsabi=%hostabi%_%targetabi%
 @if NOT "%ProgramW6432%"=="" set vsenv=%vsenv% (x86)
 @set vsenv15=%vsenv%\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars%vsabi%.bat"
-@if %vsabi%==32 set vsenv14=%VS140COMNTOOLS%..\..\VC\bin\%vsabi%\vcvars%vsabi%.bat"
-@if %vsabi%==64 set vsenv14=%VS140COMNTOOLS%..\..\VC\bin\%targetabi%\vcvars%targetabi%.bat"
+@if %vsabi%==32 set vsenv14=%VS140COMNTOOLS%..\..\VC\bin\vcvars%vsabi%.bat"
+@if %vsabi%==64 set vsenv14=%VS140COMNTOOLS%..\..\VC\bin\%targetabi%\vcvars%vsabi%.bat"
 @if NOT %targetabi%==%hostabi% set vsenv14=%VS140COMNTOOLS%..\..\VC\bin\%vsabi%\vcvars%vsabi%.bat"
 @set gcc=%mesa%mingw-w64\%abi%\mingw%minabi%\bin
 @set vsenvloaded=0
@@ -142,7 +142,7 @@ git apply -v ..\mesa-dist-win\patches\s3tc.patch
 @echo.
 @set openswr=n
 @set sconscmd=python %mesa%Python\Scripts\scons.py build=release platform=windows machine=%longabi% libgl-gdi
-@set /p openswr=Do you want to build OpenSWR drivers? (y=yes):
+@if %abi%==x64 set /p openswr=Do you want to build OpenSWR drivers? (y=yes):
 @echo.
 @if /I "%openswr%"=="y" set sconscmd=%sconscmd% swr=1
 @set /p osmesa=Do you want to build off-screen rendering drivers (y/n):
