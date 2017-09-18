@@ -45,7 +45,6 @@
 @if NOT %targetabi%==%hostabi% set vsenv14=%VS140COMNTOOLS%..\..\VC\bin\%vsabi%\vcvars%vsabi%.bat"
 @set gcc=%mesa%mingw-w64\%abi%\mingw%minabi%\bin
 @set vsenvloaded=0
-@set dxtnbuilt=0
 @set toolset=14
 @if EXIST %vsenv15% set toolset=15
 @if EXIST toolset-%abi%.ini set /p toolset=<toolset-%abi%.ini
@@ -56,7 +55,7 @@
 
 :build_llvm
 @set /p buildllvm=Begin LLVM build. Only needs to run once for each ABI and version. Proceed (y/n):
-@if /I NOT "%buildllvm%"=="y" GOTO build_dxtn
+@if /I NOT "%buildllvm%"=="y" GOTO build_mesa
 @echo.
 @cd %mesa%llvm
 @if EXIST %abi% RD /S /Q %abi%
@@ -104,31 +103,16 @@
 @echo.
 @echo %toolset% > %mesa%toolset-%abi%.ini
 
-:build_dxtn
-@if NOT EXIST %gcc% GOTO build_mesa
-@if NOT EXIST %mesa%dxtn GOTO build_mesa
-@set /p builddxtn=Do you want to build S3 texture compression library? (y/n):
-@if /i NOT "%builddxtn%"=="y" GOTO build_mesa
-@set PATH=%gcc%\;%PATH%
-@cd %mesa%dxtn
-@echo.
-@if EXIST %abi% RD /S /Q %abi%
-@MD %abi%
-@set dxtn=gcc -shared -m%minabi% -v *.c *.h -I ..\mesa\include -Wl,--dll,--dynamicbase,--enable-auto-image-base,--nxcompat -o %abi%\dxtn.dll
-@%dxtn%
-@echo.
-@set dxtnbuilt=1
-
 :build_mesa
 @set /p buildmesa=Begin mesa build. Proceed (y/n):
-@if /i NOT "%buildmesa%"=="y" GOTO distcreate
+@if /i NOT "%buildmesa%"=="y" GOTO build_dxtn
 @echo.
 @set LLVM=%mesa%llvm\%abi%
 @if NOT EXIST %LLVM% (
 @echo Could not find LLVM, aborting mesa build.
 @echo.
 @pause
-@GOTO exit
+@GOTO build_dxtn
 )
 @cd %mesa%
 @if NOT EXIST mesa echo Mesa3D source code not found. Attempting to download it using git as long as it is in PATH...
@@ -160,7 +144,10 @@ git apply -v ..\mesa-dist-win\patches\s3tc.patch
 @set msys2=%mesa%msys64\msys2_shell.cmd
 @if EXIST %msys2% set mingwtest=%mingwtest%2
 @if %mingwtest%==12 set /p mingw=Do you want to build with MinGW-W64 instead of Visual Studio (y=yes):
-@if %dxtnbuilt%==0 set PATH=%gcc%\;%PATH%
+@set ERRORLEVEL=0
+@where /q gcc.exe
+@IF ERRORLEVEL 1 set PATH=%gcc%\;%PATH%
+@set ERRORLEVEL=0
 @if /I "%mingw%"=="y" set sconscmd=%sconscmd% toolchain=crossmingw
 @if /I "%mingw%"=="y" copy %gcc%\%altabi%-w64-mingw32-gcc-ar.exe %gcc%\%altabi%-w64-mingw32-ar.exe
 @if /I "%mingw%"=="y" copy %gcc%\%altabi%-w64-mingw32-gcc-ranlib.exe %gcc%\%altabi%-w64-mingw32-ranlib.exe
@@ -192,6 +179,21 @@ GOTO build_mesa_exec
 
 :build_mesa_exec
 @%sconscmd%
+@echo.
+
+:build_dxtn
+@if NOT EXIST %gcc% GOTO distcreate
+@if NOT EXIST %mesa%dxtn GOTO distcreate
+@if NOT EXIST %mesa%mesa GOTO distcreate
+@set /p builddxtn=Do you want to build S3 texture compression library? (y/n):
+@if /i NOT "%builddxtn%"=="y" GOTO distcreate
+@set PATH=%gcc%\;%PATH%
+@cd %mesa%dxtn
+@echo.
+@if EXIST %abi% RD /S /Q %abi%
+@MD %abi%
+@set dxtn=gcc -shared -m%minabi% -v *.c *.h -I ..\mesa\include -Wl,--dll,--dynamicbase,--enable-auto-image-base,--nxcompat -o %abi%\dxtn.dll
+@%dxtn%
 @echo.
 
 :distcreate
