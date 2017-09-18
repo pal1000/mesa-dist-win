@@ -34,9 +34,12 @@
 @set hostabi=x86
 @set vsenv="%ProgramFiles%
 @if NOT "%ProgramW6432%"=="" set hostabi=x64
+@set vsabi=%abi%
+@if NOT %abi%==%hostabi% set vsabi=_%abi%
+@if %vsabi%==_%abi% set vsabi=%hostabi%_%abi%
 @if NOT "%ProgramW6432%"=="" set vsenv=%vsenv% (x86)
-@set vsenv15=%vsenv%\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars%minabi%.bat"
-@set vsenv14="%VS140COMNTOOLS%..\..\VC\bin\vcvars%minabi%.bat"
+@set vsenv15=%vsenv%\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" %vsabi%
+@set vsenv14="%VS140COMNTOOLS%..\..\VC\bin\vcvarsall.bat" %vsabi%
 @set gcc=%mesa%mingw-w64\%abi%\mingw%minabi%\bin
 @set vsenvloaded=0
 @set dxtnbuilt=0
