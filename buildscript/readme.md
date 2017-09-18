@@ -83,15 +83,17 @@ This way the script would be able to set PATH variable correctly and you'll no l
 ## 3. Build process
 The script is located at `.\mesa-dist-win\buildscript\build.cmd`. Now run it.
 The script acts like a Wizard asking for the following during execution:
+- if you want to update/install required python modules (mako and markupsafe);
 - architecture for which you want to build mesa - type "y" for x64, otherwise x86 is selected;
 - if you need to build LLVM.  You only need to do it once for each architecture you target when new version is out and this doesn't happen very often;
 - if you are running Visual Studio 2017 and Ninja build system is installed, the script asks if you want to build LLVM with MSVC 2015 toolset instead of 2017;
 - if you want to build LLVM with Ninja build system instead of Msbuild (only if you opted for default toolset, e.g. MSVC 2017 toolset with Visual Studio 2017 or MSVC 2015 toolset with Visual Studio 2015);
-- if you want to build S3 texture compression library (only asked if mingw-w64 is detected and library source code is present in the appropriate location);
-- if you want to build mesa or quit;
+- if you want to build Mesa3D;
 - if want to build OpenSWR driver;
 - if you want to build off-screen rendering drivers;
-- if you want to build graw driver.
+- if you want to build graw driver;
+- if you want to build S3 texture compression library (only asked if mingw-w64 is detected and library source code is present in the appropriate location);
+- if you want to organize binaries in a single location (distribution creation).
 
 ## 4. Miscellaneous and build location
 All paths are relative to dependencies dropping folder, the one I called `.`.
@@ -106,11 +108,9 @@ Mesa llvmpipe and softpipe drivers are dropped in:
 
 and are both named opengl32.dll.
 
-Mesa OpenSWR drivers are dropped in:
-- for 32-bit: .\mesa\build\windows-x86\gallium\drivers\swr;
-- for 64-bit: .\mesa\build\windows-x86_64\gallium\drivers\swr.
+Mesa OpenSWR drivers are dropped in.\mesa\build\windows-x86_64\gallium\drivers\swr.
 
-and are named swrAVX.dll and swrAVX2.dll after their instruction set requirements. You need both llvmpipe/softpipe and OpenSWR driver suitable to your CPU for OpenSWR to work. OpenSWR drivers are loaded when requested by llvmpipe/softpipe drivers. They can't run on their own.
+[They only support 64-bit officially](https://bugs.freedesktop.org/show_bug.cgi?id=102564#c5). They are named swrAVX.dll and swrAVX2.dll after their instruction set requirements. You need both llvmpipe/softpipe and OpenSWR driver suitable to your CPU for OpenSWR to work. OpenSWR drivers are loaded when requested by llvmpipe/softpipe drivers. They can't run on their own.
 
 S3 texture compresion binaries are dropped in:
 - for 32-bit: .\dxtn\x86;
@@ -126,6 +126,6 @@ Graw libraries are dropped in:
 - 32-bit: .\mesa\build\windows-x86\gallium\targets\graw-gdi;
 - 64-bit: .\mesa\build\windows-x86_64\gallium\targets\graw-gdi.
 
-After Mesa build completes it will deploy all binaries in: 
+Finalized distribution is deployed in: 
 - for 32-bit .\mesa-dist-win\bin\x86;
 - for 64-bit .\mesa-dist-win\bin\x64.
