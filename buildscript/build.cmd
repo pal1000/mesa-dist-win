@@ -131,8 +131,8 @@
 @if NOT EXIST mesa echo.
 @if NOT EXIST mesa git clone --depth=1 --branch=%branch% git://anongit.freedesktop.org/mesa/mesa mesa
 @cd mesa
-git apply ..\mesa-dist-win\patches\scons-llvm5.patch
-git apply ..\mesa-dist-win\patches\s3tc.patch
+git apply -v ..\mesa-dist-win\patches\scons-llvm5.patch
+git apply -v ..\mesa-dist-win\patches\s3tc.patch
 @echo.
 @set openswr=n
 @set sconscmd=python %mesa%Python\Scripts\scons.py build=release platform=windows machine=%longabi% libgl-gdi
