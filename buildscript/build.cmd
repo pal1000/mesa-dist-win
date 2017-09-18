@@ -31,15 +31,18 @@
 @if %abi%==x64 set altabi=%longabi%
 @set minabi=32
 @if %abi%==x64 set minabi=64
+@set targetabi=x86
+@if %abi%==x64 set targetabi=amd64
 @set hostabi=x86
 @set vsenv="%ProgramFiles%
-@if NOT "%ProgramW6432%"=="" set hostabi=x64
-@set vsabi=%abi%
-@if NOT %abi%==%hostabi% set vsabi=_%abi%
-@if %vsabi%==_%abi% set vsabi=%hostabi%_%abi%
+@if NOT "%ProgramW6432%"=="" set hostabi=amd64
+@set vsabi=%minabi%
+@if NOT %targetabi%==%hostabi% set vsabi=%hostabi%_%targetabi%
 @if NOT "%ProgramW6432%"=="" set vsenv=%vsenv% (x86)
-@set vsenv15=%vsenv%\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" %vsabi%
-@set vsenv14="%VS140COMNTOOLS%..\..\VC\bin\vcvarsall.bat" %vsabi%
+@set vsenv15=%vsenv%\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars%vsabi%.bat"
+@if %vsabi%==32 set vsenv14=%VS140COMNTOOLS%..\..\VC\bin\%vsabi%\vcvars%vsabi%.bat"
+@if %vsabi%==64 set vsenv14=%VS140COMNTOOLS%..\..\VC\bin\%targetabi%\vcvars%targetabi%.bat"
+@if NOT %targetabi%==%hostabi% set vsenv14=%VS140COMNTOOLS%..\..\VC\bin\%vsabi%\vcvars%vsabi%.bat"
 @set gcc=%mesa%mingw-w64\%abi%\mingw%minabi%\bin
 @set vsenvloaded=0
 @set dxtnbuilt=0
@@ -91,7 +94,7 @@
 @if %abi%==x64 set modtoolchainabi=%modtoolchainabi%2
 @if %modtoolchainabi%==12 set toolchain=%toolchain% Win64
 @cd %llvmbuildsys%
-@if NOT %hostabi%==x64 set x64compiler=
+@if NOT %hostabi%==amd64 set x64compiler=
 @cmake -G "%toolchain%"%x64compiler% -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../%abi% ..
 @echo.
 @pause
