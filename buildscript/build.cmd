@@ -10,17 +10,16 @@
 @IF ERRORLEVEL 1 set PATH=%mesa%Python\;%mesa%Python\Scripts\;%PATH%
 @set ERRORLEVEL=0
 @set pyupd=y
-@set pyfrstupd=1
-@if EXIST pyupd.ini set /p pyfrstupd=<pyupd.ini
-@if %pyfrstupd%==0 set pyupd=n
-@if %pyfrstupd%==0 set /p pyupd=Install/update python modules (y/n):
+@where python.exe>pyupd.ini
+@set /p makoloc=<pyupd.ini
+@set makoloc="%makoloc:python.exe=%Lib\site-packages\mako"
+@if EXIST %makoloc% set /p pyupd=Install/update python modules (y/n):
 @if "%pyupd%"=="y" (
 @python -m pip install -U mako
 @python -m pip freeze > requirements.txt
 @python -m pip install -r requirements.txt --upgrade
 @del requirements.txt
 @echo.
-@echo 0 > pyupd.ini
 )
 @set abi=x86
 @set /p x64=Do you want to build for x64? (y/n) Otherwise build for x86:
