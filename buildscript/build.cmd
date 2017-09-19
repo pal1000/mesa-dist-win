@@ -122,6 +122,7 @@
 @cd mesa
 git apply -v ..\mesa-dist-win\patches\scons-llvm5.patch
 git apply -v ..\mesa-dist-win\patches\s3tc.patch
+git apply -v ..\mesa-dist-win\patches\scons3.patch
 @echo.
 @set openswr=n
 @set sconscmd=python %mesa%Python\Scripts\scons.py build=release platform=windows machine=%longabi% libgl-gdi

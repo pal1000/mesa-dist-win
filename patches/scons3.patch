@@ -1,0 +1,105 @@
+diff --git a/SConstruct b/SConstruct
+index 696718c..9592dbf 100644
+--- a/SConstruct
++++ b/SConstruct
+@@ -50,9 +50,9 @@ except KeyError:
+     pass
+ else:
+     targets = targets.split(',')
+-    print 'scons: warning: targets option is deprecated; pass the targets on their own such as'
++    print ('scons: warning: targets option is deprecated; pass the targets on their own such as')
+     print
+-    print '  scons %s' % ' '.join(targets)
++    print ('  scons %s' % ' '.join(targets))
+     print
+     COMMAND_LINE_TARGETS.append(targets)
+ 
+@@ -81,7 +81,7 @@ env.Append(CPPPATH = [
+ ])
+ 
+ # for debugging
+-#print env.Dump()
++#print (env.Dump())
+ 
+ 
+ # Add a check target for running tests
+diff --git a/src/SConscript b/src/SConscript
+index 37b3f85..ed36b8d 100644
+--- a/src/SConscript
++++ b/src/SConscript
+@@ -28,7 +28,7 @@ def write_git_sha1_h_file(filename):
+         try:
+             subprocess.Popen(args, stdout=f).wait()
+         except:
+-            print "Warning: exception in write_git_sha1_h_file()"
++            print ("Warning: exception in write_git_sha1_h_file()")
+             return
+ 
+     if not os.path.exists(filename) or not filecmp.cmp(tempfile, filename):
+diff --git a/src/gallium/drivers/llvmpipe/SConscript b/src/gallium/drivers/llvmpipe/SConscript
+index fbbd22a..1fc0568 100644
+--- a/src/gallium/drivers/llvmpipe/SConscript
++++ b/src/gallium/drivers/llvmpipe/SConscript
+@@ -4,7 +4,7 @@ import distutils.version
+ Import('*')
+ 
+ if not env['llvm']:
+-    print 'warning: LLVM disabled: not building llvmpipe'
++    print ('warning: LLVM disabled: not building llvmpipe')
+     Return()
+ 
+ env = env.Clone()
+diff --git a/src/gallium/drivers/svga/SConscript b/src/gallium/drivers/svga/SConscript
+index 2d60ceb..665fc0a 100644
+--- a/src/gallium/drivers/svga/SConscript
++++ b/src/gallium/drivers/svga/SConscript
+@@ -5,7 +5,7 @@ env = env.Clone()
+ env.MSVC2013Compat()
+ 
+ if env['suncc']:
+-	print 'warning: not building svga'
++	print ('warning: not building svga')
+ 	Return()
+ 
+ env.Append(CPPDEFINES = [
+diff --git a/src/gallium/drivers/swr/SConscript b/src/gallium/drivers/swr/SConscript
+index c578d7a..c5ab620 100644
+--- a/src/gallium/drivers/swr/SConscript
++++ b/src/gallium/drivers/swr/SConscript
+@@ -8,12 +8,12 @@ if not env['swr']:
+     Return()
+ 
+ if not env['llvm']:
+-    print 'warning: LLVM disabled: not building swr'
++    print ('warning: LLVM disabled: not building swr')
+     env['swr'] = False
+     Return()
+ 
+ if env['LLVM_VERSION'] < distutils.version.LooseVersion('3.9'):
+-    print "warning: swr requires LLVM >= 3.9: not building swr"
++    print ("warning: swr requires LLVM >= 3.9: not building swr")
+     env['swr'] = False
+     Return()
+ 
+@@ -28,7 +28,7 @@ if env['platform'] == 'windows':
+ else:
+     llvm_config = os.environ.get('LLVM_CONFIG', 'llvm-config')
+     llvm_includedir = env.backtick('%s --includedir' % llvm_config).rstrip()
+-    print "llvm include dir %s" % llvm_includedir
++    print ("llvm include dir %s" % llvm_includedir)
+ 
+ if not env['msvc'] :
+     env.Append(CCFLAGS = [
+diff --git a/src/gallium/targets/dri/SConscript b/src/gallium/targets/dri/SConscript
+index d7a8cbd..2e0741f 100644
+--- a/src/gallium/targets/dri/SConscript
++++ b/src/gallium/targets/dri/SConscript
+@@ -3,7 +3,7 @@ Import('*')
+ env = drienv.Clone()
+ 
+ if env['suncc']:
+-    print 'warning: not building dri-vmwgfx'
++    print ('warning: not building dri-vmwgfx')
+     Return()
+ 
+ env.Append(CPPPATH = [
