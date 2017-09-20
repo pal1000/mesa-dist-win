@@ -115,15 +115,20 @@
 @GOTO build_dxtn
 )
 @cd %mesa%
+@set mesapatched=0
+@if NOT EXIST mesa set mesapatched=0
 @if NOT EXIST mesa echo Mesa3D source code not found. Attempting to download it using git as long as it is in PATH...
 @if NOT EXIST mesa set /p branch=Enter Mesa source code branch name - defaults to master:
 @if "%branch%"=="" set branch=master
 @if NOT EXIST mesa echo.
 @if NOT EXIST mesa git clone --depth=1 --branch=%branch% git://anongit.freedesktop.org/mesa/mesa mesa
 @cd mesa
-git apply -v ..\mesa-dist-win\patches\scons-llvm5.patch
-git apply -v ..\mesa-dist-win\patches\s3tc.patch
-git apply -v ..\mesa-dist-win\patches\scons3.patch
+@if EXIST mesapatched.ini set /p mesapatched=<mesapatched.ini
+@if NOT %mesapatched%==1 git apply -v ..\mesa-dist-win\patches\scons-llvm5.patch
+@if NOT %mesapatched%==1 git apply -v ..\mesa-dist-win\patches\s3tc.patch
+@if NOT %mesapatched%==1 git apply -v ..\mesa-dist-win\patches\scons3.patch
+@set mesapatched=1
+@echo %mesapatched% > mesapatched.ini
 @echo.
 @set openswr=n
 @set sconscmd=python %mesa%Python\Scripts\scons.py build=release platform=windows machine=%longabi% libgl-gdi
