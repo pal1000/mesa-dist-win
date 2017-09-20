@@ -9,10 +9,11 @@
 @where /q python.exe
 @IF ERRORLEVEL 1 set PATH=%mesa%Python\;%mesa%Python\Scripts\;%PATH%
 @set ERRORLEVEL=0
-@set pyupd=y
+@set pyupd=n
 @where python.exe>pyupd.ini
 @set /p makoloc=<pyupd.ini
 @set makoloc="%makoloc:python.exe=%Lib\site-packages\mako"
+@if NOT EXIST %makoloc% set pyupd=y
 @if EXIST %makoloc% set /p pyupd=Install/update python modules (y/n):
 @if "%pyupd%"=="y" (
 @python -m pip install -U mako
