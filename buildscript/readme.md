@@ -57,7 +57,9 @@ Use Python 2.7. Python 3.x is not fully supported by Scons and leads to Python c
 It must match in architecture with Python.
 - [Scons for python 2.7](https://sourceforge.net/projects/scons/files/scons/);
 
-It must match in architecture with Python.
+Scons 3.0.0 is not yet supported. See [Mesa bug 102852](https://bugs.freedesktop.org/show_bug.cgi?id=102852). A patch is included in this repository in `patches/scons3.patch` for Mesa3D source code to make it work which requires git in order to apply. This build script will try to apply it automatically. To apply manually, browse in Command Prompt to Mesa3D source code, then use `git apply` command with the location of the patch file as parametter.
+
+Scons build must match in architecture with Python.
 Get Scons installer executable, ignore the zipped version. DO NOT use Scons 2.5.0. It doesn't work as it shipped incomplete as stated in [2.5.1 release notes](https://bitbucket.org/scons/scons/raw/8d7fac5a5e9c9a1de4b81769c7c8c0032c82a9aa/src/CHANGES.txt).
 - mako module for Python 2.7. Install with pip install mako. This script installs mako automatically. It also attempts to update all Python modules.
 - Get this script.
