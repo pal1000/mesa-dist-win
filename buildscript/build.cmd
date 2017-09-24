@@ -11,8 +11,9 @@
 @set ERRORLEVEL=0
 @set pyupd=n
 @where python.exe>pyupd.ini
-@set /p makoloc=<pyupd.ini
-@set makoloc="%makoloc:python.exe=%Lib\site-packages\mako"
+@set /p pythonloc=<pyupd.ini
+@set makoloc="%pythonloc:python.exe=%Lib\site-packages\mako"
+@set sconsloc="%pythonloc:python.exe=%Scripts\scons.py"
 @if NOT EXIST %makoloc% set pyupd=y
 @if EXIST %makoloc% set /p pyupd=Install/update python modules (y/n):
 @if "%pyupd%"=="y" (
@@ -143,7 +144,7 @@
 :mesa_ext
 @cd %mesa%mesa
 @set openswr=n
-@set sconscmd=python %mesa%Python\Scripts\scons.py build=release platform=windows machine=%longabi% libgl-gdi
+@set sconscmd=python %sconsloc% build=release platform=windows machine=%longabi% libgl-gdi
 @if %abi%==x64 set /p openswr=Do you want to build OpenSWR drivers? (y=yes):
 @echo.
 @if /I "%openswr%"=="y" set sconscmd=%sconscmd% swr=1
