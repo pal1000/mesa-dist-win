@@ -117,6 +117,12 @@
 @cd %mesa%
 @set mesapatched=0
 @set branch=none
+@where /q git.exe
+@IF ERRORLEVEL 1 (
+@set ERRORLEVEL=0
+@echo Error: Git not found. Patching disabled
+@GOTO mesa_ext
+)
 @if NOT EXIST mesa set mesapatched=0
 @if NOT EXIST mesa set branch=master
 @if NOT EXIST mesa echo Mesa3D source code not found. Attempting to download it using git as long as it is in PATH...
@@ -133,6 +139,9 @@
 @set mesapatched=1
 @echo %mesapatched% > mesapatched.ini
 @echo.
+
+:mesa_ext
+@cd %mesa%mesa
 @set openswr=n
 @set sconscmd=python %mesa%Python\Scripts\scons.py build=release platform=windows machine=%longabi% libgl-gdi
 @if %abi%==x64 set /p openswr=Do you want to build OpenSWR drivers? (y=yes):
