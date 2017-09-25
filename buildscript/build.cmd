@@ -136,7 +136,7 @@
 @if %mesapatched%==1 set branch=master
 @if NOT "%branch%"=="master" git apply -v ..\mesa-dist-win\patches\scons-llvm5.patch
 @if NOT %mesapatched%==1 git apply -v ..\mesa-dist-win\patches\s3tc.patch
-@if NOT %mesapatched%==1 git apply -v ..\mesa-dist-win\patches\scons3.patch
+@if NOT "%branch%"=="master" git apply -v ..\mesa-dist-win\patches\scons3.patch
 @set mesapatched=1
 @echo %mesapatched% > mesapatched.ini
 @echo.
