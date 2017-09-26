@@ -2,7 +2,9 @@
 - Fixed python modules update check. Always check if mako not found, ask otherwise.
 - Add Scons 3.0.0 compatibility patch to Mesa3D Git-powered auto-patches.
 Only apply it to Mesa stable, patch is upstream now.
-- Drop LLVM 5.0 compatibility patch when building Mesa master. Patch is upstream.
+- Made build script aware of Mesa branches, helps with patches applicability narrowing.
+- Drop LLVM 5.0 compatibility patch when building Mesa master and version 17.1.10.
+Patch is upstream.
 - Ensure auto-patching is done once and only once.
 - Look for Git before trying to patch. It is pointless if it is not found.
 - This script won't find Scons if it isn't in a certain relative location to it.
