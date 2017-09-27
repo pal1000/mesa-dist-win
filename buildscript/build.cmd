@@ -129,12 +129,12 @@
 @if NOT EXIST mesa echo.
 @if NOT EXIST mesa git clone --depth=1 --branch=%branch% git://anongit.freedesktop.org/mesa/mesa mesa
 @cd mesa
-@set /p branch=<VERSION
-@set branch=%branch:~0,4%
+@set /p mesaver=<VERSION
+@set branch=%mesaver:~0,4%
 @if EXIST mesapatched.ini GOTO build_mesa
 @if "%branch%"=="17.2" git apply -v ..\mesa-dist-win\patches\scons-llvm5.patch
 @git apply -v ..\mesa-dist-win\patches\s3tc.patch
-@if NOT "%branch%"=="master" git apply -v ..\mesa-dist-win\patches\scons3.patch
+@if NOT "%mesaver:~-5%"=="devel" git apply -v ..\mesa-dist-win\patches\scons3.patch
 @set mesapatched=1
 @echo %mesapatched% > mesapatched.ini
 @echo.
