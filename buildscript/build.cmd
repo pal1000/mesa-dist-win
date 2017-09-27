@@ -56,7 +56,7 @@
 
 :build_llvm
 @set /p buildllvm=Begin LLVM build. Only needs to run once for each ABI and version. Proceed (y/n):
-@if /I NOT "%buildllvm%"=="y" GOTO build_mesa
+@if /I NOT "%buildllvm%"=="y" GOTO prep_mesa
 @echo.
 @cd %mesa%llvm
 @if EXIST %abi% RD /S /Q %abi%
@@ -104,6 +104,41 @@
 @echo.
 @echo %toolset% > %mesa%toolset-%abi%.ini
 
+:prep_mesa
+@cd %mesa%
+@set mesapatched=0
+@set branch=none
+@set haltmesabuild=n
+@set prepfail=0
+@where /q git.exe
+@IF ERRORLEVEL 1 (
+@set ERRORLEVEL=0
+@echo Error: Git not found. Patching disabled.
+@set prepfail=1
+)
+@if NOT EXIST mesa set mesapatched=0
+@if NOT EXIST mesa echo Warning: Mesa3D source code not found.
+@if NOT EXIST mesa set prepfail=%prepfail%2
+@if %prepfail%==12 echo Fatal: Both Mesa code and Git are missing. At least one is required. Execution halted.
+@if %prepfail%==12 GOTO distcreate
+@if NOT EXIST mesa set /p haltmesabuild=Press Y to abort execution. Press any other key to download Mesa via Git:
+@if /I "%haltmesabuild%"=="y" GOTO distcreate
+@if NOT EXIST mesa set /p branch=Enter Mesa source code branch name - defaults to master:
+@if "%branch%"=="" set branch=master
+@if "%branch%"=="none" set branch=master
+@if NOT EXIST mesa echo.
+@if NOT EXIST mesa git clone --depth=1 --branch=%branch% git://anongit.freedesktop.org/mesa/mesa mesa
+@cd mesa
+@set /p branch=<VERSION
+@set branch=%branch:~0,4%
+@if EXIST mesapatched.ini GOTO build_mesa
+@if "%branch%"=="17.2" git apply -v ..\mesa-dist-win\patches\scons-llvm5.patch
+@git apply -v ..\mesa-dist-win\patches\s3tc.patch
+@if NOT "%branch%"=="master" git apply -v ..\mesa-dist-win\patches\scons3.patch
+@set mesapatched=1
+@echo %mesapatched% > mesapatched.ini
+@echo.
+
 :build_mesa
 @set /p buildmesa=Begin mesa build. Proceed (y/n):
 @if /i NOT "%buildmesa%"=="y" GOTO build_dxtn
@@ -115,34 +150,6 @@
 @pause
 @GOTO build_dxtn
 )
-@cd %mesa%
-@set mesapatched=0
-@set branch=none
-@where /q git.exe
-@IF ERRORLEVEL 1 (
-@set ERRORLEVEL=0
-@echo Error: Git not found. Patching disabled
-@GOTO mesa_ext
-)
-@if NOT EXIST mesa set mesapatched=0
-@if NOT EXIST mesa set branch=master
-@if NOT EXIST mesa echo Mesa3D source code not found. Attempting to download it using git as long as it is in PATH...
-@if NOT EXIST mesa set /p branch=Enter Mesa source code branch name - defaults to master:
-@if "%branch%"=="" set branch=master
-@if NOT EXIST mesa echo.
-@if NOT EXIST mesa git clone --depth=1 --branch=%branch% git://anongit.freedesktop.org/mesa/mesa mesa
-@cd mesa
-@if EXIST mesapatched.ini GOTO mesa_ext
-@set /p branch=<VERSION
-@set branch=%branch:~0,4%
-@if "%branch%"=="17.2" git apply -v ..\mesa-dist-win\patches\scons-llvm5.patch
-@git apply -v ..\mesa-dist-win\patches\s3tc.patch
-@if NOT "%branch%"=="master" git apply -v ..\mesa-dist-win\patches\scons3.patch
-@set mesapatched=1
-@echo %mesapatched% > mesapatched.ini
-@echo.
-
-:mesa_ext
 @cd %mesa%mesa
 @set openswr=n
 @set sconscmd=python %sconsloc% build=release platform=windows machine=%longabi% libgl-gdi
@@ -204,7 +211,6 @@ GOTO build_mesa_exec
 :build_dxtn
 @if NOT EXIST %gcc% GOTO distcreate
 @if NOT EXIST %mesa%dxtn GOTO distcreate
-@if NOT EXIST %mesa%mesa GOTO distcreate
 @set /p builddxtn=Do you want to build S3 texture compression library? (y/n):
 @if /i NOT "%builddxtn%"=="y" GOTO distcreate
 @set PATH=%gcc%\;%PATH%

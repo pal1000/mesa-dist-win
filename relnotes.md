@@ -3,6 +3,7 @@
 - Add Scons 3.0.0 compatibility patch to Mesa3D Git-powered auto-patches.
 Only apply it to Mesa stable, patch is upstream now.
 - Made build script aware of Mesa branches, helps with patches applicability narrowing.
+- Determine Mesa branch even if it is not built. Preparation for S3TC merger.
 - Drop LLVM 5.0 compatibility patch when building Mesa master and version 17.1.10.
 Patch is upstream.
 - Ensure auto-patching is done once and only once.
