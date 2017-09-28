@@ -15,3 +15,6 @@ Addressed this by fixing scons locating when Python it's in PATH right from the 
 # Build environmemt updates
 - Scons updated to 3.0.0.
 - Visual Studio updated to 2017 v15.3.5.
+
+# Known issues
+- Mesa build: Scons 3.0.0 always uses target architecture compiler when using cross-compiling environment
