@@ -52,6 +52,7 @@
 @set vsenv=%vsenv14%
 @if %toolset%==15 set vsenv=%vsenv15%
 @set PATH=%mesa%flexbison\;%PATH%
+@set oldpath=%PATH%
 @TITLE Building Mesa3D %abi%
 
 :build_llvm
@@ -105,6 +106,7 @@
 @echo %toolset% > %mesa%toolset-%abi%.ini
 
 :prep_mesa
+@set PATH=%oldpath%
 @cd %mesa%
 @set mesapatched=0
 @set branch=none
@@ -199,11 +201,8 @@ GOTO build_mesa_exec
 @if EXIST build\windows-%longabi% set /p cleanbuild=Do you want to clean build (y/n):
 @if EXIST build\windows-%longabi% echo.
 @if /I "%cleanbuild%"=="y" RD /S /Q build\windows-%longabi%
-@if %vsenvloaded%==0 (
-@call %vsenv%
 @cd %mesa%mesa
 @echo.
-)
 
 :build_mesa_exec
 @%sconscmd%
