@@ -16,7 +16,9 @@
 @set sconsloc="%pythonloc:python.exe=%Scripts\scons.py"
 @if NOT EXIST %makoloc% set pyupd=y
 @if EXIST %makoloc% set /p pyupd=Install/update python modules (y/n):
-@if "%pyupd%"=="y" (
+@if /I "%pyupd%"=="y" (
+@python -m pip install -U wheel
+@python -m pip install -U scons
 @python -m pip install -U mako
 @python -m pip freeze > requirements.txt
 @python -m pip install -r requirements.txt --upgrade

@@ -9,8 +9,14 @@ Patch is upstream.
 - Ensure auto-patching is done once and only once.
 - Look for Git before trying to patch. It is pointless if it is not found.
 - This script won't find Scons if it isn't in a certain relative location to it.
+- Added Scons to python update checking and auto-install. Depends on wheel.
+1 less dependency requiring manual installation.
 Addressed this by fixing scons locating when Python it's in PATH right from the beginning.
-- Updated documentation: compatibility fix for Scons 3.0.0.
+
+# Build script documentation
+- Compatibility fix for Scons 3.0.0.
+- Scons can now be acquired by the build script automatically.
+- Git version control is now mandatory due to a bug in Mesa and compatibility with latest Scons needing a patch.
 
 # Build environmemt updates
 - Scons updated to 3.0.0.
