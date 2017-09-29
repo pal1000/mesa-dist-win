@@ -20,7 +20,7 @@ Before continuing prepare an empty folder to extract the rest of dependencies in
 Extract in `.`. Be warned that the archive is double packed. Rename extracted folder to `mesa`.
 - [Git for Windows 32 or 64-bit](https://git-scm.com/download/win); 
 
-You can use the portable version if you don't want to bloat your system too much, but you have to add it to PATH. Required due to a [Mesa bug](https://lists.freedesktop.org/archives/mesa-dev/2017-September/168851.html) and Scons 3.0.0 support requiring a patch on Mesa code, now that Scons is always up-to-date.
+You can use the portable version if you don't want to bloat your system too much, but you have to add it to PATH. Required due to Scons 3.0.0 support requiring a patch on Mesa code, now that Scons is always up-to-date.
 - [LLVM source code](http://llvm.org/);
 
 LLVM 5.0 is not yet supported. See [Mesa bug 102318](https://bugs.freedesktop.org/show_bug.cgi?id=102318). A patch is included in this repository in `patches/scons-llvm5.patch` for Mesa3D source code to make it work which requires git in order to apply. This build script will try to apply it automatically. To apply manually, browse in Command Prompt to Mesa3D source code, then use `git apply` command with the location of the patch file as parametter. 
