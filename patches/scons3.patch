@@ -1,43 +1,152 @@
 diff --git a/SConstruct b/SConstruct
-index 696718c..9592dbf 100644
+index 696718c8eb445341d714..0215aa83073f120fe9df 100644
 --- a/SConstruct
 +++ b/SConstruct
-@@ -50,9 +50,9 @@ except KeyError:
+@@ -50,10 +50,10 @@ except KeyError:
      pass
  else:
      targets = targets.split(',')
 -    print 'scons: warning: targets option is deprecated; pass the targets on their own such as'
-+    print ('scons: warning: targets option is deprecated; pass the targets on their own such as')
-     print
+-    print
 -    print '  scons %s' % ' '.join(targets)
-+    print ('  scons %s' % ' '.join(targets))
-     print
+-    print
++    print('scons: warning: targets option is deprecated; pass the targets on their own such as')
++    print()
++    print('  scons %s' % ' '.join(targets))
++    print()
      COMMAND_LINE_TARGETS.append(targets)
  
-@@ -81,7 +81,7 @@ env.Append(CPPPATH = [
- ])
  
- # for debugging
--#print env.Dump()
-+#print (env.Dump())
+diff --git a/scons/gallium.py b/scons/gallium.py
+index 1e35ef434a391fd9320d..db7764544145accaacf9 100755
+--- a/scons/gallium.py
++++ b/scons/gallium.py
+@@ -257,16 +257,16 @@ def generate(env):
+     # Backwards compatability with the debug= profile= options
+     if env['build'] == 'debug':
+         if not env['debug']:
+-            print 'scons: warning: debug option is deprecated and will be removed eventually; use instead'
+-            print
+-            print ' scons build=release'
+-            print
++            print('scons: warning: debug option is deprecated and will be removed eventually; use instead')
++            print()
++            print(' scons build=release')
++            print()
+             env['build'] = 'release'
+         if env['profile']:
+-            print 'scons: warning: profile option is deprecated and will be removed eventually; use instead'
+-            print
+-            print ' scons build=profile'
+-            print
++            print('scons: warning: profile option is deprecated and will be removed eventually; use instead')
++            print()
++            print(' scons build=profile')
++            print()
+             env['build'] = 'profile'
+     if False:
+         # Enforce SConscripts to use the new build variable
+@@ -300,7 +300,7 @@ def generate(env):
+     env['build_dir'] = build_dir
+     env.SConsignFile(os.path.join(build_dir, '.sconsign'))
+     if 'SCONS_CACHE_DIR' in os.environ:
+-        print 'scons: Using build cache in %s.' % (os.environ['SCONS_CACHE_DIR'],)
++        print('scons: Using build cache in %s.' % (os.environ['SCONS_CACHE_DIR'],))
+         env.CacheDir(os.environ['SCONS_CACHE_DIR'])
+     env['CONFIGUREDIR'] = os.path.join(build_dir, 'conf')
+     env['CONFIGURELOG'] = os.path.join(os.path.abspath(build_dir), 'config.log')
+@@ -385,8 +385,8 @@ def generate(env):
+     if env['embedded']:
+         cppdefines += ['PIPE_SUBSYSTEM_EMBEDDED']
+     if env['texture_float']:
+-        print 'warning: Floating-point textures enabled.'
+-        print 'warning: Please consult docs/patents.txt with your lawyer before building Mesa.'
++        print('warning: Floating-point textures enabled.')
++        print('warning: Please consult docs/patents.txt with your lawyer before building Mesa.')
+         cppdefines += ['TEXTURE_FLOAT_ENABLED']
+     env.Append(CPPDEFINES = cppdefines)
  
+diff --git a/scons/llvm.py b/scons/llvm.py
+index d6a21685df5e67488e6c..eaa2ecbe026cdcfe3d12 100644
+--- a/scons/llvm.py
++++ b/scons/llvm.py
+@@ -68,13 +68,13 @@ def generate(env):
+     if env['platform'] == 'windows':
+         # XXX: There is no llvm-config on Windows, so assume a standard layout
+         if llvm_dir is None:
+-            print 'scons: LLVM environment variable must be specified when building for windows'
++            print('scons: LLVM environment variable must be specified when building for windows')
+             return
  
- # Add a check target for running tests
+         # Try to determine the LLVM version from llvm/Config/config.h
+         llvm_config = os.path.join(llvm_dir, 'include/llvm/Config/llvm-config.h')
+         if not os.path.exists(llvm_config):
+-            print 'scons: could not find %s' % llvm_config
++            print('scons: could not find %s' % llvm_config)
+             return
+         llvm_version_major_re = re.compile(r'^#define LLVM_VERSION_MAJOR ([0-9]+)')
+         llvm_version_minor_re = re.compile(r'^#define LLVM_VERSION_MINOR ([0-9]+)')
+@@ -92,10 +92,10 @@ def generate(env):
+             llvm_version = distutils.version.LooseVersion('%s.%s' % (llvm_version_major, llvm_version_minor))
+ 
+         if llvm_version is None:
+-            print 'scons: could not determine the LLVM version from %s' % llvm_config
++            print('scons: could not determine the LLVM version from %s' % llvm_config)
+             return
+         if llvm_version < distutils.version.LooseVersion(required_llvm_version):
+-            print 'scons: LLVM version %s found, but %s is required' % (llvm_version, required_llvm_version)
++            print('scons: LLVM version %s found, but %s is required' % (llvm_version, required_llvm_version))
+             return
+ 
+         env.Prepend(CPPPATH = [os.path.join(llvm_dir, 'include')])
+@@ -231,14 +231,14 @@ def generate(env):
+     else:
+         llvm_config = os.environ.get('LLVM_CONFIG', 'llvm-config')
+         if not env.Detect(llvm_config):
+-            print 'scons: %s script not found' % llvm_config
++            print('scons: %s script not found' % llvm_config)
+             return
+ 
+         llvm_version = env.backtick('%s --version' % llvm_config).rstrip()
+         llvm_version = distutils.version.LooseVersion(llvm_version)
+ 
+         if llvm_version < distutils.version.LooseVersion(required_llvm_version):
+-            print 'scons: LLVM version %s found, but %s is required' % (llvm_version, required_llvm_version)
++            print('scons: LLVM version %s found, but %s is required' % (llvm_version, required_llvm_version))
+             return
+ 
+         try:
+@@ -264,13 +264,13 @@ def generate(env):
+                 env.ParseConfig('%s --system-libs' % llvm_config)
+                 env.Append(CXXFLAGS = ['-std=c++11'])
+         except OSError:
+-            print 'scons: llvm-config version %s failed' % llvm_version
++            print('scons: llvm-config version %s failed' % llvm_version)
+             return
+ 
+     assert llvm_version is not None
+     env['llvm'] = True
+ 
+-    print 'scons: Found LLVM version %s' % llvm_version
++    print('scons: Found LLVM version %s' % llvm_version)
+     env['LLVM_VERSION'] = llvm_version
+ 
+     # Define HAVE_LLVM macro with the major/minor version number (e.g., 0x0206 for 2.6)
 diff --git a/src/SConscript b/src/SConscript
-index 37b3f85..ed36b8d 100644
+index bd20d4e2108b463f450e..a277e8b79254588e8fd4 100644
 --- a/src/SConscript
 +++ b/src/SConscript
-@@ -28,7 +28,7 @@ def write_git_sha1_h_file(filename):
+@@ -30,7 +30,7 @@ def write_git_sha1_h_file(filename):
          try:
              subprocess.Popen(args, stdout=f).wait()
          except:
 -            print "Warning: exception in write_git_sha1_h_file()"
-+            print ("Warning: exception in write_git_sha1_h_file()")
++            print("Warning: exception in write_git_sha1_h_file()")
              return
  
      if not os.path.exists(filename) or not filecmp.cmp(tempfile, filename):
 diff --git a/src/gallium/drivers/llvmpipe/SConscript b/src/gallium/drivers/llvmpipe/SConscript
-index fbbd22a..1fc0568 100644
+index fbbd22a52999bde27f7d..74d7a9e16730b183f70b 100644
 --- a/src/gallium/drivers/llvmpipe/SConscript
 +++ b/src/gallium/drivers/llvmpipe/SConscript
 @@ -4,7 +4,7 @@ import distutils.version
@@ -45,12 +154,12 @@ index fbbd22a..1fc0568 100644
  
  if not env['llvm']:
 -    print 'warning: LLVM disabled: not building llvmpipe'
-+    print ('warning: LLVM disabled: not building llvmpipe')
++    print('warning: LLVM disabled: not building llvmpipe')
      Return()
  
  env = env.Clone()
 diff --git a/src/gallium/drivers/svga/SConscript b/src/gallium/drivers/svga/SConscript
-index 2d60ceb..665fc0a 100644
+index 2d60ceb2be5f7584b345..9c4806c715855b180d1c 100644
 --- a/src/gallium/drivers/svga/SConscript
 +++ b/src/gallium/drivers/svga/SConscript
 @@ -5,7 +5,7 @@ env = env.Clone()
@@ -58,12 +167,12 @@ index 2d60ceb..665fc0a 100644
  
  if env['suncc']:
 -	print 'warning: not building svga'
-+	print ('warning: not building svga')
++	print('warning: not building svga')
  	Return()
  
  env.Append(CPPDEFINES = [
 diff --git a/src/gallium/drivers/swr/SConscript b/src/gallium/drivers/swr/SConscript
-index c578d7a..c5ab620 100644
+index b394cbc17e349a982e40..fdced66463c912048e04 100644
 --- a/src/gallium/drivers/swr/SConscript
 +++ b/src/gallium/drivers/swr/SConscript
 @@ -8,12 +8,12 @@ if not env['swr']:
@@ -71,13 +180,13 @@ index c578d7a..c5ab620 100644
  
  if not env['llvm']:
 -    print 'warning: LLVM disabled: not building swr'
-+    print ('warning: LLVM disabled: not building swr')
++    print('warning: LLVM disabled: not building swr')
      env['swr'] = False
      Return()
  
  if env['LLVM_VERSION'] < distutils.version.LooseVersion('3.9'):
 -    print "warning: swr requires LLVM >= 3.9: not building swr"
-+    print ("warning: swr requires LLVM >= 3.9: not building swr")
++    print("warning: swr requires LLVM >= 3.9: not building swr")
      env['swr'] = False
      Return()
  
@@ -86,12 +195,12 @@ index c578d7a..c5ab620 100644
      llvm_config = os.environ.get('LLVM_CONFIG', 'llvm-config')
      llvm_includedir = env.backtick('%s --includedir' % llvm_config).rstrip()
 -    print "llvm include dir %s" % llvm_includedir
-+    print ("llvm include dir %s" % llvm_includedir)
++    print("llvm include dir %s" % llvm_includedir)
  
  if not env['msvc'] :
      env.Append(CCFLAGS = [
 diff --git a/src/gallium/targets/dri/SConscript b/src/gallium/targets/dri/SConscript
-index d7a8cbd..2e0741f 100644
+index d7a8cbdca5d7545dc324..f5c2818d04f3c6773dd6 100644
 --- a/src/gallium/targets/dri/SConscript
 +++ b/src/gallium/targets/dri/SConscript
 @@ -3,7 +3,7 @@ Import('*')
@@ -99,7 +208,7 @@ index d7a8cbd..2e0741f 100644
  
  if env['suncc']:
 -    print 'warning: not building dri-vmwgfx'
-+    print ('warning: not building dri-vmwgfx')
++    print('warning: not building dri-vmwgfx')
      Return()
  
  env.Append(CPPPATH = [
