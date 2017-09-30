@@ -15,7 +15,7 @@ Addressed this by fixing scons locating when Python it's in PATH right from the 
 
 # Build script documentation
 - Compatibility fix for Scons 3.0.0.
-- Scons can now be acquired by the build script automatically.
+- Scons can now be acquired by the build script automatically. Depends on wheel.
 - Git version control is now mandatory due to compatibility with latest Scons needing a patch.
 
 # Build environmemt updates
@@ -23,4 +23,4 @@ Addressed this by fixing scons locating when Python it's in PATH right from the 
 - Visual Studio updated to 2017 v15.3.5.
 
 # Known issues
-- Mesa build: Scons 3.0.0 always uses target architecture compiler when using cross-compiling environment
+- Mesa build: Scons 3.0.0 always uses target architecture compiler when using cross-compiling environment.
