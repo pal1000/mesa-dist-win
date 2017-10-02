@@ -18,6 +18,7 @@ Addressed this by fixing scons locating when Python it's in PATH right from the 
 - Compatibility fix for Scons 3.0.0.
 - Scons can now be acquired by the build script automatically. Depends on wheel.
 - Git version control is now mandatory due to compatibility with latest Scons needing a patch.
+- Updated questions list asked by this script.
 
 # Build environmemt updates
 - Scons updated to 3.0.0.

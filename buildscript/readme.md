@@ -88,10 +88,13 @@ The script acts like a Wizard asking for the following during execution:
 - if you need to build LLVM.  You only need to do it once for each architecture you target when new version is out and this doesn't happen very often;
 - if you are running Visual Studio 2017 and Ninja build system is installed, the script asks if you want to build LLVM with MSVC 2015 toolset instead of 2017;
 - if you want to build LLVM with Ninja build system instead of Msbuild (only if you opted for default toolset, e.g. MSVC 2017 toolset with Visual Studio 2017 or MSVC 2015 toolset with Visual Studio 2015);
+- if Git is installed and Mesa code is missing, ask if you don't want to download Mesa code using Git and abort execution;
+- if you intend to download Mesa using Git, you are asked to specify which branch (valid entries: 17.2, 17.3 ...);
 - if you want to build Mesa3D;
 - if want to build OpenSWR driver;
 - if you want to build off-screen rendering drivers;
 - if you want to build graw driver;
+- if you want to do a clean build;
 - if you want to build S3 texture compression library (only asked if mingw-w64 is detected and library source code is present in the appropriate location);
 - if you want to organize binaries in a single location (distribution creation).
 
