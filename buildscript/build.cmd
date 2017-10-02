@@ -129,9 +129,9 @@
 @if NOT EXIST mesa echo Warning: Mesa3D source code not found.
 @if NOT EXIST mesa set prepfail=%prepfail%2
 @if %prepfail%==12 echo Fatal: Both Mesa code and Git are missing. At least one is required. Execution halted.
-@if %prepfail%==12 GOTO distcreate
+@if %prepfail%==12 GOTO exit
 @if NOT EXIST mesa set /p haltmesabuild=Press Y to abort execution. Press any other key to download Mesa via Git:
-@if /I "%haltmesabuild%"=="y" GOTO distcreate
+@if /I "%haltmesabuild%"=="y" GOTO exit
 @if NOT EXIST mesa set /p branch=Enter Mesa source code branch name - defaults to master:
 @if "%branch%"=="" set branch=master
 @if "%branch%"=="none" set branch=master
@@ -251,7 +251,7 @@ GOTO build_mesa_exec
 @copy %mesa%mesa\build\windows-%longabi%\gallium\targets\graw-gdi\graw.dll graw.dll
 @copy %mesa%dxtn\%abi%\dxtn.dll dxtn.dll
 @echo.
-@pause
 
 :exit
-exit
+@pause
+@exit

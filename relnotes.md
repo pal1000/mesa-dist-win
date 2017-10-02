@@ -12,6 +12,7 @@ Patch is upstream.
 Addressed this by fixing scons locating when Python it's in PATH right from the beginning.
 - Added Scons to python update checking and auto-install. Depends on wheel.
 1 less dependency requiring manual installation.
+- Halt execution if Mesa is missing and it can't be acquired or its acquiring is refused by user.
 
 # Build script documentation
 - Compatibility fix for Scons 3.0.0.
