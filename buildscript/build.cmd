@@ -142,7 +142,6 @@
 @set branch=%mesaver:~0,4%
 @if EXIST mesapatched.ini GOTO build_mesa
 @if %prepfail%==1 GOTO build_dxtn
-@if "%branch%"=="17.2" git apply -v ..\mesa-dist-win\patches\scons-llvm5.patch
 @git apply -v ..\mesa-dist-win\patches\s3tc.patch
 @if NOT "%mesaver:~-5%"=="devel" git apply -v ..\mesa-dist-win\patches\scons3.patch
 @set mesapatched=1

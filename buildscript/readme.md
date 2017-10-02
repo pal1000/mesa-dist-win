@@ -23,9 +23,7 @@ Extract in `.`. Be warned that the archive is double packed. Rename extracted fo
 You can use the portable version if you don't want to bloat your system too much, but you have to add it to PATH. Required due to Scons 3.0.0 support requiring a patch on Mesa code, now that Scons is always up-to-date.
 - [LLVM source code](http://llvm.org/);
 
-LLVM 5.0 is not yet supported. See [Mesa bug 102318](https://bugs.freedesktop.org/show_bug.cgi?id=102318). A patch is included in this repository in `patches/scons-llvm5.patch` for Mesa3D source code to make it work which requires git in order to apply. This build script will try to apply it automatically. To apply manually, browse in Command Prompt to Mesa3D source code, then use `git apply` command with the location of the patch file as parametter. 
-
-Extract LLVM code in `.`. Rename extracted folder to `llvm`. If you use Visual Studio 2017, LLVM 4.0 is the only version that supports it.
+Extract LLVM code in `.`. Rename extracted folder to `llvm`. If you use Visual Studio 2017, LLVM 4.0 is the minimum version that supports it.
 - [Ninja build system](https://github.com/ninja-build/ninja/releases)
 
 Optional, it reduces LLVM build size as it works with single configuration. Unlike Visual Studio MsBuild which require a Release and a Debug configuration at minimum. 
