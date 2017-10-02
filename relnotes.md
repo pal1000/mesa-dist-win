@@ -1,3 +1,7 @@
+- Updated Mesa3D to 17.2.2.
+- Built with Scons 3.0.0. Made use of a compatibility patch.
+- Built LLVM 5.0 and Mesa3D with Visual Studio 2017 v15.3.5.
+
 # Build script
 - Fixed python modules update check. Always check if mako not found, ask otherwise.
 - Made build script aware of Mesa branches, helps with patches applicability narrowing.
@@ -14,14 +18,10 @@ Addressed this by fixing scons locating when Python it's in PATH right from the 
 - Drop LLVM 5.0 compatibility patch. Patch is upstream in all active branches.
 
 # Build script documentation
-- Compatibility fix for Scons 3.0.0.
+- There is a compatibility fix for Scons 3.0.0.
 - Scons can now be acquired by the build script automatically. Depends on wheel.
 - Git version control is now mandatory due to compatibility with latest Scons needing a patch.
 - Updated questions list asked by this script.
 
-# Build environmemt updates
-- Scons updated to 3.0.0.
-- Visual Studio updated to 2017 v15.3.5.
-
 # Known issues
-- Mesa build: Scons 3.0.0 always uses target architecture compiler when using cross-compiling environment.
+- Mesa build: Scons 3.0.0 always uses target architecture compiler when using cross-compiling environment. This may impact compilation performance when making 32-bit builds.
