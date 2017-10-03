@@ -219,6 +219,7 @@ GOTO build_mesa_exec
 :build_dxtn
 @if NOT EXIST %gcc% GOTO distcreate
 @if NOT EXIST %mesa%dxtn GOTO distcreate
+@if "%mesaver:~-5%"=="devel" GOTO distcreate
 @set /p builddxtn=Do you want to build S3 texture compression library? (y/n):
 @if /i NOT "%builddxtn%"=="y" GOTO distcreate
 @set PATH=%gcc%\;%PATH%
@@ -248,7 +249,7 @@ GOTO build_mesa_exec
 @copy %mesa%mesa\build\windows-%longabi%\mesa\drivers\osmesa\osmesa.dll osmesa-swrast.dll
 @copy %mesa%mesa\build\windows-%longabi%\gallium\targets\osmesa\osmesa.dll osmesa-gallium.dll
 @copy %mesa%mesa\build\windows-%longabi%\gallium\targets\graw-gdi\graw.dll graw.dll
-@copy %mesa%dxtn\%abi%\dxtn.dll dxtn.dll
+@if NOT "%mesaver:~-5%"=="devel" copy %mesa%dxtn\%abi%\dxtn.dll dxtn.dll
 @echo.
 
 :exit
