@@ -1,4 +1,6 @@
 bin/x86/
 bin/x64/
+bin/x86-bk/
+bin/x64-bk/
 bin/*.exe
 bin/*.tmp
