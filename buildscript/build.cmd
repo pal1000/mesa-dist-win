@@ -14,20 +14,14 @@
 @set /p pythonloc=<pyupd.ini
 @set makoloc="%pythonloc:python.exe=%Lib\site-packages\mako"
 @set sconsloc="%pythonloc:python.exe=%Scripts\scons.py"
-@if NOT EXIST %makoloc% (
-@python -m pip install wheel
-@python -m pip install scons
-@python -m pip install mako
-@python -m pip freeze > requirements.txt
-@python -m pip install -r requirements.txt --upgrade
-@del requirements.txt
-@echo.
-)
+@if NOT EXIST %makoloc% set pyupd=y
 @if EXIST %makoloc% set /p pyupd=Install/update python modules (y/n):
 @if /I "%pyupd%"=="y" (
-@python -m pip freeze > requirements.txt
-@python -m pip install -r requirements.txt --upgrade
-@del requirements.txt
+@python -m pip install -U pip
+@python -m pip install -U wheel
+@python -m pip install -U scons
+@python -m pip install -U mako
+@python -m pip install -U MarkupSafe
 @echo.
 )
 @set abi=x86
