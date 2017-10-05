@@ -2,12 +2,9 @@
 @cd "%~dp0"
 @cd ..\..\
 @for %%I in ("%cd%") do @set mesa=%%~sI
-@set mesa=%mesa%\
-@where /q cmake.exe
-@IF ERRORLEVEL 1 set PATH=%mesa%cmake\bin\;%PATH%
-@set ERRORLEVEL=0
+@set oldpath=%PATH%
 @where /q python.exe
-@IF ERRORLEVEL 1 set PATH=%mesa%Python\;%mesa%Python\Scripts\;%PATH%
+@IF ERRORLEVEL 1 set PATH=%mesa%\Python\;%mesa%\Python\Scripts\;%PATH%
 @set ERRORLEVEL=0
 @set pyupd=n
 @where python.exe>pyupd.ini
@@ -45,22 +42,19 @@
 @if %vsabi%==32 set vsenv14=%VS140COMNTOOLS%..\..\VC\bin\vcvars%vsabi%.bat"
 @if %vsabi%==64 set vsenv14=%VS140COMNTOOLS%..\..\VC\bin\%targetabi%\vcvars%vsabi%.bat"
 @if NOT %targetabi%==%hostabi% set vsenv14=%VS140COMNTOOLS%..\..\VC\bin\%vsabi%\vcvars%vsabi%.bat"
-@set gcc=%mesa%mingw-w64\%abi%\mingw%minabi%\bin
 @set vsenvloaded=0
 @set toolset=14
 @if EXIST %vsenv15% set toolset=15
 @if EXIST toolset-%abi%.ini set /p toolset=<toolset-%abi%.ini
 @set vsenv=%vsenv14%
 @if %toolset%==15 set vsenv=%vsenv15%
-@set PATH=%mesa%flexbison\;%PATH%
-@set oldpath=%PATH%
 @TITLE Building Mesa3D %abi%
 
 :build_llvm
 @set /p buildllvm=Begin LLVM build. Only needs to run once for each ABI and version. Proceed (y/n):
 @if /I NOT "%buildllvm%"=="y" GOTO prep_mesa
 @echo.
-@cd %mesa%llvm
+@cd %mesa%\llvm
 @if EXIST %abi% RD /S /Q %abi%
 @if EXIST cmake-%abi% RD /S /Q cmake-%abi%
 @md cmake-%abi%
@@ -72,7 +66,7 @@
 @set ninja=n
 @set oldtoolset=n
 @set x64compiler= -Thost=x64
-@if EXIST %mesa%ninja set ninja=1
+@if EXIST %mesa%\ninja set ninja=1
 @if EXIST %vsenv15% set ninja=%ninja%2
 @if %ninja%==12 set /p oldtoolset=Build with MSVC 2015 backward compatibility toolset, alternative solution for LLVM 3.9.1 build with Visual Studio 2017 (y/n):
 @if %ninja%==12 echo.
@@ -84,7 +78,7 @@
 @echo.
 @if /I "%ninja%"=="y" set toolchain=Ninja
 @if /I "%ninja%"=="y" set x64compiler=
-@if "%toolchain%"=="Ninja" set PATH=%mesa%ninja\;%PATH%
+@if "%toolchain%"=="Ninja" set PATH=%mesa%\ninja\;%PATH%
 @set vsenv=%vsenv14%
 @if %toolset%==15 set vsenv=%vsenv15%
 @set llvmbuildsys=%CD%
@@ -97,6 +91,9 @@
 @if %modtoolchainabi%==12 set toolchain=%toolchain% Win64
 @cd %llvmbuildsys%
 @if NOT %hostabi%==amd64 set x64compiler=
+@where /q cmake.exe
+@IF ERRORLEVEL 1 set PATH=%mesa%\cmake\bin\;%PATH%
+@set ERRORLEVEL=0
 @cmake -G "%toolchain%"%x64compiler% -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../%abi% ..
 @echo.
 @pause
@@ -104,7 +101,7 @@
 @if NOT "%toolchain%"=="Ninja" cmake --build . --config Release --target install
 @if "%toolchain%"=="Ninja" ninja install
 @echo.
-@echo %toolset% > %mesa%toolset-%abi%.ini
+@echo %toolset% > %mesa%\toolset-%abi%.ini
 
 :prep_mesa
 @set PATH=%oldpath%
@@ -146,14 +143,14 @@
 @set /p buildmesa=Begin mesa build. Proceed (y/n):
 @if /i NOT "%buildmesa%"=="y" GOTO build_dxtn
 @echo.
-@set LLVM=%mesa%llvm\%abi%
+@set LLVM=%mesa%\llvm\%abi%
 @if NOT EXIST %LLVM% (
 @echo Could not find LLVM, aborting mesa build.
 @echo.
 @pause
 @GOTO build_dxtn
 )
-@cd %mesa%mesa
+@cd %mesa%\mesa
 @set openswr=n
 @set sconscmd=python %sconsloc% build=release platform=windows machine=%longabi% libgl-gdi
 @if %abi%==x64 set /p openswr=Do you want to build OpenSWR drivers? (y=yes):
@@ -167,57 +164,60 @@
 @if /I "%graw%"=="y" set sconscmd=%sconscmd% graw-gdi
 @GOTO build_with_vs
 
-:build_with_mingw
+:build_with_cygwin
 @set mingw=n
-@set mingwtest=0
-@if EXIST %gcc% set mingwtest=1
-@set msys2=%mesa%msys64\msys2_shell.cmd
-@if EXIST %msys2% set mingwtest=%mingwtest%2
-@if %mingwtest%==12 set /p mingw=Do you want to build with MinGW-W64 instead of Visual Studio (y=yes):
+@if %abi%==x86 GOTO build_with_vs
+@set cygwin=%mesa%\cygwin64
+@if EXIST %cygwin% set /p mingw=Do you want to build with Cygwin instead of Visual Studio (y=yes):
+@if /I NOT "%mingw%"=="y" GOTO build_with_vs
 @set ERRORLEVEL=0
-@where /q gcc.exe
-@IF ERRORLEVEL 1 set PATH=%gcc%\;%PATH%
+@where /q python2.7.exe
+@IF ERRORLEVEL 1 set PATH=%cygwin%\bin\;%PATH%
 @set ERRORLEVEL=0
-@if /I "%mingw%"=="y" set sconscmd=%sconscmd% toolchain=crossmingw
-@if /I "%mingw%"=="y" copy %gcc%\%altabi%-w64-mingw32-gcc-ar.exe %gcc%\%altabi%-w64-mingw32-ar.exe
-@if /I "%mingw%"=="y" copy %gcc%\%altabi%-w64-mingw32-gcc-ranlib.exe %gcc%\%altabi%-w64-mingw32-ranlib.exe
-@if /I "%mingw%"=="y" call "%msys2%" -use-full-path
-@if /I "%mingw%"=="y" (
-pacman -Syu
-pacman -S python2
-wget https://bootstrap.pypa.io/get-pip.py
-python2 get-pip.py
-pip install -U mako
-pip install -U scons
-pip freeze > requirements.txt
-pip install -r requirements.txt --upgrade
-cd $mesa
-cd mesa
-GOTO build_mesa_exec
-)
+@set sconscmd=scons build=release platform=cygwin machine=%longabi% llvm=no
+@rem copy %gcc%\%altabi%-w64-mingw32-gcc-ar.exe %gcc%\%altabi%-w64-mingw32-ar.exe
+@rem copy %gcc%\%altabi%-w64-mingw32-gcc-ranlib.exe %gcc%\%altabi%-w64-mingw32-ranlib.exe
+@set cleanbuild=n
+@if EXIST build\cygwin-%longabi% set /p cleanbuild=Do you want to clean build (y/n):
+@if EXIST build\cygwin-%longabi% echo.
+@if /I "%cleanbuild%"=="y" RD /S /Q build\cygwin-%longabi%
+@cd %mesa%\mesa
+@python2.7 -m pip install -U pip
+@python2.7 -m pip install -U wheel
+@python2.7 -m pip install -U scons
+@python2.7 -m pip install -U mako
+@python2.7 -m pip install -U MarkupSafe
+@%cygwin%\bin\bash %mesa%\mesa-dist-win\buildscript\cygwin.sh
+@GOTO build_mesa_exec
 
 :build_with_vs
+@where /q python.exe
+@IF ERRORLEVEL 1 set PATH=%mesa%\Python\;%mesa%\Python\Scripts\;%PATH%
+@set ERRORLEVEL=0
+@set PATH=%mesa%\flexbison\;%PATH%
 @set cleanbuild=n
 @if EXIST build\windows-%longabi% set /p cleanbuild=Do you want to clean build (y/n):
 @if EXIST build\windows-%longabi% echo.
 @if /I "%cleanbuild%"=="y" RD /S /Q build\windows-%longabi%
-@cd %mesa%mesa
+@cd %mesa%\mesa
 @echo.
 
 :build_mesa_exec
+@if /I "%mingw%"=="y" GOTO build_dxtn
 @set dummygitver=#define MESA_GIT_SHA1 "git-"
-@if %prepfail%==1 echo %dummygitver% > %mesa%mesa\build\windows-%abi%\git_sha1.h
-@%sconscmd%
+@if NOT EXIST %mesa%\mesa\build\windows-%abi%\git_sha1.h echo %dummygitver% > %mesa%\mesa\build\windows-%abi%\git_sha1.h
+@if /I NOT "%mingw%"=="y" %sconscmd%
 @echo.
 
 :build_dxtn
+@set gcc=%mesa%\mingw-w64\%abi%\mingw%minabi%\bin
 @if NOT EXIST %gcc% GOTO distcreate
-@if NOT EXIST %mesa%dxtn GOTO distcreate
+@if NOT EXIST %mesa%\dxtn GOTO distcreate
 @if "%mesaver:~-5%"=="devel" GOTO distcreate
 @set /p builddxtn=Do you want to build S3 texture compression library? (y/n):
 @if /i NOT "%builddxtn%"=="y" GOTO distcreate
 @set PATH=%gcc%\;%PATH%
-@cd %mesa%dxtn
+@cd %mesa%\dxtn
 @echo.
 @if EXIST %abi% RD /S /Q %abi%
 @MD %abi%
@@ -237,13 +237,13 @@ GOTO build_mesa_exec
 @if EXIST %abi% RD /S /Q %abi%
 @MD %abi%
 @cd %abi%
-@copy %mesa%mesa\build\windows-%longabi%\gallium\targets\libgl-gdi\opengl32.dll opengl32.dll
-@if %abi%==x64 copy %mesa%mesa\build\windows-%longabi%\gallium\drivers\swr\swrAVX.dll swrAVX.dll
-@if %abi%==x64 copy %mesa%mesa\build\windows-%longabi%\gallium\drivers\swr\swrAVX2.dll swrAVX2.dll
-@copy %mesa%mesa\build\windows-%longabi%\mesa\drivers\osmesa\osmesa.dll osmesa-swrast.dll
-@copy %mesa%mesa\build\windows-%longabi%\gallium\targets\osmesa\osmesa.dll osmesa-gallium.dll
-@copy %mesa%mesa\build\windows-%longabi%\gallium\targets\graw-gdi\graw.dll graw.dll
-@if NOT "%mesaver:~-5%"=="devel" copy %mesa%dxtn\%abi%\dxtn.dll dxtn.dll
+@copy %mesa%\mesa\build\windows-%longabi%\gallium\targets\libgl-gdi\opengl32.dll opengl32.dll
+@if %abi%==x64 copy %mesa%\mesa\build\windows-%longabi%\gallium\drivers\swr\swrAVX.dll swrAVX.dll
+@if %abi%==x64 copy %mesa%\mesa\build\windows-%longabi%\gallium\drivers\swr\swrAVX2.dll swrAVX2.dll
+@copy %mesa%\mesa\build\windows-%longabi%\mesa\drivers\osmesa\osmesa.dll osmesa-swrast.dll
+@copy %mesa%\mesa\build\windows-%longabi%\gallium\targets\osmesa\osmesa.dll osmesa-gallium.dll
+@copy %mesa%\mesa\build\windows-%longabi%\gallium\targets\graw-gdi\graw.dll graw.dll
+@if NOT "%mesaver:~-5%"=="devel" copy %mesa%\dxtn\%abi%\dxtn.dll dxtn.dll
 @echo.
 
 :exit
