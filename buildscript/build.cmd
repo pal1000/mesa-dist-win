@@ -39,21 +39,24 @@
 @set targetabi=x86
 @if %abi%==x64 set targetabi=amd64
 @set hostabi=x86
-@set vsenv="%ProgramFiles%
 @if NOT "%ProgramW6432%"=="" set hostabi=amd64
 @set vsabi=%minabi%
 @if NOT %targetabi%==%hostabi% set vsabi=%hostabi%_%targetabi%
-@if NOT "%ProgramW6432%"=="" set vsenv=%vsenv% (x86)
-@set vsenv15=%vsenv%\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars%vsabi%.bat"
-@if %vsabi%==32 set vsenv14=%VS140COMNTOOLS%..\..\VC\bin\vcvars%vsabi%.bat"
-@if %vsabi%==64 set vsenv14=%VS140COMNTOOLS%..\..\VC\bin\%targetabi%\vcvars%vsabi%.bat"
-@if NOT %targetabi%==%hostabi% set vsenv14=%VS140COMNTOOLS%..\..\VC\bin\%vsabi%\vcvars%vsabi%.bat"
+@set vsenv15="%ProgramFiles%
+@if NOT "%ProgramW6432%"=="" set vsenv15=%vsenv15% (x86)
+@set vsenv15=%vsenv15%\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars%vsabi%.bat"
+@if %vsabi%==32 set vsenv14="%VS140COMNTOOLS%..\..\VC\bin\vcvars%vsabi%.bat"
+@if %vsabi%==64 set vsenv14="%VS140COMNTOOLS%..\..\VC\bin\%targetabi%\vcvars%vsabi%.bat"
+@if NOT %targetabi%==%hostabi% set vsenv14="%VS140COMNTOOLS%..\..\VC\bin\%vsabi%\vcvars%vsabi%.bat"
 @set vsenvloaded=0
-@set toolset=14
-@if EXIST %vsenv15% set toolset=15
+@set toolsets=0
+@if EXIST %vsenv15% set toolsets=%toolsets%15
+@if EXIST %vsenv14% set toolsets=%toolsets%14
+@if %toolsets%==0 (
+@echo Error: No Visual Studio installed.
+@GOTO build_dxtn
+)
 @if EXIST toolset-%abi%.ini set /p toolset=<toolset-%abi%.ini
-@set vsenv=%vsenv14%
-@if %toolset%==15 set vsenv=%vsenv15%
 @TITLE Building Mesa3D %abi%
 
 :build_llvm
@@ -65,38 +68,39 @@
 @if EXIST cmake-%abi% RD /S /Q cmake-%abi%
 @md cmake-%abi%
 @cd cmake-%abi%
-@set toolchain=Visual Studio 14
-@set toolset=14
-@if EXIST %vsenv15% set toolchain=Visual Studio 15 2017
-@if EXIST %vsenv15% set toolset=15
 @set ninja=n
+@if %toolsets%==01514 GOTO dualtoolsets
+@set toolset=%toolsets:~-2%
+@set toolchain=Visual Studio %toolset%
+@if EXIST %mesa%\ninja set /p ninja=Use Ninja build system instead of MsBuild, there is no requirement to do this with the primary toolset though - (y/n):
+@GOTO llvm_build_exec
+
+:dualtoolsets
 @set oldtoolset=n
-@set x64compiler= -Thost=x64
-@if EXIST %mesa%\ninja set ninja=1
-@if EXIST %vsenv15% set ninja=%ninja%2
-@if %ninja%==12 set /p oldtoolset=Build with MSVC 2015 backward compatibility toolset, alternative solution for LLVM 3.9.1 build with Visual Studio 2017 (y/n):
-@if %ninja%==12 echo.
-@if /I "%oldtoolset%"=="y" set ninja=y
+@set toolchain=Visual Studio 15
+@set toolset=15
+@if EXIST %mesa%\ninja set oldtoolset=1
+@if %oldtoolset%==1 set /p ninja=Build with MSVC 2015 backward compatibility toolset, alternative solution for LLVM 3.9.1 build with Visual Studio 2017 - (y/n):
+@if /i "%ninja%"=="y" set oldtoolset=y
 @if /I "%oldtoolset%"=="y" set toolset=14
-@if %ninja%==12 set ninja=2
-@if %ninja%==1 set ninja=2
-@if %ninja%==2 set /p ninja=Use Ninja build system instead of MsBuild, there is no requirement to do this with the primary toolset though (y/n):
-@echo.
+@if /I "%oldtoolset%"=="1" set /p ninja=Use Ninja build system instead of MsBuild, there is no requirement to do this with the primary toolset though - (y/n):
+
+:llvm_build_exec
 @if /I "%ninja%"=="y" set toolchain=Ninja
-@if /I "%ninja%"=="y" set x64compiler=
-@if "%toolchain%"=="Ninja" set PATH=%mesa%\ninja\;%PATH%
-@set vsenv=%vsenv14%
+@if /I "%ninja%"=="y" set PATH=%mesa%\ninja\;%PATH%
+@if %abi%==x64 set toolchain=%toolchain% Win64
+@if "%toolchain%"=="Ninja Win64" set toolchain=Ninja
+@set x64compile=n
+@if %hostabi%==amd64 set x64compile=1
+@if /I NOT "%ninja%"=="y" set x64compile=%x64compile%2
+@if %x64compile%==12 set x64compiler= -Thost=x64
 @if %toolset%==15 set vsenv=%vsenv15%
+@if %toolset%==14 set vsenv=%vsenv14%
 @set llvmbuildsys=%CD%
 @call %vsenv%
 @set vsenvloaded=1
-@echo.
-@set modtoolchainabi=0
-@if NOT "%toolchain%"=="Ninja" set modtoolchainabi=1
-@if %abi%==x64 set modtoolchainabi=%modtoolchainabi%2
-@if %modtoolchainabi%==12 set toolchain=%toolchain% Win64
 @cd %llvmbuildsys%
-@if NOT %hostabi%==amd64 set x64compiler=
+@echo.
 @where /q cmake.exe
 @IF ERRORLEVEL 1 set PATH=%mesa%\cmake\bin\;%PATH%
 @set ERRORLEVEL=0
@@ -175,6 +179,14 @@
 @set ERRORLEVEL=0
 @set PATH=%mesa%\flexbison\;%PATH%
 @cd %mesa%\mesa
+@set loadtoolset=0
+@set /p toolset=<%mesa%\toolset-%abi%.ini
+@if %toolset%==14 set vsenv=%vsenv14%
+@if %toolset%==15 set vsenv=%vsenv15%
+@if %vsenvloaded%==0 (
+@call %vsenv%
+@cd %mesa%\mesa
+)
 
 :build_mesa_exec
 @set cleanbuild=n
