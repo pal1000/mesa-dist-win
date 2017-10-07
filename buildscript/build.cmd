@@ -182,10 +182,8 @@
 @if EXIST build\windows-%longabi% echo.
 @if /I "%cleanbuild%"=="y" RD /S /Q build\windows-%longabi%
 @if NOT EXIST %mesa%\mesa\build md %mesa%\mesa\build
-@if NOT EXIST %mesa%\mesa\build\windows-%abi%\git_sha1.h (
-@md %mesa%\mesa\build\windows-%longabi%
-@echo 0 > %mesa%\mesa\build\windows-%longabi%\git_sha1.h
-)
+@if NOT EXIST %mesa%\mesa\build\windows-%abi% md %mesa%\mesa\build\windows-%abi%
+@if NOT EXIST %mesa%\mesa\build\windows-%abi%\git_sha1.h echo 0 > %mesa%\mesa\build\windows-%longabi%\git_sha1.h
 @echo.
 @%sconscmd%
 @echo.
@@ -205,7 +203,6 @@
 @if %gcchost%==false GOTO distcreate
 @if %gcchost%==native set gccpath=%gcc%\;
 @if %gcchost%==msys2 set gccpath=%gcc%\mingw%minabi%\bin\;%gcc%\usr\bin\;
-@if %gcchost%==msys2 pacman -Syu
 @set /p builddxtn=Do you want to build S3 texture compression library? (y/n):
 @if /i NOT "%builddxtn%"=="y" set gcchost=false
 @if /i NOT "%builddxtn%"=="y" GOTO distcreate
@@ -215,6 +212,12 @@
 @if EXIST %abi% RD /S /Q %abi%
 @MD %abi%
 @set dxtn=gcc -shared -m%minabi% -v *.c *.h -I ../mesa/include -Wl,--dll,--dynamicbase,--enable-auto-image-base,--nxcompat -o %abi%/dxtn.dll
+@set msys2update=n
+@if %gcchost%==msys2 set /p msys2update=Update MSYS2 packages (y/n):
+@if /I "%msys2update%"=="y" (
+@pacman -Syu
+@pause
+)
 @%dxtn%
 @echo.
 
