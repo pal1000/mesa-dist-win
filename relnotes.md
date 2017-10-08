@@ -7,3 +7,4 @@ Built S3TC with MSYS2 Mingw-w64 GCC 7.2.0.
 - Refactored LLVM build section. Fixed a logic loophole on which the build script would offer to build LLVM with backward compatibility toolset even if this toolset is not installed.
 This logic loophole became relevant with Scons 3.0.0 which turned the compatibility toolset from a must-have to pure optional.
 - Scons: Keep loading Visual Studio environment just to be safe for now.
+- Documentation: MSYS2 Mingw-w64 is now the preferred method to build S3TC.

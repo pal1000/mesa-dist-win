@@ -41,9 +41,19 @@ This will improve S3 texture compression performance significantly.
 - [CMake 32 or 64 bit](https://cmake.org/download/#latest);
 
 You may use the installer or you can extract the zipped version in `.\cmake`.
-- Mingw-w64 i686 and x86_64;
+- [MSYS2 Mingw-w64](https://sourceforge.net/projects/msys2/files/Base/);
 
-Optional. Download web-installer from [here](https://sourceforge.net/projects/mingw-w64/). You need to run web installer once for each target architecture (i686 means 32-bit, x86_64 means 64-bit). Install in `.\mingw-w64\x86` for 32-bit builds and `.\mingw-w64\x64` for 64-bit builds. You need both as each one can only build for their matching architecture. Leave all other setings as default. You only need mingw-w64 if you want to build S3 texture compression library. Teoretically mesa could be built the same way but [it doesn't work due to a Scons bug](https://bugs.freedesktop.org/show_bug.cgi?id=94072).
+Optional. You only need mingw-w64 if you want to build S3 texture compression library. Install the one suitable for your host in `.\msys64` or `.\msys32`. After installation completes let it open the MSYS Terminal. Execute `pacmam -Syu` and let it update. At the end it will hang, so you'll have to terminate `pacman.exe` from Task Manager then close the window. In Start search for MSYS and Open MSYS2 MSYS. Run the following commands in order, accepting all the prompts:
+
+`pacman -Syu`
+
+`pacman -S mingw-w64-i686-toolchain`
+
+`pacman -S mingw-w64-x86_64-toolchain`
+
+- Standalone Mingw-w64 i686 and x86_64 (deprecated);
+
+Optional. Alternative for MSYS2 Mingw-w64. You only need mingw-w64 if you want to build S3 texture compression library. Teoretically mesa could be built the same way but [it doesn't work due to a Scons bug](https://bugs.freedesktop.org/show_bug.cgi?id=94072). Download web-installer from [here](https://sourceforge.net/projects/mingw-w64/). You need to run web installer once for each target architecture (i686 means 32-bit, x86_64 means 64-bit). Install in `.\mingw-w64\x86` for 32-bit builds and `.\mingw-w64\x64` for 64-bit builds. You need both as each one can only build for their matching architecture. Leave all other setings as default.
 - [Flex and Bison](https://sourceforge.net/projects/winflexbison/);
 
 Extract in `.\flexbison`.
@@ -70,7 +80,8 @@ Dependency component | Paths relative to their installation directories (you hav
 flex and bison | `.\;`
 Python | `.\;` and `.\Scripts\;`
 CMake | `.\bin\;`
-mingw-w64 if used | `.\mingw64\bin\;` for 64-bit and `.\mingw32\bin\;` for 32-bit
+MSYS2 mingw-w64 if used | `.\usr\bin\;` and `.\mingw64\bin\;` for 64-bit and `.\mingw32\bin\;` for 32-bit respectively
+Standalone mingw-w64 if used | `.\mingw64\bin\;` for 64-bit and `.\mingw32\bin\;` for 32-bit
 Ninja build system if used | `.\ninja\;`
 LLVM | `.\llvm\bin\;`
 
