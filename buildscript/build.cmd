@@ -203,17 +203,17 @@
 :build_dxtn
 @if NOT EXIST %mesa%\mesa GOTO exit
 @set PATH=%oldpath%
-@set gcchost=native
 @if NOT EXIST %mesa%\dxtn GOTO distcreate
 @if "%mesaver:~-5%"=="devel" GOTO distcreate
-@set gcc=%mesa%\mingw-w64\%abi%\mingw%minabi%\bin
-@if NOT EXIST %gcc% set gcchost=msys2
-@if NOT EXIST %gcc% set gcc=%mesa%\msys64
+@set gcchost=msys2
+@set gcc=%mesa%\msys64
 @if NOT EXIST %gcc% set gcc=%mesa%\msys32
+@if NOT EXIST %gcc% set gcchost=standalone
+@if NOT EXIST %gcc% set gcc=%mesa%\mingw-w64\%abi%\mingw%minabi%\bin
 @if NOT EXIST %gcc% set gcchost=false
 @set gccpath=
 @if %gcchost%==false GOTO distcreate
-@if %gcchost%==native set gccpath=%gcc%\;
+@if %gcchost%==standalone set gccpath=%gcc%\;
 @if %gcchost%==msys2 set gccpath=%gcc%\mingw%minabi%\bin\;%gcc%\usr\bin\;
 @set /p builddxtn=Do you want to build S3 texture compression library? (y/n):
 @if /i NOT "%builddxtn%"=="y" set gcchost=false
