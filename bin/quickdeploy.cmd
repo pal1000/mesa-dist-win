@@ -39,6 +39,7 @@ if '%errorlevel%' NEQ '0' (
 @echo VMWare ThinApp capture: http://fdossena.com/mesa/MesaInjector_Capture.7z
 @echo.
 @pause
+@set mesaloc=%~dp0
 
 :deploy
 @cls
@@ -53,39 +54,51 @@ if '%errorlevel%' NEQ '0' (
 @echo.
 @set mesadll=x86
 @if %PROCESSOR_ARCHITECTURE%==AMD64 GOTO ask_for_app_abi
-@if NOT %PROCESSOR_ARCHITECTURE%==AMD64 GOTO finish
+@if NOT %PROCESSOR_ARCHITECTURE%==AMD64 GOTO desktopgl
 
 :ask_for_app_abi
 @set /p ABI=This is a 64-bit application (y=yes):
 @if /I "%ABI%"=="y" set mesadll=x64
 @echo.
 
-:finish
-@set mesaloc=%~dp0
-@mklink "%dir%\opengl32.dll" "%mesaloc%%mesadll%\opengl32.dll"
-@if %mesadll%==x64 mklink "%dir%\swrAVX.dll" "%mesaloc%x64\swrAVX.dll"
-@if %mesadll%==x64 mklink "%dir%\swrAVX2.dll" "%mesaloc%x64\swrAVX2.dll"
+:desktopgl
+@IF NOT EXIST "%dir%\opengl32.dll" mklink "%dir%\opengl32.dll" "%mesaloc%%mesadll%\opengl32.dll"
+@if NOT %mesadll%==x64 GOTO s3tc
+@if NOT EXIST "%dir%\swrAVX.dll" mklink "%dir%\swrAVX.dll" "%mesaloc%x64\swrAVX.dll"
+@if NOT EXIST "%dir%\swrAVX2.dll" mklink "%dir%\swrAVX2.dll" "%mesaloc%x64\swrAVX2.dll"
 @echo.
+
+:s3tc
 @set s3tc=n
-@set /p s3tc=Do you need S3TC (y/n):
+@IF EXIST "%mesaloc%%mesadll%\dxtn.dll" set /p s3tc=Do you need S3TC (y/n):
 @echo.
-@if /I "%s3tc%"=="y" mklink "%dir%\dxtn.dll" "%mesaloc%%mesadll%\dxtn.dll"
-@if /I "%s3tc%"=="y" echo.
+@if /I NOT "%s3tc%"=="y" GOTO osmesa
+@if NOT EXIST "%dir%\dxtn.dll" mklink "%dir%\dxtn.dll" "%mesaloc%%mesadll%\dxtn.dll"
+echo.
+
+:osmesa
 @set osmesatype=n
 @set /p osmesa=Do you need off-screen rendering (y/n):
 @echo.
-@if /I "%osmesa%"=="y" echo What version of osmesa off-screen rendering you want:
-@if /I "%osmesa%"=="y" echo 1. Gallium based (faster, but lacks certain features);
-@if /I "%osmesa%"=="y" echo 2. Swrast based (slower, but has unique OpenGL 2.1 features);
-@if /I "%osmesa%"=="y" set /p osmesatype=Enter choice:
-@if /I "%osmesa%"=="y" echo.
+@if /I NOT "%osmesa%"=="y" GOTO graw
+@IF EXIST "%dir%\osmesa.dll" del "%dir%\osmesa.dll"
+@echo What version of osmesa off-screen rendering you want:
+@echo 1. Gallium based (faster, but lacks certain features);
+@echo 2. Swrast based (slower, but has unique OpenGL 2.1 features);
+@set /p osmesatype=Enter choice:
+@echo.
 @if "%osmesatype%"=="1" mklink "%dir%\osmesa.dll" "%mesaloc%%mesadll%\osmesa-gallium.dll"
 @if "%osmesatype%"=="2" mklink "%dir%\osmesa.dll" "%mesaloc%%mesadll%\osmesa-swrast.dll"
 @if "%osmesatype%"=="1" echo.
 @if "%osmesatype%"=="2" echo.
+
+:graw
 @set /p graw=Do you need graw library (y/n):
 @echo.
-@if /I "%graw%"=="y" mklink "%dir%\graw.dll" "%mesaloc%%mesadll%\graw.dll"
+@if /I NOT "%graw%"=="y" GOTO restart
+@if NOT EXIST "%dir%\graw.dll" mklink "%dir%\graw.dll" "%mesaloc%%mesadll%\graw.dll"
 @echo.
+
+:restart
 @set /p rerun=More Mesa deployment? (y=yes):
 @if /I "%rerun%"=="y" GOTO deploy
