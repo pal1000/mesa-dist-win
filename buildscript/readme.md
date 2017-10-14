@@ -43,7 +43,7 @@ This will improve S3 texture compression performance significantly.
 You may use the installer or you can extract the zipped version in `.\cmake`.
 - [MSYS2 Mingw-w64](https://sourceforge.net/projects/msys2/files/Base/);
 
-Optional. You only need mingw-w64 if you want to build S3 texture compression library. Install the one suitable for your host in `.\msys64` or `.\msys32`. After installation completes let it open the MSYS Terminal. Execute `pacmam -Syu` and let it update. At the end it will hang, so you'll have to terminate `pacman.exe` from Task Manager then close the window. In Start search for MSYS and Open MSYS2 MSYS. Run the following commands in order, accepting all the prompts:
+Optional. You only need MSYS2 if you want to build S3 texture compression library. Install the one suitable for your host in `.\msys64` or `.\msys32`. After installation completes let it open the MSYS Terminal. Execute `pacmam -Syu` and let it update. At the end it will hang, so you'll have to terminate `pacman.exe` from Task Manager then close the window. In Start search for MSYS and Open MSYS2 MSYS. Run the following commands in order, accepting all the prompts:
 
 `pacman -Syu`
 

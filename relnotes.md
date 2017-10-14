@@ -1,4 +1,5 @@
-Built S3TC with MSYS2 Mingw-w64 GCC 7.2.0.
+- Built S3TC with MSYS2 Mingw-w64 GCC 7.2.0.
+- Built LLVM 5.0 and Mesa with Visual Studio 2017 v15.4.0.
 # Deployment utility
 - Made easy to swap osmesa variants.
 - Check before attempting to create symbolic links. Avoid harmless errors which may be confusing.
