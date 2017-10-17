@@ -145,7 +145,7 @@
 @if EXIST mesapatched.ini GOTO build_mesa
 @if %prepfail%==1 GOTO build_dxtn
 @git apply -v ..\mesa-dist-win\patches\s3tc.patch
-@if NOT "%mesaver:~-5%"=="devel" git apply -v ..\mesa-dist-win\patches\scons3.patch
+@if NOT EXIST %mesa%\mesa\.git git apply -v ..\mesa-dist-win\patches\scons3.patch
 @set mesapatched=1
 @echo %mesapatched% > mesapatched.ini
 @echo.
