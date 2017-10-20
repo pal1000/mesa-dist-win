@@ -7,8 +7,7 @@
 @IF ERRORLEVEL 1 set PATH=%mesa%\Python\;%mesa%\Python\Scripts\;%PATH%
 @set ERRORLEVEL=0
 @set pyupd=n
-@where python.exe>pyupd.ini
-@set /p pythonloc=<pyupd.ini
+@FOR /F "tokens=* USEBACKQ" %%F IN (`where python.exe`) DO @SET pythonloc=%%F
 @set makoloc="%pythonloc:python.exe=%Lib\site-packages\mako"
 @set sconsloc="%pythonloc:python.exe=%Scripts\scons.py"
 @if NOT EXIST %makoloc% (
@@ -17,6 +16,7 @@
 @python -m pip install -U scons
 @python -m pip install -U MarkupSafe
 @python -m pip install -U mako
+@echo.
 )
 @if EXIST %makoloc% set /p pyupd=Install/update python modules (y/n):
 @if /I "%pyupd%"=="y" (
