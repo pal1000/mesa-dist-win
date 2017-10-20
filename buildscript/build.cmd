@@ -48,7 +48,7 @@
 @set vsenvloaded=0
 @set toolset=0
 @if EXIST %vsenv% set toolset=15
-@if %toolset%==0 (
+@if %toolset% EQU 0 (
 @echo Error: No Visual Studio installed.
 @GOTO build_dxtn
 )
@@ -106,8 +106,8 @@
 @if NOT EXIST mesa set mesapatched=0
 @if NOT EXIST mesa echo Warning: Mesa3D source code not found.
 @if NOT EXIST mesa set prepfail=%prepfail%2
-@if %prepfail%==12 echo Fatal: Both Mesa code and Git are missing. At least one is required. Execution halted.
-@if %prepfail%==12 GOTO build_dxtn
+@if %prepfail% EQU 12 echo Fatal: Both Mesa code and Git are missing. At least one is required. Execution halted.
+@if %prepfail% EQU 12 GOTO build_dxtn
 @if NOT EXIST mesa set /p haltmesabuild=Press Y to abort execution. Press any other key to download Mesa via Git:
 @if /I "%haltmesabuild%"=="y" GOTO build_dxtn
 @if NOT EXIST mesa set /p branch=Enter Mesa source code branch name - defaults to master:
@@ -118,9 +118,11 @@
 @cd mesa
 @set LLVM=%mesa%\llvm\%abi%
 @set /p mesaver=<VERSION
+@if %mesaver:~-5%==devel set mesaver=%mesaver:~0,-6%
 @set branch=%mesaver:~0,4%
+@set /a mesaver=%mesaver:~0,2%%mesaver:~3,1%00+%mesaver:~5%
 @if EXIST mesapatched.ini GOTO build_mesa
-@if %prepfail%==1 GOTO build_mesa
+@if %prepfail% EQU 1 GOTO build_mesa
 @git apply -v ..\mesa-dist-win\patches\s3tc.patch
 @set mesapatched=1
 @echo %mesapatched% > mesapatched.ini
@@ -172,7 +174,7 @@
 @if NOT EXIST %mesa%\mesa GOTO exit
 @set PATH=%oldpath%
 @if NOT EXIST %mesa%\dxtn GOTO distcreate
-@if "%mesaver:~-5%"=="devel" GOTO distcreate
+@if %mesaver% GEQ 17300 GOTO distcreate
 @set gcchost=msys2
 @set gcc=%mesa%\msys64
 @if NOT EXIST %gcc% set gcc=%mesa%\msys32
@@ -219,7 +221,7 @@
 @copy %mesa%\mesa\build\windows-%longabi%\mesa\drivers\osmesa\osmesa.dll osmesa-swrast.dll
 @copy %mesa%\mesa\build\windows-%longabi%\gallium\targets\osmesa\osmesa.dll osmesa-gallium.dll
 @copy %mesa%\mesa\build\windows-%longabi%\gallium\targets\graw-gdi\graw.dll graw.dll
-@if NOT "%mesaver:~-5%"=="devel" copy %mesa%\dxtn\%abi%\dxtn.dll dxtn.dll
+@if %mesaver% LSS 17300 copy %mesa%\dxtn\%abi%\dxtn.dll dxtn.dll
 @echo.
 
 :exit
