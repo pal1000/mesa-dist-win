@@ -1,3 +1,4 @@
+- Updated Mesa3D to 17.2.3.
 - Built S3TC with MSYS2 Mingw-w64 GCC 7.2.0.
 - Built LLVM 5.0 and Mesa with Visual Studio 2017 v15.4.0.
 # Deployment utility
@@ -10,6 +11,8 @@
 - Support building S3TC with MSYS2 Mingw-W64 GCC by default. They fixed their problem with 32-bit binaries when they upgraded to GCC 7.2.0.
 - Drop suport for Visual Studio 2015 completely. It survived so long due to Scons 3.0.0 issues.
 - Mesa build without git workaround: git_sha1.h was generated in an incorrect location during 64-bit builds.
+- Drop Scons 3.0.0 compatibility patch. It landed in Mesa 17.2.3.
+- Allow building Mesa without git since Scons 3.0.0 compatibility patch landed in Mesa stable.
 # Build script documentation
 - MSYS2 Mingw-w64 is now the preferred method to build S3TC.
 - Visual Studio 2017 is now required to build LLVM and Mesa3D.

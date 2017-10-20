@@ -20,7 +20,7 @@ Before continuing prepare an empty folder to extract the rest of dependencies in
 Extract in `.`. Be warned that the archive is double packed. Rename extracted folder to `mesa`.
 - [Git for Windows 32 or 64-bit](https://git-scm.com/download/win); 
 
-You can use the portable version if you don't want to bloat your system too much, but you have to add it to PATH. Required due to Scons 3.0.0 support requiring a patch on Mesa code, now that Scons is always up-to-date.
+You can use the portable version if you don't want to bloat your system too much, but you have to add it to PATH.
 - [LLVM source code](http://llvm.org/);
 
 Extract LLVM code in `.`. Rename extracted folder to `llvm`. If you use Visual Studio 2017, LLVM 4.0 is the minimum version that supports it.
@@ -66,7 +66,7 @@ It must match in architecture with Python.
 - Wheel for python 2.7. Required to download Scons via pypi. The build script installs it automatically. To install manually do `pip install wheel` with python being in PATH.
 - [Scons for python 2.7](https://sourceforge.net/projects/scons/files/scons/);
 
-The build script gets the latest version of Scons automatically but Scons 3.0.0 is not yet supported. See [Mesa bug 102852](https://bugs.freedesktop.org/show_bug.cgi?id=102852). You have to apply a patch included in this repository in `patches/scons3.patch` for Mesa3D source code to make it work which requires git in order to apply. This build script will try to apply it automatically. To apply manually, browse in Command Prompt to Mesa3D source code, then use `git apply` command with the location of the patch file as parametter.
+The build script gets the latest version of Scons automatically.
 - mako module for Python 2.7. Install with pip install mako. This script installs mako automatically. It also attempts to update all Python modules.
 - Get this script.
 

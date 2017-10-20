@@ -100,7 +100,7 @@
 @where /q git.exe
 @IF ERRORLEVEL 1 (
 @set ERRORLEVEL=0
-@echo Error: Git not found. Patching disabled.
+@echo Error: Git not found. Auto-patching disabled.
 @set prepfail=1
 )
 @if NOT EXIST mesa set mesapatched=0
@@ -120,20 +120,19 @@
 @set /p mesaver=<VERSION
 @set branch=%mesaver:~0,4%
 @if EXIST mesapatched.ini GOTO build_mesa
-@if %prepfail%==1 GOTO build_dxtn
+@if %prepfail%==1 GOTO build_mesa
 @git apply -v ..\mesa-dist-win\patches\s3tc.patch
-@if NOT EXIST %mesa%\mesa\.git git apply -v ..\mesa-dist-win\patches\scons3.patch
 @set mesapatched=1
 @echo %mesapatched% > mesapatched.ini
 @echo.
+
+:build_mesa
 @if NOT EXIST %LLVM% (
 @echo Could not find LLVM, aborting mesa build.
 @echo.
 @pause
 @GOTO build_dxtn
 )
-
-:build_mesa
 @set /p buildmesa=Begin mesa build. Proceed (y/n):
 @if /i NOT "%buildmesa%"=="y" GOTO build_dxtn
 @echo.
