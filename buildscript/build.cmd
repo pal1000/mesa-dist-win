@@ -162,9 +162,9 @@
 @if EXIST build\windows-%longabi% set /p cleanbuild=Do you want to clean build (y/n):
 @if EXIST build\windows-%longabi% echo.
 @if /I "%cleanbuild%"=="y" RD /S /Q build\windows-%longabi%
-@if NOT EXIST %mesa%\mesa\build md %mesa%\mesa\build
-@if NOT EXIST %mesa%\mesa\build\windows-%abi% md %mesa%\mesa\build\windows-%abi%
-@if NOT EXIST %mesa%\mesa\build\windows-%abi%\git_sha1.h echo 0 > %mesa%\mesa\build\windows-%longabi%\git_sha1.h
+@if NOT EXIST build md build
+@if NOT EXIST build\windows-%longabi% md build\windows-%longabi%
+@if NOT EXIST build\windows-%longabi%\git_sha1.h echo 0 > build\windows-%longabi%\git_sha1.h
 @echo.
 @%sconscmd%
 @echo.
