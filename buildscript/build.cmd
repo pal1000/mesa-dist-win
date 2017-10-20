@@ -42,21 +42,16 @@
 @if NOT "%ProgramW6432%"=="" set hostabi=amd64
 @set vsabi=%minabi%
 @if NOT %targetabi%==%hostabi% set vsabi=%hostabi%_%targetabi%
-@set vsenv15="%ProgramFiles%
-@if NOT "%ProgramW6432%"=="" set vsenv15=%vsenv15% (x86)
-@set vsenv15=%vsenv15%\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars%vsabi%.bat"
-@if %vsabi%==32 set vsenv14="%VS140COMNTOOLS%..\..\VC\bin\vcvars%vsabi%.bat"
-@if %vsabi%==64 set vsenv14="%VS140COMNTOOLS%..\..\VC\bin\%targetabi%\vcvars%vsabi%.bat"
-@if NOT %targetabi%==%hostabi% set vsenv14="%VS140COMNTOOLS%..\..\VC\bin\%vsabi%\vcvars%vsabi%.bat"
+@set vsenv="%ProgramFiles%
+@if NOT "%ProgramW6432%"=="" set vsenv=%vsenv% (x86)
+@set vsenv=%vsenv%\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars%vsabi%.bat"
 @set vsenvloaded=0
-@set toolsets=0
-@if EXIST %vsenv15% set toolsets=%toolsets%15
-@if EXIST %vsenv14% set toolsets=%toolsets%14
-@if %toolsets%==0 (
+@set toolset=0
+@if EXIST %vsenv% set toolset=15
+@if %toolset%==0 (
 @echo Error: No Visual Studio installed.
 @GOTO build_dxtn
 )
-@if EXIST toolset-%abi%.ini set /p toolset=<toolset-%abi%.ini
 @TITLE Building Mesa3D %abi%
 
 :build_llvm
@@ -69,23 +64,8 @@
 @md cmake-%abi%
 @cd cmake-%abi%
 @set ninja=n
-@if %toolsets%==01514 GOTO dualtoolsets
-@set toolset=%toolsets:~-2%
 @set toolchain=Visual Studio %toolset%
-@if EXIST %mesa%\ninja set /p ninja=Use Ninja build system instead of MsBuild, there is no requirement to do this with the primary toolset though - (y/n):
-@GOTO llvm_build_exec
-
-:dualtoolsets
-@set oldtoolset=n
-@set toolchain=Visual Studio 15
-@set toolset=15
-@if EXIST %mesa%\ninja set oldtoolset=1
-@if %oldtoolset%==1 set /p ninja=Build with MSVC 2015 backward compatibility toolset, alternative solution for LLVM 3.9.1 build with Visual Studio 2017 - (y/n):
-@if /i "%ninja%"=="y" set oldtoolset=y
-@if /I "%oldtoolset%"=="y" set toolset=14
-@if /I "%oldtoolset%"=="1" set /p ninja=Use Ninja build system instead of MsBuild, there is no requirement to do this with the primary toolset though - (y/n):
-
-:llvm_build_exec
+@if EXIST %mesa%\ninja set /p ninja=Use Ninja build system instead of MsBuild (y/n); less storage device strain and maybe faster build:
 @if /I "%ninja%"=="y" set toolchain=Ninja
 @if /I "%ninja%"=="y" set PATH=%mesa%\ninja\;%PATH%
 @if %abi%==x64 set toolchain=%toolchain% Win64
@@ -94,8 +74,6 @@
 @if %hostabi%==amd64 set x64compile=1
 @if /I NOT "%ninja%"=="y" set x64compile=%x64compile%2
 @if %x64compile%==12 set x64compiler= -Thost=x64
-@if %toolset%==15 set vsenv=%vsenv15%
-@if %toolset%==14 set vsenv=%vsenv14%
 @set llvmbuildsys=%CD%
 @call %vsenv%
 @set vsenvloaded=1
@@ -111,7 +89,6 @@
 @if NOT "%toolchain%"=="Ninja" cmake --build . --config Release --target install
 @if "%toolchain%"=="Ninja" ninja install
 @echo.
-@echo %toolset% > %mesa%\toolset-%abi%.ini
 
 :prep_mesa
 @set PATH=%oldpath%
@@ -179,14 +156,6 @@
 @set ERRORLEVEL=0
 @set PATH=%mesa%\flexbison\;%PATH%
 @cd %mesa%\mesa
-@set loadtoolset=0
-@set /p toolset=<%mesa%\toolset-%abi%.ini
-@if %toolset%==14 set vsenv=%vsenv14%
-@if %toolset%==15 set vsenv=%vsenv15%
-@if %vsenvloaded%==0 (
-@call %vsenv%
-@cd %mesa%\mesa
-)
 
 :build_mesa_exec
 @set cleanbuild=n
