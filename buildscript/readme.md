@@ -6,9 +6,9 @@
   
 ## 1. Acquire mesa source code, dependencies and build tools
 
-- Visual Studio 2015 or 2017 (Visual 2015 Express may not work due to lack of MFC and ATL support);
+- Visual Studio 2017;
 
-Visual Studio has to be installed in its default location. For Visual Studio 2017 you need to install the following components under Desktop Development with C++: Visual Studio 2015 toolset [as Scons doesn't support Visual Studio 2017 yet](https://bugs.freedesktop.org/show_bug.cgi?id=100202), MFC and ATL, CMake tools, Windows 8.1 and 10 SDKs.
+Visual Studio has to be installed in its default location. You need to install the following components under Desktop Development with C++: MFC and ATL, CMake tools, Windows 8.1 SDK and latest Windows 10 SDK.
 
 - [7-zip](http://www.7-zip.org/download.html) or [7-zip portable](https://portableapps.com/apps/utilities/7-zip_portable)
 
@@ -59,7 +59,7 @@ Optional. Alternative for MSYS2 Mingw-w64. You only need mingw-w64 if you want t
 Extract in `.\flexbison`.
 - [Python 32 or 64 bit](https://www.python.org/);
 
-Use Python 2.7. Python 3.x is not fully supported by Scons and leads to Python crash at this moment. Use the installer. Make sure it's dropped in `.\python` if you don't want to add it to PATH system-wide. Make sure pip is installed. Sometimes it isn't. If it isn't get it from [here](https://pip.pypa.io/en/stable/installing/).
+Use Python 2.7. Mesa3D Scons build system was written using Python 2 syntax. Trying to use Python 3 leads to Python crash at this moment. Use the installer. Make sure it's dropped in `.\python` if you don't want to add it to PATH system-wide. Make sure pip is installed. Sometimes it isn't. If it isn't get it from [here](https://pip.pypa.io/en/stable/installing/).
 - [pywin32 for Python 2.7](https://sourceforge.net/projects/pywin32/files/);
 It must match in architecture with Python.
 
@@ -95,8 +95,7 @@ The script acts like a Wizard asking for the following during execution:
 - if you want to update/install required python modules (mako and markupsafe);
 - architecture for which you want to build mesa - type "y" for x64, otherwise x86 is selected;
 - if you need to build LLVM.  You only need to do it once for each architecture you target when new version is out and this doesn't happen very often;
-- if you are running Visual Studio 2017 and Ninja build system is installed, the script asks if you want to build LLVM with MSVC 2015 toolset instead of 2017;
-- if you want to build LLVM with Ninja build system instead of Msbuild (only if you opted for default toolset, e.g. MSVC 2017 toolset with Visual Studio 2017 or MSVC 2015 toolset with Visual Studio 2015);
+- if you want to build LLVM with Ninja build system instead of Msbuild;
 - if Git is installed and Mesa code is missing, ask if you don't want to download Mesa code using Git and abort execution;
 - if you intend to download Mesa using Git, you are asked to specify which branch (valid entries: 17.2, 17.3 ...);
 - if you want to build Mesa3D;
