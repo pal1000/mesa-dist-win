@@ -51,7 +51,7 @@ Optional. You only need MSYS2 if you want to build S3 texture compression librar
 
 `pacman -S mingw-w64-x86_64-toolchain`
 
-- Standalone Mingw-w64 i686 and x86_64 (deprecated);
+- Standalone Mingw-w64 i686 and x86_64;
 
 Optional. Alternative for MSYS2 Mingw-w64. You only need mingw-w64 if you want to build S3 texture compression library. Teoretically mesa could be built the same way but [it doesn't work due to a Scons bug](https://bugs.freedesktop.org/show_bug.cgi?id=94072). Download web-installer from [here](https://sourceforge.net/projects/mingw-w64/). You need to run web installer once for each target architecture (i686 means 32-bit, x86_64 means 64-bit). Install in `.\mingw-w64\x86` for 32-bit builds and `.\mingw-w64\x64` for 64-bit builds. You need both as each one can only build for their matching architecture. Leave all other setings as default.
 - [Flex and Bison](https://sourceforge.net/projects/winflexbison/);
@@ -103,7 +103,8 @@ The script acts like a Wizard asking for the following during execution:
 - if you want to build off-screen rendering drivers;
 - if you want to build graw driver;
 - if you want to do a clean build;
-- if you want to build S3 texture compression library (only asked if mingw-w64 is detected and library source code is present in the appropriate location);
+- if you want to build S3 texture compression library (only asked if at least a flavor of mingw-w64 is detected and library source code is present in the appropriate location);
+- what flavor of Mingw-w64 to build S3TC with (only asked if both MSYS2 and standalone Mingw-w64 are detected, 64-bit MSYS2 is preferred over 32-bit if both installed);
 - if you want to organize binaries in a single location (distribution creation).
 
 ## 4. Miscellaneous and build location

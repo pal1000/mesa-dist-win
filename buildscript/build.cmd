@@ -32,8 +32,6 @@
 @if /I "%x64%"=="y" set abi=x64
 @set longabi=%abi%
 @if %abi%==x64 set longabi=x86_64
-@set altabi=i686
-@if %abi%==x64 set altabi=%longabi%
 @set minabi=32
 @if %abi%==x64 set minabi=64
 @set targetabi=x86
@@ -45,14 +43,13 @@
 @set vsenv="%ProgramFiles%
 @if NOT "%ProgramW6432%"=="" set vsenv=%vsenv% (x86)
 @set vsenv=%vsenv%\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars%vsabi%.bat"
-@set vsenvloaded=0
 @set toolset=0
 @if EXIST %vsenv% set toolset=15
+@TITLE Building Mesa3D %abi%
 @if %toolset% EQU 0 (
 @echo Error: No Visual Studio installed.
 @GOTO build_dxtn
 )
-@TITLE Building Mesa3D %abi%
 
 :build_llvm
 @set /p buildllvm=Begin LLVM build. Only needs to run once for each ABI and version. Proceed (y/n):
@@ -75,9 +72,8 @@
 @if /I NOT "%ninja%"=="y" set x64compile=%x64compile%2
 @if %x64compile%==12 set x64compiler= -Thost=x64
 @set llvmbuildsys=%CD%
-@call %vsenv%
-@set vsenvloaded=1
-@cd %llvmbuildsys%
+@if "%toolchain%"=="Ninja" call %vsenv%
+@if "%toolchain%"=="Ninja" cd %llvmbuildsys%
 @echo.
 @where /q cmake.exe
 @IF ERRORLEVEL 1 set PATH=%mesa%\cmake\bin\;%PATH%
@@ -175,19 +171,32 @@
 @set PATH=%oldpath%
 @if NOT EXIST %mesa%\dxtn GOTO distcreate
 @if %mesaver% GEQ 17300 GOTO distcreate
-@set gcchost=msys2
-@set gcc=%mesa%\msys64
-@if NOT EXIST %gcc% set gcc=%mesa%\msys32
-@if NOT EXIST %gcc% set gcchost=standalone
-@if NOT EXIST %gcc% set gcc=%mesa%\mingw-w64\%abi%\mingw%minabi%\bin
-@if NOT EXIST %gcc% set gcchost=false
+@set gcchost=0
+@set msys32=%mesa%\msys32
+@set msys64=%mesa%\msys64
+@set standalone=%mesa%\mingw-w64\%abi%\mingw%minabi%\bin
+@if EXIST %msys32% set /a gcchost=%gcchost%+1
+@if EXIST %msys64% set /a gcchost=%gcchost%+5
+@if EXIST %standalone% set /a gcchost=%gcchost%+10
+@if %gcchost% GTR 0 set /p builddxtn=Do you want to build S3 texture compression library? (y/n):
+@if /i NOT "%builddxtn%"=="y" set gcchost=0
+@if %gcchost% EQU 0 GOTO distcreate
 @set gccpath=
-@if %gcchost%==false GOTO distcreate
-@if %gcchost%==standalone set gccpath=%gcc%\;
-@if %gcchost%==msys2 set gccpath=%gcc%\mingw%minabi%\bin\;%gcc%\usr\bin\;
-@set /p builddxtn=Do you want to build S3 texture compression library? (y/n):
-@if /i NOT "%builddxtn%"=="y" set gcchost=false
-@if /i NOT "%builddxtn%"=="y" GOTO distcreate
+@set selectgcc=0
+@if %gcchost% GTR 10 (
+@echo.
+@echo Select GCC flavor:
+@echo 1. MSYS2
+@echo 2. Standalone
+@set /p selectgcc=Enter choice:
+@echo.
+)
+@if "%selectgcc%"=="1" set /a gcchost=%gcchost%-10
+@if "%selectgcc%"=="2" set gcchost=10
+@if %gcchost% EQU 1 set gccpath=%msys32%\mingw%minabi%\bin\;%msys32%\usr\bin\;
+@if %gcchost% EQU 5 set gccpath=%msys64%\mingw%minabi%\bin\;%msys64%\usr\bin\;
+@if %gcchost% EQU 6 set gccpath=%msys64%\mingw%minabi%\bin\;%msys64%\usr\bin\;
+@if %gcchost% EQU 10 set gccpath=%standalone%\;
 @set PATH=%gccpath%%PATH%
 @cd %mesa%\dxtn
 @echo.
@@ -195,10 +204,12 @@
 @MD %abi%
 @set dxtn=gcc -shared -m%minabi% -v *.c *.h -I ../mesa/include -Wl,--dll,--dynamicbase,--enable-auto-image-base,--nxcompat -o %abi%/dxtn.dll
 @set msys2update=n
-@if %gcchost%==msys2 set /p msys2update=Update MSYS2 packages (y/n):
+@if %gcchost% LSS 10 set /p msys2update=Update MSYS2 packages (y/n):
 @if /I "%msys2update%"=="y" (
 @pacman -Syu
+@echo.
 @pause
+@echo.
 )
 @%dxtn%
 @echo.
