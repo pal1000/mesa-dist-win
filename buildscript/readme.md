@@ -105,6 +105,7 @@ The script acts like a Wizard asking for the following during execution:
 - if you want to do a clean build;
 - if you want to build S3 texture compression library (only asked if at least a flavor of mingw-w64 is detected and library source code is present in the appropriate location);
 - what flavor of Mingw-w64 to build S3TC with (only asked if both MSYS2 and standalone Mingw-w64 are detected, 64-bit MSYS2 is preferred over 32-bit if both installed);
+- if you want update MSYS2 system and packages before building S3TC (only if you opted for building S3TC with MSYS2 Mingw-w64);
 - if you want to organize binaries in a single location (distribution creation).
 
 ## 4. Miscellaneous and build location
