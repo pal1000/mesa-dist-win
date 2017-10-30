@@ -114,9 +114,11 @@
 @cd mesa
 @set LLVM=%mesa%\llvm\%abi%
 @set /p mesaver=<VERSION
-@if %mesaver:~-5%==devel set mesaver=%mesaver:~0,-6%
+@if "%mesaver:~-7%"=="0-devel" set /a intmesaver=%mesaver:~0,2%%mesaver:~3,1%00
+@if "%mesaver:~5,4%"=="0-rc" set /a intmesaver=%mesaver:~0,2%%mesaver:~3,1%00+%mesaver:~9%
+@if NOT "%mesaver:~5,2%"=="0-" set /a intmesaver=%mesaver:~0,2%%mesaver:~3,1%50+%mesaver:~5%
 @set branch=%mesaver:~0,4%
-@set /a mesaver=%mesaver:~0,2%%mesaver:~3,1%00+%mesaver:~5%
+@set mesaver=%intmesaver%
 @if EXIST mesapatched.ini GOTO build_mesa
 @if %prepfail% EQU 1 GOTO build_mesa
 @git apply -v ..\mesa-dist-win\patches\s3tc.patch
