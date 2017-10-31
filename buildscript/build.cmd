@@ -118,7 +118,6 @@
 @if "%mesaver:~5,4%"=="0-rc" set /a intmesaver=%mesaver:~0,2%%mesaver:~3,1%00+%mesaver:~9%
 @if NOT "%mesaver:~5,2%"=="0-" set /a intmesaver=%mesaver:~0,2%%mesaver:~3,1%50+%mesaver:~5%
 @set branch=%mesaver:~0,4%
-@set mesaver=%intmesaver%
 @if EXIST mesapatched.ini GOTO build_mesa
 @if %prepfail% EQU 1 GOTO build_mesa
 @git apply -v ..\mesa-dist-win\patches\s3tc.patch
@@ -172,7 +171,7 @@
 @if NOT EXIST %mesa%\mesa GOTO exit
 @set PATH=%oldpath%
 @if NOT EXIST %mesa%\dxtn GOTO distcreate
-@if %mesaver% GEQ 17300 GOTO distcreate
+@if %intmesaver% GEQ 17300 GOTO distcreate
 @set gcchost=0
 @set msys32=%mesa%\msys32
 @set msys64=%mesa%\msys64
@@ -234,7 +233,7 @@
 @copy %mesa%\mesa\build\windows-%longabi%\mesa\drivers\osmesa\osmesa.dll osmesa-swrast.dll
 @copy %mesa%\mesa\build\windows-%longabi%\gallium\targets\osmesa\osmesa.dll osmesa-gallium.dll
 @copy %mesa%\mesa\build\windows-%longabi%\gallium\targets\graw-gdi\graw.dll graw.dll
-@if %mesaver% LSS 17300 copy %mesa%\dxtn\%abi%\dxtn.dll dxtn.dll
+@if %intmesaver% LSS 17300 copy %mesa%\dxtn\%abi%\dxtn.dll dxtn.dll
 @echo.
 
 :exit
