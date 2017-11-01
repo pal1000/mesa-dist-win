@@ -90,7 +90,6 @@
 @set PATH=%oldpath%
 @cd %mesa%
 @set mesapatched=0
-@set branch=none
 @set haltmesabuild=n
 @set prepfail=0
 @where /q git.exe
@@ -99,16 +98,14 @@
 @echo Error: Git not found. Auto-patching disabled.
 @set prepfail=1
 )
-@if NOT EXIST mesa set mesapatched=0
 @if NOT EXIST mesa echo Warning: Mesa3D source code not found.
 @if NOT EXIST mesa set prepfail=%prepfail%2
 @if %prepfail% EQU 12 echo Fatal: Both Mesa code and Git are missing. At least one is required. Execution halted.
 @if %prepfail% EQU 12 GOTO build_dxtn
 @if NOT EXIST mesa set /p haltmesabuild=Press Y to abort execution. Press any other key to download Mesa via Git:
 @if /I "%haltmesabuild%"=="y" GOTO build_dxtn
+@if NOT EXIST mesa set branch=master
 @if NOT EXIST mesa set /p branch=Enter Mesa source code branch name - defaults to master:
-@if "%branch%"=="" set branch=master
-@if "%branch%"=="none" set branch=master
 @if NOT EXIST mesa echo.
 @if NOT EXIST mesa git clone --depth=1 --branch=%branch% git://anongit.freedesktop.org/mesa/mesa mesa
 @cd mesa
@@ -117,7 +114,6 @@
 @if "%mesaver:~-7%"=="0-devel" set /a intmesaver=%mesaver:~0,2%%mesaver:~3,1%00
 @if "%mesaver:~5,4%"=="0-rc" set /a intmesaver=%mesaver:~0,2%%mesaver:~3,1%00+%mesaver:~9%
 @if NOT "%mesaver:~5,2%"=="0-" set /a intmesaver=%mesaver:~0,2%%mesaver:~3,1%50+%mesaver:~5%
-@set branch=%mesaver:~0,4%
 @if EXIST mesapatched.ini GOTO build_mesa
 @if %prepfail% EQU 1 GOTO build_mesa
 @git apply -v ..\mesa-dist-win\patches\s3tc.patch

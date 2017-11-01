@@ -1,2 +1,2 @@
 ### Build script
-- Mesa3D version detection code cleanup.
+- Mesa3D version and branch detection code cleanup.
