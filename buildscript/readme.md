@@ -30,7 +30,9 @@ Optional, it reduces LLVM build size as it works with single configuration. Unli
 If used, extract Ninja in `.\ninja`. My script asks if you want to do this before starting LLVM build. LLVM must be built in release mode with install target. This build script does it automatically or you can look [here](https://wiki.qt.io/MesaLlvmpipe).
 - S3 texture compression library source code;
 
-S3 texture compression library is optional. Build it only if you need it. Mesa master branch integrated it, now that the S3TC patent expired. It implements 5 S3 texture compression extensions. You will need to clone S3 texture compression library source code repository using git. Go to folder where you installed git and open git-cmd.bat. Change current folder to dependencies dropping folder, the one I called `.`. Execute `git clone git://people.freedesktop.org/~mareko/libtxc_dxtn dxtn`. It is also recommended that before building Mesa to enable S3TC texture cache by modifying inside Mesa source code in src/gallium/drivers/llvmpipe/lp_tex_sample.h the value of LP_USE_TEXTURE_CACHE to 1. It should become
+S3 texture compression library is optional. Build it only if you need it. Mesa 17.3 integrated it, now that the S3TC patent expired, but you still need to enable S3TC texture cache though. libtxc_dxtn implements 5 S3 texture compression extensions. You will need to clone S3 texture compression library source code repository using git. Go to folder where you installed git and open git-cmd.bat. Change current folder to dependencies dropping folder, the one I called `.`. Execute `git clone git://people.freedesktop.org/~mareko/libtxc_dxtn dxtn`.
+
+It is recommended that before building Mesa to enable S3TC texture cache by modifying inside Mesa source code in src/gallium/drivers/llvmpipe/lp_tex_sample.h the value of LP_USE_TEXTURE_CACHE to 1. It should become
 
 `#define LP_USE_TEXTURE_CACHE 1`
 
