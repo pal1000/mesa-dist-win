@@ -10,21 +10,15 @@
 @FOR /F "tokens=* USEBACKQ" %%F IN (`where python.exe`) DO @SET pythonloc=%%F
 @set makoloc="%pythonloc:python.exe=%Lib\site-packages\mako"
 @set sconsloc="%pythonloc:python.exe=%Scripts\scons.py"
-@if NOT EXIST %makoloc% (
+@if NOT EXIST %makoloc% set pyupd=y
+@if EXIST %makoloc% set /p pyupd=Install/update python modules (y/n):
+@if /I "%pyupd%"=="y" (
+@python -m pip install -U setuptools
 @python -m pip install -U pip
 @python -m pip install -U wheel
 @python -m pip install -U scons
 @python -m pip install -U MarkupSafe
 @python -m pip install -U mako
-@echo.
-)
-@if EXIST %makoloc% set /p pyupd=Install/update python modules (y/n):
-@if /I "%pyupd%"=="y" (
-@python -m pip install -U pip
-@python -m pip install -U wheel
-@python -m pip freeze > requirements.txt
-@python -m pip install -r requirements.txt --upgrade
-@del requirements.txt
 @echo.
 )
 @set abi=x86
