@@ -63,8 +63,9 @@ Extract in `.\flexbison`.
 
 Use Python 2.7. Mesa3D Scons build system was written using Python 2 syntax. Trying to use Python 3 leads to Python crash at this moment. Use the installer. Make sure it's dropped in `.\python` if you don't want to add it to PATH system-wide. Make sure pip is installed. Sometimes it isn't. If it isn't get it from [here](https://pip.pypa.io/en/stable/installing/).
 - [pywin32 for Python 2.7](https://sourceforge.net/projects/pywin32/files/);
-It must match in architecture with Python.
 
+It must match in architecture with Python. There is a bug in the installer. For true successful installation you have to open Command Prompt as admin, browse to the folder holding pywin32 installer using CD command and run it from there.
+- setuptools for python. The buld script updates it automatically. To update manually do `pip install -U setuptools` with python being in PATH.
 - Wheel for python 2.7. Required to download Scons via pypi. The build script installs it automatically. To install manually do `pip install wheel` with python being in PATH.
 - [Scons for python 2.7](https://sourceforge.net/projects/scons/files/scons/);
 
