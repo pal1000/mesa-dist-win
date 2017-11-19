@@ -1,5 +1,5 @@
 ### Build script
-- Python modules update: pip freeze is seriously broken. Always use pip install -U. setuptools wasn't updated at all due to pip freeze shortcommings. Also Scons 3.0.1 wasn't picked up despite being live on Pypi.
+- Python modules update: pip freeze is seriously broken. Always use pip install -U. setuptools wasn't updated at all due to pip freeze shortcomings. Also Scons 3.0.1 wasn't picked up despite being live on Pypi.
 - Python modules: wheel is no longer needed.
 ### Build script documentation
 - Workaround a pywin32 installer bug.
