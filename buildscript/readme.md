@@ -65,8 +65,7 @@ Use Python 2.7. Mesa3D Scons build system was written using Python 2 syntax. Try
 - [pywin32 for Python 2.7](https://sourceforge.net/projects/pywin32/files/);
 
 It must match in architecture with Python. There is a bug in the installer. For true successful installation you have to open Command Prompt as admin, browse to the folder holding pywin32 installer using CD command and run it from there.
-- setuptools for python. The build script updates it automatically. To update manually do `pip install -U setuptools` with python being in PATH.
-- Wheel for python 2.7. Required to download Scons via pypi. The build script installs it automatically. To install manually do `pip install wheel` with python being in PATH.
+- Update setuptools for python. When setuptools is up-to-date you can successfully install Scons via Pypi without having to install wheel. The build script updates it automatically. To update manually do `pip install -U setuptools` with python being in PATH.
 - [Scons for python 2.7](https://sourceforge.net/projects/scons/files/scons/);
 
 The build script gets the latest version of Scons automatically.

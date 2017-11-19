@@ -15,7 +15,6 @@
 @if /I "%pyupd%"=="y" (
 @python -m pip install -U setuptools
 @python -m pip install -U pip
-@python -m pip install -U wheel
 @python -m pip install -U scons
 @python -m pip install -U MarkupSafe
 @python -m pip install -U mako
