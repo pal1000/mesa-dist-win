@@ -5,7 +5,7 @@
 - [Manual OpenGL context configuration](#manual-opengl-context-configuration) 
   
 # Downloads
-Mesa 17.2.5 builds are now available in [releases section](https://github.com/pal1000/mesa-dist-win/releases)
+Mesa 17.2.6 builds are now available in [releases section](https://github.com/pal1000/mesa-dist-win/releases)
 
 By default mesa uses llvmpipe. You can switch to OpenSWR by setting GALLIUM_DRIVER environment variable value to swr either globally or in a batch file. Mesa environment variables documentation is available [here](https://mesa3d.org/envvars.html). Build instructions, if you want to replicate my builds, are available [here](https://github.com/pal1000/mesa-dist-win/tree/master/buildscript).
 # Installation and usage
