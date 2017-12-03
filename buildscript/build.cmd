@@ -4,20 +4,23 @@
 @for %%I in ("%cd%") do @set mesa=%%~sI
 @set oldpath=%PATH%
 @where /q python.exe
-@IF ERRORLEVEL 1 set PATH=%mesa%\Python\;%mesa%\Python\Scripts\;%PATH%
+@IF ERRORLEVEL 1 set PATH=%mesa%\Python\;%PATH%
 @set ERRORLEVEL=0
 @set pyupd=n
 @FOR /F "tokens=* USEBACKQ" %%F IN (`where python.exe`) DO @SET pythonloc=%%F
 @set makoloc="%pythonloc:python.exe=%Lib\site-packages\mako"
 @set sconsloc="%pythonloc:python.exe=%Scripts\scons.py"
-@if NOT EXIST %makoloc% set pyupd=y
-@if EXIST %makoloc% set /p pyupd=Install/update python modules (y/n):
-@if /I "%pyupd%"=="y" (
+@if NOT EXIST %makoloc% (
 @python -m pip install -U setuptools
 @python -m pip install -U pip
 @python -m pip install -U scons
 @python -m pip install -U MarkupSafe
 @python -m pip install -U mako
+@echo.
+)
+@if EXIST %makoloc% set /p pyupd=Install/update python modules (y/n):
+@if /I "%pyupd%"=="y" (
+@python %mesa%\mesa-dist-win\buildscript\update.py
 @echo.
 )
 @set abi=x86
@@ -139,7 +142,7 @@
 
 :build_with_vs
 @where /q python.exe
-@IF ERRORLEVEL 1 set PATH=%mesa%\Python\;%mesa%\Python\Scripts\;%PATH%
+@IF ERRORLEVEL 1 set PATH=%mesa%\Python\;%PATH%
 @set ERRORLEVEL=0
 @set PATH=%mesa%\flexbison\;%PATH%
 @cd %mesa%\mesa
