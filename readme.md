@@ -1,13 +1,20 @@
 **Table of Contents**
 
 - [Downloads](#downloads)
+- [Package contents](#package-contents)
 - [Installation and usage](#installation-and-usage)
 - [Manual OpenGL context configuration](#manual-opengl-context-configuration) 
   
 # Downloads
 Mesa 17.3.0 builds are now available in [releases section](https://github.com/pal1000/mesa-dist-win/releases)
+# Package contents
+The following Mesa3D drivers are shipped in each release:
+- [llvmpipe](https://www.mesa3d.org/llvmpipe.html). file name: opengl32.dll. It is the default desktop OpenGL driver.
+- [swr](http://openswr.org/). File names: swrAVX.dll, swrAVX2.dll. An alternative desktop OpenGL driver developped by Intel. There are currently 2 DLLs, only one being loaded based on what the user CPU can do. 2 more will join soon matching the exting flavors of AVX512 instruction set, see issue #2. By default Mesa uses llvmpipe. You can switch to swr by setting GALLIUM_DRIVER environment variable value to swr either globally or in a batch file. Mesa environment variables documentation is available [here](https://mesa3d.org/envvars.html). 
+- [osmesa](https://www.mesa3d.org/osmesa.html). File names: osmesa-swrast.dll, osmesa-gallium.dll. 2 versions of osmesa, off-screen rendering driver. This is used in special cases by software that is designed to use Mesa code to render without any kind of winndow system or operating system dependency. swrast variant runs without LLVM JIT, being much slower than gallium version, but it has unique features.
+- graw. File name: graw.dll. This is Mesa3D plug-in library. It is not a driver. This is used in special cases by software that is designed to use Mesa code. While Mesa includes a full version bearing the build target of graw-gdi and a headless version bearing the build target of graw-null, only the full version is included. The headless version can be easily added upon request in a later release. 
 
-By default mesa uses llvmpipe. You can switch to OpenSWR by setting GALLIUM_DRIVER environment variable value to swr either globally or in a batch file. Mesa environment variables documentation is available [here](https://mesa3d.org/envvars.html). Build instructions, if you want to replicate my builds, are available [here](https://github.com/pal1000/mesa-dist-win/tree/master/buildscript).
+Build instructions, if you want to replicate my builds, are available [here](https://github.com/pal1000/mesa-dist-win/tree/master/buildscript).
 # Installation and usage
 Before running the installer close all programs that use Mesa if any is running. After running the installer you need to run the quick deployment utility located in the directory you installed Mesa. You only need to do this for programs you didn't deployed Mesa before as the quick deployment utility changes persist across upgrades and reinstallations. The quick deployment utility has a start-over mechanism so you can do all deployments you need in one go. The quick deployment utility will help you save storage and makes things easier as you won't have to manually copy DLLs from Mesa installation directory as it creates symlinks to whatever Mesa drivers you opt-in to use. This behavior ensures all programs that use Mesa use the same up-to-date version. Quick deployment utility only asks for path to directory containing application executable, if the app is 64-bit or 32-bit and the drivers you need. 32-bit applications have their names marked in Task Manager while running. Most applications will use mesa regardless of GPU capabilities, but some applications may be smart enough to load OpenGL from system directory only. Use [Federico Dossena](https://github.com/adolfintel)'s Mesainjector to workaround this issue: [Build guide](http://fdossena.com/?p=mesa/injector_build.frag), [VMWare ThinApp capture](http://fdossena.com/mesa/MesaInjector_Capture.7z). Since v17.0.1.391 in-place upgrade is fully supported. Since v17.0.1.391-2 S3 texture compression is supported. v17.0.4.391-1 requires uninstall of previous versions. Applications requiring OpenGL 3.1 or newer may need [Manual OpenGL context configuration](#manual-opengl-context-configuration).
 
