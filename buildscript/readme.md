@@ -8,7 +8,7 @@
 
 - Visual Studio 2017;
 
-Visual Studio has to be installed in its default location. You only need components from within Desktop Development with C++ category. MFC, ATL and a Windows SDK is required. Latest Windows 10 SDK is highly recommended. You may opt-out of Windows 10 SDK in Visual Studio installer and manually install its standalone version instead as it is sometimes newer. If you want to use standalone Windows 10 SDK make sure you install Windows SDK for Desktop C++ x86 and amd64 apps components. If you need Windows XP/PosReady 2009 support you also need to opt-in in Visual Studio installer for Windows XP support for C++ and Windows 8.1 SDK.
+Visual Studio has to be installed in its default location. You only need components from within Desktop Development with C++ category. Beside default selected components MFC, ATL and a Windows SDK is required. Latest Windows 10 SDK is highly recommended. You may opt-out in this exact order of CMake Tools and Windows 10 SDK in Visual Studio installer and manually install standalone version of Windows 10 SDK instead as it is sometimes newer. If you want to use standalone Windows 10 SDK make sure you install Windows SDK for Desktop C++ x86 and amd64 apps components. If you need Windows XP/PosReady 2009 support you also need to opt-in in Visual Studio installer for Windows XP support for C++ and Windows 8.1 SDK.
 
 - [7-zip](http://www.7-zip.org/download.html) or [7-zip portable](https://portableapps.com/apps/utilities/7-zip_portable)
 
