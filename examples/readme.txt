@@ -26,6 +26,6 @@ Examples:
    https://rpcs3.net/quickstart
    Example highlighted in rpcs3.cmd
 
-4. PPSSPP - PSP emulator.
-   It doesn't need any kind of GL context configuration. This example shows how to use swr instead of llvmpipe. 
-   You don't have to do this though.
+4. swr example
+   PPSSPP doesn't need any kind of GL context configuration. This example shows how to use swr instead of llvmpipe.
+   There no conflict between swr and manual GL context configuration. You can mix them if necessary.

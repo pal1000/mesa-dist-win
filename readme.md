@@ -41,7 +41,7 @@ OpenGLMajorVersion.OpenGLMinorVersion{FC|COMPAT].
 
 FC means a core+forward compatible context, COMPAT means a compatibility context, absence of any string after version number means a core profile context. Examples: 3.3FC means OpenGL 3.3 core+forward compatible context, 3.1COMPAT means OpenGL 3.1 compatibility context, 3.2 means OpenGL 3.2 core profile. The default value is 3.0COMPAT.
 
-A very important feature provided by this variable is the posibility to configure an incomplete OpenGL context. Programs can only request up to the highest OpenGL context with Khronos certification as complete from Mesa3D driver in use. Currently both llvmpipe and OpenSWR are certified for OpenGL 3.3, yet the rpcs3 context configuration sample uses OpenGL 4.3 and it works. This is because despite the context not being complete, the required extensions by rpcs3 are in place. Since Mesa 17.3 values meant for OpenGL 4.6 are recognized.
+A very important feature provided by this variable is the posibility to configure an incomplete OpenGL context. Programs can only request up to the highest OpenGL context with Khronos certification as complete from Mesa3D driver in use. Currently both llvmpipe and swr are certified for OpenGL 3.3, yet the rpcs3 context configuration sample uses OpenGL 4.3 and it works. This is because despite the context not being complete, the required extensions by rpcs3 are in place. Since Mesa 17.3 values meant for OpenGL 4.6 are recognized.
 
 - MESA_GLSL_VERSION_OVERRIDE
 
@@ -55,4 +55,4 @@ Simply open Notepad, write the batch script. When saving, end the file name with
 Documentation of most environment variables used by Mesa is available [here](https://mesa3d.org/envvars.html).
 Complete examples are available [here](https://github.com/pal1000/mesa-dist-win/tree/master/examples).
 
-
+There no conflict between swr driver and manual GL context configuration. You can mix them if necessary.
