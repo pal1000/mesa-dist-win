@@ -10,7 +10,7 @@ OS | Windows 10 Version 1709 Pro x64
 | | |
 |-|-|
 Edition | 2017 Community
-Version | 15.5.2
+Version | 15.5.3
 Windows 10 SDK Version | 10.0.16299.91
 Windows 10 SDK install method | standalone
 Windows 8.1 SDK installed | Yes
@@ -21,23 +21,27 @@ Windows XP support for C++ installed | Yes
 LLVM Version | 5.0.1
 CMake version | 3.10.1
 CMake ARCH | x64
-Ninja version | 1.8.2
-LLVM build configure x64[1] | cd llvm-5.0.1.src & md cmake-x64 & cd cmake-x64 & cmake -G "Ninja" -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../x64 ..
-LLVM build configure x86[2] | cd llvm-5.0.1.src & md cmake-x86 & cd cmake-x86 & cmake -G "Ninja" -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../x86 ..
-LLVM build execute[3] | ninja install
+Ninja version[4] | 1.8.2
+LLVM build configure x64[5] | cd llvm-5.0.1.src & md cmake-x64 & cd cmake-x64 & cmake -G "Visual Studio 15 Win64" -Thost=x64 -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../x64 ..
+LLVM build configure x86[5] | cd llvm-5.0.1.src & md cmake-x86 & cd cmake-x86 & cmake -G "Visual Studio 15" -Thost=x64 -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../x86 ..
+LLVM build execute[3] | cmake --build . --config Release --target install
 
 [1]Executed from an x64 Native Tools Command Prompt for VS 2017 shell
 
 [2]Executed from an x64_x86 Cross Tools Command Prompt for VS 2017 shell
 
 [3]Executed after each build configuration on same command shell
+
+[4]For Mesa 17.3.2 build, LLVM was built using Visual Studio MsBuild instead Ninja. Ninja has no updates since September 2017.
+
+[5]Executed from a standard Command Prompt.
 ### Python
 | | |
 |-|-|
 Version | 2.7.14
 ARCH | x64
 pip version | 9.0.1
-setuptools version | 38.2.4
+setuptools version | 38.4.0
 pywin32 / pypiwin32 version | 221
 scons version | 3.0.1
 Mako version | 1.0.7
@@ -48,6 +52,10 @@ MarkupSafe version | 1.0
 Package version | 2.5.13
 Bison version | 3.0.4
 Flex version | 2.6.4
+### Git version control
+| | |
+|-|-|
+Git For Windows portable | 2.15.1.2
 ### Mesa3D
 | | |
 |-|-|
