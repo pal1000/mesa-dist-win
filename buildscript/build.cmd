@@ -13,14 +13,17 @@
 @if NOT EXIST %makoloc% (
 @python -m pip install -U setuptools
 @python -m pip install -U pip
+@python -m pip install -U pywin32
 @python -m pip install -U scons
 @python -m pip install -U MarkupSafe
 @python -m pip install -U mako
+@powershell -Command Start-Process -FilePath "%mesa%\python\python.exe" -ArgumentList "%mesa%\python\Scripts\pywin32_postinstall.py","-install" -Verb RunAs
 @echo.
 )
 @if EXIST %makoloc% set /p pyupd=Install/update python modules (y/n):
 @if /I "%pyupd%"=="y" (
 @python %mesa%\mesa-dist-win\buildscript\update.py
+@powershell -Command Start-Process -FilePath "%mesa%\python\python.exe" -ArgumentList "%mesa%\python\Scripts\pywin32_postinstall.py","-install" -Verb RunAs
 @echo.
 )
 @set abi=x86
