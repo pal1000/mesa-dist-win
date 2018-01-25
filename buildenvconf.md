@@ -42,7 +42,7 @@ Version | 2.7.14
 ARCH | x64
 pip version | 9.0.1
 setuptools version | 38.4.0
-pywin32 / pypiwin32 version | 221
+pywin32 / pypiwin32 version | 222
 scons version | 3.0.1
 Mako version | 1.0.7
 MarkupSafe version | 1.0
@@ -55,7 +55,7 @@ Flex version | 2.6.4
 ### Git version control
 | | |
 |-|-|
-Git For Windows portable | 2.16.0.2
+Git For Windows portable | 2.16.1.1
 ### Mesa3D
 | | |
 |-|-|

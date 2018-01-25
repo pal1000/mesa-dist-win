@@ -1,5 +1,6 @@
 ### Build environment updates
 - pywin32 221 -> 222.
+- Git 2.16.0.2 -> 2.16.1.1. 
 ### Build script
 - Experimental: Get pywin32 via pypi.
 ### Build script documentaion
