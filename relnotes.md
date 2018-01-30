@@ -8,5 +8,8 @@
 ### Build script documentaion
 - pywin32 moved to Github.
 - Drop support for libxtc_dxtn standalone library and other few miscellaneous changes.
+### Inno Setup
+- Drop S3TC standalone library support.
+- Drop swr 32-bit support. Unsupported upstream.
 ### Debugging
 - Add latest llvm-config output, valid for LLVM 5.0.x and 6.0 RC1. Allows for finding new LLVM libraries a lot easier using an online diff service like text-compare.com.

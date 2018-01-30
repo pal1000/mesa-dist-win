@@ -33,16 +33,12 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Files]
 Source: "bin\x86\opengl32.dll"; DestDir: "{app}\x86"; Flags: ignoreversion
-Source: "bin\x86\swrAVX.dll"; DestDir: "{app}\x86"; Flags: ignoreversion
-Source: "bin\x86\swrAVX2.dll"; DestDir: "{app}\x86"; Flags: ignoreversion
-Source: "bin\x86\dxtn.dll"; DestDir: "{app}\x86"; Flags: ignoreversion
 Source: "bin\x86\osmesa-gallium.dll"; DestDir: "{app}\x86"; Flags: ignoreversion
 Source: "bin\x86\osmesa-swrast.dll"; DestDir: "{app}\x86"; Flags: ignoreversion
 Source: "bin\x86\graw.dll"; DestDir: "{app}\x86"; Flags: ignoreversion
 Source: "bin\x64\opengl32.dll"; DestDir: "{app}\x64"; Flags: ignoreversion; Check: Is64BitInstallMode
 Source: "bin\x64\swrAVX.dll"; DestDir: "{app}\x64"; Flags: ignoreversion; Check: Is64BitInstallMode
 Source: "bin\x64\swrAVX2.dll"; DestDir: "{app}\x64"; Flags: ignoreversion; Check: Is64BitInstallMode
-Source: "bin\x64\dxtn.dll"; DestDir: "{app}\x64"; Flags: ignoreversion; Check: Is64BitInstallMode
 Source: "bin\x64\osmesa-gallium.dll"; DestDir: "{app}\x64"; Flags: ignoreversion; Check: Is64BitInstallMode
 Source: "bin\x64\osmesa-swrast.dll"; DestDir: "{app}\x64"; Flags: ignoreversion; Check: Is64BitInstallMode
 Source: "bin\x64\graw.dll"; DestDir: "{app}\x64"; Flags: ignoreversion; Check: Is64BitInstallMode
@@ -53,16 +49,12 @@ Source: "bin\readme.txt"; DestDir: "{app}"
 
 [UninstallDelete]
 Type: files; Name: "{app}\x86\opengl32.dll"
-Type: files; Name: "{app}\x86\swrAVX.dll";
-Type: files; Name: "{app}\x86\swrAVX2.dll"
-Type: files; Name: "{app}\x86\dxtn.dll"
 Type: files; Name: "{app}\x86\graw.dll";
 Type: files; Name: "{app}\x86\osmesa-gallium.dll"
 Type: files; Name: "{app}\x86\osmesa-swrast.dll"
 Type: files; Name: "{app}\x64\opengl32.dll"; Check: Is64BitInstallMode
 Type: files; Name: "{app}\x64\swrAVX.dll"; Check: Is64BitInstallMode
 Type: files; Name: "{app}\x64\swrAVX2.dll"; Check: Is64BitInstallMode
-Type: files; Name: "{app}\x64\dxtn.dll"; Check: Is64BitInstallMode
 Type: files; Name: "{app}\x64\osmesa-gallium.dll"; Check: Is64BitInstallMode
 Type: files; Name: "{app}\x64\osmesa-swrast.dll"; Check: Is64BitInstallMode
 Type: files; Name: "{app}\x64\graw.dll"; Check: Is64BitInstallMode
