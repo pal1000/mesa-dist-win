@@ -47,7 +47,7 @@
 @TITLE Building Mesa3D %abi%
 @if %toolset% EQU 0 (
 @echo Error: No Visual Studio installed.
-@GOTO build_dxtn
+@GOTO exit
 )
 
 :build_llvm
@@ -100,19 +100,19 @@
 @if NOT EXIST mesa echo Warning: Mesa3D source code not found.
 @if NOT EXIST mesa set prepfail=%prepfail%2
 @if %prepfail% EQU 12 echo Fatal: Both Mesa code and Git are missing. At least one is required. Execution halted.
-@if %prepfail% EQU 12 GOTO build_dxtn
+@if %prepfail% EQU 12 GOTO exit
 @if NOT EXIST mesa set /p haltmesabuild=Press Y to abort execution. Press any other key to download Mesa via Git:
-@if /I "%haltmesabuild%"=="y" GOTO build_dxtn
+@if /I "%haltmesabuild%"=="y" GOTO exit
 @if NOT EXIST mesa set branch=master
 @if NOT EXIST mesa set /p branch=Enter Mesa source code branch name - defaults to master:
 @if NOT EXIST mesa echo.
 @if NOT EXIST mesa git clone --depth=1 --branch=%branch% git://anongit.freedesktop.org/mesa/mesa mesa
 @cd mesa
 @set LLVM=%mesa%\llvm\%abi%
-@set /p mesaver=<VERSION
-@if "%mesaver:~-7%"=="0-devel" set /a intmesaver=%mesaver:~0,2%%mesaver:~3,1%00
-@if "%mesaver:~5,4%"=="0-rc" set /a intmesaver=%mesaver:~0,2%%mesaver:~3,1%00+%mesaver:~9%
-@if NOT "%mesaver:~5,2%"=="0-" set /a intmesaver=%mesaver:~0,2%%mesaver:~3,1%50+%mesaver:~5%
+@rem set /p mesaver=<VERSION
+@rem if "%mesaver:~-7%"=="0-devel" set /a intmesaver=%mesaver:~0,2%%mesaver:~3,1%00
+@rem if "%mesaver:~5,4%"=="0-rc" set /a intmesaver=%mesaver:~0,2%%mesaver:~3,1%00+%mesaver:~9%
+@rem if NOT "%mesaver:~5,2%"=="0-" set /a intmesaver=%mesaver:~0,2%%mesaver:~3,1%50+%mesaver:~5%
 @if EXIST mesapatched.ini GOTO build_mesa
 @if %prepfail% EQU 1 GOTO build_mesa
 @git apply -v ..\mesa-dist-win\patches\s3tc.patch
@@ -124,11 +124,10 @@
 @if NOT EXIST %LLVM% (
 @echo Could not find LLVM, aborting mesa build.
 @echo.
-@pause
-@GOTO build_dxtn
+@GOTO exit
 )
 @set /p buildmesa=Begin mesa build. Proceed (y/n):
-@if /i NOT "%buildmesa%"=="y" GOTO build_dxtn
+@if /i NOT "%buildmesa%"=="y" GOTO exit
 @echo.
 @cd %mesa%\mesa
 @set openswr=n
@@ -162,54 +161,6 @@
 @%sconscmd%
 @echo.
 
-:build_dxtn
-@if NOT EXIST %mesa%\mesa GOTO exit
-@set PATH=%oldpath%
-@if NOT EXIST %mesa%\dxtn GOTO distcreate
-@if %intmesaver% GEQ 17300 GOTO distcreate
-@set gcchost=0
-@set msys32=%mesa%\msys32
-@set msys64=%mesa%\msys64
-@set standalone=%mesa%\mingw-w64\%abi%\mingw%minabi%\bin
-@if EXIST %msys32% set /a gcchost=%gcchost%+1
-@if EXIST %msys64% set /a gcchost=%gcchost%+5
-@if EXIST %standalone% set /a gcchost=%gcchost%+10
-@if %gcchost% GTR 0 set /p builddxtn=Do you want to build S3 texture compression library? (y/n):
-@if /i NOT "%builddxtn%"=="y" set gcchost=0
-@if %gcchost% EQU 0 GOTO distcreate
-@set gccpath=
-@set selectgcc=0
-@if %gcchost% GTR 10 (
-@echo.
-@echo Select GCC flavor:
-@echo 1. MSYS2
-@echo 2. Standalone
-@set /p selectgcc=Enter choice:
-@echo.
-)
-@if "%selectgcc%"=="1" set /a gcchost=%gcchost%-10
-@if "%selectgcc%"=="2" set gcchost=10
-@if %gcchost% EQU 1 set gccpath=%msys32%\mingw%minabi%\bin\;%msys32%\usr\bin\;
-@if %gcchost% EQU 5 set gccpath=%msys64%\mingw%minabi%\bin\;%msys64%\usr\bin\;
-@if %gcchost% EQU 6 set gccpath=%msys64%\mingw%minabi%\bin\;%msys64%\usr\bin\;
-@if %gcchost% EQU 10 set gccpath=%standalone%\;
-@set PATH=%gccpath%%PATH%
-@cd %mesa%\dxtn
-@echo.
-@if EXIST %abi% RD /S /Q %abi%
-@MD %abi%
-@set dxtn=gcc -shared -m%minabi% -v *.c *.h -I ../mesa/include -Wl,--dll,--dynamicbase,--enable-auto-image-base,--nxcompat -o %abi%/dxtn.dll
-@set msys2update=n
-@if %gcchost% LSS 10 set /p msys2update=Update MSYS2 packages (y/n):
-@if /I "%msys2update%"=="y" (
-@pacman -Syu
-@echo.
-@pause
-@echo.
-)
-@%dxtn%
-@echo.
-
 :distcreate
 @set /p dist=Create or update Mesa3D distribution package (y/n):
 @echo.
@@ -228,7 +179,6 @@
 @copy %mesa%\mesa\build\windows-%longabi%\mesa\drivers\osmesa\osmesa.dll osmesa-swrast.dll
 @copy %mesa%\mesa\build\windows-%longabi%\gallium\targets\osmesa\osmesa.dll osmesa-gallium.dll
 @copy %mesa%\mesa\build\windows-%longabi%\gallium\targets\graw-gdi\graw.dll graw.dll
-@if %intmesaver% LSS 17300 copy %mesa%\dxtn\%abi%\dxtn.dll dxtn.dll
 @echo.
 
 :exit

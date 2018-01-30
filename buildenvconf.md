@@ -10,7 +10,7 @@ OS | Windows 10 Version 1709 Pro x64
 | | |
 |-|-|
 Edition | 2017 Community
-Version | 15.5.4
+Version | 15.5.6
 Windows 10 SDK Version | 10.0.16299.91
 Windows 10 SDK install method | standalone
 Windows 8.1 SDK installed | Yes
@@ -42,7 +42,7 @@ Version | 2.7.14
 ARCH | x64
 pip version | 9.0.1
 setuptools version | 38.4.0
-pywin32 / pypiwin32 version | 222
+pywin32 / pywin32 version | 222
 scons version | 3.0.1
 Mako version | 1.0.7
 MarkupSafe version | 1.0
