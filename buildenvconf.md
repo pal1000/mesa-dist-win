@@ -41,7 +41,7 @@ LLVM build execute[3] | cmake --build . --config Release --target install
 Version | 2.7.14
 ARCH | x64
 pip version | 9.0.1
-setuptools version | 38.4.0
+setuptools version | 38.4.1
 pywin32 / pywin32 version | 222
 scons version | 3.0.1
 Mako version | 1.0.7
@@ -55,7 +55,7 @@ Flex version | 2.6.4
 ### Git version control
 | | |
 |-|-|
-Git For Windows portable | 2.16.1.1
+Git For Windows portable | 2.16.1.2
 ### Mesa3D
 | | |
 |-|-|
