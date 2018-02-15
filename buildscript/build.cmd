@@ -130,11 +130,11 @@
 @if /i NOT "%buildmesa%"=="y" GOTO exit
 @echo.
 @cd %mesa%\mesa
-@set openswr=n
+@set swrdrv=n
 @set sconscmd=python %sconsloc% build=release platform=windows machine=%longabi% libgl-gdi
-@if %abi%==x64 set /p openswr=Do you want to build OpenSWR drivers? (y=yes):
+@if %abi%==x64 set /p swrdrv=Do you want to build swr drivers? (y=yes):
 @echo.
-@if /I "%openswr%"=="y" set sconscmd=%sconscmd% swr=1
+@if /I "%swrdrv%"=="y" set sconscmd=%sconscmd% swr=1
 @set /p osmesa=Do you want to build off-screen rendering drivers (y/n):
 @echo.
 @if /I "%osmesa%"=="y" set sconscmd=%sconscmd% osmesa
