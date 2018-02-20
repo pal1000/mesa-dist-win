@@ -124,10 +124,10 @@
 @if NOT EXIST %LLVM% (
 @echo Could not find LLVM, aborting mesa build.
 @echo.
-@GOTO exit
+@GOTO distcreate
 )
 @set /p buildmesa=Begin mesa build. Proceed (y/n):
-@if /i NOT "%buildmesa%"=="y" GOTO exit
+@if /i NOT "%buildmesa%"=="y" GOTO distcreate
 @echo.
 @cd %mesa%\mesa
 @set swrdrv=n
@@ -162,6 +162,7 @@
 @echo.
 
 :distcreate
+@if NOT EXIST %mesa%\mesa\build\windows-%longabi% GOTO exit
 @set /p dist=Create or update Mesa3D distribution package (y/n):
 @echo.
 @if /I NOT "%dist%"=="y" GOTO exit
