@@ -87,8 +87,8 @@ echo.
 @echo 2. Swrast based (slower, but has unique OpenGL 2.1 features);
 @set /p osmesatype=Enter choice:
 @echo.
-@if "%osmesatype%"=="1" mklink "%dir%\osmesa.dll" "%mesaloc%%mesadll%\osmesa-gallium.dll"
-@if "%osmesatype%"=="2" mklink "%dir%\osmesa.dll" "%mesaloc%%mesadll%\osmesa-swrast.dll"
+@if "%osmesatype%"=="1" mklink "%dir%\osmesa.dll" "%mesaloc%%mesadll%\osmesa-gallium\osmesa.dll"
+@if "%osmesatype%"=="2" mklink "%dir%\osmesa.dll" "%mesaloc%%mesadll%\osmesa-swrast\osmesa.dll"
 @if "%osmesatype%"=="1" echo.
 @if "%osmesatype%"=="2" echo.
 
