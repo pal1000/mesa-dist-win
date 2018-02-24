@@ -51,7 +51,7 @@
 )
 
 :build_llvm
-@set /p buildllvm=Begin LLVM build. Only needs to run once for each ABI and version. Proceed (y/n):
+@if EXIST %mesa%\llvm set /p buildllvm=Begin LLVM build. Only needs to run once for each ABI and version. Proceed (y/n):
 @if /I NOT "%buildllvm%"=="y" GOTO prep_mesa
 @echo.
 @cd %mesa%\llvm
@@ -121,23 +121,25 @@
 @echo.
 
 :build_mesa
-@if NOT EXIST %LLVM% (
-@echo Could not find LLVM, aborting mesa build.
-@echo.
-@GOTO distcreate
-)
 @set /p buildmesa=Begin mesa build. Proceed (y/n):
 @if /i NOT "%buildmesa%"=="y" GOTO distcreate
 @echo.
 @cd %mesa%\mesa
-@set swrdrv=n
 @set sconscmd=python %sconsloc% build=release platform=windows machine=%longabi% libgl-gdi
-@if %abi%==x64 set /p swrdrv=Do you want to build swr drivers? (y=yes):
-@echo.
-@if /I "%swrdrv%"=="y" set sconscmd=%sconscmd% swr=1
 @set /p osmesa=Do you want to build off-screen rendering drivers (y/n):
 @echo.
 @if /I "%osmesa%"=="y" set sconscmd=%sconscmd% osmesa
+@if NOT EXIST %LLVM% set sconscmd=%sconscmd% llvm=no
+@if NOT EXIST %LLVM% GOTO build_with_vs
+@set disablellvm=n
+@set /p disablellvm=Build Mesa without LLVM (y/n). Only softpipe and osmesa swrast will be available:
+@echo.
+@if /I "%disablellvm%"=="y" set sconscmd=%sconscmd% llvm=no
+@if /I "%disablellvm%"=="y" GOTO build_with_vs
+@set swrdrv=n
+@if %abi%==x64 set /p swrdrv=Do you want to build swr drivers? (y=yes):
+@echo.
+@if /I "%swrdrv%"=="y" set sconscmd=%sconscmd% swr=1
 @set /p graw=Do you want to build graw library (y/n):
 @echo.
 @if /I "%graw%"=="y" set sconscmd=%sconscmd% graw-gdi
