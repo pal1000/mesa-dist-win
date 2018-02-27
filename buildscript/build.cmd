@@ -51,7 +51,7 @@
 :build_llvm
 @if EXIST %mesa%\llvm set /p buildllvm=Begin LLVM build. Only needs to run once for each ABI and version. Proceed (y/n):
 @if /I NOT "%buildllvm%"=="y" GOTO prep_mesa
-@echo.
+@if EXIST %mesa%\llvm echo.
 @cd %mesa%\llvm
 @if EXIST %abi% RD /S /Q %abi%
 @if EXIST cmake-%abi% RD /S /Q cmake-%abi%
@@ -64,10 +64,7 @@
 @if /I "%ninja%"=="y" set PATH=%mesa%\ninja\;%PATH%
 @if %abi%==x64 set toolchain=%toolchain% Win64
 @if "%toolchain%"=="Ninja Win64" set toolchain=Ninja
-@set x64compile=n
-@if %hostabi%==amd64 set x64compile=1
-@if /I NOT "%ninja%"=="y" set x64compile=%x64compile%2
-@if %x64compile%==12 set x64compiler= -Thost=x64
+@if /I NOT "%ninja%"=="y" if %hostabi%==amd64 set x64compiler= -Thost=x64
 @set llvmbuildsys=%CD%
 @if "%toolchain%"=="Ninja" call %vsenv%
 @if "%toolchain%"=="Ninja" cd %llvmbuildsys%
@@ -95,16 +92,15 @@
 @echo Error: Git not found. Auto-patching disabled.
 @set prepfail=1
 )
+@if NOT EXIST mesa if %prepfail%==1 echo Fatal: Both Mesa code and Git are missing. At least one is required. Execution halted.
+@if NOT EXIST mesa if %prepfail%==1 GOTO distcreate
 @if NOT EXIST mesa echo Warning: Mesa3D source code not found.
-@if NOT EXIST mesa set prepfail=%prepfail%2
-@if %prepfail% EQU 12 echo Fatal: Both Mesa code and Git are missing. At least one is required. Execution halted.
-@if %prepfail% EQU 12 GOTO exit
 @if NOT EXIST mesa set /p haltmesabuild=Press Y to abort execution. Press any other key to download Mesa via Git:
-@if /I "%haltmesabuild%"=="y" GOTO exit
+@if /I "%haltmesabuild%"=="y" GOTO distcreate
 @if NOT EXIST mesa set branch=master
 @if NOT EXIST mesa set /p branch=Enter Mesa source code branch name - defaults to master:
 @if NOT EXIST mesa echo.
-@if NOT EXIST mesa git clone --depth=1 --branch=%branch% git://anongit.freedesktop.org/mesa/mesa mesa
+@if NOT EXIST mesa git clone --recurse-submodules --depth=1 --branch=%branch% git://anongit.freedesktop.org/mesa/mesa mesa
 @cd mesa
 @set LLVM=%mesa%\llvm\%abi%
 @rem set /p mesaver=<VERSION
@@ -124,25 +120,26 @@
 @echo.
 @cd %mesa%\mesa
 @set sconscmd=python %sconsloc% build=release platform=windows machine=%longabi% libgl-gdi
-@set /p osmesa=Do you want to build off-screen rendering drivers (y/n):
-@echo.
-@if /I "%osmesa%"=="y" set sconscmd=%sconscmd% osmesa
-@if NOT EXIST %LLVM% set sconscmd=%sconscmd% llvm=no
-@if NOT EXIST %LLVM% GOTO build_with_vs
-@set disablellvm=n
-@set /p disablellvm=Build Mesa without LLVM (y/n). Only softpipe and osmesa swrast will be available:
-@echo.
-@if /I "%disablellvm%"=="y" set sconscmd=%sconscmd% llvm=no
-@if /I "%disablellvm%"=="y" GOTO build_with_vs
+@set llvmless=n
+@if EXIST %LLVM% set /p llvmless=Build Mesa without LLVM (y/n). Only softpipe and osmesa will be available:
+@if EXIST %LLVM% echo.
+@if NOT EXIST %LLVM% set /p llvmless=Build Mesa without LLVM (y=yes/n=quit). Only softpipe and osmesa will be available:
+@if NOT EXIST %LLVM% echo.
+@if /I "%llvmless%"=="y" set sconscmd=%sconscmd% llvm=no
+@if /I "%llvmless%"=="y" GOTO build_with_vs
+@if /I NOT "%llvmless%"=="y" if NOT EXIST %LLVM% GOTO distcreate
 @set swrdrv=n
 @if %abi%==x64 set /p swrdrv=Do you want to build swr drivers? (y=yes):
-@echo.
+@if %abi%==x64 echo.
 @if /I "%swrdrv%"=="y" set sconscmd=%sconscmd% swr=1
 @set /p graw=Do you want to build graw library (y/n):
 @echo.
 @if /I "%graw%"=="y" set sconscmd=%sconscmd% graw-gdi
 
 :build_with_vs
+@set /p osmesa=Do you want to build off-screen rendering drivers (y/n):
+@echo.
+@if /I "%osmesa%"=="y" set sconscmd=%sconscmd% osmesa
 @where /q python.exe
 @IF ERRORLEVEL 1 set PATH=%mesa%\Python\;%PATH%
 @set ERRORLEVEL=0

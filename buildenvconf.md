@@ -42,7 +42,7 @@ Version | 2.7.14
 ARCH | x64
 pip version | 9.0.1
 setuptools version | 38.5.1
-pywin32 / pywin32 version | 222
+pywin32 / pywin32 version | 223
 scons version | 3.0.1
 Mako version | 1.0.7
 MarkupSafe version | 1.0
