@@ -76,7 +76,7 @@ The script is located at `.\mesa-dist-win\buildscript\build.cmd`. Now run it.
 The script acts like a Wizard asking for the following during execution:
 - if you want to update/install required python modules (setuptools, pip, pywin32, scons, mako and MarkupSafe);
 - architecture for which you want to build mesa - type "y" for x64, otherwise x86 is selected;
-- if you want to build LLVM.  You only need to do it once for each architecture you target when new version is out and this doesn't happen very often, also it is no longer mandatory if you only want softpipe and osmesa swrast;
+- if you want to build LLVM.  You only need to do it once for each architecture you target when new version is out and this doesn't happen very often, also it is no longer mandatory if you only want softpipe, osmesa swrast and a slowed down osmesa gallium;
 - if building LLVM asks if you want to build with Ninja build system instead of Msbuild if Ninja is in PATH;
 - if Git is installed and Mesa code is missing, asks if you don't want to download Mesa code using Git and abort execution;
 - if you intend to download Mesa using Git, you are asked to specify which branch (valid entries: 17.2, 17.3 ...);
