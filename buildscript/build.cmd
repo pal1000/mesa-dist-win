@@ -8,22 +8,20 @@
 @set ERRORLEVEL=0
 @set pyupd=n
 @FOR /F "tokens=* USEBACKQ" %%F IN (`where python.exe`) DO @SET pythonloc=%%F
-@set makoloc="%pythonloc:python.exe=%Lib\site-packages\mako"
-@set sconsloc="%pythonloc:python.exe=%Scripts\scons.py"
+@set pythonloc=%pythonloc:python.exe=%
+@set makoloc="%pythonloc%Lib\site-packages\mako"
+@set sconsloc="%pythonloc%Scripts\scons.py"
 @if NOT EXIST %makoloc% (
 @python -m pip install -U setuptools
 @python -m pip install -U pip
-@python -m pip install -U pywin32
 @python -m pip install -U scons
 @python -m pip install -U MarkupSafe
 @python -m pip install -U mako
-@powershell -Command Start-Process -FilePath "%mesa%\python\python.exe" -ArgumentList "%mesa%\python\Scripts\pywin32_postinstall.py","-install" -Verb RunAs
 @echo.
 )
 @if EXIST %makoloc% set /p pyupd=Install/update python modules (y/n):
 @if /I "%pyupd%"=="y" (
-@python %mesa%\mesa-dist-win\buildscript\update.py
-@powershell -Command Start-Process -FilePath "%mesa%\python\python.exe" -ArgumentList "%mesa%\python\Scripts\pywin32_postinstall.py","-install" -Verb RunAs
+@for /F "delims= " %%i in ('python -m pip list -o --format=legacy') do @if NOT "%%i"=="pywin32" python -m pip install -U "%%i"
 @echo.
 )
 @set abi=x86
