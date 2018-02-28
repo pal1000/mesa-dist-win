@@ -59,6 +59,5 @@ Git For Windows portable | 2.16.2.1
 ### Mesa3D
 | | |
 |-|-|
-Build config and execute x64 | scons build=release platform=windows machine=x86_64 libgl-gdi swr=1 osmesa graw-gdi
-Build config and execute x86 | scons build=release platform=windows machine=x86 libgl-gdi osmesa graw-gdi
-
+Build config and execute x64 | scons build=release platform=windows machine=x86_64 libgl-gdi swr=1 graw-gdi osmesa
+Build config and execute x86 | scons build=release platform=windows machine=x86 libgl-gdi graw-gdi osmesa

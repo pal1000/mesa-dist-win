@@ -81,10 +81,10 @@ The script acts like a Wizard asking for the following during execution:
 - if Git is installed and Mesa code is missing, asks if you don't want to download Mesa code using Git and abort execution;
 - if you intend to download Mesa using Git, you are asked to specify which branch (valid entries: 17.2, 17.3 ...);
 - if you want to build Mesa3D;
-- if you want to build off-screen rendering driver(s);
 - if LLVM is available asks if you want to use it;
 - if LLVM is missing asks if you want to build without it;
 - if LLVM is used you are asked if you want to build swr, graw respectively;
+- if you want to build off-screen rendering driver(s);
 - if you want to do a clean build;
 - if you want to organize binaries in a single location (distribution creation).
 

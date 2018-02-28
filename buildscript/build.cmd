@@ -17,9 +17,10 @@
 @python -m pip install -U scons
 @python -m pip install -U MarkupSafe
 @python -m pip install -U mako
+@set pyupd=y
 @echo.
 )
-@if EXIST %makoloc% set /p pyupd=Install/update python modules (y/n):
+@if /I NOT "%pyupd%"=="y" set /p pyupd=Install/update python modules (y/n):
 @if /I "%pyupd%"=="y" (
 @for /F "delims= " %%i in ('python -m pip list -o --format=legacy') do @if NOT "%%i"=="pywin32" python -m pip install -U "%%i"
 @echo.
@@ -126,7 +127,7 @@
 @if NOT EXIST %LLVM% set /p llvmless=Build Mesa without LLVM (y=yes/n=quit). Only softpipe and osmesa will be available:
 @if NOT EXIST %LLVM% echo.
 @if /I "%llvmless%"=="y" set sconscmd=%sconscmd% llvm=no
-@if /I "%llvmless%"=="y" GOTO build_with_vs
+@if /I "%llvmless%"=="y" GOTO osmesa
 @if /I NOT "%llvmless%"=="y" if NOT EXIST %LLVM% GOTO distcreate
 @set swrdrv=n
 @if %abi%==x64 set /p swrdrv=Do you want to build swr drivers? (y=yes):
@@ -136,10 +137,12 @@
 @echo.
 @if /I "%graw%"=="y" set sconscmd=%sconscmd% graw-gdi
 
-:build_with_vs
+:osmesa
 @set /p osmesa=Do you want to build off-screen rendering drivers (y/n):
 @echo.
 @if /I "%osmesa%"=="y" set sconscmd=%sconscmd% osmesa
+
+:build_with_vs
 @where /q python.exe
 @IF ERRORLEVEL 1 set PATH=%mesa%\Python\;%PATH%
 @set ERRORLEVEL=0
