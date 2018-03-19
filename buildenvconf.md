@@ -10,20 +10,18 @@ OS | Windows 10 Version 1709 Pro x64
 | | |
 |-|-|
 Edition | 2017 Community
-Version | 15.5.7
+Version | 15.6.2
 Windows 10 SDK Version | 10.0.16299.91
 Windows 10 SDK install method | standalone
-Windows 8.1 SDK installed | Yes
-Windows XP support for C++ installed | Yes
 ### LLVM
 | | |
 |-|-|
-LLVM Version | 5.0.1
-CMake version | 3.10.2
+LLVM Version | 6.0.0
+CMake version | 3.10.3
 CMake ARCH | x64
 Ninja version[4] | 1.8.2
-LLVM build configure x64[5] | cd llvm-5.0.1.src & md cmake-x64 & cd cmake-x64 & cmake -G "Visual Studio 15 Win64" -Thost=x64 -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../x64 ..
-LLVM build configure x86[5] | cd llvm-5.0.1.src & md cmake-x86 & cd cmake-x86 & cmake -G "Visual Studio 15" -Thost=x64 -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../x86 ..
+LLVM build configure x64[5] | cd llvm-6.0.0.src & md cmake-x64 & cd cmake-x64 & cmake -G "Visual Studio 15 Win64" -Thost=x64 -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../x64 ..
+LLVM build configure x86[5] | cd llvm-6.0.0.src & md cmake-x86 & cd cmake-x86 & cmake -G "Visual Studio 15" -Thost=x64 -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../x86 ..
 LLVM build execute[3] | cmake --build . --config Release --target install
 
 [1]Executed from an x64 Native Tools Command Prompt for VS 2017 shell
@@ -40,8 +38,8 @@ LLVM build execute[3] | cmake --build . --config Release --target install
 |-|-|
 Version | 2.7.14
 ARCH | x64
-pip version | 9.0.1
-setuptools version | 38.5.1
+pip version | 9.0.2
+setuptools version | 39.0.1
 pywin32 / pywin32 version | 223
 scons version | 3.0.1
 Mako version | 1.0.7
