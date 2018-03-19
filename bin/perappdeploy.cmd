@@ -29,12 +29,14 @@ if '%errorlevel%' NEQ '0' (
     CD /D "%~dp0"
 :--------------------------------------
 
-
-@echo Mesa3D quick deployment utility
-@echo -------------------------------
-@echo Quick deployment utility allows for fast Mesa deployment without manual copy-paste. This helps a lot if you have
-@echo many programs that can use Mesa. Some applications still may use the GPU if they are smart enough to only load OpenGL
-@echo DLL from system directory. Use Federico Dossena's Mesainjector to workaround this case.
+@TITLE Mesa3D per-application deployment utility
+@echo Mesa3D per-application deployment utility
+@echo -----------------------------------------
+@echo This deployment utility allows for per-application deployments of Mesa3D without manual copy-paste 
+@echo allowing updates to Mesa3D from a central location. It is intended for systems with working GPUs. 
+@echo This helps a lot if you have many programs that you want to use Mesa3D with. 
+@echo Some applications may still use the GPU if they are smart enough to only load OpenGL DLL from system directory.
+@echo Use Federico Dossena's Mesainjector to workaround this case.
 @echo Build instructions - https://fdossena.com/?p=mesa/injector_build.frag
 @echo VMWare ThinApp capture: http://fdossena.com/mesa/MesaInjector_Capture.7z
 @echo.
@@ -43,8 +45,8 @@ if '%errorlevel%' NEQ '0' (
 
 :deploy
 @cls
-@echo Mesa3D quick deployment utility
-@echo -------------------------------
+@echo Mesa3D per-application deployment utility
+@echo -----------------------------------------
 @echo Please provide the path to the folder that contains the application launcher executable. It is recommended to
 @echo copy-paste it from Windows Explorer using CTRL+V. The right click paste introduced in Windows 10 may lead to
 @echo unexpected double paste. Also don't worry if path contains spaces, parantheses or other symbols, it is enclosed in
@@ -53,7 +55,6 @@ if '%errorlevel%' NEQ '0' (
 @set /p dir=Path to folder holding application executable:
 @echo.
 @set mesadll=x86
-@if %PROCESSOR_ARCHITECTURE%==AMD64 GOTO ask_for_app_abi
 @if NOT %PROCESSOR_ARCHITECTURE%==AMD64 GOTO desktopgl
 
 :ask_for_app_abi
@@ -62,25 +63,37 @@ if '%errorlevel%' NEQ '0' (
 @echo.
 
 :desktopgl
-@IF NOT EXIST "%dir%\opengl32.dll" mklink "%dir%\opengl32.dll" "%mesaloc%%mesadll%\opengl32.dll"
-@if NOT %mesadll%==x64 GOTO s3tc
-@if NOT EXIST "%dir%\swrAVX.dll" mklink "%dir%\swrAVX.dll" "%mesaloc%x64\swrAVX.dll"
-@if NOT EXIST "%dir%\swrAVX2.dll" mklink "%dir%\swrAVX2.dll" "%mesaloc%x64\swrAVX2.dll"
+@set nodesktopgl=n
+@set /p nodesktopgl=I don't need Desktop OpenGL drivers (y/n, defaults to no):
 @echo.
+@IF /I "%nodesktopgl%"=="y" GOTO osmesa
+@IF EXIST "%dir%\opengl32.dll" echo Updated softpipe and llvmpipe deployment.
+@IF EXIST "%dir%\opengl32.dll" del "%dir%\opengl32.dll"
+@mklink "%dir%\opengl32.dll" "%mesaloc%%mesadll%\opengl32.dll"
+@echo.
+@set swr=n
+@if NOT %mesadll%==x64 GOTO osmesa
+@set /p swr=Do you want swr driver - the new desktop OpenGL driver made by Intel (y/n):
+@echo.
+@IF /I NOT "%swr%"=="y" GOTO osmesa
+@if EXIST "%dir%\swrAVX.dll" echo Updated swr driver deployment.
+@if EXIST "%dir%\swrAVX.dll" GOTO deployswr
+@if EXIST "%dir%\swrAVX2.dll" echo Updated swr driver deployment.
+@if EXIST "%dir%\swrAVX2.dll" GOTO deployswr
 
-:s3tc
-@set s3tc=n
-@IF EXIST "%mesaloc%%mesadll%\dxtn.dll" set /p s3tc=Do you need S3TC (y/n):
+:deployswr
+@if EXIST "%dir%\swrAVX.dll" del "%dir%\swrAVX.dll"
+@if EXIST "%dir%\swrAVX2.dll" del "%dir%\swrAVX2.dll"
+@mklink "%dir%\swrAVX.dll" "%mesaloc%x64\swrAVX.dll"
+@mklink "%dir%\swrAVX2.dll" "%mesaloc%x64\swrAVX2.dll"
 @echo.
-@if /I NOT "%s3tc%"=="y" GOTO osmesa
-@if NOT EXIST "%dir%\dxtn.dll" mklink "%dir%\dxtn.dll" "%mesaloc%%mesadll%\dxtn.dll"
-echo.
 
 :osmesa
 @set osmesatype=n
 @set /p osmesa=Do you need off-screen rendering (y/n):
 @echo.
 @if /I NOT "%osmesa%"=="y" GOTO graw
+@IF EXIST "%dir%\osmesa.dll" echo Updated Mesa3D off-screen rendering interface deployment.
 @IF EXIST "%dir%\osmesa.dll" del "%dir%\osmesa.dll"
 @echo What version of osmesa off-screen rendering you want:
 @echo 1. Gallium based (faster, but lacks certain features);
@@ -96,7 +109,9 @@ echo.
 @set /p graw=Do you need graw library (y/n):
 @echo.
 @if /I NOT "%graw%"=="y" GOTO restart
-@if NOT EXIST "%dir%\graw.dll" mklink "%dir%\graw.dll" "%mesaloc%%mesadll%\graw.dll"
+@if EXIST "%dir%\graw.dll" echo Updated Mesa3D graw framework deployment.
+@if EXIST "%dir%\graw.dll" del "%dir%\graw.dll" 
+@mklink "%dir%\graw.dll" "%mesaloc%%mesadll%\graw.dll"
 @echo.
 
 :restart
