@@ -1,6 +1,6 @@
 # 17.3.7.600-1
 - Updated Mesa3D to [17.3.7](https://www.mesa3d.org/relnotes/17.3.7.html).
-### Build evironment updates
+### Build environment updates
 - Visual Studio 15.5.7 -> 15.6.3
 - setuptools 38.5.1 -> 39.0.1
 - LLVM 5.0.1 -> 6.0.0
