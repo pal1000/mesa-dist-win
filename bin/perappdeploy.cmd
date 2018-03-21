@@ -32,10 +32,12 @@ if '%errorlevel%' NEQ '0' (
 @TITLE Mesa3D per-application deployment utility
 @echo Mesa3D per-application deployment utility
 @echo -----------------------------------------
-@echo This deployment utility allows for per-application deployments of Mesa3D without manual copy-paste 
-@echo allowing updates to Mesa3D from a central location. It is intended for systems with working GPUs. 
+@echo This deployment utility allows for per-application deployments of Mesa3D
+@echo without manual copy-paste allowing updates to Mesa3D from a central location.
+@echo It is intended for systems with working GPUs.
 @echo This helps a lot if you have many programs that you want to use Mesa3D with. 
-@echo Some applications may still use the GPU if they are smart enough to only load OpenGL DLL from system directory.
+@echo Some applications may still use the GPU if they are smart enough to only load
+@echo OpenGL DLL from system directory.
 @echo Use Federico Dossena's Mesainjector to workaround this case.
 @echo Build instructions - https://fdossena.com/?p=mesa/injector_build.frag
 @echo VMWare ThinApp capture: http://fdossena.com/mesa/MesaInjector_Capture.7z
@@ -55,7 +57,7 @@ if '%errorlevel%' NEQ '0' (
 @set /p dir=Path to folder holding application executable:
 @echo.
 @set mesadll=x86
-@if NOT %PROCESSOR_ARCHITECTURE%==AMD64 GOTO desktopgl
+@if /I NOT %PROCESSOR_ARCHITECTURE%==AMD64 GOTO desktopgl
 
 :ask_for_app_abi
 @set /p ABI=This is a 64-bit application (y=yes):
