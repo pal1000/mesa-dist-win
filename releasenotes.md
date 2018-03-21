@@ -1,6 +1,275 @@
+# 17.3.7.600-1
+- Updated Mesa3D to [17.3.7](https://www.mesa3d.org/relnotes/17.3.7.html).
 ### Build evironment updates
-- Visual Studio 15.5.7 -> 15.6.2
+- Visual Studio 15.5.7 -> 15.6.3
 - setuptools 38.5.1 -> 39.0.1
 - LLVM 5.0.1 -> 6.0.0
 - cmake 3.10.2 -> 3.10.3
 - pip 9.0.1 -> 9.0.2
+- Removed mention of Windows 8.1 SDK and Windows XP support for C++ from build environment as Mesa3D dropped XP support back in 17.2.0 release.
+### Deployment
+- Created 2 deployment methods, a per-application and a system-wide one respectively;
+- Removed S3TC stand-alone library support;
+- Bugfix: PROCESSOR_ARCHITECTURE can have lowercase string values in some cases;
+- Cosmetic enhancements, support Windows 7 default size Command Prompt.
+### User guide
+- Minimize readme.txt. Just link to readme.md from GitHub;
+- Update user guide to include the new system-wide deployment.
+### Misc
+- Made release notes incremental.
+# 17.3.6.501-1
+- Mesa3D 17.3.6 [release notes](https://www.mesa3d.org/relnotes/17.3.6.html)
+### Build environment updates
+- Git 2.16.1.4 -> 2.16.2.1
+- Visual Studio 15.5.6 -> 15.5.7
+- pywin32 222 -> 223
+### Distribution creation and deployment utility
+- Move each osmesa DLL in its own folder. Reduces usage complexity.
+### Build script and build documentation
+- Allow build without LLVM. Only osmesa-swrast, osmesa-gallium and softpipe are built in this case.
+### Build script
+- Drop pywin32 installation via pypi.
+- Allow cancel build if LLVM is missing.
+### End-user documentation
+- Small enhancements.
+### Won't fix
+- This release breaks osmesa deployments performed with quick deployment utility. A re-deployment is required. Manual copy-pastes of osmesa libraries are unaffected.
+# 17.3.5.501-1
+- Updated Mesa3D to [17.3.5](https://www.mesa3d.org/relnotes/17.3.5.html)
+### Build script
+- Allow distribution creation without building Mesa if we have binaries from a past build.
+# 17.3.4.501-1
+- Updated Mesa3D to [17.3.4](https://www.mesa3d.org/relnotes/17.3.4.html)
+### Build environment updates
+- pywin32 221 -> 222.
+- Visual Studio 15.5.4 -> 15.5.6.
+- setuptools 38.4.0 -> 38.5.1.
+- Git 2.16.0.2 -> 2.16.1.4.
+### Build script
+- Experimental: Get pywin32 via pypi.
+- Drop support for libxtc_dxtn standalone library. Mesa3D 17.2 reached end-of-life on 23rd December 2017.
+### Build script documentaiton
+- pywin32 moved to Github.
+- Drop support for libxtc_dxtn standalone library and other few miscellaneous changes.
+### Inno Setup
+- Drop S3TC standalone library support.
+- Drop swr 32-bit support. Unsupported upstream.
+### Debugging
+- Add a script to generate LLVM config output. Allows for finding new LLVM libraries a lot easier using an online diff service like text-compare.com. Makes sending patches upstream easier.
+# 17.3.3.501-1
+- Updated Mesa to [17.3.3](https://www.mesa3d.org/relnotes/17.3.3.html).
+### Build environment changes
+- CMake: 3.10.1 -> 3.10.2.
+- Visual Studio: 15.5.3 -> 15.5.4.
+- winflexbison: 2.5.13 -> 2.5.14.
+- Git: 2.15.1.2 -> 2.16.0.2.
+# 17.3.2.501-1
+ Update Mesa3D to [17.3.2](https://www.mesa3d.org/relnotes/17.3.2.html).
+- Information about build environment and configuration is available [here](https://github.com/pal1000/mesa-dist-win/blob/17.3.2.501-1/buildenvconf.md).
+- Add Git version to build environment report.
+- Use Visual Studio MsBuild instead of Ninja when building LLVM. Ninja had no update since September 2017.
+# 17.3.1.501-1
+- Update Mesa3D to [17.3.1](https://www.mesa3d.org/relnotes/17.3.1.html).
+- Information about build environment and configuration is available [here](https://github.com/pal1000/mesa-dist-win/blob/17.3.1.501-1/buildenvconf.md)
+### User guide
+- Expanded installation and usage section.
+- Created a package contents section.
+- Split tutorial about environment variables in its own section as it is relevant for both swr driver and manual GL context configuration.
+- Add a swr driver use example.
+### Build script documentation
+- Visual Studio components related enhancement.
+### Misc
+- Add a detailed report about build environment and configuration.
+# 17.3.0.500-1
+-  Updated Mesa3D to [17.3.0](https://www.mesa3d.org/relnotes/17.3.0.html).
+
+This is the first release of Mesa3D with built-in S3TC support so there is no dxtn.dll anymore. I enabled S3TC texture cache as always as integration made no change on that front. See [Mesa3D release notes](https://www.mesa3d.org/relnotes/17.3.0.html) for details. 
+ 
+- LLVM and Mesa3D were built with Visual Studio 2017 v15.5.1.
+### Build script
+- Use a simple python script to update all python modules. Don't load python scripts in PATH. Things might work fine regardless.
+### Build script documentation
+- Update Visual Studio 2017 list of components needed to build Mesa and LLVM.
+### Usage documentation
+- OpenGL 4.6 context handling landed in Mesa 17.3.
+# 17.2.6.500-1
+- Updated Mesa to [17.2.6](https://www.mesa3d.org/relnotes/17.2.6.html).
+- Built with Visual Studio 2017 v15.4.4 and Scons 3.0.1.
+### Build script
+- Python modules update: pip freeze is seriously broken. Always use pip install -U. setuptools wasn't updated at all due to pip freeze shortcomings. Also Scons 3.0.1 wasn't picked up despite being live on Pypi.
+- Python modules: wheel is no longer needed.
+### Build script documentation
+- Workaround a pywin32 installer bug.
+- Updating setuptools pre-loaded with Python allows for successful installation of Scons via Pypi without having to install wheel.
+# 17.2.5.500-1
+- Updated Mesa3D to [17.2.5](https://www.mesa3d.org/relnotes/17.2.5.html).
+- Built LLVM and Mesa3D with Visual Studio 2017 v15.4.3.
+### Build script
+- Mesa3D version and branch detection code cleanup.
+### Build script documentation
+- S3TC integration landed in Mesa 17.3.
+# 17.2.4.500-1
+- Updated Mesa3D to [17.2.4](https://www.mesa3d.org/relnotes/17.2.4.html).
+- Built LLVM and Mesa3D with Visual Studio 2017 v15.4.1.
+- Built S3TC with Mingw-w64 standalone GCC 7.2.0.
+### Build script
+- Fix Mesa version detection logic epic fail with release candidates.
+- Dead variables clean-up.
+- Load Visual Studio environment only when building LLVM with Ninja.
+- S3TC build: If both MSYS2 and standalone Mingw-W64 are installed let the user pick which to use.
+- S3TC MSYS2 build: prefer 64-bit MSYS2 over 32-bit if both installed.
+### Build script documentation
+- S3TC build with standalone Mingw-w64 is no longer deprecated. GCC 7.2 update finally took place.
+- You are now asked which flavor of Mingw-W64 to use when building S3TC if both MSYS2 and standalone are installed.
+# 17.2.3.500-1
+- Updated Mesa3D to 17.2.3.
+- Built S3TC with MSYS2 Mingw-w64 GCC 7.2.0.
+- Built LLVM 5.0 and Mesa with Visual Studio 2017 v15.4.0.
+### Deployment utility
+- Made easy to swap osmesa variants.
+- Check before attempting to create symbolic links. Avoid harmless errors which may be confusing.
+### Build script
+- Drop S3TC build if Mesa master source code is detected. S3TC is now built-in. Texture cache enabling patch is still needed though.
+- Python modules updating: use both pip install -U <module-name> explicitly and pip freeze in a hybrid approach for most optimal behavior.
+- Improved PATH cleanning.
+- Support building S3TC with MSYS2 Mingw-W64 GCC by default. They fixed their problem with 32-bit binaries when they upgraded to GCC 7.2.0 (Alexpux/MINGW-packages#2271).
+- Drop suport for Visual Studio 2015 completely. It survived so long due to Scons 3.0.0 issues.
+- Mesa build without git workaround: git_sha1.h was generated in an incorrect location during 64-bit builds.
+- Drop Scons 3.0.0 compatibility patch. It landed in Mesa 17.2.3.
+- Allow building Mesa without git since Scons 3.0.0 compatibility patch landed in Mesa stable.
+### Build script documentation
+- MSYS2 Mingw-w64 is now the preferred method to build S3TC.
+- Visual Studio 2017 is now required to build LLVM and Mesa3D.
+# 17.2.2.500-1
+- Updated Mesa3D to 17.2.2.
+- Built with Scons 3.0.0. Made use of a compatibility patch.
+- Built LLVM 5.0 and Mesa3D with Visual Studio 2017 v15.3.5.
+### Build script
+- Fixed python modules update check. Always check if mako not found, ask otherwise.
+- Made build script aware of Mesa branches, helps with patches applicability narrowing.
+- Add Scons 3.0.0 compatibility patch to Mesa3D Git-powered auto-patches. Only apply it to Mesa stable, patch is upstream now.
+- Determine Mesa branch even if it is not built. Preparation for S3TC merger.
+- Ensure auto-patching is done once and only once.
+- Look for Git before trying to patch. It is pointless if it is not found.
+- This script won't find Scons if it isn't in a certain relative location to it. Addressed this by fixing scons locating when Python it's in PATH right from the beginning.
+- Added Scons to python update checking and auto-install. Depends on wheel. 1 less dependency requiring manual installation.
+- Halt execution if Mesa is missing and it can't be acquired or its acquiring is refused by user.
+- Drop LLVM 5.0 compatibility patch. Patch is upstream in all active branches.
+### Build script documentation
+- There is a compatibility fix for Scons 3.0.0.
+- Scons can now be acquired by build script automatically. Depends on wheel.
+- Git version control is now mandatory due to compatibility with latest Scons needing a patch.
+- Updated questions list asked by this script.
+### Known issues
+- Mesa build: Scons 3.0.0 always uses target architecture compiler when using cross-compiling environment. This may impact compilation performance when making 32-bit builds.
+# 17.2.1.500-1
+- Updated Mesa3D to 17.2.1;
+- Added OpenSWR support to deployment utility;
+- Built Mesa3D with LLVM 5.0 using a patch which adds support for it;
+- Built LLVM with Visual Studio 2017 v15.3.4;
+- Mesa3D build: updated Python to 2.7.14;
+- Build script: Always use a compiler that matches host architecture; previously CMake with MsBuild was always using 32-bit compiler throwing a warning in the process; ninja and Scons were using the compiler matching the build target architecture;
+- Build script: Support downloading Mesa code using Git, apply LLVM 5.0 support and S3TC texture cache enabling patches automatically using Git when possible;
+- Deployment utility and build script: [32-bit OpenSWR is unsupported](https://bugs.freedesktop.org/show_bug.cgi?id=102564#c5);
+- Build script: Attempted restore of Visual Studio 2015 support; Visual Studio 2015 compatibility toolset for VS2017 should work fine; Visual Studio 2015 default toolset is untested;
+- Build script documentation: switch Mesa download link to HTTPS, info about LLVM 5.0 support auto-patch, S3TC texture cache auto-patching, [unsupported 32-bit OpenSWR](https://bugs.freedesktop.org/show_bug.cgi?id=102564#c5) and build script wizard updates.
+# 17.2.0.401-1
+- Updated Mesa3D to 17.2.0;
+- Rebuilt LLVM 4.0.1 with Visual Studio 2017 v15.3.3;
+- Build script - show in title bar if building for x86 or x64;
+- Build script dependency cleanup - Visual Studio C/C++ standard library modules are not needed.
+# 17.1.8.401-1
+- Updated Mesa3D to 17.1.8;
+- Improve build script startup performance when no Internet connection is available. Regression from [7626fdb](https://github.com/pal1000/mesa-dist-win/commit/7626fdb).
+# 17.1.7.401-1
+- Buildscript - Visual Studio 2017 v15.3.2 compatibility fix and other improvements;
+- Rebuilt LLVM 4.0.1 with Visual Studio 2017 v15.3.2.
+- Updated Mesa3D to 17.1.7.
+# 17.1.6.401-1
+- Updated Mesa3D to 17.1.6
+- Re-built LLVM 4.0.1 with Visual Studio 2017 v15.2.26430.16.
+# 17.1.5.401-1
+- Updated Mesa3D to 17.1.5.
+# 17.1.4.401-1
+- Rebuilt Mesa 17.1.4 with LLVM 4.0.1
+- Built Mesa and LLVM with Visual Studio 2017 v15.2.26430.15.
+# 17.1.4.400-1
+- Update to Mesa 17.1.4;
+- Rebuilt LLVM and Mesa with Visual Studio 2017 - v15.2.26430.14.
+# 17.1.3.400-1
+- Updated Mesa3D to 17.1.3;
+- Improved manual OpenGL context configuration guide by adding detailed description of each context type.
+# 17.1.2.400-1
+- Updated Mesa to 17.1.2;
+- Finished manual OpenGL context configuration tutorial;
+- Built LLVM and Mesa with Visual Studio 2017 v15.2.26430.12.
+# 17.1.1.400-1
+- Updated Mesa to 17.1.1;
+- Built LLVM and Mesa3D with Visual Studio 2017 v15.2.26430.4;
+- Added manual OpenGL context configuration tutorial;
+- Clean build script guide - remove LLVM 3.9.1 info.
+# 17.1.0.400-1
+### Changes
+- Mesa is now built with LLVM 4.0;
+- S3TC library  is now built with Mingw-w64 GCC 7.1.0 r0.
+- LLVM and Mesa are both built with Visual Studio 2017 v15.0.26403.7.
+### Enhancement
+- Added OpenGL and GLSL version override samples (work in progress towards a complete guide).
+### Notable upstream fix:
+- LLVM 4.0 support in 2 steps closing [bug 100201](https://bugs.freedesktop.org/show_bug.cgi?id=100201):
+a.  [c11/threads: Include thr/xtimec.h for xtime definition when building with MSVC](https://patchwork.freedesktop.org/patch/146826/);
+b. [scons: update for LLVM 4.0](https://patchwork.freedesktop.org/patch/153385/).
+### Notable upstream enhancement:
+- GL_ARB_gpu_shader_int64 on i965/gen8+, nvc0, radeonsi, softpipe, llvmpipe.
+# 17.0.5.391-1
+- Updated Mesa to 17.0.5;
+- Rebuilt LLVM 3.9.1 using Ninja build system. Saves a bit of storage space at my end;
+- Built everything with Visual Studio 2017 v15.0.26403.7. 
+# 17.0.4.391-2
+### Buildscript improvements:
+- Be aware of the fact that CMake and Python can add themselves to PATH;
+- Fixed a serious issue causing the script to produce Debug LLVM builds instead of Release. cmake --build with Visual Studio generators does not honor CMAKE_BUILD_TYPE.
+- Binaries produced for 17.0.4.391-1 were not affected as LLVM build was manually configured in Visual Studio IDE.
+# 17.0.4.391-1
+- Various buildscript enhancements and fixes;
+- Quick deployment enhancements;
+- Dropped system-wide registration.
+### Known issue:
+- In place upgrade from 17.0.3.391-2 and older has been broken due to changes made to installer when system-wide registration was dropped. This won't be fixed. Uninstall old version before installing this one.
+# 17.0.3.391-2
+### Bugfix
+- Remove Program group screen from installer didn't actually work.
+- The portable version is unchanged from previous release.
+# 17.0.3.391-1
+- Updated Mesa to 17.0.3;
+- Added Osmesa off-screen rendering driver and graw library;
+- Applied a patch for S3TC performance boost, credit goes to Federico Dossena;
+- major build script enhancements (ninja support allowing LLVM build with backward compatibility toolset, LLVM and Mesa toolset matching validation, easy packaging post-build support, multiple bug fixes);
+- Added support for Osmesa to local deployment utility, ported bug fixes from build script.
+# 17.0.2.391-2
+- Clarify that path to program launcher is quoted automatically in local deployment utility;
+- Remove Program group screen from installer, it served no purpose and just caused confusion;
+- Delete 32-bit cygwin runtime from system32/syswow64 leftover from 17.0.1.391-2 if present. 
+- There are no changes with portable version since 17.0.2.391-1.
+# 17.0.2.391-1
+### Changes
+- Updated Mesa to 17.0.2;
+- Used Visual Studio 2017 to build LLVM, patched LLVM 3.9.1 to build with MSVC 2017 successfully as LLVM 4.0 is not yet supported;
+- Used Visual Studio 2017 toolset for Mesa build working around [Mesa bug 100201](https://bugs.freedesktop.org/show_bug.cgi?id=100201);
+- multiple buildscript and guides enhancements;
+- unified 32 and 64-bit installers and local deployment utilities respectively.
+### Known issue
+ In place upgrade leaves a 32-bit Cygwin runtime in Windows\system32 for 32-bit Windows or Windows\syswow64 for 64-bit Windows if you are upgrading from 17.0.1.391-2. Clean it by downloading and running Cygwin installer for 32-bit Windows.
+# 17.0.1.391-2
+- Support GL_EXT_texture_compression_st3c;
+- Use Mingw build of libtxc_dxtn for 64-bit apps and Cywin build of libtxc_dxtn-s2tc for 32-bit apps.
+# 17.0.1.391-1
+- Updated to Mesa 17.0.1;
+- Support in-place upgrade.
+# 17.0.0.391-4
+- Improved installer: clean up registry during uninstallation;
+- Added a local deployment utility, quickly deploy mesa for applications incompatible with system-wide installation while saving storage space; 
+- Updated startup guide.
+# 17.0.0.391-3
+- Initial release.
+- Includes softpipe/llvmpipe and OpenSWR built with LLVM 3.9.1.

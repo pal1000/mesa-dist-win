@@ -10,7 +10,7 @@ OS | Windows 10 Version 1709 Pro x64
 | | |
 |-|-|
 Edition | 2017 Community
-Version | 15.6.2
+Version | 15.6.3
 Windows 10 SDK Version | 10.0.16299.91
 Windows 10 SDK install method | standalone
 ### LLVM
