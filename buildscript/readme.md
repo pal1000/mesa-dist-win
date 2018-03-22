@@ -16,7 +16,7 @@ Before continuing prepare an empty folder to extract the rest of dependencies in
 
 - [Git for Windows 32 or 64-bit](https://git-scm.com/download/win); 
 
-You can use the portable version if you don't want to bloat your system too much, but you have to add the following locations to PATH: 
+You can use the portable version if you don't want to bloat your system too much, but you have to either launch the build script from within git-cmd.exe session (git-cmd.exe is located in Git installation directory) or add the following locations to PATH: 
 a. for 64-bit Git: %gitlocation%\bin;%gitlocation%\mingw64\bin;%gitlocation%\cmd
 b. for 32-bit Git: %gitlocation%\bin;%gitlocation%\mingw32\bin;%gitlocation%\cmd
 Replace %gitlocation% with the actual location where you unpacked Git Portable.
