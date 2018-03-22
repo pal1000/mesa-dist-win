@@ -1,3 +1,7 @@
+# Upcoming release
+### Build guide
+- Remove a relic about Windows XP/PosReady 2009, it is no longer supported since Mesa3D 17.2.0;
+- Expand section about Git portable with clear details on how you can load Git in PATH.
 # 17.3.7.600-1
 - Updated Mesa3D to [17.3.7](https://www.mesa3d.org/relnotes/17.3.7.html).
 ### Build environment updates
