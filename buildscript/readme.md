@@ -16,7 +16,10 @@ Before continuing prepare an empty folder to extract the rest of dependencies in
 
 - [Git for Windows 32 or 64-bit](https://git-scm.com/download/win); 
 
-You can use the portable version if you don't want to bloat your system too much, but you have to add it to PATH.
+You can use the portable version if you don't want to bloat your system too much, but you have to add the following locations to PATH: 
+a. for 64-bit Git: %gitlocation%\bin;%gitlocation%\mingw64\bin;%gitlocation%\cmd
+b. for 32-bit Git: %gitlocation%\bin;%gitlocation%\mingw32\bin;%gitlocation%\cmd
+Replace %gitlocation% with the actual location where you unpacked Git Portable.
 - Mesa source code: [Mirror 1](https://www.mesa3d.org/archive/), [Mirror 2](https://mesa.freedesktop.org/archive/);
 
 The build script can grab Mesa3D code if Git is in PATH. It asks for the branch to pull from. Otherwise manually extract in `.`. Be warned that the archive is double packed. Rename extracted folder to `mesa`.
