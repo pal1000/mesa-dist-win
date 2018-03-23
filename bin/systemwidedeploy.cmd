@@ -117,15 +117,16 @@ if '%errorlevel%' NEQ '0' (
 @IF /I %PROCESSOR_ARCHITECTURE%==X86 IF EXIST "%windir%\System32\graw.dll" copy "%mesaloc%x86\graw.dll" "%windir%\System32"
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%windir%\SysWOW64\graw.dll" copy "%mesaloc%x86\graw.dll" "%windir%\SysWOW64"
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%windir%\System32\graw.dll" copy "%mesaloc%x64\graw.dll" "%windir%\System32"
+@set BYTES=10000000
 @IF /I %PROCESSOR_ARCHITECTURE%==X86 IF EXIST "%windir%\System32\osmesa.dll" for %%f in ("%windir%\System32\osmesa.dll") do @set BYTES=%%~zf
-@IF %BYTES% GEQ 10000000 copy "%mesaloc%x86\osmesa-gallium\osmesa.dll" "%windir%\System32"
-@IF %BYTES% LSS 10000000 copy "%mesaloc%x86\osmesa-swrast\osmesa.dll" "%windir%\System32"
+@IF /I %PROCESSOR_ARCHITECTURE%==X86 IF EXIST "%windir%\System32\osmesa.dll" IF %BYTES% GTR 10000000 copy "%mesaloc%x86\osmesa-gallium\osmesa.dll" "%windir%\System32"
+@IF /I %PROCESSOR_ARCHITECTURE%==X86 IF EXIST "%windir%\System32\osmesa.dll" IF %BYTES% LSS 10000000 copy "%mesaloc%x86\osmesa-swrast\osmesa.dll" "%windir%\System32"
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%windir%\SysWOW64\osmesa.dll" for %%f in ("%windir%\SysWOW64\osmesa.dll") do @set BYTES=%%~zf
-@IF %BYTES% GEQ 10000000 copy "%mesaloc%x86\osmesa-gallium\osmesa.dll" "%windir%\SysWOW64"
-@IF %BYTES% LSS 10000000 copy "%mesaloc%x86\osmesa-swrast\osmesa.dll" "%windir%\SysWOW64"
+@IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%windir%\SysWOW64\osmesa.dll" IF %BYTES% GTR 10000000 copy "%mesaloc%x86\osmesa-gallium\osmesa.dll" "%windir%\SysWOW64"
+@IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%windir%\SysWOW64\osmesa.dll" IF %BYTES% LSS 10000000 copy "%mesaloc%x86\osmesa-swrast\osmesa.dll" "%windir%\SysWOW64"
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%windir%\System32\osmesa.dll" for %%f in ("%windir%\System32\osmesa.dll") do @set BYTES=%%~zf
-@IF %BYTES% GEQ 10000000 copy "%mesaloc%x64\osmesa-gallium\osmesa.dll" "%windir%\System32"
-@IF %BYTES% LSS 10000000 copy "%mesaloc%x64\osmesa-swrast\osmesa.dll" "%windir%\System32"
+@IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%windir%\System32\osmesa.dll" IF %BYTES% GTR 10000000 copy "%mesaloc%x64\osmesa-gallium\osmesa.dll" "%windir%\System32"
+@IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%windir%\System32\osmesa.dll" IF %BYTES% LSS 10000000 copy "%mesaloc%x64\osmesa-swrast\osmesa.dll" "%windir%\System32"
 @echo.
 @echo Update complete.
 @pause
