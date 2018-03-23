@@ -51,16 +51,18 @@ if '%errorlevel%' NEQ '0' (
 @echo 3. Mesa3D off-screen render driver gallium version (osmesa gallium);
 @echo 4. Mesa3D off-screen render driver classic version (osmesa swrast);
 @echo 5. Mesa3D graw framework with display support (graw gdi);
-@echo 6. Remove system-wide deployments (uninstall);
-@echo 7. Exit
+@echo 6. Update system-wide deployment
+@echo 7. Remove system-wide deployments (uninstall);
+@echo 8. Exit
 @set /p deploychoice=Enter choice:
 @if "%deploychoice%"=="1" GOTO desktopgl
 @if "%deploychoice%"=="2" GOTO desktopgl
 @if "%deploychoice%"=="3" GOTO osmesa
 @if "%deploychoice%"=="4" GOTO osmesa
 @if "%deploychoice%"=="5" GOTO graw
-@if "%deploychoice%"=="6" GOTO uninstall
-@if "%deploychoice%"=="7" GOTO exit
+@if "%deploychoice%"=="6" GOTO update
+@if "%deploychoice%"=="7" GOTO uninstall
+@if "%deploychoice%"=="8" GOTO exit
 @echo Invaild entry
 @pause
 @GOTO deploy
@@ -106,6 +108,29 @@ if '%errorlevel%' NEQ '0' (
 @pause
 @GOTO deploy
 
+:update
+@IF /I %PROCESSOR_ARCHITECTURE%==X86 IF EXIST "%windir%\System32\mesadrv.dll" copy "%mesaloc%x86\opengl32.dll" "%windir%\System32\mesadrv.dll"
+@IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%windir%\SysWOW64\mesadrv.dll" copy "%mesaloc%x86\opengl32.dll" "%windir%\SysWOW64\mesadrv.dll"
+@IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%windir%\System32\mesadrv.dll" copy "%mesaloc%x64\opengl32.dll" "%windir%\System32\mesadrv.dll"
+@IF EXIST "%windir%\System32\swrAVX.dll" copy "%mesaloc%x64\swrAVX.dll" "%windir%\System32"
+@IF EXIST "%windir%\System32\swrAVX2.dll" copy "%mesaloc%x64\swrAVX2.dll" "%windir%\System32"
+@IF /I %PROCESSOR_ARCHITECTURE%==X86 IF EXIST "%windir%\System32\graw.dll" copy "%mesaloc%x86\graw.dll" "%windir%\System32"
+@IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%windir%\SysWOW64\graw.dll" copy "%mesaloc%x86\graw.dll" "%windir%\SysWOW64"
+@IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%windir%\System32\graw.dll" copy "%mesaloc%x64\graw.dll" "%windir%\System32"
+@IF /I %PROCESSOR_ARCHITECTURE%==X86 IF EXIST "%windir%\System32\osmesa.dll" for %%f in ("%windir%\System32\osmesa.dll") do @set BYTES=%%~zf
+@IF %BYTES% GEQ 10000000 copy "%mesaloc%x86\osmesa-gallium\osmesa.dll" "%windir%\System32"
+@IF %BYTES% LSS 10000000 copy "%mesaloc%x86\osmesa-swrast\osmesa.dll" "%windir%\System32"
+@IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%windir%\SysWOW64\osmesa.dll" for %%f in ("%windir%\SysWOW64\osmesa.dll") do @set BYTES=%%~zf
+@IF %BYTES% GEQ 10000000 copy "%mesaloc%x86\osmesa-gallium\osmesa.dll" "%windir%\SysWOW64"
+@IF %BYTES% LSS 10000000 copy "%mesaloc%x86\osmesa-swrast\osmesa.dll" "%windir%\SysWOW64"
+@IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%windir%\System32\osmesa.dll" for %%f in ("%windir%\System32\osmesa.dll") do @set BYTES=%%~zf
+@IF %BYTES% GEQ 10000000 copy "%mesaloc%x64\osmesa-gallium\osmesa.dll" "%windir%\System32"
+@IF %BYTES% LSS 10000000 copy "%mesaloc%x64\osmesa-swrast\osmesa.dll" "%windir%\System32"
+@echo.
+@echo Update complete.
+@pause
+@GOTO deploy
+
 :uninstall
 @REG DELETE "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\OpenGLDrivers\MSOGL" /f
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 REG DELETE "HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Windows NT\CurrentVersion\OpenGLDrivers\MSOGL" /f
@@ -118,7 +143,7 @@ if '%errorlevel%' NEQ '0' (
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%windir%\SysWOW64\osmesa.dll" del "%windir%\SysWOW64\osmesa.dll"
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%windir%\SysWOW64\graw.dll" del "%windir%\SysWOW64\graw.dll"
 @echo.
-@echo Uninstall complete
+@echo Uninstall complete.
 @pause
 @GOTO deploy
 

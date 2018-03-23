@@ -1,9 +1,11 @@
 # Upcoming release
+### Build environment updates
+- pip 9.0.2 -> 9.0.3
 ### Build guide
 - Remove a relic about Windows XP/PosReady 2009, it is no longer supported since Mesa3D 17.2.0;
 - Expand section about Git portable with clear details on how you can load Git in PATH.
 ### Deployment
-- Add uninstall support to system-wide deployment tool.
+- Add uninstall and update support to system-wide deployment tool.
 # 17.3.7.600-1
 - Updated Mesa3D to [17.3.7](https://www.mesa3d.org/relnotes/17.3.7.html).
 ### Build environment updates

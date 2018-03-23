@@ -38,9 +38,9 @@ LLVM build execute[3] | cmake --build . --config Release --target install
 |-|-|
 Version | 2.7.14
 ARCH | x64
-pip version | 9.0.2
+pip version | 9.0.3
 setuptools version | 39.0.1
-pywin32 / pywin32 version | 223
+pywin32 / pypiwin32 version | 223
 scons version | 3.0.1
 Mako version | 1.0.7
 MarkupSafe version | 1.0
