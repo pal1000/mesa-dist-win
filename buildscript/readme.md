@@ -16,10 +16,7 @@ Before continuing prepare an empty folder to extract the rest of dependencies in
 
 - [Git for Windows 32 or 64-bit](https://git-scm.com/download/win); 
 
-You can use the portable version if you don't want to bloat your system too much, but you have to either launch the build script from within git-cmd.exe session (git-cmd.exe is located in Git installation directory) or add the following locations to PATH: 
-a. for 64-bit Git: %gitlocation%\bin;%gitlocation%\mingw64\bin;%gitlocation%\cmd
-b. for 32-bit Git: %gitlocation%\bin;%gitlocation%\mingw32\bin;%gitlocation%\cmd
-Replace %gitlocation% with the actual location where you unpacked Git Portable.
+You can use the portable version if you don't want to bloat your system too much, but you have to either launch the build script from within git-cmd.exe session (git-cmd.exe is located in Git installation directory) or run git-cmd.exe with this build script as argument (ex asuming git was instaled in c:\dev\git and this project repository was cloned in c:\dev\mesa-dist-win : "c:\dev\git\git-cmd.exe" "c:\dev\mesa-dist-win\buildscript\build.cmd").
 - Mesa source code: [Mirror 1](https://www.mesa3d.org/archive/), [Mirror 2](https://mesa.freedesktop.org/archive/);
 
 The build script can grab Mesa3D code if Git is in PATH. It asks for the branch to pull from. Otherwise manually extract in `.`. Be warned that the archive is double packed. Rename extracted folder to `mesa`.
@@ -28,7 +25,7 @@ The build script can grab Mesa3D code if Git is in PATH. It asks for the branch 
 Extract LLVM code in `.`. Rename extracted folder to `llvm`. LLVM 4.0 is the minimum version supported by this build scrpt as Visual Studio 2017 is the only version supported. Required to build high-performance drivers and libraries llvmpipe, swr, osmesa gallium JIT and graw.
 - [Ninja build system](https://github.com/ninja-build/ninja/releases)
 
-Optional, it reduces LLVM build size as it works with single configuration. Unlike Visual Studio MsBuild which requires a Release and a Debug configuration at minimum. Development on Ninja stalled shortly after 1.8.2 release for unknown reason though. If used, extract Ninja in `.\ninja`. My script asks if you want to do this before starting LLVM build. LLVM must be built in release mode with install target. This build script does it automatically or you can look [here](https://wiki.qt.io/MesaLlvmpipe).
+Optional, it reduces LLVM build size as it works with single configuration. Unlike Visual Studio MsBuild which requires a Release and a Debug configuration at minimum. Development on Ninja stalled shortly after 1.8.2 release for unknown reason though. If used, extract Ninja in `.\ninja`. If ninja is in PATH my script asks if you want to use it when building LLVM. LLVM must be built in release mode with install target. This build script does it automatically or you can look [here](https://wiki.qt.io/MesaLlvmpipe).
 
 - [CMake 32 or 64 bit](https://cmake.org/download/#latest);
 

@@ -10,7 +10,7 @@ OS | Windows 10 Version 1709 Pro x64
 | | |
 |-|-|
 Edition | 2017 Community
-Version | 15.6.3
+Version | 15.6.4
 Windows 10 SDK Version | 10.0.16299.91
 Windows 10 SDK install method | standalone
 ### LLVM
@@ -53,7 +53,7 @@ Flex version | 2.6.4
 ### Git version control
 | | |
 |-|-|
-Git For Windows portable | 2.16.2.1
+Git For Windows portable | 2.16.3.1
 ### Mesa3D
 | | |
 |-|-|

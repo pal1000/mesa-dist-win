@@ -1,9 +1,12 @@
-# Upcoming release
+# 18.0.0.600-1
+- Updated Mesa3D to [18.0.0](https://www.mesa3d.org/relnotes/18.0.0.html)
 ### Build environment updates
 - pip 9.0.2 -> 9.0.3
+- Visual Studio 15.6.3 -> 15.6.4
+- git 2.16.2.1 -> 2.16.3.1
 ### Build guide
 - Remove a relic about Windows XP/PosReady 2009, it is no longer supported since Mesa3D 17.2.0;
-- Expand section about Git portable with clear details on how you can load Git in PATH.
+- Describe the official way of loading git in PATH when using Git portable.
 ### Deployment
 - Add uninstall and update support to system-wide deployment tool.
 # 17.3.7.600-1
