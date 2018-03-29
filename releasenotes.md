@@ -1,3 +1,6 @@
+# Upcomming release
+### Deployment
+- Per app deployment: Make text fit into Windows 7 default Command Prompt size.
 # 18.0.0.600-1
 - Updated Mesa3D to [18.0.0](https://www.mesa3d.org/relnotes/18.0.0.html)
 ### Build environment updates

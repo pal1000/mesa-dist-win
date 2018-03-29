@@ -35,7 +35,7 @@ if '%errorlevel%' NEQ '0' (
 @echo This deployment utility allows for per-application deployments of Mesa3D
 @echo without manual copy-paste allowing updates to Mesa3D from a central location.
 @echo It is intended for systems with working GPUs.
-@echo This helps a lot if you have many programs that you want to use Mesa3D with. 
+@echo This helps a lot if you have many programs that you want to use Mesa3D with.
 @echo Some applications may still use the GPU if they are smart enough to only load
 @echo OpenGL DLL from system directory.
 @echo Use Federico Dossena's Mesainjector to workaround this case.
@@ -49,10 +49,12 @@ if '%errorlevel%' NEQ '0' (
 @cls
 @echo Mesa3D per-application deployment utility
 @echo -----------------------------------------
-@echo Please provide the path to the folder that contains the application launcher executable. It is recommended to
-@echo copy-paste it from Windows Explorer using CTRL+V. The right click paste introduced in Windows 10 may lead to
-@echo unexpected double paste. Also don't worry if path contains spaces, parantheses or other symbols, it is enclosed in
-@echo quotes automatically so you don't need to add them manually.
+@echo Please provide the path to the folder that contains the application launcher
+@echo executable. It is recommended to copy-paste it from Windows Explorer using
+@echo CTRL+V. The right click paste introduced in Windows 10 may lead to unexpected
+@echo double paste. Also don't worry if path contains spaces, parantheses or other
+@echo symbols, it is enclosed in quotes automatically so you don't need to add them
+@echo manually.
 @echo.
 @set /p dir=Path to folder holding application executable:
 @echo.
