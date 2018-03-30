@@ -2,21 +2,40 @@
 @cd "%~dp0"
 @cd ..\..\
 @for %%I in ("%cd%") do @set mesa=%%~sI
-@set oldpath=%PATH%
+@SET ERRORLEVEL=0
 @where /q python.exe
 @IF ERRORLEVEL 1 set PATH=%mesa%\Python\;%PATH%
+@SET ERRORLEVEL=0
+@where /q python.exe
+@IF ERRORLEVEL 1 echo Python is unreachable. Cannot continue.
+@SET ERRORLEVEL=0
+@where /q python.exe
+@IF ERRORLEVEL 1 GOTO exit
 @set ERRORLEVEL=0
-@set pyupd=n
+@set oldpath=%PATH%
 @FOR /F "tokens=* USEBACKQ" %%F IN (`where python.exe`) DO @SET pythonloc=%%F
 @set pythonloc=%pythonloc:python.exe=%
+@set pythonver=2
+@IF EXIST "%pythonloc%python3.dll" set pythonver=3
+@set pyupd=n
 @set makoloc="%pythonloc%Lib\site-packages\mako"
+@set mesonloc="%pythonloc%Scripts\meson.py"
 @set sconsloc="%pythonloc%Scripts\scons.py"
-@if NOT EXIST %makoloc% (
+@if %pythonver% GEQ 3 echo WARNING: Python 3.x support is experimental.
+@if %pythonver% GEQ 3 echo.
+@if %pythonver%==2 if NOT EXIST %makoloc% (
 @python -m pip install -U setuptools
 @python -m pip install -U pip
 @python -m pip install -U scons
 @python -m pip install -U MarkupSafe
 @python -m pip install -U mako
+@set pyupd=y
+@echo.
+)
+@if %pythonver% GEQ 3 if NOT EXIST %mesonloc% (
+@python -m pip install -U setuptools
+@python -m pip install -U pip
+@python -m pip install -U meson
 @set pyupd=y
 @echo.
 )
@@ -143,10 +162,10 @@
 @if /I "%osmesa%"=="y" set sconscmd=%sconscmd% osmesa
 
 :build_with_vs
-@where /q python.exe
-@IF ERRORLEVEL 1 set PATH=%mesa%\Python\;%PATH%
 @set ERRORLEVEL=0
-@set PATH=%mesa%\flexbison\;%PATH%
+@where /q win_flex.exe
+@IF ERRORLEVEL 1 set PATH=%mesa%\flexbison\;%PATH%
+@set ERRORLEVEL=0
 @cd %mesa%\mesa
 
 :build_mesa_exec

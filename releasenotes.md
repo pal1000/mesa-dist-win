@@ -1,6 +1,10 @@
 # Upcomming release
 ### Deployment
 - Per app deployment: Make text fit into Windows 7 default Command Prompt size.
+### Build script
+- Made the script aware of Python 2 and 3 variants;
+- Always load Python in PATH as it is used everywhere;
+- Hard fail if Python is missing.
 # 18.0.0.600-1
 - Updated Mesa3D to [18.0.0](https://www.mesa3d.org/relnotes/18.0.0.html)
 ### Build environment updates

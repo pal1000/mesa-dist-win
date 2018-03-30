@@ -35,7 +35,7 @@ if '%errorlevel%' NEQ '0' (
 @echo This deployment utility targets systems without working GPUs and any use case
 @echo where hardware accelerated OpenGL is not available. This mainly covers
 @echo virtual machines in cloud environments and RDP connections. It can be
-@echo used to replace Microsoft Windows inbox OpenGL 1.1 software render 
+@echo used to replace Microsoft Windows inbox OpenGL 1.1 software render
 @echo driver with Mesa3D softpipe, llvmpipe or swr driver.
 @echo.
 @pause
