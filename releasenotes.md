@@ -4,7 +4,8 @@
 ### Build script
 - Made the script aware of Python 2 and 3 variants;
 - Always load Python in PATH as it is used everywhere;
-- Hard fail if Python is missing.
+- Hard fail if Python is missing;
+- Support both Pypi and standalone version of Meson.
 # 18.0.0.600-1
 - Updated Mesa3D to [18.0.0](https://www.mesa3d.org/relnotes/18.0.0.html)
 ### Build environment updates

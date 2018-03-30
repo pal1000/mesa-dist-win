@@ -19,7 +19,11 @@
 @IF EXIST "%pythonloc%python3.dll" set pythonver=3
 @set pyupd=n
 @set makoloc="%pythonloc%Lib\site-packages\mako"
-@set mesonloc="%pythonloc%Scripts\meson.py"
+@set mesonloc=meson.exe
+@SET ERRORLEVEL=0
+@where /q meson.exe
+@IF ERRORLEVEL 1 set mesonloc="%pythonloc%Scripts\meson.py"
+@if %pythonver% GEQ 3 IF %mesonloc%==meson.exe FOR /F "tokens=* USEBACKQ" %%a IN (`where meson.exe`) DO @SET mesonloc=%%a
 @set sconsloc="%pythonloc%Scripts\scons.py"
 @if %pythonver% GEQ 3 echo WARNING: Python 3.x support is experimental.
 @if %pythonver% GEQ 3 echo.
