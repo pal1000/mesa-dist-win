@@ -3,9 +3,12 @@
 - Per app deployment: Make text fit into Windows 7 default Command Prompt size.
 ### Build script
 - Made the script aware of Python 2 and 3 variants;
+- Before doing anything check the dependencies availability including Meson, both Pypi and standalone versions being recognized;
 - Always load Python in PATH as it is used everywhere;
-- Hard fail if Python is missing;
-- Support both Pypi and standalone version of Meson.
+- Hard fail if Python or Visual Studio are missing;
+- Add code comments to make code easy to read.
+### Environment updates
+- cmake 3.10.3 -> 3.11.0
 # 18.0.0.600-1
 - Updated Mesa3D to [18.0.0](https://www.mesa3d.org/relnotes/18.0.0.html)
 ### Build environment updates

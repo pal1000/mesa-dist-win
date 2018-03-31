@@ -17,7 +17,7 @@ Windows 10 SDK install method | standalone
 | | |
 |-|-|
 LLVM Version | 6.0.0
-CMake version | 3.10.3
+CMake version | 3.11.0
 CMake ARCH | x64
 Ninja version[4] | 1.8.2
 LLVM build configure x64[5] | cd llvm-6.0.0.src & md cmake-x64 & cd cmake-x64 & cmake -G "Visual Studio 15 Win64" -Thost=x64 -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../x64 ..
