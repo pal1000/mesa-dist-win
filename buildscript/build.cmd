@@ -17,7 +17,6 @@
 @set vsabi=%abi%
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF %abi%==x86 set vsabi=x64_x86
 @IF /I %PROCESSOR_ARCHITECTURE%==x86 IF %abi%==x64 set vsabi=x86_x64
-@echo %vsabi%
 @set vsenv="%ProgramFiles%
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 set vsenv=%vsenv% (x86)
 @set vsenv=%vsenv%\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat"
@@ -80,6 +79,7 @@
 @set pyupd=y
 @echo.
 )
+@if %pythonver%==2 if NOT EXIST "%pythonloc:python.exe=%Lib\site-packages\win32" python -m pip install -U pypiwin32
 @if %pythonver% GEQ 3 IF %mesonstate%==0 (
 @python -m pip install -U setuptools
 @python -m pip install -U pip
