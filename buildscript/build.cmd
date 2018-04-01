@@ -5,7 +5,7 @@
 @cd ..\..\
 @for %%I in ("%cd%") do @set mesa=%%~sI
 
-@rem Analyze environment. Get each dependency status: 0=missing, 1=standby, 2=loaded manually, 3=preloaded.
+@rem Analyze environment. Get each dependency status: 0=missing, 1=standby/load manually in PATH, 2=cannot be unloaded.
 @rem Not all dependencies can have all these states.
 
 @rem Search for Visual Studio environment. Hard fail if missing.
@@ -29,41 +29,35 @@
 @set vsenv=%vsenv% %vsabi% %*
 @TITLE Building Mesa3D %abi%
 
-@rem Python. State restriction: cannot stay in standby since it is used everwhere. Hard fail if is missing.
+@rem Python. State tracking is pointless as it is loaded once and we are done.
 @SET ERRORLEVEL=0
 @SET pythonloc=python.exe
-@set pythonstate=3
 @where /q python.exe
 @IF ERRORLEVEL 1 set pythonloc=%mesa%\python\python.exe
-@IF %pythonloc%==%mesa%\python\python.exe set pythonstate=1
-@IF %pythonstate%==1 IF NOT EXIST %pythonloc% set pythonstate=0
-@IF %pythonstate%==3 FOR /F "tokens=* USEBACKQ" %%a IN (`where python.exe`) DO @SET pythonloc=%%a
-@IF %pythonstate%==0 (
+@IF %pythonloc%==%mesa%\python\python.exe IF NOT EXIST %pythonloc% (
 @echo Python is unreachable. Cannot continue.
 @GOTO exit
 )
-@IF %pythonstate%==1 (
-@SET PATH=%mesa%\python\;%PATH%
-@SET pythonstate=2
-)
+@IF %pythonloc%==python.exe FOR /F "tokens=* USEBACKQ" %%a IN (`where python.exe`) DO @SET pythonloc=%%a
+@IF "%pythonloc%"=="%mesa%\python\python.exe" SET PATH=%mesa%\python\;%PATH%
 
 @rem Identify Python version
 @set pythonver=2
 @IF EXIST "%pythonloc:python.exe=%python3.dll" set pythonver=3
 
 @rem Look for python modules
-@rem Mako - python 2 only
+@rem Mako. State is irrelevant as it can easily be added via Pypi and Pypi only if missing.
 @set makoloc="%pythonloc:python.exe=%Lib\site-packages\mako"
 
-@rem Meson - python 3 only
+@rem Meson. Can only be always present (2) or missing (0). We need to keep it state for later.
 @SET mesonloc=meson.exe
-@set mesonstate=3
+@set mesonstate=2
+@SET ERRORLEVEL=0
 @where /q meson.exe
 @IF ERRORLEVEL 1 set mesonloc="%pythonloc:python.exe=%Scripts\meson.py"
-@IF %mesonloc%=="%pythonloc:python.exe=%Scripts\meson.py" set mesonstate=2
-@IF %mesonstate%==2 IF NOT EXIST %mesonloc% set mesonstate=0
+@IF %mesonloc%=="%pythonloc:python.exe=%Scripts\meson.py" IF NOT EXIST %mesonloc% set mesonstate=0
 
-@rem Scons - python 2 only
+@rem Scons - Can be auto-acquired if missing, no state tracking needed.
 @set sconsloc="%pythonloc:python.exe=%Scripts\scons.py"
 
 @rem Check for python updates
@@ -79,7 +73,10 @@
 @set pyupd=y
 @echo.
 )
-@if %pythonver%==2 if NOT EXIST "%pythonloc:python.exe=%Lib\site-packages\win32" python -m pip install -U pypiwin32
+@if %pythonver%==2 if NOT EXIST "%pythonloc:python.exe=%Lib\site-packages\win32" (
+@python -m pip install pywin32
+@echo WARNIMG: Pywin32 is not installed in system-wide mode. COM and services support is not available.
+)
 @if %pythonver% GEQ 3 IF %mesonstate%==0 (
 @python -m pip install -U setuptools
 @python -m pip install -U pip
@@ -93,42 +90,48 @@
 @echo.
 )
 
-@rem Ninja build system. This is optional
+@rem Ninja build system. Can have all states.
 @SET ERRORLEVEL=0
 @SET ninjaloc=ninja.exe
-@set ninjastate=3
+@set ninjastate=2
 @where /q ninja.exe
 @IF ERRORLEVEL 1 set ninjaloc=%mesa%\ninja\ninja.exe
 @IF %ninjaloc%==%mesa%\ninja\ninja.exe set ninjastate=1
 @IF %ninjastate%==1 IF NOT EXIST %ninjaloc% set ninjastate=0
 
-@rem CMake build generator. Alterntive to Meson
+@rem CMake build generator. Can have all states.
 @SET ERRORLEVEL=0
 @SET cmakeloc=cmake.exe
-@set cmakestate=3
+@set cmakestate=2
 @where /q cmake.exe
 @IF ERRORLEVEL 1 set cmakeloc=%mesa%\cmake\bin\cmake.exe
 @IF %cmakeloc%==%mesa%\cmake\bin\cmake.exe set cmakestate=1
 @IF %cmakestate%==1 IF NOT EXIST %cmakeloc% set cmakestate=0
 
-@rem Git version control
+@rem Git version control. Can either be always present (2) or missing (0).
 @SET ERRORLEVEL=0
 @SET gitloc=git.exe
-@set gitstate=3
+@set gitstate=2
 @where /q git.exe
 @IF ERRORLEVEL 1 set gitstate=0
 
-@rem winflexbison
+@rem winflexbison. Can have all states.
 @SET ERRORLEVEL=0
 @SET flexloc=win_flex.exe
-@set flexstate=3
+@set flexstate=2
 @where /q win_flex.exe
 @IF ERRORLEVEL 1 set flexloc=%mesa%\flexbison\win_flex.exe
 @IF %flexloc%==%mesa%\flexbison\win_flex.exe set flexstate=1
 @IF %flexstate%==1 IF NOT EXIST %flexloc% set flexstate=0
 
+@rem Done checking environment. Backup PATH to easily keep environment clean
+set oldpath=%PATH%
 
 :build_llvm
+@IF %cmakestate%==0 IF %mesonstate%==0 (
+@echo There is no build system generator suitable for LLVN build.
+@GOTO prep_mesa
+)
 @if EXIST %mesa%\llvm set /p buildllvm=Begin LLVM build. Only needs to run once for each ABI and version. Proceed (y/n):
 @if /I NOT "%buildllvm%"=="y" GOTO prep_mesa
 @if EXIST %mesa%\llvm echo.
@@ -139,9 +142,9 @@
 @cd cmake-%abi%
 @set ninja=n
 @set toolchain=Visual Studio %toolset%
-@if EXIST "%ninjaloc%" set /p ninja=Use Ninja build system instead of MsBuild (y/n); less storage device strain and maybe faster build:
+@if %ninjastate% GEQ 0 set /p ninja=Use Ninja build system instead of MsBuild (y/n); less storage device strain and maybe faster build:
 @if /I "%ninja%"=="y" set toolchain=Ninja
-@if /I "%ninja%"=="y" set PATH=%mesa%\ninja\;%PATH%
+@if /I "%ninja%"=="y" if %ninjastate%==1 set PATH=%mesa%\ninja\;%PATH%
 @if %abi%==x64 set toolchain=%toolchain% Win64
 @if "%toolchain%"=="Ninja Win64" set toolchain=Ninja
 @if /I NOT "%ninja%"=="y" IF /I %PROCESSOR_ARCHITECTURE%==AMD64 set x64compiler= -Thost=x64
@@ -160,12 +163,18 @@
 
 :prep_mesa
 @set PATH=%oldpath%
+@IF %flexstate%==0 (
+@echo winflexbison is required to build Mesa3D.
+GOTO distcreate
+)
+@if NOT EXIST mesa if %gitstate%==0 (
+@echo Fatal: Both Mesa code and Git are missing. At least one is required. Execution halted.
+@GOTO distcreate
+)
 @cd %mesa%
 @set mesapatched=0
 @set haltmesabuild=n
 @if %gitstate%==0 echo Error: Git not found. Auto-patching disabled.
-@if NOT EXIST mesa if %gitstate%==0 echo Fatal: Both Mesa code and Git are missing. At least one is required. Execution halted.
-@if NOT EXIST mesa if %gitstate%==0 GOTO distcreate
 @if NOT EXIST mesa echo Warning: Mesa3D source code not found.
 @if NOT EXIST mesa set /p haltmesabuild=Press Y to abort execution. Press any other key to download Mesa via Git:
 @if /I "%haltmesabuild%"=="y" GOTO distcreate
