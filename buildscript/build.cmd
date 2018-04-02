@@ -168,7 +168,7 @@
 @if /I NOT "%meson%"=="y" set buildconf=%buildconf% -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../%abi% ..
 @if /I "%meson%"=="y" set buildconf=echo LLVM Build aborted. Unimplemented build configuration.
 
-@rem Load Visual Studio environment. Only cmake can load it in the background.
+@rem Load Visual Studio environment. Only cmake can load it in the background and only when using MsBuild.
 @if /I NOT "%meson%"=="y" if /I "%ninja%"=="y" call %vsenv%
 @rem if /I "%meson%"=="y" call %vsenv%
 @if /I "%ninja%"=="y" cd %mesa%\llvm\buildsys-%abi%
@@ -208,9 +208,9 @@ GOTO distcreate
 @if NOT EXIST mesa git clone --recurse-submodules --depth=1 --branch=%branch% git://anongit.freedesktop.org/mesa/mesa mesa
 @cd mesa
 @set LLVM=%mesa%\llvm\%abi%
-@rem set /p mesaver=<VERSION
-@rem if "%mesaver:~-7%"=="0-devel" set /a intmesaver=%mesaver:~0,2%%mesaver:~3,1%00
-@rem if "%mesaver:~5,4%"=="0-rc" set /a intmesaver=%mesaver:~0,2%%mesaver:~3,1%00+%mesaver:~9%
+@set /p mesaver=<VERSION
+@if "%mesaver:~-7%"=="0-devel" set /a intmesaver=%mesaver:~0,2%%mesaver:~3,1%00
+@if "%mesaver:~5,4%"=="0-rc" set /a intmesaver=%mesaver:~0,2%%mesaver:~3,1%00+%mesaver:~9%
 @rem if NOT "%mesaver:~5,2%"=="0-" set /a intmesaver=%mesaver:~0,2%%mesaver:~3,1%50+%mesaver:~5%
 @if EXIST mesapatched.ini GOTO build_mesa
 @if %gitstate%==0 GOTO build_mesa
