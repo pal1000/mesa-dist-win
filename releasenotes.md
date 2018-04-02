@@ -3,11 +3,12 @@
 - Per app deployment: Make text fit into Windows 7 default Command Prompt size.
 ### Build script
 - Made the script aware of Python 2 and 3 variants;
-- Before doing anything check the dependencies availability including Meson, both Pypi and standalone versions being recognized (implement a dependencies state tracker);
+- Before doing anything check all the dependencies availability including Meson (both Pypi and standalone versions being recognized) and record their state if it can change. This is an implementation of a dependencies state tracker;
 - Always load Python in PATH as it is used everywhere;
 - Hard fail if Python or Visual Studio are missing;
 - Add code comments to make code easy to read;
-- Began porting LLVM and Mesa3D builds to dependencies state tracker.
+- Ported LLVM build to dependencies state tracker and stubbed Meson build support;
+- Began porting Mesa3D build to dependencies state tracker.
 ### Environment updates
 - cmake 3.10.3 -> 3.11.0
 # 18.0.0.600-1
