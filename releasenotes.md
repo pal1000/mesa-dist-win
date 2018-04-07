@@ -2,15 +2,18 @@
 ### Deployment
 - Per app deployment: Make text fit into Windows 7 default Command Prompt size.
 ### Build script
-- Made the script aware of Python 2 and 3 variants;
+- Made the script aware of Python 2 and 3 variants, now with Py launcher and multi-version py3 support;
 - Before doing anything check all the dependencies availability including Meson (both Pypi and standalone versions being recognized) and record their state if it can change. This is an implementation of a dependencies state tracker;
-- Always load Python in PATH as it is used everywhere;
+- Always load Python in PATH as it is used everywhere and it convinces CMake to use same version of Python as Meson or Scons;
 - Hard fail if Python or Visual Studio are missing;
 - Add code comments to make code easy to read;
 - Ported LLVM build to dependencies state tracker and stubbed Meson build support;
-- Began porting Mesa3D build to dependencies state tracker.
+- Began porting Mesa3D build to dependencies state tracker;
+- Split the build script into modules as it grew too big.
 ### Environment updates
 - cmake 3.10.3 -> 3.11.0
+- git 2.16.3.1 -> 2.17.0.1
+- Visual Studio 15.6.4 -> 15.6.5
 # 18.0.0.600-1
 - Updated Mesa3D to [18.0.0](https://www.mesa3d.org/relnotes/18.0.0.html)
 ### Build environment updates

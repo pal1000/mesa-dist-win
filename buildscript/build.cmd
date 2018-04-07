@@ -9,84 +9,54 @@
 @rem Not all dependencies can have all these states.
 
 @rem Search for Visual Studio environment. Hard fail if missing.
-@set abi=x86
-@set /p x64=Do you want to build for x64? (y/n) Otherwise build for x86:
-@if /I "%x64%"=="y" set abi=x64
-@set longabi=%abi%
-@if %abi%==x64 set longabi=x86_64
-@set vsabi=%abi%
-@IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF %abi%==x86 set vsabi=x64_x86
-@IF /I %PROCESSOR_ARCHITECTURE%==x86 IF %abi%==x64 set vsabi=x86_x64
-@set vsenv="%ProgramFiles%
-@IF /I %PROCESSOR_ARCHITECTURE%==AMD64 set vsenv=%vsenv% (x86)
-@set vsenv=%vsenv%\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat"
-@set toolset=0
-@if EXIST %vsenv% set toolset=15
-@if %toolset% EQU 0 (
-@echo Error: No Visual Studio installed.
-@GOTO exit
-)
-@set vsenv=%vsenv% %vsabi% %*
-@TITLE Building Mesa3D %abi%
+@call %mesa%\mesa-dist-win\buildscript\modules\visualstudio.cmd
 
 @rem Python. State tracking is pointless as it is loaded once and we are done.
-@SET ERRORLEVEL=0
-@SET pythonloc=python.exe
-@where /q python.exe
-@IF ERRORLEVEL 1 set pythonloc=%mesa%\python\python.exe
-@IF %pythonloc%==%mesa%\python\python.exe IF NOT EXIST %pythonloc% (
-@echo Python is unreachable. Cannot continue.
-@GOTO exit
-)
-@IF %pythonloc%==python.exe FOR /F "tokens=* USEBACKQ" %%a IN (`where python.exe`) DO @SET pythonloc=%%a
-@IF "%pythonloc%"=="%mesa%\python\python.exe" SET PATH=%mesa%\python\;%PATH%
+@call %mesa%\mesa-dist-win\buildscript\modules\discoverpython.cmd
 
-@rem Identify Python version
-@set pythonver=2
-@IF EXIST "%pythonloc:python.exe=%python3.dll" set pythonver=3
-
+:pyupdate
 @rem Look for python modules
 @rem Mako. State is irrelevant as it can easily be added via Pypi and Pypi only if missing.
-@set makoloc="%pythonloc:python.exe=%Lib\site-packages\mako"
+@set makoloc=%pythonloc:python.exe=%Lib\site-packages\mako
 
 @rem Meson. Can only be always present (2) or missing (0). We need to keep it state for later.
 @SET mesonloc=meson.exe
 @set mesonstate=2
 @SET ERRORLEVEL=0
 @where /q meson.exe
-@IF ERRORLEVEL 1 set mesonloc="%pythonloc:python.exe=%Scripts\meson.py"
-@IF %mesonloc%=="%pythonloc:python.exe=%Scripts\meson.py" IF NOT EXIST %mesonloc% set mesonstate=0
+@IF ERRORLEVEL 1 set mesonloc=%pythonloc:python.exe=%Scripts\meson.py
+@IF %mesonloc%==%pythonloc:python.exe=%Scripts\meson.py IF NOT EXIST %mesonloc% set mesonstate=0
 
 @rem Scons - Can be auto-acquired if missing, no state tracking needed.
-@set sconsloc="%pythonloc:python.exe=%Scripts\scons.py"
+@set sconsloc=%pythonloc:python.exe=%Scripts\scons.py
 
 @rem Check for python updates
 @set pyupd=n
 @if %pythonver% GEQ 3 echo WARNING: Python 3.x support is experimental.
 @if %pythonver% GEQ 3 echo.
 @if %pythonver%==2 if NOT EXIST %makoloc% (
-@python -m pip install -U setuptools
-@python -m pip install -U pip
-@python -m pip install -U scons
-@python -m pip install -U MarkupSafe
-@python -m pip install -U mako
+@%pythonloc% -m pip install -U setuptools
+@%pythonloc% -m pip install -U pip
+@%pythonloc% -m pip install -U scons
+@%pythonloc% -m pip install -U MarkupSafe
+@%pythonloc% -m pip install -U mako
 @set pyupd=y
 @echo.
 )
-@if %pythonver%==2 if NOT EXIST "%pythonloc:python.exe=%Lib\site-packages\win32" (
-@python -m pip install pywin32
+@if %pythonver%==2 if NOT EXIST %pythonloc:python.exe=%Lib\site-packages\win32 (
+@%pythonloc% -m pip install pywin32
 @echo WARNIMG: Pywin32 is not installed in system-wide mode. COM and services support is not available.
 )
 @if %pythonver% GEQ 3 IF %mesonstate%==0 (
-@python -m pip install -U setuptools
-@python -m pip install -U pip
-@python -m pip install -U meson
+@%pythonloc% -m pip install -U setuptools
+@%pythonloc% -m pip install -U pip
+@%pythonloc% -m pip install -U meson
 @set pyupd=y
 @echo.
 )
 @if /I NOT "%pyupd%"=="y" set /p pyupd=Install/update python modules (y/n):
 @if /I "%pyupd%"=="y" (
-@for /F "delims= " %%i in ('python -m pip list -o --format=legacy') do @if NOT "%%i"=="pywin32" python -m pip install -U "%%i"
+@for /F "delims= " %%i in ('%pythonloc% -m pip list -o --format=legacy') do @if NOT "%%i"=="pywin32" %pythonloc% -m pip install -U "%%i"
 @echo.
 )
 
@@ -224,7 +194,7 @@ GOTO distcreate
 @if /i NOT "%buildmesa%"=="y" GOTO distcreate
 @echo.
 @cd %mesa%\mesa
-@set sconscmd=python %sconsloc% build=release platform=windows machine=%longabi% libgl-gdi
+@set sconscmd=%pythonloc% %sconsloc% build=release platform=windows machine=%longabi% libgl-gdi
 @set llvmless=n
 @if EXIST %LLVM% set /p llvmless=Build Mesa without LLVM (y/n). Only softpipe and osmesa will be available:
 @if EXIST %LLVM% echo.
