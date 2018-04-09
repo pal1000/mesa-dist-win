@@ -57,3 +57,6 @@
 @cls
 @echo Using Python %pythonver% from %pythonloc%.
 @echo.
+@set pythonver=%pythonver:~0,1%
+@if %pythonver% GEQ 3 echo WARNING: Python 3.x support is experimental.
+@if %pythonver% GEQ 3 echo.

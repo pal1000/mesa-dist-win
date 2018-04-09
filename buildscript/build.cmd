@@ -11,54 +11,12 @@
 @rem Search for Visual Studio environment. Hard fail if missing.
 @call %mesa%\mesa-dist-win\buildscript\modules\visualstudio.cmd
 
-@rem Python. State tracking is pointless as it is loaded once and we are done.
+@rem Search for Python. State tracking is pointless as it is loaded once and we are done. Hard fail if missing.
 @call %mesa%\mesa-dist-win\buildscript\modules\discoverpython.cmd
 
-:pyupdate
-@rem Look for python modules
-@rem Mako. State is irrelevant as it can easily be added via Pypi and Pypi only if missing.
-@set makoloc=%pythonloc:python.exe=%Lib\site-packages\mako
-
-@rem Meson. Can only be always present (2) or missing (0). We need to keep it state for later.
-@SET mesonloc=meson.exe
-@set mesonstate=2
-@SET ERRORLEVEL=0
-@where /q meson.exe
-@IF ERRORLEVEL 1 set mesonloc=%pythonloc:python.exe=%Scripts\meson.py
-@IF %mesonloc%==%pythonloc:python.exe=%Scripts\meson.py IF NOT EXIST %mesonloc% set mesonstate=0
-
-@rem Scons - Can be auto-acquired if missing, no state tracking needed.
-@set sconsloc=%pythonloc:python.exe=%Scripts\scons.py
-
-@rem Check for python updates
-@set pyupd=n
-@if %pythonver% GEQ 3 echo WARNING: Python 3.x support is experimental.
-@if %pythonver% GEQ 3 echo.
-@if %pythonver%==2 if NOT EXIST %makoloc% (
-@%pythonloc% -m pip install -U setuptools
-@%pythonloc% -m pip install -U pip
-@%pythonloc% -m pip install -U scons
-@%pythonloc% -m pip install -U MarkupSafe
-@%pythonloc% -m pip install -U mako
-@set pyupd=y
-@echo.
-)
-@if %pythonver%==2 if NOT EXIST %pythonloc:python.exe=%Lib\site-packages\win32 (
-@%pythonloc% -m pip install pywin32
-@echo WARNIMG: Pywin32 is not installed in system-wide mode. COM and services support is not available.
-)
-@if %pythonver% GEQ 3 IF %mesonstate%==0 (
-@%pythonloc% -m pip install -U setuptools
-@%pythonloc% -m pip install -U pip
-@%pythonloc% -m pip install -U meson
-@set pyupd=y
-@echo.
-)
-@if /I NOT "%pyupd%"=="y" set /p pyupd=Install/update python modules (y/n):
-@if /I "%pyupd%"=="y" (
-@for /F "delims= " %%i in ('%pythonloc% -m pip list -o --format=legacy') do @if NOT "%%i"=="pywin32" %pythonloc% -m pip install -U "%%i"
-@echo.
-)
+@rem Search for Python packages. Install missing packages automatically. Ask to do an update to all packages except pywin32
+@rem which doesn't support pypi updates.
+@call %mesa%\mesa-dist-win\buildscript\modules\pythonpackages.cmd
 
 @rem Ninja build system. Can have all states.
 @SET ERRORLEVEL=0

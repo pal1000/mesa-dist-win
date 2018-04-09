@@ -2,14 +2,15 @@
 ### Deployment
 - Per app deployment: Make text fit into Windows 7 default Command Prompt size.
 ### Build script
-- Made the script aware of Python 2 and 3 variants, now with Py launcher and multi-version py3 support;
+- Made the script aware of Python 2 and 3 variants, now with Py launcher and multiple Python 3 versions support;
 - Before doing anything check all the dependencies availability including Meson (both Pypi and standalone versions being recognized) and record their state if it can change. This is an implementation of a dependencies state tracker;
 - Always load Python in PATH as it is used everywhere and it convinces CMake to use same version of Python as Meson or Scons;
 - Hard fail if Python or Visual Studio are missing;
 - Add code comments to make code easy to read;
 - Ported LLVM build to dependencies state tracker and stubbed Meson build support;
 - Began porting Mesa3D build to dependencies state tracker;
-- Split the build script into modules as it grew too big.
+- Began spliting the build script into modules as it grew too big. Visual Studio existence check, Python discovery and Python packages management respectively were split into distinct modules;
+- Check python packages availability and install them one by one if missing. setuptools and pip are updated before installing any missing package.
 ### Environment updates
 - cmake 3.10.3 -> 3.11.0
 - git 2.16.3.1 -> 2.17.0.1
@@ -114,7 +115,7 @@ This is the first release of Mesa3D with built-in S3TC support so there is no dx
  
 - LLVM and Mesa3D were built with Visual Studio 2017 v15.5.1.
 ### Build script
-- Use a simple python script to update all python modules. Don't load python scripts in PATH. Things might work fine regardless.
+- Use a simple python script to update all python packages. Don't load python scripts in PATH. Things might work fine regardless.
 ### Build script documentation
 - Update Visual Studio 2017 list of components needed to build Mesa and LLVM.
 ### Usage documentation
@@ -123,8 +124,8 @@ This is the first release of Mesa3D with built-in S3TC support so there is no dx
 - Updated Mesa to [17.2.6](https://www.mesa3d.org/relnotes/17.2.6.html).
 - Built with Visual Studio 2017 v15.4.4 and Scons 3.0.1.
 ### Build script
-- Python modules update: pip freeze is seriously broken. Always use pip install -U. setuptools wasn't updated at all due to pip freeze shortcomings. Also Scons 3.0.1 wasn't picked up despite being live on Pypi.
-- Python modules: wheel is no longer needed.
+- Python packages update: pip freeze is seriously broken. Always use pip install -U. setuptools wasn't updated at all due to pip freeze shortcomings. Also Scons 3.0.1 wasn't picked up despite being live on Pypi.
+- Python packages: wheel is no longer needed.
 ### Build script documentation
 - Workaround a pywin32 installer bug.
 - Updating setuptools pre-loaded with Python allows for successful installation of Scons via Pypi without having to install wheel.
@@ -157,7 +158,7 @@ This is the first release of Mesa3D with built-in S3TC support so there is no dx
 - Check before attempting to create symbolic links. Avoid harmless errors which may be confusing.
 ### Build script
 - Drop S3TC build if Mesa master source code is detected. S3TC is now built-in. Texture cache enabling patch is still needed though.
-- Python modules updating: use both pip install -U <module-name> explicitly and pip freeze in a hybrid approach for most optimal behavior.
+- Python packages updating: use both pip install -U <module-name> explicitly and pip freeze in a hybrid approach for most optimal behavior.
 - Improved PATH cleanning.
 - Support building S3TC with MSYS2 Mingw-W64 GCC by default. They fixed their problem with 32-bit binaries when they upgraded to GCC 7.2.0 (Alexpux/MINGW-packages#2271).
 - Drop suport for Visual Studio 2015 completely. It survived so long due to Scons 3.0.0 issues.
@@ -172,7 +173,7 @@ This is the first release of Mesa3D with built-in S3TC support so there is no dx
 - Built with Scons 3.0.0. Made use of a compatibility patch.
 - Built LLVM 5.0 and Mesa3D with Visual Studio 2017 v15.3.5.
 ### Build script
-- Fixed python modules update check. Always check if mako not found, ask otherwise.
+- Fixed python packages update check. Always check if mako not found, ask otherwise.
 - Made build script aware of Mesa branches, helps with patches applicability narrowing.
 - Add Scons 3.0.0 compatibility patch to Mesa3D Git-powered auto-patches. Only apply it to Mesa stable, patch is upstream now.
 - Determine Mesa branch even if it is not built. Preparation for S3TC merger.
