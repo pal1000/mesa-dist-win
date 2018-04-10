@@ -5,7 +5,7 @@
 
 @set pypack=0
 @set firstpyinstall=1
-
+@set pywin32com=n
 :pypackmissing
 @rem Check for Python packages availability.
 @if %pythonver%==2 IF NOT EXIST %pythonloc:~0,-11%Lib\site-packages\markupsafe" (
@@ -22,6 +22,8 @@
 )
 @if %pythonver%==2 if NOT EXIST %pythonloc:~0,-11%Lib\site-packages\win32" (
 @set pypack=pywin32
+@set /p pywin32com=Do you want to install COM and services support - y/n. You'll be asked for admin permission:
+@echo.
 @GOTO pypackinstall
 )
 @if %pythonver%==2 set mesonstate=0
@@ -45,15 +47,12 @@
 @%pythonloc% -m pip install -U setuptools
 @set firstpyinstall=0
 )
-@IF %pypack%==pywin32 (
-@echo WARNIMG: Pywin32 is being installed without system-wide support. COM and services support is not available.
-@echo.
-)
 @IF NOT %pypack%==0 (
 @%pythonloc% -m pip install -U %pypack%
 @set pypack=0
 @echo.
 )
+@IF %pypack%==pywin32 IF /I "%pywin32com%"=="y" powershell -Command Start-Process "%mesa%\mesa-dist-win\buildscript\assets\pywin32.cmd" -Verb runAs
 @GOTO pypackmissing
 
 :pyupdate

@@ -60,3 +60,7 @@
 @set pythonver=%pythonver:~0,1%
 @if %pythonver% GEQ 3 echo WARNING: Python 3.x support is experimental.
 @if %pythonver% GEQ 3 echo.
+
+@rem Store Python location in a file in case pywin32 is missing. We need to pass it to an elevated Command Prompt to finish
+@rem Pywin32 installation.
+@echo %pythonloc%>%mesa%\mesa-dist-win\buildscript\assets\pythonloc.txt

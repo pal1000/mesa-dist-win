@@ -10,7 +10,8 @@
 - Ported LLVM build to dependencies state tracker and stubbed Meson build support;
 - Began porting Mesa3D build to dependencies state tracker;
 - Began spliting the build script into modules as it grew too big. Visual Studio existence check, Python discovery and Python packages management respectively were split into distinct modules;
-- Check python packages availability and install them one by one if missing. setuptools and pip are updated before installing any missing package.
+- Check python packages availability and install them one by one if missing. setuptools and pip are updated before installing any missing package;
+- Added support for full initial installation of pywin32 by properly requesting admin priviledges, upgrading however is unsupported because it's dirty.
 ### Environment updates
 - cmake 3.10.3 -> 3.11.0
 - git 2.16.3.1 -> 2.17.0.1
