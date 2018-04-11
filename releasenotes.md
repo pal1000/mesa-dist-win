@@ -15,7 +15,7 @@
 ### Environment updates
 - cmake 3.10.3 -> 3.11.0
 - git 2.16.3.1 -> 2.17.0.1
-- Visual Studio 15.6.4 -> 15.6.5
+- Visual Studio 15.6.4 -> 15.6.6
 # 18.0.0.600-1
 - Updated Mesa3D to [18.0.0](https://www.mesa3d.org/relnotes/18.0.0.html)
 ### Build environment updates

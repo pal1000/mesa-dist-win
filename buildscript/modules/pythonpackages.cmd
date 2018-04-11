@@ -52,7 +52,10 @@
 @set pypack=0
 @echo.
 )
-@IF %pypack%==pywin32 IF /I "%pywin32com%"=="y" powershell -Command Start-Process "%mesa%\mesa-dist-win\buildscript\assets\pywin32.cmd" -Verb runAs
+@IF %pypack%==pywin32 IF /I "%pywin32com%"=="y" (
+@echo %pythonloc%>%mesa%\mesa-dist-win\buildscript\assets\pythonloc.txt
+@powershell -Command Start-Process "%mesa%\mesa-dist-win\buildscript\assets\pywin32.cmd" -Verb runAs
+)
 @GOTO pypackmissing
 
 :pyupdate
