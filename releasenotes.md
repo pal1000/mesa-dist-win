@@ -9,7 +9,7 @@
 - Add code comments to make code easy to read;
 - Ported LLVM build to dependencies state tracker and stubbed Meson build support;
 - Began porting Mesa3D build to dependencies state tracker;
-- Split the build script into modules as it grew too big. All dependencies checkup is split into modules now;
+- Split the build script into modules as it grew too big. All dependencies checkup is split into modules now. LLVM build has its own module too.
 - Check python packages availability and install them one by one if missing. setuptools and pip are updated before installing any missing package;
 - Added support for full initial installation of pywin32 by properly requesting admin priviledges, upgrading however is unsupported because it's dirty.
 ### Environment updates

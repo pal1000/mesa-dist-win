@@ -1,4 +1,3 @@
-:pypackinit
 @rem Install missing python packages.
 @rem State tracking is irrelevant for Python packages as they can easily be added via Pypi if missing.
 @rem Meson is the exception because its a Python 3 only package and as a result it can be missing.
@@ -6,6 +5,7 @@
 @set pypack=0
 @set firstpyinstall=1
 @set pywin32com=n
+
 :pypackmissing
 @rem Check for Python packages availability.
 @if %pythonver%==2 IF NOT EXIST %pythonloc:~0,-11%Lib\site-packages\markupsafe" (
