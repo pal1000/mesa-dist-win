@@ -41,7 +41,8 @@
 @IF ERRORLEVEL 1 set pythonloc="%mesa%\python\python.exe"
 @IF %pythonloc%=="%mesa%\python\python.exe" IF NOT EXIST %pythonloc% (
 @echo Python is unreachable. Cannot continue.
-@GOTO exit
+@pause
+@exit
 )
 @IF %pythonloc%=="python.exe" FOR /F "tokens=* USEBACKQ" %%f IN (`where python.exe`) DO @SET pythonloc=%%f
 @if NOT %pythonloc:~-11,-1%==python.exe set pythonloc="%pythonloc%"

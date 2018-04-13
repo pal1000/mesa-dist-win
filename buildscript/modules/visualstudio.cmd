@@ -13,7 +13,8 @@
 @if EXIST %vsenv% set toolset=15
 @if %toolset% EQU 0 (
 @echo Error: No Visual Studio installed.
-@GOTO exit
+@pause
+@exit
 )
 @set vsenv=%vsenv% %vsabi% %*
 @TITLE Building Mesa3D %abi%

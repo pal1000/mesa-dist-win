@@ -22,7 +22,7 @@
 )
 @if %pythonver%==2 if NOT EXIST %pythonloc:~0,-11%Lib\site-packages\win32" (
 @set pypack=pywin32
-@set /p pywin32com=Do you want to install COM and services support - y/n. You'll be asked for admin permission:
+@set /p pywin32com=Do you want to install COM and services support - y/n. You'll be asked for admin priviledges:
 @echo.
 @GOTO pypackinstall
 )
