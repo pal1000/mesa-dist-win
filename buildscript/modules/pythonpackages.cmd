@@ -38,6 +38,7 @@
 @set pypack=meson
 @GOTO pypackinstall
 )
+@IF %mesonloc%==%pythonloc:~0,-11%Scripts\meson.py" set mesonloc=%pythonloc% %mesonloc%
 @GOTO pyupdate
 
 :pypackinstall
