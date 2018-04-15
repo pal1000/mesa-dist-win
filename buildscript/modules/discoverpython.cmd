@@ -1,10 +1,8 @@
 @REM Try locating all Python versions via Py Launcher.
-
 @SET pythonloc="python.exe"
 
-@REM Disable Py launcher support until we get some Meson support completed.
+@REM Disable Py launcher support until we get some Meson working.
 @GOTO nopylauncher
-
 @set ERRORLEVEL=0
 @where /q py.exe
 @IF ERRORLEVEL 1 GOTO nopylauncher
@@ -20,7 +18,8 @@
 @if EXIST "%py3_5loc%" echo Python 3.5
 @if EXIST "%py3_6loc%" echo Python 3.6
 @if EXIST "%py3_7loc%" echo Python 3.7
-@if EXIST "%py3latestloc%" echo Latest Python 3.x version
+@if EXIST "%py3latestloc%" echo.
+@if EXIST "%py3latestloc%" echo Input 3 for latest Python 3 version.
 @echo.
 @set /p pyselect=Please input Python version you want to use with Meson or Scons build system in Major.Minor format or Major only for latest version (ex: 3, 3.5, 2.7):
 @echo.

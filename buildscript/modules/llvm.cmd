@@ -7,6 +7,7 @@
 @rem Disable Meson build for now.
 @if NOT %mesonstate%==0 if %cmakestate%==0 (
 @echo Meson build support is not implemented.
+@echo.
 @GOTO skipllvm
 )
 
