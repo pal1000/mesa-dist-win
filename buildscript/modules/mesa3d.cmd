@@ -37,7 +37,7 @@ GOTO skipmesa
 :configmesabuild
 @cd %mesa%\mesa
 @if %pythonver%==2 set buildcmd=%pythonloc% %pythonloc:~0,-11%Scripts\scons.py" build=release platform=windows machine=%longabi% libgl-gdi
-@if %pythonver% GEQ 3 set buildcmd=%mesonloc% . .\build\windows-%longabi% -Dplatforms=windows
+@if %pythonver% GEQ 3 set buildcmd=%mesonloc% . .\build\windows-%longabi% --backend=vs2017 -Dplatforms=windows
 @set /p osmesa=Do you want to build off-screen rendering drivers (y/n):
 @echo.
 @if %pythonver%==2 if /I "%osmesa%"=="y" set buildcmd=%buildcmd% osmesa

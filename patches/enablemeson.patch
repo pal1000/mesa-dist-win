@@ -1,0 +1,25 @@
+diff --git a/buildscript/modules/discoverpython.cmd b/buildscript/modules/discoverpython.cmd
+index ab93a9d..81b7c7e 100644
+--- a/buildscript/modules/discoverpython.cmd
++++ b/buildscript/modules/discoverpython.cmd
+@@ -1,8 +1,5 @@
+ @REM Try locating all Python versions via Py Launcher.
+ @SET pythonloc="python.exe"
+-
+-@REM Disable Py launcher support until we get some Meson working.
+-@GOTO nopylauncher
+ @set ERRORLEVEL=0
+ @where /q py.exe
+ @IF ERRORLEVEL 1 GOTO nopylauncher
+diff --git a/buildscript/modules/mesa3d.cmd b/buildscript/modules/mesa3d.cmd
+index 445d6a3..cc5af3a 100644
+--- a/buildscript/modules/mesa3d.cmd
++++ b/buildscript/modules/mesa3d.cmd
+@@ -4,7 +4,6 @@
+ @echo winflexbison is required to build Mesa3D.
+ GOTO skipmesa
+ )
+-@if %pythonver% GEQ 3 GOTO skipmesa
+ @cd %mesa%
+ @if NOT EXIST mesa if %gitstate%==0 (
+ @echo Fatal: Both Mesa code and Git are missing. At least one is required. Execution halted.
