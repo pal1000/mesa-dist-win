@@ -15,7 +15,7 @@
 @call %mesa%\mesa-dist-win\buildscript\modules\discoverpython.cmd
 
 @rem Search for Python packages. Install missing packages automatically. Ask to do an update to all packages except pywin32
-@rem which doesn't support pypi updates cleanly.
+@rem and pypiwin32 which doesn't support pypi updates cleanly.
 @call %mesa%\mesa-dist-win\buildscript\modules\pythonpackages.cmd
 
 @rem Check for remaining dependencies: cmake, ninja, winflexbison and git.

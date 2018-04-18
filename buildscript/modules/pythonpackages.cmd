@@ -22,7 +22,7 @@
 )
 @if %pythonver%==2 if NOT EXIST %pythonloc:~0,-11%Lib\site-packages\win32" (
 @set pypack=pywin32
-@set /p pywin32com=Do you want to install COM and services support - y/n. You'll be asked for admin priviledges:
+@set /p pywin32com=Do you want to install COM and services support - y/n. You'll be asked for admin privileges:
 @echo.
 @GOTO pypackinstall
 )
@@ -64,6 +64,6 @@
 @set pyupd=n
 @set /p pyupd=Install/update python modules (y/n):
 @if /I "%pyupd%"=="y" (
-@for /F "delims= " %%i in ('%pythonloc% -m pip list -o --format=legacy') do @if NOT "%%i"=="pywin32" %pythonloc% -m pip install -U "%%i"
+@for /F "delims= " %%i in ('%pythonloc% -m pip list -o --format=legacy') do @if NOT "%%i"=="pywin32" if NOT "%%i"=="pypiwin32" %pythonloc% -m pip install -U "%%i"
 @echo.
 )

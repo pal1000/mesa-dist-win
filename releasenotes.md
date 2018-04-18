@@ -1,3 +1,6 @@
+# Upcoming release
+### Build script
+- Python packages update: Also skip pypiwin32.
 # 18.0.1.600-1
 ### Deployment
 - Per app deployment: Make text fit into Windows 7 default Command Prompt size.
