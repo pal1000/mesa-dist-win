@@ -1,4 +1,4 @@
-# Upcomming release
+# 18.0.1.600-1
 ### Deployment
 - Per app deployment: Make text fit into Windows 7 default Command Prompt size.
 ### Build script
@@ -8,17 +8,19 @@
 - Hard fail if Python or Visual Studio are missing;
 - Add code comments to make code easy to read;
 - Ported LLVM build to dependencies state tracker and stubbed Meson build support;
-- Began porting Mesa3D build to dependencies state tracker;
+- Ported Mesa3D build to dependencies state tracker;
 - Split the build script into modules as it grew too big;
 - Check python packages availability and install them one by one if missing. setuptools and pip are updated before installing any missing package;
 - Added support for full initial installation of pywin32 by properly requesting admin priviledges, upgrading however is unsupported because it's dirty;
-- first shot at getting  Mesa to build with Meson. Not functional, disabled.
+- First shot at getting  Mesa to build with Meson. Not functional, disabled.
 ### Environment updates
 - cmake 3.10.3 -> 3.11.1
 - git 2.16.3.1 -> 2.17.0.1
 - Visual Studio 15.6.4 -> 15.6.6
 - pip 8.0.3 -> 10.0.0
 - Performed some reorganization to build environment report. Ninja is again used when building LLVM.
+### Known issue
+- The text may turn red in the Command Prompt in which the build script is running after updating Python packages. This is a glitch caused by pip 10.0.0.
 # 18.0.0.600-1
 - Updated Mesa3D to [18.0.0](https://www.mesa3d.org/relnotes/18.0.0.html)
 ### Build environment updates
@@ -162,7 +164,7 @@ This is the first release of Mesa3D with built-in S3TC support so there is no dx
 - Check before attempting to create symbolic links. Avoid harmless errors which may be confusing.
 ### Build script
 - Drop S3TC build if Mesa master source code is detected. S3TC is now built-in. Texture cache enabling patch is still needed though.
-- Python packages updating: use both pip install -U <module-name> explicitly and pip freeze in a hybrid approach for most optimal behavior.
+- Python packages updating: use both pip install -U <package-name> explicitly and pip freeze in a hybrid approach for most optimal behavior.
 - Improved PATH cleanning.
 - Support building S3TC with MSYS2 Mingw-W64 GCC by default. They fixed their problem with 32-bit binaries when they upgraded to GCC 7.2.0 (Alexpux/MINGW-packages#2271).
 - Drop suport for Visual Studio 2015 completely. It survived so long due to Scons 3.0.0 issues.
