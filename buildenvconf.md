@@ -1,3 +1,12 @@
+### Notes
+
+[1]Executed from an x64 Native Tools Command Prompt for VS 2017 shell
+
+[2]Executed from an x64_x86 Cross Tools Command Prompt for VS 2017 shell
+
+[3]Executed after each build configuration on same command shell
+
+[4]Executed from a standard Command Prompt.
 ### Hardware
 | | |
 |-|-|
@@ -19,20 +28,10 @@ Windows 10 SDK install method | standalone
 LLVM Version | 6.0.0
 CMake version | 3.11.1
 CMake ARCH | x64
-Ninja version[4] | 1.8.2
-LLVM build configure x64[5] | cd llvm-6.0.0.src & md cmake-x64 & cd cmake-x64 & cmake -G "Visual Studio 15 Win64" -Thost=x64 -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../x64 ..
-LLVM build configure x86[5] | cd llvm-6.0.0.src & md cmake-x86 & cd cmake-x86 & cmake -G "Visual Studio 15" -Thost=x64 -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../x86 ..
-LLVM build execute[3] | cmake --build . --config Release --target install
-
-[1]Executed from an x64 Native Tools Command Prompt for VS 2017 shell
-
-[2]Executed from an x64_x86 Cross Tools Command Prompt for VS 2017 shell
-
-[3]Executed after each build configuration on same command shell
-
-[4]For Mesa 17.3.2 and newer builds, LLVM was built using Visual Studio MsBuild instead Ninja. Ninja has no updates since September 2017.
-
-[5]Executed from a standard Command Prompt.
+Ninja version | 1.8.2
+LLVM build configure x64[1] | cd llvm-6.0.0.src & md buildsys-x64 & cd buildsys-x64 & cmake -G "Ninja" -Thost=x64 -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../x64 ..
+LLVM build configure x86[2] | cd llvm-6.0.0.src & md buildsys-x86 & cd buildsys-x86 & cmake -G "Ninja" -Thost=x64 -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../x86 ..
+LLVM build execute[3] | ninja install
 ### Python
 | | |
 |-|-|
@@ -57,5 +56,5 @@ Git For Windows portable | 2.17.0.1
 ### Mesa3D
 | | |
 |-|-|
-Build config and execute x64 | scons build=release platform=windows machine=x86_64 libgl-gdi swr=1 graw-gdi osmesa
-Build config and execute x86 | scons build=release platform=windows machine=x86 libgl-gdi graw-gdi osmesa
+Build config and execute x64 [4] | scons build=release platform=windows machine=x86_64 libgl-gdi swr=1 graw-gdi osmesa
+Build config and execute x86 [4] | scons build=release platform=windows machine=x86 libgl-gdi graw-gdi osmesa

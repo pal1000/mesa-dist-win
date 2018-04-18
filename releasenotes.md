@@ -18,6 +18,7 @@
 - git 2.16.3.1 -> 2.17.0.1
 - Visual Studio 15.6.4 -> 15.6.6
 - pip 8.0.3 -> 10.0.0
+- Performed some reorganization to build environment report. Ninja is again used when building LLVM.
 # 18.0.0.600-1
 - Updated Mesa3D to [18.0.0](https://www.mesa3d.org/relnotes/18.0.0.html)
 ### Build environment updates
