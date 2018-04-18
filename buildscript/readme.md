@@ -25,7 +25,7 @@ The build script can grab Mesa3D code if Git is in PATH. It asks for the branch 
 Extract LLVM code in `.`. Rename extracted folder to `llvm`. LLVM 4.0 is the minimum version supported by this build scrpt as Visual Studio 2017 is the only version supported. Required to build high-performance drivers and libraries llvmpipe, swr, osmesa gallium JIT and graw.
 - [Ninja build system](https://github.com/ninja-build/ninja/releases)
 
-Optional, it reduces LLVM build size as it works with single configuration. Unlike Visual Studio MsBuild which requires a Release and a Debug configuration at minimum. Development on Ninja stalled shortly after 1.8.2 release for unknown reason though. If used, extract Ninja in `.\ninja`. If ninja is in PATH my script asks if you want to use it when building LLVM. LLVM must be built in release mode with install target. This build script does it automatically or you can look [here](https://wiki.qt.io/MesaLlvmpipe).
+Optional, it reduces LLVM build size as it works with single configuration. Unlike Visual Studio MsBuild which requires a Release and a Debug configuration at minimum. If used, extract Ninja in `.\ninja`. If ninja is available my script asks if you want to use it when building LLVM. LLVM must be built in release mode with install target. This build script does it automatically or you can look [here](https://wiki.qt.io/MesaLlvmpipe).
 
 - [CMake 32 or 64 bit](https://cmake.org/download/#latest);
 
@@ -77,7 +77,7 @@ The script acts like a Wizard asking for the following during execution:
 - architecture for which you want to build mesa - type "y" for x64, otherwise x86 is selected;
 - if you want to build LLVM.  You only need to do it once for each architecture you target when new version is out and this doesn't happen very often, also it is no longer mandatory if you only want softpipe, osmesa swrast and a slowed down osmesa gallium;
 - if building LLVM asks if you want to build with Ninja build system instead of Msbuild if Ninja is in PATH;
-- if Git is installed and Mesa code is missing, asks if you don't want to download Mesa code using Git and abort execution;
+- if Git is installed and Mesa code is missing, asks if you want to download Mesa code using Git and build;
 - if you intend to download Mesa using Git, you are asked to specify which branch (valid entries: 17.2, 17.3 ...);
 - if you want to build Mesa3D;
 - if LLVM is available asks if you want to use it;
@@ -91,8 +91,8 @@ The script acts like a Wizard asking for the following during execution:
 All paths are relative to dependencies dropping folder, the one I called `.`.
 
 CMake build system is created in:
-- for 32 bit: .\llvm\cmake-x86;
-- for 64-bit: .\llvm\cmake-x64.
+- for 32 bit: .\llvm\buildsys-x86;
+- for 64-bit: .\llvm\buildsys-x64.
 
 CMake binaries are created in:
 - for 32 bit: .\llvm\x86;
