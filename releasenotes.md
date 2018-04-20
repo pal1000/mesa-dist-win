@@ -1,6 +1,8 @@
 # Upcoming release
 ### Build script
-- Python packages update: Also skip pypiwin32.
+- Python packages update: Use grid format pip list and skip pypiwin32 as well. This fixes the known issue from 18.0.1.600-1.
+### Environment updates
+- pip 10.0.0 -> 10.0.1
 # 18.0.1.600-1
 ### Deployment
 - Per app deployment: Make text fit into Windows 7 default Command Prompt size.

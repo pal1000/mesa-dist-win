@@ -37,7 +37,7 @@ LLVM build execute[3] | ninja install
 |-|-|
 Version | 2.7.14
 ARCH | x64
-pip version | 10.0.0
+pip version | 10.0.1
 setuptools version | 39.0.1
 pywin32 / pypiwin32 version | 223
 scons version | 3.0.1

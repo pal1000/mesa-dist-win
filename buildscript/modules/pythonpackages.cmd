@@ -64,6 +64,6 @@
 @set pyupd=n
 @set /p pyupd=Install/update python modules (y/n):
 @if /I "%pyupd%"=="y" (
-@for /F "delims= " %%i in ('%pythonloc% -m pip list -o --format=legacy') do @if NOT "%%i"=="pywin32" if NOT "%%i"=="pypiwin32" %pythonloc% -m pip install -U "%%i"
+@for /F "skip=2 delims= " %%i in ('%pythonloc% -m pip list -o --disable-pip-version-check') do @if NOT "%%i"=="pywin32" if NOT "%%i"=="pypiwin32" %pythonloc% -m pip install -U "%%i"
 @echo.
 )
