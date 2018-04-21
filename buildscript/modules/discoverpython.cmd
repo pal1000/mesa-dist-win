@@ -10,7 +10,17 @@
 @FOR /F "tokens=* USEBACKQ" %%b IN (`py -3.5 -c "import sys; print(sys.executable)"`) DO @SET py3_5loc=%%b
 @FOR /F "tokens=* USEBACKQ" %%c IN (`py -3.6 -c "import sys; print(sys.executable)"`) DO @SET py3_6loc=%%c
 @FOR /F "tokens=* USEBACKQ" %%d IN (`py -3.7 -c "import sys; print(sys.executable)"`) DO @SET py3_7loc=%%d
+
+@if NOT EXIST "%py2_7loc%" if NOT EXIST "%py3_5loc%" if NOT EXIST "%py3_6loc%" if NOT EXIST "%py3_7loc%" (
+@cls
+@echo Your Python version is too old. Only Python 2.7 or 3.5 through 3.7 are supported.
+@echo.
+@GOTO nopylauncher
+)
+
 @FOR /F "tokens=* USEBACKQ" %%e IN (`py -3 -c "import sys; print(sys.executable)"`) DO @SET py3latestloc=%%e
+@FOR /F "tokens=* USEBACKQ" %%f IN (`py -2 -c "import sys; print(sys.executable)"`) DO @SET py2latestloc=%%f
+
 @cls
 @echo The following Python versions were detected:
 
@@ -18,8 +28,6 @@
 @if EXIST "%py3_5loc%" echo Python 3.5
 @if EXIST "%py3_6loc%" echo Python 3.6
 @if EXIST "%py3_7loc%" echo Python 3.7
-@if EXIST "%py3latestloc%" echo.
-@if EXIST "%py3latestloc%" echo Input 3 for latest Python 3 version.
 @echo.
 @set /p pyselect=Please input Python version you want to use with Meson or Scons build system in Major.Minor format or Major only for latest version (ex: 3, 3.5, 2.7):
 @echo.
@@ -29,6 +37,7 @@
 @if EXIST "%py3_6loc%" if "%pyselect%"=="3.6" set pythonloc="%py3_6loc%"
 @if EXIST "%py3_7loc%" if "%pyselect%"=="3.7" set pythonloc="%py3_7loc%"
 @if EXIST "%py3latestloc%" if "%pyselect%"=="3" set pythonloc="%py3latestloc%"
+@if EXIST "%py2latestloc%" if "%pyselect%"=="2" set pythonloc="%py2latestloc%"
 
 @IF %pythonloc%=="python.exe" echo Invalid entry. You may close and relaunch this build script or continue as if Py launcher is not installed.
 @IF %pythonloc%=="python.exe" pause
@@ -43,7 +52,7 @@
 @pause
 @exit
 )
-@IF %pythonloc%=="python.exe" FOR /F "tokens=* USEBACKQ" %%f IN (`where python.exe`) DO @SET pythonloc=%%f
+@IF %pythonloc%=="python.exe" FOR /F "tokens=* USEBACKQ" %%g IN (`where python.exe`) DO @SET pythonloc=%%g
 @if NOT %pythonloc:~-11,-1%==python.exe set pythonloc="%pythonloc%"
 
 @REM Load Python in PATH to convince CMake to use the selected version
@@ -53,7 +62,7 @@
 
 @rem Identify Python version
 @set pythonver=2.7
-@FOR /F "tokens=* USEBACKQ" %%g IN (`%pythonloc% --version`) DO @SET pythonver=%%g
+@FOR /F "tokens=* USEBACKQ" %%h IN (`%pythonloc% --version`) DO @SET pythonver=%%h
 @cls
 @echo Using Python %pythonver% from %pythonloc%.
 @echo.

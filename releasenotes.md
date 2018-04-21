@@ -1,6 +1,8 @@
 # Upcoming release
 ### Build script
-- Python packages update: Use grid format pip list and skip pypiwin32 as well. This fixes the known issue from 18.0.1.600-1.
+- Python packages update: Use grid format pip list and skip pypiwin32 as well. This fixes the known issue from 18.0.1.600-1;
+- Python launcher interface - handle too old Python versions gracefully;
+- Python launcher interface - support picking Python 2.7 using only major version (2).
 ### Environment updates
 - pip 10.0.0 -> 10.0.1
 # 18.0.1.600-1
