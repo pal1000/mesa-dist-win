@@ -1,8 +1,11 @@
-@REM Try locating all Python versions via Py Launcher.
+:pydiscover
+@REM Try locating all Python versions via Python Launcher.
 @SET pythonloc="python.exe"
 
-@REM Disable Py launcher support until we get some Meson working.
+@REM Disable Python launcher support until we get some Meson working.
 @GOTO nopylauncher
+
+@rem Query Python launcher for supported Python versions. Hard fail if none found.
 @set ERRORLEVEL=0
 @where /q py.exe
 @IF ERRORLEVEL 1 GOTO nopylauncher
@@ -10,20 +13,21 @@
 @FOR /F "tokens=* USEBACKQ" %%b IN (`py -3.5 -c "import sys; print(sys.executable)"`) DO @SET py3_5loc=%%b
 @FOR /F "tokens=* USEBACKQ" %%c IN (`py -3.6 -c "import sys; print(sys.executable)"`) DO @SET py3_6loc=%%c
 @FOR /F "tokens=* USEBACKQ" %%d IN (`py -3.7 -c "import sys; print(sys.executable)"`) DO @SET py3_7loc=%%d
-
 @if NOT EXIST "%py2_7loc%" if NOT EXIST "%py3_5loc%" if NOT EXIST "%py3_6loc%" if NOT EXIST "%py3_7loc%" (
 @cls
 @echo Your Python version is too old. Only Python 2.7 or 3.5 through 3.7 are supported.
 @echo.
-@GOTO nopylauncher
+@pause
+@exit
 )
 
+@rem Get latest Python versions in order to support picking a Python version via major version only.
 @FOR /F "tokens=* USEBACKQ" %%e IN (`py -3 -c "import sys; print(sys.executable)"`) DO @SET py3latestloc=%%e
 @FOR /F "tokens=* USEBACKQ" %%f IN (`py -2 -c "import sys; print(sys.executable)"`) DO @SET py2latestloc=%%f
-
 @cls
-@echo The following Python versions were detected:
 
+@rem List found Python versions and ask the user to pick one.
+@echo The following Python versions were detected:
 @if EXIST "%py2_7loc%" echo Python 2.7
 @if EXIST "%py3_5loc%" echo Python 3.5
 @if EXIST "%py3_6loc%" echo Python 3.6
@@ -32,6 +36,7 @@
 @set /p pyselect=Please input Python version you want to use with Meson or Scons build system in Major.Minor format or Major only for latest version (ex: 3, 3.5, 2.7):
 @echo.
 
+@rem Retrieve the location of the selected Python version.
 @if EXIST "%py2_7loc%" if "%pyselect%"=="2.7" set pythonloc="%py2_7loc%"
 @if EXIST "%py3_5loc%" if "%pyselect%"=="3.5" set pythonloc="%py3_5loc%"
 @if EXIST "%py3_6loc%" if "%pyselect%"=="3.6" set pythonloc="%py3_6loc%"
@@ -39,9 +44,11 @@
 @if EXIST "%py3latestloc%" if "%pyselect%"=="3" set pythonloc="%py3latestloc%"
 @if EXIST "%py2latestloc%" if "%pyselect%"=="2" set pythonloc="%py2latestloc%"
 
-@IF %pythonloc%=="python.exe" echo Invalid entry. You may close and relaunch this build script or continue as if Py launcher is not installed.
+@rem User invalid input error checking.
+@IF %pythonloc%=="python.exe" echo Invalid entry.
 @IF %pythonloc%=="python.exe" pause
-@IF %pythonloc%=="python.exe" echo.
+@IF %pythonloc%=="python.exe" cls
+@IF %pythonloc%=="python.exe" GOTO pydiscover
 
 :nopylauncher
 @SET ERRORLEVEL=0
