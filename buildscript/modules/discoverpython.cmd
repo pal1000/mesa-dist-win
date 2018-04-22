@@ -64,12 +64,16 @@
 
 @REM Load Python in PATH to convince CMake to use the selected version
 @SET ERRORLEVEL=0
+@set pypath=1
 @where /q python.exe
-@IF ERRORLEVEL 1 set PATH=%pythonloc:~1,-11%;%PATH%
+@IF ERRORLEVEL 1 set pypath=0
+@IF "%pypath%"=="1" FOR /F "tokens=* USEBACKQ" %%h IN (`where python.exe`) DO @SET pypath=%%h
+@IF NOT "%pypath%"=="0" if NOT %pypath:~-11,-1%==python.exe set pypath="%pypath%"
+@IF NOT %pypath%==%pythonloc% set PATH=%pythonloc:~1,-11%;%PATH%
 
 @rem Identify Python version
 @set pythonver=2.7
-@FOR /F "tokens=* USEBACKQ" %%h IN (`%pythonloc% --version`) DO @SET pythonver=%%h
+@FOR /F "tokens=* USEBACKQ" %%k IN (`%pythonloc% --version`) DO @SET pythonver=%%k
 @cls
 @echo Using Python %pythonver% from %pythonloc%.
 @echo.
