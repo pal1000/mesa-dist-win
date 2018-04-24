@@ -1,10 +1,10 @@
 diff --git a/buildscript/modules/discoverpython.cmd b/buildscript/modules/discoverpython.cmd
-index 714694b..5816fd1 100644
+index 92ff303..1374ced 100644
 --- a/buildscript/modules/discoverpython.cmd
 +++ b/buildscript/modules/discoverpython.cmd
 @@ -2,9 +2,6 @@
  @REM Try locating all Python versions via Python Launcher.
- @SET pythonloc="python.exe"
+ @SET pythonloc=python.exe
  
 -@REM Disable Python launcher support until we get some Meson working.
 -@GOTO nopylauncher
@@ -13,7 +13,7 @@ index 714694b..5816fd1 100644
  @set ERRORLEVEL=0
  @where /q py.exe
 diff --git a/buildscript/modules/mesa3d.cmd b/buildscript/modules/mesa3d.cmd
-index e080722..7a4e5c6 100644
+index 4c3cbf7..1b7dcf4 100644
 --- a/buildscript/modules/mesa3d.cmd
 +++ b/buildscript/modules/mesa3d.cmd
 @@ -4,7 +4,6 @@
