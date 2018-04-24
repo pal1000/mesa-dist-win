@@ -5,7 +5,8 @@
 - Python launcher interface - support picking Python 2.7 using only major version (2);
 - Python launcher interface - hard fail if Python is too old;
 - Python launcher interface - restart interface on invalid user input;
-- LLVM cmake build: Make sure Python launcher overrides PATH.
+- Make sure Python launcher overrides PATH for LLVM build sake;
+- Always get, store and use Python location in DOS format to simplify many things and make Python launcher PATH override apply only when needed.
 ### Environment updates
 - pip 10.0.0 -> 10.0.1
 # 18.0.1.600-1
