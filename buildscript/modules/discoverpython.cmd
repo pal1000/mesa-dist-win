@@ -13,7 +13,7 @@
 @FOR /F "tokens=* USEBACKQ" %%b IN (`py -3.5 -c "import sys; print(sys.executable)"`) DO @SET py3_5loc=%%~sb
 @FOR /F "tokens=* USEBACKQ" %%c IN (`py -3.6 -c "import sys; print(sys.executable)"`) DO @SET py3_6loc=%%~sc
 @FOR /F "tokens=* USEBACKQ" %%d IN (`py -3.7 -c "import sys; print(sys.executable)"`) DO @SET py3_7loc=%%~sd
-@if NOT EXIST %py2_7loc% if NOT EXIST %py3_5loc% if NOT EXIST %py3_6loc% if NOT EXIST %py3_7loc% (
+@if NOT EXIST "%py2_7loc%" if NOT EXIST "%py3_5loc%" if NOT EXIST "%py3_6loc%" if NOT EXIST "%py3_7loc%" (
 @cls
 @echo Your Python version is too old. Only Python 2.7 or 3.5 through 3.7 are supported.
 @echo.
@@ -28,21 +28,21 @@
 
 @rem List found Python versions and ask the user to pick one.
 @echo The following Python versions were detected:
-@if EXIST %py2_7loc% echo Python 2.7
-@if EXIST %py3_5loc% echo Python 3.5
-@if EXIST %py3_6loc% echo Python 3.6
-@if EXIST %py3_7loc% echo Python 3.7
+@if EXIST "%py2_7loc%" echo Python 2.7
+@if EXIST "%py3_5loc%" echo Python 3.5
+@if EXIST "%py3_6loc%" echo Python 3.6
+@if EXIST "%py3_7loc%" echo Python 3.7
 @echo.
 @set /p pyselect=Please input Python version you want to use with Meson or Scons build system in Major.Minor format or Major only for latest version (ex: 3, 3.5, 2.7):
 @echo.
 
 @rem Retrieve the location of the selected Python version.
-@if EXIST %py2_7loc% if "%pyselect%"=="2.7" set pythonloc=%py2_7loc%
-@if EXIST %py3_5loc% if "%pyselect%"=="3.5" set pythonloc=%py3_5loc%
-@if EXIST %py3_6loc% if "%pyselect%"=="3.6" set pythonloc=%py3_6loc%
-@if EXIST %py3_7loc% if "%pyselect%"=="3.7" set pythonloc=%py3_7loc%
-@if EXIST %py3latestloc% if "%pyselect%"=="3" set pythonloc=%py3latestloc%
-@if EXIST %py2latestloc% if "%pyselect%"=="2" set pythonloc=%py2latestloc%
+@if EXIST "%py2_7loc%" if "%pyselect%"=="2.7" set pythonloc=%py2_7loc%
+@if EXIST "%py3_5loc%" if "%pyselect%"=="3.5" set pythonloc=%py3_5loc%
+@if EXIST "%py3_6loc%" if "%pyselect%"=="3.6" set pythonloc=%py3_6loc%
+@if EXIST "%py3_7loc%" if "%pyselect%"=="3.7" set pythonloc=%py3_7loc%
+@if EXIST "%py3latestloc%" if "%pyselect%"=="3" set pythonloc=%py3latestloc%
+@if EXIST "%py2latestloc%" if "%pyselect%"=="2" set pythonloc=%py2latestloc%
 
 @rem User invalid input error checking.
 @IF %pythonloc%==python.exe echo Invalid entry.
