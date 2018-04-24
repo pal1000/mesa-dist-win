@@ -8,19 +8,19 @@
 
 :pypackmissing
 @rem Check for Python packages availability.
-@if %pythonver%==2 IF NOT EXIST %pythonloc:~0,-11%Lib\site-packages\markupsafe" (
+@if %pythonver%==2 IF NOT EXIST %pythonloc:~0,-10%Lib\site-packages\markupsafe (
 @set pypack=MarkupSafe
 @GOTO pypackinstall
 )
-@if %pythonver%==2 IF NOT EXIST %pythonloc:~0,-11%Lib\site-packages\mako" (
+@if %pythonver%==2 IF NOT EXIST %pythonloc:~0,-10%Lib\site-packages\mako (
 @set pypack=Mako
 @GOTO pypackinstall
 )
-@if %pythonver%==2 IF NOT EXIST %pythonloc:~0,-11%Scripts\scons.py"  (
+@if %pythonver%==2 IF NOT EXIST %pythonloc:~0,-10%Scripts\scons.py  (
 @set pypack=scons
 @GOTO pypackinstall
 )
-@if %pythonver%==2 if NOT EXIST %pythonloc:~0,-11%Lib\site-packages\win32" (
+@if %pythonver%==2 if NOT EXIST %pythonloc:~0,-10%Lib\site-packages\win32 (
 @set pypack=pywin32
 @set /p pywin32com=Do you want to install COM and services support - y/n. You'll be asked for admin privileges:
 @echo.
@@ -33,12 +33,12 @@
 @set mesonstate=2
 @SET ERRORLEVEL=0
 @where /q meson.exe
-@IF ERRORLEVEL 1 set mesonloc=%pythonloc:~0,-11%Scripts\meson.py"
-@IF %mesonloc%==%pythonloc:~0,-11%Scripts\meson.py" IF NOT EXIST %mesonloc% (
+@IF ERRORLEVEL 1 set mesonloc=%pythonloc:~0,-10%Scripts\meson.py
+@IF %mesonloc%==%pythonloc:~0,-10%Scripts\meson.py IF NOT EXIST %mesonloc% (
 @set pypack=meson
 @GOTO pypackinstall
 )
-@IF %mesonloc%==%pythonloc:~0,-11%Scripts\meson.py" set mesonloc=%pythonloc% %mesonloc%
+@IF %mesonloc%==%pythonloc:~0,-10%Scripts\meson.py set mesonloc=%pythonloc% %mesonloc%
 @GOTO pyupdate
 
 :pypackinstall
