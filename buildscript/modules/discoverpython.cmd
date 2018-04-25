@@ -52,6 +52,7 @@
 @GOTO loadpypath
 
 :nopylauncher
+@rem Missing Python launcher fallback code path.
 @SET ERRORLEVEL=0
 @IF %pythonloc%==python.exe where /q python.exe
 @IF ERRORLEVEL 1 set pythonloc=%mesa%\python\python.exe
@@ -63,7 +64,7 @@
 @IF %pythonloc%==python.exe FOR /F "tokens=* USEBACKQ" %%g IN (`where /f python.exe`) DO @SET pythonloc=%%~sg & GOTO loadpypath
 
 :loadpypath
-@REM Load Python in PATH to convince CMake to use the selected version
+@REM Load Python in PATH to convince CMake to use the selected version.
 @SET ERRORLEVEL=0
 @set pypath=1
 @where /q python.exe
@@ -74,7 +75,7 @@
 @IF NOT %pypath%==%pythonloc% set PATH=%pythonloc:~0,-10%;%PATH%
 
 :pyver
-@rem Identify Python version
+@rem Identify Python version.
 @set pythonver=2.7
 @FOR /F "tokens=* USEBACKQ" %%k IN (`%pythonloc% --version`) DO @SET pythonver=%%k
 @cls

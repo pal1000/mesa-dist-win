@@ -1,15 +1,21 @@
-@REM Aquire Mesa3D source code and enable S3TC texture cache automatically if possible.
+@rem Reset PATH and current folder after LLVM build.
 @set PATH=%oldpath%
+@cd %mesa%
+
+@rem Check environment
 @if %pythonver%==2 IF %flexstate%==0 (
 @echo winflexbison is required to build Mesa3D.
 GOTO skipmesa
 )
-@if %pythonver% GEQ 3 GOTO skipmesa
-@cd %mesa%
 @if NOT EXIST mesa if %gitstate%==0 (
 @echo Fatal: Both Mesa code and Git are missing. At least one is required. Execution halted.
 @GOTO skipmesa
 )
+
+@rem Disable WIP Meson support as it doesn't work yet.
+@if %pythonver% GEQ 3 GOTO skipmesa
+
+@REM Aquire Mesa3D source code if missing and enable S3TC texture cache automatically if possible.
 @set buildmesa=n
 @if %gitstate%==0 echo Error: Git not found. Auto-patching disabled.
 @if NOT EXIST mesa echo Warning: Mesa3D source code not found.
@@ -18,8 +24,10 @@ GOTO skipmesa
 @if NOT EXIST mesa set branch=master
 @if NOT EXIST mesa set /p branch=Enter Mesa source code branch name - defaults to master:
 @if NOT EXIST mesa echo.
-@if NOT EXIST mesa git clone --recurse-submodules --depth=1 --branch=%branch% git://anongit.freedesktop.org/mesa/mesa mesa
+@if NOT EXIST mesa (
+@git clone --recurse-submodules --depth=1 --branch=%branch% git://anongit.freedesktop.org/mesa/mesa mesa
 @echo.
+)
 @if EXIST mesa if /i NOT "%buildmesa%"=="y" set /p buildmesa=Begin mesa build. Proceed (y/n):
 @if /i NOT "%buildmesa%"=="y" GOTO skipmesa
 @cd mesa
@@ -35,7 +43,7 @@ GOTO skipmesa
 @echo.
 
 :configmesabuild
-@cd %mesa%\mesa
+@rem Configure Mesa build.
 @if %pythonver%==2 set buildcmd=%pythonloc% %pythonloc:~0,-10%Scripts\scons.py build=release platform=windows machine=%longabi% libgl-gdi
 @if %pythonver% GEQ 3 set buildcmd=%mesonloc% . .\build\windows-%longabi% --backend=vs2017 -Dplatforms=windows
 @set /p osmesa=Do you want to build off-screen rendering drivers (y/n):
@@ -61,7 +69,6 @@ GOTO skipmesa
 
 :build_mesa
 @if %pythonver%==2 IF %flexstate%==1 set PATH=%mesa%\flexbison\;%PATH%
-@cd %mesa%\mesa
 @set cleanbuild=n
 @if EXIST build\windows-%longabi% set /p cleanbuild=Do you want to clean build (y/n):
 @if EXIST build\windows-%longabi% echo.

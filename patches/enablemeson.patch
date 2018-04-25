@@ -1,5 +1,5 @@
 diff --git a/buildscript/modules/discoverpython.cmd b/buildscript/modules/discoverpython.cmd
-index 92ff303..1374ced 100644
+index faa9831..a6d8e3e 100644
 --- a/buildscript/modules/discoverpython.cmd
 +++ b/buildscript/modules/discoverpython.cmd
 @@ -2,9 +2,6 @@
@@ -13,14 +13,16 @@ index 92ff303..1374ced 100644
  @set ERRORLEVEL=0
  @where /q py.exe
 diff --git a/buildscript/modules/mesa3d.cmd b/buildscript/modules/mesa3d.cmd
-index 4c3cbf7..1b7dcf4 100644
+index 4908338..8078c89 100644
 --- a/buildscript/modules/mesa3d.cmd
 +++ b/buildscript/modules/mesa3d.cmd
-@@ -4,7 +4,6 @@
- @echo winflexbison is required to build Mesa3D.
- GOTO skipmesa
+@@ -12,9 +12,6 @@ GOTO skipmesa
+ @GOTO skipmesa
  )
+ 
+-@rem Disable WIP Meson support as it doesn't work yet.
 -@if %pythonver% GEQ 3 GOTO skipmesa
- @cd %mesa%
- @if NOT EXIST mesa if %gitstate%==0 (
- @echo Fatal: Both Mesa code and Git are missing. At least one is required. Execution halted.
+-
+ @REM Aquire Mesa3D source code if missing and enable S3TC texture cache automatically if possible.
+ @set buildmesa=n
+ @if %gitstate%==0 echo Error: Git not found. Auto-patching disabled.

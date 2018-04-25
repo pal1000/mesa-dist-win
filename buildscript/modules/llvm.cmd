@@ -30,9 +30,10 @@
 @if /I "%ninja%"=="y" if %ninjastate%==1 set PATH=%mesa%\ninja\;%PATH%
 
 @rem Ask for Meson use if both CMake and Meson are present (commented out since Meson support is just stubbed for now).
-@rem Load cmake into build environment if used.
 @rem if NOT %mesonstate%==0 if NOT %cmakestate%==0 set /p meson=Use Meson build generator instead of CMake (y/n):
 @rem if NOT %mesonstate%==0 if NOT %cmakestate%==0 echo.
+
+@rem Load cmake into build environment if used.
 @if /I NOT "%meson%"=="y" if %cmakestate%==1 set PATH=%mesa%\cmake\bin\;%PATH%
 
 @rem Construct build configuration command based on choices made above.
@@ -47,8 +48,8 @@
 
 @rem Load Visual Studio environment. Only cmake can load it in the background and only when using MsBuild.
 @if /I NOT "%meson%"=="y" if /I "%ninja%"=="y" call %vsenv%
-@if /I "%meson%"=="y" call %vsenv%
 @if /I NOT "%meson%"=="y" if /I "%ninja%"=="y" cd %mesa%\llvm\buildsys-%abi%
+@if /I "%meson%"=="y" call %vsenv%
 @if /I "%meson%"=="y" cd %mesa%\llvm\buildsys-%abi%
 
 @rem Configure and execute the build with the configuration made above.
