@@ -1,4 +1,4 @@
-# Upcoming release
+# 18.0.2.600-1
 ### Build script
 - Python packages update: Use grid format pip list and skip pypiwin32 as well. This fixes the known issue from 18.0.1.600-1;
 - Python launcher interface - handle too old Python versions gracefully;
@@ -9,6 +9,8 @@
 - Always get, store and use Python location in DOS format to simplify many things and make Python launcher PATH override apply only when needed.
 ### Environment updates
 - pip 10.0.0 -> 10.0.1
+- Visual Studio 15.6.6 -> 15.6.7
+- setuptools 39.0.1 -> 39.1.0
 # 18.0.1.600-1
 ### Deployment
 - Per app deployment: Make text fit into Windows 7 default Command Prompt size.

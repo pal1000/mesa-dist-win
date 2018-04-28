@@ -6,7 +6,7 @@
 - [Manual OpenGL context configuration](#manual-opengl-context-configuration) 
   
 # Downloads
-Mesa 18.0.1 builds are now available in [releases section](https://github.com/pal1000/mesa-dist-win/releases)
+Mesa 18.0.2 builds are now available in [releases section](https://github.com/pal1000/mesa-dist-win/releases)
 
 # Package contents
 The following Mesa3D drivers are shipped in each release:
