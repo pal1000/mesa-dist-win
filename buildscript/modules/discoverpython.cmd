@@ -76,11 +76,11 @@
 
 :pyver
 @rem Identify Python version.
-@set pythonver=2.7
+@set pythonver=Python 2.7
 @FOR /F "tokens=* USEBACKQ" %%k IN (`%pythonloc% --version`) DO @SET pythonver=%%k
 @cls
-@echo Using Python %pythonver% from %pythonloc%.
+@echo Using %pythonver% from %pythonloc%.
 @echo.
-@set pythonver=%pythonver:~0,1%
+@set pythonver=%pythonver:~7,1%
 @if %pythonver% GEQ 3 echo WARNING: Python 3.x support is experimental.
 @if %pythonver% GEQ 3 echo.

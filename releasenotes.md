@@ -1,3 +1,6 @@
+# Upcomming release
+### Build script
+- Fix Python 3.x version retrieval.
 # 18.0.2.600-1
 ### Build script
 - Python packages update: Use grid format pip list and skip pypiwin32 as well. This fixes the known issue from 18.0.1.600-1;
