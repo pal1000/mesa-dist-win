@@ -76,20 +76,18 @@
 
 :pyver
 @rem Identify Python version.
-@set pythonver=Python 2.7
-@FOR /F "tokens=* USEBACKQ" %%k IN (`%pythonloc% --version`) DO @SET pythonver=%%k
-@cls
+@FOR /F "USEBACKQ delims= " %%k IN (`%pythonloc% -c "import sys; print(sys.version)"`) DO @SET pythonver=%%k
 
 @rem Check if Python version is not too old. Only works for Python 3.x.
-@IF NOT %pythonver:~7,3%==2.7 IF NOT %pythonver:~7,3%==3.5 IF NOT %pythonver:~7,3%==3.6 IF NOT %pythonver:~7,3%==3.7 (
+@IF NOT %pythonver:~0,3%==2.7 IF NOT %pythonver:~0,3%==3.5 IF NOT %pythonver:~0,3%==3.6 IF NOT %pythonver:~0,3%==3.7 (
 @echo Your Python version is too old. Only Python 2.7 or 3.5 through 3.7 are supported.
 @echo.
 @pause
 @exit
 )
 
-@echo Using %pythonver% from %pythonloc%.
+@echo Using Python %pythonver% from %pythonloc%.
 @echo.
-@set pythonver=%pythonver:~7,1%
+@set pythonver=%pythonver:~0,1%
 @if %pythonver% GEQ 3 echo WARNING: Python 3.x support is experimental.
 @if %pythonver% GEQ 3 echo.
