@@ -10,6 +10,7 @@
 @FOR /F "tokens=* USEBACKQ" %%b IN (`py -3.5 -c "import sys; print(sys.executable)"`) DO @SET py3_5loc=%%~sb
 @FOR /F "tokens=* USEBACKQ" %%c IN (`py -3.6 -c "import sys; print(sys.executable)"`) DO @SET py3_6loc=%%~sc
 @FOR /F "tokens=* USEBACKQ" %%d IN (`py -3.7 -c "import sys; print(sys.executable)"`) DO @SET py3_7loc=%%~sd
+@cls
 @if NOT EXIST "%py2_7loc%" if NOT EXIST "%py3_5loc%" if NOT EXIST "%py3_6loc%" if NOT EXIST "%py3_7loc%" (
 @echo Your Python version is too old. Only Python 2.7 or 3.5 through 3.7 are supported.
 @echo.
@@ -20,6 +21,7 @@
 @rem Get latest Python versions in order to support picking a Python version via major version only.
 @FOR /F "tokens=* USEBACKQ" %%e IN (`py -3 -c "import sys; print(sys.executable)"`) DO @SET py3latestloc=%%~se
 @FOR /F "tokens=* USEBACKQ" %%f IN (`py -2 -c "import sys; print(sys.executable)"`) DO @SET py2latestloc=%%~sf
+@cls
 
 @rem List found Python versions and ask the user to pick one.
 @echo The following Python versions were detected:
