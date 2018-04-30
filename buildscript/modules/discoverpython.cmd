@@ -2,6 +2,9 @@
 @REM Try locating all Python versions via Python Launcher.
 @SET pythonloc=python.exe
 
+@REM Disable Python launcher support until we get some Meson working.
+@GOTO nopylauncher
+
 @rem Query Python launcher for supported Python versions. Hard fail if none found.
 @set ERRORLEVEL=0
 @where /q py.exe

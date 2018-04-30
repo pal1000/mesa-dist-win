@@ -12,6 +12,9 @@ GOTO skipmesa
 @GOTO skipmesa
 )
 
+@rem Disable WIP Meson support as it doesn't work yet.
+@if %pythonver% GEQ 3 GOTO skipmesa
+
 @REM Aquire Mesa3D source code if missing and enable S3TC texture cache automatically if possible.
 @set buildmesa=n
 @if %gitstate%==0 echo Error: Git not found. Auto-patching disabled.
