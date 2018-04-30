@@ -3,7 +3,11 @@
 @rem Determine Mesa3D build environment root folder and convert the path to it into DOS 8.3 format to avoid quotes mess.
 @cd "%~dp0"
 @cd ..\..\
-@for %%I in ("%cd%") do @set mesa=%%~sI
+@for %%a in ("%cd%") do @set mesa=%%~sa
+
+@rem Check if experimental features are requested.
+@set enablemeson=0
+@if "%1"=="/enablemeson" set enablemeson=1
 
 @rem Analyze environment. Get each dependency status: 0=missing, 1=standby/load manually in PATH, 2=cannot be unloaded.
 @rem Not all dependencies can have all these states.

@@ -12,8 +12,10 @@ GOTO skipmesa
 @GOTO skipmesa
 )
 
-@rem Disable WIP Meson support as it doesn't work yet.
-@if %pythonver% GEQ 3 GOTO skipmesa
+@rem Hide Meson support behind a parametter as it doesn't work yet.
+@IF %enablemeson%==0 if %pythonver% GEQ 3 echo Unimplemented code path
+@IF %enablemeson%==0 if %pythonver% GEQ 3 echo.
+@IF %enablemeson%==0 if %pythonver% GEQ 3 GOTO skipmesa
 
 @REM Aquire Mesa3D source code if missing and enable S3TC texture cache automatically if possible.
 @set buildmesa=n
