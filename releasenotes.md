@@ -4,7 +4,9 @@
 - Implement Python version validation without depending on Python launcher;
 - Add /enablemeson command line switch to try Mesa3D Meson build;
 - Python launcher interface is always used if possible;
-- Python launcher interface: Support 32-bit Python on 64-bit Windows.
+- Python launcher interface: Support 32-bit Python on 64-bit Windows;
+- Fix pypi based pywin32 installation again, the part that needs to run as admin was previously unreachable;
+- wheel package is required to install Scons on Python 2.7.15, it also makes possible to uninstall pywin32 cleanly which may provide the means for error-free upgrade.
 # 18.0.2.600-1
 ### Build script
 - Python packages update: Use grid format pip list and skip pypiwin32 as well. This fixes the known issue from 18.0.1.600-1;

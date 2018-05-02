@@ -16,14 +16,16 @@
 @set pypack=Mako
 @GOTO pypackinstall
 )
-@if %pythonver%==2 IF NOT EXIST %pythonloc:~0,-10%Scripts\scons.py  (
-@set pypack=scons
-@GOTO pypackinstall
-)
 @if %pythonver%==2 if NOT EXIST %pythonloc:~0,-10%Lib\site-packages\win32 (
 @set pypack=pywin32
-@set /p pywin32com=Do you want to install COM and services support - y/n. You'll be asked for admin privileges:
-@echo.
+@GOTO pypackinstall
+)
+@if %pythonver%==2 if NOT EXIST %pythonloc:~0,-10%Scripts\wheel.exe (
+@set pypack=wheel
+@GOTO pypackinstall
+)
+@if %pythonver%==2 IF NOT EXIST %pythonloc:~0,-10%Scripts\scons.py  (
+@set pypack=scons
 @GOTO pypackinstall
 )
 @if %pythonver%==2 set mesonstate=0
@@ -50,13 +52,15 @@
 )
 @IF NOT %pypack%==0 (
 @%pythonloc% -m pip install -U %pypack%
-@set pypack=0
 @echo.
 )
+@IF %pypack%==pywin32 set /p pywin32com=Do you want to install COM and services support - y/n. You'll be asked for admin privileges:
+@IF %pypack%==pywin32 echo.
 @IF %pypack%==pywin32 IF /I "%pywin32com%"=="y" (
 @echo %pythonloc%>%mesa%\mesa-dist-win\buildscript\assets\pythonloc.txt
 @powershell -Command Start-Process "%mesa%\mesa-dist-win\buildscript\assets\pywin32.cmd" -Verb runAs
 )
+@set pypack=0
 @GOTO pypackmissing
 
 :pyupdate
