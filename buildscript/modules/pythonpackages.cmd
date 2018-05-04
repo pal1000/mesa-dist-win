@@ -47,7 +47,9 @@
 @rem Found a missing package. Install it.
 @IF %firstpyinstall%==1 IF NOT %pypack%==0 (
 @%pythonloc% -m pip install -U pip
+@echo.
 @%pythonloc% -m pip install -U setuptools
+@echo.
 @set firstpyinstall=0
 )
 @IF NOT %pypack%==0 (
@@ -67,7 +69,6 @@
 @rem Check for python packages updates.
 @set pyupd=n
 @set /p pyupd=Install/update python packages (y/n):
-@if /I "%pyupd%"=="y" (
-@for /F "skip=2 delims= " %%m in ('%pythonloc% -m pip list -o --disable-pip-version-check') do @if NOT "%%m"=="pywin32" if NOT "%%m"=="pypiwin32" %pythonloc% -m pip install -U "%%m"
 @echo.
-)
+@if /I "%pyupd%"=="y" for /F "skip=2 delims= " %%m in ('%pythonloc% -m pip list -o --disable-pip-version-check') do @if NOT "%%m"=="pywin32" if NOT "%%m"=="pypiwin32" %pythonloc% -m pip install -U "%%m"
+@if /I "%pyupd%"=="y" echo.

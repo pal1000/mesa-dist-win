@@ -64,6 +64,7 @@
 @IF ERRORLEVEL 1 set pythonloc=%mesa%\python\python.exe
 @IF %pythonloc%==%mesa%\python\python.exe IF NOT EXIST %pythonloc% (
 @echo Python is unreachable. Cannot continue.
+@echo.
 @pause
 @exit
 )

@@ -13,15 +13,17 @@ GOTO skipmesa
 )
 
 @rem Hide Meson support behind a parametter as it doesn't work yet.
-@IF %enablemeson%==0 if %pythonver% GEQ 3 echo Unimplemented code path
-@IF %enablemeson%==0 if %pythonver% GEQ 3 echo.
+@IF %enablemeson%==0 if %pythonver% GEQ 3 echo Unimplemented code path.
 @IF %enablemeson%==0 if %pythonver% GEQ 3 GOTO skipmesa
 
 @REM Aquire Mesa3D source code if missing and enable S3TC texture cache automatically if possible.
 @set buildmesa=n
 @if %gitstate%==0 echo Error: Git not found. Auto-patching disabled.
+@if %gitstate%==0 echo.
 @if NOT EXIST mesa echo Warning: Mesa3D source code not found.
+@if NOT EXIST mesa echo.
 @if NOT EXIST mesa set /p buildmesa=Download mesa code and build (y/n):
+@if NOT EXIST mesa if /i "%buildmesa%"=="y" echo.
 @if NOT EXIST mesa if /i NOT "%buildmesa%"=="y" GOTO skipmesa
 @if NOT EXIST mesa set branch=master
 @if NOT EXIST mesa set /p branch=Enter Mesa source code branch name - defaults to master:
@@ -31,6 +33,7 @@ GOTO skipmesa
 @echo.
 )
 @if EXIST mesa if /i NOT "%buildmesa%"=="y" set /p buildmesa=Begin mesa build. Proceed (y/n):
+@if EXIST mesa if /i "%buildmesa%"=="y" echo.
 @if /i NOT "%buildmesa%"=="y" GOTO skipmesa
 @cd mesa
 @set LLVM=%mesa%\llvm\%abi%
@@ -59,7 +62,6 @@ GOTO skipmesa
 @if %pythonver%==2 if /I "%llvmless%"=="y" set buildcmd=%buildcmd% llvm=no
 @if /I "%llvmless%"=="y" GOTO build_mesa
 @if /I NOT "%llvmless%"=="y" if NOT EXIST %LLVM% echo User refused to build Mesa without LLVM.
-@if /I NOT "%llvmless%"=="y" if NOT EXIST %LLVM% echo.
 @if /I NOT "%llvmless%"=="y" if NOT EXIST %LLVM% GOTO skipmesa
 @set swrdrv=n
 @if %abi%==x64 set /p swrdrv=Do you want to build swr drivers? (y=yes):
@@ -88,3 +90,4 @@ GOTO skipmesa
 @if %pythonver% GEQ 3 cmd
 
 :skipmesa
+@echo.

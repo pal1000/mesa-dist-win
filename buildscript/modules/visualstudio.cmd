@@ -14,6 +14,7 @@
 @if EXIST %vsenv% set toolset=15
 @if %toolset% EQU 0 (
 @echo Error: No Visual Studio installed.
+@echo.
 @pause
 @exit
 )

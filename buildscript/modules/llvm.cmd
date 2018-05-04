@@ -7,13 +7,12 @@
 @rem Disable Meson build for now.
 @if NOT %mesonstate%==0 if %cmakestate%==0 (
 @echo Meson build support is not implemented.
-@echo.
 @GOTO skipllvm
 )
 
 @rem LLVM build getting started.
 @if EXIST %mesa%\llvm set /p buildllvm=Begin LLVM build. Only needs to run once for each ABI and version. Proceed (y/n):
-@if EXIST %mesa%\llvm echo.
+@if /I "%buildllvm%"=="y" echo.
 @if /I NOT "%buildllvm%"=="y" GOTO skipllvm
 @cd %mesa%\llvm
 @if EXIST %abi% RD /S /Q %abi%
@@ -61,6 +60,6 @@
 @if /I NOT "%meson%"=="y" if /I NOT "%ninja%"=="y" cmake --build . --config Release --target install
 @if /I NOT "%meson%"=="y" if /I "%ninja%"=="y" ninja install
 @if /I "%meson%"=="y" echo Unimplemented code path.
-@echo.
 
 :skipllvm
+@echo.
