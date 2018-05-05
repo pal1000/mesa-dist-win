@@ -7,6 +7,11 @@
 - Python launcher interface: Support 32-bit Python on 64-bit Windows;
 - Fix pypi based pywin32 installation again, the part that needs to run as admin was previously unreachable;
 - wheel package is required to install Scons on Python 2.7.15, it also makes possible to uninstall pywin32 cleanly which may provide the means for error-free upgrade.
+### Build environment updates
+- Updated build machine OS to Windows 10 April 2018;
+- Windows 10 SDK 10.0.16299.91 -> 10.0.17134.12;
+- Python 2.7.14 -> 2.7.15;
+- Installed wheel 0.31.0.
 # 18.0.2.600-1
 ### Build script
 - Python packages update: Use grid format pip list and skip pypiwin32 as well. This fixes the known issue from 18.0.1.600-1;
