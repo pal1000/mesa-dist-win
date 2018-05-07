@@ -6,7 +6,7 @@
 
 @rem Disable Meson build for now.
 @if NOT %mesonstate%==0 if %cmakestate%==0 (
-@echo Meson build support is not implemented.
+@echo LLVM build: Meson build support is not implemented.
 @GOTO skipllvm
 )
 
@@ -59,7 +59,7 @@
 @echo.
 @if /I NOT "%meson%"=="y" if /I NOT "%ninja%"=="y" cmake --build . --config Release --target install
 @if /I NOT "%meson%"=="y" if /I "%ninja%"=="y" ninja install
-@if /I "%meson%"=="y" echo Unimplemented code path.
+@if /I "%meson%"=="y" echo LLVM build: Unimplemented code path.
 
 :skipllvm
 @echo.

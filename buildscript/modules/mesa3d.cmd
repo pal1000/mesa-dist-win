@@ -8,12 +8,12 @@
 GOTO skipmesa
 )
 @if NOT EXIST mesa if %gitstate%==0 (
-@echo Fatal: Both Mesa code and Git are missing. At least one is required. Execution halted.
+@echo Fatal: Both Mesa3D code and Git are missing. At least one is required. Execution halted.
 @GOTO skipmesa
 )
 
 @rem Hide Meson support behind a parametter as it doesn't work yet.
-@IF %enablemeson%==0 if %pythonver% GEQ 3 echo Unimplemented code path.
+@IF %enablemeson%==0 if %pythonver% GEQ 3 echo Mesa3D build: Unimplemented code path.
 @IF %enablemeson%==0 if %pythonver% GEQ 3 GOTO skipmesa
 
 @REM Aquire Mesa3D source code if missing and enable S3TC texture cache automatically if possible.
@@ -57,7 +57,7 @@ GOTO skipmesa
 @set llvmless=n
 @if EXIST %LLVM% set /p llvmless=Build Mesa without LLVM (y/n). Only softpipe and osmesa will be available:
 @if EXIST %LLVM% echo.
-@if NOT EXIST %LLVM% set /p llvmless=Build Mesa without LLVM (y=yes/n=quit). Only softpipe and osmesa will be available:
+@if NOT EXIST %LLVM% set /p llvmless=Build Mesa without LLVM (y=yes/q=quit). Only softpipe and osmesa will be available:
 @if NOT EXIST %LLVM% echo.
 @if %pythonver%==2 if /I "%llvmless%"=="y" set buildcmd=%buildcmd% llvm=no
 @if /I "%llvmless%"=="y" GOTO build_mesa
