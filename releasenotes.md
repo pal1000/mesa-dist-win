@@ -1,4 +1,7 @@
-# Upcomming release
+# 18.0.3.600-1
+- Updated Mesa3D to [18.0.3](https://www.mesa3d.org/relnotes/18.0.3.html).
+### Inno Setup
+- Update Inno Setup script. It was broken two-fold, once when osmesa DLLs were moved to dedicated folders and again when deployment tool was split in two.
 ### Build script
 - Fix Python 3.x version retrieval;
 - Implement Python version validation without depending on Python launcher;
@@ -6,13 +9,15 @@
 - Python launcher interface is always used if possible;
 - Python launcher interface: Support 32-bit Python on 64-bit Windows;
 - Fix pypi based pywin32 installation again, the part that needs to run as admin was previously unreachable;
-- wheel package is required to install Scons on Python 2.7.15, it also makes possible to uninstall pywin32 cleanly which may provide the means for error-free upgrade.
+- wheel package is required to install Scons on Python 2.7.15, it also makes possible to uninstall pywin32 cleanly which may provide the means for error-free upgrade;
+- Python launcher interface: Lookup for Python 3.x even if /enablemeson command line argument is unset as LLVM build can use it. Display appropriate warnings.
 ### Build environment updates
 - Updated build machine OS to Windows 10 April 2018;
 - Windows 10 SDK 10.0.16299.91 -> 10.0.17134.12;
 - Python 2.7.14 -> 2.7.15;
 - Installed wheel 0.31.0.
 # 18.0.2.600-1
+- Updated Mesa3D to [18.0.2](https://www.mesa3d.org/relnotes/18.0.2.html).
 ### Build script
 - Python packages update: Use grid format pip list and skip pypiwin32 as well. This fixes the known issue from 18.0.1.600-1;
 - Python launcher interface - handle too old Python versions gracefully;
@@ -26,6 +31,7 @@
 - Visual Studio 15.6.6 -> 15.6.7
 - setuptools 39.0.1 -> 39.1.0
 # 18.0.1.600-1
+- Updated Mesa3D to [18.0.1](https://www.mesa3d.org/relnotes/18.0.1.html).
 ### Deployment
 - Per app deployment: Make text fit into Windows 7 default Command Prompt size.
 ### Build script
@@ -49,7 +55,7 @@
 ### Known issue
 - The text may turn red in the Command Prompt in which the build script is running after updating Python packages. This is a glitch caused by pip 10.0.0.
 # 18.0.0.600-1
-- Updated Mesa3D to [18.0.0](https://www.mesa3d.org/relnotes/18.0.0.html)
+- Updated Mesa3D to [18.0.0](https://www.mesa3d.org/relnotes/18.0.0.html).
 ### Build environment updates
 - pip 9.0.2 -> 9.0.3
 - Visual Studio 15.6.3 -> 15.6.4
@@ -79,7 +85,7 @@
 ### Misc
 - Made release notes incremental.
 # 17.3.6.501-1
-- Mesa3D 17.3.6 [release notes](https://www.mesa3d.org/relnotes/17.3.6.html)
+- Mesa3D 17.3.6 [release notes](https://www.mesa3d.org/relnotes/17.3.6.html).
 ### Build environment updates
 - Git 2.16.1.4 -> 2.16.2.1
 - Visual Studio 15.5.6 -> 15.5.7
@@ -96,11 +102,11 @@
 ### Won't fix
 - This release breaks osmesa deployments performed with quick deployment utility. A re-deployment is required. Manual copy-pastes of osmesa libraries are unaffected.
 # 17.3.5.501-1
-- Updated Mesa3D to [17.3.5](https://www.mesa3d.org/relnotes/17.3.5.html)
+- Updated Mesa3D to [17.3.5](https://www.mesa3d.org/relnotes/17.3.5.html).
 ### Build script
 - Allow distribution creation without building Mesa if we have binaries from a past build.
 # 17.3.4.501-1
-- Updated Mesa3D to [17.3.4](https://www.mesa3d.org/relnotes/17.3.4.html)
+- Updated Mesa3D to [17.3.4](https://www.mesa3d.org/relnotes/17.3.4.html).
 ### Build environment updates
 - pywin32 221 -> 222.
 - Visual Studio 15.5.4 -> 15.5.6.
