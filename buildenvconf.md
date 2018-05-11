@@ -19,7 +19,7 @@ OS | Windows 10 April 2018 Update Pro x64
 | | |
 |-|-|
 Edition | 2017 Community
-Version | 15.6.7
+Version | 15.7.1
 Windows 10 SDK Version | 10.0.17134.12
 Windows 10 SDK install method | standalone
 ### LLVM
