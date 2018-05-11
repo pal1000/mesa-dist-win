@@ -1,4 +1,4 @@
-# Usage guidelines for build.cmd
+# Build script usage guidelines
   * [1. Acquire mesa source code, dependencies and build tools](#1-acquire-mesa-source-code-dependencies-and-build-tools)
   * [2. Setting environment variables and prepare the build](#2-setting-environment-variables-and-prepare-the-build)
   * [3. Build process](#3-build-process)
@@ -16,16 +16,16 @@ Before continuing prepare an empty folder to extract the rest of dependencies in
 
 - [Git for Windows 32 or 64-bit](https://git-scm.com/download/win); 
 
-You can use the portable version if you don't want to bloat your system too much, but you have to either launch the build script from within git-cmd.exe session (git-cmd.exe is located in Git installation directory) or run git-cmd.exe with this build script as argument (ex asuming git was instaled in c:\dev\git and this project repository was cloned in c:\dev\mesa-dist-win : "c:\dev\git\git-cmd.exe" "c:\dev\mesa-dist-win\buildscript\build.cmd").
+Highly recommended, but not mandatory. You can use the portable version if you don't want to bloat your system too much, but you have to either launch the build script from within git-cmd.exe session (git-cmd.exe is located in Git installation directory) or run git-cmd.exe with this build script as argument (ex asuming git was instaled in c:\dev\git and this project repository was cloned in c:\dev\mesa-dist-win : "c:\dev\git\git-cmd.exe" "c:\dev\mesa-dist-win\buildscript\build.cmd").
 - Mesa source code: [Mirror 1](https://www.mesa3d.org/archive/), [Mirror 2](https://mesa.freedesktop.org/archive/);
 
 The build script can grab Mesa3D code if Git is in PATH. It asks for the branch to pull from. Otherwise manually extract in `.`. Be warned that the archive is double packed. Rename extracted folder to `mesa`.
 - [LLVM source code](http://llvm.org/);
 
-Extract LLVM code in `.`. Rename extracted folder to `llvm`. LLVM 4.0 is the minimum version supported by this build scrpt as Visual Studio 2017 is the only version supported. Required to build high-performance drivers and libraries llvmpipe, swr, osmesa gallium JIT and graw.
+Extract LLVM code in `.`. Rename extracted folder to `llvm`. LLVM 4.0 is the minimum version supported by this build scrpt as Visual Studio 2017 is the only version supported. Required to build high-performance drivers and libraries llvmpipe, swr, osmesa gallium JIT and graw. LLVM must be built in release mode with install target. This build script does it automatically or you can look [here](https://wiki.qt.io/MesaLlvmpipe).
 - [Ninja build system](https://github.com/ninja-build/ninja/releases)
 
-Optional, it reduces LLVM build size as it works with single configuration. Unlike Visual Studio MsBuild which requires a Release and a Debug configuration at minimum. If used, extract Ninja in `.\ninja`. If ninja is available my script asks if you want to use it when building LLVM. LLVM must be built in release mode with install target. This build script does it automatically or you can look [here](https://wiki.qt.io/MesaLlvmpipe).
+Optional, it reduces LLVM build size as it works with single configuration and also it is much faster and gentler with the storage device unlike Visual Studio MsBuild which requires a Release and a Debug configuration at minimum. If used, extract Ninja in `.\ninja`. If ninja is available my script asks if you want to use it when building LLVM.
 
 - [CMake 32 or 64 bit](https://cmake.org/download/#latest);
 
@@ -35,15 +35,15 @@ You may use the installer or you can extract the zipped version in `.\cmake`. Re
 Extract in `.\flexbison`.
 - [Python 32 or 64 bit](https://www.python.org/);
 
-Use Python 2.7. Mesa3D Scons build system was written using Python 2 syntax. Trying to use Python 3 leads to Python crash at this moment. Use the installer. Make sure it's dropped in `.\python` if you don't want to add it to PATH system-wide. Make sure pip is installed. Sometimes it isn't. If it isn't get it from [here](https://pip.pypa.io/en/stable/installing/).
+Use Python 2.7. Mesa3D Scons build system was written using Python 2 syntax. Trying to use Python 3 leads to Python crash at this moment. Use the installer. Make sure pip is installed. Sometimes it isn't. If it isn't get it from [here](https://pip.pypa.io/en/stable/installing/). If you don't want to add Python to PATH you can either install it in `.\python` or if you have Python launcher component of Python 3.x installed for whatever reason you can install it anywhere you want. If using Python launcher pick a Python 2.7 installation. Python 3.x can only build LLVM for now. It can't build Mes3D on Windows yet, but developpers are working upstream on a Meson build for Mesa3D which is a Python 3.x native. For those who want to attempt a Mesa3D build with Meson there is the command line switch `/enablemeson`, but obviously it doesn't work yet due to lack of upstream support.
 - [pywin32 for Python 2.7](https://github.com/mhammond/pywin32/releases);
 
 It must match in architecture with Python. There is a bug in the installer. For true successful installation you have to open Command Prompt as admin, browse to the folder holding pywin32 installer using CD command and run it from there.
-- Update setuptools for python. When setuptools is up-to-date you can successfully install Scons via Pypi without having to install wheel. The build script updates it automatically. To update manually do `pip install -U setuptools` with python being in PATH.
+- Update setuptools for python via `python -m pip install -U setuptools` when Python is in PATH or currrent folder. You can successfully install Scons via Pypi without having to install wheel when setuptools is up-to-date if you are still on Python 2.7.14. For some reason with Python 2.7.15 wheel is mandatory. Install it with `python -m pip install -U wheel`. The build script updates setuptools and installs wheel automatically.
 - [Scons for python 2.7](https://sourceforge.net/projects/scons/files/scons/);
 
 The build script gets the latest version of Scons automatically.
-- mako module for Python 2.7 and MarkupSafe dependency. Install with pip install mako. This script installs mako automatically. It also attempts to update all Python modules.
+- mako module for Python 2.7 and MarkupSafe dependency. Install with `python -m pip install mako`. This script installs mako automatically. It also attempts to update all Python modules.
 - Get this script.
 
 You will need to clone its repository using git. Go to folder where you installed git and open git-cmd.bat. Change current folder to dependencies dropping folder, the one I called `.`. Execute `git clone https://github.com/pal1000/mesa-dist-win mesa-dist-win`.
@@ -72,18 +72,19 @@ This way the script would be able to set PATH variable correctly and you'll no l
 
 ## 3. Build process
 The script is located at `.\mesa-dist-win\buildscript\build.cmd`. Now run it.
-The script acts like a Wizard asking for the following during execution:
-- if you want to update/install required python modules (setuptools, pip, pywin32, scons, mako and MarkupSafe);
+The script acts like a Wizard asking questions during execution:
 - architecture for which you want to build mesa - type "y" for x64, otherwise x86 is selected;
-- if you want to build LLVM.  You only need to do it once for each architecture you target when new version is out and this doesn't happen very often, also it is no longer mandatory if you only want softpipe, osmesa swrast and a slowed down osmesa gallium;
-- if building LLVM asks if you want to build with Ninja build system instead of Msbuild if Ninja is in PATH;
-- if Git is installed and Mesa code is missing, asks if you want to download Mesa code using Git and build;
+- if Python launcher is available a list of Python installations is displayed. If you pick a Python 3.x installation, or your main Python installation is version 3.x, in normal mode you can only build LLVM as it supports both Python 2.7 and 3.x, but if the script is running with the experimental `/enablemeson` command line switch a build of Mesa3D with Meson is attempted;
+- if you want to update/install required python modules (setuptools, pip, pywin32, scons, meson, mako and MarkupSafe);
+- if you want to build LLVM.  You only need to do it once for each architecture you target, also it is no longer mandatory if you only want softpipe, osmesa swrast and a slowed down osmesa gallium;
+- if building LLVM it asks if you want to build with Ninja build system instead of Msbuild if Ninja is in PATH;
+- if Git is installed and Mesa code is missing it asks if you want to download Mesa code using Git and build;
 - if you intend to download Mesa using Git, you are asked to specify which branch (valid entries: 17.2, 17.3 ...);
-- if you want to build Mesa3D;
-- if LLVM is available asks if you want to use it;
-- if LLVM is missing asks if you want to build without it;
-- if LLVM is used you are asked if you want to build swr, graw respectively;
+- if you want to build Mesa3D if you weren't asked already;
+- if LLVM is available it asks if you want to use it;
+- if LLVM is missing it asks if you want to build without it;
 - if you want to build off-screen rendering driver(s);
+- if LLVM is used you are asked if you want to build swr, graw respectively;
 - if you want to do a clean build;
 - if you want to organize binaries in a single location (distribution creation).
 
