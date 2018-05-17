@@ -1,6 +1,9 @@
-# Upcomming release
+# 18.0.4.600-1
+- Updated Mesa3D to [18.0.4](https://www.mesa3d.org/relnotes/18.0.4.html).
 ### Build environment updates
 - Visual Studio 15.6.7 -> 15.7.1
+- wheel 0.31.0 -> 0.31.1
+- cmake 3.11.1 -> 3.11.2
 ### Build script
 - Update documentation;
 - Display warnings when LLVM is missing.
