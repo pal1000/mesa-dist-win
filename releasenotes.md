@@ -1,3 +1,8 @@
+# 18.1.0.600-1
+- Updated Mesa3D to [18.1.0](https://www.mesa3d.org/relnotes/18.1.0.html).
+### General documentation updates
+- Make appropriate changes as Mesa3D now supports OpenGL 3.1 in compatibility context;
+- Fix a bunch of typos and wording bugs in the process.
 # 18.0.4.600-1
 - Updated Mesa3D to [18.0.4](https://www.mesa3d.org/relnotes/18.0.4.html).
 ### Build environment updates
@@ -159,7 +164,7 @@
 # 17.3.0.500-1
 -  Updated Mesa3D to [17.3.0](https://www.mesa3d.org/relnotes/17.3.0.html).
 
-This is the first release of Mesa3D with built-in S3TC support so there is no dxtn.dll anymore. I enabled S3TC texture cache as always as integration made no change on that front. See [Mesa3D release notes](https://www.mesa3d.org/relnotes/17.3.0.html) for details. 
+This is the first release of Mesa3D with built-in S3TC support so there is no dxtn.dll anymore. I enabled S3TC texture cache as always as integration made no change on that front. See [Mesa3D release notes](https://www.mesa3d.org/relnotes/17.3.0.html) for details.
  
 - LLVM and Mesa3D were built with Visual Studio 2017 v15.5.1.
 ### Build script

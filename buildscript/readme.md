@@ -11,7 +11,7 @@
 Visual Studio has to be installed in its default location. You only need components from within Desktop Development with C++ category. Beside default selected components MFC, ATL and a Windows SDK is required. Latest Windows 10 SDK is highly recommended. You may opt-out in this exact order of CMake Tools and Windows 10 SDK in Visual Studio installer and manually install standalone version of Windows 10 SDK instead as it is sometimes newer. If you want to use standalone Windows 10 SDK make sure you install Windows SDK for Desktop C++ x86 and amd64 apps components.
 - [7-zip](http://www.7-zip.org/download.html) or [7-zip portable](https://portableapps.com/apps/utilities/7-zip_portable)
 
-We'll use this to extract all depencies packed in tar.gz or tar.xz archives.
+We'll use this to extract all dependencies packed in tar.gz or tar.xz archives.
 Before continuing prepare an empty folder to extract the rest of dependencies into. I'll call this `.`.
 
 - [Git for Windows 32 or 64-bit](https://git-scm.com/download/win); 
@@ -35,7 +35,7 @@ You may use the installer or you can extract the zipped version in `.\cmake`. Re
 Extract in `.\flexbison`.
 - [Python 32 or 64 bit](https://www.python.org/);
 
-Use Python 2.7. Mesa3D Scons build system was written using Python 2 syntax. Trying to use Python 3 leads to Python crash at this moment. Use the installer. Make sure pip is installed. Sometimes it isn't. If it isn't get it from [here](https://pip.pypa.io/en/stable/installing/). If you don't want to add Python to PATH you can either install it in `.\python` or if you have Python launcher component of Python 3.x installed for whatever reason you can install it anywhere you want. If using Python launcher pick a Python 2.7 installation. Python 3.x can only build LLVM for now. It can't build Mes3D on Windows yet, but developpers are working upstream on a Meson build for Mesa3D which is a Python 3.x native. For those who want to attempt a Mesa3D build with Meson there is the command line switch `/enablemeson`, but obviously it doesn't work yet due to lack of upstream support.
+Use Python 2.7. Mesa3D Scons build system was written using Python 2 syntax. Trying to use Python 3 leads to Python crash at this moment. Use the installer. Make sure pip is installed. Sometimes it isn't. If it isn't get it from [here](https://pip.pypa.io/en/stable/installing/). If you don't want to add Python to PATH you can either install it in `.\python` or if you have Python launcher component of Python 3.x installed for whatever reason you can install it anywhere you want. If using Python launcher pick a Python 2.7 installation. Python 3.x can only build LLVM for now. It can't build Mes3D on Windows yet, but developers are working upstream on a Meson build for Mesa3D which is a Python 3.x native. For those who want to attempt a Mesa3D build with Meson there is the command line switch `/enablemeson`, but obviously it doesn't work yet due to lack of upstream support.
 - [pywin32 for Python 2.7](https://github.com/mhammond/pywin32/releases);
 
 It must match in architecture with Python. There is a bug in the installer. For true successful installation you have to open Command Prompt as admin, browse to the folder holding pywin32 installer using CD command and run it from there.
@@ -48,11 +48,11 @@ The build script gets the latest version of Scons automatically.
 
 You will need to clone its repository using git. Go to folder where you installed git and open git-cmd.bat. Change current folder to dependencies dropping folder, the one I called `.`. Execute `git clone https://github.com/pal1000/mesa-dist-win mesa-dist-win`.
 
-Mesa 17.3 and newer have built-in S3TC suppport, now that the S3TC patent expired, but you still need to enable S3TC texture cache though by modifying inside Mesa source code in src/gallium/drivers/llvmpipe/lp_tex_sample.h the value of LP_USE_TEXTURE_CACHE to 1. It should become
+Mesa 17.3 and newer have built-in S3TC support, now that the S3TC patent expired, but you still need to enable S3TC texture cache though by modifying inside Mesa source code in src/gallium/drivers/llvmpipe/lp_tex_sample.h the value of LP_USE_TEXTURE_CACHE to 1. It should become
 
 `#define LP_USE_TEXTURE_CACHE 1`
 
-You can also enable S3TC texture cache by applying a patch included in this repository in `patches/s3tc.patch` to Mesa3D source code if you have git installed. This build script will try to apply it automatically. To apply manually, browse in Command Prompt to Mesa3D source code, then use `git apply` command with the location of the patch file as parametter.
+You can also enable S3TC texture cache by applying a patch included in this repository in `patches/s3tc.patch` to Mesa3D source code if you have git installed. This build script will try to apply it automatically. To apply manually, browse in Command Prompt to Mesa3D source code, then use `git apply` command with the location of the patch file as parameter.
 
 This will improve S3 texture compression performance significantly.
 ## 2. Setting environment variables and prepare the build
@@ -66,7 +66,7 @@ CMake | `.\bin\;`
 Ninja build system if used | `.\ninja\;`
 LLVM | `.\llvm\bin\;`
 
-Python and CMake installers can set PATH automatically during installation. This build script automates this whole process but you must respect the relative paths between the script and the sources and tools. If you folowed my instructions this should have been accomplished already.
+Python and CMake installers can set PATH automatically during installation. This build script automates this whole process but you must respect the relative paths between the script and the sources and tools. If you followed my instructions this should have been accomplished already.
 
 This way the script would be able to set PATH variable correctly and you'll no longer need to set anything from this point forward.
 
@@ -109,7 +109,7 @@ Mesa swr drivers are dropped in.\mesa\build\windows-x86_64\gallium\drivers\swr.
 
 [They only support 64-bit officially](https://bugs.freedesktop.org/show_bug.cgi?id=102564#c5). They are named swrAVX.dll and swrAVX2.dll after their instruction set requirements. You need both llvmpipe/softpipe and swr driver suitable to your CPU for swr to work. swr drivers are loaded when requested by llvmpipe/softpipe drivers. They can't run on their own.
 
-Mesa3D off-screen renderers are dropped in:
+Mesa3D off-screen rendering drivers are dropped in:
 - 32-bit gallium: .\mesa\build\windows-x86\gallium\targets\osmesa;
 - 64-bit gallium: .\mesa\build\windows-x86_64\gallium\targets\osmesa;
 - 32-bit swrast: .\mesa\build\windows-x86\mesa\drivers\osmesa;

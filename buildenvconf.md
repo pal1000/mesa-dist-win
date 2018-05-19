@@ -1,8 +1,8 @@
 ### Notes
 
-[1]Executed from an x64 Native Tools Command Prompt for VS 2017 shell
+[1]Executed from a x64 Native Tools Command Prompt for VS 2017 shell
 
-[2]Executed from an x64_x86 Cross Tools Command Prompt for VS 2017 shell
+[2]Executed from a x64_x86 Cross Tools Command Prompt for VS 2017 shell
 
 [3]Executed after each build configuration on same command shell
 
