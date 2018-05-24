@@ -19,7 +19,7 @@ OS | Windows 10 April 2018 Update Pro x64
 | | |
 |-|-|
 Edition | 2017 Community
-Version | 15.7.1
+Version | 15.7.2
 Windows 10 SDK Version | 10.0.17134.12
 Windows 10 SDK install method | standalone
 ### LLVM
@@ -38,7 +38,7 @@ LLVM build execute[3] | ninja install
 Version | 2.7.15
 ARCH | x64
 pip version | 10.0.1
-setuptools version | 39.1.0
+setuptools version | 39.2.0
 pywin32 / pypiwin32 version | 223
 scons version | 3.0.1
 Mako version | 1.0.7

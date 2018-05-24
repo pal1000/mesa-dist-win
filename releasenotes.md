@@ -1,6 +1,9 @@
 # Upcoming release
 ### End user guide
 - More documentation updates related to GL_ARB_compatibility and OpenGL context types.
+### Build environment updates
+- setuptools 39.1.0 -> 39.2.0
+- Visual Studio 15.7.1 -> 15.7.2
 # 18.1.0.600-1
 - Updated Mesa3D to [18.1.0](https://www.mesa3d.org/relnotes/18.1.0.html).
 ### General documentation updates

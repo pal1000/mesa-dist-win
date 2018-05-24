@@ -13,7 +13,7 @@
 @rem LLVM build getting started.
 @if NOT EXIST %mesa%\llvm echo WARNING: Both LLVM source code and binaries not found. If you want to build Mesa3D anyway it will be without swr, llvmpipe or graw drivers and osmesa will run with performance penalty.
 @if EXIST %mesa%\llvm\cmake set /p buildllvm=Begin LLVM build. Only needs to run once for each ABI and version. Proceed (y/n):
-@if /I "%buildllvm%"=="y" echo.
+@if EXIST %mesa%\llvm\cmake echo.
 @if /I NOT "%buildllvm%"=="y" if EXIST %mesa%\llvm\cmake IF NOT EXIST %mesa%\llvm\%abi% echo WARNING: Not building LLVM. If you want to build Mesa3D anyway it will be without swr, llvmpipe or graw drivers and osmesa will run with performance penalty.
 @if /I NOT "%buildllvm%"=="y" GOTO skipllvm
 @cd %mesa%\llvm
