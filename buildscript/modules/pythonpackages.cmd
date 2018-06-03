@@ -70,5 +70,6 @@
 @set pyupd=n
 @set /p pyupd=Install/update python packages (y/n):
 @echo.
+@if /I "%pyupd%"=="y" if %pythonver% GEQ 3 RD /S /Q "%LOCALAPPDATA%\pip"
 @if /I "%pyupd%"=="y" for /F "skip=2 delims= " %%m in ('%pythonloc% -m pip list -o --disable-pip-version-check') do @if NOT "%%m"=="pywin32" if NOT "%%m"=="pypiwin32" %pythonloc% -m pip install -U "%%m"
 @if /I "%pyupd%"=="y" echo.

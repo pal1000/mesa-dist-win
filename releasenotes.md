@@ -1,3 +1,6 @@
+# Next release
+### Build script
+- Workaround a pip v10.0.1 bug by nuking pip cache. The cache processing bug throws a warning that permanently changes the text color to yellow.
 # 18.1.1.600-1
 - Updated Mesa3D to [18.1.1](https://www.mesa3d.org/relnotes/18.1.1.html).
 ### End user guide
