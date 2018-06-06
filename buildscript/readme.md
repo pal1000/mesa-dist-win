@@ -81,9 +81,10 @@ The script acts like a Wizard asking questions during execution:
 - if Git is installed and Mesa code is missing it asks if you want to download Mesa code using Git and build;
 - if you intend to download Mesa using Git, you are asked to specify which branch (valid entries: 17.2, 17.3 ...);
 - if you want to build Mesa3D if you weren't asked already;
+- if you want to build off-screen rendering driver(s);
+- if you want to build GLAPI and GLES support;
 - if LLVM is available it asks if you want to use it;
 - if LLVM is missing it asks if you want to build without it;
-- if you want to build off-screen rendering driver(s);
 - if LLVM is used you are asked if you want to build swr, graw respectively;
 - if you want to do a clean build;
 - if you want to organize binaries in a single location (distribution creation).
@@ -104,6 +105,12 @@ Mesa llvmpipe and softpipe drivers are dropped in:
 - for 64-bit: .\mesa\build\windows-x86_64\gallium\targets\libgl-gdi.
 
 and are both named opengl32.dll.
+
+Mesa GLAPI shared libraries are dropped in:
+- for 32-bit: .\mesa\build\windows-x86\mapi\shared-glapi;
+- for 64-bit: .\mesa\build\windows-x86_64\mapi\shared-glapi.
+
+and are both named libglapi.dll.
 
 Mesa swr drivers are dropped in.\mesa\build\windows-x86_64\gallium\drivers\swr.
 

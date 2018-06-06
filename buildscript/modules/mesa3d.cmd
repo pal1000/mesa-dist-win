@@ -54,6 +54,9 @@ GOTO skipmesa
 @set /p osmesa=Do you want to build off-screen rendering drivers (y/n):
 @echo.
 @if %pythonver%==2 if /I "%osmesa%"=="y" set buildcmd=%buildcmd% osmesa
+@set /p gles=Do you want to build GLAPI and GLES support (y/n):
+@echo.
+@if %pythonver%==2 if /I "%gles%"=="y" set buildcmd=%buildcmd% gles=1
 @set llvmless=n
 @if EXIST %LLVM% set /p llvmless=Build Mesa without LLVM (y/n). Only softpipe and osmesa will be available:
 @if EXIST %LLVM% echo.

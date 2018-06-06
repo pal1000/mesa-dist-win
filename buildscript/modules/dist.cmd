@@ -14,6 +14,7 @@
 @MD osmesa-gallium
 @MD osmesa-swrast
 @copy %mesa%\mesa\build\windows-%longabi%\gallium\targets\libgl-gdi\opengl32.dll opengl32.dll
+@copy %mesa%\mesa\build\windows-%longabi%\mapi\shared-glapi\libglapi.dll libglapi.dll
 @if %abi%==x64 copy %mesa%\mesa\build\windows-%longabi%\gallium\drivers\swr\swrAVX.dll swrAVX.dll
 @if %abi%==x64 copy %mesa%\mesa\build\windows-%longabi%\gallium\drivers\swr\swrAVX2.dll swrAVX2.dll
 @copy %mesa%\mesa\build\windows-%longabi%\mesa\drivers\osmesa\osmesa.dll osmesa-swrast\osmesa.dll

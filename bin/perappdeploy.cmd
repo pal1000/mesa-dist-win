@@ -44,6 +44,7 @@ if '%errorlevel%' NEQ '0' (
 @echo.
 @pause
 @set mesaloc=%~dp0
+@IF "%mesaloc:~-1%"=="\" set mesaloc=%mesaloc:~0,-1%
 
 :deploy
 @cls
@@ -73,7 +74,9 @@ if '%errorlevel%' NEQ '0' (
 @IF /I "%nodesktopgl%"=="y" GOTO osmesa
 @IF EXIST "%dir%\opengl32.dll" echo Updated softpipe and llvmpipe deployment.
 @IF EXIST "%dir%\opengl32.dll" del "%dir%\opengl32.dll"
-@mklink "%dir%\opengl32.dll" "%mesaloc%%mesadll%\opengl32.dll"
+@IF EXIST "%dir%\libglapi.dll" del "%dir%\libglapi.dll"
+@mklink "%dir%\opengl32.dll" "%mesaloc%\%mesadll%\opengl32.dll"
+@mklink "%dir%\libglapi.dll" "%mesaloc%\%mesadll%\libglapi.dll"
 @echo.
 @set swr=n
 @if NOT %mesadll%==x64 GOTO osmesa
@@ -88,8 +91,8 @@ if '%errorlevel%' NEQ '0' (
 :deployswr
 @if EXIST "%dir%\swrAVX.dll" del "%dir%\swrAVX.dll"
 @if EXIST "%dir%\swrAVX2.dll" del "%dir%\swrAVX2.dll"
-@mklink "%dir%\swrAVX.dll" "%mesaloc%x64\swrAVX.dll"
-@mklink "%dir%\swrAVX2.dll" "%mesaloc%x64\swrAVX2.dll"
+@mklink "%dir%\swrAVX.dll" "%mesaloc%\x64\swrAVX.dll"
+@mklink "%dir%\swrAVX2.dll" "%mesaloc%\x64\swrAVX2.dll"
 @echo.
 
 :osmesa
@@ -104,8 +107,8 @@ if '%errorlevel%' NEQ '0' (
 @echo 2. Swrast based (slower, but has unique OpenGL 2.1 features);
 @set /p osmesatype=Enter choice:
 @echo.
-@if "%osmesatype%"=="1" mklink "%dir%\osmesa.dll" "%mesaloc%%mesadll%\osmesa-gallium\osmesa.dll"
-@if "%osmesatype%"=="2" mklink "%dir%\osmesa.dll" "%mesaloc%%mesadll%\osmesa-swrast\osmesa.dll"
+@if "%osmesatype%"=="1" mklink "%dir%\osmesa.dll" "%mesaloc%\%mesadll%\osmesa-gallium\osmesa.dll"
+@if "%osmesatype%"=="2" mklink "%dir%\osmesa.dll" "%mesaloc%\%mesadll%\osmesa-swrast\osmesa.dll"
 @if "%osmesatype%"=="1" echo.
 @if "%osmesatype%"=="2" echo.
 
@@ -115,7 +118,7 @@ if '%errorlevel%' NEQ '0' (
 @if /I NOT "%graw%"=="y" GOTO restart
 @if EXIST "%dir%\graw.dll" echo Updated Mesa3D graw framework deployment.
 @if EXIST "%dir%\graw.dll" del "%dir%\graw.dll" 
-@mklink "%dir%\graw.dll" "%mesaloc%%mesadll%\graw.dll"
+@mklink "%dir%\graw.dll" "%mesaloc%\%mesadll%\graw.dll"
 @echo.
 
 :restart
