@@ -86,8 +86,8 @@ GOTO skipmesa
 @echo.
 @if %pythonver% GEQ 3 call %vsenv%
 @if %pythonver% GEQ 3 echo.
-@if %pythonver% GEQ 3 echo Build command: %buildcmd%
-@if %pythonver% GEQ 3 echo.
+@echo Build command: %buildcmd%
+@echo.
 @%buildcmd%
 @echo.
 @if %pythonver% GEQ 3 cmd

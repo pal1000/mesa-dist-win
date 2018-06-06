@@ -1,6 +1,7 @@
 # Next release
 ### Build script
-- Workaround a pip v10.0.1 bug by nuking pip cache. The cache processing bug throws a warning that permanently changes the text color to yellow.
+- Workaround a pip v10.0.1 bug by nuking pip cache. The cache processing bug throws a warning that permanently changes the text color to yellow;
+- Always print Mesa3D build command on screen.
 ### General
 - GLES and GLAPI support.
 ### End-user guide
