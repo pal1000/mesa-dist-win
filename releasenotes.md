@@ -3,6 +3,8 @@
 - Workaround a pip v10.0.1 bug by nuking pip cache. The cache processing bug throws a warning that permanently changes the text color to yellow.
 ### General
 - GLES and GLAPI support.
+### End-user guide
+- Document an issue with Virtualbox VMs that may happen if Mesa3D desktop OpenGL driver is installed inside the VM using system-wide deployment tool.
 # 18.1.1.600-1
 - Updated Mesa3D to [18.1.1](https://www.mesa3d.org/relnotes/18.1.1.html).
 ### End user guide
