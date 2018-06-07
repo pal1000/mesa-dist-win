@@ -49,10 +49,14 @@ GOTO skipmesa
 
 :configmesabuild
 @rem Configure Mesa build.
-@if %pythonver%==2 set buildcmd=%pythonloc% %pythonloc:~0,-10%Scripts\scons.py build=release platform=windows machine=%longabi% libgl-gdi
+@if %pythonver%==2 set buildcmd=%pythonloc% %pythonloc:~0,-10%Scripts\scons.py build=release platform=windows machine=%longabi%
 @if %pythonver% GEQ 3 set buildcmd=%mesonloc% . .\build\windows-%longabi% --backend=vs2017
-@set /p osmesa=Do you want to build off-screen rendering drivers (y/n):
+@set /p expressmesabuild=Do you want to build Mesa with quick configuration - libgl-gdi, graw-gdi, graw-null and osmesa being included and other features opt-in (y/n):
 @echo.
+@if %pythonver%==2 IF /I NOT "%expressmesabuild%"=="y" set buildcmd=%buildcmd% libgl-gdi
+@set osmesa=n
+@IF /I NOT "%expressmesabuild%"=="y" set /p osmesa=Do you want to build off-screen rendering drivers (y/n):
+@IF /I NOT "%expressmesabuild%"=="y" echo.
 @if %pythonver%==2 if /I "%osmesa%"=="y" set buildcmd=%buildcmd% osmesa
 @set /p gles=Do you want to build GLAPI and GLES support (y/n):
 @echo.
@@ -70,8 +74,9 @@ GOTO skipmesa
 @if %abi%==x64 set /p swrdrv=Do you want to build swr drivers? (y=yes):
 @if %abi%==x64 echo.
 @if %pythonver%==2 if /I "%swrdrv%"=="y" set buildcmd=%buildcmd% swr=1
-@set /p graw=Do you want to build graw library (y/n):
-@echo.
+@set graw=n
+@IF /I NOT "%expressmesabuild%"=="y" set /p graw=Do you want to build graw library (y/n):
+@IF /I NOT "%expressmesabuild%"=="y" echo.
 @if %pythonver%==2 if /I "%graw%"=="y" set buildcmd=%buildcmd% graw-gdi
 
 :build_mesa
