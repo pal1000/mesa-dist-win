@@ -16,13 +16,13 @@ Before continuing prepare an empty folder to extract the rest of dependencies in
 
 - [Git for Windows 32 or 64-bit](https://git-scm.com/download/win); 
 
-Highly recommended, but not mandatory. You can use the portable version if you don't want to bloat your system too much, but you have to either launch the build script from within git-cmd.exe session (git-cmd.exe is located in Git installation directory) or run git-cmd.exe with this build script as argument (ex asuming git was instaled in c:\dev\git and this project repository was cloned in c:\dev\mesa-dist-win : "c:\dev\git\git-cmd.exe" "c:\dev\mesa-dist-win\buildscript\build.cmd").
+Highly recommended, but not mandatory. Required if you want to build Mesa3D osmesa library having GLES support enabled, osmesa won’t have GLES support however. You can use the portable version if you don't want to bloat your system too much, but you have to either launch the build script from within git-cmd.exe session (git-cmd.exe is located in Git installation directory) or run git-cmd.exe with this build script as argument (ex assuming git was installed in c:\dev\git and this project repository was cloned in c:\dev\mesa-dist-win , the build script launch command looks like this - "c:\dev\git\git-cmd.exe" "c:\dev\mesa-dist-win\buildscript\build.cmd").
 - Mesa source code: [Mirror 1](https://www.mesa3d.org/archive/), [Mirror 2](https://mesa.freedesktop.org/archive/);
 
 The build script can grab Mesa3D code if Git is in PATH. It asks for the branch to pull from. Otherwise manually extract in `.`. Be warned that the archive is double packed. Rename extracted folder to `mesa`.
 - [LLVM source code](http://llvm.org/);
 
-Extract LLVM code in `.`. Rename extracted folder to `llvm`. LLVM 4.0 is the minimum version supported by this build scrpt as Visual Studio 2017 is the only version supported. Required to build high-performance drivers and libraries llvmpipe, swr, osmesa gallium JIT and graw. LLVM must be built in release mode with install target. This build script does it automatically or you can look [here](https://wiki.qt.io/MesaLlvmpipe).
+Extract LLVM code in `.`. Rename extracted folder to `llvm`. LLVM 4.0 is the minimum version supported by this build scrpt as Visual Studio 2017 is the only version supported. Required to build high-performance drivers and libraries llvmpipe, swr, osmesa gallium JIT and graw (non-express configuration only). LLVM must be built in release mode with install target. This build script does it automatically or you can look [here](https://wiki.qt.io/MesaLlvmpipe).
 - [Ninja build system](https://github.com/ninja-build/ninja/releases)
 
 Optional, it reduces LLVM build size as it works with single configuration and also it is much faster and gentler with the storage device unlike Visual Studio MsBuild which requires a Release and a Debug configuration at minimum. If used, extract Ninja in `.\ninja`. If ninja is available my script asks if you want to use it when building LLVM.
