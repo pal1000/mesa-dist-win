@@ -1,0 +1,33 @@
+diff --git a/src/gallium/SConscript b/src/gallium/SConscript
+index 358c31e..45e992c 100644
+--- a/src/gallium/SConscript
++++ b/src/gallium/SConscript
+@@ -59,10 +59,11 @@ SConscript([
+ ])
+ 
+ if not env['embedded']:
+-    SConscript([
+-        'state_trackers/osmesa/SConscript',
+-        'targets/osmesa/SConscript',
+-    ])
++    if not env['gles']:
++            SConscript([
++                'state_trackers/osmesa/SConscript',
++                'targets/osmesa/SConscript',
++            ])
+ 
+     if env['x11']:
+         SConscript([
+diff --git a/src/mesa/drivers/SConscript b/src/mesa/drivers/SConscript
+index f549910..2fb3bb2 100644
+--- a/src/mesa/drivers/SConscript
++++ b/src/mesa/drivers/SConscript
+@@ -1,6 +1,7 @@
+ Import('*')
+ 
+-SConscript('osmesa/SConscript')
++if not env['gles']:
++    SConscript('osmesa/SConscript')
+ 
+ if env['x11']:
+     SConscript('x11/SConscript')
