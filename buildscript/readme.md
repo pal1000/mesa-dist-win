@@ -1,9 +1,9 @@
 # Build script usage guidelines
-  * [1. Acquire mesa source code, dependencies and build tools](#1-acquire-mesa-source-code-dependencies-and-build-tools)
-  * [2. Setting environment variables and prepare the build](#2-setting-environment-variables-and-prepare-the-build)
-  * [3. Build process](#3-build-process)
-  * [4. Miscellaneous and build location](#4-miscellaneous-and-build-location)
-  
+* [1. Acquire mesa source code, dependencies and build tools](#1-acquire-mesa-source-code-dependencies-and-build-tools)
+* [2. Setting environment variables and prepare the build](#2-setting-environment-variables-and-prepare-the-build)
+* [3. Build process](#3-build-process)
+* [4. Miscellaneous and build location](#4-miscellaneous-and-build-location)
+
 ## 1. Acquire mesa source code, dependencies and build tools
 
 - Visual Studio 2017;
@@ -14,7 +14,7 @@ Visual Studio has to be installed in its default location. You only need compone
 We'll use this to extract all dependencies packed in tar.gz or tar.xz archives.
 Before continuing prepare an empty folder to extract the rest of dependencies into. I'll call this `.`.
 
-- [Git for Windows 32 or 64-bit](https://git-scm.com/download/win); 
+- [Git for Windows 32 or 64-bit](https://git-scm.com/download/win);
 
 Highly recommended, but not mandatory. Required if you want to build Mesa3D osmesa library having GLES support enabled, osmesa won’t have GLES support however. You can use the portable version if you don't want to bloat your system too much, but you have to either launch the build script from within git-cmd.exe session (git-cmd.exe is located in Git installation directory) or run git-cmd.exe with this build script as argument (ex assuming git was installed in c:\dev\git and this project repository was cloned in c:\dev\mesa-dist-win , the build script launch command looks like this - "c:\dev\git\git-cmd.exe" "c:\dev\mesa-dist-win\buildscript\build.cmd").
 - Mesa source code: [Mirror 1](https://www.mesa3d.org/archive/), [Mirror 2](https://mesa.freedesktop.org/archive/);
@@ -22,14 +22,14 @@ Highly recommended, but not mandatory. Required if you want to build Mesa3D osme
 The build script can grab Mesa3D code if Git is in PATH. It asks for the branch to pull from. Otherwise manually extract in `.`. Be warned that the archive is double packed. Rename extracted folder to `mesa`.
 - [LLVM source code](http://llvm.org/);
 
-Extract LLVM code in `.`. Rename extracted folder to `llvm`. LLVM 4.0 is the minimum version supported by this build scrpt as Visual Studio 2017 is the only version supported. Required to build high-performance drivers and libraries llvmpipe, swr, osmesa gallium JIT and graw (non-express configuration only). LLVM must be built in release mode with install target. This build script does it automatically or you can look [here](https://wiki.qt.io/MesaLlvmpipe).
+Extract LLVM code in `.`. Rename extracted folder to `llvm`. LLVM 4.0 is the minimum version supported by this build scrpt as Visual Studio 2017 is the only version supported. Required to build high-performance drivers llvmpipe and swr and JIT speed-up for other drivers and libraries. LLVM must be built in release mode with install target. This build script does it automatically or you can look [here](https://wiki.qt.io/MesaLlvmpipe).
 - [Ninja build system](https://github.com/ninja-build/ninja/releases)
 
 Optional, it reduces LLVM build size as it works with single configuration and also it is much faster and gentler with the storage device unlike Visual Studio MsBuild which requires a Release and a Debug configuration at minimum. If used, extract Ninja in `.\ninja`. If ninja is available my script asks if you want to use it when building LLVM.
 
 - [CMake 32 or 64 bit](https://cmake.org/download/#latest);
 
-You may use the installer or you can extract the zipped version in `.\cmake`. Required to build LLVM just-in-time recompiler used by Mesa high-performance drivers and libraries llvmpipe, swr, osmesa gallium JIT and graw.
+You may use the installer or you can extract the zipped version in `.\cmake`. Required to build LLVM just-in-time recompiler used by Mesa high-performance drivers llvmpipe and swr and JIT speed-up for other drivers and libraries.
 - [Flex and Bison](https://sourceforge.net/projects/winflexbison/);
 
 Extract in `.\flexbison`.
@@ -76,18 +76,18 @@ The script acts like a Wizard asking questions during execution:
 - architecture for which you want to build mesa - type "y" for x64, otherwise x86 is selected;
 - if Python launcher is available a list of Python installations is displayed. If you pick a Python 3.x installation, or your main Python installation is version 3.x, in normal mode you can only build LLVM as it supports both Python 2.7 and 3.x, but if the script is running with the experimental `/enablemeson` command line switch a build of Mesa3D with Meson is attempted;
 - if you want to update/install required python modules (setuptools, pip, pywin32, scons, meson, mako and MarkupSafe);
-- if you want to build LLVM.  You only need to do it once for each architecture you target, also it is no longer mandatory if you only want softpipe, osmesa swrast and a slowed down osmesa gallium;
+- if you want to build LLVM.  You only need to do it once for each architecture you target, also it is no longer mandatory if you are not interested in llvmpipe, swr or JIT speed-ups;
 - if building LLVM it asks if you want to build with Ninja build system instead of Msbuild if Ninja is in PATH;
 - if Git is installed and Mesa code is missing it asks if you want to download Mesa code using Git and build;
 - if you intend to download Mesa using Git, you are asked to specify which branch (valid entries: 17.2, 17.3 ...);
 - if you want to build Mesa3D if you weren't asked already;
-- if you want to do an express configuration of Mesa build which includes libgl-gdi, graw-gdi, graw-null and osmesa targets by default with swr and GLES support opt-in;
+- if you want to do an express configuration of Mesa build which includes libgl-gdi, graw-gdi, graw-null and osmesa targets by default with swr, GLES and OpenGL ES support opt-in;
+- if you want to build GLAPI, GLES and OpenGL ES support;
 - if you didn't opt-in for express configuration you are asked if you want to build off-screen rendering driver(s);
-- if you want to build GLAPI and GLES support;
+- if you didn't opt-in for express configuration you are asked if you want to build graw;
 - if LLVM is available it asks if you want to use it;
 - if LLVM is missing it asks if you want to build without it;
 - if LLVM is used you are asked if you want to build swr;
-- if LLVM is used and if you didn't opt-in for express configuration you are asked if you want to build graw;
 - if you want to do a clean build;
 - if you want to organize binaries in a single location (distribution creation).
 

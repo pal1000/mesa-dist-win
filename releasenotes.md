@@ -4,7 +4,8 @@
 - Always print Mesa3D build command on screen;
 - Support express configuration of Mesa3D build;
 - Workaround Mesa3D bug [106843](https://bugs.freedesktop.org/show_bug.cgi?id=106843) affecting Mesa3D build when GLES is enabled using an ugly hack I'd like to drop ASAP;
-- Allow building graw without LLVM.
+- Allow building graw without LLVM;
+- Update build script documentation.
 ### General
 - GLES and GLAPI support.
 ### End-user guide
