@@ -5,7 +5,8 @@
 - Support express configuration of Mesa3D build;
 - Workaround Mesa3D bug [106843](https://bugs.freedesktop.org/show_bug.cgi?id=106843) affecting Mesa3D build when GLES is enabled using an ugly hack I'd like to drop ASAP;
 - Allow building graw without LLVM;
-- Update build script documentation.
+- Update build script documentation;
+- Switch Mesa3D source code acquisition to Freedesktop Gitlab.
 ### General
 - GLES and GLAPI support.
 ### End-user guide
