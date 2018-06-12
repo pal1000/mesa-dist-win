@@ -3,7 +3,8 @@
 - Workaround a pip v10.0.1 bug by nuking pip cache. The cache processing bug throws a warning that permanently changes the text color to yellow;
 - Always print Mesa3D build command on screen;
 - Support express configuration of Mesa3D build;
-- Workaround Mesa3D bug [106843](https://bugs.freedesktop.org/show_bug.cgi?id=106843) affecting Mesa3D build when GLES is enabled using an ugly hack I'd like to drop ASAP.
+- Workaround Mesa3D bug [106843](https://bugs.freedesktop.org/show_bug.cgi?id=106843) affecting Mesa3D build when GLES is enabled using an ugly hack I'd like to drop ASAP;
+- Allow building graw without LLVM.
 ### General
 - GLES and GLAPI support.
 ### End-user guide

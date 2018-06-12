@@ -60,21 +60,26 @@ GOTO skipmesa
 @if %pythonver%==2 set buildcmd=%pythonloc% %pythonloc:~0,-10%Scripts\scons.py build=release platform=windows machine=%longabi%
 @if %pythonver%==2 set sconscmd=%buildcmd%
 @if %pythonver% GEQ 3 set buildcmd=%mesonloc% . .\build\windows-%longabi% --backend=vs2017
-@set /p expressmesabuild=Do you want to build Mesa with quick configuration - libgl-gdi, graw-gdi, graw-null, tests, osmesa and GLAPI and OpenGL ES if GLES enabled:
+@set /p expressmesabuild=Do you want to build Mesa with quick configuration - libgl-gdi, graw-gdi, graw-null, tests, osmesa and GLAPI + OpenGL ES if GLES enabled:
 @echo.
 @if %pythonver%==2 IF /I NOT "%expressmesabuild%"=="y" set buildcmd=%buildcmd% libgl-gdi
-@set /p gles=Do you want to build GLAPI and GLES support (y/n):
+@set /p gles=Do you want to build GLAPI shared library and GLES support (y/n):
 @echo.
 @if %pythonver%==2 if /I "%gles%"=="y" set buildcmd=%buildcmd% gles=1
 @set osmesa=n
 @IF /I NOT "%expressmesabuild%"=="y" set /p osmesa=Do you want to build off-screen rendering drivers (y/n):
 @IF /I NOT "%expressmesabuild%"=="y" echo.
+@if %pythonver%==2 IF /I NOT "%expressmesabuild%"=="y" IF /I "%osmesa%"=="y" set buildcmd=%buildcmd% osmesa
 @IF /I "%expressmesabuild%"=="y" set osmesa=y
-@if %pythonver%==2 if /I "%osmesa%"=="y" IF /I NOT "%expressmesabuild%"=="y" set buildcmd=%buildcmd% osmesa
+@set graw=n
+@IF /I NOT "%expressmesabuild%"=="y" set /p graw=Do you want to build graw library (y/n):
+@IF /I NOT "%expressmesabuild%"=="y" echo.
+@if %pythonver%==2 if /I "%graw%"=="y" IF /I NOT "%expressmesabuild%"=="y" set buildcmd=%buildcmd% graw-gdi
+@IF /I "%expressmesabuild%"=="y" set graw=y
 @set llvmless=n
-@if EXIST %LLVM% set /p llvmless=Build Mesa without LLVM (y/n). Only softpipe and osmesa will be available:
+@if EXIST %LLVM% set /p llvmless=Build Mesa without LLVM (y/n). llvmpipe and swr drivers and high performance JIT won't be available for other drivers and libraries:
 @if EXIST %LLVM% echo.
-@if NOT EXIST %LLVM% set /p llvmless=Build Mesa without LLVM (y=yes/q=quit). Only softpipe and osmesa will be available:
+@if NOT EXIST %LLVM% set /p llvmless=Build Mesa without LLVM (y=yes/q=quit). llvmpipe and swr drivers and high performance JIT won't be available for other drivers and libraries:
 @if NOT EXIST %LLVM% echo.
 @if %pythonver%==2 if /I "%llvmless%"=="y" set buildcmd=%buildcmd% llvm=no
 @if /I "%llvmless%"=="y" GOTO build_mesa
@@ -84,11 +89,6 @@ GOTO skipmesa
 @if %abi%==x64 set /p swrdrv=Do you want to build swr drivers? (y=yes):
 @if %abi%==x64 echo.
 @if %pythonver%==2 if /I "%swrdrv%"=="y" set buildcmd=%buildcmd% swr=1
-@set graw=n
-@IF /I NOT "%expressmesabuild%"=="y" set /p graw=Do you want to build graw library (y/n):
-@IF /I NOT "%expressmesabuild%"=="y" echo.
-@IF /I "%expressmesabuild%"=="y" set graw=y
-@if %pythonver%==2 if /I "%graw%"=="y" IF /I NOT "%expressmesabuild%"=="y" set buildcmd=%buildcmd% graw-gdi
 
 :build_mesa
 @if %pythonver%==2 IF %flexstate%==1 set PATH=%mesa%\flexbison\;%PATH%
@@ -107,7 +107,8 @@ GOTO skipmesa
 @%buildcmd%
 @echo.
 
-@if %pythonver%==2 IF /I NOT "%gles%"=="y" IF /I NOT "%osmesa%"=="y" GOTO skipmesa
+@if %pythonver%==2 IF /I NOT "%gles%"=="y" GOTO skipmesa
+@if %pythonver%==2 IF /I "%gles%"=="y" IF /I NOT "%osmesa%"=="y" GOTO skipmesa
 @if %pythonver% GEQ 3 cmd
 
 @pause
