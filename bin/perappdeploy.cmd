@@ -68,10 +68,10 @@ if '%errorlevel%' NEQ '0' (
 @echo.
 
 :desktopgl
-@set nodesktopgl=n
-@set /p nodesktopgl=I don't need Desktop OpenGL drivers (y/n, defaults to no):
+@set desktopgl=y
+@set /p desktopgl=Do you want Desktop OpenGL drivers (y/n, defaults to yes):
 @echo.
-@IF /I "%nodesktopgl%"=="y" GOTO osmesa
+@IF /I "%desktopgl%"=="n" GOTO opengles
 @IF EXIST "%dir%\opengl32.dll" echo Updated softpipe and llvmpipe deployment.
 @IF EXIST "%dir%\opengl32.dll" del "%dir%\opengl32.dll"
 @IF EXIST "%dir%\libglapi.dll" del "%dir%\libglapi.dll"
@@ -79,10 +79,10 @@ if '%errorlevel%' NEQ '0' (
 @mklink "%dir%\libglapi.dll" "%mesaloc%\%mesadll%\libglapi.dll"
 @echo.
 @set swr=n
-@if NOT %mesadll%==x64 GOTO osmesa
+@if NOT %mesadll%==x64 GOTO opengles
 @set /p swr=Do you want swr driver - the new desktop OpenGL driver made by Intel (y/n):
 @echo.
-@IF /I NOT "%swr%"=="y" GOTO osmesa
+@IF /I NOT "%swr%"=="y" GOTO opengles
 @if EXIST "%dir%\swrAVX.dll" echo Updated swr driver deployment.
 @if EXIST "%dir%\swrAVX.dll" GOTO deployswr
 @if EXIST "%dir%\swrAVX2.dll" echo Updated swr driver deployment.
@@ -94,6 +94,14 @@ if '%errorlevel%' NEQ '0' (
 @mklink "%dir%\swrAVX.dll" "%mesaloc%\x64\swrAVX.dll"
 @mklink "%dir%\swrAVX2.dll" "%mesaloc%\x64\swrAVX2.dll"
 @echo.
+
+:opengles
+@set /p opengles=Do you need OpenGL ES support (y/n):
+@IF /I NOT "%opengles%"=="y" GOTO osmesa
+@if EXIST "%dir%\libGLESv1_CM.dll" del "%dir%\libGLESv1_CM.dll"
+@if EXIST "%dir%\libGLESv2.dll" del "%dir%\libGLESv2.dll"
+@mklink "%dir%\libGLESv1_CM.dll" "%mesaloc%\%mesadll%\libGLESv1_CM.dll"
+@mklink "%dir%\libGLESv2.dll" "%mesaloc%\%mesadll%\libGLESv2.dll"
 
 :osmesa
 @set osmesatype=n

@@ -34,11 +34,15 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 [Files]
 Source: "bin\x86\opengl32.dll"; DestDir: "{app}\x86"; Flags: ignoreversion
 Source: "bin\x86\libglapi.dll"; DestDir: "{app}\x86"; Flags: ignoreversion
+Source: "bin\x86\libGLESv1_CM.dll"; DestDir: "{app}\x86"; Flags: ignoreversion
+Source: "bin\x86\libGLESv2.dll"; DestDir: "{app}\x86"; Flags: ignoreversion
 Source: "bin\x86\osmesa-gallium\osmesa.dll"; DestDir: "{app}\x86\osmesa-gallium"; Flags: ignoreversion
 Source: "bin\x86\osmesa-swrast\osmesa.dll"; DestDir: "{app}\x86\osmesa-swrast"; Flags: ignoreversion
 Source: "bin\x86\graw.dll"; DestDir: "{app}\x86"; Flags: ignoreversion
 Source: "bin\x64\opengl32.dll"; DestDir: "{app}\x64"; Flags: ignoreversion; Check: Is64BitInstallMode
 Source: "bin\x64\libglapi.dll"; DestDir: "{app}\x64"; Flags: ignoreversion; Check: Is64BitInstallMode
+Source: "bin\x64\libGLESv1_CM.dll"; DestDir: "{app}\x64"; Flags: ignoreversion; Check: Is64BitInstallMode
+Source: "bin\x64\libGLESv2.dll"; DestDir: "{app}\x64"; Flags: ignoreversion; Check: Is64BitInstallMode
 Source: "bin\x64\swrAVX.dll"; DestDir: "{app}\x64"; Flags: ignoreversion; Check: Is64BitInstallMode
 Source: "bin\x64\swrAVX2.dll"; DestDir: "{app}\x64"; Flags: ignoreversion; Check: Is64BitInstallMode
 Source: "bin\x64\osmesa-gallium\osmesa.dll"; DestDir: "{app}\x64\osmesa-gallium"; Flags: ignoreversion; Check: Is64BitInstallMode
@@ -53,11 +57,15 @@ Source: "bin\readme.txt"; DestDir: "{app}"
 [UninstallDelete]
 Type: files; Name: "{app}\x86\opengl32.dll"
 Type: files; Name: "{app}\x86\libglapi.dll"
+Type: files; Name: "{app}\x86\libGLESv1_CM.dll"
+Type: files; Name: "{app}\x86\libGLESv2.dll"
 Type: files; Name: "{app}\x86\graw.dll";
 Type: files; Name: "{app}\x86\osmesa-gallium\osmesa.dll"
 Type: files; Name: "{app}\x86\osmesa-swrast\osmesa.dll"
 Type: files; Name: "{app}\x64\opengl32.dll"; Check: Is64BitInstallMode
 Type: files; Name: "{app}\x64\libglapi.dll"; Check: Is64BitInstallMode
+Type: files; Name: "{app}\x64\libGLESv1_CM.dll"; Check: Is64BitInstallMode
+Type: files; Name: "{app}\x64\libGLESv2.dll"; Check: Is64BitInstallMode
 Type: files; Name: "{app}\x64\swrAVX.dll"; Check: Is64BitInstallMode
 Type: files; Name: "{app}\x64\swrAVX2.dll"; Check: Is64BitInstallMode
 Type: files; Name: "{app}\x64\osmesa-gallium\osmesa.dll"; Check: Is64BitInstallMode

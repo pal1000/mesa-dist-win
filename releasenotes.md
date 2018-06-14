@@ -9,7 +9,7 @@
 - Switch Mesa3D source code acquisition to Freedesktop Gitlab;
 - Floating-pont textures, renderbuffers and OpenMP support
 ### General
-- GLES and GLAPI support.
+- GLES, GLAPI and OpenGL ES support.
 ### End-user guide
 - Document an issue with Virtualbox VMs that may happen if Mesa3D desktop OpenGL driver is installed inside the VM using system-wide deployment tool.
 # 18.1.1.600-1
