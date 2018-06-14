@@ -81,13 +81,15 @@ The script acts like a Wizard asking questions during execution:
 - if Git is installed and Mesa code is missing it asks if you want to download Mesa code using Git and build;
 - if you intend to download Mesa using Git, you are asked to specify which branch (valid entries: 17.2, 17.3 ...);
 - if you want to build Mesa3D if you weren't asked already;
-- if you want to do an express configuration of Mesa build which includes libgl-gdi, graw-gdi, graw-null and osmesa targets by default with swr, GLES and OpenGL ES support opt-in;
-- if you want to build GLAPI, GLES and OpenGL ES support;
-- if you didn't opt-in for express configuration you are asked if you want to build off-screen rendering driver(s);
-- if you didn't opt-in for express configuration you are asked if you want to build graw;
 - if LLVM is available it asks if you want to use it;
 - if LLVM is missing it asks if you want to build without it;
-- if LLVM is used you are asked if you want to build swr;
+- if you want to build Mesa3D with OpenMP support;
+- if you want to build Mesa3D with floating-point textures and renderbuffers support;
+- if LLVM is used and if it's a 64-bit build you are asked if you want to build swr;
+- if you want to build GLAPI, GLES and OpenGL ES support;
+- if you want to do an express configuration of Mesa3D build which includes libgl-gdi, graw-gdi, graw-null and osmesa targets by default with swr, GLES and OpenGL ES support opt-in;
+- if you didn't opt-in for express configuration you are asked if you want to build off-screen rendering driver(s);
+- if you didn't opt-in for express configuration you are asked if you want to build graw;
 - if you want to do a clean build;
 - if you want to organize binaries in a single location (distribution creation).
 

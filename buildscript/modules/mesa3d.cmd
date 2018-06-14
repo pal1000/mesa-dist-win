@@ -58,37 +58,51 @@ GOTO skipmesa
 @rem Configure Mesa build.
 
 @if %pythonver%==2 set buildcmd=%pythonloc% %pythonloc:~0,-10%Scripts\scons.py build=release platform=windows machine=%longabi%
-@if %pythonver%==2 set sconscmd=%buildcmd%
 @if %pythonver% GEQ 3 set buildcmd=%mesonloc% . .\build\windows-%longabi% --backend=vs2017
-@set /p expressmesabuild=Do you want to build Mesa with quick configuration - libgl-gdi, graw-gdi, graw-null, tests, osmesa and GLAPI + OpenGL ES if GLES enabled:
-@echo.
-@if %pythonver%==2 IF /I NOT "%expressmesabuild%"=="y" set buildcmd=%buildcmd% libgl-gdi
-@set /p gles=Do you want to build GLAPI shared library and GLES support (y/n):
-@echo.
-@if %pythonver%==2 if /I "%gles%"=="y" set buildcmd=%buildcmd% gles=1
-@set osmesa=n
-@IF /I NOT "%expressmesabuild%"=="y" set /p osmesa=Do you want to build off-screen rendering drivers (y/n):
-@IF /I NOT "%expressmesabuild%"=="y" echo.
-@if %pythonver%==2 IF /I NOT "%expressmesabuild%"=="y" IF /I "%osmesa%"=="y" set buildcmd=%buildcmd% osmesa
-@IF /I "%expressmesabuild%"=="y" set osmesa=y
-@set graw=n
-@IF /I NOT "%expressmesabuild%"=="y" set /p graw=Do you want to build graw library (y/n):
-@IF /I NOT "%expressmesabuild%"=="y" echo.
-@if %pythonver%==2 if /I "%graw%"=="y" IF /I NOT "%expressmesabuild%"=="y" set buildcmd=%buildcmd% graw-gdi
-@IF /I "%expressmesabuild%"=="y" set graw=y
+
 @set llvmless=n
 @if EXIST %LLVM% set /p llvmless=Build Mesa without LLVM (y/n). llvmpipe and swr drivers and high performance JIT won't be available for other drivers and libraries:
 @if EXIST %LLVM% echo.
 @if NOT EXIST %LLVM% set /p llvmless=Build Mesa without LLVM (y=yes/q=quit). llvmpipe and swr drivers and high performance JIT won't be available for other drivers and libraries:
 @if NOT EXIST %LLVM% echo.
 @if %pythonver%==2 if /I "%llvmless%"=="y" set buildcmd=%buildcmd% llvm=no
-@if /I "%llvmless%"=="y" GOTO build_mesa
 @if /I NOT "%llvmless%"=="y" if NOT EXIST %LLVM% echo User refused to build Mesa without LLVM.
 @if /I NOT "%llvmless%"=="y" if NOT EXIST %LLVM% GOTO skipmesa
+
+@set /p openmp=Build Mesa3D with OpenMP. It may help performance (y/n):
+@echo.
+@if %pythonver%==2 if /I "%openmp%"=="y" set buildcmd=%buildcmd% openmp=1
+
+@set /p texturefloat=Build Mesa3D with floating-point textures and renderbuffers (y/n):
+@echo.
+@if %pythonver%==2 if /I "%texturefloat%"=="y" set buildcmd=%buildcmd% texture_float=1
+
+@if %pythonver%==2 set rootbuildcmd=%buildcmd%
+
 @set swrdrv=n
-@if %abi%==x64 set /p swrdrv=Do you want to build swr drivers? (y=yes):
-@if %abi%==x64 echo.
+@if /I NOT "%llvmless%"=="y" if %abi%==x64 if EXIST %LLVM% set /p swrdrv=Do you want to build swr drivers? (y=yes):
+@if /I NOT "%llvmless%"=="y" if %abi%==x64 if EXIST %LLVM% echo.
 @if %pythonver%==2 if /I "%swrdrv%"=="y" set buildcmd=%buildcmd% swr=1
+
+@set /p gles=Do you want to build GLAPI shared library and GLES support (y/n):
+@echo.
+@if %pythonver%==2 if /I "%gles%"=="y" set buildcmd=%buildcmd% gles=1
+
+@set /p expressmesabuild=Do you want to build Mesa with quick configuration - includes libgl-gdi, graw-gdi, graw-null, tests, osmesa and GLAPI + OpenGL ES if GLES enabled:
+@echo.
+@if %pythonver%==2 IF /I NOT "%expressmesabuild%"=="y" set buildcmd=%buildcmd% libgl-gdi
+
+@set osmesa=n
+@IF /I NOT "%expressmesabuild%"=="y" set /p osmesa=Do you want to build off-screen rendering drivers (y/n):
+@IF /I NOT "%expressmesabuild%"=="y" echo.
+@if %pythonver%==2 IF /I NOT "%expressmesabuild%"=="y" IF /I "%osmesa%"=="y" set buildcmd=%buildcmd% osmesa
+@IF /I "%expressmesabuild%"=="y" set osmesa=y
+
+@set graw=n
+@IF /I NOT "%expressmesabuild%"=="y" set /p graw=Do you want to build graw library (y/n):
+@IF /I NOT "%expressmesabuild%"=="y" echo.
+@if %pythonver%==2 if /I "%graw%"=="y" IF /I NOT "%expressmesabuild%"=="y" set buildcmd=%buildcmd% graw-gdi
+@IF /I "%expressmesabuild%"=="y" set graw=y
 
 :build_mesa
 @if %pythonver%==2 IF %flexstate%==1 set PATH=%mesa%\flexbison\;%PATH%
@@ -118,9 +132,9 @@ GOTO skipmesa
 @IF EXIST %mesa%\build\windows-%longabi%\bin\opengl32.dll del %mesa%\build\windows-%longabi%\bin\opengl32.dll
 @copy %mesa%\build\windows-%longabi%\gallium\targets\libgl-gdi\opengl32.dll %mesa%\build\windows-%longabi%\bin
 @echo.
-@echo Second stage build command: %sconscmd% libgl-gdi osmesa
+@echo Second stage build command: %rootbuildcmd% libgl-gdi osmesa
 @echo.
-@%sconscmd% libgl-gdi osmesa
+@%rootbuildcmd% libgl-gdi osmesa
 @echo.
 @pause
 @echo.
