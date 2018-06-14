@@ -53,6 +53,7 @@ GOTO skipmesa
 @rem finally build again libgl-gdi and osmesa without GLES. Caveat: osmesa will not have GLES support and it may no longer
 @rem work with swr. In the end restore the original libgl-gdi with GLES support.
 @git apply -v ..\mesa-dist-win\patches\osmesa.patch
+@echo.
 
 :configmesabuild
 @rem Configure Mesa build.
@@ -129,8 +130,8 @@ GOTO skipmesa
 @echo Beginning 2nd build pass
 @echo.
 @echo Backing softpipe+llvmpipe drivers having GLES support
-@IF EXIST %mesa%\build\windows-%longabi%\bin\opengl32.dll del %mesa%\build\windows-%longabi%\bin\opengl32.dll
-@copy %mesa%\build\windows-%longabi%\gallium\targets\libgl-gdi\opengl32.dll %mesa%\build\windows-%longabi%\bin
+@IF EXIST %mesa%\mesa\build\windows-%longabi%\bin\opengl32.dll del %mesa%\mesa\build\windows-%longabi%\bin\opengl32.dll
+@copy %mesa%\mesa\build\windows-%longabi%\gallium\targets\libgl-gdi\opengl32.dll %mesa%\mesa\build\windows-%longabi%\bin
 @echo.
 @echo Second stage build command: %rootbuildcmd% libgl-gdi osmesa
 @echo.
@@ -140,8 +141,8 @@ GOTO skipmesa
 @echo.
 @echo Replace softpipe+llvpipe without GLES support from pass 2 with ones from pass 1
 @echo.
-@del %mesa%\build\windows-%longabi%\gallium\targets\libgl-gdi\opengl32.dll
-@copy %mesa%\build\windows-%longabi%\bin\opengl32.dll %mesa%\build\windows-%longabi%\gallium\targets\libgl-gdi
+@del %mesa%\mesa\build\windows-%longabi%\gallium\targets\libgl-gdi\opengl32.dll
+@copy %mesa%\mesa\build\windows-%longabi%\bin\opengl32.dll %mesa%\mesa\build\windows-%longabi%\gallium\targets\libgl-gdi
 @echo.
 
 :skipmesa
