@@ -1,4 +1,13 @@
 # Next release
+### New features
+- GLES, GLAPI and OpenGL ES support;
+- Enable OpenMP.
+### Known issues
+- If you used per-app deployment to deploy Mesa3D desktop OpenGL driver you may encounter an error mentioning `libglapi.dll`. To fix it just do a re-deploy of the desktop OpenGL driver. If you don't remember if an affected program is 32-bit or 64-bit, right click on opengl32.dll shortcut in the folder where the program executable is located and select open file location. If the location ends in x64 then it's 64-bit otherwise it's 32-bit;
+- osmesa doesn't have GLES support, also it is no longer linked with swr. This is due to workaround for [Mesa bug 106843](https://bugs.freedesktop.org/show_bug.cgi?id=106843) which affects Mesa3D builds with GLES support since at least [2012](https://lists.freedesktop.org/archives/mesa-users/2012-May/000431.html).
+### End-user guide
+- Document an issue with Virtualbox VMs that may happen if Mesa3D desktop OpenGL driver is installed inside the VM using system-wide deployment tool;
+- Document known issues and OpenGL ES support.
 ### Build script
 - Workaround a pip v10.0.1 bug by nuking pip cache. The cache processing bug throws a warning that permanently changes the text color to yellow;
 - Always print Mesa3D build command on screen;
@@ -7,11 +16,9 @@
 - Allow building graw without LLVM;
 - Update build script documentation;
 - Switch Mesa3D source code acquisition to Freedesktop Gitlab;
-- Floating-pont textures, renderbuffers and OpenMP support
-### General
-- GLES, GLAPI and OpenGL ES support.
-### End-user guide
-- Document an issue with Virtualbox VMs that may happen if Mesa3D desktop OpenGL driver is installed inside the VM using system-wide deployment tool.
+- Floating-pont textures, renderbuffers and OpenMP support.
+### Build environment update
+- Update build configuration.
 # 18.1.1.600-1
 - Updated Mesa3D to [18.1.1](https://www.mesa3d.org/relnotes/18.1.1.html).
 ### End user guide
