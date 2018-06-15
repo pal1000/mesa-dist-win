@@ -57,5 +57,5 @@ Git For Windows portable | 2.17.1.2
 ### Mesa3D
 | | |
 |-|-|
-Build config and execute x64 [4] | scons build=release platform=windows machine=x86_64 libgl-gdi osmesa gles=1 swr=1 graw-gdi
-Build config and execute x86 [4] | scons build=release platform=windows machine=x86 libgl-gdi osmesa gles=1 graw-gdi
+Build config and execute x64 [4] | scons build=release platform=windows machine=x86_64 openmp=1 swr=1 gles=1 & copy build\windows-x86_64\gallium\targets\libgl-gdi\opengl32.dll build\windows-x86_64\bin & scons build=release platform=windows machine=x86_64 openmp=1 libgl-gdi osmesa & copy build\windows-x86_64\bin\opengl32.dll build\windows-x86_64\gallium\targets\libgl-gdi
+Build config and execute x86 [4] | scons build=release platform=windows machine=x86 openmp=1 gles=1 & copy build\windows-x86\gallium\targets\libgl-gdi\opengl32.dll build\windows-x86\bin & scons build=release platform=windows machine=x86 openmp=1 libgl-gdi osmesa & copy build\windows-x86\bin\opengl32.dll build\windows-x86\gallium\targets\libgl-gdi
