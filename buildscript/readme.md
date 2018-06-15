@@ -86,8 +86,8 @@ The script acts like a Wizard asking questions during execution:
 - if you want to build Mesa3D with OpenMP support;
 - if you want to build Mesa3D with floating-point textures and renderbuffers support;
 - if LLVM is used and if it's a 64-bit build you are asked if you want to build swr;
-- if you want to build GLAPI, GLES and OpenGL ES support;
-- if you want to do an express configuration of Mesa3D build which includes libgl-gdi, graw-gdi, graw-null and osmesa targets by default with swr, GLES and OpenGL ES support opt-in;
+- if you want to build GLAPI and GLES support;
+- if you want to do an express configuration of Mesa3D build which includes libgl-gdi, graw-gdi, graw-null and osmesa targets by default with OpenGL ES added if GLES and GLAPI support is enabled;
 - if you didn't opt-in for express configuration you are asked if you want to build off-screen rendering driver(s);
 - if you didn't opt-in for express configuration you are asked if you want to build graw;
 - if you want to do a clean build;
@@ -110,11 +110,11 @@ Mesa llvmpipe and softpipe drivers are dropped in:
 
 and are both named opengl32.dll.
 
-Mesa GLAPI shared libraries are dropped in:
+Mesa GLAPI shared libraries and OpenGL ES drivers are dropped in:
 - for 32-bit: .\mesa\build\windows-x86\mapi\shared-glapi;
 - for 64-bit: .\mesa\build\windows-x86_64\mapi\shared-glapi.
 
-and are both named libglapi.dll.
+Both shared libraries are named libglapi.dll. OpenGL ES 1.x drivers are named libGLESv1_CM.dll and OpenGL ES 2.0 and 3.0 drivers are named libGLESv2.dll.
 
 Mesa swr drivers are dropped in.\mesa\build\windows-x86_64\gallium\drivers\swr.
 
