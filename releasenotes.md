@@ -1,3 +1,6 @@
+# 18.1.2.600-2
+### Deployment
+- Per application deployment: validate program location.
 # 18.1.2.600-1
 - Updated Mesa3D to [18.1.2](https://www.mesa3d.org/relnotes/18.1.2.html).
 ### New features

@@ -58,6 +58,10 @@ if '%errorlevel%' NEQ '0' (
 @echo manually.
 @echo.
 @set /p dir=Path to folder holding application executable:
+@IF NOT EXIST "%dir%" echo.
+@IF NOT EXIST "%dir%" echo Error: That location doesn't exist.
+@IF NOT EXIST "%dir%" pause
+@IF NOT EXIST "%dir%" GOTO deploy
 @echo.
 @set mesadll=x86
 @if /I NOT %PROCESSOR_ARCHITECTURE%==AMD64 GOTO desktopgl
@@ -102,6 +106,7 @@ if '%errorlevel%' NEQ '0' (
 @if EXIST "%dir%\libGLESv2.dll" del "%dir%\libGLESv2.dll"
 @mklink "%dir%\libGLESv1_CM.dll" "%mesaloc%\%mesadll%\libGLESv1_CM.dll"
 @mklink "%dir%\libGLESv2.dll" "%mesaloc%\%mesadll%\libGLESv2.dll"
+@echo.
 
 :osmesa
 @set osmesatype=n
