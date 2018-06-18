@@ -1,3 +1,10 @@
+# Next release
+### New features
+- Enabled texture float and renderbuffers as patent expired on 6/17/2018.
+### Build script
+- Improve osmesa dual pass build workaround hack to minimize regression. osmesa classic should have integration with other drivers fully restored. Also there is no need to backup and restore softpipe and llvmpipe anymore.
+### Build environment updates
+- cmake 3.11.3 -> 3.11.4.
 # 18.1.2.600-2
 ### Deployment
 - Per application deployment: validate program location.
