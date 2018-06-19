@@ -26,12 +26,15 @@ GOTO skipmesa
 @if NOT EXIST mesa if /i "%buildmesa%"=="y" echo.
 @if NOT EXIST mesa if /i NOT "%buildmesa%"=="y" GOTO skipmesa
 @if NOT EXIST mesa set branch=master
-@if NOT EXIST mesa set /p branch=Enter Mesa source code branch name - defaults to master:
+@if NOT EXIST mesa IF %pythonver%==2 set /p branch=Enter Mesa source code branch name - defaults to master:
+@if NOT EXIST mesa IF %pythonver%==2 echo.
+@if NOT EXIST mesa IF %pythonver%==2 set mesarepo=https://gitlab.freedesktop.org/mesa/mesa.git
+@if NOT EXIST mesa IF %pythonver% GEQ 3 set mesarepo=git://people.freedesktop.org/~dbaker/mesa
+@if NOT EXIST mesa IF %pythonver% GEQ 3 set branch=meson-windows
+@if NOT EXIST mesa git clone --recurse-submodules --depth=1 --branch=%branch% %mesarepo% mesa
 @if NOT EXIST mesa echo.
-@if NOT EXIST mesa (
-@git clone --recurse-submodules --depth=1 --branch=%branch% https://gitlab.freedesktop.org/mesa/mesa.git mesa
-@echo.
-)
+
+@REM Collect information about Mesa3D code. Apply patches
 @if EXIST mesa if /i NOT "%buildmesa%"=="y" set /p buildmesa=Begin mesa build. Proceed (y/n):
 @if EXIST mesa if /i "%buildmesa%"=="y" echo.
 @if /i NOT "%buildmesa%"=="y" GOTO skipmesa
@@ -47,19 +50,18 @@ GOTO skipmesa
 @echo 1 > mesapatched.ini
 @echo.
 
-@rem Initially disable osmesa when building with GLES due to build failure
-@rem https://bugs.freedesktop.org/show_bug.cgi?id=106843
-@rem We'll do a 2-pass build in this case. Build everything requested except osmesa with GLES, backup libgl-gdi and
-@rem finally build again libgl-gdi and osmesa without GLES. Caveat: osmesa will not have GLES support and it may no longer
-@rem work with swr. In the end restore the original libgl-gdi with GLES support.
-@git apply -v ..\mesa-dist-win\patches\osmesa.patch
+@rem Apply a patch that disables osmesa gallium and cuts off GLES from osmesa classic when building with Scons
+@rem when GLES is enabled due to build failure - https://bugs.freedesktop.org/show_bug.cgi?id=106843
+@rem We'll do a 2-pass build in this case. Build everything requested without GLES, then build everything again with GLES
+@rem having osmesa gallium disabled via patch.
+@IF %pythonver%==2 git apply -v ..\mesa-dist-win\patches\osmesa.patch
 @echo.
 
 :configmesabuild
 @rem Configure Mesa build.
 
 @if %pythonver%==2 set buildcmd=%pythonloc% %pythonloc:~0,-10%Scripts\scons.py build=release platform=windows machine=%longabi% texture_float=1
-@if %pythonver% GEQ 3 set buildcmd=%mesonloc% . .\build\windows-%longabi% --backend=vs2017
+@if %pythonver% GEQ 3 set buildcmd=%mesonloc% . .\build\windows-%longabi% --backend=vs2017 --buildtype=release
 
 @set llvmless=n
 @if EXIST %LLVM% set /p llvmless=Build Mesa without LLVM (y/n). llvmpipe and swr drivers and high performance JIT won't be available for other drivers and libraries:
