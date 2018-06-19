@@ -63,6 +63,12 @@ GOTO skipmesa
 @if %pythonver%==2 set buildcmd=%pythonloc% %pythonloc:~0,-10%Scripts\scons.py build=release platform=windows machine=%longabi% texture_float=1
 @if %pythonver% GEQ 3 set buildcmd=%mesonloc% . .\build\windows-%longabi% --backend=vs2017 --buildtype=release
 
+@set ninja=n
+@if %pythonver% GEQ 3 if NOT %ninjastate%==0 set /p ninja=Use Ninja build system instead of MsBuild (y/n); less storage device strain and maybe faster build:
+@if %pythonver% GEQ 3 if NOT %ninjastate%==0 echo.
+@if /I "%ninja%"=="y" if %ninjastate%==1 set PATH=%mesa%\ninja\;%PATH%
+@if /I "%ninja%"=="y" set buildcmd=%buildcmd:vs2017=ninja%
+
 @set llvmless=n
 @if EXIST %LLVM% set /p llvmless=Build Mesa without LLVM (y/n). llvmpipe and swr drivers and high performance JIT won't be available for other drivers and libraries:
 @if EXIST %LLVM% echo.
