@@ -70,42 +70,42 @@ GOTO skipmesa
 @if /I "%ninja%"=="y" set buildcmd=%buildcmd:vs2017=ninja%
 
 @set llvmless=n
-@if EXIST %LLVM% set /p llvmless=Build Mesa without LLVM (y/n). llvmpipe and swr drivers and high performance JIT won't be available for other drivers and libraries:
-@if EXIST %LLVM% echo.
-@if NOT EXIST %LLVM% set /p llvmless=Build Mesa without LLVM (y=yes/q=quit). llvmpipe and swr drivers and high performance JIT won't be available for other drivers and libraries:
-@if NOT EXIST %LLVM% echo.
+@if %pythonver%==2 if EXIST %LLVM% set /p llvmless=Build Mesa without LLVM (y/n). llvmpipe and swr drivers and high performance JIT won't be available for other drivers and libraries:
+@if %pythonver%==2 if EXIST %LLVM% echo.
+@if %pythonver%==2 if NOT EXIST %LLVM% set /p llvmless=Build Mesa without LLVM (y=yes/q=quit). llvmpipe and swr drivers and high performance JIT won't be available for other drivers and libraries:
+@if %pythonver%==2 if NOT EXIST %LLVM% echo.
 @if %pythonver%==2 if /I "%llvmless%"=="y" set buildcmd=%buildcmd% llvm=no
-@if /I NOT "%llvmless%"=="y" if NOT EXIST %LLVM% echo User refused to build Mesa without LLVM.
-@if /I NOT "%llvmless%"=="y" if NOT EXIST %LLVM% GOTO skipmesa
+@if %pythonver%==2 if /I NOT "%llvmless%"=="y" if NOT EXIST %LLVM% echo User refused to build Mesa without LLVM.
+@if %pythonver%==2 if /I NOT "%llvmless%"=="y" if NOT EXIST %LLVM% GOTO skipmesa
 
-@set /p openmp=Build Mesa3D with OpenMP. Faster build and smaller binaries (y/n):
-@echo.
+@if %pythonver%==2 set /p openmp=Build Mesa3D with OpenMP. Faster build and smaller binaries (y/n):
+@if %pythonver%==2 echo.
 @if %pythonver%==2 if /I "%openmp%"=="y" set buildcmd=%buildcmd% openmp=1
 
 @set swrdrv=n
-@if /I NOT "%llvmless%"=="y" if %abi%==x64 if EXIST %LLVM% set /p swrdrv=Do you want to build swr drivers? (y=yes):
-@if /I NOT "%llvmless%"=="y" if %abi%==x64 if EXIST %LLVM% echo.
+@if %pythonver%==2 if /I NOT "%llvmless%"=="y" if %abi%==x64 if EXIST %LLVM% set /p swrdrv=Do you want to build swr drivers? (y=yes):
+@if %pythonver%==2 if /I NOT "%llvmless%"=="y" if %abi%==x64 if EXIST %LLVM% echo.
 @if %pythonver%==2 if /I "%swrdrv%"=="y" set buildcmd=%buildcmd% swr=1
 
-@set /p gles=Do you want to build GLAPI shared library and GLES support (y/n):
-@echo.
+@if %pythonver%==2 set /p gles=Do you want to build GLAPI shared library and GLES support (y/n):
+@if %pythonver%==2 echo.
 @if %pythonver%==2 if /I "%gles%"=="y" set gles=y
 @if %pythonver%==2 if /I NOT "%gles%"=="y" set gles=0
 
-@set /p expressmesabuild=Do you want to build Mesa with quick configuration - includes libgl-gdi, graw-gdi, graw-null, tests, osmesa and GLAPI + OpenGL ES if GLES enabled:
-@echo.
+@if %pythonver%==2 set /p expressmesabuild=Do you want to build Mesa with quick configuration - includes libgl-gdi, graw-gdi, graw-null, tests, osmesa and GLAPI + OpenGL ES if GLES enabled:
+@if %pythonver%==2 echo.
 @if %pythonver%==2 IF /I "%expressmesabuild%"=="y" set mesatargets=.
 @if %pythonver%==2 IF /I NOT "%expressmesabuild%"=="y" set mesatargets=libgl-gdi
 
 @set osmesa=n
-@IF /I NOT "%expressmesabuild%"=="y" set /p osmesa=Do you want to build off-screen rendering drivers (y/n):
-@IF /I NOT "%expressmesabuild%"=="y" echo.
+@if %pythonver%==2 IF /I NOT "%expressmesabuild%"=="y" set /p osmesa=Do you want to build off-screen rendering drivers (y/n):
+@if %pythonver%==2 IF /I NOT "%expressmesabuild%"=="y" echo.
 @if %pythonver%==2 IF /I NOT "%expressmesabuild%"=="y" IF /I "%osmesa%"=="y" set mesatargets=%mesatargets% osmesa
 @IF /I "%expressmesabuild%"=="y" set osmesa=y
 
 @set graw=n
-@IF /I NOT "%expressmesabuild%"=="y" set /p graw=Do you want to build graw library (y/n):
-@IF /I NOT "%expressmesabuild%"=="y" echo.
+@if %pythonver%==2 IF /I NOT "%expressmesabuild%"=="y" set /p graw=Do you want to build graw library (y/n):
+@if %pythonver%==2 IF /I NOT "%expressmesabuild%"=="y" echo.
 @if %pythonver%==2 if /I "%graw%"=="y" IF /I NOT "%expressmesabuild%"=="y" set mesatargets=%mesatargets% graw-gdi
 @IF /I "%expressmesabuild%"=="y" set graw=y
 
@@ -120,6 +120,8 @@ GOTO skipmesa
 @if NOT EXIST build\windows-%longabi%\git_sha1.h echo 0 > build\windows-%longabi%\git_sha1.h
 @echo.
 @if %pythonver% GEQ 3 call %vsenv%
+@if %pythonver% GEQ 3 echo.
+@if %pythonver% GEQ 3 echo Build command stored in buildcmd variable.
 @if %pythonver% GEQ 3 echo.
 @if %pythonver% GEQ 3 cmd
 @if %pythonver%==2 IF /I "%osmesa%"=="y" IF /I "%gles%"=="y" (
