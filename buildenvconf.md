@@ -19,7 +19,7 @@ OS | Windows 10 April 2018 Update Pro x64
 | | |
 |-|-|
 Edition | 2017 Community
-Version | 15.7.3
+Version | 15.7.4
 Windows 10 SDK Version | 10.0.17134.12
 Windows 10 SDK install method | standalone
 ### LLVM
@@ -53,9 +53,11 @@ Flex version | 2.6.4
 ### Git version control
 | | |
 |-|-|
-Git For Windows portable | 2.17.1.2
+Git For Windows portable | 2.18.0.1
 ### Mesa3D
 | | |
 |-|-|
-Build config and execute x64 [4] | scons build=release platform=windows machine=x86_64 openmp=1 swr=1 gles=1 & copy build\windows-x86_64\gallium\targets\libgl-gdi\opengl32.dll build\windows-x86_64\bin & scons build=release platform=windows machine=x86_64 openmp=1 libgl-gdi osmesa & copy build\windows-x86_64\bin\opengl32.dll build\windows-x86_64\gallium\targets\libgl-gdi
-Build config and execute x86 [4] | scons build=release platform=windows machine=x86 openmp=1 gles=1 & copy build\windows-x86\gallium\targets\libgl-gdi\opengl32.dll build\windows-x86\bin & scons build=release platform=windows machine=x86 openmp=1 libgl-gdi osmesa & copy build\windows-x86\bin\opengl32.dll build\windows-x86\gallium\targets\libgl-gdi
+Enable S3TC texture cache [4] | git apply -v ..\mesa-dist-win\patches\s3tc.patch
+osmesa build fix patch - disables GLES in osmesa [4] | git apply -v ..\mesa-dist-win\patches\osmesa.patch
+Build config and execute x64 [4] | scons build=release platform=windows machine=x86_64 texture_float=1 openmp=1 swr=1 gles=0 . & scons build=release platform=windows machine=x86_64 texture_float=1 openmp=1 swr=1 gles=1 .
+Build config and execute x86 [4] | scons build=release platform=windows machine=x86 texture_float=1 openmp=1 gles=0 . & scons build=release platform=windows machine=x86 texture_float=1 openmp=1 gles=1 .

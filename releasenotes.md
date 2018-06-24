@@ -4,7 +4,10 @@
 ### Build script
 - Improve osmesa dual pass build workaround hack to minimize regression. osmesa classic should have integration with other drivers fully restored. Also there is no need to backup and restore softpipe and llvmpipe anymore.
 ### Build environment updates
-- cmake 3.11.3 -> 3.11.4.
+- Update build configuration info to match latest changes;
+- cmake 3.11.3 -> 3.11.4;
+- Visual Studio 15.7.3 -> 15.7.4;
+- git 2.17.1.2 -> 2.18.0.1.
 # 18.1.2.600-2
 ### Deployment
 - Per application deployment: validate program location.
