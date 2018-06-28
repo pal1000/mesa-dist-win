@@ -55,7 +55,7 @@ GOTO skipmesa
 @rem We'll do a 2-pass build in this case. Build everything requested without GLES, then build everything again with GLES
 @rem having osmesa gallium disabled via patch.
 @IF %pythonver%==2 git apply -v ..\mesa-dist-win\patches\osmesa.patch
-@echo.
+@IF %pythonver%==2 echo.
 
 :configmesabuild
 @rem Configure Mesa build.
