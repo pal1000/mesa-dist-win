@@ -6,7 +6,7 @@
 - [OpenGL context configuration override](#opengl-context-configuration-override)
   
 # Downloads
-Mesa 18.1.2 builds are now available in [releases section](https://github.com/pal1000/mesa-dist-win/releases)
+Mesa 18.1.3 builds are now available in [releases section](https://github.com/pal1000/mesa-dist-win/releases)
 
 # Package contents
 The following Mesa3D drivers are shipped in each release:

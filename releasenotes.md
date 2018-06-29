@@ -1,4 +1,5 @@
-# Next release
+# 18.1.3.601-1
+- Updated Mesa3D to [18.1.3](https://www.mesa3d.org/relnotes/18.1.3.html).
 ### New features
 - Enabled texture float and renderbuffers as patent expired on 6/17/2018.
 ### Build script
@@ -7,7 +8,8 @@
 - Update build configuration info to match latest changes;
 - cmake 3.11.3 -> 3.11.4;
 - Visual Studio 15.7.3 -> 15.7.4;
-- git 2.17.1.2 -> 2.18.0.1.
+- git 2.17.1.2 -> 2.18.0.1;
+- LLVM 6.0.0 -> 6.0.1.
 # 18.1.2.600-2
 ### Deployment
 - Per application deployment: validate program location.
