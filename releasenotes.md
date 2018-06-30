@@ -1,3 +1,6 @@
+# Next release
+### End user guide
+- Minor fix related to OpenGL context override.
 # 18.1.3.601-1
 - Updated Mesa3D to [18.1.3](https://www.mesa3d.org/relnotes/18.1.3.html).
 ### New features
