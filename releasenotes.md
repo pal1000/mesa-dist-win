@@ -1,6 +1,8 @@
 # Next release
 ### End user guide
 - Minor fix related to OpenGL context override.
+### Build script
+- Always flush pip cache before updating or installing python modules. I stil get cache parsing errors with Python 3.x
 # 18.1.3.601-1
 - Updated Mesa3D to [18.1.3](https://www.mesa3d.org/relnotes/18.1.3.html).
 ### New features
