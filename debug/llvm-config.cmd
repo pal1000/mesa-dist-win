@@ -1,6 +1,5 @@
-@if EXIST llvm-config-old.txt del llvm-config-old.txt
-@if EXIST llvm-config.txt REN llvm-config.txt llvm-config-old.txt
 @cd ../../
+@for %%a in ("%cd%") do @set mesa=%%~sa
 @IF NOT EXIST llvm GOTO error
 @cd llvm
 @if EXIST x64 (
@@ -16,7 +15,9 @@
 :writedebugoutput
 @IF EXIST bin (
 @cd bin
-@llvm-config --libs engine mcjit bitwriter x86asmprinter irreader > "..\..\..\mesa-dist-win\debug\llvm-config.txt"
+@if EXIST %mesa%\mesa-dist-win\debug\llvm-config-old.txt del %mesa%\mesa-dist-win\debug\llvm-config-old.txt
+@if EXIST %mesa%\mesa-dist-win\debug\llvm-config.txt REN %mesa%\mesa-dist-win\debug\llvm-config.txt %mesa%\mesa-dist-win\debug\llvm-config-old.txt
+@llvm-config --libs engine mcjit bitwriter x86asmprinter irreader > %mesa%\mesa-dist-win\debug\llvm-config.txt
 @echo LLVM config output updated.
 @GOTO finished
 )
