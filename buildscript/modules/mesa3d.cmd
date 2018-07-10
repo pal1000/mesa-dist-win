@@ -29,7 +29,7 @@ GOTO skipmesa
 @if NOT EXIST mesa IF %pythonver%==2 set /p branch=Enter Mesa source code branch name - defaults to master:
 @if NOT EXIST mesa IF %pythonver%==2 echo.
 @if NOT EXIST mesa IF %pythonver%==2 set mesarepo=https://gitlab.freedesktop.org/mesa/mesa.git
-@if NOT EXIST mesa IF %pythonver% GEQ 3 set mesarepo=git://people.freedesktop.org/~dbaker/mesa
+@if NOT EXIST mesa IF %pythonver% GEQ 3 set mesarepo=https://gitlab.freedesktop.org/dbaker/mesa.git
 @if NOT EXIST mesa IF %pythonver% GEQ 3 set branch=meson-windows
 @if NOT EXIST mesa git clone --recurse-submodules --depth=1 --branch=%branch% %mesarepo% mesa
 @if NOT EXIST mesa echo.
