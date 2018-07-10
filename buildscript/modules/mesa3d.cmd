@@ -3,7 +3,7 @@
 @cd %mesa%
 
 @rem Check environment
-@if %pythonver%==2 IF %flexstate%==0 (
+@IF %flexstate%==0 (
 @echo winflexbison is required to build Mesa3D.
 GOTO skipmesa
 )
@@ -110,7 +110,7 @@ GOTO skipmesa
 @IF /I "%expressmesabuild%"=="y" set graw=y
 
 :build_mesa
-@if %pythonver%==2 IF %flexstate%==1 set PATH=%mesa%\flexbison\;%PATH%
+@IF %flexstate%==1 set PATH=%mesa%\flexbison\;%PATH%
 @set cleanbuild=n
 @if EXIST build\windows-%longabi% set /p cleanbuild=Do you want to clean build (y/n):
 @if EXIST build\windows-%longabi% echo.

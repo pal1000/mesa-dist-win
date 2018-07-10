@@ -2,7 +2,8 @@
 ### End user guide
 - Minor fix related to OpenGL context override.
 ### Build script
-- Always flush pip cache before updating or installing python modules. I stil get cache parsing errors with Python 3.x.
+- Always flush pip cache before updating or installing python modules. I stil get cache parsing errors with Python 3.x;
+- winflexbison is required to build Mesa3D regardless of build system used.
 ### llvm-config output grabber
 - Make sure old output snapshot is not destroyed when LLVM binaries are missing.
 # 18.1.3.601-1
