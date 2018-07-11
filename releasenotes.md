@@ -7,7 +7,8 @@
 ### llvm-config output grabber
 - Make sure old output snapshot is not destroyed when LLVM binaries are missing.
 ### Build environment updates
-- setuptools 39.2.0 -> 40.0.0.
+- setuptools 39.2.0 -> 40.0.0;
+- Visual Studio 15.7.4 -> 15.7.5.
 # 18.1.3.601-1
 - Updated Mesa3D to [18.1.3](https://www.mesa3d.org/relnotes/18.1.3.html).
 ### New features

@@ -12,14 +12,14 @@
 |-|-|
 System | [Dell Vostro 2521-9566 Q1 2013](http://www.dell.com/support/home/en/us/robsdt1/product-support/product/vostro-2521)
 CPU | [Intel Core I3-2375M](https://ark.intel.com/products/74259/Intel-Core-i3-2375M-Processor-3M-Cache-1_50-GHz)
-RAM | 4GB DDR3 1600 MHz dual channel
+RAM | 4GB DDR3 1600 MHz
 dGPU | None
 OS | Windows 10 April 2018 Update Pro x64
 ### Visual Studio
 | | |
 |-|-|
 Edition | 2017 Community
-Version | 15.7.4
+Version | 15.7.5
 Windows 10 SDK Version | 10.0.17134.12
 Windows 10 SDK install method | standalone
 ### LLVM

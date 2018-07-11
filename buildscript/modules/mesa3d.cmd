@@ -1,6 +1,7 @@
 @rem Reset PATH and current folder after LLVM build.
 @set PATH=%oldpath%
 @cd %mesa%
+@IF %pythonver% GEQ 3 SET PATH=%mesa%\Python\;%mesa%\pkgconfig\;%PATH%
 
 @rem Check environment
 @IF %flexstate%==0 (
