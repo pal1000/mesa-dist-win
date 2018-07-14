@@ -1,4 +1,5 @@
-# Next release
+# 18.1.4.601-1
+- Updated Mesa3D to [18.1.4](https://www.mesa3d.org/relnotes/18.1.4.html).
 ### End user guide
 - Minor fix related to OpenGL context override.
 ### Build script
