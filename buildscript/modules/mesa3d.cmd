@@ -1,7 +1,6 @@
 @rem Reset PATH and current folder after LLVM build.
 @set PATH=%oldpath%
 @cd %mesa%
-@IF %pythonver% GEQ 3 SET PATH=%mesa%\Python\;%mesa%\pkgconfig\;%PATH%
 
 @rem Check environment
 @IF %flexstate%==0 (
@@ -16,6 +15,9 @@ GOTO skipmesa
 @rem Hide Meson support behind a parametter as it doesn't work yet.
 @IF %enablemeson%==0 if %pythonver% GEQ 3 echo Mesa3D build: Unimplemented code path.
 @IF %enablemeson%==0 if %pythonver% GEQ 3 GOTO skipmesa
+
+@IF %pythonver% GEQ 3 IF %pkgconfigstate%==0 echo pkg-config is required to build Mesa3D with Meson. You can either use mingw-w64 or pkgconfiglite distribution, but mingw-w64 is the only up-to-date distribution.
+@IF %pythonver% GEQ 3 IF %pkgconfigstate%==0 GOTO skipmesa
 
 @REM Aquire Mesa3D source code if missing and enable S3TC texture cache automatically if possible.
 @set buildmesa=n
@@ -63,6 +65,10 @@ GOTO skipmesa
 
 @if %pythonver%==2 set buildcmd=%pythonloc% %pythonloc:~0,-10%Scripts\scons.py build=release platform=windows machine=%longabi% texture_float=1
 @if %pythonver% GEQ 3 set buildcmd=%mesonloc% . .\build\windows-%longabi% --backend=vs2017 --buildtype=release
+@IF %pythonver% GEQ 3 IF %pkgconfigstate%==1 SET PATH=%mesa%\pkgconfig\;%PATH%
+
+@rem Hardcode this until simultaneous dual python support is implemented.
+@IF %pythonver% GEQ 3 SET PATH=%mesa%\Python\;
 
 @set ninja=n
 @if %pythonver% GEQ 3 if NOT %ninjastate%==0 set /p ninja=Use Ninja build system instead of MsBuild (y/n); less storage device strain and maybe faster build:
