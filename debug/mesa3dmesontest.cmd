@@ -9,5 +9,5 @@
 @set buildcmd=ninja -C .\%abi%
 @IF EXIST %mesa%\mesa\%abi% RD /S /Q %mesa%\mesa\%abi%
 @cd mesa
-@IF EXIST %mesa%\llvm\%abi% SET PATH=%mesa%\llvm\%abi%\bin\;%PATH%
+@rem IF EXIST %mesa%\llvm\%abi% SET PATH=%mesa%\llvm\%abi%\bin\;%PATH%
 @cmd
