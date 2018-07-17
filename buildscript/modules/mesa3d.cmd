@@ -78,7 +78,7 @@ GOTO skipmesa
 @if /I "%ninja%"=="y" set buildconf=%buildconf:vs2017=ninja%
 
 @set llvmless=n
-if %pythonver% GEQ 3 set llvmless=y
+@if %pythonver% GEQ 3 set llvmless=y
 @if %pythonver%==2 if EXIST %LLVM% set /p llvmless=Build Mesa without LLVM (y/n). llvmpipe and swr drivers and high performance JIT won't be available for other drivers and libraries:
 @if %pythonver%==2 if EXIST %LLVM% echo.
 @if %pythonver%==2 if NOT EXIST %LLVM% set /p llvmless=Build Mesa without LLVM (y=yes/q=quit). llvmpipe and swr drivers and high performance JIT won't be available for other drivers and libraries:
