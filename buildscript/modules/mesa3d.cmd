@@ -95,7 +95,7 @@ GOTO skipmesa
 @if /I NOT "%llvmless%"=="y" if %abi%==x64 if EXIST %LLVM% set /p swrdrv=Do you want to build swr drivers? (y=yes):
 @if /I NOT "%llvmless%"=="y" if %abi%==x64 if EXIST %LLVM% echo.
 @if %pythonver%==2 if /I "%swrdrv%"=="y" set buildcmd=%buildcmd% swr=1
-@if %pythonver% GEQ 3 if /I "%swrdrv%"=="y" set buildconf=%buildconf% gallium-drivers=auto,swr -Dswr-arches=avx,avx2,knl,skx
+@if %pythonver% GEQ 3 if /I "%swrdrv%"=="y" set buildconf=%buildconf% -Dgallium-drivers=auto,swr -Dswr-arches=avx,avx2,knl,skx
 
 @set /p gles=Do you want to build GLAPI shared library and GLES support (y/n):
 @echo.
