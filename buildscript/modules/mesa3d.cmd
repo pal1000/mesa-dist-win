@@ -80,14 +80,14 @@ GOTO skipmesa
 @set llvmless=n
 if %pythonver% GEQ 3 set llvmless=y
 @if %pythonver%==2 if EXIST %LLVM% set /p llvmless=Build Mesa without LLVM (y/n). llvmpipe and swr drivers and high performance JIT won't be available for other drivers and libraries:
-@if %pythonver%==2 if EXIST %LLVM% echo.
+@if %pythonver%==2 if %pythonver%==2 if EXIST %LLVM% echo.
 @if %pythonver%==2 if NOT EXIST %LLVM% set /p llvmless=Build Mesa without LLVM (y=yes/q=quit). llvmpipe and swr drivers and high performance JIT won't be available for other drivers and libraries:
 @if %pythonver%==2 if NOT EXIST %LLVM% echo.
 @if %pythonver%==2 if /I "%llvmless%"=="y" set buildcmd=%buildcmd% llvm=no
 @if %pythonver% GEQ 3 if /I "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm=false
 @if /I NOT "%llvmless%"=="y" if NOT EXIST %LLVM% echo User refused to build Mesa without LLVM.
 @if /I NOT "%llvmless%"=="y" if NOT EXIST %LLVM% GOTO skipmesa
-@if %pythonver% GEQ 3 if /I NOT "%llvmless%"=="y" set PATH=%LLVM%\bin\;%PATH%
+@if %pythonver% GEQ 3 if /I NOT "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm-wrap=llvm
 
 @if %pythonver%==2 set /p openmp=Build Mesa3D with OpenMP. Faster build and smaller binaries (y/n):
 @if %pythonver%==2 echo.
@@ -97,7 +97,7 @@ if %pythonver% GEQ 3 set llvmless=y
 @if /I NOT "%llvmless%"=="y" if %abi%==x64 if EXIST %LLVM% set /p swrdrv=Do you want to build swr drivers? (y=yes):
 @if /I NOT "%llvmless%"=="y" if %abi%==x64 if EXIST %LLVM% echo.
 @if %pythonver%==2 if /I "%swrdrv%"=="y" set buildcmd=%buildcmd% swr=1
-@if %pythonver% GEQ 3 if /I "%swrdrv%"=="y" set buildconf=%buildconf% -Dgallium-drivers=swr -Dswr-arches=avx,avx2,knl,skx
+@if %pythonver% GEQ 3 if /I "%swrdrv%"=="y" set buildconf=%buildconf% -Dgallium-drivers=auto,swr -Dswr-arches=avx,avx2,knl,skx
 
 @set /p gles=Do you want to build GLAPI shared library and GLES support (y/n):
 @echo.
