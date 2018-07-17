@@ -64,7 +64,7 @@ GOTO skipmesa
 @rem Configure Mesa build.
 
 @if %pythonver%==2 set buildcmd=%pythonloc% %pythonloc:~0,-10%Scripts\scons.py build=release platform=windows machine=%longabi% texture_float=1
-@if %pythonver% GEQ 3 set buildcmd=%mesonloc% . .\build\windows-%longabi% --backend=vs2017 --buildtype=release
+@if %pythonver% GEQ 3 set buildconf=%mesonloc% . .\build\windows-%longabi% --backend=vs2017 --buildtype=release
 @IF %pythonver% GEQ 3 IF %pkgconfigstate%==1 SET PATH=%mesa%\pkgconfig\;%PATH%
 
 @rem Hardcode this until simultaneous dual python support is implemented.
@@ -74,40 +74,46 @@ GOTO skipmesa
 @if %pythonver% GEQ 3 if NOT %ninjastate%==0 set /p ninja=Use Ninja build system instead of MsBuild (y/n); less storage device strain and maybe faster build:
 @if %pythonver% GEQ 3 if NOT %ninjastate%==0 echo.
 @if /I "%ninja%"=="y" if %ninjastate%==1 set PATH=%mesa%\ninja\;%PATH%
-@if /I "%ninja%"=="y" set buildcmd=%buildcmd:vs2017=ninja%
+@if /I "%ninja%"=="y" set buildconf=%buildconf:vs2017=ninja%
 
 @set llvmless=n
-@if %pythonver%==2 if EXIST %LLVM% set /p llvmless=Build Mesa without LLVM (y/n). llvmpipe and swr drivers and high performance JIT won't be available for other drivers and libraries:
-@if %pythonver%==2 if EXIST %LLVM% echo.
-@if %pythonver%==2 if NOT EXIST %LLVM% set /p llvmless=Build Mesa without LLVM (y=yes/q=quit). llvmpipe and swr drivers and high performance JIT won't be available for other drivers and libraries:
-@if %pythonver%==2 if NOT EXIST %LLVM% echo.
+@if EXIST %LLVM% set /p llvmless=Build Mesa without LLVM (y/n). llvmpipe and swr drivers and high performance JIT won't be available for other drivers and libraries:
+@if EXIST %LLVM% echo.
+@if NOT EXIST %LLVM% set /p llvmless=Build Mesa without LLVM (y=yes/q=quit). llvmpipe and swr drivers and high performance JIT won't be available for other drivers and libraries:
+@if NOT EXIST %LLVM% echo.
 @if %pythonver%==2 if /I "%llvmless%"=="y" set buildcmd=%buildcmd% llvm=no
-@if %pythonver%==2 if /I NOT "%llvmless%"=="y" if NOT EXIST %LLVM% echo User refused to build Mesa without LLVM.
-@if %pythonver%==2 if /I NOT "%llvmless%"=="y" if NOT EXIST %LLVM% GOTO skipmesa
+@if %pythonver% GEQ 3 if /I "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm=false
+@if /I NOT "%llvmless%"=="y" if NOT EXIST %LLVM% echo User refused to build Mesa without LLVM.
+@if /I NOT "%llvmless%"=="y" if NOT EXIST %LLVM% GOTO skipmesa
+@if %pythonver% GEQ 3 if /I NOT "%llvmless%"=="y" set PATH=%LLVM%\bin\;%PATH%
 
 @if %pythonver%==2 set /p openmp=Build Mesa3D with OpenMP. Faster build and smaller binaries (y/n):
 @if %pythonver%==2 echo.
 @if %pythonver%==2 if /I "%openmp%"=="y" set buildcmd=%buildcmd% openmp=1
 
 @set swrdrv=n
-@if %pythonver%==2 if /I NOT "%llvmless%"=="y" if %abi%==x64 if EXIST %LLVM% set /p swrdrv=Do you want to build swr drivers? (y=yes):
-@if %pythonver%==2 if /I NOT "%llvmless%"=="y" if %abi%==x64 if EXIST %LLVM% echo.
+@if /I NOT "%llvmless%"=="y" if %abi%==x64 if EXIST %LLVM% set /p swrdrv=Do you want to build swr drivers? (y=yes):
+@if /I NOT "%llvmless%"=="y" if %abi%==x64 if EXIST %LLVM% echo.
 @if %pythonver%==2 if /I "%swrdrv%"=="y" set buildcmd=%buildcmd% swr=1
+@if %pythonver% GEQ 3 if /I "%swrdrv%"=="y" set buildconf=%buildconf% gallium-drivers=auto,swr -Dswr-arches=avx,avx2,knl,skx
 
-@if %pythonver%==2 set /p gles=Do you want to build GLAPI shared library and GLES support (y/n):
-@if %pythonver%==2 echo.
+@set /p gles=Do you want to build GLAPI shared library and GLES support (y/n):
+@echo.
 @if %pythonver%==2 if /I "%gles%"=="y" set gles=y
 @if %pythonver%==2 if /I NOT "%gles%"=="y" set gles=0
+@if %pythonver% GEQ 3 if /I NOT "%gles%"=="y" set buildconf=%buildconf% -Dgles1=false -Dgles2=false
 
+@set expressmesabuild=n
 @if %pythonver%==2 set /p expressmesabuild=Do you want to build Mesa with quick configuration - includes libgl-gdi, graw-gdi, graw-null, tests, osmesa and GLAPI + OpenGL ES if GLES enabled:
 @if %pythonver%==2 echo.
 @if %pythonver%==2 IF /I "%expressmesabuild%"=="y" set mesatargets=.
 @if %pythonver%==2 IF /I NOT "%expressmesabuild%"=="y" set mesatargets=libgl-gdi
 
 @set osmesa=n
-@if %pythonver%==2 IF /I NOT "%expressmesabuild%"=="y" set /p osmesa=Do you want to build off-screen rendering drivers (y/n):
-@if %pythonver%==2 IF /I NOT "%expressmesabuild%"=="y" echo.
+@IF /I NOT "%expressmesabuild%"=="y" set /p osmesa=Do you want to build off-screen rendering drivers (y/n):
+@IF /I NOT "%expressmesabuild%"=="y" echo.
 @if %pythonver%==2 IF /I NOT "%expressmesabuild%"=="y" IF /I "%osmesa%"=="y" set mesatargets=%mesatargets% osmesa
+@if %pythonver% GEQ 3 IF /I NOT "%expressmesabuild%"=="y" IF /I "%osmesa%"=="y" set buildconf=%buildconf% -Dosmesa=gallium
 @IF /I "%expressmesabuild%"=="y" set osmesa=y
 
 @set graw=n
@@ -128,7 +134,7 @@ GOTO skipmesa
 @echo.
 @if %pythonver% GEQ 3 call %vsenv%
 @if %pythonver% GEQ 3 echo.
-@if %pythonver% GEQ 3 echo Build command stored in buildcmd variable.
+@if %pythonver% GEQ 3 echo Build configuration command stored in buildconf variable.
 @if %pythonver% GEQ 3 echo.
 @if %pythonver% GEQ 3 cmd
 @if %pythonver%==2 IF /I "%osmesa%"=="y" IF /I "%gles%"=="y" (
