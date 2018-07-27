@@ -2,7 +2,12 @@
 ### Build script
 - Mesa3D Meson build dependency check: add pkg-config and libwinpthread;
 - Initial Mesa3D Meson build configuration control;
-- LLVM wrap generator for Mesa3D Meson build.
+- LLVM wrap generator for Mesa3D Meson build;
+- Minor UI fix.
+### Build environment updates
+- cmake 3.11.4 -> 3.12.0;
+- Bison 3.0.4 -> 3.0.5;
+- pip 10.0.1 -> 18.0.0.
 # 18.1.4.601-1
 - Updated Mesa3D to [18.1.4](https://www.mesa3d.org/relnotes/18.1.4.html).
 ### End user guide
