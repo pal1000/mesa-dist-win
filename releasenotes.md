@@ -1,4 +1,6 @@
-# Next release
+# 18.1.5
+- Updated Mesa3D to [18.1.5](https://www.mesa3d.org/relnotes/18.1.5.html);
+- Remove LLVM version from version string. There is a prettier way to bump version when LLVM is updated.
 ### Build script
 - Mesa3D Meson build dependency check: add pkg-config and libwinpthread;
 - Initial Mesa3D Meson build configuration control;
@@ -7,7 +9,7 @@
 ### Build environment updates
 - cmake 3.11.4 -> 3.12.0;
 - Bison 3.0.4 -> 3.0.5;
-- pip 10.0.1 -> 18.0
+- pip 10.0.1 -> 18.0.
 # 18.1.4.601-1
 - Updated Mesa3D to [18.1.4](https://www.mesa3d.org/relnotes/18.1.4.html).
 ### End user guide
