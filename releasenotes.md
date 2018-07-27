@@ -7,7 +7,7 @@
 ### Build environment updates
 - cmake 3.11.4 -> 3.12.0;
 - Bison 3.0.4 -> 3.0.5;
-- pip 10.0.1 -> 18.0.0.
+- pip 10.0.1 -> 18.0
 # 18.1.4.601-1
 - Updated Mesa3D to [18.1.4](https://www.mesa3d.org/relnotes/18.1.4.html).
 ### End user guide
