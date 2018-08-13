@@ -1,4 +1,5 @@
-# Next release
+# 18.1.6
+- Updated Mesa3D to [18.1.6](https://www.mesa3d.org/relnotes/18.1.6.html).
 ### Build script
 - Do not pass texture float build option to Mesa 18.2 and up;
 - Mesa3D Meson build: Implement Msbuild support.
