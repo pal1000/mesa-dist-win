@@ -1,6 +1,7 @@
 # Next release
 ### Build script
-- Do not pass texture float build option to Mesa 18.2 and up.
+- Do not pass texture float build option to Mesa 18.2 and up;
+- Mesa3D Meson build: Implement Msbuild support.
 ### Build environment updates
 - winflexbison package 2.5.14 -> 2.5.15;
 - Visual Studio 15.7.5 -> 15.7.6;

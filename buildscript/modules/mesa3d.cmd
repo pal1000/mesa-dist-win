@@ -66,8 +66,8 @@ GOTO skipmesa
 @if %pythonver%==2 set buildcmd=%pythonloc% %pythonloc:~0,-10%Scripts\scons.py build=release platform=windows machine=%longabi%
 @if %pythonver%==2 if %mesaver% LSS 18201 set buildcmd=%buildcmd% texture_float=1
 @if %pythonver% GEQ 3 set buildconf=%mesonloc% . .\build\windows-%longabi% --backend=vs2017 --buildtype=release
-@if %pythonver% GEQ 3 set buildcmd=ninja -C build\windows-%longabi%
 @IF %pythonver% GEQ 3 IF %pkgconfigstate%==1 SET PATH=%mesa%\pkgconfig\;%PATH%
+@if %pythonver% GEQ 3 set buildcmd=msbuild build\windows-%longabi%\mesa.sln
 
 @rem Hardcode this until simultaneous dual python support is implemented.
 @IF %pythonver% GEQ 3 SET PATH=%mesa%\Python\;%PATH%
@@ -77,6 +77,7 @@ GOTO skipmesa
 @if %pythonver% GEQ 3 if NOT %ninjastate%==0 echo.
 @if /I "%ninja%"=="y" if %ninjastate%==1 set PATH=%mesa%\ninja\;%PATH%
 @if /I "%ninja%"=="y" set buildconf=%buildconf:vs2017=ninja%
+@if %pythonver% GEQ 3 if /I "%ninja%"=="y" set buildcmd=ninja -C build\windows-%longabi%
 
 @set llvmless=n
 @if %pythonver% GEQ 3 set llvmless=y
