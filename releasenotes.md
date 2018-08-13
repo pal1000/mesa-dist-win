@@ -1,3 +1,10 @@
+# Next release
+### Build script
+- Do not pass texture float build option to Mesa 18.2 and up.
+### Build environment updates
+- winflexbison package 2.5.14 -> 2.5.15;
+- Visual Studio 15.7.5 -> 15.7.6;
+- cmake 3.12.0 -> 3.12.1.
 # 18.1.5
 - Updated Mesa3D to [18.1.5](https://www.mesa3d.org/relnotes/18.1.5.html);
 - Remove LLVM version from version string. There is a prettier way to bump version when LLVM is updated.
