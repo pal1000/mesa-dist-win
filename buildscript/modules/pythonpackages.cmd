@@ -8,11 +8,11 @@
 
 :pypackmissing
 @rem Check for Python packages availability.
-@if %pythonver%==2 IF NOT EXIST %pythonloc:~0,-10%Lib\site-packages\markupsafe (
+@IF NOT EXIST %pythonloc:~0,-10%Lib\site-packages\markupsafe (
 @set pypack=MarkupSafe
 @GOTO pypackinstall
 )
-@if %pythonver%==2 IF NOT EXIST %pythonloc:~0,-10%Lib\site-packages\mako (
+@IF NOT EXIST %pythonloc:~0,-10%Lib\site-packages\mako (
 @set pypack=Mako
 @GOTO pypackinstall
 )

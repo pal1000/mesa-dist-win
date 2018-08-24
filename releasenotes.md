@@ -1,3 +1,9 @@
+# Next release
+### Build script
+- Mesa3D build finally works with parallel dual Python. Python 2.7.x exclusive for Scons and Python 3.5.x+ exclusive for Meson.
+### Build environment updates
+- Visual Studio 15.7.6 -> 15.8.1;
+- setuptools 40.0.0 -> 40.2.0.
 # 18.1.6
 - Updated Mesa3D to [18.1.6](https://www.mesa3d.org/relnotes/18.1.6.html).
 ### Build script

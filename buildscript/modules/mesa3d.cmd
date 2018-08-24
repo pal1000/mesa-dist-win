@@ -69,9 +69,6 @@ GOTO skipmesa
 @IF %pythonver% GEQ 3 IF %pkgconfigstate%==1 SET PATH=%mesa%\pkgconfig\;%PATH%
 @if %pythonver% GEQ 3 set buildcmd=msbuild build\windows-%longabi%\mesa.sln
 
-@rem Hardcode this until simultaneous dual python support is implemented.
-@IF %pythonver% GEQ 3 SET PATH=%mesa%\Python\;%PATH%
-
 @set ninja=n
 @if %pythonver% GEQ 3 if NOT %ninjastate%==0 set /p ninja=Use Ninja build system instead of MsBuild (y/n); less storage device strain and maybe faster build:
 @if %pythonver% GEQ 3 if NOT %ninjastate%==0 echo.
