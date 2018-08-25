@@ -1,4 +1,5 @@
-# Next release
+# 18.1.7
+- Updated Mesa3D to [18.1.7](https://www.mesa3d.org/relnotes/18.1.7.html).
 ### Build script
 - Mesa3D build finally works with parallel dual Python. Python 2.7.x exclusive for Scons and Python 3.5.x+ exclusive for Meson.
 ### Build environment updates
