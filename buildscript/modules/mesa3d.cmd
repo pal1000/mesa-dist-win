@@ -65,9 +65,9 @@ GOTO skipmesa
 
 @if %pythonver%==2 set buildcmd=%pythonloc% %pythonloc:~0,-10%Scripts\scons.py build=release platform=windows machine=%longabi%
 @if %pythonver%==2 if %mesaver% LSS 18201 set buildcmd=%buildcmd% texture_float=1
-@if %pythonver% GEQ 3 set buildconf=%mesonloc% . .\build\windows-%longabi% --backend=vs2017 --buildtype=release
+@if %pythonver% GEQ 3 set buildconf=%mesonloc% . .\build\windows-%longabi% --backend=vs2017 --buildtype=release -Dc_args="/MT" -Dcpp_args="/MT"
 @IF %pythonver% GEQ 3 IF %pkgconfigstate%==1 SET PATH=%mesa%\pkgconfig\;%PATH%
-@if %pythonver% GEQ 3 set buildcmd=msbuild build\windows-%longabi%\mesa.sln
+@if %pythonver% GEQ 3 set buildcmd=msbuild mesa.sln /m
 
 @set ninja=n
 @if %pythonver% GEQ 3 if NOT %ninjastate%==0 set /p ninja=Use Ninja build system instead of MsBuild (y/n); less storage device strain and maybe faster build:
@@ -77,16 +77,15 @@ GOTO skipmesa
 @if %pythonver% GEQ 3 if /I "%ninja%"=="y" set buildcmd=ninja -C build\windows-%longabi%
 
 @set llvmless=n
-@if %pythonver% GEQ 3 set llvmless=y
-@if %pythonver%==2 if EXIST %LLVM% set /p llvmless=Build Mesa without LLVM (y/n). llvmpipe and swr drivers and high performance JIT won't be available for other drivers and libraries:
-@if %pythonver%==2 if EXIST %LLVM% echo.
-@if %pythonver%==2 if NOT EXIST %LLVM% set /p llvmless=Build Mesa without LLVM (y=yes/q=quit). llvmpipe and swr drivers and high performance JIT won't be available for other drivers and libraries:
-@if %pythonver%==2 if NOT EXIST %LLVM% echo.
+@if EXIST %LLVM% set /p llvmless=Build Mesa without LLVM (y/n). llvmpipe and swr drivers and high performance JIT won't be available for other drivers and libraries:
+@if EXIST %LLVM% echo.
+@if NOT EXIST %LLVM% set /p llvmless=Build Mesa without LLVM (y=yes/q=quit). llvmpipe and swr drivers and high performance JIT won't be available for other drivers and libraries:
+@if NOT EXIST %LLVM% echo.
 @if /I NOT "%llvmless%"=="y" if NOT EXIST %LLVM% echo User refused to build Mesa without LLVM.
 @if /I NOT "%llvmless%"=="y" if NOT EXIST %LLVM% GOTO skipmesa
 @if %pythonver%==2 if /I "%llvmless%"=="y" set buildcmd=%buildcmd% llvm=no
 @if %pythonver% GEQ 3 if /I "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm=false
-@if %pythonver% GEQ 3 if /I NOT "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm-wrap=llvm
+@if %pythonver% GEQ 3 if /I NOT "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm=true -Dllvm-wrap=llvm
 @if %pythonver% GEQ 3 if /I NOT "%llvmless%"=="y" call %mesa%\mesa-dist-win\buildscript\modules\llvmwrapgen.cmd
 
 @if %pythonver%==2 set /p openmp=Build Mesa3D with OpenMP. Faster build and smaller binaries (y/n):
