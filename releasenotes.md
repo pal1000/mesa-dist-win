@@ -1,6 +1,7 @@
 # Next release
 ### Build script
-- Finally get LLVM link working when building Mesa3D with Meson.
+- Finally get LLVM link working when building Mesa3D with Meson;
+- More robust way of using MsBuild backend when building Mesa3D with Meson.
 # 18.1.7
 - Updated Mesa3D to [18.1.7](https://www.mesa3d.org/relnotes/18.1.7.html).
 ### Build script
