@@ -58,6 +58,11 @@ Git For Windows portable | 2.18.0.1
 | | |
 |-|-|
 Enable S3TC texture cache [4] | git apply -v ..\mesa-dist-win\patches\s3tc.patch
-osmesa build fix patch - disables GLES in osmesa [4] | git apply -v ..\mesa-dist-win\patches\osmesa.patch
+osmesa build fix patch, disables GLES in osmesa [4] | git apply -v ..\mesa-dist-win\patches\osmesa.patch
 Build config and execute x64 [4] | scons build=release platform=windows machine=x86_64 texture_float=1 openmp=1 swr=1 gles=0 . & scons build=release platform=windows machine=x86_64 texture_float=1 openmp=1 swr=1 gles=1 .
 Build config and execute x86 [4] | scons build=release platform=windows machine=x86 texture_float=1 openmp=1 gles=0 . & scons build=release platform=windows machine=x86 texture_float=1 openmp=1 gles=1 .
+### Release packaging
+| | |
+|-|-|
+7-zip version | 18.05
+Compression level | ultra
