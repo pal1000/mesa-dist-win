@@ -5,6 +5,8 @@
 - Make clean build and git_sha1.h fallback work with Meson;
 - Standardize Meson build generating directory to %mesa%\mesa\%abi%;
 - Make distribution creation work with Meson build.
+### Docunentation
+- Add a notice for enterprise environments documenting a scenario where running 3rd-party unsgned executables is prohibited, See [#11](https://github.com/pal1000/mesa-dist-win/issues/11).
 ### Build environment updates
 - Visual Studio 15.8.1 -> 15.8.2.
 # 18.1.7
@@ -69,7 +71,7 @@
 - Enable OpenMP.
 ### Known issues
 - If you used per-app deployment to deploy Mesa3D desktop OpenGL driver you may encounter an error mentioning `libglapi.dll`. To fix it just do a re-deploy of the desktop OpenGL driver. If you don't remember if an affected program is 32-bit or 64-bit, right click on opengl32.dll shortcut in the folder where the program executable is located and select open file location. If the location ends in x64 then it's 64-bit otherwise it's 32-bit;
-- osmesa doesn't have GLES support, also its integration with softpipe, llvmpipe and swr may be broken. This is due to workaround for [Mesa bug 106843](https://bugs.freedesktop.org/show_bug.cgi?id=106843) which affects Mesa3D builds with GLES support since at least [2012](https://lists.freedesktop.org/archives/mesa-users/2012-May/000431.html).
+- osmesa does not have GLES support, also its integration with softpipe, llvmpipe and swr may be broken. This is due to workaround for [Mesa bug 106843](https://bugs.freedesktop.org/show_bug.cgi?id=106843) which affects Mesa3D builds with GLES support since at least [2012](https://lists.freedesktop.org/archives/mesa-users/2012-May/000431.html).
 ### End-user guide
 - Document an issue with Virtualbox VMs that may happen if Mesa3D desktop OpenGL driver is installed inside the VM using system-wide deployment tool;
 - Document known issues and OpenGL ES support.
