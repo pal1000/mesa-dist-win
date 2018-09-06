@@ -16,7 +16,7 @@
 @IF %pythonver% GEQ 3 GOTO mesondist
 
 :sconsdist
-@forfiles /p %mesa%\mesa\build\windows-%longabi% /s /m *.dll /c "cmd /c IF NOT @file==osmesa.dll copy @path %mesa%\mesa-dist-win\bin\%abi%"
+@forfiles /p %mesa%\mesa\build\windows-%longabi% /s /m *.dll /c "cmd /c IF NOT @file==0x22osmesa.dll0x22 copy @path %mesa%\mesa-dist-win\bin\%abi%"
 @copy %mesa%\mesa\build\windows-%longabi%\mesa\drivers\osmesa\osmesa.dll osmesa-swrast\osmesa.dll
 @copy %mesa%\mesa\build\windows-%longabi%\gallium\targets\osmesa\osmesa.dll osmesa-gallium\osmesa.dll
 @echo.
