@@ -65,8 +65,7 @@ GOTO skipmesa
 
 @if %pythonver%==2 set buildcmd=%pythonloc% %pythonloc:~0,-10%Scripts\scons.py build=release platform=windows machine=%longabi%
 @if %pythonver%==2 if %mesaver% LSS 18201 set buildcmd=%buildcmd% texture_float=1
-@if %pythonver% GEQ 3 set buildconf=%mesonloc% . .\build\windows-%longabi% --backend=vs2017 --buildtype=plain -Dc_args="/MT /O2" -Dcpp_args="/MT /O2"
-@IF %pythonver% GEQ 3 IF %pkgconfigstate%==1 SET PATH=%mesa%\pkgconfig\;%PATH%
+@if %pythonver% GEQ 3 set buildconf=%mesonloc% %abi% --backend=vs2017 --buildtype=plain -Dc_args="/MT /O2" -Dcpp_args="/MT /O2"
 @IF %pythonver% GEQ 3 set platformabi=Win32
 @IF %pythonver% GEQ 3 IF %abi%==x64 set platformabi=%abi%
 @if %pythonver% GEQ 3 set buildcmd=msbuild /p^:Configuration=plain,Platform=%platformabi% mesa.sln /m
@@ -76,7 +75,7 @@ GOTO skipmesa
 @if %pythonver% GEQ 3 if NOT %ninjastate%==0 echo.
 @if /I "%ninja%"=="y" if %ninjastate%==1 set PATH=%mesa%\ninja\;%PATH%
 @if /I "%ninja%"=="y" set buildconf=%buildconf:vs2017=ninja%
-@if %pythonver% GEQ 3 if /I "%ninja%"=="y" set buildcmd=ninja -C build\windows-%longabi%
+@if %pythonver% GEQ 3 if /I "%ninja%"=="y" set buildcmd=ninja
 
 @set llvmless=n
 @if EXIST %LLVM% set /p llvmless=Build Mesa without LLVM (y/n). llvmpipe and swr drivers and high performance JIT won't be available for other drivers and libraries:
@@ -98,7 +97,7 @@ GOTO skipmesa
 @if /I NOT "%llvmless%"=="y" if %abi%==x64 if EXIST %LLVM% set /p swrdrv=Do you want to build swr drivers? (y=yes):
 @if /I NOT "%llvmless%"=="y" if %abi%==x64 if EXIST %LLVM% echo.
 @if %pythonver%==2 if /I "%swrdrv%"=="y" set buildcmd=%buildcmd% swr=1
-@if %pythonver% GEQ 3 if /I "%swrdrv%"=="y" set buildconf=%buildconf% -Dgallium-drivers=auto,swr -Dswr-arches=avx,avx2,knl,skx
+@if %pythonver% GEQ 3 if /I "%swrdrv%"=="y" set buildconf=%buildconf% -Dgallium-drivers=swrast,swr -Dswr-arches=avx,avx2,knl,skx
 
 @set /p gles=Do you want to build GLAPI shared library and GLES support (y/n):
 @echo.
@@ -127,13 +126,21 @@ GOTO skipmesa
 
 :build_mesa
 @IF %flexstate%==1 set PATH=%mesa%\flexbison\;%PATH%
+@IF %pythonver% GEQ 3 IF %pkgconfigstate%==1 SET PATH=%mesa%\pkgconfig\;%PATH%
+@IF %pythonver% GEQ 3 set buildconf=%buildconf% & cd %abi%
 @set cleanbuild=n
-@if EXIST build\windows-%longabi% set /p cleanbuild=Do you want to clean build (y/n):
-@if EXIST build\windows-%longabi% echo.
-@if /I "%cleanbuild%"=="y" RD /S /Q build\windows-%longabi%
-@if NOT EXIST build md build
-@if NOT EXIST build\windows-%longabi% md build\windows-%longabi%
-@if NOT EXIST build\windows-%longabi%\git_sha1.h echo 0 > build\windows-%longabi%\git_sha1.h
+@IF %pythonver%==2 if EXIST build\windows-%longabi% set /p cleanbuild=Do you want to clean build (y/n):
+@IF %pythonver%==2 if EXIST build\windows-%longabi% echo.
+@IF %pythonver% GEQ 3 if EXIST %abi% set /p cleanbuild=Do you want to clean build (y/n):
+@IF %pythonver% GEQ 3 if EXIST %abi% echo.
+@IF %pythonver%==2 if /I "%cleanbuild%"=="y" RD /S /Q build\windows-%longabi%
+@IF %pythonver% GEQ 3 if /I "%cleanbuild%"=="y" RD /S /Q %abi%
+@IF %pythonver%==2 if NOT EXIST build md build
+@IF %pythonver%==2 if NOT EXIST build\windows-%longabi% md build\windows-%longabi%
+@IF %pythonver% GEQ 3 if NOT EXIST %abi% md %abi%
+@IF %pythonver%==2 if NOT EXIST build\windows-%longabi%\git_sha1.h echo 0 > build\windows-%longabi%\git_sha1.h
+@IF %pythonver% GEQ 3 if NOT EXIST %abi%\src md %abi%\src
+@IF %pythonver% GEQ 3 if NOT EXIST %abi%\src\git_sha1.h echo 0 > %abi%\src\git_sha1.h
 @echo.
 @if %pythonver% GEQ 3 call %vsenv%
 @if %pythonver% GEQ 3 echo.

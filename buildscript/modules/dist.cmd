@@ -13,14 +13,17 @@
 @cd %abi%
 @MD osmesa-gallium
 @MD osmesa-swrast
-@copy %mesa%\mesa\build\windows-%longabi%\gallium\targets\libgl-gdi\opengl32.dll opengl32.dll
-@copy %mesa%\mesa\build\windows-%longabi%\mapi\shared-glapi\lib*.dll .
-@if %abi%==x64 copy %mesa%\mesa\build\windows-%longabi%\gallium\drivers\swr\swrAVX.dll swrAVX.dll
-@if %abi%==x64 copy %mesa%\mesa\build\windows-%longabi%\gallium\drivers\swr\swrAVX2.dll swrAVX2.dll
+@IF %pythonver% GEQ 3 GOTO mesondist
+
+:sconsdist
+@forfiles /p %mesa%\mesa\build\windows-%longabi% /s /m *.dll /c "cmd /c IF NOT @file==osmesa.dll copy @path %mesa%\mesa-dist-win\bin\%abi%"
 @copy %mesa%\mesa\build\windows-%longabi%\mesa\drivers\osmesa\osmesa.dll osmesa-swrast\osmesa.dll
 @copy %mesa%\mesa\build\windows-%longabi%\gallium\targets\osmesa\osmesa.dll osmesa-gallium\osmesa.dll
-@copy %mesa%\mesa\build\windows-%longabi%\gallium\targets\graw-gdi\graw.dll graw.dll
 @echo.
+@GOTO exit
+
+:mesondist
+@forfiles /p %mesa%\mesa\%abi% /s /m *.dll /c "cmd /c copy @path %mesa%\mesa-dist-win\bin\%abi%"
 
 :exit
 @pause
