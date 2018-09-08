@@ -1,3 +1,5 @@
+# 18.2.0
+- Updated Mesa3D to [18.2.0](https://www.mesa3d.org/relnotes/18.2.0.html).
 # 18.1.8
 - Updated Mesa3D to [18.1.8](https://www.mesa3d.org/relnotes/18.1.8.html).
 ### Build script
