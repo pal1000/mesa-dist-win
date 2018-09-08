@@ -1,4 +1,5 @@
-# Next release
+# 18.1.8
+- Updated Mesa3D to [18.1.8](https://www.mesa3d.org/relnotes/18.1.8.html).
 ### Build script
 - Finally get LLVM link working when building Mesa3D with Meson;
 - More robust way of using MsBuild backend when building Mesa3D with Meson;
@@ -8,7 +9,7 @@
 ### Docunentation
 - Add a notice for enterprise environments documenting a scenario where running 3rd-party unsgned executables is prohibited, See [#11](https://github.com/pal1000/mesa-dist-win/issues/11).
 ### Build environment updates
-- Visual Studio 15.8.1 -> 15.8.2;
+- Visual Studio 15.8.1 -> 15.8.3;
 - Add 7-zip to build environment configuration info as it is used to package releases.
 # 18.1.7
 - Updated Mesa3D to [18.1.7](https://www.mesa3d.org/relnotes/18.1.7.html).
