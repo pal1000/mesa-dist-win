@@ -97,7 +97,7 @@ GOTO skipmesa
 @if /I NOT "%llvmless%"=="y" if %abi%==x64 if EXIST %LLVM% set /p swrdrv=Do you want to build swr drivers? (y=yes):
 @if /I NOT "%llvmless%"=="y" if %abi%==x64 if EXIST %LLVM% echo.
 @if %pythonver%==2 if /I "%swrdrv%"=="y" set buildcmd=%buildcmd% swr=1
-@if %pythonver% GEQ 3 if /I "%swrdrv%"=="y" set buildconf=%buildconf% -Dgallium-drivers=swrast,swr -Dswr-arches=avx,avx2,knl,skx
+@if %pythonver% GEQ 3 if /I "%swrdrv%"=="y" set buildconf=%buildconf% -Dgallium-drivers=swrast,swr
 
 @set /p gles=Do you want to build GLAPI shared library and GLES support (y/n):
 @echo.
@@ -127,7 +127,6 @@ GOTO skipmesa
 :build_mesa
 @IF %flexstate%==1 set PATH=%mesa%\flexbison\;%PATH%
 @IF %pythonver% GEQ 3 IF %pkgconfigstate%==1 SET PATH=%mesa%\pkgconfig\;%PATH%
-@IF %pythonver% GEQ 3 set buildconf=%buildconf% & cd %abi%
 @set cleanbuild=n
 @IF %pythonver%==2 if EXIST build\windows-%longabi% set /p cleanbuild=Do you want to clean build (y/n):
 @IF %pythonver%==2 if EXIST build\windows-%longabi% echo.

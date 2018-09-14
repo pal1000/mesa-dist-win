@@ -1,3 +1,9 @@
+# Next release
+### Build environment updates
+- CMake 3.12.1 -> 3.12.2;
+- Visual Studio 15.8.3 -> 15.8.4.
+### Build script
+- Mesa3D Meson build: Disable SWR AVX512. It fails to configure for now.
 # 18.2.0
 - Updated Mesa3D to [18.2.0](https://www.mesa3d.org/relnotes/18.2.0.html).
 # 18.1.8
@@ -6,7 +12,7 @@
 - Finally get LLVM link working when building Mesa3D with Meson;
 - More robust way of using MsBuild backend when building Mesa3D with Meson;
 - Make clean build and git_sha1.h fallback work with Meson;
-- Standardize Meson build generating directory to %mesa%\mesa\%abi%;
+- Standardize Meson build generating directory to `%mesa%\mesa\%abi%`;
 - Make distribution creation work with Meson build.
 ### Docunentation
 - Add a notice for enterprise environments documenting a scenario where running 3rd-party unsgned executables is prohibited, See [#11](https://github.com/pal1000/mesa-dist-win/issues/11).
