@@ -72,6 +72,12 @@ if '%errorlevel%' NEQ '0' (
 @echo.
 
 :desktopgl
+@rem Add Meson subprojects
+@if EXIST "%dir%\z.dll" del "%dir%\z.dll"
+@if EXIST "%dir%\expat-1.dll" del "%dir%\expat-1.dll"
+@IF EXIST "%mesaloc%\%mesadll%\z.dll" mklink "%dir%\z.dll" "%mesaloc%\%mesadll%\z.dll"
+@IF EXIST "%mesaloc%\%mesadll%\expat-1.dll" mklink "%dir%\expat-1.dll" "%mesaloc%\%mesadll%\expat-1.dll"
+
 @set desktopgl=y
 @set /p desktopgl=Do you want Desktop OpenGL drivers (y/n, defaults to yes):
 @echo.

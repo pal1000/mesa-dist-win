@@ -7,6 +7,8 @@
 - Mesa3D Meson build: Build config command cleanup.
 ### Release maker
 - Fix a complete silent failure with distribution creation when using Meson.
+### Deployment
+- Add support for Mesa3D Meson subprojects to per app deployment tool.
 # 18.2.0
 - Updated Mesa3D to [18.2.0](https://www.mesa3d.org/relnotes/18.2.0.html).
 # 18.1.8
