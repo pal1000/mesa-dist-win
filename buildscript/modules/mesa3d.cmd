@@ -85,8 +85,7 @@ GOTO skipmesa
 @if /I NOT "%llvmless%"=="y" if NOT EXIST %LLVM% echo User refused to build Mesa without LLVM.
 @if /I NOT "%llvmless%"=="y" if NOT EXIST %LLVM% GOTO skipmesa
 @if %pythonver%==2 if /I "%llvmless%"=="y" set buildcmd=%buildcmd% llvm=no
-@if %pythonver% GEQ 3 if /I "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm=false
-@if %pythonver% GEQ 3 if /I NOT "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm=true -Dllvm-wrap=llvm
+@if %pythonver% GEQ 3 if /I NOT "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm-wrap=llvm
 @if %pythonver% GEQ 3 if /I NOT "%llvmless%"=="y" call %mesa%\mesa-dist-win\buildscript\modules\llvmwrapgen.cmd
 
 @if %pythonver%==2 set /p openmp=Build Mesa3D with OpenMP. Faster build and smaller binaries (y/n):
