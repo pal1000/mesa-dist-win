@@ -1,5 +1,5 @@
 @rem Create distribution.
-@if NOT EXIST %mesa%\mesa\build\windows-%longabi% GOTO exit
+@if NOT EXIST %mesa%\mesa\build\windows-%longabi% if NOT EXIST %mesa%\mesa\%abi% GOTO exit
 @set /p dist=Create or update Mesa3D distribution package (y/n):
 @echo.
 @if /I NOT "%dist%"=="y" GOTO exit

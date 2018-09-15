@@ -4,7 +4,9 @@
 - Visual Studio 15.8.3 -> 15.8.4.
 ### Build script
 - Mesa3D Meson build: Disable SWR AVX512. It fails to configure for now;
-- Mesa3D Meson build: Build config command cleanup;
+- Mesa3D Meson build: Build config command cleanup.
+### Release maker
+- Fix a complete silent failure with distribution creation when using Meson.
 # 18.2.0
 - Updated Mesa3D to [18.2.0](https://www.mesa3d.org/relnotes/18.2.0.html).
 # 18.1.8
