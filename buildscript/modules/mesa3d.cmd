@@ -114,14 +114,15 @@ GOTO skipmesa
 @IF /I NOT "%expressmesabuild%"=="y" set /p osmesa=Do you want to build off-screen rendering drivers (y/n):
 @IF /I NOT "%expressmesabuild%"=="y" echo.
 @if %pythonver%==2 IF /I NOT "%expressmesabuild%"=="y" IF /I "%osmesa%"=="y" set mesatargets=%mesatargets% osmesa
-@if %pythonver% GEQ 3 IF /I NOT "%expressmesabuild%"=="y" IF /I "%osmesa%"=="y" set buildconf=%buildconf% -Dosmesa=gallium
+@if %pythonver% GEQ 3 IF /I "%osmesa%"=="y" set buildconf=%buildconf% -Dosmesa=gallium
 @IF /I "%expressmesabuild%"=="y" set osmesa=y
 
 @set graw=n
-@if %pythonver%==2 IF /I NOT "%expressmesabuild%"=="y" set /p graw=Do you want to build graw library (y/n):
-@if %pythonver%==2 IF /I NOT "%expressmesabuild%"=="y" echo.
+@IF /I NOT "%expressmesabuild%"=="y" set /p graw=Do you want to build graw library (y/n):
+@IF /I NOT "%expressmesabuild%"=="y" echo.
 @if %pythonver%==2 if /I "%graw%"=="y" IF /I NOT "%expressmesabuild%"=="y" set mesatargets=%mesatargets% graw-gdi
 @IF /I "%expressmesabuild%"=="y" set graw=y
+@if %pythonver% GEQ 3 if /I "%graw%"=="y" set buildconf=%buildconf% -Dbuild-tests=true
 
 :build_mesa
 @IF %flexstate%==1 set PATH=%mesa%\flexbison\;%PATH%

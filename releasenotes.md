@@ -6,7 +6,8 @@
 - Git 2.18.0.1 -> 2.19.0.1.
 ### Build script
 - Mesa3D Meson build: Disable SWR AVX512. It fails to configure for now;
-- Mesa3D Meson build: Build config command cleanup.
+- Mesa3D Meson build: Build config command cleanup;
+- Mesa3D Meson build: graw framework support.
 ### Release maker
 - Fix a complete silent failure with distribution creation when using Meson.
 ### Deployment
