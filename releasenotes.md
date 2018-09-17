@@ -1,14 +1,17 @@
 # Next release
 ### Build environment updates
 - CMake 3.12.1 -> 3.12.2;
-- Visual Studio 15.8.3 -> 15.8.4.
+- Visual Studio 15.8.3 -> 15.8.4;
+- setuptools 40.2.0 -> 40.3.0;
+- Git 2.18.0.1 -> 2.19.0.1.
 ### Build script
 - Mesa3D Meson build: Disable SWR AVX512. It fails to configure for now;
 - Mesa3D Meson build: Build config command cleanup.
 ### Release maker
 - Fix a complete silent failure with distribution creation when using Meson.
 ### Deployment
-- Add support for Mesa3D Meson subprojects to per app deployment tool.
+- Add support for Mesa3D Meson subprojects to per app deployment tool;
+- Per app deployment tool learned how to [bypass LoadLibrary and LoadLibraryEx API calls with absolute paths](https://docs.microsoft.com/en-us/windows/desktop/dlls/dynamic-link-library-redirection), reducing the number of scenarios where Mesainjector is required.
 # 18.2.0
 - Updated Mesa3D to [18.2.0](https://www.mesa3d.org/relnotes/18.2.0.html).
 # 18.1.8

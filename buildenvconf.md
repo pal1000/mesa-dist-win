@@ -38,7 +38,7 @@ LLVM build execute[3] | ninja install
 Version | 2.7.15
 ARCH | x64
 pip version | 18.0
-setuptools version | 40.2.0
+setuptools version | 40.3.0
 pywin32 / pypiwin32 version | 223
 scons version | 3.0.1
 Mako version | 1.0.7
@@ -53,7 +53,7 @@ Flex version | 2.6.4
 ### Git version control
 | | |
 |-|-|
-Git For Windows portable | 2.18.0.1
+Git For Windows portable | 2.19.0.1
 ### Mesa3D
 | | |
 |-|-|

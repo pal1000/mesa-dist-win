@@ -41,6 +41,7 @@ if '%errorlevel%' NEQ '0' (
 @echo Use Federico Dossena's Mesainjector to workaround this case.
 @echo Build instructions - https://fdossena.com/?p=mesa/injector_build.frag
 @echo VMWare ThinApp capture: http://fdossena.com/mesa/MesaInjector_Capture.7z
+@echo Mesainjector does not work with Windows 10 Version 1803 and newer.
 @echo.
 @pause
 @set mesaloc=%~dp0
@@ -63,10 +64,20 @@ if '%errorlevel%' NEQ '0' (
 @IF NOT EXIST "%dir%" pause
 @IF NOT EXIST "%dir%" GOTO deploy
 @echo.
-@set mesadll=x86
-@if /I NOT %PROCESSOR_ARCHITECTURE%==AMD64 GOTO desktopgl
+
+:askforappexe
+@set /p appexe=Application executable name with or without extension (optional, forces some programs to use Mesa3D which would otherwise bypass it):
+@IF "%appexe%"=="" GOTO ask_for_app_abi
+@IF /I NOT "%appexe:~-4%"==".exe" set appexe=%appexe%.exe
+@IF NOT EXIST "%dir%\%appexe%" echo.
+@IF NOT EXIST "%dir%\%appexe%" echo Error: File not found.
+@IF NOT EXIST "%dir%\%appexe%" pause
+@IF NOT EXIST "%dir%\%appexe%" cls
+@IF NOT EXIST "%dir%\%appexe%" GOTO askforappexe
 
 :ask_for_app_abi
+@set mesadll=x86
+@if /I NOT %PROCESSOR_ARCHITECTURE%==AMD64 GOTO desktopgl
 @set /p ABI=This is a 64-bit application (y=yes):
 @if /I "%ABI%"=="y" set mesadll=x64
 @echo.
@@ -87,6 +98,7 @@ if '%errorlevel%' NEQ '0' (
 @IF EXIST "%dir%\libglapi.dll" del "%dir%\libglapi.dll"
 @mklink "%dir%\opengl32.dll" "%mesaloc%\%mesadll%\opengl32.dll"
 @mklink "%dir%\libglapi.dll" "%mesaloc%\%mesadll%\libglapi.dll"
+@IF NOT "%dir%\%appexe%"=="%dir%\" echo dummy > "%dir%\%appexe%.local"
 @echo.
 @set swr=n
 @if NOT %mesadll%==x64 GOTO opengles
