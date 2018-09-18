@@ -39,7 +39,7 @@
 @if EXIST "%py3_7loc%" set /a py3exists=%py3exists%+10000
 @if EXIST "%py3_7wowloc%" set /a py3exists=%py3exists%+100000
 @IF %py3exists% GEQ 2000000 IF %enablemeson%==0 echo Note: Experimental /enablemeson command-line argument is not set. We won't attempt to build Mesa3D if you pick any of the folowing Python versions: & echo.
-@IF %py3exists% GEQ 2000000 IF %enablemeson%==1 echo Note: Experimental /enablemeson command-line argument is set. We will attempt to build Mesa3D if you pick any of the folowing Python versions even if it is known to fail for now: & echo.
+@IF %py3exists% GEQ 2000000 IF %enablemeson%==1 echo Note: Experimental /enablemeson command-line argument is set. We will attempt to build Mesa3D if you pick any of the folowing Python versions even if it is still a work in progress: & echo.
 
 @rem Display choices for the rest of Python versions.
 @IF %py3exists:~-1,1%==1 echo 3. Python 3.5

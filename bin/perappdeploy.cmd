@@ -67,6 +67,7 @@ if '%errorlevel%' NEQ '0' (
 
 :askforappexe
 @set /p appexe=Application executable name with or without extension (optional, forces some programs to use Mesa3D which would otherwise bypass it):
+@IF "%appexe%"=="" echo.
 @IF "%appexe%"=="" GOTO ask_for_app_abi
 @IF /I NOT "%appexe:~-4%"==".exe" set appexe=%appexe%.exe
 @IF NOT EXIST "%dir%\%appexe%" echo.
@@ -88,6 +89,7 @@ if '%errorlevel%' NEQ '0' (
 @if EXIST "%dir%\expat-1.dll" del "%dir%\expat-1.dll"
 @IF EXIST "%mesaloc%\%mesadll%\z.dll" mklink "%dir%\z.dll" "%mesaloc%\%mesadll%\z.dll"
 @IF EXIST "%mesaloc%\%mesadll%\expat-1.dll" mklink "%dir%\expat-1.dll" "%mesaloc%\%mesadll%\expat-1.dll"
+@echo.
 
 @set desktopgl=y
 @set /p desktopgl=Do you want Desktop OpenGL drivers (y/n, defaults to yes):
