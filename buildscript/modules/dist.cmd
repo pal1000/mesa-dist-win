@@ -18,10 +18,9 @@
 :sconsdist
 @IF EXIST %mesa%\mesa\build\windows-%longabi%\bin RD /S /Q %mesa%\mesa\build\windows-%longabi%\bin
 @forfiles /p %mesa%\mesa\build\windows-%longabi% /s /m *.dll /c "cmd /c IF NOT @file==0x22osmesa.dll0x22 IF NOT @file==0x22graw.dll0x22 copy @path %mesa%\mesa-dist-win\bin\%abi%"
-@copy %mesa%\mesa\build\windows-%longabi%\mesa\drivers\osmesa\osmesa.dll osmesa-swrast\osmesa.dll
-@copy %mesa%\mesa\build\windows-%longabi%\gallium\targets\osmesa\osmesa.dll osmesa-gallium\osmesa.dll
-@copy %mesa%\mesa\build\windows-%longabi%\gallium\targets\graw-gdi\graw.dll graw.dll
-
+@IF EXIST %mesa%\mesa\build\windows-%longabi%\mesa\drivers\osmesa\osmesa.dll copy %mesa%\mesa\build\windows-%longabi%\mesa\drivers\osmesa\osmesa.dll osmesa-swrast\osmesa.dll
+@IF EXIST %mesa%\mesa\build\windows-%longabi%\gallium\targets\osmesa\osmesa.dll copy %mesa%\mesa\build\windows-%longabi%\gallium\targets\osmesa\osmesa.dll osmesa-gallium\osmesa.dll
+@IF EXIST %mesa%\mesa\build\windows-%longabi%\gallium\targets\graw-gdi\graw.dll copy %mesa%\mesa\build\windows-%longabi%\gallium\targets\graw-gdi\graw.dll graw.dll
 @echo.
 @GOTO exit
 
