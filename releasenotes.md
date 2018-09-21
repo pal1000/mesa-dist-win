@@ -1,4 +1,7 @@
-# Next release
+# 18.2.1
+- Updated Mesa3D to [18.2.1](https://www.mesa3d.org/relnotes/18.2.1.html).
+### Known issue
+- No swr driver in this release due to build failure with LLVM 7.0.0. Weighting my options I decided to release quickly instead of doing a LLVM 6.0.1 x64 buid just get swr to build with it.
 ### Build environment updates
 - CMake 3.12.1 -> 3.12.2;
 - Visual Studio 15.8.3 -> 15.8.4;
