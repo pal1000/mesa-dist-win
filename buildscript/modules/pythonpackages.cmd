@@ -36,11 +36,12 @@
 @SET ERRORLEVEL=0
 @where /q meson.exe
 @IF ERRORLEVEL 1 set mesonloc=%pythonloc:~0,-10%Scripts\meson.py
-@IF %mesonloc%==%pythonloc:~0,-10%Scripts\meson.py IF NOT EXIST %mesonloc% (
+@IF %mesonloc%==%pythonloc:~0,-10%Scripts\meson.py IF NOT EXIST %mesonloc% IF NOT EXIST %mesonloc:~0,-2%exe (
 @set pypack=meson
 @GOTO pypackinstall
 )
-@IF %mesonloc%==%pythonloc:~0,-10%Scripts\meson.py set mesonloc=%pythonloc% %mesonloc%
+@IF %mesonloc%==%pythonloc:~0,-10%Scripts\meson.py IF EXIST %mesonloc% set mesonloc=%pythonloc% %mesonloc%
+@IF %mesonloc%==%pythonloc:~0,-10%Scripts\meson.py IF NOT EXIST %mesonloc% set mesonloc=%mesonloc:~0,-2%exe
 @GOTO pyupdate
 
 :pypackinstall

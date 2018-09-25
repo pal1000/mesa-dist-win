@@ -1,3 +1,9 @@
+# Next release
+### Build environment updates
+- setuptools 40.4.1 -> 40.4.3;
+- Visual Studio 15.8.4 -> 15.8.5.
+### Build script
+- Python 3 packages: Fix an infinite loop with Meson 0.48.0 and newer.
 # 18.2.1
 - Updated Mesa3D to [18.2.1](https://www.mesa3d.org/relnotes/18.2.1.html).
 ### Known issue
