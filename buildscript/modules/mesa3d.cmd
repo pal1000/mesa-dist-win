@@ -68,7 +68,7 @@ GOTO skipmesa
 @if %pythonver% GEQ 3 set buildconf=%mesonloc% %abi% --backend=vs2017 --buildtype=plain -Dc_args="/MT /O2" -Dcpp_args="/MT /O2"
 @IF %pythonver% GEQ 3 set platformabi=Win32
 @IF %pythonver% GEQ 3 IF %abi%==x64 set platformabi=%abi%
-@if %pythonver% GEQ 3 set buildcmd=msbuild /p^:Configuration=plain,Platform=%platformabi% mesa.sln /m
+@if %pythonver% GEQ 3 set buildcmd=msbuild /p^:Configuration=plain,Platform=%platformabi% mesa.sln /m /v^:q
 
 @set ninja=n
 @if %pythonver% GEQ 3 if NOT %ninjastate%==0 set /p ninja=Use Ninja build system instead of MsBuild (y/n); less storage device strain and maybe faster build:
