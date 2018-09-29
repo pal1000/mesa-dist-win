@@ -39,7 +39,7 @@ Version | 2.7.15
 ARCH | x64
 pip version | 18.0
 setuptools version | 40.4.3
-pywin32 / pypiwin32 version | 223
+pywin32 / pypiwin32 version | 224
 scons version | 3.0.1
 Mako version | 1.0.7
 MarkupSafe version | 1.0
@@ -47,8 +47,8 @@ wheel version | 0.31.1
 ### winflexbison
 | | |
 |-|-|
-Package version | 2.5.15
-Bison version | 3.0.5
+Package version | 2.5.16
+Bison version | 3.1.0
 Flex version | 2.6.4
 ### Git version control
 | | |

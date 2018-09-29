@@ -60,10 +60,7 @@
 )
 @IF %pypack%==pywin32 set /p pywin32com=Do you want to install COM and services support - y/n. You'll be asked for admin privileges:
 @IF %pypack%==pywin32 echo.
-@IF %pypack%==pywin32 IF /I "%pywin32com%"=="y" (
-@echo %pythonloc%>%mesa%\mesa-dist-win\buildscript\assets\pythonloc.txt
-@powershell -Command Start-Process "%mesa%\mesa-dist-win\buildscript\assets\pywin32.cmd" -Verb runAs
-)
+@IF %pypack%==pywin32 IF /I "%pywin32com%"=="y" powershell -Command Start-Process "%mesa%\mesa-dist-win\buildscript\modules\pywin32.cmd" -Args "%pythonloc%" -Verb runAs
 @set pypack=0
 @GOTO pypackmissing
 
@@ -73,5 +70,9 @@
 @set /p pyupd=Install/update python packages (y/n):
 @echo.
 @if /I "%pyupd%"=="y" if EXIST "%LOCALAPPDATA%\pip" RD /S /Q "%LOCALAPPDATA%\pip"
-@if /I "%pyupd%"=="y" for /F "skip=2 delims= " %%m in ('%pythonloc% -m pip list -o --disable-pip-version-check') do @if NOT "%%m"=="pywin32" if NOT "%%m"=="pypiwin32" %pythonloc% -m pip install -U "%%m"
-@if /I "%pyupd%"=="y" echo.
+@if /I "%pyupd%"=="y" for /F "skip=2 delims= " %%m in ('%pythonloc% -m pip list -o --disable-pip-version-check') do @%pythonloc% -m pip install -U "%%m"
+@if /I "%pyupd%"=="y" IF %pythonver%==2 IF NOT EXIST "%windir%\system32\pythoncom27.dll" IF NOT EXIST "%windir%\syswow64\pythoncom27.dll" GOTO endpython
+@if /I "%pyupd%"=="y" IF %pythonver%==2 powershell -Command Start-Process "%mesa%\mesa-dist-win\buildscript\modules\pywin32.cmd" -Args "%pythonloc%" -Verb runAs
+
+:endpython
+@echo.

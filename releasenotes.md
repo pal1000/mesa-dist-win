@@ -1,10 +1,14 @@
 # Next release
 ### Build environment updates
 - setuptools 40.4.1 -> 40.4.3;
-- Visual Studio 15.8.4 -> 15.8.5.
+- Visual Studio 15.8.4 -> 15.8.5;
+- winflexbison 2.5.15 -> 2.5.16;
+- bison 3.0.5 -> 3.1.0;
+- pywin32 223 -> 224.
 ### Build script
 - Python 3 packages: Fix an infinite loop with Meson 0.48.0 and newer;
-- Mesa3D Meson MsBuild backend: Only print errors and warnings.
+- Mesa3D Meson MsBuild backend: Only print errors and warnings;
+- Python 2.7 packages: Bring back pywin32 upgrade.
 # 18.2.1
 - Updated Mesa3D to [18.2.1](https://www.mesa3d.org/relnotes/18.2.1.html).
 ### Known issue
