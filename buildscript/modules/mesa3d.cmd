@@ -68,7 +68,7 @@ GOTO skipmesa
 @if %pythonver% GEQ 3 set buildconf=%mesonloc% %abi% --backend=vs2017 --buildtype=plain -Dc_args="/MT /O2" -Dcpp_args="/MT /O2"
 @IF %pythonver% GEQ 3 set platformabi=Win32
 @IF %pythonver% GEQ 3 IF %abi%==x64 set platformabi=%abi%
-@if %pythonver% GEQ 3 set buildcmd=msbuild /p^:Configuration=plain,Platform=%platformabi% mesa.sln /m /v^:q
+@if %pythonver% GEQ 3 set buildcmd=msbuild /p^:Configuration=plain,Platform=%platformabi% mesa.sln /m /v^:m
 
 @set ninja=n
 @if %pythonver% GEQ 3 if NOT %ninjastate%==0 set /p ninja=Use Ninja build system instead of MsBuild (y/n); less storage device strain and maybe faster build:
@@ -124,9 +124,6 @@ GOTO skipmesa
 @IF /I "%expressmesabuild%"=="y" set graw=y
 @if %pythonver% GEQ 3 if /I "%graw%"=="y" set buildconf=%buildconf% -Dbuild-tests=true
 
-:build_mesa
-@IF %flexstate%==1 set PATH=%mesa%\flexbison\;%PATH%
-@IF %pythonver% GEQ 3 IF %pkgconfigstate%==1 SET PATH=%mesa%\pkgconfig\;%PATH%
 @set cleanbuild=n
 @IF %pythonver%==2 if EXIST build\windows-%longabi% set /p cleanbuild=Do you want to clean build (y/n):
 @IF %pythonver%==2 if EXIST build\windows-%longabi% echo.
@@ -134,6 +131,13 @@ GOTO skipmesa
 @IF %pythonver% GEQ 3 if EXIST %abi% echo.
 @IF %pythonver%==2 if /I "%cleanbuild%"=="y" RD /S /Q build\windows-%longabi%
 @IF %pythonver% GEQ 3 if /I "%cleanbuild%"=="y" RD /S /Q %abi%
+@IF %pythonver% GEQ 3 if /I "%cleanbuild%"=="y" for /d %%p in ("%mesa%\mesa\subprojects\zlib-*") do @RD /s /q "%%~p"
+@IF %pythonver% GEQ 3 if /I "%cleanbuild%"=="y" for /d %%q in ("%mesa%\mesa\subprojects\expat-*") do @RD /s /q "%%~q"
+
+:build_mesa
+@IF %flexstate%==1 set PATH=%mesa%\flexbison\;%PATH%
+@IF %pythonver% GEQ 3 IF %pkgconfigstate%==1 SET PATH=%mesa%\pkgconfig\;%PATH%
+
 @IF %pythonver%==2 if NOT EXIST build md build
 @IF %pythonver%==2 if NOT EXIST build\windows-%longabi% md build\windows-%longabi%
 @IF %pythonver% GEQ 3 if NOT EXIST %abi% md %abi%

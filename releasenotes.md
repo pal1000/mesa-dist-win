@@ -7,9 +7,10 @@
 - pywin32 223 -> 224.
 ### Build script
 - Python 3 packages: Fix an infinite loop with Meson 0.48.0 and newer;
-- Mesa3D Meson MsBuild backend: Only print errors and warnings;
+- Mesa3D Meson MsBuild backend: Lower log verbosity level to minimal;
 - Python 2.7 packages: Bring back pywin32 upgrade;
-- Mesa3D Meson build LLVM wrap generator: Tweak to replicate Mesa3D built-in wrap configuration and code clean-up.
+- Mesa3D Meson build LLVM wrap generator: Tweak to replicate Mesa3D built-in wrap configuration and code clean-up;
+- Mesa3D Meson clean build: Cover subprojects too.
 # 18.2.1
 - Updated Mesa3D to [18.2.1](https://www.mesa3d.org/relnotes/18.2.1.html).
 ### Known issue
