@@ -1,11 +1,7 @@
-@FOR /F "tokens=* USEBACKQ" %%n IN (`%mesa%\llvm\%abi%\bin\llvm-config --libs engine mcjit bitwriter x86asmprinter irreader`) DO @SET llvmlibs=%%~n
+@FOR /F "tokens=* USEBACKQ" %%n IN (`%mesa%\llvm\%abi%\bin\llvm-config --libnames bitwriter engine mcdisassembler mcjit`) DO @SET llvmlibs=%%~n
 @FOR /F "tokens=* USEBACKQ" %%o IN (`%mesa%\llvm\%abi%\bin\llvm-config --version`) DO @SET llvmver=%%~o
-@set llvmlibs='%llvmlibs:.lib=',%
-@set llvmlibs=%llvmlibs:~0,-1%
-@set llvmlibs=%llvmlibs: = '%
-@SETLOCAL ENABLEDELAYEDEXPANSION
-@set llvmlibs=!llvmlibs:%LLVM%\lib\=!
-@SETLOCAL DISABLEDELAYEDEXPANSION
+@set llvmlibs=%llvmlibs:.lib=%
+@set llvmlibs='%llvmlibs: =', '%'
 @IF NOT EXIST %mesa%\mesa\subprojects\llvm md %mesa%\mesa\subprojects\llvm
 @echo project('llvm', ['cpp']) > %mesa%\mesa\subprojects\llvm\meson.build
 @echo. >> %mesa%\mesa\subprojects\llvm\meson.build
