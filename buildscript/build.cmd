@@ -18,8 +18,7 @@
 @rem Search for Python. State tracking is pointless as it is loaded once and we are done. Hard fail if missing.
 @call %mesa%\mesa-dist-win\buildscript\modules\discoverpython.cmd
 
-@rem Search for Python packages. Install missing packages automatically. Ask to do an update to all packages except pywin32
-@rem and pypiwin32 which doesn't support pypi updates cleanly.
+@rem Search for Python packages. Install missing packages automatically. Ask to do an update to all packages.
 @call %mesa%\mesa-dist-win\buildscript\modules\pythonpackages.cmd
 
 @rem Check for remaining dependencies: cmake, ninja, winflexbison and git.

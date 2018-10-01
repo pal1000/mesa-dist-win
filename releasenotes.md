@@ -4,13 +4,16 @@
 - Visual Studio 15.8.4 -> 15.8.5;
 - winflexbison 2.5.15 -> 2.5.16;
 - bison 3.0.5 -> 3.1.0;
-- pywin32 223 -> 224.
+- pywin32 223 -> 224;
+- wheel 0.31.1 -> 0.32.0.
 ### Build script
 - Python 3 packages: Fix an infinite loop with Meson 0.48.0 and newer;
 - Mesa3D Meson MsBuild backend: Lower log verbosity level to minimal;
 - Python 2.7 packages: Bring back pywin32 upgrade;
+- Python 2.7 packages: install pywin32 after wheel, just to be safe;
 - Mesa3D Meson build LLVM wrap generator: Tweak to replicate Mesa3D built-in wrap configuration and code clean-up;
-- Mesa3D Meson clean build: Cover subprojects too.
+- Mesa3D Meson clean build: Cover subprojects too;
+- Cap Meson at 0.47.2 due to failure to pass /MT c_arg and cpp_arg in Meson 0.48.0.
 # 18.2.1
 - Updated Mesa3D to [18.2.1](https://www.mesa3d.org/relnotes/18.2.1.html).
 ### Known issue
