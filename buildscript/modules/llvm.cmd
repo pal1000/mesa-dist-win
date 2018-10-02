@@ -14,13 +14,17 @@
 @if NOT EXIST %mesa%\llvm echo WARNING: Both LLVM source code and binaries not found. If you want to build Mesa3D anyway it will be without swr and llvmpipe drivers and osmesa will run with performance penalty.
 @if EXIST %mesa%\llvm\cmake set /p buildllvm=Begin LLVM build. Only needs to run once for each ABI and version. Proceed (y/n):
 @if EXIST %mesa%\llvm\cmake echo.
-@if /I NOT "%buildllvm%"=="y" if EXIST %mesa%\llvm\cmake IF NOT EXIST %mesa%\llvm\%abi% echo WARNING: Not building LLVM. If you want to build Mesa3D anyway it will be without swr and llvmpipe drivers and osmesa will run with performance penalty.
+
+@IF %pythonver%==2 set llvmlink=MT
+@IF %pythonver% GEQ 3 set llvmlink=MT
+
+@if /I NOT "%buildllvm%"=="y" if EXIST %mesa%\llvm\cmake IF NOT EXIST %mesa%\llvm\%abi%-%llvmlink% echo WARNING: Not building LLVM. If you want to build Mesa3D anyway it will be without swr and llvmpipe drivers and osmesa will run with performance penalty.
 @if /I NOT "%buildllvm%"=="y" GOTO skipllvm
 @cd %mesa%\llvm
-@if EXIST %abi% RD /S /Q %abi%
-@if EXIST buildsys-%abi% RD /S /Q buildsys-%abi%
-@md buildsys-%abi%
-@cd buildsys-%abi%
+@if EXIST %abi%-%llvmlink% RD /S /Q %abi%-%llvmlink%
+@if EXIST buildsys-%abi%-%llvmlink% RD /S /Q buildsys-%abi%-%llvmlink%
+@md buildsys-%abi%-%llvmlink%
+@cd buildsys-%abi%-%llvmlink%
 @set ninja=n
 @set meson=n
 @if NOT %mesonstate%==0 if %cmakestate%==0 set meson=y
@@ -44,14 +48,14 @@
 @if /I NOT "%meson%"=="y" if %abi%==x64 if /I NOT "%ninja%"=="y" set buildconf=%buildconf% Win64"
 @if /I NOT "%meson%"=="y" if /I NOT "%ninja%"=="y" IF /I %PROCESSOR_ARCHITECTURE%==AMD64 set buildconf=%buildconf% -Thost=x64
 @if /I NOT "%meson%"=="y" if /I "%ninja%"=="y" set buildconf=%buildconf% "Ninja"
-@if /I NOT "%meson%"=="y" set buildconf=%buildconf% -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../%abi% ..
+@if /I NOT "%meson%"=="y" set buildconf=%buildconf% -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=%llvmlink% -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../%abi%-%llvmlink% ..
 @if /I "%meson%"=="y" set buildconf=echo LLVM Build aborted. Unimplemented build configuration.
 
 @rem Load Visual Studio environment. Only cmake can load it in the background and only when using MsBuild.
 @if /I NOT "%meson%"=="y" if /I "%ninja%"=="y" call %vsenv%
-@if /I NOT "%meson%"=="y" if /I "%ninja%"=="y" cd %mesa%\llvm\buildsys-%abi%
+@if /I NOT "%meson%"=="y" if /I "%ninja%"=="y" cd %mesa%\llvm\buildsys-%abi%-%llvmlink%
 @if /I "%meson%"=="y" call %vsenv%
-@if /I "%meson%"=="y" cd %mesa%\llvm\buildsys-%abi%
+@if /I "%meson%"=="y" cd %mesa%\llvm\buildsys-%abi%-%llvmlink%
 
 @rem Configure and execute the build with the configuration made above.
 @echo.

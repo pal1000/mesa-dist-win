@@ -42,7 +42,7 @@ GOTO skipmesa
 @if EXIST mesa if /i "%buildmesa%"=="y" echo.
 @if /i NOT "%buildmesa%"=="y" GOTO skipmesa
 @cd mesa
-@set LLVM=%mesa%\llvm\%abi%
+@set LLVM=%mesa%\llvm\%abi%-%llvmlink%
 @set /p mesaver=<VERSION
 @if "%mesaver:~-7%"=="0-devel" set /a intmesaver=%mesaver:~0,2%%mesaver:~3,1%00
 @if "%mesaver:~5,4%"=="0-rc" set /a intmesaver=%mesaver:~0,2%%mesaver:~3,1%00+%mesaver:~9%
