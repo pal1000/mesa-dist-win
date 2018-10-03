@@ -65,7 +65,8 @@ GOTO skipmesa
 
 @if %pythonver%==2 set buildcmd=%pythonloc% %pythonloc:~0,-10%Scripts\scons.py build=release platform=windows machine=%longabi%
 @if %pythonver%==2 if %mesaver% LSS 18201 set buildcmd=%buildcmd% texture_float=1
-@if %pythonver% GEQ 3 set buildconf=%mesonloc% %abi% --backend=vs2017 --buildtype=plain -Dc_args="/MT /O2" -Dcpp_args="/MT /O2"
+@if %pythonver% GEQ 3 set buildconf=%mesonloc% %abi% --backend=vs2017 --buildtype=plain
+@if %pythonver% GEQ 3 if %llvmlink%==MT set buildconf=%buildconf% -Dc_args="/MT /O2" -Dcpp_args="/MT /O2"
 @IF %pythonver% GEQ 3 set platformabi=Win32
 @IF %pythonver% GEQ 3 IF %abi%==x64 set platformabi=%abi%
 @if %pythonver% GEQ 3 set buildcmd=msbuild /p^:Configuration=plain,Platform=%platformabi% mesa.sln /m /v^:m
@@ -131,8 +132,8 @@ GOTO skipmesa
 @IF %pythonver% GEQ 3 if EXIST %abi% echo.
 @IF %pythonver%==2 if /I "%cleanbuild%"=="y" RD /S /Q build\windows-%longabi%
 @IF %pythonver% GEQ 3 if /I "%cleanbuild%"=="y" RD /S /Q %abi%
-@IF %pythonver% GEQ 3 if /I "%cleanbuild%"=="y" for /d %%p in ("%mesa%\mesa\subprojects\zlib-*") do @RD /s /q "%%~p"
-@IF %pythonver% GEQ 3 if /I "%cleanbuild%"=="y" for /d %%q in ("%mesa%\mesa\subprojects\expat-*") do @RD /s /q "%%~q"
+@IF %pythonver% GEQ 3 if /I "%cleanbuild%"=="y" for /d %%q in ("%mesa%\mesa\subprojects\zlib-*") do @RD /s /q "%%~q"
+@IF %pythonver% GEQ 3 if /I "%cleanbuild%"=="y" for /d %%r in ("%mesa%\mesa\subprojects\expat-*") do @RD /s /q "%%~r"
 
 :build_mesa
 @IF %flexstate%==1 set PATH=%mesa%\flexbison\;%PATH%
