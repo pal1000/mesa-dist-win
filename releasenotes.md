@@ -13,7 +13,6 @@
 - Python 2.7 packages: install pywin32 after wheel, just to be safe;
 - Mesa3D Meson build LLVM wrap generator: Tweak to replicate Mesa3D built-in wrap configuration and code clean-up;
 - Mesa3D Meson clean build: Cover subprojects too;
-- Cap Meson at 0.47.2 due to failure to pass /MT c_arg and cpp_arg in Meson 0.48.0;
 - Make it possible to have multiple LLVM builds with different limking modes at the same time.
 # 18.2.1
 - Updated Mesa3D to [18.2.1](https://www.mesa3d.org/relnotes/18.2.1.html).

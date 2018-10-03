@@ -16,7 +16,7 @@
 @echo ext_llvm = declare_dependency( >> %mesa%\mesa\subprojects\llvm\meson.build
 @echo   include_directories : include_directories(join_paths(meson.current_source_dir(), '../../../llvm/%abi%-%llvmlink%/include')), >> %mesa%\mesa\subprojects\llvm\meson.build
 @echo   dependencies : _deps, >> %mesa%\mesa\subprojects\llvm\meson.build
-@echo   version : '%llvmver%', >> %mesa%\mesa\subprojects\llvm\meson.build
+@echo   version : '%llvmver%' >> %mesa%\mesa\subprojects\llvm\meson.build
 @echo ) >> %mesa%\mesa\subprojects\llvm\meson.build
 @echo. >> %mesa%\mesa\subprojects\llvm\meson.build
 @echo irbuilder_h = files(join_paths(meson.current_source_dir(), '../../../llvm/%abi%-%llvmlink%/include/llvm/IR/IRBuilder.h')) >> %mesa%\mesa\subprojects\llvm\meson.build
