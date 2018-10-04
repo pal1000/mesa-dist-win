@@ -14,23 +14,23 @@ System | [Dell Vostro 2521-9566 Q1 2013](http://www.dell.com/support/home/en/us/
 CPU | [Intel Core I3-2375M](https://ark.intel.com/products/74259/Intel-Core-i3-2375M-Processor-3M-Cache-1_50-GHz)
 RAM | 4GB DDR3 1600 MHz
 dGPU | None
-OS | Windows 10 April 2018 Update Pro x64
+OS | Windows 10 October 2018 Update Pro x64
 ### Visual Studio
 | | |
 |-|-|
 Edition | 2017 Community
-Version | 15.8.5
-Windows 10 SDK Version | 10.0.17134.12
+Version | 15.8.6
+Windows 10 SDK Version | 10.0.17763.1
 Windows 10 SDK install method | standalone
 ### LLVM
 | | |
 |-|-|
 LLVM Version | 7.0.0
-CMake version | 3.12.2
+CMake version | 3.12.3
 CMake ARCH | x64
 Ninja version | 1.8.2
-LLVM build configure x64[1] | cd llvm-7.0.0.src & md buildsys-x64 & cd buildsys-x64 & cmake -G "Ninja" -Thost=x64 -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../x64 ..
-LLVM build configure x86[2] | cd llvm-7.0.0.src & md buildsys-x86 & cd buildsys-x86 & cmake -G "Ninja" -Thost=x64 -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../x86 ..
+LLVM build configure x64[1] | cd llvm-7.0.0.src & md buildsys-x64-MT & cd buildsys-x64-MT & cmake -G "Ninja" -Thost=x64 -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../x64-MT ..
+LLVM build configure x86[2] | cd llvm-7.0.0.src & md buildsys-x86-MT & cd buildsys-x86-MT & cmake -G "Ninja" -Thost=x64 -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../x86-MT ..
 LLVM build execute[3] | ninja install
 ### Python
 | | |
@@ -43,7 +43,7 @@ pywin32 / pypiwin32 version | 224
 scons version | 3.0.1
 Mako version | 1.0.7
 MarkupSafe version | 1.0
-wheel version | 0.32.0
+wheel version | 0.32.1
 ### winflexbison
 | | |
 |-|-|

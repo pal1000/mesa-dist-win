@@ -1,11 +1,15 @@
 # Next release
 ### Build environment updates
+- Windows 10.0.7134 -> 10.0.17763;
+- Windows SDK 10.0.17134.12 -> 10.0.17763.1;
 - setuptools 40.4.1 -> 40.4.3;
-- Visual Studio 15.8.4 -> 15.8.5;
+- Visual Studio 15.8.4 -> 15.8.6;
 - winflexbison 2.5.15 -> 2.5.16;
 - bison 3.0.5 -> 3.1.0;
 - pywin32 223 -> 224;
-- wheel 0.31.1 -> 0.32.0.
+- wheel 0.31.1 -> 0.32.1;
+- cmake 3.12.2 -> 3.12.3;
+- Update LLVM build commands to reflect side-by-side CRTs support.
 ### Build script
 - Python 3 packages: Fix an infinite loop with Meson 0.48.0 and newer;
 - Mesa3D Meson MsBuild backend: Lower log verbosity level to minimal;
@@ -13,7 +17,7 @@
 - Python 2.7 packages: install pywin32 after wheel, just to be safe;
 - Mesa3D Meson build LLVM wrap generator: Tweak to replicate Mesa3D built-in wrap configuration and code clean-up;
 - Mesa3D Meson clean build: Cover subprojects too;
-- Make it possible to have multiple LLVM builds with different limking modes at the same time;
+- Make it possible to have multiple LLVM builds with different linking modes at the same time;
 - Enforce LLVM CRT based on Python and Meson version bypasing Meson 0.48.0 c_args and cpp_args loss.
 # 18.2.1
 - Updated Mesa3D to [18.2.1](https://www.mesa3d.org/relnotes/18.2.1.html).
