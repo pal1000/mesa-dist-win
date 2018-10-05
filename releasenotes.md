@@ -9,7 +9,8 @@
 - pywin32 223 -> 224;
 - wheel 0.31.1 -> 0.32.1;
 - cmake 3.12.2 -> 3.12.3;
-- Update LLVM build commands to reflect side-by-side CRTs support.
+- Update LLVM build commands to reflect side-by-side CRTs support;
+- Fix a serious bug in LLVM build command that fortunately does not apply to the build script itself, only the build environment information document is affected.
 ### Build script
 - Python 3 packages: Fix an infinite loop with Meson 0.48.0 and newer;
 - Mesa3D Meson MsBuild backend: Lower log verbosity level to minimal;
