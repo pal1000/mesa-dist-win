@@ -4,3 +4,5 @@ bin/x86-bk/
 bin/x64-bk/
 bin/*.exe
 bin/*.tmp
+lib/
+include/

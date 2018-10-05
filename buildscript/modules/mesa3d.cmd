@@ -53,12 +53,18 @@ GOTO skipmesa
 @echo 1 > mesapatched.ini
 @echo.
 
-@rem Apply a patch that disables osmesa gallium and cuts off GLES from osmesa classic when building with Scons
-@rem when GLES is enabled due to build failure - https://bugs.freedesktop.org/show_bug.cgi?id=106843
-@rem We'll do a 2-pass build in this case. Build everything requested without GLES, then build everything again with GLES
-@rem having osmesa gallium disabled via patch.
+@rem Apply a patch that disables osmesa when building GLES or swr drver when using Scons
+@rem GLES linking with osmesa is disabled due to build failure - https://bugs.freedesktop.org/show_bug.cgi?id=106843
+@rem Now do the same for swr as well.
+@rem We'll do a 2-pass build in this case. Build everything requested without GLES and swr, then build everything again
+@rem with GLES and swr.
 @IF %pythonver%==2 git apply -v ..\mesa-dist-win\patches\osmesa.patch
 @IF %pythonver%==2 echo.
+
+@rem Apply a patch that fixes swr build with LLVM 7.0. It incorporates https://patchwork.freedesktop.org/patch/252354/
+@rem and Scons part I did myself.
+@git apply -v ..\mesa-dist-win\patches\swr-llvm7.patch
+@echo.
 
 :configmesabuild
 @rem Configure Mesa build.
@@ -94,14 +100,16 @@ GOTO skipmesa
 @if %pythonver%==2 if /I "%openmp%"=="y" set buildcmd=%buildcmd% openmp=1
 
 @set swrdrv=n
+@set disableosmesa=0
 @if /I NOT "%llvmless%"=="y" if %abi%==x64 if EXIST %LLVM% set /p swrdrv=Do you want to build swr drivers? (y=yes):
 @if /I NOT "%llvmless%"=="y" if %abi%==x64 if EXIST %LLVM% echo.
-@if %pythonver%==2 if /I "%swrdrv%"=="y" set buildcmd=%buildcmd% swr=1
+@if %pythonver%==2 if /I "%swrdrv%"=="y" set swrdrv=1
+@if %pythonver%==2 if /I "%swrdrv%"=="1" set disableosmesa=1
 @if %pythonver% GEQ 3 if /I "%swrdrv%"=="y" set buildconf=%buildconf% -Dgallium-drivers=swrast,swr
 
 @set /p gles=Do you want to build GLAPI shared library and GLES support (y/n):
 @echo.
-@if %pythonver%==2 if /I "%gles%"=="y" set gles=y
+@if %pythonver%==2 if /I "%gles%"=="y" set disableosmesa=1
 @if %pythonver%==2 if /I NOT "%gles%"=="y" set gles=0
 @if %pythonver% GEQ 3 if /I NOT "%gles%"=="y" set buildconf=%buildconf% -Dgles1=false -Dgles2=false
 
@@ -151,19 +159,19 @@ GOTO skipmesa
 @if %pythonver% GEQ 3 echo Build configuration command stored in buildconf variable.
 @if %pythonver% GEQ 3 echo.
 @if %pythonver% GEQ 3 cmd
-@if %pythonver%==2 IF /I "%osmesa%"=="y" IF /I "%gles%"=="y" (
-echo Build command: %buildcmd% gles=0 %mesatargets%
+@if %pythonver%==2 IF /I "%osmesa%"=="y" IF %disableosmesa%==1 (
+echo Build command: %buildcmd% gles=0 swr=0 %mesatargets%
 @echo.
-@%buildcmd% gles=0 %mesatargets%
+@%buildcmd% gles=0 swr=0 %mesatargets%
 @echo.
 @pause
 @echo Beginning 2nd build pass
 @echo.
 )
 @if %pythonver%==2 (
-@echo Build command: %buildcmd% gles=%gles% %mesatargets%
+@echo Build command: %buildcmd% gles=%gles% swr=%swrdrv% %mesatargets%
 @echo.
-@%buildcmd% gles=%gles% %mesatargets%
+@%buildcmd% gles=%gles% swr=%swrdrv% %mesatargets%
 @echo.
 )
 

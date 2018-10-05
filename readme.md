@@ -7,19 +7,20 @@
 - [OpenGL context configuration override](#opengl-context-configuration-override)
   
 # Downloads
-Mesa 18.2.1 builds are now available in [releases section](https://github.com/pal1000/mesa-dist-win/releases)
+Mesa 18.2.2 builds are now available in [releases section](https://github.com/pal1000/mesa-dist-win/releases)
 
 # Note for enterprise environments
 IT security policy may restrict or even outright prohibit running 3rd-party unsigned executables. If this is the case you can extract Mesa3D drivers using [7-Zip](https://www.7-zip.org/).
 
 # Package contents
-The following Mesa3D drivers are shipped in each release:
+The following Mesa3D drivers and build artifacts are shipped in each release:
 - [llvmpipe](https://www.mesa3d.org/llvmpipe.html) and softpipe bundle. File name: opengl32.dll. llvmpipe is the default desktop OpenGL driver. Both llvmpipe and softpipe are available for both x86 and x64. softpipe can be selected by setting environment variable GALLIUM_DRIVER=softpipe.
 - [GLAPI shared library](https://www.mesa3d.org/egl.html). File name: libglapi.dll. Required by llvmpipe, softpipe and swr if Mesa3D is bult with GLES support. This change took place in 18.1.2.600-1, see [#8](https://github.com/pal1000/mesa-dist-win/issues/8).
 - [swr](http://openswr.org/). File names: swrAVX.dll, swrAVX2.dll. An alternative desktop OpenGL driver developed by Intel.  Available for x64 only, x86 is [officially unsupported](https://bugs.freedesktop.org/show_bug.cgi?id=102564#c5). There are currently 2 DLLs, only one being loaded based on what the user CPU can do. 2 more will join soon matching the existing flavors of AVX512 instruction set, see issue [#2](https://github.com/pal1000/mesa-dist-win/issues/2). By default Mesa uses llvmpipe. You can switch to swr by setting GALLIUM_DRIVER environment variable value to swr either globally or in a batch file. See [How to set environment variables](#how-to-set-environment-variables).
 - [OpenGL ES](https://www.mesa3d.org/opengles.html). File names: libGLESv1_CM.dll and libGLESv2.dll. OpenGL ES 1.x, 2.0 and 3.0 drivers available for 32-bit and 64-bit applications.
 - [osmesa](https://www.mesa3d.org/osmesa.html). File name: osmesa.dll. 2 versions of osmesa, off-screen rendering driver. They are located in osmesa-gallium and osmesa-swrast subdirectories. Available for both x86 and x64. This driver is used in special cases by software that is designed to use Mesa code to render without any kind of window system or operating system dependency. osmesa gallium supports OpenGL 3.x and newer while osmesa swrast also known as osmesa classic only supports OpenGL 2.1 but it has some unique capabilities. osmesa does not have GLES support and integration with softpipe, llvmpipe and swr may be broken beginning with 18.1.2.600-1 due to complexity required to workaround its build failure with GLES, see upstream bug [106843](https://bugs.freedesktop.org/show_bug.cgi?id=106843).
-- graw. File name: graw.dll. This is Mesa3D plug-in library. It is not a driver. Available for both x86 and x64. This is used in special cases by software that is designed to use Mesa code. While Mesa includes a full version bearing the build target of graw-gdi and a headless version bearing the build target of graw-null, only the full version is included. The headless version can be easily added upon request in a later release. 
+- graw. File name: graw.dll. This is Mesa3D plug-in library. It is not a driver. Available for both x86 and x64. This is used in special cases by software that is designed to use Mesa code. While Mesa includes a full version bearing the build target of graw-gdi and a headless version bearing the build target of graw-null, only the full version is included. The headless version can be easily added upon request in a later release.
+- libraries and headers generated at build time for both 32-bit and 64-bit builds in a separate archive called devpack. Note that build time generated headers depend on source code headers, so you may need Mesa3D source code because only build time headers are included in the release.
 
 Build instructions, if you want to replicate my builds, are available [here](https://github.com/pal1000/mesa-dist-win/tree/master/buildscript).
 

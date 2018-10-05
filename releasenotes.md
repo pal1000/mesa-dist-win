@@ -1,4 +1,6 @@
-# Next release
+# 18.2.2
+- Updated Mesa3D to [18.2.2](https://www.mesa3d.org/relnotes/18.2.2.html);
+- swr driver is back.
 ### Build environment updates
 - Windows 10.0.7134 -> 10.0.17763;
 - Windows SDK 10.0.17134.12 -> 10.0.17763.1;
@@ -9,6 +11,7 @@
 - pywin32 223 -> 224;
 - wheel 0.31.1 -> 0.32.1;
 - cmake 3.12.2 -> 3.12.3;
+- pip 18.0 -> 18.1;
 - Update LLVM build commands to reflect side-by-side CRTs support;
 - Fix a serious bug in LLVM build command that fortunately does not apply to the build script itself, only the build environment information document is affected.
 ### Build script
@@ -19,7 +22,13 @@
 - Mesa3D Meson build LLVM wrap generator: Tweak to replicate Mesa3D built-in wrap configuration and code clean-up;
 - Mesa3D Meson clean build: Cover subprojects too;
 - Make it possible to have multiple LLVM builds with different linking modes at the same time;
-- Enforce LLVM CRT based on Python and Meson version bypasing Meson 0.48.0 c_args and cpp_args loss.
+- Enforce LLVM CRT based on Python and Meson version bypasing Meson 0.48.0 c_args and cpp_args loss;
+- Update distribution maker to collect headers and libraries - fixes [#14](https://github.com/pal1000/mesa-dist-win/issues/14);
+- Add a patch to get swr to build with LLVM 7.0. It incorporates [this patch](https://patchwork.freedesktop.org/patch/252354/) and Scons part I did myself.
+- Adjust osmesa dual pass build hack to occur with swr as well.
+### Debug
+- Remove early, obsoleted and forgotten Meson build draft;
+- llvm-config-output tool: Make it behave like llvm-wrap generator.
 # 18.2.1
 - Updated Mesa3D to [18.2.1](https://www.mesa3d.org/relnotes/18.2.1.html).
 ### Known issue
