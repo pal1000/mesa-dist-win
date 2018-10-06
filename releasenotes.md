@@ -5,6 +5,8 @@
 - osmesa support is limited. OpenGL ES and swr driver integration have to be stripped due to build failure.
 ### Upstream
 - Post a candidate patch - Scons: swr build fix with LLVM >= 7.
+### Patches and workarounds
+- Split LLVM 7 patch into the one already on mailing list and the scons one.
 # 18.2.2
 - Updated Mesa3D to [18.2.2](https://www.mesa3d.org/relnotes/18.2.2.html);
 - swr driver is back.

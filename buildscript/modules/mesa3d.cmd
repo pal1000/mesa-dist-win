@@ -53,17 +53,18 @@ GOTO skipmesa
 @echo 1 > mesapatched.ini
 @echo.
 
-@rem Apply a patch that disables osmesa when building GLES or swr drver when using Scons
+@rem Apply a patch that disables osmesa when building GLES or swr driver when using Scons.
 @rem GLES linking with osmesa is disabled due to build failure - https://bugs.freedesktop.org/show_bug.cgi?id=106843
-@rem Now do the same for swr as well.
-@rem We'll do a 2-pass build in this case. Build everything requested without GLES and swr, then build everything again
-@rem with GLES and swr.
+@rem Now do the same for swr as it fails to link with osmesa when using LLVM 7.0.
+@rem We'll do a 2-pass build in either case. Build everything requested without GLES and swr, then build everything again
+@rem with GLES or swr or both.
 @IF %pythonver%==2 git apply -v ..\mesa-dist-win\patches\osmesa.patch
 @IF %pythonver%==2 echo.
 
-@rem Apply a patch that fixes swr build with LLVM 7.0. It incorporates https://patchwork.freedesktop.org/patch/252354/
-@rem and Scons part I did myself.
+@rem Apply 2 patches that fix swr build with LLVM 7.0. The first one is https://patchwork.freedesktop.org/patch/252354/
+@rem and the second one which is Scons specific I did myself.
 @git apply -v ..\mesa-dist-win\patches\swr-llvm7.patch
+@git apply -v ..\mesa-dist-win\patches\upstream/scons-swr-llvm7.patch
 @echo.
 
 :configmesabuild
@@ -101,7 +102,7 @@ GOTO skipmesa
 
 @set swrdrv=n
 @set disableosmesa=0
-@if /I NOT "%llvmless%"=="y" if %abi%==x64 if EXIST %LLVM% set /p swrdrv=Do you want to build swr drivers? (y=yes):
+@if /I NOT "%llvmless%"=="y" if %abi%==x64 if EXIST %LLVM% set /p swrdrv=Do you want to build swr drivers? (y/1=yes):
 @if /I NOT "%llvmless%"=="y" if %abi%==x64 if EXIST %LLVM% echo.
 @if %pythonver%==2 if /I "%swrdrv%"=="y" set swrdrv=1
 @if %pythonver%==2 if /I "%swrdrv%"=="1" set disableosmesa=1
