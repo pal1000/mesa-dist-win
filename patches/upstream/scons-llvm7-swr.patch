@@ -1,0 +1,52 @@
+diff --git a/scons/llvm.py b/scons/llvm.py
+index a34edfb..6cb607d 100644
+--- a/scons/llvm.py
++++ b/scons/llvm.py
+@@ -103,8 +103,9 @@ def generate(env):
+             'HAVE_STDINT_H',
+         ])
+         env.Prepend(LIBPATH = [os.path.join(llvm_dir, 'lib')])
+-        # LIBS should match the output of `llvm-config --libs engine mcjit bitwriter x86asmprinter irreader`
+-        if llvm_version >= distutils.version.LooseVersion('5.0'):
++        # LIBS should match the output of `llvm-config --libs engine mcjit bitwriter x86asmprinter irreader` for LLVM < 7.0
++        # and `llvm-config --libs bitwriter engine mcdisassembler mcjit ipo objcarcopts` for LLVM >= 7.0
++        if llvm_version >= distutils.version.LooseVersion('7.0'):
+             env.Prepend(LIBS = [
+                 'LLVMX86Disassembler', 'LLVMX86AsmParser',
+                 'LLVMX86CodeGen', 'LLVMSelectionDAG', 'LLVMAsmPrinter',
+@@ -122,9 +123,34 @@ def generate(env):
+                 'LLVMIRReader', 'LLVMAsmParser',
+                 'LLVMDemangle', 'LLVMGlobalISel', 'LLVMDebugInfoMSF',
+                 'LLVMBinaryFormat',
++                'LLVMObjCARCOpts', 'LLVMipo', 'LLVMVectorize',
++                'LLVMLinker', 'LLVMAggressiveInstCombine',
+             ])
+             if env['platform'] == 'windows' and env['crosscompile']:
+-                # LLVM 5.0 requires MinGW w/ pthreads due to use of std::thread and friends.
++                # LLVM 5.0 and newer require MinGW w/ pthreads due to use of std::thread and friends.
++                assert env['gcc']
++                env['CXX'] = env['CXX'] + '-posix'
++        elif llvm_version >= distutils.version.LooseVersion('5.0'):
++            env.Prepend(LIBS = [
++                'LLVMX86Disassembler', 'LLVMX86AsmParser',
++                'LLVMX86CodeGen', 'LLVMSelectionDAG', 'LLVMAsmPrinter',
++                'LLVMDebugInfoCodeView', 'LLVMCodeGen',
++                'LLVMScalarOpts', 'LLVMInstCombine',
++                'LLVMTransformUtils',
++                'LLVMBitWriter', 'LLVMX86Desc',
++                'LLVMMCDisassembler', 'LLVMX86Info',
++                'LLVMX86AsmPrinter', 'LLVMX86Utils',
++                'LLVMMCJIT', 'LLVMExecutionEngine', 'LLVMTarget',
++                'LLVMAnalysis', 'LLVMProfileData',
++                'LLVMRuntimeDyld', 'LLVMObject', 'LLVMMCParser',
++                'LLVMBitReader', 'LLVMMC', 'LLVMCore',
++                'LLVMSupport',
++                'LLVMIRReader', 'LLVMAsmParser',
++                'LLVMDemangle', 'LLVMGlobalISel', 'LLVMDebugInfoMSF',
++                'LLVMBinaryFormat',
++            ])
++            if env['platform'] == 'windows' and env['crosscompile']:
++                # LLVM 5.0 and newer require MinGW w/ pthreads due to use of std::thread and friends.
+                 assert env['gcc']
+                 env['CXX'] = env['CXX'] + '-posix'
+         elif llvm_version >= distutils.version.LooseVersion('4.0'):
