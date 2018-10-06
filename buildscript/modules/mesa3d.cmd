@@ -71,7 +71,7 @@ GOTO skipmesa
 @rem Configure Mesa build.
 
 @if %pythonver%==2 set buildcmd=%pythonloc% %pythonloc:~0,-10%Scripts\scons.py build=release platform=windows machine=%longabi%
-@if %pythonver%==2 if %mesaver% LSS 18201 set buildcmd=%buildcmd% texture_float=1
+@if %pythonver%==2 if %intmesaver% LSS 18201 set buildcmd=%buildcmd% texture_float=1
 @if %pythonver% GEQ 3 set buildconf=%mesonloc% %abi% --backend=vs2017 --buildtype=plain
 @if %pythonver% GEQ 3 if %llvmlink%==MT set buildconf=%buildconf% -Dc_args="/MT /O2" -Dcpp_args="/MT /O2"
 @IF %pythonver% GEQ 3 set platformabi=Win32
@@ -100,7 +100,7 @@ GOTO skipmesa
 @if %pythonver%==2 echo.
 @if %pythonver%==2 if /I "%openmp%"=="y" set buildcmd=%buildcmd% openmp=1
 
-@set swrdrv=n
+@set swrdrv=0
 @set disableosmesa=0
 @if /I NOT "%llvmless%"=="y" if %abi%==x64 if EXIST %LLVM% set /p swrdrv=Do you want to build swr drivers? (y/1=yes):
 @if /I NOT "%llvmless%"=="y" if %abi%==x64 if EXIST %LLVM% echo.
