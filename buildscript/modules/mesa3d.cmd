@@ -109,6 +109,7 @@ GOTO skipmesa
 
 @set /p gles=Do you want to build GLAPI shared library and GLES support (y/n):
 @echo.
+@if %pythonver%==2 if /I "%gles%"=="y" set gles=y
 @if %pythonver%==2 if /I "%gles%"=="y" set disableosmesa=1
 @if %pythonver%==2 if /I NOT "%gles%"=="y" set gles=0
 @if %pythonver% GEQ 3 if /I NOT "%gles%"=="y" set buildconf=%buildconf% -Dgles1=false -Dgles2=false
