@@ -1,5 +1,5 @@
 @cd ../../
-@set llvmlink=mt
+@set llvmlink=MT
 @set llvmmeson=bitwriter engine mcdisassembler mcjit
 @set llvmscons=engine mcjit bitwriter x86asmprinter irreader
 @set llvm7=bitwriter engine mcdisassembler mcjit ipo objcarcopts

@@ -6,7 +6,8 @@
 ### Patches and workarounds
 - Split LLVM 7 patch into the one already on mailing list and the scons one.
 ### Build script
-- Fix a typo that was causing the defunct texture_float build option to linger.
+- Fix a typo that was causing the defunct texture_float build option to linger;
+- Mesa3D Meson build: Far more robust detection of pkg-config.
 # 18.2.2
 - Updated Mesa3D to [18.2.2](https://www.mesa3d.org/relnotes/18.2.2.html);
 - swr driver is back.

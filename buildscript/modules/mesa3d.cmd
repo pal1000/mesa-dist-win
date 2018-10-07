@@ -147,7 +147,6 @@ GOTO skipmesa
 
 :build_mesa
 @IF %flexstate%==1 set PATH=%mesa%\flexbison\;%PATH%
-@IF %pythonver% GEQ 3 IF %pkgconfigstate%==1 SET PATH=%mesa%\pkgconfig\;%PATH%
 
 @IF %pythonver%==2 if NOT EXIST build md build
 @IF %pythonver%==2 if NOT EXIST build\windows-%longabi% md build\windows-%longabi%
