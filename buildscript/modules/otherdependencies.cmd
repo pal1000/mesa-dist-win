@@ -56,44 +56,44 @@
 
 @rem Look for mingw versions of pkg-config.
 @set pkgconfloc=%mesa%\msys64\mingw64\bin
-@IF EXIST %pkgconfloc%\pkg-config.exe SET PKG_CONFIG_PATH=%pkgconfloc%\pkg-config.exe
+@IF EXIST %pkgconfloc%\pkg-config.exe SET PKG_CONFIG_PATH=%pkgconfloc%
 @IF EXIST "%PKG_CONFIG_PATH%" GOTO doneenvcheck
 
 @set pkgconfloc=%mesa%\msys32\mingw64\bin
-@IF EXIST %pkgconfloc%\pkg-config.exe SET PKG_CONFIG_PATH=%pkgconfloc%\pkg-config.exe
+@IF EXIST %pkgconfloc%\pkg-config.exe SET PKG_CONFIG_PATH=%pkgconfloc%
 @IF EXIST "%PKG_CONFIG_PATH%" GOTO doneenvcheck
 
 @set pkgconfloc=%mesa%\msys64\mingw32\bin
-@IF EXIST %pkgconfloc%\pkg-config.exe SET PKG_CONFIG_PATH=%pkgconfloc%\pkg-config.exe
+@IF EXIST %pkgconfloc%\pkg-config.exe SET PKG_CONFIG_PATH=%pkgconfloc%
 @IF EXIST "%PKG_CONFIG_PATH%" GOTO doneenvcheck
 
 @set pkgconfloc=%mesa%\msys32\mingw32\bin
-@IF EXIST %pkgconfloc%\pkg-config.exe SET PKG_CONFIG_PATH=%pkgconfloc%\pkg-config.exe
+@IF EXIST %pkgconfloc%\pkg-config.exe SET PKG_CONFIG_PATH=%pkgconfloc%
 @IF EXIST "%PKG_CONFIG_PATH%" GOTO doneenvcheck
 
 @rem Look for pkg-config-lite and standalone pkg-config
 @set pkgconfloc=%mesa%\pkgconfig
-@IF EXIST %pkgconfloc%\pkg-config.exe IF NOT EXIST %pkgconfloc%\x86_64-w64-mingw32-pkg-config.exe IF NOT EXIST %pkgconfloc%\i686-w64-mingw32-pkg-config.exe SET PKG_CONFIG_PATH=%pkgconfloc%\pkg-config.exe
-@IF EXIST %pkgconfloc%\pkg-config.exe IF EXIST %pkgconfloc%\x86_64-w64-mingw32-pkg-config.exe IF EXIST %pkgconfloc%\libwinpthread-1.dll SET PKG_CONFIG_PATH=%pkgconfloc%\pkg-config.exe
-@IF EXIST %pkgconfloc%\pkg-config.exe IF EXIST %pkgconfloc%\i686-w64-mingw32-pkg-config.exe IF EXIST %pkgconfloc%\libwinpthread-1.dll SET PKG_CONFIG_PATH=%pkgconfloc%\pkg-config.exe
+@IF EXIST %pkgconfloc%\pkg-config.exe IF NOT EXIST %pkgconfloc%\x86_64-w64-mingw32-pkg-config.exe IF NOT EXIST %pkgconfloc%\i686-w64-mingw32-pkg-config.exe SET PKG_CONFIG_PATH=%pkgconfloc%
+@IF EXIST %pkgconfloc%\pkg-config.exe IF EXIST %pkgconfloc%\x86_64-w64-mingw32-pkg-config.exe IF EXIST %pkgconfloc%\libwinpthread-1.dll SET PKG_CONFIG_PATH=%pkgconfloc%
+@IF EXIST %pkgconfloc%\pkg-config.exe IF EXIST %pkgconfloc%\i686-w64-mingw32-pkg-config.exe IF EXIST %pkgconfloc%\libwinpthread-1.dll SET PKG_CONFIG_PATH=%pkgconfloc%
 @IF EXIST "%PKG_CONFIG_PATH%" GOTO doneenvcheck
 
 @set pkgconfloc=%mesa%\pkg-config
-@IF EXIST %pkgconfloc%\pkg-config.exe IF NOT EXIST %pkgconfloc%\x86_64-w64-mingw32-pkg-config.exe IF NOT EXIST %pkgconfloc%\i686-w64-mingw32-pkg-config.exe SET PKG_CONFIG_PATH=%pkgconfloc%\pkg-config.exe
-@IF EXIST %pkgconfloc%\pkg-config.exe IF EXIST %pkgconfloc%\x86_64-w64-mingw32-pkg-config.exe IF EXIST %pkgconfloc%\libwinpthread-1.dll SET PKG_CONFIG_PATH=%pkgconfloc%\pkg-config.exe
-@IF EXIST %pkgconfloc%\pkg-config.exe IF EXIST %pkgconfloc%\i686-w64-mingw32-pkg-config.exe IF EXIST %pkgconfloc%\libwinpthread-1.dll SET PKG_CONFIG_PATH=%pkgconfloc%\pkg-config.exe
+@IF EXIST %pkgconfloc%\pkg-config.exe IF NOT EXIST %pkgconfloc%\x86_64-w64-mingw32-pkg-config.exe IF NOT EXIST %pkgconfloc%\i686-w64-mingw32-pkg-config.exe SET PKG_CONFIG_PATH=%pkgconfloc%
+@IF EXIST %pkgconfloc%\pkg-config.exe IF EXIST %pkgconfloc%\x86_64-w64-mingw32-pkg-config.exe IF EXIST %pkgconfloc%\libwinpthread-1.dll SET PKG_CONFIG_PATH=%pkgconfloc%
+@IF EXIST %pkgconfloc%\pkg-config.exe IF EXIST %pkgconfloc%\i686-w64-mingw32-pkg-config.exe IF EXIST %pkgconfloc%\libwinpthread-1.dll SET PKG_CONFIG_PATH=%pkgconfloc%
 @IF EXIST "%PKG_CONFIG_PATH%" GOTO doneenvcheck
 
 @set pkgconfloc=%mesa%\pkgconfiglite
-@IF EXIST %pkgconfloc%\pkg-config.exe IF NOT EXIST %pkgconfloc%\x86_64-w64-mingw32-pkg-config.exe IF NOT EXIST %pkgconfloc%\i686-w64-mingw32-pkg-config.exe SET PKG_CONFIG_PATH=%pkgconfloc%\pkg-config.exe
-@IF EXIST %pkgconfloc%\pkg-config.exe IF EXIST %pkgconfloc%\x86_64-w64-mingw32-pkg-config.exe IF EXIST %pkgconfloc%\libwinpthread-1.dll SET PKG_CONFIG_PATH=%pkgconfloc%\pkg-config.exe
-@IF EXIST %pkgconfloc%\pkg-config.exe IF EXIST %pkgconfloc%\i686-w64-mingw32-pkg-config.exe IF EXIST %pkgconfloc%\libwinpthread-1.dll SET PKG_CONFIG_PATH=%pkgconfloc%\pkg-config.exe
+@IF EXIST %pkgconfloc%\pkg-config.exe IF NOT EXIST %pkgconfloc%\x86_64-w64-mingw32-pkg-config.exe IF NOT EXIST %pkgconfloc%\i686-w64-mingw32-pkg-config.exe SET PKG_CONFIG_PATH=%pkgconfloc%
+@IF EXIST %pkgconfloc%\pkg-config.exe IF EXIST %pkgconfloc%\x86_64-w64-mingw32-pkg-config.exe IF EXIST %pkgconfloc%\libwinpthread-1.dll SET PKG_CONFIG_PATH=%pkgconfloc%
+@IF EXIST %pkgconfloc%\pkg-config.exe IF EXIST %pkgconfloc%\i686-w64-mingw32-pkg-config.exe IF EXIST %pkgconfloc%\libwinpthread-1.dll SET PKG_CONFIG_PATH=%pkgconfloc%
 @IF EXIST "%PKG_CONFIG_PATH%" GOTO doneenvcheck
 
 @set pkgconfloc=%mesa%\pkg-config-lite
-@IF EXIST %pkgconfloc%\pkg-config.exe IF NOT EXIST %pkgconfloc%\x86_64-w64-mingw32-pkg-config.exe IF NOT EXIST %pkgconfloc%\i686-w64-mingw32-pkg-config.exe SET PKG_CONFIG_PATH=%pkgconfloc%\pkg-config.exe
-@IF EXIST %pkgconfloc%\pkg-config.exe IF EXIST %pkgconfloc%\x86_64-w64-mingw32-pkg-config.exe IF EXIST %pkgconfloc%\libwinpthread-1.dll SET PKG_CONFIG_PATH=%pkgconfloc%\pkg-config.exe
-@IF EXIST %pkgconfloc%\pkg-config.exe IF EXIST %pkgconfloc%\i686-w64-mingw32-pkg-config.exe IF EXIST %pkgconfloc%\libwinpthread-1.dll SET PKG_CONFIG_PATH=%pkgconfloc%\pkg-config.exe
+@IF EXIST %pkgconfloc%\pkg-config.exe IF NOT EXIST %pkgconfloc%\x86_64-w64-mingw32-pkg-config.exe IF NOT EXIST %pkgconfloc%\i686-w64-mingw32-pkg-config.exe SET PKG_CONFIG_PATH=%pkgconfloc%
+@IF EXIST %pkgconfloc%\pkg-config.exe IF EXIST %pkgconfloc%\x86_64-w64-mingw32-pkg-config.exe IF EXIST %pkgconfloc%\libwinpthread-1.dll SET PKG_CONFIG_PATH=%pkgconfloc%
+@IF EXIST %pkgconfloc%\pkg-config.exe IF EXIST %pkgconfloc%\i686-w64-mingw32-pkg-config.exe IF EXIST %pkgconfloc%\libwinpthread-1.dll SET PKG_CONFIG_PATH=%pkgconfloc%
 @IF EXIST "%PKG_CONFIG_PATH%" GOTO doneenvcheck
 
 @set pkgconfigstate=0
