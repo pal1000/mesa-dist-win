@@ -145,9 +145,12 @@ GOTO skipmesa
 @IF %pythonver% GEQ 3 if /I "%cleanbuild%"=="y" for /d %%q in ("%mesa%\mesa\subprojects\zlib-*") do @RD /s /q "%%~q"
 @IF %pythonver% GEQ 3 if /I "%cleanbuild%"=="y" for /d %%r in ("%mesa%\mesa\subprojects\expat-*") do @RD /s /q "%%~r"
 
-:build_mesa
 @IF %flexstate%==1 set PATH=%mesa%\flexbison\;%PATH%
+@if %pythonver%==2 GOTO build_mesa
+@if %pythonver% GEQ 3 IF %pkgconfigstate%==2 GOTO build_mesa
+@set PATH=%PKG_CONFIG_PATH:~0,-14%;%PATH%
 
+:build_mesa
 @IF %pythonver%==2 if NOT EXIST build md build
 @IF %pythonver%==2 if NOT EXIST build\windows-%longabi% md build\windows-%longabi%
 @IF %pythonver% GEQ 3 if NOT EXIST %abi% md %abi%

@@ -31,8 +31,8 @@
 @IF %flexloc%==%mesa%\flexbison\win_flex.exe set flexstate=1
 @IF %flexstate%==1 IF NOT EXIST %flexloc% set flexstate=0
 
-@rem pkg-config. can be present (1), missing or broken (0). Only required with Meson build.
-@set pkgconfigstate=1
+@rem pkg-config. can be present in PATH (2), present as local dependency (1), missing or broken (0). Only required with Meson build.
+@set pkgconfigstate=2
 
 @rem Look in PATH for pkg-config
 @SET ERRORLEVEL=0
@@ -52,6 +52,8 @@
 @GOTO doneenvcheck
 
 :nopathpkgconfig
+@set pkgconfigstate=1
+
 @rem Look for mingw versions of pkg-config.
 @set pkgconfloc=%mesa%\msys64\mingw64\bin
 @IF EXIST %pkgconfloc%\pkg-config.exe SET PKG_CONFIG_PATH=%pkgconfloc%\pkg-config.exe
