@@ -61,29 +61,27 @@ GOTO skipmesa
 @IF %pythonver%==2 git apply -v ..\mesa-dist-win\patches\osmesa.patch
 @IF %pythonver%==2 echo.
 
-@rem Apply 2 patches that fix swr build with LLVM 7.0. The first one is https://patchwork.freedesktop.org/patch/252354/
-@rem and the second one which is Scons specific I did myself.
+@rem Apply a patch that fixes swr build with LLVM 7.0 - https://bugs.freedesktop.org/attachment.cgi?id=141969
 @git apply -v ..\mesa-dist-win\patches\swr-llvm7.patch
-@git apply -v ..\mesa-dist-win\patches\upstream/scons-swr-llvm7.patch
 @echo.
 
 :configmesabuild
 @rem Configure Mesa build.
 
-@if %pythonver%==2 set buildcmd=%pythonloc% %pythonloc:~0,-10%Scripts\scons.py build=release platform=windows machine=%longabi%
+@if %pythonver%==2 set buildcmd=%pythonloc% %pythonloc:~0,-10%Scripts\scons.py -j%throttle% build=release platform=windows machine=%longabi%
 @if %pythonver%==2 if %intmesaver% LSS 18201 set buildcmd=%buildcmd% texture_float=1
 @if %pythonver% GEQ 3 set buildconf=%mesonloc% %abi% --backend=vs2017 --buildtype=plain
 @if %pythonver% GEQ 3 if %llvmlink%==MT set buildconf=%buildconf% -Dc_args="/MT /O2" -Dcpp_args="/MT /O2"
 @IF %pythonver% GEQ 3 set platformabi=Win32
 @IF %pythonver% GEQ 3 IF %abi%==x64 set platformabi=%abi%
-@if %pythonver% GEQ 3 set buildcmd=msbuild /p^:Configuration=plain,Platform=%platformabi% mesa.sln /m /v^:m
+@if %pythonver% GEQ 3 set buildcmd=msbuild /p^:Configuration=plain,Platform=%platformabi% mesa.sln /m^:%throttle% /v^:m
 
 @set ninja=n
 @if %pythonver% GEQ 3 if NOT %ninjastate%==0 set /p ninja=Use Ninja build system instead of MsBuild (y/n); less storage device strain and maybe faster build:
 @if %pythonver% GEQ 3 if NOT %ninjastate%==0 echo.
 @if /I "%ninja%"=="y" if %ninjastate%==1 set PATH=%mesa%\ninja\;%PATH%
 @if /I "%ninja%"=="y" set buildconf=%buildconf:vs2017=ninja%
-@if %pythonver% GEQ 3 if /I "%ninja%"=="y" set buildcmd=ninja
+@if %pythonver% GEQ 3 if /I "%ninja%"=="y" set buildcmd=ninja -j %throttle%
 
 @set llvmless=n
 @if EXIST %LLVM% set /p llvmless=Build Mesa without LLVM (y/n). llvmpipe and swr drivers and high performance JIT won't be available for other drivers and libraries:
@@ -101,13 +99,12 @@ GOTO skipmesa
 @if %pythonver%==2 if /I "%openmp%"=="y" set buildcmd=%buildcmd% openmp=1
 
 @set swrdrv=0
-@set disableosmesa=0
 @if /I NOT "%llvmless%"=="y" if %abi%==x64 if EXIST %LLVM% set /p swrdrv=Do you want to build swr drivers? (y/1=yes):
 @if /I NOT "%llvmless%"=="y" if %abi%==x64 if EXIST %LLVM% echo.
-@if %pythonver%==2 if /I "%swrdrv%"=="y" set swrdrv=1
-@if %pythonver%==2 if /I "%swrdrv%"=="1" set disableosmesa=1
+@if %pythonver%==2 if /I "%swrdrv%"=="y" set buildcmd=%buildcmd% swr=1
 @if %pythonver% GEQ 3 if /I "%swrdrv%"=="y" set buildconf=%buildconf% -Dgallium-drivers=swrast,swr
 
+@set disableosmesa=0
 @set /p gles=Do you want to build GLAPI shared library and GLES support (y/n):
 @echo.
 @if %pythonver%==2 if /I "%gles%"=="y" set gles=y
@@ -164,18 +161,18 @@ GOTO skipmesa
 @if %pythonver% GEQ 3 echo.
 @if %pythonver% GEQ 3 cmd
 @if %pythonver%==2 IF /I "%osmesa%"=="y" IF %disableosmesa%==1 (
-echo Build command: %buildcmd% gles=0 swr=0 %mesatargets%
+@echo Build command: %buildcmd% gles=0 %mesatargets%
 @echo.
-@%buildcmd% gles=0 swr=0 %mesatargets%
+@%buildcmd% gles=0 %mesatargets%
 @echo.
 @pause
 @echo Beginning 2nd build pass
 @echo.
 )
 @if %pythonver%==2 (
-@echo Build command: %buildcmd% gles=%gles% swr=%swrdrv% %mesatargets%
+@echo Build command: %buildcmd% gles=%gles% %mesatargets%
 @echo.
-@%buildcmd% gles=%gles% swr=%swrdrv% %mesatargets%
+@%buildcmd% gles=%gles% %mesatargets%
 @echo.
 )
 

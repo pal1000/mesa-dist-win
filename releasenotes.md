@@ -1,13 +1,15 @@
 # Next release
+- Restore osmesa and swr integration now that we have a far better LLVM 7 compatibility patch.
 ### Documentation
-- Update documentation regarding swr workaround for LLVM >= 7 and LLVM new binaries location.
-### Upstream
-- Post a candidate patch - Scons: swr build fix with LLVM >= 7.
+- Update documentation regarding swr workaround for LLVM >= 7, LLVM new binaries location and build throttling support.
 ### Patches and workarounds
-- Split LLVM 7 patch into the one already on mailing list and the scons one.
+- Add a LLVM 7 compatibility patch for swr driver. Patch is provided by Clear Linux - https://bugs.freedesktop.org/attachment.cgi?id=141969.
 ### Build script
 - Fix a typo that was causing the defunct texture_float build option to linger;
-- Mesa3D Meson build: Far more robust detection of pkg-config.
+- Mesa3D Meson build: Far more robust detection of pkg-config;
+- Buld throttling suport. Doesn't make much difference with Scons as it uses the incremental linker a lot.
+### Build environment updates
+- git 2.19.0.1 -> 2.19.1.1.
 # 18.2.2
 - Updated Mesa3D to [18.2.2](https://www.mesa3d.org/relnotes/18.2.2.html);
 - swr driver is back.

@@ -1,93 +1,83 @@
-diff --git a/configure.ac b/configure.ac
-index 864dcae8e3..9fd68d4929 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -2719,6 +2719,11 @@ if test -n "$with_gallium_drivers"; then
-             ;;
-         xswr)
-             llvm_require_version $LLVM_REQUIRED_SWR "swr"
-+            llvm_add_default_components "swr"
-+            if test $LLVM_VERSION_MAJOR -ge 7; then
-+                llvm_add_component "ipo" "swr"
-+                llvm_add_component "ObjCARCOpts" "swr"
-+            fi
- 
-             if test "x$HAVE_CXX11" != "xyes"; then
-                 AC_MSG_ERROR([swr requires c++11 support])
 diff --git a/src/gallium/drivers/swr/rasterizer/jitter/blend_jit.cpp b/src/gallium/drivers/swr/rasterizer/jitter/blend_jit.cpp
-index f89c502db7..1d6fb405dd 100644
+index f89c502db7..d5328c8e4e 100644
 --- a/src/gallium/drivers/swr/rasterizer/jitter/blend_jit.cpp
 +++ b/src/gallium/drivers/swr/rasterizer/jitter/blend_jit.cpp
-@@ -870,7 +870,11 @@ struct BlendJit : public Builder
-         passes.add(createCFGSimplificationPass());
-         passes.add(createEarlyCSEPass());
-         passes.add(createInstructionCombiningPass());
-+#if LLVM_VERSION_MAJOR >= 7
-+        passes.add(createInstSimplifyLegacyPass());
-+#else
-         passes.add(createInstructionSimplifierPass());
-+#endif
-         passes.add(createConstantPropagationPass());
-         passes.add(createSCCPPass());
-         passes.add(createAggressiveDCEPass());
-diff --git a/src/gallium/drivers/swr/rasterizer/jitter/fetch_jit.cpp b/src/gallium/drivers/swr/rasterizer/jitter/fetch_jit.cpp
-index b4d326ebdc..26972cddc2 100644
---- a/src/gallium/drivers/swr/rasterizer/jitter/fetch_jit.cpp
-+++ b/src/gallium/drivers/swr/rasterizer/jitter/fetch_jit.cpp
-@@ -294,7 +294,11 @@ Function* FetchJit::Create(const FETCH_COMPILE_STATE& fetchState)
-     optPasses.add(createCFGSimplificationPass());
-     optPasses.add(createEarlyCSEPass());
-     optPasses.add(createInstructionCombiningPass());
-+#if LLVM_VERSION_MAJOR >= 7
-+    optPasses.add(createInstSimplifyLegacyPass());
-+#else
-     optPasses.add(createInstructionSimplifierPass());
-+#endif
-     optPasses.add(createConstantPropagationPass());
-     optPasses.add(createSCCPPass());
-     optPasses.add(createAggressiveDCEPass());
-diff --git a/src/gallium/drivers/swr/rasterizer/jitter/functionpasses/lower_x86.cpp b/src/gallium/drivers/swr/rasterizer/jitter/functionpasses/lower_x86.cpp
-index 7605823c04..c58a7552a3 100644
---- a/src/gallium/drivers/swr/rasterizer/jitter/functionpasses/lower_x86.cpp
-+++ b/src/gallium/drivers/swr/rasterizer/jitter/functionpasses/lower_x86.cpp
-@@ -76,7 +76,11 @@ namespace SwrJit
-         {"meta.intrinsic.VCVTPS2PH", Intrinsic::x86_vcvtps2ph_256},
-         {"meta.intrinsic.VPTESTC", Intrinsic::x86_avx_ptestc_256},
-         {"meta.intrinsic.VPTESTZ", Intrinsic::x86_avx_ptestz_256},
-+#if LLVM_VERSION_MAJOR >= 7
-+        {"meta.intrinsic.VFMADDPS", Intrinsic::fma},
-+#else
-         {"meta.intrinsic.VFMADDPS", Intrinsic::x86_fma_vfmadd_ps_256},
-+#endif
-         {"meta.intrinsic.VPHADDD", Intrinsic::x86_avx2_phadd_d},
-         {"meta.intrinsic.PDEP32", Intrinsic::x86_bmi_pdep_32},
-         {"meta.intrinsic.RDTSC", Intrinsic::x86_rdtsc},
-diff --git a/src/gallium/drivers/swr/rasterizer/jitter/jit_pch.hpp b/src/gallium/drivers/swr/rasterizer/jitter/jit_pch.hpp
-index 47f717bfc2..e58de783ab 100644
---- a/src/gallium/drivers/swr/rasterizer/jitter/jit_pch.hpp
-+++ b/src/gallium/drivers/swr/rasterizer/jitter/jit_pch.hpp
-@@ -70,6 +70,7 @@ using PassManager         = llvm::legacy::PassManager;
- #if LLVM_VERSION_MAJOR >= 7
- #include "llvm/Transforms/Utils.h"
- #include "llvm/Transforms/InstCombine/InstCombine.h"
-+#include "llvm/LinkAllPasses.h"
- #endif
- #include "llvm/Support/Host.h"
- #include "llvm/Support/DynamicLibrary.h"
-diff --git a/src/gallium/drivers/swr/rasterizer/jitter/streamout_jit.cpp b/src/gallium/drivers/swr/rasterizer/jitter/streamout_jit.cpp
-index 8f86af2a4b..1b78c8296e 100644
---- a/src/gallium/drivers/swr/rasterizer/jitter/streamout_jit.cpp
-+++ b/src/gallium/drivers/swr/rasterizer/jitter/streamout_jit.cpp
-@@ -306,7 +306,11 @@ struct StreamOutJit : public Builder
+@@ -870,7 +870,6 @@ struct BlendJit : public Builder
          passes.add(createCFGSimplificationPass());
          passes.add(createEarlyCSEPass());
          passes.add(createInstructionCombiningPass());
 -        passes.add(createInstructionSimplifierPass());
-+#if LLVM_VERSION_MAJOR >= 7
-+    passes.add(createInstSimplifyLegacyPass());
-+#else
-+    passes.add(createInstructionSimplifierPass());
-+#endif
          passes.add(createConstantPropagationPass());
          passes.add(createSCCPPass());
          passes.add(createAggressiveDCEPass());
+diff --git a/src/gallium/drivers/swr/rasterizer/jitter/fetch_jit.cpp b/src/gallium/drivers/swr/rasterizer/jitter/fetch_jit.cpp
+index b4d326ebdc..3ad0fabe81 100644
+--- a/src/gallium/drivers/swr/rasterizer/jitter/fetch_jit.cpp
++++ b/src/gallium/drivers/swr/rasterizer/jitter/fetch_jit.cpp
+@@ -294,7 +294,6 @@ Function* FetchJit::Create(const FETCH_COMPILE_STATE& fetchState)
+     optPasses.add(createCFGSimplificationPass());
+     optPasses.add(createEarlyCSEPass());
+     optPasses.add(createInstructionCombiningPass());
+-    optPasses.add(createInstructionSimplifierPass());
+     optPasses.add(createConstantPropagationPass());
+     optPasses.add(createSCCPPass());
+     optPasses.add(createAggressiveDCEPass());
+diff --git a/src/gallium/drivers/swr/rasterizer/jitter/streamout_jit.cpp b/src/gallium/drivers/swr/rasterizer/jitter/streamout_jit.cpp
+index 8f86af2a4b..11ad36521b 100644
+--- a/src/gallium/drivers/swr/rasterizer/jitter/streamout_jit.cpp
++++ b/src/gallium/drivers/swr/rasterizer/jitter/streamout_jit.cpp
+@@ -306,7 +306,6 @@ struct StreamOutJit : public Builder
+         passes.add(createCFGSimplificationPass());
+         passes.add(createEarlyCSEPass());
+         passes.add(createInstructionCombiningPass());
+-        passes.add(createInstructionSimplifierPass());
+         passes.add(createConstantPropagationPass());
+         passes.add(createSCCPPass());
+         passes.add(createAggressiveDCEPass());
+diff --git a/src/gallium/drivers/swr/rasterizer/codegen/gen_llvm_ir_macros.py b/src/gallium/drivers/swr/rasterizer/codegen/gen_llvm_ir_macros.py
+index 2e7f1a88a0..9b20dc2c49 100644
+--- a/src/gallium/drivers/swr/rasterizer/codegen/gen_llvm_ir_macros.py
++++ b/src/gallium/drivers/swr/rasterizer/codegen/gen_llvm_ir_macros.py
+@@ -57,7 +57,6 @@ intrinsics = [
+     ['VHSUBPS',     ['a', 'b'], 'a'],
+     ['VPTESTC',     ['a', 'b'], 'mInt32Ty'],
+     ['VPTESTZ',     ['a', 'b'], 'mInt32Ty'],
+-    ['VFMADDPS',    ['a', 'b', 'c'], 'a'],
+     ['VPHADDD',     ['a', 'b'], 'a'],
+     ['PDEP32',      ['a', 'b'], 'a'],
+     ['RDTSC',       [], 'mInt64Ty'],
+diff --git a/src/gallium/drivers/swr/rasterizer/jitter/builder_misc.cpp b/src/gallium/drivers/swr/rasterizer/jitter/builder_misc.cpp
+index 4116dad443..50375f41f2 100644
+--- a/src/gallium/drivers/swr/rasterizer/jitter/builder_misc.cpp
++++ b/src/gallium/drivers/swr/rasterizer/jitter/builder_misc.cpp
+@@ -754,17 +754,7 @@ namespace SwrJit
+ 
+     Value* Builder::FMADDPS(Value* a, Value* b, Value* c)
+     {
+-        Value* vOut;
+-        // use FMADs if available
+-        if (JM()->mArch.AVX2())
+-        {
+-            vOut = VFMADDPS(a, b, c);
+-        }
+-        else
+-        {
+-            vOut = FADD(FMUL(a, b), c);
+-        }
+-        return vOut;
++        return FADD(FMUL(a, b), c); // llvm automatically optimizes this to VFMADDPS
+     }
+ 
+     //////////////////////////////////////////////////////////////////////////
+diff --git a/src/gallium/drivers/swr/rasterizer/jitter/functionpasses/lower_x86.cpp b/src/gallium/drivers/swr/rasterizer/jitter/functionpasses/lower_x86.cpp
+index 7605823c04..c34959d35e 100644
+--- a/src/gallium/drivers/swr/rasterizer/jitter/functionpasses/lower_x86.cpp
++++ b/src/gallium/drivers/swr/rasterizer/jitter/functionpasses/lower_x86.cpp
+@@ -76,7 +76,6 @@ namespace SwrJit
+         {"meta.intrinsic.VCVTPS2PH", Intrinsic::x86_vcvtps2ph_256},
+         {"meta.intrinsic.VPTESTC", Intrinsic::x86_avx_ptestc_256},
+         {"meta.intrinsic.VPTESTZ", Intrinsic::x86_avx_ptestz_256},
+-        {"meta.intrinsic.VFMADDPS", Intrinsic::x86_fma_vfmadd_ps_256},
+         {"meta.intrinsic.VPHADDD", Intrinsic::x86_avx2_phadd_d},
+         {"meta.intrinsic.PDEP32", Intrinsic::x86_bmi_pdep_32},
+         {"meta.intrinsic.RDTSC", Intrinsic::x86_rdtsc},

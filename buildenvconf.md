@@ -53,7 +53,7 @@ Flex version | 2.6.4
 ### Git version control
 | | |
 |-|-|
-Git For Windows portable | 2.19.0.1
+Git For Windows portable | 2.19.1.1
 ### Mesa3D
 | | |
 |-|-|

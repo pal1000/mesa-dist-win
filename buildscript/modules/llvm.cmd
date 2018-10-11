@@ -70,8 +70,8 @@
 @echo.
 @pause
 @echo.
-@if /I NOT "%meson%"=="y" if /I NOT "%ninja%"=="y" cmake --build . --config Release --target install
-@if /I NOT "%meson%"=="y" if /I "%ninja%"=="y" ninja install
+@if /I NOT "%meson%"=="y" if /I NOT "%ninja%"=="y" cmake --build . -j %throttle% --config Release --target install
+@if /I NOT "%meson%"=="y" if /I "%ninja%"=="y" ninja -j %throttle% install
 @if /I "%meson%"=="y" echo LLVM build: Unimplemented code path.
 
 :skipllvm

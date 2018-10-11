@@ -15,7 +15,7 @@
 @cd bin
 @if EXIST %mesa%\mesa-dist-win\debug\llvm-config-old.txt del %mesa%\mesa-dist-win\debug\llvm-config-old.txt
 @if EXIST %mesa%\mesa-dist-win\debug\llvm-config.txt REN %mesa%\mesa-dist-win\debug\llvm-config.txt llvm-config-old.txt
-@FOR /F "tokens=* USEBACKQ" %%b IN (`llvm-config --libnames %llvm7%`) DO @SET llvmlibs=%%~b
+@FOR /F "tokens=* USEBACKQ" %%b IN (`llvm-config --libnames %llvmmeson%`) DO @SET llvmlibs=%%~b
 @set llvmlibs=%llvmlibs:.lib=%
 @set llvmlibs='%llvmlibs: =', '%'
 @echo LLVM config output updated.

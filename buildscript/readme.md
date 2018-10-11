@@ -16,7 +16,7 @@ Before continuing prepare an empty folder to extract the rest of dependencies in
 
 - [Git for Windows 32 or 64-bit](https://git-scm.com/download/win);
 
-Highly recommended, but not mandatory. Required if you want to build Mesa3D osmesa library having GLES support enabled or if building swr driver along with osmesa, osmesa won’t have GLES support or swr integration however. You can use the portable version if you don't want to bloat your system too much, but you have to either launch the build script from within git-cmd.exe session (git-cmd.exe is located in Git installation directory) or run git-cmd.exe with this build script as argument (ex assuming git was installed in c:\dev\git and this project repository was cloned in c:\dev\mesa-dist-win , the build script launch command looks like this - "c:\dev\git\git-cmd.exe" "c:\dev\mesa-dist-win\buildscript\build.cmd").
+Highly recommended, but not mandatory. Required if you want to build Mesa3D osmesa library having GLES support enabled, osmesa won’t have GLES support however. Also required if using LLVM 7.0 as we need to apply a patch to Mesa3D for swr driver to successfully build. You can use the portable version if you don't want to bloat your system too much, but you have to either launch the build script from within git-cmd.exe session (git-cmd.exe is located in Git installation directory) or run git-cmd.exe with this build script as argument (ex assuming git was installed in c:\dev\git and this project repository was cloned in c:\dev\mesa-dist-win , the build script launch command looks like this - "c:\dev\git\git-cmd.exe" "c:\dev\mesa-dist-win\buildscript\build.cmd").
 - Mesa source code: [Mirror 1](https://gitlab.freedesktop.org/mesa/mesa), [Mirror 2](https://www.mesa3d.org/archive/), [Mirror 3](https://mesa.freedesktop.org/archive/);
 
 The build script can grab Mesa3D code if Git is in PATH. It asks for the branch to pull from. Otherwise manually extract in `.`. Be warned that the archive is double packed. Rename extracted folder to `mesa`.
@@ -76,6 +76,7 @@ The script acts like a Wizard asking questions during execution:
 - architecture for which you want to build mesa - type "y" for x64, otherwise x86 is selected;
 - if Python launcher is available a list of Python installations is displayed. If you pick a Python 3.x installation, or your main Python installation is version 3.x, in normal mode you can only build LLVM as it supports both Python 2.7 and 3.x, but if the script is running with the experimental `/enablemeson` command line switch a build of Mesa3D with Meson is attempted;
 - if you want to update/install required python modules (setuptools, pip, pywin32, scons, meson, mako and MarkupSafe);
+- if you want to throttle builds to a specific number of hyperthreads (it does not apply to incremental linker however, Scons is using it a lot when building swr driver);
 - if you want to build LLVM.  You only need to do it once for each architecture you target, also it is no longer mandatory if you are not interested in llvmpipe, swr or JIT speed-ups;
 - if building LLVM it asks if you want to build with Ninja build system instead of Msbuild if Ninja is in PATH;
 - if Git is installed and Mesa code is missing it asks if you want to download Mesa code using Git and build;

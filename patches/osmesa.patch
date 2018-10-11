@@ -1,26 +1,40 @@
-diff --git a/src/gallium/SConscript b/src/gallium/SConscript
-index 358c31e..c71ccfd 100644
---- a/src/gallium/SConscript
-+++ b/src/gallium/SConscript
-@@ -58,7 +58,7 @@ SConscript([
-     'targets/graw-null/SConscript',
- ])
+diff --git a/src/gallium/state_trackers/osmesa/SConscript b/src/gallium/state_trackers/osmesa/SConscript
+index f5519f1..8e0da94 100644
+--- a/src/gallium/state_trackers/osmesa/SConscript
++++ b/src/gallium/state_trackers/osmesa/SConscript
+@@ -15,7 +15,7 @@ if env['platform'] == 'windows':
+         'BUILD_GL32', # declare gl* as __declspec(dllexport) in Mesa headers
+         'WIN32_LEAN_AND_MEAN', # http://msdn2.microsoft.com/en-us/library/6dwk3a1z.aspx
+     ])
+-    if not env['gles']:
++    if 1==1:
+         # prevent _glapi_* from being declared __declspec(dllimport)
+         env.Append(CPPDEFINES = ['_GLAPI_NO_EXPORTS'])
  
--if not env['embedded']:
-+if not env['embedded'] and not env['gles'] and not env['swr']:
-     SConscript([
-         'state_trackers/osmesa/SConscript',
-         'targets/osmesa/SConscript',
-diff --git a/src/mesa/drivers/SConscript b/src/mesa/drivers/SConscript
-index f549910..165619a 100644
---- a/src/mesa/drivers/SConscript
-+++ b/src/mesa/drivers/SConscript
-@@ -1,6 +1,6 @@
- Import('*')
--
--SConscript('osmesa/SConscript')
-+if not env['gles'] and not env['swr']:
-+    SConscript('osmesa/SConscript')
+diff --git a/src/gallium/targets/osmesa/SConscript b/src/gallium/targets/osmesa/SConscript
+index 3df5c50..5fb9a30 100644
+--- a/src/gallium/targets/osmesa/SConscript
++++ b/src/gallium/targets/osmesa/SConscript
+@@ -2,6 +2,9 @@ Import('*')
  
- if env['x11']:
-     SConscript('x11/SConscript')
+ env = env.Clone()
+ 
++if env['gles']:
++     Return()
++
+ env.Prepend(CPPPATH = [
+     '#src/mapi',
+     '#src/mesa',
+diff --git a/src/mesa/drivers/osmesa/SConscript b/src/mesa/drivers/osmesa/SConscript
+index 064f3da..a918dc5 100644
+--- a/src/mesa/drivers/osmesa/SConscript
++++ b/src/mesa/drivers/osmesa/SConscript
+@@ -29,7 +29,7 @@ if env['platform'] == 'windows':
+         '_GDI32_', # prevent wgl* being declared __declspec(dllimport)
+         'BUILD_GL32', # declare gl* as __declspec(dllexport) in Mesa headers
+     ])
+-    if not env['gles']:
++    if 1==1:
+         # prevent _glapi_* from being declared __declspec(dllimport)
+         env.Append(CPPDEFINES = ['_GLAPI_NO_EXPORTS'])
+ 

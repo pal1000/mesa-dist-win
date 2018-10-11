@@ -24,6 +24,9 @@
 @rem Check for remaining dependencies: cmake, ninja, winflexbison and git.
 @call %mesa%\mesa-dist-win\buildscript\modules\otherdependencies.cmd
 
+@rem Build throttle.
+@call %mesa%\mesa-dist-win\buildscript\modules\throttle.cmd
+
 @rem LLVM build.
 @call %mesa%\mesa-dist-win\buildscript\modules\llvm.cmd
 
