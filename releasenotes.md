@@ -1,7 +1,9 @@
 # Next release
 - Restore osmesa and swr integration now that we have a far better LLVM 7 compatibility patch.
 ### Documentation
-- Update documentation regarding swr workaround for LLVM >= 7, LLVM new binaries location and build throttling support.
+- Document swr patch for LLVM >= 7;
+- Document LLVM new binaries location;
+- Document build throttling support.
 ### Patches and workarounds
 - Add a LLVM 7 compatibility patch for swr driver. Patch is provided by Clear Linux - https://bugs.freedesktop.org/attachment.cgi?id=141969.
 ### Build script
