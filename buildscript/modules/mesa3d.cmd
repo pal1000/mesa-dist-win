@@ -99,7 +99,7 @@ GOTO skipmesa
 @if %pythonver%==2 if /I "%openmp%"=="y" set buildcmd=%buildcmd% openmp=1
 
 @set swrdrv=0
-@if /I NOT "%llvmless%"=="y" if %abi%==x64 if EXIST %LLVM% set /p swrdrv=Do you want to build swr drivers? (y/1=yes):
+@if /I NOT "%llvmless%"=="y" if %abi%==x64 if EXIST %LLVM% set /p swrdrv=Do you want to build swr drivers? (y=yes):
 @if /I NOT "%llvmless%"=="y" if %abi%==x64 if EXIST %LLVM% echo.
 @if %pythonver%==2 if /I "%swrdrv%"=="y" set buildcmd=%buildcmd% swr=1
 @if %pythonver% GEQ 3 if /I "%swrdrv%"=="y" set buildconf=%buildconf% -Dgallium-drivers=swrast,swr
