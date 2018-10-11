@@ -53,11 +53,10 @@ GOTO skipmesa
 @echo 1 > mesapatched.ini
 @echo.
 
-@rem Apply a patch that disables osmesa when building GLES or swr driver when using Scons.
+@rem Apply a patch that disables osmesa when building GLES when using Scons build.
 @rem GLES linking with osmesa is disabled due to build failure - https://bugs.freedesktop.org/show_bug.cgi?id=106843
-@rem Now do the same for swr as it fails to link with osmesa when using LLVM 7.0.
-@rem We'll do a 2-pass build in either case. Build everything requested without GLES and swr, then build everything again
-@rem with GLES or swr or both.
+@rem We'll do a 2-pass build in this case. Build everything requested without GLES, then build everything again
+@rem with GLES.
 @IF %pythonver%==2 git apply -v ..\mesa-dist-win\patches\osmesa.patch
 @IF %pythonver%==2 echo.
 
