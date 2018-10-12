@@ -1,5 +1,5 @@
 @rem Create distribution.
-@if NOT EXIST %mesa%\mesa\build\windows-%longabi% if NOT EXIST %mesa%\mesa\%abi% GOTO exit
+@if NOT EXIST %mesa%\mesa\build\windows-%longabi% if NOT EXIST %mesa%\mesa\build\%abi% GOTO exit
 @set /p dist=Create or update Mesa3D distribution package (y/n):
 @echo.
 @if /I NOT "%dist%"=="y" GOTO exit
@@ -38,7 +38,7 @@
 @GOTO exit
 
 :mesondist
-@forfiles /p %mesa%\mesa\%abi% /s /m *.dll /c "cmd /c copy @path %mesa%\mesa-dist-win\bin\%abi%"
+@forfiles /p %mesa%\mesa\build\%abi% /s /m *.dll /c "cmd /c copy @path %mesa%\mesa-dist-win\bin\%abi%"
 
 :exit
 @pause

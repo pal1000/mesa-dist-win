@@ -10,7 +10,8 @@
 - Fix a typo that was causing the defunct texture_float build option to linger;
 - Mesa3D Meson build: Far more robust detection of pkg-config;
 - Buld throttling suport. Doesn't make much difference with Scons as it uses the incremental linker a lot;
-- LLVM wrap generator: Make use of LLVM variable.
+- LLVM wrap generator: Make use of LLVM variable;
+- Mesa3D Meson build: Use build folder. Avoids git spammming untracked files in Mesa source code repository.
 ### Build environment updates
 - git 2.19.0.1 -> 2.19.1.1.
 # 18.2.2

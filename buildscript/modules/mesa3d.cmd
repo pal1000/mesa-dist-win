@@ -69,7 +69,7 @@ GOTO skipmesa
 
 @if %pythonver%==2 set buildcmd=%pythonloc% %pythonloc:~0,-10%Scripts\scons.py -j%throttle% build=release platform=windows machine=%longabi%
 @if %pythonver%==2 if %intmesaver% LSS 18201 set buildcmd=%buildcmd% texture_float=1
-@if %pythonver% GEQ 3 set buildconf=%mesonloc% %abi% --backend=vs2017 --buildtype=plain
+@if %pythonver% GEQ 3 set buildconf=%mesonloc% build/%abi% --backend=vs2017 --buildtype=plain
 @if %pythonver% GEQ 3 if %llvmlink%==MT set buildconf=%buildconf% -Dc_args="/MT /O2" -Dcpp_args="/MT /O2"
 @IF %pythonver% GEQ 3 set platformabi=Win32
 @IF %pythonver% GEQ 3 IF %abi%==x64 set platformabi=%abi%
@@ -134,12 +134,12 @@ GOTO skipmesa
 @set cleanbuild=n
 @IF %pythonver%==2 if EXIST build\windows-%longabi% set /p cleanbuild=Do you want to clean build (y/n):
 @IF %pythonver%==2 if EXIST build\windows-%longabi% echo.
-@IF %pythonver% GEQ 3 if EXIST %abi% set /p cleanbuild=Do you want to clean build (y/n):
-@IF %pythonver% GEQ 3 if EXIST %abi% echo.
+@IF %pythonver% GEQ 3 if EXIST build\%abi% set /p cleanbuild=Do you want to clean build (y/n):
+@IF %pythonver% GEQ 3 if EXIST build\%abi% echo.
 @IF %pythonver%==2 if /I "%cleanbuild%"=="y" RD /S /Q build\windows-%longabi%
-@IF %pythonver% GEQ 3 if /I "%cleanbuild%"=="y" RD /S /Q %abi%
-@IF %pythonver% GEQ 3 if /I "%cleanbuild%"=="y" for /d %%q in ("%mesa%\mesa\subprojects\zlib-*") do @RD /s /q "%%~q"
-@IF %pythonver% GEQ 3 if /I "%cleanbuild%"=="y" for /d %%r in ("%mesa%\mesa\subprojects\expat-*") do @RD /s /q "%%~r"
+@IF %pythonver% GEQ 3 if /I "%cleanbuild%"=="y" RD /S /Q build\%abi%
+@IF %pythonver% GEQ 3 if /I "%cleanbuild%"=="y" for /d %%q in ("%mesa%\mesa\subprojects\zlib-*") do @RD /S /Q "%%~q"
+@IF %pythonver% GEQ 3 if /I "%cleanbuild%"=="y" for /d %%r in ("%mesa%\mesa\subprojects\expat-*") do @RD /S /Q "%%~r"
 
 @IF %flexstate%==1 set PATH=%mesa%\flexbison\;%PATH%
 @if %pythonver%==2 GOTO build_mesa
@@ -147,12 +147,12 @@ GOTO skipmesa
 @set PATH=%PKG_CONFIG_PATH%\;%PATH%
 
 :build_mesa
-@IF %pythonver%==2 if NOT EXIST build md build
+@if NOT EXIST build md build
 @IF %pythonver%==2 if NOT EXIST build\windows-%longabi% md build\windows-%longabi%
-@IF %pythonver% GEQ 3 if NOT EXIST %abi% md %abi%
+@IF %pythonver% GEQ 3 if NOT EXIST build\%abi% md build\%abi%
 @IF %pythonver%==2 if NOT EXIST build\windows-%longabi%\git_sha1.h echo 0 > build\windows-%longabi%\git_sha1.h
-@IF %pythonver% GEQ 3 if NOT EXIST %abi%\src md %abi%\src
-@IF %pythonver% GEQ 3 if NOT EXIST %abi%\src\git_sha1.h echo 0 > %abi%\src\git_sha1.h
+@IF %pythonver% GEQ 3 if NOT EXIST build\%abi%\src md build\%abi%\src
+@IF %pythonver% GEQ 3 if NOT EXIST build\%abi%\src\git_sha1.h echo 0 > build\%abi%\src\git_sha1.h
 @echo.
 @if %pythonver% GEQ 3 call %vsenv%
 @if %pythonver% GEQ 3 echo.
