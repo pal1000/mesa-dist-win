@@ -9,10 +9,11 @@
 ### Build script
 - Fix a typo that was causing the defunct texture_float build option to linger;
 - Mesa3D Meson build: Far more robust detection of pkg-config;
-- Buld throttling suport. Doesn't make much difference with Scons as it uses the incremental linker a lot;
+- Buld throttling suport. Doesn't make much difference with Scons when building swr as it uses the incremental linker a lot;
 - LLVM wrap generator: Make use of LLVM variable;
 - Mesa3D Meson build: Use build folder. Avoids git spammming untracked files in Mesa source code repository;
-- Mesa3D Meson build: Restore verbosity level to normal. Now we have build throttling to control system strain which does a better job.
+- Mesa3D Meson build: Restore verbosity level to normal. Now we have build throttling to control system strain which does a better job;
+- Remove old and abandoned pywin32 install asset.
 ### Build environment updates
 - git 2.19.0.1 -> 2.19.1.1;
 - Visual Studio 15.8.6 -> 15.8.7.
