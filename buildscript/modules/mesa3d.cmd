@@ -60,7 +60,7 @@ GOTO skipmesa
 @IF %pythonver%==2 git apply -v ..\mesa-dist-win\patches\osmesa.patch
 @IF %pythonver%==2 echo.
 
-@rem Apply a patch that fixes swr build with LLVM 7.0 - https://bugs.freedesktop.org/attachment.cgi?id=141969
+@rem Apply a patch that fixes swr build with LLVM 7.0 - https://lists.freedesktop.org/archives/mesa-dev/2018-October/207017.html
 @git apply -v ..\mesa-dist-win\patches\swr-llvm7.patch
 @echo.
 

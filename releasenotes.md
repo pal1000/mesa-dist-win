@@ -5,7 +5,7 @@
 - Document LLVM new binaries location;
 - Document build throttling support.
 ### Patches and workarounds
-- Add a LLVM 7 compatibility patch for swr driver. Patch is provided by Clear Linux - https://bugs.freedesktop.org/attachment.cgi?id=141969.
+- Add a LLVM 7 compatibility patch for swr driver, now at version 3: https://lists.freedesktop.org/archives/mesa-dev/2018-October/207017.html
 ### Build script
 - Fix a typo that was causing the defunct texture_float build option to linger;
 - Mesa3D Meson build: Far more robust detection of pkg-config;
@@ -14,7 +14,8 @@
 - Mesa3D Meson build: Use build folder. Avoids git spammming untracked files in Mesa source code repository;
 - Mesa3D Meson build: Restore verbosity level to normal. Now we have build throttling to control system strain which does a better job.
 ### Build environment updates
-- git 2.19.0.1 -> 2.19.1.1.
+- git 2.19.0.1 -> 2.19.1.1;
+- Visual Studio 15.8.6 -> 15.8.7.
 # 18.2.2
 - Updated Mesa3D to [18.2.2](https://www.mesa3d.org/relnotes/18.2.2.html);
 - swr driver is back.

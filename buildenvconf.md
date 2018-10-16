@@ -19,7 +19,7 @@ OS | Windows 10 October 2018 Update Pro x64
 | | |
 |-|-|
 Edition | 2017 Community
-Version | 15.8.6
+Version | 15.8.7
 Windows 10 SDK Version | 10.0.17763.1
 Windows 10 SDK install method | standalone
 ### LLVM
