@@ -1,4 +1,5 @@
-# Next release
+# 18.2.3
+- Updated Mesa3D to [18.2.3](https://www.mesa3d.org/relnotes/18.2.3.html);
 - Restore osmesa and swr integration now that we have a far better LLVM 7 compatibility patch.
 ### Documentation
 - Document swr patch for LLVM >= 7;
