@@ -49,19 +49,25 @@ GOTO skipmesa
 @if NOT "%mesaver:~5,2%"=="0-" set /a intmesaver=%mesaver:~0,2%%mesaver:~3,1%50+%mesaver:~5%
 @if EXIST mesapatched.ini GOTO configmesabuild
 @if %gitstate%==0 GOTO configmesabuild
+
+@rem Enable S3TC texture cache
 @git apply -v ..\mesa-dist-win\patches\s3tc.patch
 @echo 1 > mesapatched.ini
 @echo.
 
-@rem Apply a patch that disables osmesa when building GLES when using Scons build.
+@rem Disable osmesa when building GLES when using Scons build.
 @rem GLES linking with osmesa is disabled due to build failure - https://bugs.freedesktop.org/show_bug.cgi?id=106843
 @rem We'll do a 2-pass build in this case. Build everything requested without GLES, then build everything again
 @rem with GLES.
 @IF %pythonver%==2 git apply -v ..\mesa-dist-win\patches\osmesa.patch
 @IF %pythonver%==2 echo.
 
-@rem Apply a patch that fixes swr build with LLVM 7.0 - https://lists.freedesktop.org/archives/mesa-dev/2018-October/207017.html
+@rem Fix swr build with LLVM 7.0 (patch v3) - https://lists.freedesktop.org/archives/mesa-dev/2018-October/207017.html
 @git apply -v ..\mesa-dist-win\patches\swr-llvm7.patch
+@echo.
+
+@rem RIP texture_float build option that remained present in a zombie state for Scons build.
+@git apply -v ..\mesa-dist-win\patches\upstream\texture_float-zombie-RIP.patch
 @echo.
 
 :configmesabuild
@@ -70,7 +76,9 @@ GOTO skipmesa
 @if %pythonver%==2 set buildcmd=%pythonloc% %pythonloc:~0,-10%Scripts\scons.py -j%throttle% build=release platform=windows machine=%longabi%
 @if %pythonver%==2 if %intmesaver% LSS 18201 set buildcmd=%buildcmd% texture_float=1
 @if %pythonver% GEQ 3 set buildconf=%mesonloc% build/%abi% --backend=vs2017 --buildtype=plain
-@if %pythonver% GEQ 3 if %llvmlink%==MT set buildconf=%buildconf% -Dc_args="/MT /O2" -Dcpp_args="/MT /O2"
+@if %pythonver% GEQ 3 IF %mesonver:~2,-2% LSS 48 if %llvmlink%==MT set buildconf=%buildconf% -Dc_args="/MT /O2" -Dcpp_args="/MT /O2"
+@if %pythonver% GEQ 3 IF %mesonver:~2,-2% GEQ 48 set buildconf=%buildconf% --optimization=2
+@if %pythonver% GEQ 3 IF %mesonver:~2,-2% GEQ 48 if %llvmlink%==MT set buildconf=%buildconf% -Db_vscrt=mt
 @IF %pythonver% GEQ 3 set platformabi=Win32
 @IF %pythonver% GEQ 3 IF %abi%==x64 set platformabi=%abi%
 @if %pythonver% GEQ 3 set buildcmd=msbuild /p^:Configuration=plain,Platform=%platformabi% mesa.sln /m^:%throttle%

@@ -43,7 +43,7 @@ pywin32 / pypiwin32 version | 224
 scons version | 3.0.1
 Mako version | 1.0.7
 MarkupSafe version | 1.0
-wheel version | 0.32.1
+wheel version | 0.32.2
 ### winflexbison
 | | |
 |-|-|
