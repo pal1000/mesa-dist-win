@@ -169,8 +169,8 @@ GOTO skipmesa
 @IF %pythonver% GEQ 3 if NOT EXIST build\%abi%\src md build\%abi%\src
 @IF %pythonver% GEQ 3 if NOT EXIST build\%abi%\src\git_sha1.h echo 0 > build\%abi%\src\git_sha1.h
 @echo.
-@if %pythonver% GEQ 3 call %vsenv% %vsabi%
-@if %pythonver% GEQ 3 echo.
+@call %vsenv% %vsabi%
+@echo.
 @if %pythonver% GEQ 3 echo Build configuration command stored in buildconf variable.
 @if %pythonver% GEQ 3 echo.
 @if %pythonver% GEQ 3 cmd
