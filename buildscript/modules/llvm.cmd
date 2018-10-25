@@ -59,9 +59,9 @@
 @if /I "%meson%"=="y" set buildconf=echo LLVM Build aborted. Unimplemented build configuration.
 
 @rem Load Visual Studio environment. Only cmake can load it in the background and only when using MsBuild.
-@if /I NOT "%meson%"=="y" if /I "%ninja%"=="y" call %vsenv%
+@if /I NOT "%meson%"=="y" if /I "%ninja%"=="y" call %vsenv% %vsabi%
 @if /I NOT "%meson%"=="y" if /I "%ninja%"=="y" cd %mesa%\llvm\buildsys-%abi%-%llvmlink%
-@if /I "%meson%"=="y" call %vsenv%
+@if /I "%meson%"=="y" call %vsenv% %vsabi%
 @if /I "%meson%"=="y" cd %mesa%\llvm\buildsys-%abi%-%llvmlink%
 
 @rem Configure and execute the build with the configuration made above.

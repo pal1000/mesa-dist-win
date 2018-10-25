@@ -18,5 +18,4 @@
 @pause
 @exit
 )
-@set vsenv=%vsenv% %vsabi% %*
 @TITLE Building Mesa3D %abi%
