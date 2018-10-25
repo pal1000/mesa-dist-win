@@ -59,12 +59,16 @@ GOTO skipmesa
 @rem GLES linking with osmesa is disabled due to build failure - https://bugs.freedesktop.org/show_bug.cgi?id=106843
 @rem We'll do a 2-pass build in this case. Build everything requested without GLES, then build everything again
 @rem with GLES.
-@IF %pythonver%==2 git apply -v ..\mesa-dist-win\patches\osmesa.patch
-@IF %pythonver%==2 echo.
+@IF %pythonver%==2 IF %intmesaver% LSS 18300 git apply -v ..\mesa-dist-win\patches\osmesa.patch
+@IF %pythonver%==2 IF %intmesaver% LSS 18300 echo.
 
 @rem Fix swr build with LLVM 7.0 (patch v3) - https://lists.freedesktop.org/archives/mesa-dev/2018-October/207017.html
 @git apply -v ..\mesa-dist-win\patches\swr-llvm7.patch
 @echo.
+
+@rem Add MSVC_USE_SCRIPT support so that Scons can use 64-bit compiler when doing a 32-bit build.
+@IF %intmesaver% LSS 18300 git appy -v ..\mesa-dist-win\patches\msvc_use_script.patch
+@IF %intmesaver% LSS 18300 echo.
 
 @rem RIP texture_float build option that remained present in a zombie state for Scons build.
 @git apply -v ..\mesa-dist-win\patches\upstream\texture_float-zombie-RIP.patch
@@ -73,7 +77,7 @@ GOTO skipmesa
 :configmesabuild
 @rem Configure Mesa build.
 
-@if %pythonver%==2 set buildcmd=%pythonloc% %pythonloc:~0,-10%Scripts\scons.py -j%throttle% build=release platform=windows machine=%longabi%
+@if %pythonver%==2 set buildcmd=%pythonloc% %pythonloc:~0,-10%Scripts\scons.py -j%throttle% build=release platform=windows machine=%longabi% MSVC_USE_SCRIPT=None
 @if %pythonver%==2 if %intmesaver% LSS 18201 set buildcmd=%buildcmd% texture_float=1
 @if %pythonver% GEQ 3 set buildconf=%mesonloc% build/%abi% --backend=vs2017 --buildtype=plain
 @if %pythonver% GEQ 3 IF %mesonver:~2,-2% LSS 48 if %llvmlink%==MT set buildconf=%buildconf% -Dc_args="/MT /O2" -Dcpp_args="/MT /O2"
@@ -112,12 +116,15 @@ GOTO skipmesa
 @if %pythonver% GEQ 3 if /I "%swrdrv%"=="y" set buildconf=%buildconf% -Dgallium-drivers=swrast,swr
 
 @set disableosmesa=0
-@set /p gles=Do you want to build GLAPI shared library and GLES support (y/n):
-@echo.
+@IF %pythonver%==2 IF %intmesaver% LSS 18300 set /p gles=Do you want to build GLAPI as a shared library and standalone GLES libraries (y/n):
+@IF %pythonver%==2 IF %intmesaver% LSS 18300 echo.
+@IF %pythonver% GEQ 3 set /p gles=Do you want to build GLAPI as a shared library and standalone GLES libraries (y/n):
+@IF %pythonver% GEQ 3 echo.
 @if %pythonver%==2 if /I "%gles%"=="y" set gles=y
 @if %pythonver%==2 if /I "%gles%"=="y" set disableosmesa=1
 @if %pythonver%==2 if /I NOT "%gles%"=="y" set gles=0
 @if %pythonver% GEQ 3 if /I NOT "%gles%"=="y" set buildconf=%buildconf% -Dgles1=false -Dgles2=false
+@if %pythonver% GEQ 3 if /I "%gles%"=="y" set buildconf=%buildconf% -Dgles1=true -Dgles2=true
 
 @set expressmesabuild=n
 @if %pythonver%==2 set /p expressmesabuild=Do you want to build Mesa with quick configuration - includes libgl-gdi, graw-gdi, graw-null, tests, osmesa and GLAPI + OpenGL ES if GLES enabled:
@@ -162,8 +169,8 @@ GOTO skipmesa
 @IF %pythonver% GEQ 3 if NOT EXIST build\%abi%\src md build\%abi%\src
 @IF %pythonver% GEQ 3 if NOT EXIST build\%abi%\src\git_sha1.h echo 0 > build\%abi%\src\git_sha1.h
 @echo.
-@if %pythonver% GEQ 3 call %vsenv%
-@if %pythonver% GEQ 3 echo.
+@call %vsenv%
+@echo.
 @if %pythonver% GEQ 3 echo Build configuration command stored in buildconf variable.
 @if %pythonver% GEQ 3 echo.
 @if %pythonver% GEQ 3 cmd

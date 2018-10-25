@@ -1,0 +1,21 @@
+diff --git a/common.py b/common.py
+index 24a7e8a611df56620955ca84d468e26cddc510b0..113fc7f5c122a368e94f8d0b549f236655223261 100644
+--- a/common.py
++++ b/common.py
+@@ -113,3 +113,4 @@ def AddOptions(opts):
+     opts.Add(BoolOption('swr', 'Build OpenSWR', 'no'))
+     if host_platform == 'windows':
+         opts.Add('MSVC_VERSION', 'Microsoft Visual C/C++ version')
++        opts.Add('MSVC_USE_SCRIPT', 'Microsoft Visual C/C++ vcvarsall script', True)
+diff --git a/src/gallium/targets/libgl-gdi/SConscript b/src/gallium/targets/libgl-gdi/SConscript
+index a8bdc3e58693543e73763bd44c812bf701439b0b..132cb73358d4443ee28f6f040b92977571ca7b4e 100644
+--- a/src/gallium/targets/libgl-gdi/SConscript
++++ b/src/gallium/targets/libgl-gdi/SConscript
+@@ -16,6 +16,7 @@ env.Append(LIBS = [
+     'user32',
+     'kernel32',
+     'ws2_32',
++    'advapi32',
+ ])
+ 
+ env.Prepend(LIBS = [
