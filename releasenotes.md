@@ -9,7 +9,8 @@
 - Adjust Mesa3D build script taking into account the fact that shared glapi and standalone GLES support is going down in upcoming Mesa 18.3 series for Scons build system;
 - Take advantage of MSVC_USE_SCRIPT support patch to use the 64-bit compiler when doing 32-bit builds;
 - Mesa3D Meson build: ensure standalone GLES libraries are built when GLAPI is a shared library;
-- Mesa3D Meson build: use all known ways of forcing static linking.
+- Mesa3D Meson build: use all known ways of forcing static linking;
+- Mesa3D Meson build: always link zlib and expat statically.
 # 18.2.3
 - Updated Mesa3D to [18.2.3](https://www.mesa3d.org/relnotes/18.2.3.html);
 - Restore osmesa and swr integration now that we have a far better LLVM 7 compatibility patch.

@@ -79,8 +79,7 @@ GOTO skipmesa
 
 @if %pythonver%==2 set buildcmd=%pythonloc% %pythonloc:~0,-10%Scripts\scons.py -j%throttle% build=release platform=windows machine=%longabi% MSVC_USE_SCRIPT=%vsenv%
 @if %pythonver%==2 if %intmesaver% LSS 18201 set buildcmd=%buildcmd% texture_float=1
-@if %pythonver% GEQ 3 set buildconf=%mesonloc% build/%abi% --backend=vs2017 --buildtype=plain
-@if %pythonver% GEQ 3 if %llvmlink%==MT set buildconf=%buildconf% --default-library=static -Dshared-llvm=false
+@if %pythonver% GEQ 3 set buildconf=%mesonloc% build/%abi% --backend=vs2017 --buildtype=plain --default-library=static
 @if %pythonver% GEQ 3 IF %mesonver:~2,-2% LSS 48 if %llvmlink%==MT set buildconf=%buildconf% -Dc_args="/MT /O2" -Dcpp_args="/MT /O2"
 @if %pythonver% GEQ 3 IF %mesonver:~2,-2% GEQ 48 set buildconf=%buildconf% --optimization=2
 @if %pythonver% GEQ 3 IF %mesonver:~2,-2% GEQ 48 if %llvmlink%==MT set buildconf=%buildconf% -Db_vscrt=mt
@@ -106,6 +105,7 @@ GOTO skipmesa
 @if /I NOT "%llvmless%"=="y" if NOT EXIST %LLVM% GOTO skipmesa
 @if %pythonver%==2 if /I "%llvmless%"=="y" set buildcmd=%buildcmd% llvm=no
 @if %pythonver% GEQ 3 if /I NOT "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm-wrap=llvm
+@if %pythonver% GEQ 3 if /I NOT "%llvmless%"=="y" if %llvmlink%==MT set buildconf=%buildconf% -Dshared-llvm=false
 @if %pythonver% GEQ 3 if /I NOT "%llvmless%"=="y" call %mesa%\mesa-dist-win\buildscript\modules\llvmwrapgen.cmd
 
 @if %pythonver%==2 set /p openmp=Build Mesa3D with OpenMP. Faster build and smaller binaries (y/n):
@@ -126,7 +126,7 @@ GOTO skipmesa
 @if %pythonver%==2 if /I "%gles%"=="y" set gles=y
 @if %pythonver%==2 if /I "%gles%"=="y" set disableosmesa=1
 @if %pythonver%==2 if /I NOT "%gles%"=="y" set gles=0
-@if %pythonver% GEQ 3 if /I NOT "%gles%"=="y" set buildconf=%buildconf% -Dgles1=false -Dgles2=false
+@if %pythonver% GEQ 3 if /I NOT "%gles%"=="y" set buildconf=%buildconf% -Dshared-glapi=false -Dgles1=false -Dgles2=false
 @if %pythonver% GEQ 3 if /I "%gles%"=="y" set buildconf=%buildconf% -Dgles1=true -Dgles2=true
 
 @set expressmesabuild=n
