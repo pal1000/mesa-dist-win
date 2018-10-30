@@ -80,12 +80,15 @@ GOTO skipmesa
 @if %pythonver%==2 set buildcmd=%pythonloc% %pythonloc:~0,-10%Scripts\scons.py -j%throttle% build=release platform=windows machine=%longabi% MSVC_USE_SCRIPT=%vsenv%
 @if %pythonver%==2 if %intmesaver% LSS 18201 set buildcmd=%buildcmd% texture_float=1
 @if %pythonver% GEQ 3 set buildconf=%mesonloc% build/%abi% --backend=vs2017 --buildtype=plain
+@if %pythonver% GEQ 3 if %llvmlink%==MT set buildconf=%buildconf% --default-library=static -Dshared-llvm=false
 @if %pythonver% GEQ 3 IF %mesonver:~2,-2% LSS 48 if %llvmlink%==MT set buildconf=%buildconf% -Dc_args="/MT /O2" -Dcpp_args="/MT /O2"
 @if %pythonver% GEQ 3 IF %mesonver:~2,-2% GEQ 48 set buildconf=%buildconf% --optimization=2
 @if %pythonver% GEQ 3 IF %mesonver:~2,-2% GEQ 48 if %llvmlink%==MT set buildconf=%buildconf% -Db_vscrt=mt
+@if %pythonver% GEQ 3 IF %mesonver:~2,-2% GEQ 48 if %llvmlink%==MD set buildconf=%buildconf% -Db_vscrt=md
+
 @IF %pythonver% GEQ 3 set platformabi=Win32
 @IF %pythonver% GEQ 3 IF %abi%==x64 set platformabi=%abi%
-@if %pythonver% GEQ 3 set buildcmd=msbuild /p^:Configuration=plain,Platform=%platformabi% mesa.sln /m^:%throttle%
+@if %pythonver% GEQ 3 set buildcmd=msbuild /p^:Configuration=custom,Platform=%platformabi% mesa.sln /m^:%throttle%
 
 @set ninja=n
 @if %pythonver% GEQ 3 if NOT %ninjastate%==0 set /p ninja=Use Ninja build system instead of MsBuild (y/n); less storage device strain and maybe faster build:
