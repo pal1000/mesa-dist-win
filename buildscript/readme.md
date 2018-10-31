@@ -16,7 +16,7 @@ Before continuing prepare an empty folder to extract the rest of dependencies in
 
 - [Git for Windows 32 or 64-bit](https://git-scm.com/download/win);
 
-Highly recommended, but not mandatory. Required if you want to build Mesa3D osmesa library having GLES support enabled, osmesa won’t have GLES support however. Also required if using LLVM 7.0 as we need to apply a patch to Mesa3D for swr driver to successfully build. You can use the portable version if you don't want to bloat your system too much, but you have to either launch the build script from within git-cmd.exe session (git-cmd.exe is located in Git installation directory) or run git-cmd.exe with this build script as argument (ex assuming git was installed in c:\dev\git and this project repository was cloned in c:\dev\mesa-dist-win , the build script launch command looks like this - "c:\dev\git\git-cmd.exe" "c:\dev\mesa-dist-win\buildscript\build.cmd").
+Highly recommended, but not mandatory. Required if you want to build Mesa3D osmesa library having shared glapi support enabled, osmesa won’t have shared glapi support however. Also required if using LLVM 7.0 as we need to apply a patch to Mesa3D for swr driver to successfully build. You can use the portable version if you don't want to bloat your system too much, but you have to either launch the build script from within git-cmd.exe session (git-cmd.exe is located in Git installation directory) or run git-cmd.exe with this build script as argument (ex assuming git was installed in c:\dev\git and this project repository was cloned in c:\dev\mesa-dist-win , the build script launch command looks like this - "c:\dev\git\git-cmd.exe" "c:\dev\mesa-dist-win\buildscript\build.cmd").
 - Mesa source code: [Mirror 1](https://gitlab.freedesktop.org/mesa/mesa), [Mirror 2](https://www.mesa3d.org/archive/), [Mirror 3](https://mesa.freedesktop.org/archive/);
 
 The build script can grab Mesa3D code if Git is in PATH. It asks for the branch to pull from. Otherwise manually extract in `.`. Be warned that the archive is double packed. Rename extracted folder to `mesa`.
@@ -87,8 +87,8 @@ The script acts like a Wizard asking questions during execution:
 - if you want to build Mesa3D with OpenMP support;
 - if you want to build Mesa3D with floating-point textures and renderbuffers support;
 - if LLVM is used and if it's a 64-bit build you are asked if you want to build swr;
-- if you want to build GLAPI and GLES support;
-- if you want to do an express configuration of Mesa3D build which includes libgl-gdi, graw-gdi, graw-null and osmesa targets by default with OpenGL ES added if GLES and GLAPI support is enabled;
+- if you want to build GLAPI and GLES as shared libraries;
+- if you want to do an express configuration of Mesa3D build which includes libgl-gdi, graw-gdi, graw-null and osmesa targets by default with OpenGL ES standalone libraries added if GLES and GLAPI are built as shared libraries;
 - if you didn't opt-in for express configuration you are asked if you want to build off-screen rendering driver(s);
 - if you didn't opt-in for express configuration you are asked if you want to build graw;
 - if you want to do a clean build;

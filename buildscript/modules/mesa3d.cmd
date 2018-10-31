@@ -55,10 +55,10 @@ GOTO skipmesa
 @echo 1 > mesapatched.ini
 @echo.
 
-@rem Disable osmesa when building GLES when using Scons build.
-@rem GLES linking with osmesa is disabled due to build failure - https://bugs.freedesktop.org/show_bug.cgi?id=106843
-@rem We'll do a 2-pass build in this case. Build everything requested without GLES, then build everything again
-@rem with GLES.
+@rem Disable osmesa when building shared glapi when using Scons build.
+@rem shared glapi linking with osmesa is disabled due to build failure - https://bugs.freedesktop.org/show_bug.cgi?id=106843
+@rem We'll do a 2-pass build in this case. Build everything requested without shared glapi, then build everything again
+@rem with shared glapi.
 @IF %pythonver%==2 IF %intmesaver% LSS 18300 git apply -v ..\mesa-dist-win\patches\osmesa.patch
 @IF %pythonver%==2 IF %intmesaver% LSS 18300 echo.
 
@@ -71,8 +71,8 @@ GOTO skipmesa
 @IF %intmesaver% LSS 18300 echo.
 
 @rem RIP texture_float build option that remained present in a zombie state for Scons build.
-@git apply -v ..\mesa-dist-win\patches\upstream\texture_float-zombie-RIP.patch
-@echo.
+@IF %intmesaver% LSS 18254 git apply -v ..\mesa-dist-win\patches\upstream\texture_float-zombie-RIP.patch
+@IF %intmesaver% LSS 18254 echo.
 
 :configmesabuild
 @rem Configure Mesa build.
@@ -126,7 +126,7 @@ GOTO skipmesa
 @if %pythonver%==2 if /I "%gles%"=="y" set gles=y
 @if %pythonver%==2 if /I "%gles%"=="y" set disableosmesa=1
 @if %pythonver%==2 if /I NOT "%gles%"=="y" set gles=0
-@if %pythonver% GEQ 3 if /I NOT "%gles%"=="y" set buildconf=%buildconf% -Dshared-glapi=false -Dgles1=false -Dgles2=false
+@if %pythonver% GEQ 3 if /I NOT "%gles%"=="y" set buildconf=%buildconf% -Dshared-glapi=false
 @if %pythonver% GEQ 3 if /I "%gles%"=="y" set buildconf=%buildconf% -Dgles1=true -Dgles2=true
 
 @set expressmesabuild=n
