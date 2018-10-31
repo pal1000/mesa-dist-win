@@ -63,11 +63,11 @@ GOTO skipmesa
 @IF %pythonver%==2 IF %intmesaver% LSS 18300 echo.
 
 @rem Fix swr build with LLVM 7.0 (patch v3) - https://lists.freedesktop.org/archives/mesa-dev/2018-October/207017.html
-@git apply -v ..\mesa-dist-win\patches\swr-llvm7.patch
-@echo.
+@IF %intmesaver% LSS 18254 git apply -v ..\mesa-dist-win\patches\swr-llvm7.patch
+@IF %intmesaver% LSS 18254 echo.
 
 @rem Add MSVC_USE_SCRIPT support so that Scons can use 64-bit compiler when doing a 32-bit build.
-@IF %intmesaver% LSS 18300 git appy -v ..\mesa-dist-win\patches\msvc_use_script.patch
+@IF %intmesaver% LSS 18300 git apply -v ..\mesa-dist-win\patches\msvc_use_script.patch
 @IF %intmesaver% LSS 18300 echo.
 
 @rem RIP texture_float build option that remained present in a zombie state for Scons build.
@@ -78,7 +78,6 @@ GOTO skipmesa
 @rem Configure Mesa build.
 
 @if %pythonver%==2 set buildcmd=%pythonloc% %pythonloc:~0,-10%Scripts\scons.py -j%throttle% build=release platform=windows machine=%longabi% MSVC_USE_SCRIPT=%vsenv%
-@if %pythonver%==2 if %intmesaver% LSS 18201 set buildcmd=%buildcmd% texture_float=1
 @if %pythonver% GEQ 3 set buildconf=%mesonloc% build/%abi% --backend=vs2017 --buildtype=plain --default-library=static
 @if %pythonver% GEQ 3 IF %mesonver:~2,-2% LSS 48 if %llvmlink%==MT set buildconf=%buildconf% -Dc_args="/MT /O2" -Dcpp_args="/MT /O2"
 @if %pythonver% GEQ 3 IF %mesonver:~2,-2% GEQ 48 set buildconf=%buildconf% --optimization=2
