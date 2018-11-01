@@ -1,10 +1,11 @@
-# Next release
+# 18.2.4
+- Updated Mesa3D to [18.2.4](https://www.mesa3d.org/relnotes/18.2.4.html)
 ### Build environment updates
 - wheel 0.32.1 -> 0.32.2;
 - Visual Studio 15.8.7 -> 15.8.8;
 - setuptools 40.4.3 -> 40.5.0.
 ### Build script
-- Apply a patch that puts to rest the zombie texture float build option in Mesa3D Scons build;
+- Got a patch accepted upstream that puts to rest the zombie texture float build option in Mesa3D Scons build;
 - Use recommended way of selecting CRT and optimization level for Meson build based on Meson version;
 - Adjust Mesa3D build script taking into account the fact that shared glapi and standalone GLES support is going down in upcoming Mesa 18.3 series for Scons build system;
 - Take advantage of MSVC_USE_SCRIPT support patch to use the 64-bit compiler when doing 32-bit builds;

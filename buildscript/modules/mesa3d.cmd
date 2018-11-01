@@ -129,7 +129,7 @@ GOTO skipmesa
 @if %pythonver% GEQ 3 if /I "%gles%"=="y" set buildconf=%buildconf% -Dgles1=true -Dgles2=true
 
 @set expressmesabuild=n
-@if %pythonver%==2 set /p expressmesabuild=Do you want to build Mesa with quick configuration - includes libgl-gdi, graw-gdi, graw-null, tests, osmesa and GLAPI + OpenGL ES if GLES enabled:
+@if %pythonver%==2 set /p expressmesabuild=Do you want to build Mesa with quick configuration - includes libgl-gdi, graw-gdi, graw-null, tests, osmesa and shared glapi and shared GLES libraries if glapi is a shared library:
 @if %pythonver%==2 echo.
 @if %pythonver%==2 IF /I "%expressmesabuild%"=="y" set mesatargets=.
 @if %pythonver%==2 IF /I NOT "%expressmesabuild%"=="y" set mesatargets=libgl-gdi
