@@ -1,3 +1,6 @@
+# Next release
+### Documentation
+- shared glapi and standalone GLES drivers will not be available in Mesa 18.3 series due to support for this build configuration being dropped upstream.
 # 18.2.4
 - Updated Mesa3D to [18.2.4](https://www.mesa3d.org/relnotes/18.2.4.html)
 ### Build environment updates
