@@ -5,7 +5,7 @@
 - Visual Studio 15.8.8 -> 15.8.9;
 - cmake 3.12.3 -> 3.12.4.
 ### Build script
-- Move target ABI selection in its own module. Groundwork for potential MSYS2 Mingw-w64 GCC bild with Scons.
+- Move target ABI selection in its own module. Groundwork for potential MSYS2 Mingw-w64 GCC build with Scons.
 ### Debug
 - Remove LLVM 7 special case from llvm-config output tool.
 # 18.2.4
