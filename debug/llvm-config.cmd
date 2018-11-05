@@ -2,7 +2,6 @@
 @set llvmlink=MT
 @set llvmmeson=bitwriter engine mcdisassembler mcjit
 @set llvmscons=engine mcjit bitwriter x86asmprinter irreader
-@set llvm7=bitwriter engine mcdisassembler mcjit ipo objcarcopts
 @for %%a in ("%cd%") do @set mesa=%%~sa
 @IF NOT EXIST llvm GOTO error
 @cd llvm

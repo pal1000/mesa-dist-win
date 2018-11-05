@@ -6,6 +6,8 @@
 - cmake 3.12.3 -> 3.12.4.
 ### Build script
 - Move target ABI selection in its own module. Groundwork for potential MSYS2 Mingw-w64 GCC bild with Scons.
+### Debug
+- Remove LLVM 7 special case from llvm-config output tool.
 # 18.2.4
 - Updated Mesa3D to [18.2.4](https://www.mesa3d.org/relnotes/18.2.4.html)
 ### Build environment updates
