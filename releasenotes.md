@@ -1,6 +1,11 @@
 # Next release
 ### Documentation
 - shared glapi and standalone GLES drivers will not be available in Mesa 18.3 series due to support for this build configuration being dropped upstream.
+### Build environment updates
+- Visual Studio 15.8.8 -> 15.8.9;
+- cmake 3.12.3 -> 3.12.4.
+### Build script
+- Move target ABI selection in its own module. Groundwork for potential MSYS2 Mingw-w64 GCC bild with Scons.
 # 18.2.4
 - Updated Mesa3D to [18.2.4](https://www.mesa3d.org/relnotes/18.2.4.html)
 ### Build environment updates

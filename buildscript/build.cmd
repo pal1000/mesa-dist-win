@@ -9,6 +9,9 @@
 @set enablemeson=0
 @if /I "%1"=="/enablemeson" set enablemeson=1
 
+@rem Select target architecture
+@call %mesa%\mesa-dist-win\buildscript\modules\abi.cmd
+
 @rem Analyze environment. Get each dependency status: 0=missing, 1=standby/load manually in PATH, 2=cannot be unloaded.
 @rem Not all dependencies can have all these states.
 
