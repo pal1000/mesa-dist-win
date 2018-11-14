@@ -1,4 +1,5 @@
-# Next release
+# 18.2.5
+- Updated Mesa3D to [18.2.5](https://www.mesa3d.org/relnotes/18.2.5.html).
 ### Documentation
 - shared glapi and standalone GLES drivers will not be available in Mesa 18.3 series due to support for this build configuration being dropped upstream.
 ### Build environment updates
@@ -11,7 +12,7 @@
 ### Debug
 - Remove LLVM 7 special case from llvm-config output tool.
 # 18.2.4
-- Updated Mesa3D to [18.2.4](https://www.mesa3d.org/relnotes/18.2.4.html)
+- Updated Mesa3D to [18.2.4](https://www.mesa3d.org/relnotes/18.2.4.html).
 ### Build environment updates
 - wheel 0.32.1 -> 0.32.2;
 - Visual Studio 15.8.7 -> 15.8.8;
