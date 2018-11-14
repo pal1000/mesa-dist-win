@@ -2,8 +2,10 @@
 ### Documentation
 - shared glapi and standalone GLES drivers will not be available in Mesa 18.3 series due to support for this build configuration being dropped upstream.
 ### Build environment updates
-- Visual Studio 15.8.8 -> 15.8.9;
-- cmake 3.12.3 -> 3.12.4.
+- Visual Studio 15.8.8 -> 15.9.0;
+- cmake 3.12.3 -> 3.12.4;
+- MarkupSafe 1.0 -> 1.1.0;
+- setuptools 40.5.0 -> 40.6.2.
 ### Build script
 - Move target ABI selection in its own module. Groundwork for potential MSYS2 Mingw-w64 GCC build with Scons.
 ### Debug
