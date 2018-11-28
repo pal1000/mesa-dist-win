@@ -7,3 +7,4 @@ bin/*.tmp
 lib/
 include/
 *.7z
+*.tmp

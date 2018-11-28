@@ -1,3 +1,12 @@
+# 18.2.6
+- Updated Mesa3D to [18.2.6](https://www.mesa3d.org/relnotes/18.2.6.html).
+### Build environment updates
+- wheel 0.32.2 -> 0.32.3;
+- Visual Studio 15.9.0 -> 15.9.2;
+- Git 2.19.1.1 -> 2.19.2.1;
+- cmake 3.12.4 -> 3.13.0.
+### gitignore
+- Ignore .tmp files.
 # 18.2.5
 - Updated Mesa3D to [18.2.5](https://www.mesa3d.org/relnotes/18.2.5.html).
 ### Documentation
