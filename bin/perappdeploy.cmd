@@ -99,7 +99,7 @@ if '%errorlevel%' NEQ '0' (
 @IF EXIST "%dir%\opengl32.dll" del "%dir%\opengl32.dll"
 @IF EXIST "%dir%\libglapi.dll" del "%dir%\libglapi.dll"
 @mklink "%dir%\opengl32.dll" "%mesaloc%\%mesadll%\opengl32.dll"
-@mklink "%dir%\libglapi.dll" "%mesaloc%\%mesadll%\libglapi.dll"
+@IF EXIST "%mesaloc%\%mesadll%\libglapi.dll" mklink "%dir%\libglapi.dll" "%mesaloc%\%mesadll%\libglapi.dll"
 @IF NOT "%dir%\%appexe%"=="%dir%\" echo dummy > "%dir%\%appexe%.local"
 @echo.
 @set swr=n
@@ -124,8 +124,8 @@ if '%errorlevel%' NEQ '0' (
 @IF /I NOT "%opengles%"=="y" GOTO osmesa
 @if EXIST "%dir%\libGLESv1_CM.dll" del "%dir%\libGLESv1_CM.dll"
 @if EXIST "%dir%\libGLESv2.dll" del "%dir%\libGLESv2.dll"
-@mklink "%dir%\libGLESv1_CM.dll" "%mesaloc%\%mesadll%\libGLESv1_CM.dll"
-@mklink "%dir%\libGLESv2.dll" "%mesaloc%\%mesadll%\libGLESv2.dll"
+@IF EXIST "%mesaloc%\%mesadll%\libGLESv1_CM.dll" mklink "%dir%\libGLESv1_CM.dll" "%mesaloc%\%mesadll%\libGLESv1_CM.dll"
+@IF EXIST "%mesaloc%\%mesadll%\libGLESv2.dll" mklink "%dir%\libGLESv2.dll" "%mesaloc%\%mesadll%\libGLESv2.dll"
 @echo.
 
 :osmesa

@@ -6,6 +6,8 @@
 ### Build script
 - Do not expect MSYS2 environment preload in PATH as it is unlikely;
 - Make sure we do not pass the invalid gles option for Mesa 18.3.
+### Deployment tools
+- Consider that shared glapi and standalone GLES drivers may not always be available.
 # 18.2.6
 - Updated Mesa3D to [18.2.6](https://www.mesa3d.org/relnotes/18.2.6.html).
 ### Build environment updates
