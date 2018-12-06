@@ -117,13 +117,13 @@ GOTO skipmesa
 @if %pythonver%==2 if /I "%swrdrv%"=="y" set buildcmd=%buildcmd% swr=1
 @if %pythonver% GEQ 3 if /I "%swrdrv%"=="y" set buildconf=%buildconf% -Dgallium-drivers=swrast,swr
 
-@set disableosmesa=0
+@set osmesadualpass=0
 @IF %pythonver%==2 IF %intmesaver% LSS 18300 set /p gles=Do you want to build GLAPI as a shared library and standalone GLES libraries (y/n):
 @IF %pythonver%==2 IF %intmesaver% LSS 18300 echo.
 @IF %pythonver% GEQ 3 set /p gles=Do you want to build GLAPI as a shared library and standalone GLES libraries (y/n):
 @IF %pythonver% GEQ 3 echo.
 @if %pythonver%==2 if /I "%gles%"=="y" set gles=y
-@if %pythonver%==2 if /I "%gles%"=="y" set disableosmesa=1
+@if %pythonver%==2 if /I "%gles%"=="y" set osmesadualpass=1
 @if %pythonver%==2 if /I NOT "%gles%"=="y" set gles=0
 @if %pythonver% GEQ 3 if /I NOT "%gles%"=="y" set buildconf=%buildconf% -Dshared-glapi=false
 @if %pythonver% GEQ 3 if /I "%gles%"=="y" set buildconf=%buildconf% -Dgles1=true -Dgles2=true
@@ -176,7 +176,7 @@ GOTO skipmesa
 @if %pythonver% GEQ 3 echo Build configuration command stored in buildconf variable.
 @if %pythonver% GEQ 3 echo.
 @if %pythonver% GEQ 3 cmd
-@if %pythonver%==2 IF /I "%osmesa%"=="y" IF %disableosmesa%==1 (
+@if %pythonver%==2 IF /I "%osmesa%"=="y" IF %osmesadualpass%==1 (
 @echo Build command: %buildcmd% gles=0 %mesatargets%
 @echo.
 @%buildcmd% gles=0 %mesatargets%
@@ -185,10 +185,16 @@ GOTO skipmesa
 @echo Beginning 2nd build pass
 @echo.
 )
-@if %pythonver%==2 (
+@if %pythonver%==2 IF %intmesaver% LSS 18300 (
 @echo Build command: %buildcmd% gles=%gles% %mesatargets%
 @echo.
 @%buildcmd% gles=%gles% %mesatargets%
+@echo.
+)
+@if %pythonver%==2 IF %intmesaver% GEQ 18300 (
+@echo Build command: %buildcmd% %mesatargets%
+@echo.
+@%buildcmd% %mesatargets%
 @echo.
 )
 
