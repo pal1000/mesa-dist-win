@@ -19,14 +19,14 @@ OS | Windows 10 October 2018 Update Pro x64
 | | |
 |-|-|
 Edition | 2017 Community
-Version | 15.9.2
-Windows 10 SDK Version | 10.0.17763.1
+Version | 15.9.3
+Windows 10 SDK Version | 10.0.17763.132
 Windows 10 SDK install method | standalone
 ### LLVM
 | | |
 |-|-|
 LLVM Version | 7.0.0
-CMake version | 3.13.0
+CMake version | 3.13.1
 CMake ARCH | x64
 Ninja version | 1.8.2
 LLVM build configure x64[1] | cd llvm-7.0.0.src & md buildsys-x64-MT & cd buildsys-x64-MT & cmake -G "Ninja" -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../x64-MT ..
@@ -59,8 +59,8 @@ Git For Windows portable | 2.19.2.1
 |-|-|
 Enable S3TC texture cache [4] | git apply -v ..\mesa-dist-win\patches\s3tc.patch
 osmesa build fix patch, disables GLES in osmesa [4] | git apply -v ..\mesa-dist-win\patches\osmesa.patch
-Build config and execute x64 [4] | scons build=release platform=windows machine=x86_64 texture_float=1 openmp=1 swr=1 gles=0 . & scons build=release platform=windows machine=x86_64 texture_float=1 openmp=1 swr=1 gles=1 .
-Build config and execute x86 [4] | scons build=release platform=windows machine=x86 texture_float=1 openmp=1 gles=0 . & scons build=release platform=windows machine=x86 texture_float=1 openmp=1 gles=1 .
+Build config and execute x64 [4] | scons build=release platform=windows machine=x86_64 openmp=1 swr=1 .
+Build config and execute x86 [4] | scons build=release platform=windows machine=x86 openmp=1 .
 ### Release packaging
 | | |
 |-|-|

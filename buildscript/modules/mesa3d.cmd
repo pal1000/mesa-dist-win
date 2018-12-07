@@ -62,17 +62,9 @@ GOTO skipmesa
 @IF %pythonver%==2 IF %intmesaver% LSS 18300 git apply -v ..\mesa-dist-win\patches\osmesa.patch
 @IF %pythonver%==2 IF %intmesaver% LSS 18300 echo.
 
-@rem Fix swr build with LLVM 7.0 (patch v3) - https://lists.freedesktop.org/archives/mesa-dev/2018-October/207017.html
-@IF %intmesaver% LSS 18254 git apply -v ..\mesa-dist-win\patches\swr-llvm7.patch
-@IF %intmesaver% LSS 18254 echo.
-
-@rem Add MSVC_USE_SCRIPT support so that Scons can use 64-bit compiler when doing a 32-bit build.
+@rem Add MSVC_USE_SCRIPT support so that Scons can use 64-bit compiler when doing a 32-bit build. Only needed by Mesa 18.2.
 @IF %intmesaver% LSS 18300 git apply -v ..\mesa-dist-win\patches\msvc_use_script.patch
 @IF %intmesaver% LSS 18300 echo.
-
-@rem RIP texture_float build option that remained present in a zombie state for Scons build.
-@IF %intmesaver% LSS 18254 git apply -v ..\mesa-dist-win\patches\upstream\texture_float-zombie-RIP.patch
-@IF %intmesaver% LSS 18254 echo.
 
 :configmesabuild
 @rem Configure Mesa build.
