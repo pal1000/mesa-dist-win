@@ -1,4 +1,7 @@
-# Next release
+# 18.3.0
+- Updated Mesa3D to [18.3.0](https://www.mesa3d.org/relnotes/18.3.0.html).
+### Removed features
+- shared glapi and standalone GLES drivers support in Scons build has been removed upstream in [this commit](https://gitlab.freedesktop.org/mesa/mesa/commit/45bacc4b63d83447c144d14cb075eaf7a458c429). @jrfonseca chose to cut down this build configuration altogether instead of fixing osmesa build.
 ### Build environment updates
 - Visual Studio 15.9.2 -> 15.9.3;
 - cmake 3.13.0 -> 3.13.1;
