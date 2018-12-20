@@ -1,8 +1,3 @@
-@rem Harcode some stuff to ease integration later
-@set longabi=x86
-@set abi=x86
-@set mesa=C:\Software\Development\projects\mesa
-
 @rem ABI format conversions for Mingw
 @set mingwabi=%longabi%
 @set minabi=%abi:~1%
@@ -14,8 +9,4 @@
 @set msysloc=%mesa%\msys64
 @IF NOT EXIST %msysloc% set msysloc=%mesa%\msys32
 @IF NOT EXIST %msysloc% set msysstate=0
-@IF %msysstate%==1 set PATH=%msysloc%\usr\bin\;%msysloc%\migw%minabi%\bin\;%PATH%
-@cmd
-
-
-
+@IF %msysstate%==1 set PATH=%msysloc%\usr\bin\;%PATH%

@@ -31,46 +31,18 @@
 @IF %flexloc%==%mesa%\flexbison\win_flex.exe set flexstate=1
 @IF %flexstate%==1 IF NOT EXIST %flexloc% set flexstate=0
 
-@rem pkg-config. can be present in PATH (2), present as local dependency (1), missing or broken (0). Only required with Meson build.
-@set pkgconfigstate=2
-
-@rem Look in PATH for pkg-config
-@SET ERRORLEVEL=0
-@where /q pkg-config.exe
-@IF ERRORLEVEL 1 GOTO nopathpkgconfig
-@set mingwpkgconfig=110
-@SET ERRORLEVEL=0
-@where /q x86_64-w64-mingw32-pkg-config.exe
-@IF ERRORLEVEL 1 set mingwpkgconfig=%mingwpkgconfig:~1%
-@SET ERRORLEVEL=0
-@where /q i686-w64-mingw32-pkg-config.exe
-@IF ERRORLEVEL 1 set mingwpkgconfig=%mingwpkgconfig:~1%
-@IF %mingwpkgconfig%==0 GOTO doneenvcheck
-@SET ERRORLEVEL=0
-@where /q libwinpthread-1.dll
-@IF ERRORLEVEL 1 GOTO nopathpkgconfig
+@rem pkg-config. Can be (1) present (0) missing/broken
+@set pkgconfigstate=1
+@call %mesa%\mesa-dist-win\buildscript\modules\mingw.cmd
+@IF %msysstate%==0 GOTO nonmingwpkgconfig
+@IF NOT EXIST %msysloc%\mingw64\bin\pkg-config.exe (
+@pacman -S mingw-w64-x86_64-pkg-config
+@echo.
+)
+@call %mesa%\mesa-dist-win\buildscript\modules\mingwupdate.cmd
 @GOTO doneenvcheck
 
-:nopathpkgconfig
-@set pkgconfigstate=1
-
-@rem Look for mingw versions of pkg-config.
-@set pkgconfloc=%mesa%\msys64\mingw64\bin
-@IF EXIST %pkgconfloc%\pkg-config.exe SET PKG_CONFIG_PATH=%pkgconfloc%
-@IF EXIST "%PKG_CONFIG_PATH%" GOTO doneenvcheck
-
-@set pkgconfloc=%mesa%\msys32\mingw64\bin
-@IF EXIST %pkgconfloc%\pkg-config.exe SET PKG_CONFIG_PATH=%pkgconfloc%
-@IF EXIST "%PKG_CONFIG_PATH%" GOTO doneenvcheck
-
-@set pkgconfloc=%mesa%\msys64\mingw32\bin
-@IF EXIST %pkgconfloc%\pkg-config.exe SET PKG_CONFIG_PATH=%pkgconfloc%
-@IF EXIST "%PKG_CONFIG_PATH%" GOTO doneenvcheck
-
-@set pkgconfloc=%mesa%\msys32\mingw32\bin
-@IF EXIST %pkgconfloc%\pkg-config.exe SET PKG_CONFIG_PATH=%pkgconfloc%
-@IF EXIST "%PKG_CONFIG_PATH%" GOTO doneenvcheck
-
+:nonmingwpkgconfig
 @rem Look for pkg-config-lite and standalone pkg-config
 @set pkgconfloc=%mesa%\pkgconfig
 @IF EXIST %pkgconfloc%\pkg-config.exe IF NOT EXIST %pkgconfloc%\x86_64-w64-mingw32-pkg-config.exe IF NOT EXIST %pkgconfloc%\i686-w64-mingw32-pkg-config.exe SET PKG_CONFIG_PATH=%pkgconfloc%

@@ -1,3 +1,12 @@
+# Next release
+### Build script
+- Better pkg-config support: aquire via MSYS2 pacman when possible.
+- Added MSYS2 update support.
+### Build environment updates
+- cmake 3.13.1 -> 3.13.2;
+- Visual Studio 15.9.3 -> 15.9.4;
+- setuptools 40.6.2 -> 40.6.3;
+- Git 2.20.0.1 -> 2.20.1.1.
 # 18.3.0
 - Updated Mesa3D to [18.3.0](https://www.mesa3d.org/relnotes/18.3.0.html).
 ### Removed features
@@ -5,7 +14,8 @@
 ### Build environment updates
 - Visual Studio 15.9.2 -> 15.9.3;
 - cmake 3.13.0 -> 3.13.1;
-- Windows SDK 10.0.17763.1 -> 10.0.17763.132.
+- Windows SDK 10.0.17763.1 -> 10.0.17763.132;
+- Git 2.19.2.1 -> 2.20.0.1.
 ### Build script
 - Do not expect MSYS2 environment preload in PATH as it is unlikely;
 - Make sure we do not pass the invalid gles option for Mesa 18.3.
