@@ -25,12 +25,12 @@ Windows 10 SDK install method | standalone
 ### LLVM
 | | |
 |-|-|
-LLVM Version | 7.0.0
+LLVM Version | 7.0.1
 CMake version | 3.13.2
 CMake ARCH | x64
 Ninja version | 1.8.2
-LLVM build configure x64[1] | cd llvm-7.0.0.src & md buildsys-x64-MT & cd buildsys-x64-MT & cmake -G "Ninja" -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../x64-MT ..
-LLVM build configure x86[2] | cd llvm-7.0.0.src & md buildsys-x86-MT & cd buildsys-x86-MT & cmake -G "Ninja" -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../x86-MT ..
+LLVM build configure x64[1] | cd llvm-7.0.1.src & md buildsys-x64-MT & cd buildsys-x64-MT & cmake -G "Ninja" -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../x64-MT ..
+LLVM build configure x86[2] | cd llvm-7.0.1.src & md buildsys-x86-MT & cd buildsys-x86-MT & cmake -G "Ninja" -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../x86-MT ..
 LLVM build execute[3] | ninja install
 ### Python
 | | |
