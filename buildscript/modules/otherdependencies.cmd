@@ -31,6 +31,7 @@
 @IF %flexloc%==%mesa%\flexbison\win_flex.exe set flexstate=1
 @IF %flexstate%==1 IF NOT EXIST %flexloc% set flexstate=0
 
+@IF %pythonver%==2 set pkgconfigstate=0
 @IF %pythonver%==2 GOTO doneenvcheck
 @rem pkg-config. Can be (1) present (0) missing/broken
 @set pkgconfigstate=1
