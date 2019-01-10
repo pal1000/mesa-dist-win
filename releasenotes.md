@@ -5,6 +5,8 @@
 - Do not lookup MSYS2 when using Python 2 / Scons build, at least for the time being;
 - Python 2 modules check compatibility update for Scons 3.0.3;
 - Mesa3D build script compatibility update for Scons 3.0.3.
+### Deployment
+- Make sure per app deployment only asks for GLES libraries deployment when glapi is a shared library.
 ### Build environment updates
 - cmake 3.13.1 -> 3.13.2;
 - Visual Studio 15.9.3 -> 15.9.5;

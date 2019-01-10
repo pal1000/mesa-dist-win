@@ -120,7 +120,7 @@ if '%errorlevel%' NEQ '0' (
 @echo.
 
 :opengles
-@set /p opengles=Do you need OpenGL ES support (y/n):
+@IF EXIST "%mesaloc%\%mesadll%\libglapi.dll" set /p opengles=Do you need OpenGL ES support (y/n):
 @IF /I NOT "%opengles%"=="y" GOTO osmesa
 @if EXIST "%dir%\libGLESv1_CM.dll" del "%dir%\libGLESv1_CM.dll"
 @if EXIST "%dir%\libGLESv2.dll" del "%dir%\libGLESv2.dll"
