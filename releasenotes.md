@@ -2,13 +2,16 @@
 ### Build script
 - Better pkg-config support: aquire via MSYS2 pacman when possible.
 - Added MSYS2 update support;
-- Do not lookup MSYS2 when using Python 2 / Scons build, at least for the time being.
+- Do not lookup MSYS2 when using Python 2 / Scons build, at least for the time being;
+- Python 2 modules check compatibility update for Scons 3.0.3;
+- Mesa3D build script compatibility update for Scons 3.0.3.
 ### Build environment updates
 - cmake 3.13.1 -> 3.13.2;
-- Visual Studio 15.9.3 -> 15.9.4;
+- Visual Studio 15.9.3 -> 15.9.5;
 - setuptools 40.6.2 -> 40.6.3;
 - Git 2.20.0.1 -> 2.20.1.1;
-- LLVM 7.0.0 -> 7.0.1.
+- LLVM 7.0.0 -> 7.0.1;
+- scons 3.0.1 -> 3.0.3.
 # 18.3.0
 - Updated Mesa3D to [18.3.0](https://www.mesa3d.org/relnotes/18.3.0.html).
 ### Removed features

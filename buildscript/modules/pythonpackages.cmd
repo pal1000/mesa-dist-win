@@ -24,7 +24,7 @@
 @set pypack=pywin32
 @GOTO pypackinstall
 )
-@if %pythonver%==2 IF NOT EXIST %pythonloc:~0,-10%Scripts\scons.py  (
+@if %pythonver%==2 IF NOT EXIST %pythonloc:~0,-10%Scripts\scons.py IF NOT EXIST %pythonloc:~0,-10%Scripts\scons (
 @set pypack=scons
 @GOTO pypackinstall
 )
