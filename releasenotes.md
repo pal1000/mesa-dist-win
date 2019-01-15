@@ -1,4 +1,4 @@
-# Next release
+# 18.3.2
 ### Build script
 - Better pkg-config support: aquire via MSYS2 pacman when possible.
 - Added MSYS2 update support;
@@ -8,7 +8,7 @@
 ### Deployment
 - Make sure per app deployment only asks for GLES libraries deployment when glapi is a shared library.
 ### Build environment updates
-- cmake 3.13.1 -> 3.13.2;
+- cmake 3.13.1 -> 3.13.3;
 - Visual Studio 15.9.3 -> 15.9.5;
 - setuptools 40.6.2 -> 40.6.3;
 - Git 2.20.0.1 -> 2.20.1.1;
