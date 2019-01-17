@@ -55,17 +55,6 @@ GOTO skipmesa
 @echo 1 > mesapatched.ini
 @echo.
 
-@rem Disable osmesa when building shared glapi when using Scons build.
-@rem shared glapi linking with osmesa is disabled due to build failure - https://bugs.freedesktop.org/show_bug.cgi?id=106843
-@rem We'll do a 2-pass build in this case. Build everything requested without shared glapi, then build everything again
-@rem with shared glapi.
-@IF %pythonver%==2 IF %intmesaver% LSS 18300 git apply -v ..\mesa-dist-win\patches\osmesa.patch
-@IF %pythonver%==2 IF %intmesaver% LSS 18300 echo.
-
-@rem Add MSVC_USE_SCRIPT support so that Scons can use 64-bit compiler when doing a 32-bit build. Only needed by Mesa 18.2.
-@IF %intmesaver% LSS 18300 git apply -v ..\mesa-dist-win\patches\msvc_use_script.patch
-@IF %intmesaver% LSS 18300 echo.
-
 :configmesabuild
 @rem Configure Mesa build.
 
