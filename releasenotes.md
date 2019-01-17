@@ -1,4 +1,6 @@
 # 18.3.2
+- Updated Mesa3D to [18.3.2](https://www.mesa3d.org/relnotes/18.3.2.html);
+- Added binaries descriptions, versions and company names - [#19](https://github.com/pal1000/mesa-dist-win/issues/19).
 ### Build script
 - Better pkg-config support: aquire via MSYS2 pacman when possible.
 - Added MSYS2 update support;
