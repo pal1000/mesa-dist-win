@@ -42,7 +42,7 @@ It must match in architecture with Python. There is a bug in the installer. For 
 - Update setuptools for python via `python -m pip install -U setuptools` when Python is in PATH or currrent folder. You can successfully install Scons via Pypi without having to install wheel when setuptools is up-to-date if you are still on Python 2.7.14. For some reason with Python 2.7.15 wheel is mandatory. Install it with `python -m pip install -U wheel`. The build script updates setuptools and installs wheel automatically.
 - [Scons for python 2.7](https://sourceforge.net/projects/scons/files/scons/);
 
-The build script gets the latest version of Scons automatically.
+Stay on Scons 3.0.1 until further notice.Scons 3.0.3 fails to build Mesa3D.
 - mako module for Python 2.7 and MarkupSafe dependency. Install with `python -m pip install mako`. This script installs mako automatically. It also attempts to update all Python modules.
 - Get this script.
 
