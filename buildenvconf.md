@@ -19,7 +19,7 @@ OS | Windows 10 October 2018 Update Pro x64
 | | |
 |-|-|
 Edition | 2017 Community
-Version | 15.9.5
+Version | 15.9.6
 Windows 10 SDK Version | 10.0.17763.132
 Windows 10 SDK install method | standalone
 ### LLVM
@@ -37,7 +37,7 @@ LLVM build execute[3] | ninja install
 |-|-|
 Version | 2.7.15
 ARCH | x64
-pip version | 18.1
+pip version | 19.0.1
 setuptools version | 40.6.3
 pywin32 / pypiwin32 version | 224
 scons version | 3.0.1
