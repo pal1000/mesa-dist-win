@@ -1,9 +1,13 @@
-# Next release
+# 18.3.3
+- Updated Mesa3D to [18.3.3](https://www.mesa3d.org/relnotes/18.3.3.html).
 ### Build script
 - Ignore deprecation warnings affecting pip 19 and newer with Python 2.7.
 ### Build environment updates
 - pip 18.1 -> 19.0.1;
-- Visual Studio 15.9.5 -> 15.9.6.
+- Visual Studio 15.9.5 -> 15.9.6;
+- setuptools 40.6.3 -> 40.7.2;
+- ninja 1.8.2 -> 1.9.0;
+- 7-zip 18.05 -> 18.06.
 # 18.3.2
 - Updated Mesa3D to [18.3.2](https://www.mesa3d.org/relnotes/18.3.2.html);
 - Added binaries descriptions, versions and company names - [#19](https://github.com/pal1000/mesa-dist-win/issues/19).

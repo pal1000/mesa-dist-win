@@ -28,7 +28,7 @@ Windows 10 SDK install method | standalone
 LLVM Version | 7.0.1
 CMake version | 3.13.3
 CMake ARCH | x64
-Ninja version | 1.8.2
+Ninja version | 1.9.0
 LLVM build configure x64[1] | cd llvm-7.0.1.src & md buildsys-x64-MT & cd buildsys-x64-MT & cmake -G "Ninja" -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../x64-MT ..
 LLVM build configure x86[2] | cd llvm-7.0.1.src & md buildsys-x86-MT & cd buildsys-x86-MT & cmake -G "Ninja" -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../x86-MT ..
 LLVM build execute[3] | ninja install
@@ -38,7 +38,7 @@ LLVM build execute[3] | ninja install
 Version | 2.7.15
 ARCH | x64
 pip version | 19.0.1
-setuptools version | 40.6.3
+setuptools version | 40.7.2
 pywin32 / pypiwin32 version | 224
 scons version | 3.0.1
 Mako version | 1.0.7
@@ -64,5 +64,5 @@ Build config and execute x86 [4] | scons build=release platform=windows machine=
 ### Release packaging
 | | |
 |-|-|
-7-zip version | 18.05
+7-zip version | 18.06
 Compression level | ultra
