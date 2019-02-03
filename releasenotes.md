@@ -1,3 +1,8 @@
+# Next release
+### Build environment updates
+- setuptools 40.7.2 -> 40.7.3.
+### Manual build information
+- Remove mention of an obsolete patch.
 # 18.3.3
 - Updated Mesa3D to [18.3.3](https://www.mesa3d.org/relnotes/18.3.3.html).
 ### Build script

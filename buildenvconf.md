@@ -38,7 +38,7 @@ LLVM build execute[3] | ninja install
 Version | 2.7.15
 ARCH | x64
 pip version | 19.0.1
-setuptools version | 40.7.2
+setuptools version | 40.7.3
 pywin32 / pypiwin32 version | 224
 scons version | 3.0.1
 Mako version | 1.0.7
@@ -58,7 +58,6 @@ Git For Windows portable | 2.20.1.1
 | | |
 |-|-|
 Enable S3TC texture cache [4] | git apply -v ..\mesa-dist-win\patches\s3tc.patch
-osmesa build fix patch, disables GLES in osmesa [4] | git apply -v ..\mesa-dist-win\patches\osmesa.patch
 Build config and execute x64 [4] | scons build=release platform=windows machine=x86_64 openmp=1 swr=1 .
 Build config and execute x86 [4] | scons build=release platform=windows machine=x86 openmp=1 .
 ### Release packaging
