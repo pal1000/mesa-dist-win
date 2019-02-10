@@ -9,4 +9,4 @@
 @set msysloc=%mesa%\msys64
 @IF NOT EXIST %msysloc% set msysloc=%mesa%\msys32
 @IF NOT EXIST %msysloc% set msysstate=0
-@IF %msysstate%==1 set PATH=%msysloc%\usr\bin\;%PATH%
+@IF %msysstate%==1 set PATH=%msysloc%\usr\bin\;%msysloc%\mingw%minabi%\bin\;%PATH%

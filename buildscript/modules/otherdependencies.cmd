@@ -37,8 +37,8 @@
 @set pkgconfigstate=1
 @call %mesa%\mesa-dist-win\buildscript\modules\mingw.cmd
 @IF %msysstate%==0 GOTO nonmingwpkgconfig
-@IF NOT EXIST %msysloc%\mingw64\bin\pkg-config.exe (
-@pacman -S mingw-w64-x86_64-pkg-config
+@IF NOT EXIST %msysloc%\mingw%minabi%\bin\pkg-config.exe (
+@pacman -S mingw-w64-%mingwabi%-pkg-config
 @echo.
 )
 @call %mesa%\mesa-dist-win\buildscript\modules\mingwupdate.cmd

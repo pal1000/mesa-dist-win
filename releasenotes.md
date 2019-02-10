@@ -1,10 +1,13 @@
 # Next release
 ### Build environment updates
-- setuptools 40.7.2 -> 40.7.3.
+- setuptools 40.7.2 -> 40.8.0;
+- cmake 3.13.3 -> 3.13.4;
+- pip 19.0.1 -> 19.0.2.
 ### Manual build information
 - Remove mention of an obsolete patch.
 ### Build script
-- Remove old gles related workarounds that are only relevant for Mesa 18.2 and older.
+- Remove old gles related workarounds that are only relevant for Mesa 18.2 and older;
+- Use same ABI pkg-config and load Mingw environment along with MSYS2 when using Meson build to ease logic of things.
 # 18.3.3
 - Updated Mesa3D to [18.3.3](https://www.mesa3d.org/relnotes/18.3.3.html).
 ### Build script
