@@ -61,15 +61,12 @@ GOTO skipmesa
 @if %pythonver%==2 set sconsloc=%pythonloc:~0,-10%Scripts\scons.py
 @if %pythonver%==2 IF NOT EXIST "%sconsloc%" set sconsloc=%pythonloc:~0,-10%Scripts\scons
 @if %pythonver%==2 set buildcmd=%pythonloc% %sconsloc% -j%throttle% build=release platform=windows machine=%longabi% MSVC_USE_SCRIPT=%vsenv%
-@if %pythonver% GEQ 3 set buildconf=%mesonloc% build/%abi% --backend=vs2017 --buildtype=plain --default-library=static
-@if %pythonver% GEQ 3 IF %mesonver:~2,-2% LSS 48 if %llvmlink%==MT set buildconf=%buildconf% -Dc_args="/MT /O2" -Dcpp_args="/MT /O2"
-@if %pythonver% GEQ 3 IF %mesonver:~2,-2% GEQ 48 set buildconf=%buildconf% --optimization=2
-@if %pythonver% GEQ 3 IF %mesonver:~2,-2% GEQ 48 if %llvmlink%==MT set buildconf=%buildconf% -Db_vscrt=mt
-@if %pythonver% GEQ 3 IF %mesonver:~2,-2% GEQ 48 if %llvmlink%==MD set buildconf=%buildconf% -Db_vscrt=md
+@if %pythonver% GEQ 3 set buildconf=%mesonloc% build/%abi% --backend=vs2017 --default-library=static --buildtype=release
+@if %pythonver% GEQ 3 if %llvmlink%==MT set buildconf=%buildconf% -Db_vscrt=mt
 
 @IF %pythonver% GEQ 3 set platformabi=Win32
 @IF %pythonver% GEQ 3 IF %abi%==x64 set platformabi=%abi%
-@if %pythonver% GEQ 3 set buildcmd=msbuild /p^:Configuration=custom,Platform=%platformabi% mesa.sln /m^:%throttle%
+@if %pythonver% GEQ 3 set buildcmd=msbuild /p^:Configuration=release,Platform=%platformabi% mesa.sln /m^:%throttle%
 
 @set ninja=n
 @if %pythonver% GEQ 3 if NOT %ninjastate%==0 set /p ninja=Use Ninja build system instead of MsBuild (y/n); less storage device strain and maybe faster build:
@@ -86,9 +83,8 @@ GOTO skipmesa
 @if /I NOT "%llvmless%"=="y" if NOT EXIST %LLVM% echo User refused to build Mesa without LLVM.
 @if /I NOT "%llvmless%"=="y" if NOT EXIST %LLVM% GOTO skipmesa
 @if %pythonver%==2 if /I "%llvmless%"=="y" set buildcmd=%buildcmd% llvm=no
-@if %pythonver% GEQ 3 if /I NOT "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm-wrap=llvm
-@if %pythonver% GEQ 3 if /I NOT "%llvmless%"=="y" if %llvmlink%==MT set buildconf=%buildconf% -Dshared-llvm=false
 @if %pythonver% GEQ 3 if /I NOT "%llvmless%"=="y" call %mesa%\mesa-dist-win\buildscript\modules\llvmwrapgen.cmd
+@if %pythonver% GEQ 3 if /I NOT "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm-wrap=llvm -Dllvm=true
 
 @if %pythonver%==2 set /p openmp=Build Mesa3D with OpenMP. Faster build and smaller binaries (y/n):
 @if %pythonver%==2 echo.

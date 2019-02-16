@@ -10,7 +10,8 @@
 ### Build script
 - Remove old gles related workarounds that are only relevant for Mesa 18.2 and older;
 - Use same ABI pkg-config and load Mingw environment along with MSYS2 when using Meson build to ease logic of things;
-- Add a patch to ease replication of build failure with Scons 3.0.2 and newer.
+- Add a patch to ease replication of build failure with Scons 3.0.2 and newer;
+- Make Meson build behave as close as possible to upstream Appveyor script.
 # 18.3.3
 - Updated Mesa3D to [18.3.3](https://www.mesa3d.org/relnotes/18.3.3.html).
 ### Build script
