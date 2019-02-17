@@ -1,0 +1,16 @@
+diff --git a/scons/custom.py b/scons/custom.py
+index 09946fa..8f9ba12 100644
+--- a/scons/custom.py
++++ b/scons/custom.py
+@@ -48,7 +48,10 @@ import source_list
+ # a path directly. We want to support both, so we need to detect the SCons version,
+ # for which no API is provided by SCons 8-P
+ 
+-scons_version = tuple(map(int, SCons.__version__.split('.')))
++try:
++    scons_version = tuple(map(int, SCons.__version__.split('.')))
++except ValueError as e:
++    scons_version = (3,0,5)
+ 
+ def quietCommandLines(env):
+     # Quiet command lines

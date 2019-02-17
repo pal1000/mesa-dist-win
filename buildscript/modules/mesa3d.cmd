@@ -52,6 +52,9 @@ GOTO skipmesa
 
 @rem Enable S3TC texture cache
 @git apply -v ..\mesa-dist-win\patches\s3tc.patch
+@rem Allow development version of Scons to work
+@if EXIST %mesa%\scons git apply -v %mesa%\mesa-dist-win\patches\sconsdev.patch
+@if EXIST %mesa%\scons echo.
 @echo 1 > mesapatched.ini
 @echo.
 
@@ -60,6 +63,7 @@ GOTO skipmesa
 
 @if %pythonver%==2 set sconsloc=%pythonloc:~0,-10%Scripts\scons.py
 @if %pythonver%==2 IF NOT EXIST "%sconsloc%" set sconsloc=%pythonloc:~0,-10%Scripts\scons
+@if %pythonver%==2 IF NOT EXIST "%sconsloc%" set sconsloc=%mesa%\scons\src\script\scons.py
 @if %pythonver%==2 set buildcmd=%pythonloc% %sconsloc% -j%throttle% build=release platform=windows machine=%longabi% MSVC_USE_SCRIPT=%vsenv%
 @if %pythonver% GEQ 3 set buildconf=%mesonloc% build/%abi% --backend=vs2017 --default-library=static --buildtype=release
 @if %pythonver% GEQ 3 if %llvmlink%==MT set buildconf=%buildconf% -Db_vscrt=mt
