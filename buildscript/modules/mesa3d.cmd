@@ -61,9 +61,9 @@ GOTO skipmesa
 :configmesabuild
 @rem Configure Mesa build.
 
-@if %pythonver%==2 set sconsloc=%pythonloc:~0,-10%Scripts\scons.py
-@if %pythonver%==2 IF NOT EXIST "%sconsloc%" set sconsloc=%pythonloc:~0,-10%Scripts\scons
-@if %pythonver%==2 IF NOT EXIST "%sconsloc%" set sconsloc=%mesa%\scons\src\script\scons.py
+@if %pythonver%==2 IF NOT "%sconspypi%"=="1" set sconsloc=%mesa%\scons\src\script\scons.py
+@if %pythonver%==2 IF "%sconspypi%"=="1" set sconsloc=%pythonloc:~0,-10%Scripts\scons.py
+@if %pythonver%==2 IF "%sconspypi%"=="1" IF NOT EXIST "%sconsloc%" set sconsloc=%pythonloc:~0,-10%Scripts\scons
 @if %pythonver%==2 set buildcmd=%pythonloc% %sconsloc% -j%throttle% build=release platform=windows machine=%longabi% MSVC_USE_SCRIPT=%vsenv%
 @if %pythonver% GEQ 3 set buildconf=%mesonloc% build/%abi% --backend=vs2017 --default-library=static --buildtype=release
 @if %pythonver% GEQ 3 if %llvmlink%==MT set buildconf=%buildconf% -Db_vscrt=mt

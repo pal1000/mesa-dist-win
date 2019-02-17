@@ -24,7 +24,8 @@
 @set pypack=pywin32
 @GOTO pypackinstall
 )
-@if %pythonver%==2 IF NOT EXIST %pythonloc:~0,-10%Scripts\scons.py IF NOT EXIST %pythonloc:~0,-10%Scripts\scons (
+@if %pythonver%==2 for /F "skip=2 delims= " %%a in ('%pythonloc% -W ignore -m pip list --disable-pip-version-check') do @IF /I "%%a"=="scons" set sconspypi=1
+@if %pythonver%==2 IF NOT "%sconspypi%"=="1" IF NOT EXIST %mesa%\scons (
 @set pypack=scons
 @GOTO pypackinstall
 )
