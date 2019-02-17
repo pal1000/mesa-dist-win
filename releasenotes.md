@@ -13,7 +13,8 @@
 - Add a patch to ease replication of build failure with Scons 3.0.2 and newer;
 - Make Meson build behave as close as possible to upstream Appveyor script;
 - Support development version of Scons;
-- More robust way of checking if Scons is installed as it leaves remnants behind when uninstalled which can confuse the build script.
+- More robust way of checking if Scons is installed as it leaves remnants behind when uninstalled which can confuse the build script;
+- Make sure Python launcher query runs only once regardless of user input.
 # 18.3.3
 - Updated Mesa3D to [18.3.3](https://www.mesa3d.org/relnotes/18.3.3.html).
 ### Build script

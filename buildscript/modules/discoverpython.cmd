@@ -1,4 +1,3 @@
-:pydiscover
 @REM Try locating all Python versions via Python Launcher.
 @SET pythonloc=python.exe
 
@@ -8,14 +7,14 @@
 @IF ERRORLEVEL 1 GOTO nopylauncher
 
 @rem Query Python launcher for supported Python versions. Hard fail if none found.
-@FOR /F "tokens=* USEBACKQ" %%b IN (`py -2.7 -c "import sys; print(sys.executable)"`) DO @SET py2_7loc=%%~sb
-@FOR /F "tokens=* USEBACKQ" %%c IN (`py -2.7-32 -c "import sys; print(sys.executable)"`) DO @SET py2_7wowloc=%%~sc
-@FOR /F "tokens=* USEBACKQ" %%d IN (`py -3.5 -c "import sys; print(sys.executable)"`) DO @SET py3_5loc=%%~sd
-@FOR /F "tokens=* USEBACKQ" %%e IN (`py -3.5-32 -c "import sys; print(sys.executable)"`) DO @SET py3_5wowloc=%%~se
-@FOR /F "tokens=* USEBACKQ" %%f IN (`py -3.6 -c "import sys; print(sys.executable)"`) DO @SET py3_6loc=%%~sf
-@FOR /F "tokens=* USEBACKQ" %%g IN (`py -3.6-32 -c "import sys; print(sys.executable)"`) DO @SET py3_6wowloc=%%~sg
-@FOR /F "tokens=* USEBACKQ" %%h IN (`py -3.7 -c "import sys; print(sys.executable)"`) DO @SET py3_7loc=%%~sh
-@FOR /F "tokens=* USEBACKQ" %%i IN (`py -3.7-32 -c "import sys; print(sys.executable)"`) DO @SET py3_7wowloc=%%~si
+@FOR /F "tokens=* USEBACKQ" %%a IN (`py -2.7 -c "import sys; print(sys.executable)"`) DO @SET py2_7loc=%%~sa
+@FOR /F "tokens=* USEBACKQ" %%a IN (`py -2.7-32 -c "import sys; print(sys.executable)"`) DO @SET py2_7wowloc=%%~sa
+@FOR /F "tokens=* USEBACKQ" %%a IN (`py -3.5 -c "import sys; print(sys.executable)"`) DO @SET py3_5loc=%%~sa
+@FOR /F "tokens=* USEBACKQ" %%a IN (`py -3.5-32 -c "import sys; print(sys.executable)"`) DO @SET py3_5wowloc=%%~sa
+@FOR /F "tokens=* USEBACKQ" %%a IN (`py -3.6 -c "import sys; print(sys.executable)"`) DO @SET py3_6loc=%%~sa
+@FOR /F "tokens=* USEBACKQ" %%a IN (`py -3.6-32 -c "import sys; print(sys.executable)"`) DO @SET py3_6wowloc=%%~sa
+@FOR /F "tokens=* USEBACKQ" %%a IN (`py -3.7 -c "import sys; print(sys.executable)"`) DO @SET py3_7loc=%%~sa
+@FOR /F "tokens=* USEBACKQ" %%a IN (`py -3.7-32 -c "import sys; print(sys.executable)"`) DO @SET py3_7wowloc=%%~sa
 @cls
 @if NOT EXIST "%py2_7loc%" if NOT EXIST "%py3_5loc%" if NOT EXIST "%py3_6loc%" if NOT EXIST "%py3_7loc%" if NOT EXIST "%py2_7wowloc%" if NOT EXIST "%py3_5wowloc%" if NOT EXIST "%py3_6wowloc%" if NOT EXIST "%py3_7wowloc%" (
 @echo Your Python version is too old. Only Python 2.7 or 3.5 through 3.7 are supported.
@@ -24,6 +23,7 @@
 @exit
 )
 
+:pylist
 @rem List found Python versions and ask the user to pick one. Begin with Python 2.7.
 @echo The following Python versions were detected:
 @if EXIST "%py2_7loc%" echo 1. Python 2.7
@@ -66,7 +66,7 @@
 @IF %pythonloc%==python.exe echo Invalid entry.
 @IF %pythonloc%==python.exe pause
 @IF %pythonloc%==python.exe cls
-@IF %pythonloc%==python.exe GOTO pydiscover
+@IF %pythonloc%==python.exe GOTO pylist
 @GOTO loadpypath
 
 :nopylauncher
@@ -80,7 +80,7 @@
 @pause
 @exit
 )
-@IF %pythonloc%==python.exe FOR /F "tokens=* USEBACKQ" %%j IN (`where /f python.exe`) DO @SET pythonloc=%%~sj & GOTO loadpypath
+@IF %pythonloc%==python.exe FOR /F "tokens=* USEBACKQ" %%a IN (`where /f python.exe`) DO @SET pythonloc=%%~sa & GOTO loadpypath
 
 :loadpypath
 @REM Load Python in PATH to convince CMake to use the selected version.
@@ -88,14 +88,14 @@
 @set pypath=1
 @where /q python.exe
 @IF ERRORLEVEL 1 set pypath=0
-@IF %pypath%==1 FOR /F "tokens=* USEBACKQ" %%k IN (`where /f python.exe`) DO @SET pypath=%%~sk & GOTO doloadpy
+@IF %pypath%==1 FOR /F "tokens=* USEBACKQ" %%a IN (`where /f python.exe`) DO @SET pypath=%%~sa & GOTO doloadpy
 
 :doloadpy
 @IF NOT %pypath%==%pythonloc% set PATH=%pythonloc:~0,-10%;%PATH%
 
 :pyver
 @rem Identify Python version.
-@FOR /F "USEBACKQ delims= " %%l IN (`%pythonloc% -c "import sys; print(sys.version)"`) DO @SET pythonver=%%l
+@FOR /F "USEBACKQ delims= " %%a IN (`%pythonloc% -c "import sys; print(sys.version)"`) DO @SET pythonver=%%a
 
 @rem Check if Python version is not too old.
 @IF NOT %pythonver:~0,3%==2.7 IF NOT %pythonver:~0,3%==3.5 IF NOT %pythonver:~0,3%==3.6 IF NOT %pythonver:~0,3%==3.7 (
