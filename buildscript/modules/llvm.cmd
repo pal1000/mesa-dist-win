@@ -19,7 +19,7 @@
 @rem MT when using Python 3 with Meson 0.47 or older.
 @IF %pythonver%==2 set llvmlink=MT
 @set mesonver=0.00.0
-@IF %pythonver% GEQ 3 FOR /F "tokens=* USEBACKQ" %%p IN (`%mesonloc% --version`) DO @set mesonver=%%~p
+@IF %pythonver% GEQ 3 FOR /F "tokens=* USEBACKQ" %%a IN (`%mesonloc% --version`) DO @set mesonver=%%~a
 @IF %pythonver% GEQ 3 set llvmlink=MT
 @IF %pythonver% GEQ 3 IF %mesonver:~0,1%==0 IF %mesonver:~2,-2% LSS 48 set llvmlink=MT
 @echo Using CRT %llvmlink% Release...
