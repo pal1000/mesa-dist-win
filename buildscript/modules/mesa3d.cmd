@@ -108,20 +108,19 @@ GOTO skipmesa
 @set expressmesabuild=n
 @if %pythonver%==2 set /p expressmesabuild=Do you want to build Mesa with quick configuration - includes libgl-gdi, graw-gdi, graw-null, tests, osmesa and shared glapi and shared GLES libraries if glapi is a shared library:
 @if %pythonver%==2 echo.
-@if %pythonver%==2 IF /I "%expressmesabuild%"=="y" set mesatargets=.
-@if %pythonver%==2 IF /I NOT "%expressmesabuild%"=="y" set mesatargets=libgl-gdi
+@if %pythonver%==2 IF /I NOT "%expressmesabuild%"=="y" set buildcmd=%buildcmd% libgl-gdi
 
 @set osmesa=n
 @IF /I NOT "%expressmesabuild%"=="y" set /p osmesa=Do you want to build off-screen rendering drivers (y/n):
 @IF /I NOT "%expressmesabuild%"=="y" echo.
-@if %pythonver%==2 IF /I NOT "%expressmesabuild%"=="y" IF /I "%osmesa%"=="y" set mesatargets=%mesatargets% osmesa
+@if %pythonver%==2 IF /I NOT "%expressmesabuild%"=="y" IF /I "%osmesa%"=="y" set buildcmd=%buildcmd% osmesa
 @if %pythonver% GEQ 3 IF /I "%osmesa%"=="y" set buildconf=%buildconf% -Dosmesa=gallium
 @IF /I "%expressmesabuild%"=="y" set osmesa=y
 
 @set graw=n
 @IF /I NOT "%expressmesabuild%"=="y" set /p graw=Do you want to build graw library (y/n):
 @IF /I NOT "%expressmesabuild%"=="y" echo.
-@if %pythonver%==2 if /I "%graw%"=="y" IF /I NOT "%expressmesabuild%"=="y" set mesatargets=%mesatargets% graw-gdi
+@if %pythonver%==2 if /I "%graw%"=="y" IF /I NOT "%expressmesabuild%"=="y" set buildcmd=%buildcmd% graw-gdi
 @IF /I "%expressmesabuild%"=="y" set graw=y
 @if %pythonver% GEQ 3 if /I "%graw%"=="y" set buildconf=%buildconf% -Dbuild-tests=true
 
@@ -132,8 +131,8 @@ GOTO skipmesa
 @IF %pythonver% GEQ 3 if EXIST build\%abi% echo.
 @IF %pythonver%==2 if /I "%cleanbuild%"=="y" RD /S /Q build\windows-%longabi%
 @IF %pythonver% GEQ 3 if /I "%cleanbuild%"=="y" RD /S /Q build\%abi%
-@IF %pythonver% GEQ 3 if /I "%cleanbuild%"=="y" for /d %%q in ("%mesa%\mesa\subprojects\zlib-*") do @RD /S /Q "%%~q"
-@IF %pythonver% GEQ 3 if /I "%cleanbuild%"=="y" for /d %%r in ("%mesa%\mesa\subprojects\expat-*") do @RD /S /Q "%%~r"
+@IF %pythonver% GEQ 3 if /I "%cleanbuild%"=="y" for /d %%a in ("%mesa%\mesa\subprojects\zlib-*") do @RD /S /Q "%%~a"
+@IF %pythonver% GEQ 3 if /I "%cleanbuild%"=="y" for /d %%a in ("%mesa%\mesa\subprojects\expat-*") do @RD /S /Q "%%~a"
 
 @IF %flexstate%==1 set PATH=%mesa%\flexbison\;%PATH%
 @if %pythonver%==2 GOTO build_mesa
@@ -155,9 +154,9 @@ GOTO skipmesa
 @if %pythonver% GEQ 3 cmd
 
 @if %pythonver%==2 (
-@echo Build command: %buildcmd% %mesatargets%
+@echo Build command: %buildcmd%
 @echo.
-@%buildcmd% %mesatargets%
+@%buildcmd%
 @echo.
 )
 
