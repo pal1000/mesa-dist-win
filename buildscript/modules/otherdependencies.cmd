@@ -31,17 +31,20 @@
 @IF %flexloc%==%mesa%\flexbison\win_flex.exe set flexstate=1
 @IF %flexstate%==1 IF NOT EXIST %flexloc% set flexstate=0
 
+@rem pkg-config. Can be (1) present (0) missing/broken. Only valid for Python 3.x
 @IF %pythonver%==2 set pkgconfigstate=0
 @IF %pythonver%==2 GOTO doneenvcheck
-@rem pkg-config. Can be (1) present (0) missing/broken
+
 @set pkgconfigstate=1
-@call %mesa%\mesa-dist-win\buildscript\modules\mingw.cmd
+@call %mesa%\mesa-dist-win\buildscript\modules\msys.cmd
 @IF %msysstate%==0 GOTO nonmingwpkgconfig
+@call %mesa%\mesa-dist-win\buildscript\modules\msysload.cmd
+@call %mesa%\mesa-dist-win\buildscript\modules\mingwload.cmd
+@call %mesa%\mesa-dist-win\buildscript\modules\msysupdate.cmd
 @IF NOT EXIST %msysloc%\mingw%minabi%\bin\pkg-config.exe (
-@pacman -S mingw-w64-%mingwabi%-pkg-config
+@pacman -S mingw-w64-%mingwabi%-pkg-config --noconfirm
 @echo.
 )
-@call %mesa%\mesa-dist-win\buildscript\modules\mingwupdate.cmd
 @GOTO doneenvcheck
 
 :nonmingwpkgconfig

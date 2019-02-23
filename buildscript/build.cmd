@@ -15,8 +15,8 @@
 @rem Analyze environment. Get each dependency status: 0=missing, 1=standby/load manually in PATH, 2=cannot be unloaded.
 @rem Not all dependencies can have all these states.
 
-@rem Search for Visual Studio environment. Hard fail if missing.
-@call %mesa%\mesa-dist-win\buildscript\modules\visualstudio.cmd
+@rem Search for compiler toolchain. Hard fail if none found
+@call %mesa%\mesa-dist-win\buildscript\modules\toolchain.cmd
 
 @rem Search for Python. State tracking is pointless as it is loaded once and we are done. Hard fail if missing.
 @call %mesa%\mesa-dist-win\buildscript\modules\discoverpython.cmd
