@@ -3,7 +3,8 @@
 - wheel 0.33.0 -> 0.33.1;
 - winflexbison 2.5.16 -> 2.5.17;
 - GNU bison 3.1.0 -> 3.3.1;
-- pip 19.0.2 -> 19.0.3.
+- pip 19.0.2 -> 19.0.3;
+- MarkupSafe 1.1.0 -> 1.1.1.
 # 18.3.4
 - Updated Mesa3D to [18.3.4](https://www.mesa3d.org/relnotes/18.3.4.html).
 ### Build environment updates
