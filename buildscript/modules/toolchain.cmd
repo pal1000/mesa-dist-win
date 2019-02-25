@@ -1,4 +1,4 @@
-@set buildtype=msvc
+@set toolchain=msvc
 @set vsabi=%abi%
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF %abi%==x86 set vsabi=x64_x86
 @IF /I %PROCESSOR_ARCHITECTURE%==x86 IF %abi%==x64 set vsabi=x86_x64

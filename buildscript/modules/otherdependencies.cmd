@@ -38,13 +38,7 @@
 @set pkgconfigstate=1
 @call %mesa%\mesa-dist-win\buildscript\modules\msys.cmd
 @IF %msysstate%==0 GOTO nonmingwpkgconfig
-@call %mesa%\mesa-dist-win\buildscript\modules\msysload.cmd
-@call %mesa%\mesa-dist-win\buildscript\modules\mingwload.cmd
-@call %mesa%\mesa-dist-win\buildscript\modules\msysupdate.cmd
-@IF NOT EXIST %msysloc%\mingw%minabi%\bin\pkg-config.exe (
-@pacman -S mingw-w64-%mingwabi%-pkg-config --noconfirm
-@echo.
-)
+@pacman -S mingw-w64-%mingwabi%-pkg-config --needed --noconfirm
 @GOTO doneenvcheck
 
 :nonmingwpkgconfig

@@ -5,6 +5,10 @@
 - GNU bison 3.1.0 -> 3.3.1;
 - pip 19.0.2 -> 19.0.3;
 - MarkupSafe 1.1.0 -> 1.1.1.
+### Debug
+- Add MSYS2 cmd console.
+### Build script
+- MSYS2 code cleanup.
 # 18.3.4
 - Updated Mesa3D to [18.3.4](https://www.mesa3d.org/relnotes/18.3.4.html).
 ### Build environment updates
