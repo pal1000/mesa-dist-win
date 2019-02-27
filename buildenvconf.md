@@ -63,5 +63,5 @@ Build config and execute x86 [4] | scons build=release platform=windows machine=
 ### Release packaging
 | | |
 |-|-|
-7-zip version | 18.06
+7-zip version | 19.00
 Compression level | ultra

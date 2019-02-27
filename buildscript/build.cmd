@@ -18,20 +18,20 @@
 @rem Search for compiler toolchain. Hard fail if none found
 @call %mesa%\mesa-dist-win\buildscript\modules\toolchain.cmd
 
-@rem Search for Python. State tracking is pointless as it is loaded once and we are done. Hard fail if missing.
-@call %mesa%\mesa-dist-win\buildscript\modules\discoverpython.cmd
+@rem If using MSVC search for Python. State tracking is pointless as it is loaded once and we are done. Hard fail if missing.
+@IF %toolchain%==msvc call %mesa%\mesa-dist-win\buildscript\modules\discoverpython.cmd
 
-@rem Search for Python packages. Install missing packages automatically. Ask to do an update to all packages.
-@call %mesa%\mesa-dist-win\buildscript\modules\pythonpackages.cmd
+@rem If using MSVC search for Python packages. Install missing packages automatically. Ask to do an update to all packages.
+@IF %toolchain%==msvc call %mesa%\mesa-dist-win\buildscript\modules\pythonpackages.cmd
 
-@rem Check for remaining dependencies: cmake, ninja, winflexbison and git.
-@call %mesa%\mesa-dist-win\buildscript\modules\otherdependencies.cmd
+@rem If using MSVC check for remaining dependencies: cmake, ninja, winflexbison, git and pkg-config if applies.
+@IF %toolchain%==msvc call %mesa%\mesa-dist-win\buildscript\modules\otherdependencies.cmd
 
 @rem Build throttle.
 @call %mesa%\mesa-dist-win\buildscript\modules\throttle.cmd
 
-@rem LLVM build.
-@call %mesa%\mesa-dist-win\buildscript\modules\llvm.cmd
+@rem If using MSVC do LLVM build.
+@IF %toolchain%==msvc call %mesa%\mesa-dist-win\buildscript\modules\llvm.cmd
 
 @rem Mesa3D build.
 @call %mesa%\mesa-dist-win\buildscript\modules\mesa3d.cmd

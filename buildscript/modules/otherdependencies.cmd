@@ -39,6 +39,7 @@
 @call %mesa%\mesa-dist-win\buildscript\modules\msys.cmd
 @IF %msysstate%==0 GOTO nonmingwpkgconfig
 @pacman -S mingw-w64-%mingwabi%-pkg-config --needed --noconfirm
+@echo.
 @GOTO doneenvcheck
 
 :nonmingwpkgconfig
