@@ -1,4 +1,4 @@
-@set abi=x86
+@set abi=x64
 @set longabi=%abi%
 @set mingwabi=i686
 @set minabi=32
@@ -15,21 +15,27 @@
 @set mesa=/%mesa:~0,1%%mesa:~2%
 @cd mesa
 @IF EXIST build RD /S /Q build
+@pacman -Syu --noconfirm
+@echo.
 @pacman -S python2-mako scons mingw-w64-%mingwabi%-clang flex bison patch --needed --noconfirm
 @echo.
 @set MSYSTEM=MINGW%minabi%
-@set buildcmd=scons -j3 build=release platform=windows toolchain=mingw machine=%abi%
+@set buildcmd=scons -j3 build=release platform=windows toolchain=mingw machine=%longabi%
+@rem IF %abi%==x64 set buildcmd=%buildcmd% swr=1
 @set LLVM=/mingw%minabi%
 @set CFLAGS=-march=core2 -pipe -D_USE_MATH_DEFINES
 @set CXXFLAGS=-march=core2 -pipe -std=c++11 -D_USE_MATH_DEFINES
 @set LDFLAGS=-static -s
-@IF NOT EXIST mesapatched.ini patch -Nbp1 -i "%mesa%/mesa-dist-win/patches/s3tc.patch"
-@IF NOT EXIST mesapatched.ini echo.
+@rem IF NOT EXIST mesapatched.ini patch -Nbp1 -i "%mesa%/mesa-dist-win/patches/s3tc.patch"
+@rem IF NOT EXIST mesapatched.ini echo.
 @IF NOT EXIST mesapatched.ini patch -Nbp1 -i "%mesa%/mesa-dist-win/patches/link-ole32.patch"
 @IF NOT EXIST mesapatched.ini echo.
 @echo 1 > mesapatched.ini
 @echo cd $mesa/mesa > ..\mesa-dist-win\debug\build.sh
 @echo $buildcmd >> ..\mesa-dist-win\debug\build.sh
+@echo.
+@echo %buildcmd%
+@echo.
 @bash --login %mesa%/mesa-dist-win/debug/build.sh
 @del ..\mesa-dist-win\debug\build.sh
 @cmd

@@ -35,7 +35,7 @@ LLVM build execute[3] | ninja install
 ### Python
 | | |
 |-|-|
-Version | 2.7.15
+Version | 2.7.16
 ARCH | x64
 pip version | 19.0.3
 setuptools version | 40.8.0
@@ -53,7 +53,7 @@ Flex version | 2.6.4
 ### Git version control
 | | |
 |-|-|
-Git For Windows portable | 2.20.1.1
+Git For Windows portable | 2.21.0.1
 ### Mesa3D
 | | |
 |-|-|

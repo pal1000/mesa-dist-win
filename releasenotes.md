@@ -5,11 +5,15 @@
 - GNU bison 3.1.0 -> 3.3.1;
 - pip 19.0.2 -> 19.0.3;
 - MarkupSafe 1.1.0 -> 1.1.1;
-- 7-zip 18.06 -> 19.00.
+- 7-zip 18.06 -> 19.00;
+- Git 2.20.1.1 -> 2.21.0.1;
+- Python 2.7.15 -> 2.7.16.
 ### Debug
 - Add MSYS2 cmd console.
 ### Build script
-- MSYS2 code cleanup.
+- MSYS2 code cleanup;
+- Add a patch for Mesa3D to build with MSYS2;
+- Stub Microsoft vswhere interface to support mutiple editions and versions  of Visual Studio along with MSYS2 Mingw-w64 GCC toolchain.
 # 18.3.4
 - Updated Mesa3D to [18.3.4](https://www.mesa3d.org/relnotes/18.3.4.html).
 ### Build environment updates
