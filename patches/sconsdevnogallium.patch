@@ -1,0 +1,18 @@
+diff --git a/scons/custom.py b/scons/custom.py
+index 09946fa73246c1956e09e08a616be6a584dcb6fa..0d4e843b34a8c643198da463e8ab24d4b4cbb4f6 100644
+--- a/scons/custom.py
++++ b/scons/custom.py
+@@ -48,7 +48,12 @@ import source_list
+ # a path directly. We want to support both, so we need to detect the SCons version,
+ # for which no API is provided by SCons 8-P
+ 
+-scons_version = tuple(map(int, SCons.__version__.split('.')))
++# Scons version string has consistently been in this format:
++# MajorVersion.MinorVersion.Patch[alpha/beta.yyyymmdd]
++# so this formula should cover all versions regardless of type
++# stable, alpha or beta.
++# For simplicity alpha and beta flags are removed.
++scons_version = tuple(map(int, SCons.__version__.split('.')[:3]))
+ 
+ def quietCommandLines(env):
+     # Quiet command lines

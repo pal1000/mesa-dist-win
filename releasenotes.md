@@ -16,7 +16,10 @@
 - Implement toolchain selection to support mutiple editions and versions of Visual Studio along with MSYS2 Mingw-w64 GCC;
 - Avoid loading MSYS2 in PATH;
 - Implement MSYS2 packages collection;
-- Disable MSYS2 build for now as it is still work in progress.
+- Disable MSYS2 build for now as it is still work in progress;
+- Add Scons develpment compatibility patches;
+- Use `git apply --check --apply` to apply patches and drop the inflexible mesapatched.ini;
+- Remove the obsolete Scons 3.0.1 un-freeze patch.
 # 18.3.4
 - Updated Mesa3D to [18.3.4](https://www.mesa3d.org/relnotes/18.3.4.html).
 ### Build environment updates

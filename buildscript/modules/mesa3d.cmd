@@ -47,16 +47,18 @@ GOTO skipmesa
 @if "%mesaver:~-7%"=="0-devel" set /a intmesaver=%mesaver:~0,2%%mesaver:~3,1%00
 @if "%mesaver:~5,4%"=="0-rc" set /a intmesaver=%mesaver:~0,2%%mesaver:~3,1%00+%mesaver:~9%
 @if NOT "%mesaver:~5,2%"=="0-" set /a intmesaver=%mesaver:~0,2%%mesaver:~3,1%50+%mesaver:~5%
-@if EXIST mesapatched.ini GOTO configmesabuild
 @if %gitstate%==0 GOTO configmesabuild
 
 @rem Enable S3TC texture cache
-@%git% apply -v ..\mesa-dist-win\patches\s3tc.patch
-@rem Allow development version of Scons to work
-@if EXIST %mesa%\scons %git% apply -v %mesa%\mesa-dist-win\patches\sconsdev.patch
-@if EXIST %mesa%\scons echo.
-@echo 1 > mesapatched.ini
+@%git% apply --check --apply ..\mesa-dist-win\patches\s3tc.patch
 @echo.
+@rem Allow development version of Scons to work
+@IF %intmesaver% LSS 19007 %git% apply --check --apply %mesa%\mesa-dist-win\patches\sconsdevnogallium.patch
+@IF %intmesaver% GEQ 19007 %git% apply --check --apply %mesa%\mesa-dist-win\patches\sconsdev.patch
+@echo.
+@rem Fix MSYS2 Mingw-w64 GCC build
+@IF %toolchain%==gcc %git% apply --check --apply %mesa%\mesa-dist-win\patches\link-ole32.patch
+@IF %toolchain%==gcc echo.
 
 :configmesabuild
 @rem Configure Mesa build.
