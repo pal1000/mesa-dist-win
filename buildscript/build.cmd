@@ -15,6 +15,9 @@
 @rem Analyze environment. Get each dependency status: 0=missing, 1=standby/load manually in PATH, 2=cannot be unloaded.
 @rem Not all dependencies can have all these states.
 
+@rem Look for MSYS2 build environment
+@call %mesa%\mesa-dist-win\buildscript\modules\msys.cmd
+
 @rem Search for compiler toolchain. Hard fail if none found
 @call %mesa%\mesa-dist-win\buildscript\modules\toolchain.cmd
 
@@ -32,6 +35,12 @@
 
 @rem If using MSVC do LLVM build.
 @IF %toolchain%==msvc call %mesa%\mesa-dist-win\buildscript\modules\llvm.cmd
+
+@rem If using MSYS2 Mingw-w64 GCC update MSYS2 packages
+@IF %toolchain%==gcc call %mesa%\mesa-dist-win\buildscript\modules\msysupdate.cmd
+
+@rem If using MSYS2 Mingw-w64 GCC install necessary packages
+@IF %toolchain%==gcc call %mesa%\mesa-dist-win\buildscript\modules\msyspackages.cmd
 
 @rem Mesa3D build.
 @call %mesa%\mesa-dist-win\buildscript\modules\mesa3d.cmd

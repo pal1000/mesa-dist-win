@@ -21,6 +21,7 @@
 @set gitstate=2
 @where /q git.exe
 @IF ERRORLEVEL 1 set gitstate=0
+@set git=git
 
 @rem winflexbison. Can have all states.
 @SET ERRORLEVEL=0
@@ -36,10 +37,11 @@
 @IF %pythonver%==2 GOTO doneenvcheck
 
 @set pkgconfigstate=1
-@call %mesa%\mesa-dist-win\buildscript\modules\msys.cmd
 @IF %msysstate%==0 GOTO nonmingwpkgconfig
-@pacman -S mingw-w64-%mingwabi%-pkg-config --needed --noconfirm
+@call %mesa%\mesa-dist-win\buildscript\modules\msysupdate.cmd
+@%msysloc%\usr\bin\pacman -S mingw-w64-%mingwabi%-pkg-config --needed --noconfirm
 @echo.
+@set PATH=%msysloc%\mingw%minabi%\bin\;%PATH%
 @GOTO doneenvcheck
 
 :nonmingwpkgconfig

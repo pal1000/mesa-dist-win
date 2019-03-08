@@ -4,7 +4,7 @@
 
 @rem Check environment
 @IF %flexstate%==0 (
-@echo winflexbison is required to build Mesa3D.
+@echo Flex and bison are required to build Mesa3D.
 GOTO skipmesa
 )
 @if NOT EXIST mesa if %gitstate%==0 (
@@ -34,7 +34,7 @@ GOTO skipmesa
 @if NOT EXIST mesa IF %pythonver%==2 set mesarepo=https://gitlab.freedesktop.org/mesa/mesa.git
 @if NOT EXIST mesa IF %pythonver% GEQ 3 set mesarepo=https://gitlab.freedesktop.org/dbaker/mesa.git
 @if NOT EXIST mesa IF %pythonver% GEQ 3 set branch=meson-windows
-@if NOT EXIST mesa git clone --recurse-submodules --depth=1 --branch=%branch% %mesarepo% mesa
+@if NOT EXIST mesa %git% clone --recurse-submodules --depth=1 --branch=%branch% %mesarepo% mesa
 @if NOT EXIST mesa echo.
 
 @REM Collect information about Mesa3D code. Apply patches
@@ -51,9 +51,9 @@ GOTO skipmesa
 @if %gitstate%==0 GOTO configmesabuild
 
 @rem Enable S3TC texture cache
-@git apply -v ..\mesa-dist-win\patches\s3tc.patch
+@%git% apply -v ..\mesa-dist-win\patches\s3tc.patch
 @rem Allow development version of Scons to work
-@if EXIST %mesa%\scons git apply -v %mesa%\mesa-dist-win\patches\sconsdev.patch
+@if EXIST %mesa%\scons %git% apply -v %mesa%\mesa-dist-win\patches\sconsdev.patch
 @if EXIST %mesa%\scons echo.
 @echo 1 > mesapatched.ini
 @echo.
@@ -130,6 +130,7 @@ GOTO skipmesa
 @IF %pythonver% GEQ 3 if EXIST build\%abi% set /p cleanbuild=Do you want to clean build (y/n):
 @IF %pythonver% GEQ 3 if EXIST build\%abi% echo.
 @IF %pythonver%==2 if /I "%cleanbuild%"=="y" RD /S /Q build\windows-%longabi%
+@IF %pythonver%==2 if /I "%cleanbuild%"=="y" for /d %%a in ("%mesa%\mesa\build\mingw%minabi%*") do @RD /S /Q "%%~a"
 @IF %pythonver% GEQ 3 if /I "%cleanbuild%"=="y" RD /S /Q build\%abi%
 @IF %pythonver% GEQ 3 if /I "%cleanbuild%"=="y" for /d %%a in ("%mesa%\mesa\subprojects\zlib-*") do @RD /S /Q "%%~a"
 @IF %pythonver% GEQ 3 if /I "%cleanbuild%"=="y" for /d %%a in ("%mesa%\mesa\subprojects\expat-*") do @RD /S /Q "%%~a"

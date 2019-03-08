@@ -13,7 +13,10 @@
 ### Build script
 - MSYS2 code cleanup;
 - Add a patch for Mesa3D to build with MSYS2;
-- Stub Microsoft vswhere interface to support mutiple editions and versions  of Visual Studio along with MSYS2 Mingw-w64 GCC toolchain.
+- Implement toolchain selection to support mutiple editions and versions of Visual Studio along with MSYS2 Mingw-w64 GCC;
+- Avoid loading MSYS2 in PATH;
+- Implement MSYS2 packages collection;
+- Disable MSYS2 build for now as it is still work in progress.
 # 18.3.4
 - Updated Mesa3D to [18.3.4](https://www.mesa3d.org/relnotes/18.3.4.html).
 ### Build environment updates

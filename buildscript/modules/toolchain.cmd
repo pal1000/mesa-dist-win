@@ -2,41 +2,48 @@
 @set vsabi=%abi%
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF %abi%==x86 set vsabi=x64_x86
 @IF /I %PROCESSOR_ARCHITECTURE%==x86 IF %abi%==x64 set vsabi=x86_x64
-@set vswhere="%ProgramFiles%
-@IF /I %PROCESSOR_ARCHITECTURE%==AMD64 set vswhere=%vswhere% (x86)
-@set vswhere=%vswhere%\Microsoft Visual Studio\Installer\vswhere.exe"
-@if NOT EXIST %vswhere% (
-@echo Error: No Visual Studio installed.
+@set vsenv="%ProgramFiles%
+@IF /I %PROCESSOR_ARCHITECTURE%==AMD64 set vsenv=%vsenv% (x86)
+@set vsenv=%vsenv%\Microsoft Visual Studio
+
+:selectcompiler
+@set toolchains=20000000
+@echo Select compiler
+@echo ---------------
+@IF EXIST %vsenv%\2017\Community" echo 1. Visual Studio 2017 Community
+@IF EXIST %vsenv%\2017\Community" set /a toolchains=%toolchains%+1000000
+@IF EXIST %vsenv%\2017\Professional" echo 2. Visual Studio 2017 Professional
+@IF EXIST %vsenv%\2017\Professional" set /a toolchains=%toolchains%+100000
+@IF EXIST %vsenv%\2017\Enterprise" echo 3. Visual Studio 2017 Enterprise
+@IF EXIST %vsenv%\2017\Enterprise" set /a toolchains=%toolchains%+10000
+@IF EXIST %vsenv%\Preview\2019\Community" echo 4. Visual Studio 2019 Community Preview
+@IF EXIST %vsenv%\Preview\2019\Community" set /a toolchains=%toolchains%+1000
+@IF EXIST %vsenv%\Preview\2019\Professional" echo 5. Visual Studio 2019 Professional Preview
+@IF EXIST %vsenv%\Preview\2019\Professional" set /a toolchains=%toolchains%+100
+@IF EXIST %vsenv%\Preview\2019\Enterprise" echo 6. Visual Studio 2019 Enterprise Preview
+@IF EXIST %vsenv%\Preview\2019\Enterprise" set /a toolchains=%toolchains%+10
+@rem IF NOT %msysstate%==0 echo 7. MSYS2 Mingw-w64 GCC
+@rem IF NOT %msysstate%==0 set /a toolchains=%toolchains%+1
+@if %toolchains%==20000000 (
+@echo Error: No compiler found. Cannot continue.
 @echo.
 @pause
 @exit
 )
-@set vswhere=%vswhere% -prerelease -property installationPath
-@set vs15c=null
-@set vs15e=null
-@set vs15p=null
-@set vs15bc=null
-@set vs15be=null
-@set vs15bp=null
-@set vs16bc=null
-@set vs16be=null
-@set vs16bp=null
-@set vsenvfound=null
-@FOR /F "tokens=* USEBACKQ" %%a IN (`%vswhere%`) DO @SET vsenvfound="%%~a"&&call :vswhere
-@GOTO donevswhere
-
-:vswhere
-@IF /I "%vsenvfound:~-2,1%"=="y" IF "%vsenvfound:~-15,4%"=="2017" set vs15c=%vsenvfound%
-@IF /I "%vsenvfound:~-2,1%"=="y" IF "%vsenvfound:~-15,4%"=="view" IF "%vsenvfound:~-23,4%"=="2017" set vs15bc=%vsenvfound%
-@IF /I "%vsenvfound:~-2,1%"=="e" IF "%vsenvfound:~-16,4%"=="2017" set vs15e=%vsenvfound%
-@IF /I "%vsenvfound:~-2,1%"=="e" IF "%vsenvfound:~-16,4%"=="view" IF "%vsenvfound:~-24,4%"=="2017" set vs15be=%vsenvfound%
-@IF /I "%vsenvfound:~-2,1%"=="l" IF "%vsenvfound:~-18,4%"=="2017" set vs15p=%vsenvfound%
-@IF /I "%vsenvfound:~-2,1%"=="l" IF "%vsenvfound:~-18,4%"=="view" IF "%vsenvfound:~-26,4%"=="2017" set vs15bp=%vsenvfound%
-@IF /I "%vsenvfound:~-2,1%"=="y" IF "%vsenvfound:~-15,4%"=="view" IF "%vsenvfound:~-23,4%"=="2019" set vs16bc=%vsenvfound%
-@IF /I "%vsenvfound:~-2,1%"=="e" IF "%vsenvfound:~-16,4%"=="view" IF "%vsenvfound:~-24,4%"=="2019" set vs16be=%vsenvfound%
-@IF /I "%vsenvfound:~-2,1%"=="l" IF "%vsenvfound:~-18,4%"=="view" IF "%vsenvfound:~-26,4%"=="2019" set vs16bp=%vsenvfound%
-
-:donevswhere
-@set vsenv=%vs15c:~0,-1%\VC\Auxiliary\Build\vcvarsall.bat"
+@set selecttoolchain=0
 @set toolset=0
-@if EXIST %vsenv% set toolset=15
+@set /p selecttoolchain=Select compiler:
+@echo.
+@IF "%selecttoolchain%"=="1" IF %toolchains:~1,1%==1 set vsenv=%vsenv%\2017\Community\VC\Auxiliary\Build\vcvarsall.bat"&&set toolset=15&&GOTO selectedcompiler
+@IF "%selecttoolchain%"=="2" IF %toolchains:~2,1%==1 set vsenv=%vsenv%\2017\Professional\VC\Auxiliary\Build\vcvarsall.bat"&&set toolset=15&&GOTO selectedcompiler
+@IF "%selecttoolchain%"=="3" IF %toolchains:~3,1%==1 set vsenv=%vsenv%\2017\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"&&set toolset=15&&GOTO selectedcompiler
+@IF "%selecttoolchain%"=="4" IF %toolchains:~4,1%==1 set vsenv=%vsenv%\Preview\2019\Community\VC\Auxiliary\Build\vcvarsall.bat"&&set toolset=16&&GOTO selectedcompiler
+@IF "%selecttoolchain%"=="5" IF %toolchains:~5,1%==1 set vsenv=%vsenv%\Preview\2019\Professional\VC\Auxiliary\Build\vcvarsall.bat"&&set toolset=16&&GOTO selectedcompiler
+@IF "%selecttoolchain%"=="6" IF %toolchains:~6,1%==1 set vsenv=%vsenv%\Preview\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"&&set toolset=16&&GOTO selectedcompiler
+@rem IF "%selecttoolchain%"=="7" IF %toolchains:~7,1%==1 set toolchain=gcc&&GOTO selectedcompiler
+@echo Invalid entry
+@pause
+@cls
+@GOTO selectcompiler
+
+:selectedcompiler
