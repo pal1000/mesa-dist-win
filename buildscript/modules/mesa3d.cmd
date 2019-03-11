@@ -34,7 +34,7 @@ GOTO skipmesa
 @if NOT EXIST mesa IF %pythonver%==2 set mesarepo=https://gitlab.freedesktop.org/mesa/mesa.git
 @if NOT EXIST mesa IF %pythonver% GEQ 3 set mesarepo=https://gitlab.freedesktop.org/dbaker/mesa.git
 @if NOT EXIST mesa IF %pythonver% GEQ 3 set branch=meson-windows
-@if NOT EXIST mesa %git% clone --recurse-submodules --depth=1 --branch=%branch% %mesarepo% mesa
+@if NOT EXIST mesa git clone --recurse-submodules --depth=1 --branch=%branch% %mesarepo% mesa
 @if NOT EXIST mesa echo.
 
 @REM Collect information about Mesa3D code. Apply patches
@@ -50,14 +50,14 @@ GOTO skipmesa
 @if %gitstate%==0 GOTO configmesabuild
 
 @rem Enable S3TC texture cache
-@%git% apply --check --apply ..\mesa-dist-win\patches\s3tc.patch
+@git apply --check --apply ..\mesa-dist-win\patches\s3tc.patch
 @echo.
 @rem Allow development version of Scons to work
-@IF %intmesaver% LSS 19007 %git% apply --check --apply %mesa%\mesa-dist-win\patches\sconsdevnogallium.patch
-@IF %intmesaver% GEQ 19007 %git% apply --check --apply %mesa%\mesa-dist-win\patches\sconsdev.patch
+@IF %intmesaver% LSS 19007 git apply --check --apply %mesa%\mesa-dist-win\patches\sconsdevnogallium.patch
+@IF %intmesaver% GEQ 19007 git apply --check --apply %mesa%\mesa-dist-win\patches\sconsdev.patch
 @echo.
 @rem Fix MSYS2 Mingw-w64 GCC build
-@IF %toolchain%==gcc %git% apply --check --apply %mesa%\mesa-dist-win\patches\link-ole32.patch
+@IF %toolchain%==gcc git apply --check --apply %mesa%\mesa-dist-win\patches\link-ole32.patch
 @IF %toolchain%==gcc echo.
 
 :configmesabuild

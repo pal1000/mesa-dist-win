@@ -8,3 +8,4 @@ lib/
 include/
 *.7z
 *.tmp
+*.sh
