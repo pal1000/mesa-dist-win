@@ -1,25 +1,29 @@
 # Next release
+- MSYS2 Mingw-w64 build debut.
 ### Build environment updates
 - wheel 0.33.0 -> 0.33.1;
-- winflexbison 2.5.16 -> 2.5.17;
-- GNU bison 3.1.0 -> 3.3.1;
+- winflexbison 2.5.16 -> 2.5.18-devel;
+- GNU bison 3.1.0 -> 3.3.2;
 - pip 19.0.2 -> 19.0.3;
 - MarkupSafe 1.1.0 -> 1.1.1;
 - 7-zip 18.06 -> 19.00;
 - Git 2.20.1.1 -> 2.21.0.1;
-- Python 2.7.15 -> 2.7.16.
+- Python 2.7.15 -> 2.7.16;
+- Visual Studio 15.9.7 -> 15.9.9;
+- scons 3.0.1 -> 3.0.5a2.
 ### Debug
 - Add MSYS2 cmd console.
 ### Build script
-- MSYS2 code cleanup;
 - Add a patch for Mesa3D to build with MSYS2;
 - Implement toolchain selection to support mutiple editions and versions of Visual Studio along with MSYS2 Mingw-w64 GCC;
-- Avoid loading MSYS2 in PATH;
-- Implement MSYS2 packages collection;
-- Disable MSYS2 build for now as it is still work in progress;
+- Avoid loading MSYS2 components in PATH by implementing a MSYS2 running script as only Meson build needs Mingw-w64 in PATH for pkg-config;
+- Implement MSYS2 package management and acquisition;
+- Disable Meson build in MSYS2 code path as it is not implemented;
 - Add Scons develpment compatibility patches;
 - Use `git apply --check --apply` to apply patches and drop the inflexible mesapatched.ini;
-- Remove the obsolete Scons 3.0.1 un-freeze patch.
+- Remove the obsolete Scons 3.0.1 un-freeze patch;
+- Implement Mesa3D build recipe with Scons in MSYS2 Mingw-w64 environment, fixes [#17](https://github.com/pal1000/mesa-dist-win/issues/17);
+- Implement a patch applying script that uses git when building with MSVC and GNU patch when building with MSYS2 Mingw-w64.
 # 18.3.4
 - Updated Mesa3D to [18.3.4](https://www.mesa3d.org/relnotes/18.3.4.html).
 ### Build environment updates

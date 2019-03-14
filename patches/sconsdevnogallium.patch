@@ -1,5 +1,5 @@
 diff --git a/scons/custom.py b/scons/custom.py
-index 09946fa73246c1956e09e08a616be6a584dcb6fa..0d4e843b34a8c643198da463e8ab24d4b4cbb4f6 100644
+index 09946fa73246c1956e09e08a616be6a584dcb6fa..8028990ef61b3a1af8f5de0f8697b13375d89d6b 100644
 --- a/scons/custom.py
 +++ b/scons/custom.py
 @@ -48,7 +48,12 @@ import source_list
@@ -8,7 +8,7 @@ index 09946fa73246c1956e09e08a616be6a584dcb6fa..0d4e843b34a8c643198da463e8ab24d4
  
 -scons_version = tuple(map(int, SCons.__version__.split('.')))
 +# Scons version string has consistently been in this format:
-+# MajorVersion.MinorVersion.Patch[alpha/beta.yyyymmdd]
++# MajorVersion.MinorVersion.Patch[.alpha/beta.yyyymmdd]
 +# so this formula should cover all versions regardless of type
 +# stable, alpha or beta.
 +# For simplicity alpha and beta flags are removed.

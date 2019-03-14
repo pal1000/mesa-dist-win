@@ -1,3 +1,6 @@
+@rem Backup PATH before LLVM build to easily keep environment clean.
+@set oldpath=%PATH%
+
 @rem Look for build generators.
 @IF %cmakestate%==0 IF %mesonstate%==0 (
 @echo There is no build system generator suitable for LLVM build.
@@ -76,3 +79,6 @@
 
 :skipllvm
 @echo.
+@rem Reset PATH and current folder after LLVM build.
+@set PATH=%oldpath%
+@cd %mesa%

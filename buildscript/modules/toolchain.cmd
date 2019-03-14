@@ -22,8 +22,8 @@
 @IF EXIST %vsenv%\Preview\2019\Professional" set /a toolchains=%toolchains%+100
 @IF EXIST %vsenv%\Preview\2019\Enterprise" echo 6. Visual Studio 2019 Enterprise Preview
 @IF EXIST %vsenv%\Preview\2019\Enterprise" set /a toolchains=%toolchains%+10
-@rem IF NOT %msysstate%==0 echo 7. MSYS2 Mingw-w64 GCC
-@rem IF NOT %msysstate%==0 set /a toolchains=%toolchains%+1
+@IF NOT %msysstate%==0 echo 7. MSYS2 Mingw-w64 GCC
+@IF NOT %msysstate%==0 set /a toolchains=%toolchains%+1
 @if %toolchains%==20000000 (
 @echo Error: No compiler found. Cannot continue.
 @echo.
@@ -40,7 +40,7 @@
 @IF "%selecttoolchain%"=="4" IF %toolchains:~4,1%==1 set vsenv=%vsenv%\Preview\2019\Community\VC\Auxiliary\Build\vcvarsall.bat"&&set toolset=16&&GOTO selectedcompiler
 @IF "%selecttoolchain%"=="5" IF %toolchains:~5,1%==1 set vsenv=%vsenv%\Preview\2019\Professional\VC\Auxiliary\Build\vcvarsall.bat"&&set toolset=16&&GOTO selectedcompiler
 @IF "%selecttoolchain%"=="6" IF %toolchains:~6,1%==1 set vsenv=%vsenv%\Preview\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"&&set toolset=16&&GOTO selectedcompiler
-@rem IF "%selecttoolchain%"=="7" IF %toolchains:~7,1%==1 set toolchain=gcc&&GOTO selectedcompiler
+@IF "%selecttoolchain%"=="7" IF %toolchains:~7,1%==1 set toolchain=gcc&&GOTO selectedcompiler
 @echo Invalid entry
 @pause
 @cls

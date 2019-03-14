@@ -39,7 +39,6 @@
 @IF %msysstate%==0 GOTO nonmingwpkgconfig
 @call %mesa%\mesa-dist-win\buildscript\modules\msysupdate.cmd
 @%runmsys% pacman -S mingw-w64-%mingwabi%-pkg-config --needed --noconfirm
-@echo.
 @set PATH=%msysloc%\mingw%minabi%\bin\;%PATH%
 @GOTO doneenvcheck
 
@@ -72,5 +71,3 @@
 @set pkgconfigstate=0
 
 :doneenvcheck
-@rem Done checking environment. Backup PATH to easily keep environment clean
-@set oldpath=%PATH%

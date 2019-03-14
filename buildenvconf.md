@@ -19,7 +19,7 @@ OS | Windows 10 October 2018 Update Pro x64
 | | |
 |-|-|
 Edition | 2017 Community
-Version | 15.9.7
+Version | 15.9.9
 Windows 10 SDK Version | 10.0.17763.132
 Windows 10 SDK install method | standalone
 ### LLVM
@@ -40,15 +40,15 @@ ARCH | x64
 pip version | 19.0.3
 setuptools version | 40.8.0
 pywin32 / pypiwin32 version | 224
-scons version | 3.0.1
+scons version | 3.0.5.a.2
 Mako version | 1.0.7
 MarkupSafe version | 1.1.1
 wheel version | 0.33.1
 ### winflexbison
 | | |
 |-|-|
-Package version | 2.5.17
-GNU Bison version | 3.3.1
+Package version | 2.5.18-devel
+GNU Bison version | 3.3.2
 Flex version | 2.6.4
 ### Git version control
 | | |
