@@ -1,4 +1,5 @@
-# Next release
+# 19.0.0
+- Updated Mesa3D to [19.0.0](https://www.mesa3d.org/relnotes/19.0.0.html).
 - MSYS2 Mingw-w64 build debut.
 ### Build environment updates
 - wheel 0.33.0 -> 0.33.1;
