@@ -80,7 +80,7 @@ GOTO skipmesa
 @if %pythonver%==2 if %toolchain%==msvc set buildcmd=%buildcmd% MSVC_USE_SCRIPT=%vsenv%
 
 @if %pythonver% GEQ 3 set buildconf=%mesonloc% build/%abi% --backend=vs2017 --default-library=static --buildtype=release
-@if %pythonver% GEQ 3 if %llvmlink%==MT set buildconf=%buildconf% -Db_vscrt=mt
+@if %pythonver% GEQ 3 if "%llvmlink%"=="MT" set buildconf=%buildconf% -Db_vscrt=mt
 @IF %pythonver% GEQ 3 set platformabi=Win32
 @IF %pythonver% GEQ 3 IF %abi%==x64 set platformabi=%abi%
 @if %pythonver% GEQ 3 set buildcmd=msbuild /p^:Configuration=release,Platform=%platformabi% mesa.sln /m^:%throttle%

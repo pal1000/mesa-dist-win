@@ -1,6 +1,12 @@
+# 19.0.0-2
+- MSYS2 Mingw-w64 build debut.
+- Mingw-w64 build does not include swr driver due to [build failure](https://gitlab.freedesktop.org/mesa/mesa/merge_requests/362#note_130059).
+- Mingw-w64 binaries requires a CPU capable of running [SSSE3 instruction set](https://en.wikipedia.org/wiki/SSSE3#CPUs_with_SSSE3) with benefit of having slightly beter performance than MSVC binaries.
+### Build script
+- Fixed script segmentation fault for Scons build in MSYS2 Mingw-w64 due to use of undefined llvmlink variable;
+- Fixed MSYS2 update script so that it does not perform the initial upgrade every time.
 # 19.0.0
 - Updated Mesa3D to [19.0.0](https://www.mesa3d.org/relnotes/19.0.0.html).
-- MSYS2 Mingw-w64 build debut.
 ### Build environment updates
 - wheel 0.33.0 -> 0.33.1;
 - winflexbison 2.5.16 -> 2.5.18-devel;

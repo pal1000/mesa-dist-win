@@ -1,6 +1,6 @@
 @rem Check for updates
 @rem Initial upgrade
-@IF NOT EXIST %msysloc%\mingw%minabi%\pkg-config.exe (
+@IF NOT EXIST %msysloc%\mingw%minabi%\bin\libwinpthread-1.dll (
 @%runmsys% pacman -Syu --noconfirm
 @%runmsys% pacman -Syu --noconfirm
 )
