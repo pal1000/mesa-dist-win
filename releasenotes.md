@@ -1,7 +1,11 @@
+# Next release
+### Build script
+- Remove MSYS2 draft;
+- Improve MSYS2 loader script so that it does not need a temporary shell script.
 # 19.0.0-2
 - MSYS2 Mingw-w64 build debut.
 - Mingw-w64 build does not include swr driver due to [build failure](https://gitlab.freedesktop.org/mesa/mesa/merge_requests/362#note_130059).
-- Mingw-w64 binaries requires a CPU capable of running [SSSE3 instruction set](https://en.wikipedia.org/wiki/SSSE3#CPUs_with_SSSE3) with benefit of having slightly beter performance than MSVC binaries.
+- Mingw-w64 binaries require a CPU capable of running [SSSE3 instruction set](https://en.wikipedia.org/wiki/SSSE3#CPUs_with_SSSE3) with benefit of having slightly better performance than MSVC binaries.
 ### Build script
 - Fixed script segmentation fault for Scons build in MSYS2 Mingw-w64 due to use of undefined llvmlink variable;
 - Fixed MSYS2 update script so that it does not perform the initial upgrade every time.
