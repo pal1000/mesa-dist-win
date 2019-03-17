@@ -40,7 +40,7 @@ ARCH | x64
 pip version | 19.0.3
 setuptools version | 40.8.0
 pywin32 / pypiwin32 version | 224
-scons version | 3.0.5.a.2
+scons version | 3.0.5.a.3
 Mako version | 1.0.7
 MarkupSafe version | 1.1.1
 wheel version | 0.33.1
