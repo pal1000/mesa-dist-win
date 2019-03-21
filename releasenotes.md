@@ -2,7 +2,8 @@
 ### Build script
 - Remove MSYS2 draft;
 - Improve MSYS2 loader script so that it does not need a temporary shell script;
-- Grab latest development version of Scons from test pypi while waiting for 3.0.5 release which will include the fix for MD5-timestamp decider bug that affects Mesa3D - https://bugs.freedesktop.org/show_bug.cgi?id=109443 .
+- Grab latest development version of Scons from test pypi while waiting for 3.0.5 release which will include the fix for MD5-timestamp decider bug that affects Mesa3D - https://bugs.freedesktop.org/show_bug.cgi?id=109443 ;
+- Toolchain selection: Support release candidates and stable release of Visual Studio 2019.
 ### Build environment updates
 - scons 3.0.5a2 -> 3.0.5a3.
 ### Patches and workarounds

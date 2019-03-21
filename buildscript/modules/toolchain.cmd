@@ -16,12 +16,12 @@
 @IF EXIST %vsenv%\2017\Professional" set /a toolchains=%toolchains%+100000
 @IF EXIST %vsenv%\2017\Enterprise" echo 3. Visual Studio 2017 Enterprise
 @IF EXIST %vsenv%\2017\Enterprise" set /a toolchains=%toolchains%+10000
-@IF EXIST %vsenv%\Preview\2019\Community" echo 4. Visual Studio 2019 Community Preview
-@IF EXIST %vsenv%\Preview\2019\Community" set /a toolchains=%toolchains%+1000
-@IF EXIST %vsenv%\Preview\2019\Professional" echo 5. Visual Studio 2019 Professional Preview
-@IF EXIST %vsenv%\Preview\2019\Professional" set /a toolchains=%toolchains%+100
-@IF EXIST %vsenv%\Preview\2019\Enterprise" echo 6. Visual Studio 2019 Enterprise Preview
-@IF EXIST %vsenv%\Preview\2019\Enterprise" set /a toolchains=%toolchains%+10
+@IF EXIST %vsenv%\2019\Community" echo 4. Visual Studio 2019 Community RC
+@IF EXIST %vsenv%\2019\Community" set /a toolchains=%toolchains%+1000
+@IF EXIST %vsenv%\2019\Professional" echo 5. Visual Studio 2019 Professional RC
+@IF EXIST %vsenv%\2019\Professional" set /a toolchains=%toolchains%+100
+@IF EXIST %vsenv%\2019\Enterprise" echo 6. Visual Studio 2019 Enterprise RC
+@IF EXIST %vsenv%\2019\Enterprise" set /a toolchains=%toolchains%+10
 @IF NOT %msysstate%==0 echo 7. MSYS2 Mingw-w64 GCC
 @IF NOT %msysstate%==0 set /a toolchains=%toolchains%+1
 @if %toolchains%==20000000 (
@@ -37,9 +37,9 @@
 @IF "%selecttoolchain%"=="1" IF %toolchains:~1,1%==1 set vsenv=%vsenv%\2017\Community\VC\Auxiliary\Build\vcvarsall.bat"&&set toolset=15&&GOTO selectedcompiler
 @IF "%selecttoolchain%"=="2" IF %toolchains:~2,1%==1 set vsenv=%vsenv%\2017\Professional\VC\Auxiliary\Build\vcvarsall.bat"&&set toolset=15&&GOTO selectedcompiler
 @IF "%selecttoolchain%"=="3" IF %toolchains:~3,1%==1 set vsenv=%vsenv%\2017\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"&&set toolset=15&&GOTO selectedcompiler
-@IF "%selecttoolchain%"=="4" IF %toolchains:~4,1%==1 set vsenv=%vsenv%\Preview\2019\Community\VC\Auxiliary\Build\vcvarsall.bat"&&set toolset=16&&GOTO selectedcompiler
-@IF "%selecttoolchain%"=="5" IF %toolchains:~5,1%==1 set vsenv=%vsenv%\Preview\2019\Professional\VC\Auxiliary\Build\vcvarsall.bat"&&set toolset=16&&GOTO selectedcompiler
-@IF "%selecttoolchain%"=="6" IF %toolchains:~6,1%==1 set vsenv=%vsenv%\Preview\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"&&set toolset=16&&GOTO selectedcompiler
+@IF "%selecttoolchain%"=="4" IF %toolchains:~4,1%==1 set vsenv=%vsenv%\2019\Community\VC\Auxiliary\Build\vcvarsall.bat"&&set toolset=16&&GOTO selectedcompiler
+@IF "%selecttoolchain%"=="5" IF %toolchains:~5,1%==1 set vsenv=%vsenv%\2019\Professional\VC\Auxiliary\Build\vcvarsall.bat"&&set toolset=16&&GOTO selectedcompiler
+@IF "%selecttoolchain%"=="6" IF %toolchains:~6,1%==1 set vsenv=%vsenv%\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"&&set toolset=16&&GOTO selectedcompiler
 @IF "%selecttoolchain%"=="7" IF %toolchains:~7,1%==1 set toolchain=gcc&&GOTO selectedcompiler
 @echo Invalid entry
 @pause
