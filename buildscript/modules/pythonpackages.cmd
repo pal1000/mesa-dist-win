@@ -69,7 +69,7 @@
 @echo.
 @if /I "%pyupd%"=="y" if EXIST "%LOCALAPPDATA%\pip" RD /S /Q "%LOCALAPPDATA%\pip"
 @if /I "%pyupd%"=="y" for /F "skip=2 delims= " %%a in ('%pythonloc% -W ignore -m pip list -o --disable-pip-version-check') do @IF /I NOT "%%a"=="scons" %pythonloc% -W ignore -m pip install -U "%%a"
-@if /I "%pyupd%"=="y" %pythonloc% -W ignore -m pip install -U --index-url https://test.pypi.org/simple/ scons==3.0.5a3
+@if /I "%pyupd%"=="y" IF %pythonver%==2 %pythonloc% -W ignore -m pip install -U --index-url https://test.pypi.org/simple/ scons==3.0.5a3
 @if /I "%pyupd%"=="y" IF %pythonver%==2 IF NOT EXIST "%windir%\system32\pythoncom27.dll" IF NOT EXIST "%windir%\syswow64\pythoncom27.dll" GOTO locatemeson
 @if /I "%pyupd%"=="y" IF %pythonver%==2 powershell -Command Start-Process "%mesa%\mesa-dist-win\buildscript\modules\pywin32.cmd" -Args "%pythonloc%" -Verb runAs
 
