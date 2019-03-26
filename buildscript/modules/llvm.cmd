@@ -44,9 +44,8 @@
 
 @rem Construct build configuration command.
 @set buildconf=cmake -G
-@if /I NOT "%ninja%"=="y" set buildconf=%buildconf% "Visual Studio %toolset%
-@if NOT %abi%==x64 if /I NOT "%ninja%"=="y" set buildconf=%buildconf%"
-@if %abi%==x64 if /I NOT "%ninja%"=="y" set buildconf=%buildconf% Win64"
+@if /I NOT "%ninja%"=="y" set buildconf=%buildconf% "Visual Studio %toolset%"
+@if %abi%==x64 if /I NOT "%ninja%"=="y" set buildconf=%buildconf% -A x64
 @if /I NOT "%ninja%"=="y" IF /I %PROCESSOR_ARCHITECTURE%==AMD64 set buildconf=%buildconf% -Thost=x64
 @if /I "%ninja%"=="y" set buildconf=%buildconf% "Ninja"
 @set buildconf=%buildconf% -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=%llvmlink% -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../%abi%-%llvmlink% ..
