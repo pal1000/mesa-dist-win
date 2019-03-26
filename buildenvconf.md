@@ -19,18 +19,18 @@ OS | Windows 10 October 2018 Update Pro x64
 | | |
 |-|-|
 Edition | 2017 Community
-Version | 15.9.9
+Version | 15.9.10
 Windows 10 SDK Version | 10.0.17763.132
 Windows 10 SDK install method | standalone
 ### LLVM
 | | |
 |-|-|
-LLVM Version | 7.0.1
-CMake version | 3.13.4
+LLVM Version | 8.0.0
+CMake version | 3.14.0
 CMake ARCH | x64
 Ninja version | 1.9.0
-LLVM build configure x64[1] | cd llvm-7.0.1.src & md buildsys-x64-MT & cd buildsys-x64-MT & cmake -G "Ninja" -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../x64-MT ..
-LLVM build configure x86[2] | cd llvm-7.0.1.src & md buildsys-x86-MT & cd buildsys-x86-MT & cmake -G "Ninja" -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../x86-MT ..
+LLVM build configure x64[1] | cd llvm-8.0.0.src & md buildsys-x64-MT & cd buildsys-x64-MT & cmake -G "Ninja" -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../x64-MT ..
+LLVM build configure x86[2] | cd llvm-8.0.0.src & md buildsys-x86-MT & cd buildsys-x86-MT & cmake -G "Ninja" -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../x86-MT ..
 LLVM build execute[3] | ninja install
 ### Python
 | | |
@@ -41,7 +41,7 @@ pip version | 19.0.3
 setuptools version | 40.8.0
 pywin32 / pypiwin32 version | 224
 scons version | 3.0.5.a.3
-Mako version | 1.0.7
+Mako version | 1.0.8
 MarkupSafe version | 1.1.1
 wheel version | 0.33.1
 ### winflexbison
