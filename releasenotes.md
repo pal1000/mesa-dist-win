@@ -2,12 +2,11 @@
 ### Build script
 - Remove MSYS2 draft;
 - Improve MSYS2 loader script so that it does not need a temporary shell script;
-- Grab latest development version of Scons from test pypi while waiting for 3.0.5 release which will include the fix for MD5-timestamp decider bug that affects Mesa3D - https://bugs.freedesktop.org/show_bug.cgi?id=109443 ;
 - Toolchain selection: Support release candidates and stable release of Visual Studio 2019;
 - It turns out LLVM has no Meson build so remove all related code;
 - LLVM/MsBuild: Compatibility with Visual Studio 2019 retaining backward compatibility with Visual Studio 2017.
 ### Build environment updates
-- scons 3.0.5a2 -> 3.0.5a3;
+- scons 3.0.5a2 -> 3.0.5;
 - LLVM 7.0.1 -> 8.0.0;
 - Mako 1.0.7 -> 1.0.8;
 - cmake 3.13.4 -> 3.14.0;
