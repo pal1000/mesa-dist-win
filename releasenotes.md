@@ -1,4 +1,5 @@
-# Next release
+# 19.0.1
+- Updated Mesa3D to [19.0.1](https://www.mesa3d.org/relnotes/19.0.1.html).
 ### Build script
 - Remove MSYS2 draft;
 - Improve MSYS2 loader script so that it does not need a temporary shell script;
