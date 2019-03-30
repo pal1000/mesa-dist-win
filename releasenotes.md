@@ -1,3 +1,6 @@
+# Next release
+### Debug
+- Add a MSYS2 console for debug purposes.
 # 19.0.1
 - Updated Mesa3D to [19.0.1](https://www.mesa3d.org/relnotes/19.0.1.html).
 ### Build script
