@@ -61,7 +61,7 @@
 @pause
 @echo.
 @if /I NOT "%ninja%"=="y" cmake --build . -j %throttle% --config Release --target install
-@if /I "%ninja%"=="y" ninja -j %throttle% install
+@if /I "%ninja%"=="y" ninja -j %throttle% install-llvm-headers install-llvm-libraries install-llvm-config
 
 :skipllvm
 @echo.
