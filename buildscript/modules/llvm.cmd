@@ -35,7 +35,7 @@
 
 @rem Ask for Ninja use if exists. Load it if opted for it.
 @set ninja=n
-@if NOT %ninjastate%==0 set /p ninja=Use Ninja build system instead of MsBuild (y/n); less storage device strain and maybe faster build:
+@if NOT %ninjastate%==0 set /p ninja=Use Ninja build system instead of MsBuild (y/n); less storage device strain, faster and more efficient build:
 @if NOT %ninjastate%==0 echo.
 @if /I "%ninja%"=="y" if %ninjastate%==1 set PATH=%mesa%\ninja\;%PATH%
 
@@ -61,7 +61,7 @@
 @pause
 @echo.
 @if /I NOT "%ninja%"=="y" cmake --build . -j %throttle% --config Release --target install
-@if /I "%ninja%"=="y" ninja -j %throttle% install-llvm-headers install-llvm-libraries install-llvm-config
+@if /I "%ninja%"=="y" call %mesa%\mesa-dist-win\buildscript\modules\ninjallvmbuild.cmd
 
 :skipllvm
 @echo.

@@ -1,3 +1,4 @@
+buildscript/modules/llvmlibs.tmp
 bin/x86/
 bin/x64/
 bin/x86-bk/
