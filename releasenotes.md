@@ -3,6 +3,8 @@
 - Add a MSYS2 console for debug purposes.
 ### Build script
 - Build LLVM efficiently when using Ninja by only building llvm-config tool, required libraries and headers.
+### Build environment updates
+- cmake 3.14.0 -> 3.14.1.
 # 19.0.1
 - Updated Mesa3D to [19.0.1](https://www.mesa3d.org/relnotes/19.0.1.html).
 ### Build script

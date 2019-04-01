@@ -26,7 +26,7 @@ Windows 10 SDK install method | standalone
 | | |
 |-|-|
 LLVM Version | 8.0.0
-CMake version | 3.14.0
+CMake version | 3.14.1
 CMake ARCH | x64
 Ninja version | 1.9.0
 LLVM build configure x64[1] | cd llvm-8.0.0.src & md buildsys-x64-MT & cd buildsys-x64-MT & cmake -G "Ninja" -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../x64-MT ..

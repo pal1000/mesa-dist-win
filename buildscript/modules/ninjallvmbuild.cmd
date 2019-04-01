@@ -4,7 +4,7 @@
 @echo.
 
 @rem Build LLVM libraries
-@%mesa%\llvm\%abi%-MT\bin\llvm-config.exe --libnames engine mcjit bitwriter x86asmprinter irreader 2> %mesa%\mesa-dist-win\buildscript\modules\llvmlibs.tmp
+@%mesa%\llvm\%abi%-%llvmlink%\bin\llvm-config.exe --libnames engine mcjit bitwriter x86asmprinter irreader 2> %mesa%\mesa-dist-win\buildscript\modules\llvmlibs.tmp
 @setlocal ENABLEDELAYEDEXPANSION
 @set llvmlibscount=0
 @set llvmlibstotal=0
