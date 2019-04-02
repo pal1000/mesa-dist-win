@@ -148,9 +148,7 @@ GOTO skipmesa
 @IF %pythonver% GEQ 3 if /I "%cleanbuild%"=="y" for /d %%a in ("%mesa%\mesa\subprojects\expat-*") do @RD /S /Q "%%~a"
 
 @IF %flexstate%==1 set PATH=%mesa%\flexbison\;%PATH%
-@if %pythonver%==2 GOTO build_mesa
-@if %pythonver% GEQ 3 IF %pkgconfigstate%==2 GOTO build_mesa
-@set PATH=%PKG_CONFIG_PATH%\;%PATH%
+@if %pythonver% GEQ 3 set PATH=%PKG_CONFIG_PATH%\;%PATH%
 
 :build_mesa
 @rem Generate dummy heaader for MSVC build when git is missing.
