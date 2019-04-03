@@ -16,11 +16,11 @@
 @IF EXIST %vsenv%\2017\Professional" set /a toolchains=%toolchains%+100000
 @IF EXIST %vsenv%\2017\Enterprise" echo 3. Visual Studio 2017 Enterprise
 @IF EXIST %vsenv%\2017\Enterprise" set /a toolchains=%toolchains%+10000
-@IF EXIST %vsenv%\2019\Community" echo 4. Visual Studio 2019 Community RC
+@IF EXIST %vsenv%\2019\Community" echo 4. Visual Studio 2019 Community
 @IF EXIST %vsenv%\2019\Community" set /a toolchains=%toolchains%+1000
-@IF EXIST %vsenv%\2019\Professional" echo 5. Visual Studio 2019 Professional RC
+@IF EXIST %vsenv%\2019\Professional" echo 5. Visual Studio 2019 Professional
 @IF EXIST %vsenv%\2019\Professional" set /a toolchains=%toolchains%+100
-@IF EXIST %vsenv%\2019\Enterprise" echo 6. Visual Studio 2019 Enterprise RC
+@IF EXIST %vsenv%\2019\Enterprise" echo 6. Visual Studio 2019 Enterprise
 @IF EXIST %vsenv%\2019\Enterprise" set /a toolchains=%toolchains%+10
 @IF NOT %msysstate%==0 echo 7. MSYS2 Mingw-w64 GCC
 @IF NOT %msysstate%==0 set /a toolchains=%toolchains%+1
