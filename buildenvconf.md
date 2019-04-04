@@ -18,10 +18,10 @@ OS | Windows 10 October 2018 Update Pro x64
 ### Visual Studio
 | | |
 |-|-|
-Edition | 2017 Community
-Version | 15.9.10
+Edition | 2019 Community
+Version | 16.0.0
 Windows 10 SDK Version | 10.0.17763.132
-Windows 10 SDK install method | standalone
+Windows 10 SDK install method | inbox via Visual Studio installer
 ### LLVM
 | | |
 |-|-|
@@ -31,14 +31,14 @@ CMake ARCH | x64
 Ninja version | 1.9.0
 LLVM build configure x64[1] | cd llvm-8.0.0.src & md buildsys-x64-MT & cd buildsys-x64-MT & cmake -G "Ninja" -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../x64-MT ..
 LLVM build configure x86[2] | cd llvm-8.0.0.src & md buildsys-x86-MT & cd buildsys-x86-MT & cmake -G "Ninja" -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../x86-MT ..
-LLVM build execute[3] | ninja install
+LLVM build execute[3] | ninja install-llvm-config install-LLVMIRReader install-LLVMAsmParser install-LLVMX86Disassembler install-LLVMX86AsmParser install-LLVMX86CodeGen install-LLVMGlobalISel install-LLVMSelectionDAG install-LLVMAsmPrinter install-LLVMCodeGen install-LLVMScalarOpts install-LLVMInstCombine install-LLVMAggressiveInstCombine install-LLVMTransformUtils install-LLVMBitWriter install-LLVMX86Desc install-LLVMMCDisassembler install-LLVMX86Info install-LLVMX86AsmPrinter install-LLVMX86Utils install-LLVMMCJIT install-LLVMExecutionEngine install-LLVMTarget install-LLVMAnalysis install-LLVMProfileData install-LLVMRuntimeDyld install-LLVMObject install-LLVMMCParser install-LLVMBitReader install-LLVMMC install-LLVMDebugInfoCodeView install-LLVMDebugInfoMSF install-LLVMCore install-LLVMBinaryFormat install-LLVMSupport install-LLVMDemangle install-llvm-headers
 ### Python
 | | |
 |-|-|
 Version | 2.7.16
 ARCH | x64
 pip version | 19.0.3
-setuptools version | 40.8.0
+setuptools version | 40.9.0
 pywin32 / pypiwin32 version | 224
 scons version | 3.0.5
 Mako version | 1.0.8

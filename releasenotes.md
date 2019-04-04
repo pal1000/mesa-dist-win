@@ -1,10 +1,15 @@
 # Next release
 ### Debug
-- Add a MSYS2 console for debug purposes.
+- Add a MSYS2 console for debug purposes;
+- llvm-config debug tool: Support returning libraries list in both python list and ninja targets format.
 ### Build script
 - Build LLVM efficiently when using Ninja by only building llvm-config tool, required libraries and headers.
 ### Build environment updates
-- cmake 3.14.0 -> 3.14.1.
+- cmake 3.14.0 -> 3.14.1;
+- Visual Studio 15.9.10 -> 16.0.0;
+- setuptools 40.8.0 -> 40.9.0.
+### Build reproducing docs
+- Update LLVM build command.
 # 19.0.1
 - Updated Mesa3D to [19.0.1](https://www.mesa3d.org/relnotes/19.0.1.html).
 ### Build script

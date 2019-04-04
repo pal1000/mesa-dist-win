@@ -2,6 +2,7 @@
 @set llvmlink=MT
 @set llvmmeson=bitwriter engine mcdisassembler mcjit
 @set llvmscons=engine mcjit bitwriter x86asmprinter irreader
+@set format=ninjatargets
 @for %%a in ("%cd%") do @set mesa=%%~sa
 @IF NOT EXIST llvm GOTO error
 @cd llvm
@@ -14,9 +15,10 @@
 @cd bin
 @if EXIST %mesa%\mesa-dist-win\debug\llvm-config-old.txt del %mesa%\mesa-dist-win\debug\llvm-config-old.txt
 @if EXIST %mesa%\mesa-dist-win\debug\llvm-config.txt REN %mesa%\mesa-dist-win\debug\llvm-config.txt llvm-config-old.txt
-@FOR /F "tokens=* USEBACKQ" %%b IN (`llvm-config --libnames %llvmmeson%`) DO @SET llvmlibs=%%~b
+@FOR /F "tokens=* USEBACKQ" %%b IN (`llvm-config --libnames %llvmscons%`) DO @SET llvmlibs=%%~b
 @set llvmlibs=%llvmlibs:.lib=%
-@set llvmlibs='%llvmlibs: =', '%'
+@IF %format%==pythonlist set llvmlibs='%llvmlibs: =', '%'
+@if %format%==ninjatargets set llvmlibs=install-%llvmlibs: = install-%
 @echo LLVM config output updated.
 @echo %llvmlibs% > %mesa%\mesa-dist-win\debug\llvm-config.txt
 @GOTO finished
