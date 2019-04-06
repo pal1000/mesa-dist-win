@@ -38,7 +38,7 @@ LLVM build execute[3] | ninja install-llvm-config install-LLVMIRReader install-L
 Version | 2.7.16
 ARCH | x64
 pip version | 19.0.3
-setuptools version | 40.9.0
+setuptools version | 41.0.0
 pywin32 / pypiwin32 version | 224
 scons version | 3.0.5
 Mako version | 1.0.8

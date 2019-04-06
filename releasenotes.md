@@ -7,7 +7,7 @@
 ### Build environment updates
 - cmake 3.14.0 -> 3.14.1;
 - Visual Studio 15.9.10 -> 16.0.0;
-- setuptools 40.8.0 -> 40.9.0.
+- setuptools 40.8.0 -> 41.0.0.
 ### Build reproducing docs
 - Update LLVM build command.
 # 19.0.1
