@@ -5,7 +5,7 @@
 ### Build script
 - Build LLVM efficiently when using Ninja by only building llvm-config tool, required libraries and headers;
 - Detect Visual Studio installations using vswhere;
-- Support handling missing Desktop Development with C++ workload through Visual Studio installer.
+- Support handling missing Desktop development with C++ workload through Visual Studio installer.
 ### Build environment updates
 - cmake 3.14.0 -> 3.14.1;
 - Visual Studio 15.9.10 -> 16.0.0;
