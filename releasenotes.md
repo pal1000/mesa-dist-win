@@ -10,8 +10,9 @@
 - cmake 3.14.0 -> 3.14.1;
 - Visual Studio 15.9.10 -> 16.0.0;
 - setuptools 40.8.0 -> 41.0.0.
-### Build reproducing docs
-- Update LLVM build command.
+### Documentation
+- Update LLVM build command;
+- Per-app deployment: Document .local file generation support.
 # 19.0.1
 - Updated Mesa3D to [19.0.1](https://www.mesa3d.org/relnotes/19.0.1.html).
 ### Build script

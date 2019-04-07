@@ -38,10 +38,11 @@ if '%errorlevel%' NEQ '0' (
 @echo This helps a lot if you have many programs that you want to use Mesa3D with.
 @echo Some applications may still use the GPU if they are smart enough to only load
 @echo OpenGL DLL from system directory.
-@echo Use Federico Dossena's Mesainjector to workaround this case.
-@echo Build instructions - https://fdossena.com/?p=mesa/injector_build.frag
-@echo VMWare ThinApp capture: http://fdossena.com/mesa/MesaInjector_Capture.7z
-@echo Mesainjector does not work with Windows 10 Version 1803 and newer.
+@echo To overcome this you may enter the program executable filename and a .local
+@echo file is generated for it or use Mesainjector made by Federico Dossena.
+@echo However Mesainjector does not work with Windows 10 Version 1803 and newer.
+@echo Download: http://downloads.fdossena.com/Projects/Mesa3D/Injector/index.php
+@echo Build Mesainjector - https://fdossena.com/?p=mesa/injector_build.frag
 @echo.
 @pause
 @set mesaloc=%~dp0
