@@ -12,7 +12,10 @@
 - setuptools 40.8.0 -> 41.0.0.
 ### Documentation
 - Update LLVM build command;
-- Per-app deployment: Document .local file generation support.
+- Per-app deployment: Document .local file generation support;
+- End-user guide: Document MESA_EXTENSION_MAX_YEAR;
+- End-user guide: Document .local file generation support;
+- End-user guide: Document pros and cons of Mingw vs MSVC binaries and how to migrate from one to the other.
 # 19.0.1
 - Updated Mesa3D to [19.0.1](https://www.mesa3d.org/relnotes/19.0.1.html).
 ### Build script
