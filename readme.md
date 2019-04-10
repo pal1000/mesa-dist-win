@@ -1,10 +1,11 @@
-﻿# Table of Contents
+# Table of Contents
 
 - [Downloads](#downloads)
 - [Note for enterprise environments](#note-for-enterprise-environments)
 - [About Mingw package](#about-mingw-package)
 - [Mingw and MSVC Package contents](#mingw-and-msvc-package-contents)
 - [Installation and usage](#installation-and-usage)
+- [Legacy software compatibility](#legacy-software-compatibility)
 - [OpenGL context configuration override](#opengl-context-configuration-override)
   
 # Downloads
@@ -37,7 +38,12 @@ First choose between Mingw and MSVC package. See [About Mingw package](#about-mi
 - A system-wide deployment tool. While intended for systems lacking hardware accelerated OpenGL support like virtual machines in cloud environments, it can also be used on any Windows system to replace the inbox software rendering OpenGL 1.1 driver extending OpenGL support for use cases where hardware accelerated OpenGL is not available like RDP connections. Due to potential issues with Virtualbox VMs running Windows it is recommended to disable 3D acceleration in such VMs if Mesa3D desktop OpenGL driver is installed inside them using the system-wide deployment tool, see [#9](https://github.com/pal1000/mesa-dist-win/issues/9).
 - A per-application deployment tool. If you used it to deploy desktop OpenGL driver and you are upgrading from 18.1.1.600-1 or older to 18.1.2.600-1 or newer you may have to re-deploy it to avoid an error related to `libglapi.dll`. If you don't remember if an affected program is 32-bit or 64-bit, right click on opengl32.dll shortcut in the folder where the program executable is located and select open file location. If the location ends in x64 then it's 64-bit otherwise it's 32-bit. Same for osmesa if you are upgrading from 17.3.5.501-1 or older. Per-app deployment utility changes are persistent and are being kept across upgrades and re-installations. The per-app deployment utility helps you save storage and makes things easier as you won't have to manually copy DLLs from Mesa installation directory as it creates symbolic links to whatever Mesa drivers you opt-in to use. This behavior ensures all programs that use Mesa use the same up-to-date version. Per-app deployment utility only asks for path to directory containing application executable, application executable filename (optional, it can remain blank), if the app is 64-bit or 32-bit and the drivers you need. 32-bit applications have their names marked in Task Manager while running. Most applications will use Mesa regardless of GPU capabilities, but some applications may be smart enough to load OpenGL from system directory only. By providing the application filename, a .local file is generated in an attempt to force the application to use Mesa3D when it doesn't want to. Also, [Federico Dossena](https://github.com/adolfintel)'s [Mesainjector](http://downloads.fdossena.com/Projects/Mesa3D/Injector/index.php) can be used to workaround this issue. [Build instructions for Mesainjector](http://fdossena.com/?p=mesa/injector_build.frag).
 
-Since v17.0.1.391 in-place upgrade is fully supported. Since v17.0.1.391-2 S3 texture compression is supported. v17.0.4.391-1 requires uninstall of previous versions. Applications requiring OpenGL 3.2 or newer may need [OpenGL context configuration override](#opengl-context-configuration-override).
+Since v17.0.1.391 in-place upgrade is fully supported. Since v17.0.1.391-2 S3 texture compression is supported. v17.0.4.391-1 requires uninstall of previous versions. Old applications from early 200x and older may need MESA_EXTENSION_MAX_YEAR environment variable set, see [legacy software compatibility section](#legacy-software-compatibility). Applications requiring OpenGL 3.2 or newer may need [OpenGL context configuration override](#opengl-context-configuration-override).
+
+# Legacy software compatibility
+Old applications from early 200x and older may need MESA_EXTENSION_MAX_YEAR environment variable set to avoid buffer overflows. It expects a year number as value, most commonly used being 2001. It trims the extensions list returned by Mesa3D to extensions released up to and including provided year as Mesa3D extensions list is sorted by year.
+
+Ex: `set MESA_EXTENSION_MAX_YEAR=2001`. See [How to set environment variables](#how-to-set-environment-variables).
 
 # OpenGL context configuration override
 With release of [OpenGL 3.1](https://en.wikipedia.org/wiki/OpenGL#OpenGL_3.1) many features marked as deprecated in OpenGL 3.0 have been removed and since OpenGL 3.2 launch this OpenGL specification branch is known as OpenGL Core profile. Also in OpenGL 3.3 a new branch of the OpenGL specification known as forward compatible context was introduced which removes the OpenGL 3.0 deprecated features that were not removed in OpenGL 3.1. Most proprietary drivers implemented the exemptions from these changes offered in the form of GL_ARB_compatibility extension for OpenGL 3.1 and compatibility contexts for OpenGL 3.2 and above. Due to complexity and especially lack of correct implementation tests for GL_ARB_compatibility and compatibility contexts, Mesa3D developers chose to retain features deprecated in OpenGL 3.0 and implement Core profile and forward compatible contexts. Mesa 18.1 introduced GL_ARB_compatibility support making the first step toward having compatibility contexts support in the future. Because GL_ARB_compatibility is only for OpenGL 3.1, programs requesting OpenGL compatibility context won't get above OpenGL 3.0 for Mesa 18.0 and 3.1 for Mesa 18.1. Unfortunately these kind of programs are prevalent on Windows where developers tend to avoid using context flags required by Core profile. Fortunately Mesa3D provides a mechanism to override the OpenGL context requested. There are 2 environment variables that override OpenGL context configuration:
@@ -59,9 +65,13 @@ Supported values are version numbers converted to integer: 110, 120, 130, 140. 1
 Default values: 140 for Mesa 18.1 and 130 for Mesa 18.0 if MESA_GL_VERSION_OVERRIDE is undefined or 330 otherwise.
 
 # How to set environment variables
-Under Windows the easiest way to set environment variables is by writing batch files for every application requiring OpenGL 3.2 or newer that is using Mesa or if your want to use swr instead of llvmpipe for Desktop OpenGL.
+Under Windows the easiest way to set environment variables is by writing batch files. You'll most likely need to do so:
+- for every application requiring OpenGL 3.2 or newer in compatibility profile or 4.0 or newer in core profile;
+- if your want to use swr instead of llvmpipe for desktop OpenGL;
+- if you need to trim extensions list for old programs compatibility.
+
 Simply open Notepad, write the batch script. When saving, end the file name with .bat or .cmd, change save as type to all files and change save location to where the application executable is located. If you have some skill with batch scripts you can change the current directory during script execution using CD command opening the possibility to save the script anywhere you want as shown in [rpcs3](https://github.com/pal1000/mesa-dist-win/blob/master/examples/rpcs3.cmd) and [GPU Caps Viewer](https://github.com/pal1000/mesa-dist-win/blob/master/examples/GPUCapsViewer.cmd) examples.
 Documentation of most environment variables used by Mesa is available [here](https://mesa3d.org/envvars.html).
 Complete examples are available [here](https://github.com/pal1000/mesa-dist-win/tree/master/examples).
 
-There is no conflict between GALLIUM_DRIVER variable used to change the desktop OpenGL driver and OpenGL context configuration override. You can mix them if necessary.
+You can set multiple environment variables on same batch script to mix the functionality provided by Mesa3D.
