@@ -1,4 +1,5 @@
-# Next release
+# 19.0.2
+- Updated Mesa3D to [19.0.2](https://www.mesa3d.org/relnotes/19.0.2.html).
 ### Debug
 - Add a MSYS2 console for debug purposes;
 - llvm-config debug tool: Support returning libraries list in both python list and ninja targets format.
