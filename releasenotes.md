@@ -9,7 +9,7 @@
 - Support handling missing Desktop development with C++ workload through Visual Studio installer.
 ### Build environment updates
 - cmake 3.14.0 -> 3.14.1;
-- Visual Studio 15.9.10 -> 16.0.0;
+- Visual Studio 15.9.10 -> 16.0.1;
 - setuptools 40.8.0 -> 41.0.0.
 ### Documentation
 - Update LLVM build command;

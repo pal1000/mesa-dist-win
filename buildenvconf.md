@@ -19,7 +19,7 @@ OS | Windows 10 October 2018 Update Pro x64
 | | |
 |-|-|
 Edition | 2019 Community
-Version | 16.0.0
+Version | 16.0.1
 Windows 10 SDK Version | 10.0.17763.132
 Windows 10 SDK install method | inbox via Visual Studio installer
 ### LLVM
