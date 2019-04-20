@@ -71,6 +71,12 @@
 
 :nopylauncher
 @rem Missing Python launcher fallback code path.
+@rem First remove Python UWP installer from PATH (see https://github.com/pal1000/mesa-dist-win/issues/23)
+
+@setlocal ENABLEDELAYEDEXPANSION
+@SET PATH=!PATH:;%LOCALAPPDATA%\Microsoft\WindowsApps=!
+@endlocal&set PATH=%PATH%
+
 @SET ERRORLEVEL=0
 @IF %pythonloc%==python.exe where /q python.exe
 @IF ERRORLEVEL 1 set pythonloc=%mesa%\python\python.exe
