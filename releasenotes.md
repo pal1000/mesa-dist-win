@@ -1,3 +1,6 @@
+# Next release
+### Build script
+- Fixed a critical bug causing build script to abort execution when MSYS2 is missing.
 # 19.0.2
 - Updated Mesa3D to [19.0.2](https://www.mesa3d.org/relnotes/19.0.2.html).
 ### Debug
