@@ -1,7 +1,8 @@
 # Next release
 ### Build script
 - Fixed a critical bug causing build script to abort execution when MSYS2 is missing;
-- Compatibility update for Windows 10 Version 1903: Remove Python UWP installer from PATH [#23](https://github.com/pal1000/mesa-dist-win/issues/23).
+- Compatibility update for Windows 10 Version 1903: Remove Python UWP installer from PATH - [#23](https://github.com/pal1000/mesa-dist-win/issues/23);
+- Make sure initial MSYS2 required double update only occurs once by looking for a specific MSYS package needed by Mesa3D build that is not included in a fresh install of MSYS2.
 # 19.0.2
 - Updated Mesa3D to [19.0.2](https://www.mesa3d.org/relnotes/19.0.2.html).
 ### Debug

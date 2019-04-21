@@ -1,6 +1,6 @@
 @rem Check for updates
 @rem Initial upgrade
-@IF NOT EXIST %msysloc%\mingw%minabi%\bin\libwinpthread-1.dll (
+@IF NOT EXIST %msysloc%\usr\bin\bison.exe (
 @%runmsys% pacman -Syu --noconfirm
 @%runmsys% pacman -Syu --noconfirm
 )
