@@ -5,18 +5,18 @@
 @IF /I %PROCESSOR_ARCHITECTURE%==x86 IF %abi%==x64 set vsabi=x86_x64
 @set vswhere="%ProgramFiles%
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 set vswhere=%vswhere% (x86)
-@set vswhere=%vswhere%\Microsoft Visual Studio\Installer\vswhere.exe" -prerelease -property
+@set vswhere=%vswhere%\Microsoft Visual Studio\Installer\vswhere.exe"
 
 :findcompilers
 @set vsenv=%vswhere%
 @set totaltoolchains=0
 @set totalmsvc=0
-@for /F "USEBACKQ tokens=*" %%a IN (`%vswhere% catalog_productDisplayVersion`) do @set /a totalmsvc+=1&set /a totaltoolchains+=1
+@for /F "USEBACKQ tokens=*" %%a IN (`%vswhere% -prerelease -property catalog_productDisplayVersion`) do @set /a totalmsvc+=1&set /a totaltoolchains+=1
 @IF NOT %msysstate%==0 set /a totaltoolchains+=1
 @cls
 @setlocal ENABLEDELAYEDEXPANSION
 @set msvccount=0
-@for /F "USEBACKQ tokens=*" %%a IN (`%vswhere% catalog_productDisplayVersion`) do @set /a msvccount+=1&echo !msvccount!. Visual Studio %%a
+@IF EXIST %vswhere% for /F "USEBACKQ tokens=*" %%a IN (`%vswhere% -prerelease -property catalog_productDisplayVersion`) do @set /a msvccount+=1&echo !msvccount!. Visual Studio %%a
 @endlocal
 @IF NOT %msysstate%==0 echo %totaltoolchains%. MSYS2 Mingw-w64 GCC
 @echo.
@@ -50,9 +50,9 @@
 @rem Determine toolset version and build enviroment launcher PATH for selected Visual Studio installation
 @setlocal ENABLEDELAYEDEXPANSION
 @set msvccount=0
-@for /F "USEBACKQ tokens=*" %%a IN (`%vswhere% installationPath`) do @set /a msvccount+=1&IF !msvccount!==%selecttoolchain% set vsenv="%%a\VC\Auxiliary\Build\vcvarsall.bat"
+@for /F "USEBACKQ tokens=*" %%a IN (`%vswhere% -prerelease -property installationPath`) do @set /a msvccount+=1&IF !msvccount!==%selecttoolchain% set vsenv="%%a\VC\Auxiliary\Build\vcvarsall.bat"
 @set msvccount=0
-@for /F "USEBACKQ tokens=*" %%a IN (`%vswhere% catalog_productDisplayVersion`) do @set /a msvccount+=1&IF !msvccount!==%selecttoolchain% set toolset=%%a
+@for /F "USEBACKQ tokens=*" %%a IN (`%vswhere% -prerelease -property catalog_productDisplayVersion`) do @set /a msvccount+=1&IF !msvccount!==%selecttoolchain% set toolset=%%a
 @set toolset=%toolset:~0,2%
 @endlocal&set vsenv=%vsenv%&set toolset=%toolset%
 
@@ -62,7 +62,7 @@
 @IF NOT EXIST %vsenv% echo.
 @IF NOT EXIST %vsenv% IF /I NOT "%addvcpp%"=="y" pause
 @IF NOT EXIST %vsenv% IF /I NOT "%addvcpp%"=="y" GOTO findcompilers
-@IF NOT EXIST %vsenv% %vswhere:~0,-34%vs_installer.exe"
+@IF NOT EXIST %vsenv% %vswhere:~0,-12%vs_installer.exe"
 @IF NOT EXIST %vsenv% GOTO findcompilers
 
 :selectedcompiler
