@@ -9,7 +9,7 @@
 - [OpenGL context configuration override](#opengl-context-configuration-override)
   
 # Downloads
-Mesa 19.0.2 builds with Visual Studio and MSYS2 Mingw-w64 are now available in [releases section](https://github.com/pal1000/mesa-dist-win/releases).
+Mesa 19.0.3 builds with Visual Studio and MSYS2 Mingw-w64 are now available in [releases section](https://github.com/pal1000/mesa-dist-win/releases).
 
 # Note for enterprise environments
 IT security policy may restrict or even outright prohibit running 3rd-party unsigned executables. If this is the case you can extract Mesa3D drivers using [7-Zip](https://www.7-zip.org/).
