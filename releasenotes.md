@@ -1,6 +1,9 @@
 # Next release
 ### Build script
-- Display toolchain name in Command Prompt window title.
+- Display toolchain name in Command Prompt window title;
+- Redesigned Python launcher interface to improve script performance, code readability and ease support of future versions of Python.
+### Build environment updates
+- Visual Studio 16.0.2 -> 16.0.3.
 # 19.0.3
 - Updated Mesa3D to [19.0.3](https://www.mesa3d.org/relnotes/19.0.3.html).
 ### Build script

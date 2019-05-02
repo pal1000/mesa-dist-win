@@ -6,67 +6,56 @@
 @where /q py.exe
 @IF ERRORLEVEL 1 GOTO nopylauncher
 
-@rem Query Python launcher for supported Python versions. Hard fail if none found.
-@FOR /F "tokens=* USEBACKQ" %%a IN (`py -2.7 -c "import sys; print(sys.executable)"`) DO @SET py2_7loc=%%~sa
-@FOR /F "tokens=* USEBACKQ" %%a IN (`py -2.7-32 -c "import sys; print(sys.executable)"`) DO @SET py2_7wowloc=%%~sa
-@FOR /F "tokens=* USEBACKQ" %%a IN (`py -3.5 -c "import sys; print(sys.executable)"`) DO @SET py3_5loc=%%~sa
-@FOR /F "tokens=* USEBACKQ" %%a IN (`py -3.5-32 -c "import sys; print(sys.executable)"`) DO @SET py3_5wowloc=%%~sa
-@FOR /F "tokens=* USEBACKQ" %%a IN (`py -3.6 -c "import sys; print(sys.executable)"`) DO @SET py3_6loc=%%~sa
-@FOR /F "tokens=* USEBACKQ" %%a IN (`py -3.6-32 -c "import sys; print(sys.executable)"`) DO @SET py3_6wowloc=%%~sa
-@FOR /F "tokens=* USEBACKQ" %%a IN (`py -3.7 -c "import sys; print(sys.executable)"`) DO @SET py3_7loc=%%~sa
-@FOR /F "tokens=* USEBACKQ" %%a IN (`py -3.7-32 -c "import sys; print(sys.executable)"`) DO @SET py3_7wowloc=%%~sa
-@cls
-@if NOT EXIST "%py2_7loc%" if NOT EXIST "%py3_5loc%" if NOT EXIST "%py3_6loc%" if NOT EXIST "%py3_7loc%" if NOT EXIST "%py2_7wowloc%" if NOT EXIST "%py3_5wowloc%" if NOT EXIST "%py3_6wowloc%" if NOT EXIST "%py3_7wowloc%" (
-@echo Your Python version is too old. Only Python 2.7 or 3.5 through 3.7 are supported.
-@echo.
-@pause
-@exit
-)
-
 :pylist
-@rem List found Python versions and ask the user to pick one. Begin with Python 2.7.
-@echo The following Python versions were detected:
-@if EXIST "%py2_7loc%" echo 1. Python 2.7
-@if EXIST "%py2_7wowloc%" echo 2. Python 2.7 (32-bit)
-@echo.
+@set pythontotal=0
+@set pythoncount=0
+@set goodpython=0
+@cls
 
-@rem Check if at least one Python 3.x version is installed and display a notice about support being limited.
-@set py3exists=2000000
-@if EXIST "%py3_5loc%" set /a py3exists=%py3exists%+1
-@if EXIST "%py3_5wowloc%" set /a py3exists=%py3exists%+10
-@if EXIST "%py3_6loc%" set /a py3exists=%py3exists%+100
-@if EXIST "%py3_6wowloc%" set /a py3exists=%py3exists%+1000
-@if EXIST "%py3_7loc%" set /a py3exists=%py3exists%+10000
-@if EXIST "%py3_7wowloc%" set /a py3exists=%py3exists%+100000
-@IF %py3exists% GEQ 2000000 IF %enablemeson%==0 echo Note: Experimental /enablemeson command-line argument is not set. We won't attempt to build Mesa3D if you pick any of the folowing Python versions: & echo.
-@IF %py3exists% GEQ 2000000 IF %enablemeson%==1 echo Note: Experimental /enablemeson command-line argument is set. We will attempt to build Mesa3D if you pick any of the folowing Python versions even if it is still a work in progress: & echo.
+@rem Count supported python installations
+@setlocal ENABLEDELAYEDEXPANSION
+@FOR /F "USEBACKQ tokens=1 skip=1" %%a IN (`py -0 2^>nul`) do @(
+@set pythoninstance=%%a
+@IF !pythoninstance^:^~1^,1! EQU 2 IF !pythoninstance^:~^3^,-3! EQU 7 set goodpython=1
+@IF !pythoninstance^:^~1^,1! GEQ 3 IF !pythoninstance^:~^3^,-3! GEQ 5 set goodpython=1
+@IF !goodpython!==1 set /a pythontotal+=1
+)
+@endlocal&set pythontotal=%pythontotal%
+@IF %pythontotal%==0 GOTO nopylauncher
 
-@rem Display choices for the rest of Python versions.
-@IF %py3exists:~-1,1%==1 echo 3. Python 3.5
-@IF %py3exists:~-2,1%==1 echo 4. Python 3.5 (32-bit)
-@IF %py3exists:~-3,1%==1 echo 5. Python 3.6
-@IF %py3exists:~-4,1%==1 echo 6. Python 3.6 (32-bit)
-@IF %py3exists:~-5,1%==1 echo 7. Python 3.7
-@IF %py3exists:~-6,1%==1 echo 8. Python 3.7 (32-bit)
+@rem Select Python installation to use
+@IF %enablemeson%==0 echo Select python installation. Note that experimental /enablemeson command-line argument is not set. We won't attempt to build Mesa3D if you pick any Python 3.x installation: & echo.
+@IF %enablemeson%==1 echo Select python installation. Note that experimental /enablemeson command-line argument is set. We will attempt to build Mesa3D regardless of Python installation selected: & echo.
+@setlocal ENABLEDELAYEDEXPANSION
+@FOR /F "USEBACKQ tokens=1 skip=1" %%a IN (`py -0 2^>nul`) do @(
+@set pythoninstance=%%a
+@IF !pythoninstance^:^~1^,1! EQU 2 IF !pythoninstance^:~^3^,-3! EQU 7 set goodpython=1
+@IF !pythoninstance^:^~1^,1! GEQ 3 IF !pythoninstance^:~^3^,-3! GEQ 5 set goodpython=1
+@IF !goodpython!==1 set /a pythoncount+=1
+@IF !goodpython!==1 echo !pythoncount!. Python !pythoninstance:~1,1!.!pythoninstance:~3,-3! !pythoninstance:~-2! bit
+)
+@endlocal
 @echo.
 @set /p pyselect=Select Python version by entering its index from the table above:
 @echo.
+@IF %pyselect% LEQ 0 echo Invalid entry.
+@IF %pyselect% LEQ 0 pause
+@IF %pyselect% LEQ 0 GOTO pylist
+@IF %pyselect% GTR %pythontotal% echo Invalid entry.
+@IF %pyselect% GTR %pythontotal% pause
+@IF %pyselect% GTR %pythontotal% GOTO pylist
 
-@rem Retrieve the location of the selected Python version.
-@if EXIST "%py2_7loc%" if "%pyselect%"=="1" set pythonloc=%py2_7loc%
-@if EXIST "%py2_7wowloc%" if "%pyselect%"=="2" set pythonloc=%py2_7wowloc%
-@IF %py3exists:~-1,1%==1 if "%pyselect%"=="3" set pythonloc=%py3_5loc%
-@IF %py3exists:~-2,1%==1 if "%pyselect%"=="4" set pythonloc=%py3_5wowloc%
-@IF %py3exists:~-3,1%==1 if "%pyselect%"=="5" set pythonloc=%py3_6loc%
-@IF %py3exists:~-4,1%==1 if "%pyselect%"=="6" set pythonloc=%py3_6wowloc%
-@IF %py3exists:~-5,1%==1 if "%pyselect%"=="7" set pythonloc=%py3_7loc%
-@IF %py3exists:~-6,1%==1 if "%pyselect%"=="8" set pythonloc=%py3_7wowloc%
-
-@rem User invalid input error checking.
-@IF %pythonloc%==python.exe echo Invalid entry.
-@IF %pythonloc%==python.exe pause
-@IF %pythonloc%==python.exe cls
-@IF %pythonloc%==python.exe GOTO pylist
+@rem Locate selected Python installation
+@setlocal ENABLEDELAYEDEXPANSION
+@FOR /F "USEBACKQ tokens=1 skip=1" %%a IN (`py -0 2^>nul`) do @(
+@set pythoninstance=%%a
+@IF !pythoninstance^:^~1^,1! EQU 2 IF !pythoninstance^:~^3^,-3! EQU 7 set goodpython=1
+@IF !pythoninstance^:^~1^,1! GEQ 3 IF !pythoninstance^:~^3^,-3! GEQ 5 set goodpython=1
+@IF !goodpython!==1 set /a pythoncount+=1
+@IF !pythoncount!==%pyselect% set selectedpython=%%a
+)
+@endlocal&set selectedpython=%selectedpython%
+@FOR /F "tokens=* USEBACKQ" %%a IN (`py %selectedpython%  -c "import sys; print(sys.executable)"`) DO @set pythonloc=%%~sa
 @GOTO loadpypath
 
 :nopylauncher

@@ -19,7 +19,7 @@ OS | Windows 10 April 2019 Update Pro x64
 | | |
 |-|-|
 Edition | 2019 Community
-Version | 16.0.2
+Version | 16.0.3
 Windows 10 SDK Version | 10.0.18362.1
 Windows 10 SDK install method | standalone
 ### LLVM
