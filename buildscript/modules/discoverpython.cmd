@@ -16,11 +16,13 @@
 @setlocal ENABLEDELAYEDEXPANSION
 @FOR /F "USEBACKQ tokens=1 skip=1" %%a IN (`py -0 2^>nul`) do @(
 @set pythoninstance=%%a
-@IF !pythoninstance^:^~1^,1! EQU 2 IF !pythoninstance^:~^3^,-3! EQU 7 set goodpython=1
-@IF !pythoninstance^:^~1^,1! GEQ 3 IF !pythoninstance^:~^3^,-3! GEQ 5 set goodpython=1
+@IF !pythoninstance^:^~1^,-3! EQU 2.7 set goodpython=1
+@IF !pythoninstance^:^~1^,-3! GEQ 3.5 set goodpython=1
 @IF !goodpython!==1 set /a pythontotal+=1
 )
 @endlocal&set pythontotal=%pythontotal%
+@IF %pythontotal%==0 echo WARNING: No suitable Python installation found by Python launcher. Note that Python 2.7 or Python 3.5 and newer is required.
+@IF %pythontotal%==0 echo.
 @IF %pythontotal%==0 GOTO nopylauncher
 
 @rem Select Python installation to use
@@ -29,8 +31,8 @@
 @setlocal ENABLEDELAYEDEXPANSION
 @FOR /F "USEBACKQ tokens=1 skip=1" %%a IN (`py -0 2^>nul`) do @(
 @set pythoninstance=%%a
-@IF !pythoninstance^:^~1^,1! EQU 2 IF !pythoninstance^:~^3^,-3! EQU 7 set goodpython=1
-@IF !pythoninstance^:^~1^,1! GEQ 3 IF !pythoninstance^:~^3^,-3! GEQ 5 set goodpython=1
+@IF !pythoninstance^:^~1^,-3! EQU 2.7 set goodpython=1
+@IF !pythoninstance^:^~1^,-3! GEQ 3.5 set goodpython=1
 @IF !goodpython!==1 set /a pythoncount+=1
 @IF !goodpython!==1 echo !pythoncount!. Python !pythoninstance:~1,1!.!pythoninstance:~3,-3! !pythoninstance:~-2! bit
 )
@@ -49,8 +51,8 @@
 @setlocal ENABLEDELAYEDEXPANSION
 @FOR /F "USEBACKQ tokens=1 skip=1" %%a IN (`py -0 2^>nul`) do @(
 @set pythoninstance=%%a
-@IF !pythoninstance^:^~1^,1! EQU 2 IF !pythoninstance^:~^3^,-3! EQU 7 set goodpython=1
-@IF !pythoninstance^:^~1^,1! GEQ 3 IF !pythoninstance^:~^3^,-3! GEQ 5 set goodpython=1
+@IF !pythoninstance^:^~1^,-3! EQU 2.7 set goodpython=1
+@IF !pythoninstance^:^~1^,-3! GEQ 3.5 set goodpython=1
 @IF !goodpython!==1 set /a pythoncount+=1
 @IF !pythoncount!==%pyselect% set selectedpython=%%a
 )
@@ -90,17 +92,18 @@
 
 :pyver
 @rem Identify Python version.
-@FOR /F "USEBACKQ delims= " %%a IN (`%pythonloc% -c "import sys; print(sys.version)"`) DO @SET pythonver=%%a
+@FOR /F "USEBACKQ delims= " %%a IN (`%pythonloc% -c "import sys; print(sys.version)"`) DO @SET fpythonver=%%a
 
 @rem Check if Python version is not too old.
-@IF NOT %pythonver:~0,3%==2.7 IF NOT %pythonver:~0,3%==3.5 IF NOT %pythonver:~0,3%==3.6 IF NOT %pythonver:~0,3%==3.7 (
-@echo Your Python version is too old. Only Python 2.7 or 3.5 through 3.7 are supported.
+@FOR /F "USEBACKQ delims= " %%a IN (`%pythonloc% -c "import sys; print(str(sys.version_info[0])+'.'+str(sys.version_info[1]))"`) DO @SET pythonver=%%a
+@IF NOT %pythonver% EQU 2.7 IF NOT %pythonver% GEQ 3.5 (
+@echo Your Python version is too old. Only Python 2.7 or 3.5 and newer are supported.
 @echo.
 @pause
 @exit
 )
 
-@echo Using Python %pythonver% from %pythonloc%.
+@echo Using Python %fpythonver% from %pythonloc%.
 @echo.
 @set pythonver=%pythonver:~0,1%
 @if %pythonver% GEQ 3 IF %enablemeson%==1 echo WARNING: Python 3.x support is experimental.
