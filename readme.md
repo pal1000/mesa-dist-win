@@ -19,7 +19,7 @@ Mingw package is recommended in most cases over MSVC as it has better performanc
 - it requires a CPU with [SSSE3](https://en.wikipedia.org/wiki/SSSE3#CPUs_with_SSSE3);
 - swr driver is not available due to build failure see [1](https://gitlab.freedesktop.org/mesa/mesa/merge_requests/362#note_130059) and [2](https://ci.appveyor.com/project/Alexpux/mingw-packages/builds/23168385/job/xx1p90m245mmhgkk).
 
-If you nred to migrate from Mingw to MSVC binaries you have to make sure you replace `opengl32.dll` from Mingw package with MSVC counterpart otherwise swr driver won't load even if you set `GALLIUM_DRIVER=swr`.
+If you need to migrate from Mingw to MSVC binaries you have to make sure you replace `opengl32.dll` from Mingw package with MSVC counterpart otherwise swr driver won't load even if you set `GALLIUM_DRIVER=swr`.
 
 # Mingw and MSVC Package contents
 The following Mesa3D drivers and build artifacts are shipped in each release:
