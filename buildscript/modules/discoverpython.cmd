@@ -34,7 +34,7 @@
 @IF !pythoninstance^:^~1^,-3! EQU 2.7 set goodpython=1
 @IF !pythoninstance^:^~1^,-3! GEQ 3.5 set goodpython=1
 @IF !goodpython!==1 set /a pythoncount+=1
-@IF !goodpython!==1 echo !pythoncount!. Python !pythoninstance:~1,1!.!pythoninstance:~3,-3! !pythoninstance:~-2! bit
+@IF !goodpython!==1 echo !pythoncount!. Python !pythoninstance:~1,-3! !pythoninstance:~-2! bit
 )
 @endlocal
 @echo.
