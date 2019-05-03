@@ -66,5 +66,6 @@
 @IF NOT EXIST %vsenv% GOTO findcompilers
 
 :selectedcompiler
-@if %toolchain%==msvc TITLE Building Mesa3D %abi% using Visual Studio
-@if %toolchain%==gcc TITLE Building Mesa3D %abi% using MSYS2 Mingw-w64 GCC
+@if %toolchain%==msvc set TITLE=%TITLE% using Visual Studio
+@if %toolchain%==gcc set TITLE=%TITLE% using MSYS2 Mingw-w64 GCC
+@TITLE %TITLE%

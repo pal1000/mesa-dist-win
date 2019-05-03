@@ -1,6 +1,6 @@
 # Next release
 ### Build script
-- Display toolchain name in Command Prompt window title;
+- Display toolchain name and CPU cap in Command Prompt window title;
 - Redesigned Python launcher interface to improve script performance, code readability and ease support of future versions of Python;
 - Improve Python version checking by treating version as a fractional number and by also using sys.version_info python function.
 ### Build environment updates
