@@ -37,17 +37,17 @@ LLVM build execute[3] | ninja install-llvm-config install-LLVMIRReader install-L
 |-|-|
 Version | 2.7.16
 ARCH | x64
-pip version | 19.1
+pip version | 19.1.1
 setuptools version | 41.0.1
 pywin32 / pypiwin32 version | 224
 scons version | 3.0.5
 Mako version | 1.0.9
 MarkupSafe version | 1.1.1
-wheel version | 0.33.1
+wheel version | 0.33.3
 ### winflexbison
 | | |
 |-|-|
-Package version | 2.5.18-devel
+Package version | 2.5.18
 GNU Bison version | 3.3.2
 Flex version | 2.6.4
 ### Git version control

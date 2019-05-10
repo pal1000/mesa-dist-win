@@ -3,8 +3,13 @@
 - Display toolchain name and CPU cap in Command Prompt window title;
 - Redesigned Python launcher interface to filter old Python versions, improve script performance, code readability and ease support of future versions of Python;
 - Improve Python version checking by treating version as a fractional number and by also using sys.version_info python function.
+### Other
+- Add resource script file for each binary (#19).
 ### Build environment updates
-- Visual Studio 16.0.2 -> 16.0.3.
+- Visual Studio 16.0.2 -> 16.0.3;
+- pip 19.1 -> 19.1.1;
+- winflexbison 2.5.18-devel -> 2.5.18;
+- wheel 0.33.1 -> 0.33.3.
 # 19.0.3
 - Updated Mesa3D to [19.0.3](https://www.mesa3d.org/relnotes/19.0.3.html).
 ### Build script
