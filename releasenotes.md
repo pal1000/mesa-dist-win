@@ -1,4 +1,7 @@
-# Next release
+# 19.0.4
+- Updated Mesa3D to [19.0.4](https://www.mesa3d.org/relnotes/19.0.4.html).
+### Changes
+- Version information has been added to binaries via Resource Hacker instead of Visual Studio.
 ### Build script
 - Display toolchain name and CPU cap in Command Prompt window title;
 - Redesigned Python launcher interface to filter old Python versions, improve script performance, code readability and ease support of future versions of Python;
