@@ -1,3 +1,6 @@
+# Next release
+### Version control
+- Allow diffing resource script files.
 # 19.0.4
 - Updated Mesa3D to [19.0.4](https://www.mesa3d.org/relnotes/19.0.4.html).
 ### Changes
