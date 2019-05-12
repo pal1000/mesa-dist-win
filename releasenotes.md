@@ -3,6 +3,8 @@
 - Allow diffing resource script files.
 ### End-user guide
 - Add citra emulator OpenGL context override and SiN 1998 extensions list trimming examples.
+### Build script
+- Reimplement LLVM efficent build without requiring temporary file.
 # 19.0.4
 - Updated Mesa3D to [19.0.4](https://www.mesa3d.org/relnotes/19.0.4.html).
 ### Changes
