@@ -1,11 +1,14 @@
-buildscript/modules/llvmlibs.tmp
+# Binaries and their backups
 bin/x86/
 bin/x64/
 bin/x86-bk/
 bin/x64-bk/
-bin/*.exe
-bin/*.tmp
+# 7-zip artifacts
+*.exe
+*.tmp
+*.7z
+# Libraries and headers
 lib/
 include/
-*.7z
-*.tmp
+# Visual Studio compiled resource scripts
+*.aps

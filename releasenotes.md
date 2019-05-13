@@ -1,6 +1,7 @@
 # Next release
 ### Version control
-- Allow diffing resource script files.
+- Allow diffing resource script files;
+- Make .gitignore easier to read and add Visual Studio compiled resource scripts (*.aps) to it.
 ### End-user guide
 - Add citra emulator OpenGL context override and SiN 1998 extensions list trimming examples.
 ### Build script
