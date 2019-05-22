@@ -1,4 +1,4 @@
-# # 19.0.5
+# 19.0.5
 - Updated Mesa3D to [19.0.5](https://www.mesa3d.org/relnotes/19.0.5.html).
 ### Version control
 - Allow diffing resource script files;
@@ -7,7 +7,7 @@
 - Add citra emulator OpenGL context override and SiN 1998 extensions list trimming examples;
 - Add a missing TOC entry.
 ### Build script
-- Reimplement LLVM efficent build without requiring temporary file.
+- Re-implement LLVM efficient build without requiring temporary file.
 ### Build environment updates
 - Visual Studio 16.0.3 -> 16.1.0;
 - cmake 3.14.3 -> 3.14.4.
