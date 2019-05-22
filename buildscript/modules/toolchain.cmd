@@ -11,7 +11,7 @@
 @set vsenv=%vswhere%
 @set totaltoolchains=0
 @set totalmsvc=0
-@for /F "USEBACKQ tokens=*" %%a IN (`%vswhere% -prerelease -property catalog_productDisplayVersion`) do @set /a totalmsvc+=1&set /a totaltoolchains+=1
+@IF EXIST %vswhere% for /F "USEBACKQ tokens=*" %%a IN (`%vswhere% -prerelease -property catalog_productDisplayVersion`) do @set /a totalmsvc+=1&set /a totaltoolchains+=1
 @IF NOT %msysstate%==0 set /a totaltoolchains+=1
 @cls
 @setlocal ENABLEDELAYEDEXPANSION

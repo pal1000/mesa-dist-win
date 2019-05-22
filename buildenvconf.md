@@ -19,14 +19,14 @@ OS | Windows 10 April 2019 Update Pro x64
 | | |
 |-|-|
 Edition | 2019 Community
-Version | 16.0.3
+Version | 16.1.0
 Windows 10 SDK Version | 10.0.18362.1
 Windows 10 SDK install method | standalone
 ### LLVM
 | | |
 |-|-|
 LLVM Version | 8.0.0
-CMake version | 3.14.3
+CMake version | 3.14.4
 CMake ARCH | x64
 Ninja version | 1.9.0
 LLVM build configure x64[1] | cd llvm-8.0.0.src & md buildsys-x64-MT & cd buildsys-x64-MT & cmake -G "Ninja" -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../x64-MT ..
