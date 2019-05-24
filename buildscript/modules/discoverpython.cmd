@@ -41,6 +41,9 @@
 @echo.
 @set /p pyselect=Select Python version by entering its index from the table above:
 @echo.
+@IF "%pyselect%"=="" echo Invalid entry.
+@IF "%pyselect%"=="" pause
+@IF "%pyselect%"=="" GOTO pylist
 @IF %pyselect% LEQ 0 echo Invalid entry.
 @IF %pyselect% LEQ 0 pause
 @IF %pyselect% LEQ 0 GOTO pylist

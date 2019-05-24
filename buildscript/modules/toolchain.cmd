@@ -36,6 +36,11 @@
 @set toolchain=gcc
 @GOTO selectedcompiler
 )
+@IF "%selecttoolchain%"=="" (
+@echo Invalid entry
+@pause
+@GOTO findcompilers
+)
 @IF %selecttoolchain% LEQ 0 (
 @echo Invalid entry
 @pause
