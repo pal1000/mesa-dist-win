@@ -10,5 +10,8 @@ bin/x64-bk/
 # Libraries and headers
 lib/
 include/
-# Visual Studio compiled resource scripts
+# Compiled resource scripts
 *.aps
+*.res
+# Programatically generated resource scripts
+buildscript/assets/temp.rc

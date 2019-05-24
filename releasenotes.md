@@ -1,3 +1,6 @@
+# Next release
+### Build script
+- Implement automatic version information attaching to binaries using Resource Hacker - fixes #19.
 # # 19.0.5
 - Updated Mesa3D to [19.0.5](https://www.mesa3d.org/relnotes/19.0.5.html).
 ### Version control

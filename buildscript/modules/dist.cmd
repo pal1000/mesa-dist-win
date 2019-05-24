@@ -37,11 +37,15 @@
 @xcopy %mesa%\mesa\build\windows-%longabi%\*.h %mesa%\mesa-dist-win\include\%abi% /E /I /G
 
 @echo.
-@GOTO exit
+@GOTO distributed
 
 :mesondist
 @forfiles /p %mesa%\mesa\build\%abi% /s /m *.dll /c "cmd /c IF NOT @file==0x22graw.dll0x22 copy @path %mesa%\mesa-dist-win\bin\%abi%"
 @IF EXIST %mesa%\mesa\build\%abi%\src\gallium\targets\graw-gdi\graw.dll copy %mesa%\mesa\build\%abi%\src\gallium\targets\graw-gdi\graw.dll %mesa%\mesa-dist-win\bin\%abi%\graw.dll
+@echo.
+
+:distributed
+@call %mesa%\mesa-dist-win\buildscript\modules\addversioninfo.cmd
 
 :exit
 @pause
