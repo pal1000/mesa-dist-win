@@ -178,4 +178,6 @@ GOTO skipmesa
 @if %pythonver% GEQ 3 cmd
 
 :skipmesa
+@rem Reset PATH after Mesa3D build to clean the environment again.
+@set PATH=%oldpath%
 @echo.

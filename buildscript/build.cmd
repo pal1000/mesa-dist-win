@@ -34,6 +34,9 @@
 @rem Build throttle.
 @call %mesa%\mesa-dist-win\buildscript\modules\throttle.cmd
 
+@rem Backup PATH before building anything to easily keep environment clean.
+@set oldpath=%PATH%
+
 @rem If using MSVC do LLVM build.
 @IF %toolchain%==msvc call %mesa%\mesa-dist-win\buildscript\modules\llvm.cmd
 

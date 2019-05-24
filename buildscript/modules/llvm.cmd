@@ -1,6 +1,3 @@
-@rem Backup PATH before LLVM build to easily keep environment clean.
-@set oldpath=%PATH%
-
 @rem Look for CMake build generator.
 @IF %cmakestate%==0 (
 @echo CMake is required for LLVM build.
