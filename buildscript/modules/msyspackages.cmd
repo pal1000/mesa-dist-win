@@ -16,8 +16,8 @@
 )
 
 @rem Get dependencies
-@IF %pythonver%==2 %runmsys% pacman -S python2-mako mingw-w64-%mingwabi%-llvm mingw-w64-%mingwabi%-gcc mingw-w64-%mingwabi%-zlib flex bison patch scons --needed --noconfirm
-@IF %pythonver% GEQ 3 %runmsys% pacman -S mingw-w64-%mingwabi%-python3-mako mingw-w64-%mingwabi%-llvm mingw-w64-%mingwabi%-gcc mingw-w64-%mingwabi%-zlib mingw-w64-%mingwabi%-meson flex bison patch --needed --noconfirm
+@IF %pythonver%==2 %runmsys% pacman -S python2-mako mingw-w64-%mingwabi%-llvm mingw-w64-%mingwabi%-gcc mingw-w64-%mingwabi%-zlib flex bison patch scons --needed --noconfirm --disable-download-timeout
+@IF %pythonver% GEQ 3 %runmsys% pacman -S mingw-w64-%mingwabi%-python3-mako mingw-w64-%mingwabi%-llvm mingw-w64-%mingwabi%-gcc mingw-w64-%mingwabi%-zlib mingw-w64-%mingwabi%-meson flex bison patch --needed --noconfirm --disable-download-timeout
 @set flexstate=2
 @set ninjastate=2
 @set pkgconfigstate=1
