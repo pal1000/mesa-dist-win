@@ -4,7 +4,8 @@
 - Clean PATH after Mesa3D build in the same fashion it is done for LLVM;
 - Guard toolchain selection and python launcher menus from bad user input;
 - MSYS2: Workaround msys2/MSYS2-packages#1658;
-- MSYS2 Debug: Imlement pacman cache eraser support.
+- MSYS2 Debug: Imlement pacman cache eraser support;
+- MSYS2 initial setup: Do not ask about updates when done as it is highly unlikely to be out-of-date.
 # 19.0.5
 - Updated Mesa3D to [19.0.5](https://www.mesa3d.org/relnotes/19.0.5.html).
 ### Version control
