@@ -3,7 +3,8 @@
 - Implement automatic version information attaching to binaries using Resource Hacker - fixes #19;
 - Clean PATH after Mesa3D build in the same fashion it is done for LLVM;
 - Guard toolchain selection and python launcher menus from bad user input;
-- MSYS2: Workaround msys2/MSYS2-packages#1658.
+- MSYS2: Workaround msys2/MSYS2-packages#1658;
+- MSYS2 Debug: Imlement pacman cache eraser support.
 # 19.0.5
 - Updated Mesa3D to [19.0.5](https://www.mesa3d.org/relnotes/19.0.5.html).
 ### Version control
