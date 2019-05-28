@@ -61,9 +61,6 @@ GOTO skipmesa
 @if %gitstate%==0 IF %toolchain%==msvc GOTO configmesabuild
 @rem Enable S3TC texture cache
 @call %mesa%\mesa-dist-win\buildscript\modules\applypatch.cmd s3tc
-@rem Allow development version of Scons to work for Mesa 18.3.4 and 19.0 before stable.
-@IF %intmesaver% LSS 18355 call %mesa%\mesa-dist-win\buildscript\modules\applypatch.cmd sconsdevnogallium
-@IF %intmesaver% GEQ 19000 IF %intmesaver% LSS 19050 call %mesa%\mesa-dist-win\buildscript\modules\applypatch.cmd sconsdevnogallium
 @rem Fix MSYS2 Mingw-w64 GCC build
 @IF %toolchain%==gcc call %mesa%\mesa-dist-win\buildscript\modules\applypatch.cmd msys2-mingw_w64-fixes
 

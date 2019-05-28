@@ -19,7 +19,7 @@ OS | Windows 10 April 2019 Update Pro x64
 | | |
 |-|-|
 Edition | 2019 Community
-Version | 16.1.0
+Version | 16.1.1
 Windows 10 SDK Version | 10.0.18362.1
 Windows 10 SDK install method | standalone
 ### LLVM
@@ -41,9 +41,9 @@ pip version | 19.1.1
 setuptools version | 41.0.1
 pywin32 / pypiwin32 version | 224
 scons version | 3.0.5
-Mako version | 1.0.9
+Mako version | 1.0.10
 MarkupSafe version | 1.1.1
-wheel version | 0.33.3
+wheel version | 0.33.4
 ### winflexbison
 | | |
 |-|-|

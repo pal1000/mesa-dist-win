@@ -6,6 +6,11 @@
 - MSYS2: Workaround msys2/MSYS2-packages#1658;
 - MSYS2 Debug: Imlement pacman cache eraser support;
 - MSYS2 initial setup: Do not ask about updates when done as it is highly unlikely to be out-of-date.
+### Build environment updates
+- mako 1.0.9 -> 1.0.10;
+- Visual Studio 16.1.0 -> 16.1.1.
+### Patches
+- Remove scons development version string compatibility patch as it has been upstreamed months ago.
 # 19.0.5
 - Updated Mesa3D to [19.0.5](https://www.mesa3d.org/relnotes/19.0.5.html).
 ### Version control
@@ -18,7 +23,8 @@
 - Re-implement LLVM efficient build without requiring temporary file.
 ### Build environment updates
 - Visual Studio 16.0.3 -> 16.1.0;
-- cmake 3.14.3 -> 3.14.4.
+- cmake 3.14.3 -> 3.14.4;
+- wheel 0.33.3 -> 0.33.4.
 # 19.0.4
 - Updated Mesa3D to [19.0.4](https://www.mesa3d.org/relnotes/19.0.4.html).
 ### Changes
@@ -47,7 +53,8 @@
 - Windows SDK 10.0.17763.132 -> 10.0.18362.1;
 - cmake 3.14.1 -> 3.14.3;
 - setuptools 41.0.0 -> 41.0.1;
-- pip 19.0.3 -> 19.1.
+- pip 19.0.3 -> 19.1;
+- mako 1.0.8 -> 1.0.9.
 # 19.0.2
 - Updated Mesa3D to [19.0.2](https://www.mesa3d.org/relnotes/19.0.2.html).
 ### Debug
