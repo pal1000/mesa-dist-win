@@ -7,12 +7,12 @@
 - MSYS2 Debug: Imlement pacman cache eraser support;
 - MSYS2 initial setup: Do not ask about updates when done as it is highly unlikely to be out-of-date;
 - Run "pacman -Syu" 2 times when updating MSYS2, once for core packages and twice for the rest to ensure everything is updated.
-
 ### Build environment updates
 - mako 1.0.9 -> 1.0.10;
 - Visual Studio 16.1.0 -> 16.1.1.
 ### Patches
-- Remove scons development version string compatibility patch as it has been upstreamed months ago.
+- Remove scons development version string compatibility patch as it has been upstreamed months ago;
+- Update MSYS2 Mingw-w64 compatibility patch.
 # 19.0.5
 - Updated Mesa3D to [19.0.5](https://www.mesa3d.org/relnotes/19.0.5.html).
 ### Version control
