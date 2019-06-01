@@ -58,8 +58,7 @@
 @for /F "USEBACKQ tokens=*" %%a IN (`%vswhere% -prerelease -property installationPath`) do @set /a msvccount+=1&IF !msvccount!==%selecttoolchain% set vsenv="%%a\VC\Auxiliary\Build\vcvarsall.bat"
 @set msvccount=0
 @for /F "USEBACKQ tokens=*" %%a IN (`%vswhere% -prerelease -property catalog_productDisplayVersion`) do @set /a msvccount+=1&IF !msvccount!==%selecttoolchain% set toolset=%%a
-@set toolset=%toolset:~0,2%
-@endlocal&set vsenv=%vsenv%&set toolset=%toolset%
+@endlocal&set vsenv=%vsenv%&set msvcver=%toolset%&set toolset=%toolset:~0,2%
 
 :novcpp
 @IF NOT EXIST %vsenv% echo Error: Selected Visual Studio installation lacks Desktop development with C++ workload necessary to build Mesa3D.

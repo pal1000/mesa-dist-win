@@ -1,0 +1,15 @@
+Windows 10.0.18362
+Ressource Hacker 5.1.7.343
+Visual Studio 16.1.1
+Windows SDK 10.0.18362.0
+Python 2.7.16
+
+Python packages
+---------------
+Mako       1.0.10 
+MarkupSafe 1.1.1  
+pip        19.1.1 
+pywin32    224    
+scons      3.0.5  
+setuptools 41.0.1 
+wheel      0.33.4 

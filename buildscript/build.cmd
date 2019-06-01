@@ -46,6 +46,9 @@
 @rem If using MSYS2 Mingw-w64 GCC install necessary packages
 @IF %toolchain%==gcc call %mesa%\mesa-dist-win\buildscript\modules\msyspackages.cmd
 
+@rem Dump build environment information
+@call %mesa%\mesa-dist-win\buildscript\modules\envdump.cmd
+
 @rem Mesa3D build.
 @call %mesa%\mesa-dist-win\buildscript\modules\mesa3d.cmd
 
