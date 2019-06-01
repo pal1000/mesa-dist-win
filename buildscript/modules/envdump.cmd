@@ -22,9 +22,7 @@
 @IF %rhstate% GTR 0 FOR /F "USEBACKQ tokens=*" %%a IN (`where ResourceHacker.exe`) do @set rhloc="%%a"
 @IF %rhstate% GTR 0 ResourceHacker.exe -open %rhloc% -action extract -mask VERSIONINFO,, -save %mesa%\mesa-dist-win\buildscript\assets\temp.rc -log NUL
 @IF %rhstate% GTR 0 set PATH=%oldpath%
-@IF %rhstate% GTR 0 FOR /F "tokens=2 skip=2 USEBACKQ" %%a IN (`type %mesa%\mesa-dist-win\buildscript\assets\temp.rc`) do @set rhver=%%a&GOTO doneenvcommon
-
-:doneenvcommon
+@IF %rhstate% GTR 0 set exitloop=1&FOR /F "tokens=2 skip=2 USEBACKQ" %%a IN (`type %mesa%\mesa-dist-win\buildscript\assets\temp.rc`) do @IF defined exitloop set "exitloop="&set rhver=%%a
 @IF %rhstate% GTR 0 IF %toolchain%==gcc echo Ressource Hacker %rhver:,=.%>>%mesa%\mesa-dist-win\buildinfo\mingw.txt
 @IF %rhstate% GTR 0 IF %toolchain%==msvc echo Ressource Hacker %rhver:,=.%>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
 
@@ -46,6 +44,23 @@
 @IF %toolchain%==msvc echo Python packages>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
 @IF %toolchain%==msvc echo --------------->>%mesa%\mesa-dist-win\buildinfo\msvc.txt
 @IF %toolchain%==msvc FOR /F "USEBACKQ skip=2 tokens=*" %%a IN (`%pythonloc% -W ignore -m pip list --disable-pip-version-check`) do @echo %%a>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
+@IF %toolchain%==msvc echo.>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
+
+@rem Get CMake version
+@IF %toolchain%==msvc IF "%cmakestate%"=="1" set PATH=%mesa%\cmake\bin\;%PATH%
+@IF %toolchain%==msvc IF NOT "%cmakestate%"=="0" IF NOT "%cmakestate%"=="" set exitloop=1&for /f "tokens=3 USEBACKQ" %%a IN (`cmake --version`) do @if defined exitloop set "exitloop="&echo CMake %%a>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
+@IF %toolchain%==msvc IF "%cmakestate%"=="1" set PATH=%oldpath%
+
+@rem Get Ninja version
+@IF %toolchain%==msvc IF "%ninjastate%"=="1" set PATH=%mesa%\ninja\;%PATH%
+@IF %toolchain%==msvc IF NOT "%ninjastate%"=="0" IF NOT "%ninjastate%"=="" for /f "USEBACKQ" %%a IN (`ninja --version`) do @echo Ninja %%a>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
+@IF %toolchain%==msvc IF "%ninjastate%"=="1" set PATH=%oldpath%
+
+@rem Get flex and bison version
+@IF %toolchain%==msvc IF "%flexstate%"=="1" set PATH=%mesa%\flexbison\;%PATH%
+@IF %toolchain%==msvc IF NOT "%flexstate%"=="0" IF NOT "%flexstate%"=="" for /f "tokens=2 USEBACKQ" %%a IN (`win_flex --version`) do @echo flex %%a>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
+@IF %toolchain%==msvc IF NOT "%flexstate%"=="0" IF NOT "%flexstate%"=="" set exitloop=1&for /f "tokens=4 USEBACKQ" %%a IN (`win_bison --version`) do @if defined exitloop set "exitloop="&echo Bison %%a>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
+@IF %toolchain%==msvc IF "%flexstate%"=="1" set PATH=%oldpath%
 
 @rem Finished environment information dump.
 @echo Done.
