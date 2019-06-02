@@ -1,6 +1,7 @@
 Windows 10.0.18362
 Ressource Hacker 5.1.7.343
 7-Zip 19.00
+Git 2.21.0.1
 Visual Studio 16.1.1
 Windows SDK 10.0.18362.0
 Python 2.7.16

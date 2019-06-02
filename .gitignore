@@ -1,8 +1,5 @@
 # Binaries and their backups
-bin/x86/
-bin/x64/
-bin/x86-bk/
-bin/x64-bk/
+*.dll
 # 7-zip artifacts
 *.exe
 *.tmp
@@ -10,8 +7,5 @@ bin/x64-bk/
 # Libraries and headers
 lib/
 include/
-# Compiled resource scripts
-*.aps
-*.res
-# Programatically generated resource scripts
-buildscript/assets/temp.rc
+# Build scripts assets
+buildscript/assets/

@@ -27,9 +27,19 @@
 @IF %rhstate% GTR 0 IF %toolchain%==msvc echo Ressource Hacker %rhver:,=.%>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
 
 @rem Dump 7-Zip version
-@set sevenzipver=19.00
-@IF %toolchain%==gcc echo 7-Zip %sevenzipver%>>%mesa%\mesa-dist-win\buildinfo\mingw.txt
-@IF %toolchain%==msvc echo 7-Zip %sevenzipver%>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
+@IF EXIST %mesa%\mesa-dist-win\buildscript\assets\sevenzip.txt set "sevenzipver=<%mesa%\mesa-dist-win\buildscript\assets\sevenzip.txt"
+@IF %toolchain%==gcc IF defined sevenzipver echo 7-Zip %sevenzipver%>>%mesa%\mesa-dist-win\buildinfo\mingw.txt
+@IF %toolchain%==msvc IF defined sevenzipver echo 7-Zip %sevenzipver%>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
+
+@rem Get Git version
+@SET ERRORLEVEL=0
+@set gitstate=2
+@where /q git.exe
+@IF ERRORLEVEL 1 set gitstate=0
+@IF NOT %gitstate%==0 FOR /F "USEBACKQ tokens=3" %%a IN (`git --version`) do @set gitver=%%a
+@IF NOT %gitstate%==0 set "gitver=%gitver:.windows=%"
+@IF defined gitver IF %toolchain%==gcc echo Git %gitver%>>%mesa%\mesa-dist-win\buildinfo\mingw.txt
+@IF defined gitver IF %toolchain%==msvc echo Git %gitver%>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
 
 @rem Dump MSYS2 environment
 @IF %toolchain%==gcc echo.>>%mesa%\mesa-dist-win\buildinfo\mingw.txt
