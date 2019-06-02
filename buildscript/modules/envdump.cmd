@@ -77,6 +77,7 @@
 
 @rem Get flex and bison version
 @IF %toolchain%==msvc IF "%flexstate%"=="1" set PATH=%mesa%\flexbison\;%PATH%
+@IF %toolchain%==msvc IF NOT "%flexstate%"=="0" IF NOT "%flexstate%"=="" set exitloop=1&for /f "tokens=* USEBACKQ" %%a IN (`where changelog.md`) do @for /f "tokens=3 skip=6 USEBACKQ" %%b IN (`type %%a`) do @if defined exitloop set "exitloop="&echo Winflexbison package %%b>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
 @IF %toolchain%==msvc IF NOT "%flexstate%"=="0" IF NOT "%flexstate%"=="" for /f "tokens=2 USEBACKQ" %%a IN (`win_flex --version`) do @echo flex %%a>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
 @IF %toolchain%==msvc IF NOT "%flexstate%"=="0" IF NOT "%flexstate%"=="" set exitloop=1&for /f "tokens=4 USEBACKQ" %%a IN (`win_bison --version`) do @if defined exitloop set "exitloop="&echo Bison %%a>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
 @IF %toolchain%==msvc IF "%flexstate%"=="1" set PATH=%oldpath%
