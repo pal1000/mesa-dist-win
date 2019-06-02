@@ -27,7 +27,7 @@
 @IF %rhstate% GTR 0 IF %toolchain%==msvc echo Ressource Hacker %rhver:,=.%>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
 
 @rem Dump 7-Zip version
-@IF EXIST %mesa%\mesa-dist-win\buildscript\assets\sevenzip.txt set "sevenzipver=<%mesa%\mesa-dist-win\buildscript\assets\sevenzip.txt"
+@IF EXIST %mesa%\mesa-dist-win\buildscript\assets\sevenzip.txt set /p sevenzipver=<%mesa%\mesa-dist-win\buildscript\assets\sevenzip.txt
 @IF %toolchain%==gcc IF defined sevenzipver echo 7-Zip %sevenzipver%>>%mesa%\mesa-dist-win\buildinfo\mingw.txt
 @IF %toolchain%==msvc IF defined sevenzipver echo 7-Zip %sevenzipver%>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
 
