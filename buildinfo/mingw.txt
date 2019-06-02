@@ -1,5 +1,6 @@
 Windows 10.0.18362
 Ressource Hacker 5.1.7.343
+7-Zip 19.00
 
 MSYS2 environment
 -----------------

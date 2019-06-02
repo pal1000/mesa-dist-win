@@ -26,6 +26,11 @@
 @IF %rhstate% GTR 0 IF %toolchain%==gcc echo Ressource Hacker %rhver:,=.%>>%mesa%\mesa-dist-win\buildinfo\mingw.txt
 @IF %rhstate% GTR 0 IF %toolchain%==msvc echo Ressource Hacker %rhver:,=.%>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
 
+@rem Dump 7-Zip version
+@set sevenzipver=19.00
+@IF %toolchain%==gcc echo 7-Zip %sevenzipver%>>%mesa%\mesa-dist-win\buildinfo\mingw.txt
+@IF %toolchain%==msvc echo 7-Zip %sevenzipver%>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
+
 @rem Dump MSYS2 environment
 @IF %toolchain%==gcc echo.>>%mesa%\mesa-dist-win\buildinfo\mingw.txt
 @IF %toolchain%==gcc echo MSYS2 environment>>%mesa%\mesa-dist-win\buildinfo\mingw.txt
