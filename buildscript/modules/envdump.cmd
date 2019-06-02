@@ -56,6 +56,10 @@
 @IF %toolchain%==msvc IF NOT "%ninjastate%"=="0" IF NOT "%ninjastate%"=="" for /f "USEBACKQ" %%a IN (`ninja --version`) do @echo Ninja %%a>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
 @IF %toolchain%==msvc IF "%ninjastate%"=="1" set PATH=%oldpath%
 
+@rem Get LLVM version
+@IF %toolchain%==msvc IF EXIST %mesa%\llvm\%abi%-%llvmlink%\bin\llvm-config.exe FOR /F "USEBACKQ" %%a IN (`%mesa%\llvm\%abi%-%llvmlink%\bin\llvm-config.exe --version`) do @set llvmver=%%a
+@IF %toolchain%==msvc IF EXIST %mesa%\llvm\%abi%-%llvmlink%\bin\llvm-config.exe echo LLVM %llvmver%>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
+
 @rem Get flex and bison version
 @IF %toolchain%==msvc IF "%flexstate%"=="1" set PATH=%mesa%\flexbison\;%PATH%
 @IF %toolchain%==msvc IF NOT "%flexstate%"=="0" IF NOT "%flexstate%"=="" for /f "tokens=2 USEBACKQ" %%a IN (`win_flex --version`) do @echo flex %%a>>%mesa%\mesa-dist-win\buildinfo\msvc.txt

@@ -16,5 +16,6 @@ wheel      0.33.4
 
 CMake 3.14.4
 Ninja 1.9.0
+LLVM 8.0.0
 flex 2.6.4
 Bison 3.3.2
