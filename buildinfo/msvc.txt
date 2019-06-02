@@ -20,3 +20,19 @@ Ninja 1.9.0
 LLVM 8.0.0
 flex 2.6.4
 Bison 3.3.2
+
+Build commands
+--------------
+[1] md buildsys-x86-MT&cd buildsys-x86-MT&cmake -G "Ninja" -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../x86-MT ..
+[2] md buildsys-x64-MT&cd buildsys-x64-MT&cmake -G "Ninja" -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../x64-MT ..
+[3] ninja install
+[4] scons build=release platform=windows machine=x86 libgl-gdi osmesa graw-gdi
+[4] scons build=release platform=windows machine=x86_64 libgl-gdi osmesa graw-gdi
+
+Notes
+-----
+[0] Apply mesa-dist-win\patches\s3tc.patch to enable S3TC texture cache.
+[1] Natigate to LLVM source code in a Visual Studio x64_x86 Cross Tools Command Prompt and execute this command.
+[2] Natigate to LLVM source code in a Visual Studio x64 Native Tools Command Prompt and execute this command.
+[3] Execute this command after [1] and [2] respectively on same Visual Studio command line console.
+[4] Navigate to Mesa3D source code in a standard Windows Command Prompt and execute any or both these commands.

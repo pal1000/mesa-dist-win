@@ -71,6 +71,38 @@
 @IF %toolchain%==msvc IF NOT "%flexstate%"=="0" IF NOT "%flexstate%"=="" set exitloop=1&for /f "tokens=4 USEBACKQ" %%a IN (`win_bison --version`) do @if defined exitloop set "exitloop="&echo Bison %%a>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
 @IF %toolchain%==msvc IF "%flexstate%"=="1" set PATH=%oldpath%
 
+@rem Build comands
+@IF %toolchain%==gcc echo.>>%mesa%\mesa-dist-win\buildinfo\mingw.txt
+@IF %toolchain%==gcc echo Build commands>>%mesa%\mesa-dist-win\buildinfo\mingw.txt
+@IF %toolchain%==gcc echo -------------->>%mesa%\mesa-dist-win\buildinfo\mingw.txt
+@IF %toolchain%==msvc echo.>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
+@IF %toolchain%==msvc echo Build commands>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
+@IF %toolchain%==msvc echo -------------->>%mesa%\mesa-dist-win\buildinfo\msvc.txt
+
+@IF %toolchain%==gcc echo [2] scons build=release platform=windows machine=x86 toolchain=mingw libgl-gdi osmesa graw-gdi>>%mesa%\mesa-dist-win\buildinfo\mingw.txt
+@IF %toolchain%==gcc echo [3] scons build=release platform=windows machine=x86_64 toolchain=mingw libgl-gdi osmesa graw-gdi>>%mesa%\mesa-dist-win\buildinfo\mingw.txt
+@IF %toolchain%==gcc echo.>>%mesa%\mesa-dist-win\buildinfo\mingw.txt
+@IF %toolchain%==gcc echo Notes>>%mesa%\mesa-dist-win\buildinfo\mingw.txt
+@IF %toolchain%==gcc echo ----->>%mesa%\mesa-dist-win\buildinfo\mingw.txt
+@IF %toolchain%==gcc echo [0] Apply mesa-dist-win\patches\msys2-mingw_w64-fixes.patch before building Mesa.>>%mesa%\mesa-dist-win\buildinfo\mingw.txt
+@IF %toolchain%==gcc echo [1] Apply mesa-dist-win\patches\s3tc.patch to enable S3TC texture cache.>>%mesa%\mesa-dist-win\buildinfo\mingw.txt
+@IF %toolchain%==gcc echo [2] Navigate to Mesa3D source code in a MSYS2 MINGW32 shell and execute this command.>>%mesa%\mesa-dist-win\buildinfo\mingw.txt
+@IF %toolchain%==gcc echo [3] Navigate to Mesa3D source code in a MSYS2 MINGW64 shell and execute this command.>>%mesa%\mesa-dist-win\buildinfo\mingw.txt
+
+@IF %toolchain%==msvc echo [1] md buildsys-x86-%llvmlink%^&cd buildsys-x86-%llvmlink%^&cmake -G "Ninja" -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=%llvmlink% -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../x86-%llvmlink% ..>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
+@IF %toolchain%==msvc echo [2] md buildsys-x64-%llvmlink%^&cd buildsys-x64-%llvmlink%^&cmake -G "Ninja" -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=%llvmlink% -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../x64-%llvmlink% ..>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
+@IF %toolchain%==msvc echo [3] ninja install>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
+@IF %toolchain%==msvc echo [4] scons build=release platform=windows machine=x86 libgl-gdi osmesa graw-gdi>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
+@IF %toolchain%==msvc echo [4] scons build=release platform=windows machine=x86_64 libgl-gdi osmesa graw-gdi>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
+@IF %toolchain%==msvc echo.>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
+@IF %toolchain%==msvc echo Notes>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
+@IF %toolchain%==msvc echo ----->>%mesa%\mesa-dist-win\buildinfo\msvc.txt
+@IF %toolchain%==msvc echo [0] Apply mesa-dist-win\patches\s3tc.patch to enable S3TC texture cache.>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
+@IF %toolchain%==msvc echo [1] Natigate to LLVM source code in a Visual Studio x64_x86 Cross Tools Command Prompt and execute this command.>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
+@IF %toolchain%==msvc echo [2] Natigate to LLVM source code in a Visual Studio x64 Native Tools Command Prompt and execute this command.>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
+@IF %toolchain%==msvc echo [3] Execute this command after [1] and [2] respectively on same Visual Studio command line console.>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
+@IF %toolchain%==msvc echo [4] Navigate to Mesa3D source code in a standard Windows Command Prompt and execute any or both these commands.>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
+
 @rem Finished environment information dump.
 @echo Done.
 @IF %toolchain%==gcc echo Environment information has been written to %mesa%\mesa-dist-win\buildinfo\mingw.txt.

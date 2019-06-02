@@ -156,3 +156,15 @@ wget 1.20.3-1
 which 2.21-2
 xz 5.2.4-1
 zlib 1.2.11-1
+
+Build commands
+--------------
+[2] scons build=release platform=windows machine=x86 toolchain=mingw libgl-gdi osmesa graw-gdi
+[3] scons build=release platform=windows machine=x86_64 toolchain=mingw libgl-gdi osmesa graw-gdi
+
+Notes
+-----
+[0] Apply mesa-dist-win\patches\msys2-mingw_w64-fixes.patch before building Mesa.
+[1] Apply mesa-dist-win\patches\s3tc.patch to enable S3TC texture cache.
+[2] Navigate to Mesa3D source code in a MSYS2 MINGW32 shell and execute this command.
+[3] Navigate to Mesa3D source code in a MSYS2 MINGW64 shell and execute this command.
