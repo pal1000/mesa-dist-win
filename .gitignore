@@ -7,5 +7,5 @@
 # Libraries and headers
 lib/
 include/
-# Build scripts assets
+# Build script assets
 buildscript/assets/

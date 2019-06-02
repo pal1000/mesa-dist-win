@@ -1,6 +1,12 @@
 @IF NOT EXIST %mesa%\mesa-dist-win\buildinfo md %mesa%\mesa-dist-win\buildinfo
+@set disableenvdump=1
+@IF "%disableenvdump%"=="1" GOTO skipenvdump
 @echo Dumping build environment information. This will take a short while...
 @echo.
+@IF %toolchain%==gcc echo Build environment>%mesa%\mesa-dist-win\buildinfo\mingw.txt
+@IF %toolchain%==gcc echo ----------------->>%mesa%\mesa-dist-win\buildinfo\mingw.txt
+@IF %toolchain%==msvc echo Build environment>%mesa%\mesa-dist-win\buildinfo\msvc.txt
+@IF %toolchain%==msvc echo ----------------->>%mesa%\mesa-dist-win\buildinfo\msvc.txt
 
 @rem Dump Windows version
 @FOR /F "USEBACKQ tokens=4" %%a IN (`ver`) DO @set winver=%%a
@@ -9,8 +15,8 @@
 @IF %toolchain%==gcc echo python2 -c "print('.'.join('%winver%'.split('.')[:3]))">%mesa%\mesa-dist-win\buildinfo\temp.sh
 @IF %toolchain%==gcc FOR /F "USEBACKQ" %%a IN (`%msysloc%\usr\bin\bash --login %mesa%\mesa-dist-win\buildinfo\temp.sh`) do @set winver=%%a
 @IF %toolchain%==gcc del %mesa%\mesa-dist-win\buildinfo\temp.sh
-@IF %toolchain%==gcc echo Windows %winver%>%mesa%\mesa-dist-win\buildinfo\mingw.txt
-@IF %toolchain%==msvc echo Windows %winver%>%mesa%\mesa-dist-win\buildinfo\msvc.txt
+@IF %toolchain%==gcc echo Windows %winver%>>%mesa%\mesa-dist-win\buildinfo\mingw.txt
+@IF %toolchain%==msvc echo Windows %winver%>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
 
 @rem Dump Resource Hacker version
 @set rhstate=2
@@ -26,10 +32,10 @@
 @IF %rhstate% GTR 0 IF %toolchain%==gcc echo Ressource Hacker %rhver:,=.%>>%mesa%\mesa-dist-win\buildinfo\mingw.txt
 @IF %rhstate% GTR 0 IF %toolchain%==msvc echo Ressource Hacker %rhver:,=.%>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
 
-@rem Dump 7-Zip version
+@rem Dump 7-Zip version and compression level
 @IF EXIST %mesa%\mesa-dist-win\buildscript\assets\sevenzip.txt set /p sevenzipver=<%mesa%\mesa-dist-win\buildscript\assets\sevenzip.txt
-@IF %toolchain%==gcc IF defined sevenzipver echo 7-Zip %sevenzipver%>>%mesa%\mesa-dist-win\buildinfo\mingw.txt
-@IF %toolchain%==msvc IF defined sevenzipver echo 7-Zip %sevenzipver%>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
+@IF %toolchain%==gcc IF defined sevenzipver echo 7-Zip %sevenzipver% ultra compression>>%mesa%\mesa-dist-win\buildinfo\mingw.txt
+@IF %toolchain%==msvc IF defined sevenzipver echo 7-Zip %sevenzipver% ultra compression>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
 
 @rem Get Git version
 @SET ERRORLEVEL=0
@@ -119,3 +125,5 @@
 @IF %toolchain%==gcc echo Environment information has been written to %mesa%\mesa-dist-win\buildinfo\mingw.txt.
 @IF %toolchain%==msvc echo Environment information has been written to %mesa%\mesa-dist-win\buildinfo\msvc.txt.
 @echo.
+
+:skipenvdump

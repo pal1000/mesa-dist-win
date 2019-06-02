@@ -6,7 +6,8 @@
 - MSYS2: Workaround msys2/MSYS2-packages#1658;
 - MSYS2 Debug: Imlement pacman cache eraser support;
 - MSYS2 initial setup: Do not ask about updates when done as it is highly unlikely to be out-of-date;
-- Run "pacman -Syu" 2 times when updating MSYS2, once for core packages and twice for the rest to ensure everything is updated.
+- Run "pacman -Syu" 2 times when updating MSYS2, once for core packages and twice for the rest to ensure everything is updated;
+- Implement automatic build environment information dumper. Have it disabled by default as it is only necessary for it to run periodically.
 ### Build environment updates
 - mako 1.0.9 -> 1.0.10;
 - Visual Studio 16.1.0 -> 16.1.1.
