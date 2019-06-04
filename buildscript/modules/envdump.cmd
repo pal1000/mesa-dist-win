@@ -109,8 +109,8 @@
 @IF %toolchain%==msvc echo [1] md buildsys-x86-%llvmlink%^&cd buildsys-x86-%llvmlink%^&cmake -G "Ninja" -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=%llvmlink% -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../x86-%llvmlink% ..>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
 @IF %toolchain%==msvc echo [2] md buildsys-x64-%llvmlink%^&cd buildsys-x64-%llvmlink%^&cmake -G "Ninja" -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=%llvmlink% -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../x64-%llvmlink% ..>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
 @IF %toolchain%==msvc echo [3] ninja install>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
-@IF %toolchain%==msvc echo [4] scons build=release platform=windows machine=x86 libgl-gdi osmesa graw-gdi>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
-@IF %toolchain%==msvc echo [4] scons build=release platform=windows machine=x86_64 libgl-gdi osmesa graw-gdi>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
+@IF %toolchain%==msvc echo [4] scons build=release platform=windows machine=x86 openmp=1 libgl-gdi osmesa graw-gdi>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
+@IF %toolchain%==msvc echo [4] scons build=release platform=windows machine=x86_64 swr=1 openmp=1 libgl-gdi osmesa graw-gdi>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
 @IF %toolchain%==msvc echo.>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
 @IF %toolchain%==msvc echo Notes>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
 @IF %toolchain%==msvc echo ----->>%mesa%\mesa-dist-win\buildinfo\msvc.txt
