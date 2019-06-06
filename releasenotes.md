@@ -1,16 +1,20 @@
-# Next release
+# 19.0.6
+- Updated Mesa3D to [19.0.6](https://www.mesa3d.org/relnotes/19.0.6.html).
 ### Build script
 - Implement automatic version information attaching to binaries using Resource Hacker - fixes #19;
 - Clean PATH after Mesa3D build in the same fashion it is done for LLVM;
 - Guard toolchain selection and python launcher menus from bad user input;
-- MSYS2: Workaround msys2/MSYS2-packages#1658;
+- MSYS2: Workaround msys2/MSYS2-packages#1658 and future equivalents;
 - MSYS2 Debug: Imlement pacman cache eraser support;
 - MSYS2 initial setup: Do not ask about updates when done as it is highly unlikely to be out-of-date;
 - Run "pacman -Syu" 2 times when updating MSYS2, once for core packages and twice for the rest to ensure everything is updated;
-- Implement automatic build environment information dumper. Have it disabled by default as it is only necessary for it to run periodically.
-### Build environment updates
-- mako 1.0.9 -> 1.0.10;
-- Visual Studio 16.1.0 -> 16.1.1.
+- Implement automatic build environment information dumper.
+### MSVC build environment updates
+- mako 1.0.9 -> 1.0.12;
+- Visual Studio 16.1.0 -> 16.1.2;
+- cmake 3.14.4 -> 3.14.5
+### MSYS2 MINGW build environment status
+- MSYS2 MINGW build environment status is available [here](https://raw.githubusercontent.com/pal1000/mesa-dist-win/19.0.6/buildinfo/mingw.txt).
 ### Patches
 - Remove scons development version string compatibility patch as it has been upstreamed months ago;
 - Update MSYS2 Mingw-w64 compatibility patch.
@@ -24,7 +28,7 @@
 - Add a missing TOC entry.
 ### Build script
 - Re-implement LLVM efficient build without requiring temporary file.
-### Build environment updates
+### MSVC build environment updates
 - Visual Studio 16.0.3 -> 16.1.0;
 - cmake 3.14.3 -> 3.14.4;
 - wheel 0.33.3 -> 0.33.4.
@@ -38,7 +42,7 @@
 - Improve Python version checking by treating version as a fractional number and by also using sys.version_info python function.
 ### Other
 - Add resource script file for each binary (#19).
-### Build environment updates
+### MSVC build environment updates
 - Visual Studio 16.0.2 -> 16.0.3;
 - pip 19.1 -> 19.1.1;
 - winflexbison 2.5.18-devel -> 2.5.18;
@@ -50,7 +54,7 @@
 - Compatibility update for Windows 10 Version 1903: Remove Python UWP installer from PATH - [#23](https://github.com/pal1000/mesa-dist-win/issues/23);
 - Make sure initial MSYS2 required double update only occurs once by looking for a specific MSYS package needed by Mesa3D build that is not included in a fresh install of MSYS2;
 - Avoid a harmless error when Visual Studio is not installed.
-### Build environment updates
+### MSVC build environment updates
 - Host OS 10.0.17763 -> 10.0.18362;
 - Visual Studio 16.0.1 -> 16.0.2;
 - Windows SDK 10.0.17763.132 -> 10.0.18362.1;
@@ -67,7 +71,7 @@
 - Build LLVM efficiently when using Ninja by only building llvm-config tool, required libraries and headers;
 - Detect Visual Studio installations using vswhere;
 - Support handling missing Desktop development with C++ workload through Visual Studio installer.
-### Build environment updates
+### MSVC build environment updates
 - cmake 3.14.0 -> 3.14.1;
 - Visual Studio 15.9.10 -> 16.0.1;
 - setuptools 40.8.0 -> 41.0.0.
@@ -85,7 +89,7 @@
 - Toolchain selection: Support release candidates and stable release of Visual Studio 2019;
 - It turns out LLVM has no Meson build so remove all related code;
 - LLVM/MsBuild: Compatibility with Visual Studio 2019 retaining backward compatibility with Visual Studio 2017.
-### Build environment updates
+### MSVC build environment updates
 - scons 3.0.5a2 -> 3.0.5;
 - LLVM 7.0.1 -> 8.0.0;
 - Mako 1.0.7 -> 1.0.8;
@@ -102,7 +106,7 @@
 - Fixed MSYS2 update script so that it does not perform the initial upgrade every time.
 # 19.0.0
 - Updated Mesa3D to [19.0.0](https://www.mesa3d.org/relnotes/19.0.0.html).
-### Build environment updates
+### MSVC build environment updates
 - wheel 0.33.0 -> 0.33.1;
 - winflexbison 2.5.16 -> 2.5.18-devel;
 - GNU bison 3.1.0 -> 3.3.2;
@@ -128,7 +132,7 @@
 - Implement a patch applying script that uses git when building with MSVC and GNU patch when building with MSYS2 Mingw-w64.
 # 18.3.4
 - Updated Mesa3D to [18.3.4](https://www.mesa3d.org/relnotes/18.3.4.html).
-### Build environment updates
+### MSVC build environment updates
 - setuptools 40.7.2 -> 40.8.0;
 - cmake 3.13.3 -> 3.13.4;
 - pip 19.0.1 -> 19.0.2;
@@ -149,7 +153,7 @@
 - Updated Mesa3D to [18.3.3](https://www.mesa3d.org/relnotes/18.3.3.html).
 ### Build script
 - Ignore deprecation warnings affecting pip 19 and newer with Python 2.7.
-### Build environment updates
+### MSVC build environment updates
 - pip 18.1 -> 19.0.1;
 - Visual Studio 15.9.5 -> 15.9.6;
 - setuptools 40.6.3 -> 40.7.2;
@@ -166,7 +170,7 @@
 - Mesa3D build script compatibility update for Scons 3.0.3. Actual upgrade to Scons 3.0.3 is on hold due to Mesa3D build failure with it. Upstream work is needed.
 ### Deployment
 - Make sure per app deployment only asks for GLES libraries deployment when glapi is a shared library.
-### Build environment updates
+### MSVC build environment updates
 - cmake 3.13.1 -> 3.13.3;
 - Visual Studio 15.9.3 -> 15.9.5;
 - setuptools 40.6.2 -> 40.6.3;
@@ -176,7 +180,7 @@
 - Updated Mesa3D to [18.3.0](https://www.mesa3d.org/relnotes/18.3.0.html).
 ### Removed features
 - shared glapi and standalone GLES drivers support in Scons build has been removed upstream in [this commit](https://gitlab.freedesktop.org/mesa/mesa/commit/45bacc4b63d83447c144d14cb075eaf7a458c429). @jrfonseca chose to cut down this build configuration altogether instead of fixing osmesa build.
-### Build environment updates
+### MSVC build environment updates
 - Visual Studio 15.9.2 -> 15.9.3;
 - cmake 3.13.0 -> 3.13.1;
 - Windows SDK 10.0.17763.1 -> 10.0.17763.132;
@@ -188,7 +192,7 @@
 - Consider that shared glapi and standalone GLES drivers may not always be available.
 # 18.2.6
 - Updated Mesa3D to [18.2.6](https://www.mesa3d.org/relnotes/18.2.6.html).
-### Build environment updates
+### MSVC build environment updates
 - wheel 0.32.2 -> 0.32.3;
 - Visual Studio 15.9.0 -> 15.9.2;
 - Git 2.19.1.1 -> 2.19.2.1;
@@ -199,7 +203,7 @@
 - Updated Mesa3D to [18.2.5](https://www.mesa3d.org/relnotes/18.2.5.html).
 ### Documentation
 - shared glapi and standalone GLES drivers will not be available in Mesa 18.3 series due to support for this build configuration being dropped upstream.
-### Build environment updates
+### MSVC build environment updates
 - Visual Studio 15.8.8 -> 15.9.0;
 - cmake 3.12.3 -> 3.12.4;
 - MarkupSafe 1.0 -> 1.1.0;
@@ -210,7 +214,7 @@
 - Remove LLVM 7 special case from llvm-config output tool.
 # 18.2.4
 - Updated Mesa3D to [18.2.4](https://www.mesa3d.org/relnotes/18.2.4.html).
-### Build environment updates
+### MSVC build environment updates
 - wheel 0.32.1 -> 0.32.2;
 - Visual Studio 15.8.7 -> 15.8.8;
 - setuptools 40.4.3 -> 40.5.0.
@@ -242,7 +246,7 @@
 - Mesa3D Meson build: Use build folder. Avoids git spammming untracked files in Mesa source code repository;
 - Mesa3D Meson build: Restore verbosity level to normal. Now we have build throttling to control system strain which does a better job;
 - Remove old and abandoned pywin32 install asset.
-### Build environment updates
+### MSVC build environment updates
 - git 2.19.0.1 -> 2.19.1.1;
 - Visual Studio 15.8.6 -> 15.8.7.
 # 18.2.2
@@ -250,7 +254,7 @@
 - swr driver is back.
 ### Known issue
 - osmesa support is limited. OpenGL ES and swr driver integration have to be stripped due to build failure.
-### Build environment updates
+### MSVC build environment updates
 - Windows 10.0.7134 -> 10.0.17763;
 - Windows SDK 10.0.17134.12 -> 10.0.17763.1;
 - setuptools 40.4.1 -> 40.4.3;
@@ -282,7 +286,7 @@
 - Updated Mesa3D to [18.2.1](https://www.mesa3d.org/relnotes/18.2.1.html).
 ### Known issue
 - No swr driver in this release due to build failure with LLVM 7.0.0. Weighting my options I decided to release quickly instead of doing a LLVM 6.0.1 x64 buid just get swr to build with it.
-### Build environment updates
+### MSVC build environment updates
 - CMake 3.12.1 -> 3.12.2;
 - Visual Studio 15.8.3 -> 15.8.4;
 - setuptools 40.2.0 -> 40.4.1;
@@ -310,14 +314,14 @@
 - Make distribution creation work with Meson build.
 ### Docunentation
 - Add a notice for enterprise environments documenting a scenario where running 3rd-party unsgned executables is prohibited, See [#11](https://github.com/pal1000/mesa-dist-win/issues/11).
-### Build environment updates
+### MSVC build environment updates
 - Visual Studio 15.8.1 -> 15.8.3;
 - Add 7-zip to build environment configuration info as it is used to package releases.
 # 18.1.7
 - Updated Mesa3D to [18.1.7](https://www.mesa3d.org/relnotes/18.1.7.html).
 ### Build script
 - Mesa3D build finally works with parallel dual Python. Python 2.7.x exclusive for Scons and Python 3.5.x+ exclusive for Meson.
-### Build environment updates
+### MSVC build environment updates
 - Visual Studio 15.7.6 -> 15.8.1;
 - setuptools 40.0.0 -> 40.2.0.
 # 18.1.6
@@ -325,7 +329,7 @@
 ### Build script
 - Do not pass texture float build option to Mesa 18.2 and up;
 - Mesa3D Meson build: Implement Msbuild support.
-### Build environment updates
+### MSVC build environment updates
 - winflexbison package 2.5.14 -> 2.5.15;
 - Visual Studio 15.7.5 -> 15.7.6;
 - cmake 3.12.0 -> 3.12.1.
@@ -337,7 +341,7 @@
 - Initial Mesa3D Meson build configuration control;
 - LLVM wrap generator for Mesa3D Meson build;
 - Minor UI fix.
-### Build environment updates
+### MSVC build environment updates
 - cmake 3.11.4 -> 3.12.0;
 - Bison 3.0.4 -> 3.0.5;
 - pip 10.0.1 -> 18.0.
@@ -350,7 +354,7 @@
 - winflexbison is required to build Mesa3D regardless of build system used.
 ### llvm-config output grabber
 - Make sure old output snapshot is not destroyed when LLVM binaries are missing.
-### Build environment updates
+### MSVC build environment updates
 - setuptools 39.2.0 -> 40.0.0;
 - Visual Studio 15.7.4 -> 15.7.5.
 # 18.1.3.601-1
@@ -359,7 +363,7 @@
 - Enabled texture float and renderbuffers as patent expired on 6/17/2018.
 ### Build script
 - Improve osmesa dual pass build workaround hack to minimize regression. osmesa classic should have integration with other drivers fully restored. Also there is no need to backup and restore softpipe and llvmpipe anymore.
-### Build environment updates
+### MSVC build environment updates
 - Update build configuration info to match latest changes;
 - cmake 3.11.3 -> 3.11.4;
 - Visual Studio 15.7.3 -> 15.7.4;
@@ -394,7 +398,7 @@
 - Updated Mesa3D to [18.1.1](https://www.mesa3d.org/relnotes/18.1.1.html).
 ### End user guide
 - More documentation updates related to GL_ARB_compatibility and OpenGL context types.
-### Build environment updates
+### MSVC build environment updates
 - setuptools 39.1.0 -> 39.2.0
 - Visual Studio 15.7.1 -> 15.7.3
 - git 2.17.0.1 -> 2.17.1.2
@@ -406,7 +410,7 @@
 - Fix a bunch of typos and wording bugs in the process.
 # 18.0.4.600-1
 - Updated Mesa3D to [18.0.4](https://www.mesa3d.org/relnotes/18.0.4.html).
-### Build environment updates
+### MSVC build environment updates
 - Visual Studio 15.6.7 -> 15.7.1
 - wheel 0.31.0 -> 0.31.1
 - cmake 3.11.1 -> 3.11.2
@@ -426,7 +430,7 @@
 - Fix pypi based pywin32 installation again, the part that needs to run as admin was previously unreachable;
 - wheel package is required to install Scons on Python 2.7.15, it also makes possible to uninstall pywin32 cleanly which may provide the means for error-free upgrade;
 - Python launcher interface: Lookup for Python 3.x even if /enablemeson command line argument is unset as LLVM build can use it. Display appropriate warnings.
-### Build environment updates
+### MSVC build environment updates
 - Updated build machine OS to Windows 10 April 2018;
 - Windows 10 SDK 10.0.16299.91 -> 10.0.17134.12;
 - Python 2.7.14 -> 2.7.15;
@@ -471,7 +475,7 @@
 - The text may turn red in the Command Prompt in which the build script is running after updating Python packages. This is a glitch caused by pip 10.0.0.
 # 18.0.0.600-1
 - Updated Mesa3D to [18.0.0](https://www.mesa3d.org/relnotes/18.0.0.html).
-### Build environment updates
+### MSVC build environment updates
 - pip 9.0.2 -> 9.0.3
 - Visual Studio 15.6.3 -> 15.6.4
 - git 2.16.2.1 -> 2.16.3.1
@@ -482,7 +486,7 @@
 - Add uninstall and update support to system-wide deployment tool.
 # 17.3.7.600-1
 - Updated Mesa3D to [17.3.7](https://www.mesa3d.org/relnotes/17.3.7.html).
-### Build environment updates
+### MSVC build environment updates
 - Visual Studio 15.5.7 -> 15.6.3
 - setuptools 38.5.1 -> 39.0.1
 - LLVM 5.0.1 -> 6.0.0
@@ -501,7 +505,7 @@
 - Made release notes incremental.
 # 17.3.6.501-1
 - Mesa3D 17.3.6 [release notes](https://www.mesa3d.org/relnotes/17.3.6.html).
-### Build environment updates
+### MSVC build environment updates
 - Git 2.16.1.4 -> 2.16.2.1
 - Visual Studio 15.5.6 -> 15.5.7
 - pywin32 222 -> 223
@@ -522,7 +526,7 @@
 - Allow distribution creation without building Mesa if we have binaries from a past build.
 # 17.3.4.501-1
 - Updated Mesa3D to [17.3.4](https://www.mesa3d.org/relnotes/17.3.4.html).
-### Build environment updates
+### MSVC build environment updates
 - pywin32 221 -> 222.
 - Visual Studio 15.5.4 -> 15.5.6.
 - setuptools 38.4.0 -> 38.5.1.

@@ -1,6 +1,7 @@
 @IF NOT EXIST %mesa%\mesa-dist-win\buildinfo md %mesa%\mesa-dist-win\buildinfo
-@set disableenvdump=1
-@IF "%disableenvdump%"=="1" GOTO skipenvdump
+@set /p enableenvdump=Do you want to dump build environment information to a text file (y/n):
+@echo.
+@IF /I NOT "%enableenvdump%"=="y" GOTO skipenvdump
 @echo Dumping build environment information. This will take a short while...
 @echo.
 @IF %toolchain%==gcc echo Build environment>%mesa%\mesa-dist-win\buildinfo\mingw.txt

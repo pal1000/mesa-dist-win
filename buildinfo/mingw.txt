@@ -96,7 +96,7 @@ mingw-w64-i686-isl 0.21-1
 mingw-w64-i686-libffi 3.2.1-4
 mingw-w64-i686-libiconv 1.16-1
 mingw-w64-i686-libwinpthread-git 7.0.0.5447.a2d94c81-1
-mingw-w64-i686-llvm 8.0.0-3
+mingw-w64-i686-llvm 8.0.0-4
 mingw-w64-i686-mpc 1.1.0-1
 mingw-w64-i686-mpfr 4.0.2-2
 mingw-w64-i686-pkg-config 0.29.2-1
@@ -113,7 +113,7 @@ mingw-w64-x86_64-isl 0.21-1
 mingw-w64-x86_64-libffi 3.2.1-4
 mingw-w64-x86_64-libiconv 1.16-1
 mingw-w64-x86_64-libwinpthread-git 7.0.0.5447.a2d94c81-1
-mingw-w64-x86_64-llvm 8.0.0-3
+mingw-w64-x86_64-llvm 8.0.0-4
 mingw-w64-x86_64-mpc 1.1.0-1
 mingw-w64-x86_64-mpfr 4.0.2-2
 mingw-w64-x86_64-windows-default-manifest 6.4-3
