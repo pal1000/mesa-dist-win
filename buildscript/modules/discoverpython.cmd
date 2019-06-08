@@ -67,12 +67,12 @@
 
 :nopylauncher
 @rem Missing Python launcher fallback code path.
-@rem First remove Python UWP installer from PATH (see https://github.com/pal1000/mesa-dist-win/issues/23)
-
+@rem First remove Python UWP loader from PATH (see https://github.com/pal1000/mesa-dist-win/issues/23)
 @setlocal ENABLEDELAYEDEXPANSION
 @SET PATH=!PATH:;%LOCALAPPDATA%\Microsoft\WindowsApps=!
 @endlocal&set PATH=%PATH%
 
+@rem Check if Python is in PATH or if it is provided as a local depedency.
 @SET ERRORLEVEL=0
 @IF %pythonloc%==python.exe where /q python.exe
 @IF ERRORLEVEL 1 set pythonloc=%mesa%\python\python.exe
@@ -82,7 +82,7 @@
 @pause
 @exit
 )
-@IF %pythonloc%==python.exe FOR /F "tokens=* USEBACKQ" %%a IN (`where /f python.exe`) DO @SET pythonloc=%%~sa & GOTO loadpypath
+@IF %pythonloc%==python.exe set exitloop=1&FOR /F "tokens=* USEBACKQ" %%a IN (`where /f python.exe`) DO @IF defined exitloop set "exitloop="&SET pythonloc=%%~sa
 
 :loadpypath
 @REM Load Python in PATH to convince CMake to use the selected version.
@@ -90,9 +90,7 @@
 @set pypath=1
 @where /q python.exe
 @IF ERRORLEVEL 1 set pypath=0
-@IF %pypath%==1 FOR /F "tokens=* USEBACKQ" %%a IN (`where /f python.exe`) DO @SET pypath=%%~sa & GOTO doloadpy
-
-:doloadpy
+@IF %pypath%==1 set exitloop=1&FOR /F "tokens=* USEBACKQ" %%a IN (`where /f python.exe`) DO @IF defined exitloop set "exitloop="&SET pypath=%%~sa
 @IF NOT %pypath%==%pythonloc% set PATH=%pythonloc:~0,-10%;%PATH%
 
 :pyver
