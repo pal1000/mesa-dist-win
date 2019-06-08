@@ -16,7 +16,10 @@
 @cls
 @setlocal ENABLEDELAYEDEXPANSION
 @set msvccount=0
-@IF EXIST %vswhere% for /F "USEBACKQ tokens=*" %%a IN (`%vswhere% -prerelease -property catalog_productDisplayVersion`) do @set /a msvccount+=1&echo !msvccount!. Visual Studio %%a
+@IF %totalmsvc% GTR 0 for /F "USEBACKQ tokens=*" %%a IN (`%vswhere% -prerelease -property displayName`) do @set /a msvccount+=1&set msvcnames[!msvccount!]=%%a
+@IF %totalmsvc% GTR 0 set msvccount=0
+@IF %totalmsvc% GTR 0 for /F "USEBACKQ tokens=*" %%a IN (`%vswhere% -prerelease -property catalog_productDisplayVersion`) do @set /a msvccount+=1&set msvcversions[!msvccount!]=%%a
+@IF %totalmsvc% GTR 0 FOR /L %%a IN (1,1,%totalmsvc%) do @echo %%a.!msvcnames[%%a]! v!msvcversions[%%a]!
 @endlocal
 @IF NOT %msysstate%==0 echo %totaltoolchains%. MSYS2 Mingw-w64 GCC
 @echo.

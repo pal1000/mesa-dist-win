@@ -1,7 +1,8 @@
 # Next release
 ### Build script
 - MSYS2 refactor: Remove runmsys module as it is too small to be necessary;
-- Python doscovery refactor: Use exitloop variable to break from for loops.
+- Python doscovery refactor: Use exitloop variable to break from for loops;
+- Display Visual Studio edition in toolchain selection menu.
 # 19.0.6
 - Updated Mesa3D to [19.0.6](https://www.mesa3d.org/relnotes/19.0.6.html).
 ### Build script
