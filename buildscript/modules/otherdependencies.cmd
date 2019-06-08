@@ -37,7 +37,8 @@
 @set pkgconfigstate=1
 @IF %msysstate%==0 GOTO nonmingwpkgconfig
 @call %mesa%\mesa-dist-win\buildscript\modules\msysupdate.cmd
-@%runmsys% pacman -S mingw-w64-%mingwabi%-pkg-config --needed --noconfirm --disable-download-timeout
+@%msysloc%\usr\bin\bash --login -c "pacman -S mingw-w64-%mingwabi%-pkg-config --needed --noconfirm --disable-download-timeout"
+@echo.
 @set PKG_CONFIG_PATH=%msysloc%\mingw%minabi%\bin
 @GOTO doneenvcheck
 

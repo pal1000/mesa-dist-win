@@ -71,7 +71,7 @@ GOTO skipmesa
 @if %pythonver%==2 if %toolchain%==msvc IF "%sconspypi%"=="1" set sconsloc=%pythonloc:~0,-10%Scripts\scons.py
 @if %pythonver%==2 if %toolchain%==msvc IF "%sconspypi%"=="1" IF NOT EXIST "%sconsloc%" set sconsloc=%pythonloc:~0,-10%Scripts\scons
 @if %pythonver%==2 if %toolchain%==msvc set buildcmd=%pythonloc% %sconsloc%
-@if %pythonver%==2 if %toolchain%==gcc set buildcmd=%runmsys% cd $mesa/mesa;scons
+@if %pythonver%==2 if %toolchain%==gcc set buildcmd=%msysloc%\usr\bin\bash --login -c "cd $mesa/mesa;scons
 @if %pythonver%==2 set buildcmd=%buildcmd% -j%throttle% build=release platform=windows machine=%longabi%
 @if %pythonver%==2 if %toolchain%==gcc set buildcmd=%buildcmd% toolchain=mingw
 @if %pythonver%==2 if %toolchain%==msvc set buildcmd=%buildcmd% MSVC_USE_SCRIPT=%vsenv%
@@ -134,6 +134,8 @@ GOTO skipmesa
 @IF /I "%expressmesabuild%"=="y" set graw=y
 @if %pythonver% GEQ 3 if /I "%graw%"=="y" set buildconf=%buildconf% -Dbuild-tests=true
 
+@if %pythonver%==2 if %toolchain%==gcc set buildcmd=%buildcmd%"
+
 @set cleanbuild=n
 @IF %pythonver%==2 if EXIST build\windows-%longabi% set /p cleanbuild=Do you want to clean build (y/n):
 @IF %pythonver%==2 if EXIST build\windows-%longabi% echo.
@@ -166,8 +168,8 @@ GOTO skipmesa
 @IF %toolchain%==gcc set LDFLAGS=-static -s
 
 @rem Execute build.
-@if %pythonver%==2 IF %toolchain%==msvc echo Build command: %buildcmd%
-@if %pythonver%==2 IF %toolchain%==msvc echo.
+@if %pythonver%==2 echo Build command: %buildcmd%
+@if %pythonver%==2 echo.
 @if %pythonver%==2 %buildcmd%
 @if %pythonver%==2 IF %toolchain%==msvc echo.
 @if %pythonver% GEQ 3 echo Build configuration command is stored in buildconf variable.
