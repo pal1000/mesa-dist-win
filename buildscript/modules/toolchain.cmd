@@ -65,8 +65,10 @@
 @IF NOT EXIST %vsenv% set /p addvcpp=Add Desktop development with C++ workload - y/n:
 @IF NOT EXIST %vsenv% echo.
 @IF NOT EXIST %vsenv% IF /I NOT "%addvcpp%"=="y" pause
+@IF NOT EXIST %vsenv% IF /I NOT "%addvcpp%"=="y" endlocal
 @IF NOT EXIST %vsenv% IF /I NOT "%addvcpp%"=="y" GOTO findcompilers
 @IF NOT EXIST %vsenv% %vswhere:~0,-12%vs_installer.exe"
+@IF NOT EXIST %vsenv% endlocal
 @IF NOT EXIST %vsenv% GOTO findcompilers
 
 :selectedmsvc
