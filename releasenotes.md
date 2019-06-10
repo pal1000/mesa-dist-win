@@ -4,7 +4,8 @@
 - Python doscovery refactor: Use exitloop variable to break from for loops;
 - Display Visual Studio edition in toolchain selection menu and build environment information file;
 - Improve performance of toolchain selection menu by deduplicating calls to vswhere tool;
-- Clean-up toolchain selection validation.
+- Clean-up toolchain selection validation;
+- Hide Powershell errors when aborting pywin32 COM and services component update by canceling at UAC prompt.
 # 19.0.6
 - Updated Mesa3D to [19.0.6](https://www.mesa3d.org/relnotes/19.0.6.html).
 ### Build script

@@ -57,7 +57,7 @@
 @IF NOT %pypack%==0 echo.
 @IF %pypack%==pywin32 set /p pywin32com=Do you want to install COM and services support - y/n. You'll be asked for admin privileges:
 @IF %pypack%==pywin32 echo.
-@IF %pypack%==pywin32 IF /I "%pywin32com%"=="y" powershell -Command Start-Process "%mesa%\mesa-dist-win\buildscript\modules\pywin32.cmd" -Args "%pythonloc%" -Verb runAs
+@IF %pypack%==pywin32 IF /I "%pywin32com%"=="y" powershell -Command Start-Process "%mesa%\mesa-dist-win\buildscript\modules\pywin32.cmd" -Args "%pythonloc%" -Verb runAs 2>nul
 @set pypack=0
 @GOTO pypackmissing
 
@@ -69,7 +69,7 @@
 @if /I "%pyupd%"=="y" if EXIST "%LOCALAPPDATA%\pip" RD /S /Q "%LOCALAPPDATA%\pip"
 @if /I "%pyupd%"=="y" for /F "skip=2 delims= " %%a in ('%pythonloc% -W ignore -m pip list -o --disable-pip-version-check') do @%pythonloc% -W ignore -m pip install -U "%%a"
 @if /I "%pyupd%"=="y" IF %pythonver%==2 IF NOT EXIST "%windir%\system32\pythoncom27.dll" IF NOT EXIST "%windir%\syswow64\pythoncom27.dll" GOTO locatemeson
-@if /I "%pyupd%"=="y" IF %pythonver%==2 powershell -Command Start-Process "%mesa%\mesa-dist-win\buildscript\modules\pywin32.cmd" -Args "%pythonloc%" -Verb runAs
+@if /I "%pyupd%"=="y" IF %pythonver%==2 powershell -Command Start-Process "%mesa%\mesa-dist-win\buildscript\modules\pywin32.cmd" -Args "%pythonloc%" -Verb runAs 2>nul
 
 :locatemeson
 @IF %pythonver%==2 GOTO endpython
