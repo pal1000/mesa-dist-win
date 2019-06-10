@@ -75,7 +75,7 @@ libpcre2_8 10.33-2
 libpcre32 8.43-2
 libpcrecpp 8.43-2
 libpcreposix 8.43-2
-libpsl 0.20.2-3
+libpsl 0.21.0-1
 libreadline 8.0.000-1
 libsqlite 3.28.0-1
 libssh2 1.8.2-1
@@ -148,7 +148,7 @@ python2-pyparsing 2.4.0-1
 python2-setuptools 41.0.1-1
 python2-six 1.12.0-1
 rebase 4.4.4-1
-scons 3.0.1-1
+scons 3.0.4-1
 sed 4.7-1
 tftp-hpa 5.2-3
 time 1.9-1

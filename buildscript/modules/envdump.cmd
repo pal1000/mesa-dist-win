@@ -28,7 +28,7 @@
 @IF %rhstate%==1 SET PATH=%mesa%\resource-hacker\;%PATH%
 @IF %rhstate% GTR 0 FOR /F "USEBACKQ tokens=*" %%a IN (`where ResourceHacker.exe`) do @set rhloc="%%a"
 @IF %rhstate% GTR 0 ResourceHacker.exe -open %rhloc% -action extract -mask VERSIONINFO,, -save %mesa%\mesa-dist-win\buildscript\assets\temp.rc -log NUL
-@IF %rhstate% GTR 0 set PATH=%oldpath%
+@IF %rhstate%==1 set PATH=%oldpath%
 @IF %rhstate% GTR 0 set exitloop=1&FOR /F "tokens=2 skip=2 USEBACKQ" %%a IN (`type %mesa%\mesa-dist-win\buildscript\assets\temp.rc`) do @IF defined exitloop set "exitloop="&set rhver=%%a
 @IF %rhstate% GTR 0 IF %toolchain%==gcc echo Ressource Hacker %rhver:,=.%>>%mesa%\mesa-dist-win\buildinfo\mingw.txt
 @IF %rhstate% GTR 0 IF %toolchain%==msvc echo Ressource Hacker %rhver:,=.%>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
@@ -55,7 +55,7 @@
 @IF %toolchain%==gcc %msysloc%\usr\bin\bash --login -c "pacman -Q">>%mesa%\mesa-dist-win\buildinfo\mingw.txt
 
 @rem Dump Visual Studio environment
-@IF %toolchain%==msvc echo Visual Studio %msvcver%>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
+@IF %toolchain%==msvc echo %msvcname% v%msvcver%>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
 @IF %toolchain%==msvc call %vsenv% %vsabi%>nul 2>&1
 @IF %toolchain%==msvc set PATH=%oldpath%
 @IF %toolchain%==msvc echo Windows SDK %WindowsSDKVersion:~0,-1%>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
