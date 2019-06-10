@@ -36,19 +36,16 @@
 @set toolchain=gcc
 @GOTO selectedgcc
 )
+@set validtoolchain=1
 @IF "%selecttoolchain%"=="" (
 @echo Invalid entry
 @pause
 @endlocal
 @GOTO findcompilers
 )
-@IF %selecttoolchain% LEQ 0 (
-@echo Invalid entry
-@pause
-@endlocal
-@GOTO findcompilers
-)
-@IF %selecttoolchain% GTR %totaltoolchains% (
+@IF %selecttoolchain% LEQ 0 set validtoolchain=0
+@IF %selecttoolchain% GTR %totaltoolchains% set validtoolchain=0
+@IF %validtoolchain%==0 (
 @echo Invalid entry
 @pause
 @endlocal
