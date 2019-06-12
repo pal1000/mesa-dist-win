@@ -3,7 +3,7 @@ Build environment
 Windows 10.0.18362
 Ressource Hacker 5.1.7.343
 7-Zip 19.00 ultra compression
-Git 2.21.0.1
+Git 2.22.0.1
 
 MSYS2 environment
 -----------------
@@ -37,7 +37,7 @@ heimdal-libs 7.5.0-3
 icu 64.2-1
 inetutils 1.9.4-2
 info 6.6-1
-less 550-1
+less 551-1
 libarchive 3.3.3-3
 libargp 20110921-2
 libasprintf 0.19.8.1-1
@@ -96,7 +96,7 @@ mingw-w64-i686-isl 0.21-1
 mingw-w64-i686-libffi 3.2.1-4
 mingw-w64-i686-libiconv 1.16-1
 mingw-w64-i686-libwinpthread-git 7.0.0.5447.a2d94c81-1
-mingw-w64-i686-llvm 8.0.0-4
+mingw-w64-i686-llvm 8.0.0-8
 mingw-w64-i686-mpc 1.1.0-1
 mingw-w64-i686-mpfr 4.0.2-2
 mingw-w64-i686-pkg-config 0.29.2-1
@@ -113,13 +113,13 @@ mingw-w64-x86_64-isl 0.21-1
 mingw-w64-x86_64-libffi 3.2.1-4
 mingw-w64-x86_64-libiconv 1.16-1
 mingw-w64-x86_64-libwinpthread-git 7.0.0.5447.a2d94c81-1
-mingw-w64-x86_64-llvm 8.0.0-4
+mingw-w64-x86_64-llvm 8.0.0-8
 mingw-w64-x86_64-mpc 1.1.0-1
 mingw-w64-x86_64-mpfr 4.0.2-2
 mingw-w64-x86_64-windows-default-manifest 6.4-3
 mingw-w64-x86_64-winpthreads-git 7.0.0.5447.a2d94c81-1
 mingw-w64-x86_64-zlib 1.2.11-7
-mintty 1~3.0.0-2
+mintty 1~3.0.1-1
 mpfr 4.0.2-1
 msys2-keyring r9.397a52e-1
 msys2-launcher-git 0.3.32.56c2ba7-2

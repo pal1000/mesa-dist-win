@@ -1,4 +1,5 @@
-# Next release
+# 19.1.0
+- Updated Mesa3D to [19.1.0](https://www.mesa3d.org/relnotes/19.1.0.html).
 ### Build script
 - MSYS2 refactor: Remove runmsys module as it is too small to be necessary;
 - Python doscovery refactor: Use exitloop variable to break from for loops;
@@ -6,6 +7,8 @@
 - Improve performance of toolchain selection menu by deduplicating calls to vswhere tool;
 - Clean-up toolchain selection validation;
 - Hide Powershell errors when aborting pywin32 COM and services component update by canceling at UAC prompt.
+### Source control
+- Stop treating .rc files as text as they are no longer tracked by git.
 # 19.0.6
 - Updated Mesa3D to [19.0.6](https://www.mesa3d.org/relnotes/19.0.6.html).
 ### Build script
