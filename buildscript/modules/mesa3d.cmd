@@ -76,8 +76,7 @@ GOTO skipmesa
 @if %pythonver%==2 if %toolchain%==gcc set buildcmd=%buildcmd% toolchain=mingw
 @if %pythonver%==2 if %toolchain%==msvc set buildcmd=%buildcmd% MSVC_USE_SCRIPT=%vsenv%
 
-@if %pythonver% GEQ 3 set buildconf=%mesonloc% build/%abi% --backend=vs2017 --default-library=static --buildtype=release
-@if %pythonver% GEQ 3 if "%llvmlink%"=="MT" set buildconf=%buildconf% -Db_vscrt=mt
+@if %pythonver% GEQ 3 set buildconf=%mesonloc% build/%abi% --backend=
 @IF %pythonver% GEQ 3 set platformabi=Win32
 @IF %pythonver% GEQ 3 IF %abi%==x64 set platformabi=%abi%
 @if %pythonver% GEQ 3 set buildcmd=msbuild /p^:Configuration=release,Platform=%platformabi% mesa.sln /m^:%throttle%
@@ -85,9 +84,13 @@ GOTO skipmesa
 @set ninja=n
 @if %pythonver% GEQ 3 if NOT %ninjastate%==0 set /p ninja=Use Ninja build system instead of MsBuild (y/n); less storage device strain and maybe faster build:
 @if %pythonver% GEQ 3 if NOT %ninjastate%==0 echo.
-@if /I "%ninja%"=="y" if %ninjastate%==1 set PATH=%mesa%\ninja\;%PATH%
-@if /I "%ninja%"=="y" set buildconf=%buildconf:vs2017=ninja%
+@if %pythonver% GEQ 3 if /I "%ninja%"=="y" if %ninjastate%==1 set PATH=%mesa%\ninja\;%PATH%
+@if %pythonver% GEQ 3 if /I "%ninja%"=="y" set buildconf=%buildconf%ninja
 @if %pythonver% GEQ 3 if /I "%ninja%"=="y" set buildcmd=ninja -j %throttle%
+@if %pythonver% GEQ 3 if /I NOT "%ninja%"=="y" set buildconf=%buildconf%vs
+
+@if %pythonver% GEQ 3 set buildconf=%buildconf% --default-library=static --buildtype=release
+@if %pythonver% GEQ 3 if "%llvmlink%"=="MT" set buildconf=%buildconf% -Db_vscrt=mt
 
 @set llvmless=n
 @if %havellvm%==0 set /p llvmless=Build Mesa without LLVM (y=yes/q=quit). llvmpipe and swr drivers and high performance JIT won't be available for other drivers and libraries:
@@ -113,7 +116,7 @@ GOTO skipmesa
 @IF %pythonver% GEQ 3 set /p gles=Do you want to build GLAPI as a shared library and standalone GLES libraries (y/n):
 @IF %pythonver% GEQ 3 echo.
 @if %pythonver% GEQ 3 if /I NOT "%gles%"=="y" set buildconf=%buildconf% -Dshared-glapi=false
-@if %pythonver% GEQ 3 if /I "%gles%"=="y" set buildconf=%buildconf% -Dgles1=true -Dgles2=true
+@if %pythonver% GEQ 3 if /I "%gles%"=="y" set buildconf=%buildconf% -Dshared-glapi=true -Dgles1=true -Dgles2=true
 
 @set expressmesabuild=n
 @if %pythonver%==2 set /p expressmesabuild=Do you want to build Mesa with quick configuration - includes libgl-gdi, graw-gdi, graw-null, tests, osmesa and shared glapi and shared GLES libraries if glapi is a shared library:
@@ -146,7 +149,7 @@ GOTO skipmesa
 @IF %pythonver% GEQ 3 if /I "%cleanbuild%"=="y" for /d %%a in ("%mesa%\mesa\subprojects\zlib-*") do @RD /S /Q "%%~a"
 @IF %pythonver% GEQ 3 if /I "%cleanbuild%"=="y" for /d %%a in ("%mesa%\mesa\subprojects\expat-*") do @RD /S /Q "%%~a"
 
-@IF %flexstate%==1 set PATH=%mesa%\flexbison\;%PATH%
+@IF %toolchain%==msvc IF %flexstate%==1 set PATH=%mesa%\flexbison\;%PATH%
 @if %pythonver% GEQ 3 set PATH=%PKG_CONFIG_PATH%\;%PATH%
 
 :build_mesa
@@ -173,6 +176,7 @@ GOTO skipmesa
 @if %pythonver%==2 %buildcmd%
 @if %pythonver%==2 IF %toolchain%==msvc echo.
 @if %pythonver% GEQ 3 echo Build configuration command is stored in buildconf variable.
+@if %pythonver% GEQ 3 echo Build execution command is stored in buildcmd variable.
 @if %pythonver% GEQ 3 echo.
 @if %pythonver% GEQ 3 cmd
 
