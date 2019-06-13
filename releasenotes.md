@@ -3,7 +3,8 @@
 - Meson build: don't overwrite backend string, it is too risky;
 - Meson build: fix gles and shared glapi configuration;
 - Meson build: mention that buildcmd variable stores the build execution command;
-- Meson build with Ninja: VS Cross Tools is not supported so use 32-bit compiler instead.
+- Meson build with Ninja: VS Cross Tools is not supported so use 32-bit compiler instead;
+- Meson build: Disable lookup for Mingw pkg-config as it doesn't work anymore and also fix lookup for pkg-config-lite.
 # 19.1.0
 - Updated Mesa3D to [19.1.0](https://www.mesa3d.org/relnotes/19.1.0.html).
 ### Build script

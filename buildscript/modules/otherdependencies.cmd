@@ -35,7 +35,8 @@
 @IF %pythonver%==2 set pkgconfigstate=0
 @IF %pythonver%==2 GOTO doneenvcheck
 @set pkgconfigstate=1
-@IF %msysstate%==0 GOTO nonmingwpkgconfig
+@rem IF %msysstate%==0 GOTO nonmingwpkgconfig
+@GOTO nonmingwpkgconfig
 @call %mesa%\mesa-dist-win\buildscript\modules\msysupdate.cmd
 @%msysloc%\usr\bin\bash --login -c "pacman -S mingw-w64-%mingwabi%-pkg-config --needed --noconfirm --disable-download-timeout"
 @echo.
@@ -44,25 +45,25 @@
 
 :nonmingwpkgconfig
 @rem Look for pkg-config-lite and standalone pkg-config
-@set pkgconfloc=%mesa%\pkgconfig
+@set pkgconfloc=%mesa%\pkgconfig\bin
 @IF EXIST %pkgconfloc%\pkg-config.exe IF NOT EXIST %pkgconfloc%\x86_64-w64-mingw32-pkg-config.exe IF NOT EXIST %pkgconfloc%\i686-w64-mingw32-pkg-config.exe SET PKG_CONFIG_PATH=%pkgconfloc%
 @IF EXIST %pkgconfloc%\pkg-config.exe IF EXIST %pkgconfloc%\x86_64-w64-mingw32-pkg-config.exe IF EXIST %pkgconfloc%\libwinpthread-1.dll SET PKG_CONFIG_PATH=%pkgconfloc%
 @IF EXIST %pkgconfloc%\pkg-config.exe IF EXIST %pkgconfloc%\i686-w64-mingw32-pkg-config.exe IF EXIST %pkgconfloc%\libwinpthread-1.dll SET PKG_CONFIG_PATH=%pkgconfloc%
 @IF EXIST "%PKG_CONFIG_PATH%" GOTO doneenvcheck
 
-@set pkgconfloc=%mesa%\pkg-config
+@set pkgconfloc=%mesa%\pkg-config\bin
 @IF EXIST %pkgconfloc%\pkg-config.exe IF NOT EXIST %pkgconfloc%\x86_64-w64-mingw32-pkg-config.exe IF NOT EXIST %pkgconfloc%\i686-w64-mingw32-pkg-config.exe SET PKG_CONFIG_PATH=%pkgconfloc%
 @IF EXIST %pkgconfloc%\pkg-config.exe IF EXIST %pkgconfloc%\x86_64-w64-mingw32-pkg-config.exe IF EXIST %pkgconfloc%\libwinpthread-1.dll SET PKG_CONFIG_PATH=%pkgconfloc%
 @IF EXIST %pkgconfloc%\pkg-config.exe IF EXIST %pkgconfloc%\i686-w64-mingw32-pkg-config.exe IF EXIST %pkgconfloc%\libwinpthread-1.dll SET PKG_CONFIG_PATH=%pkgconfloc%
 @IF EXIST "%PKG_CONFIG_PATH%" GOTO doneenvcheck
 
-@set pkgconfloc=%mesa%\pkgconfiglite
+@set pkgconfloc=%mesa%\pkgconfiglite\bin
 @IF EXIST %pkgconfloc%\pkg-config.exe IF NOT EXIST %pkgconfloc%\x86_64-w64-mingw32-pkg-config.exe IF NOT EXIST %pkgconfloc%\i686-w64-mingw32-pkg-config.exe SET PKG_CONFIG_PATH=%pkgconfloc%
 @IF EXIST %pkgconfloc%\pkg-config.exe IF EXIST %pkgconfloc%\x86_64-w64-mingw32-pkg-config.exe IF EXIST %pkgconfloc%\libwinpthread-1.dll SET PKG_CONFIG_PATH=%pkgconfloc%
 @IF EXIST %pkgconfloc%\pkg-config.exe IF EXIST %pkgconfloc%\i686-w64-mingw32-pkg-config.exe IF EXIST %pkgconfloc%\libwinpthread-1.dll SET PKG_CONFIG_PATH=%pkgconfloc%
 @IF EXIST "%PKG_CONFIG_PATH%" GOTO doneenvcheck
 
-@set pkgconfloc=%mesa%\pkg-config-lite
+@set pkgconfloc=%mesa%\pkg-config-lite\bin
 @IF EXIST %pkgconfloc%\pkg-config.exe IF NOT EXIST %pkgconfloc%\x86_64-w64-mingw32-pkg-config.exe IF NOT EXIST %pkgconfloc%\i686-w64-mingw32-pkg-config.exe SET PKG_CONFIG_PATH=%pkgconfloc%
 @IF EXIST %pkgconfloc%\pkg-config.exe IF EXIST %pkgconfloc%\x86_64-w64-mingw32-pkg-config.exe IF EXIST %pkgconfloc%\libwinpthread-1.dll SET PKG_CONFIG_PATH=%pkgconfloc%
 @IF EXIST %pkgconfloc%\pkg-config.exe IF EXIST %pkgconfloc%\i686-w64-mingw32-pkg-config.exe IF EXIST %pkgconfloc%\libwinpthread-1.dll SET PKG_CONFIG_PATH=%pkgconfloc%
