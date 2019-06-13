@@ -84,9 +84,9 @@ GOTO skipmesa
 @set ninja=n
 @if %pythonver% GEQ 3 if NOT %ninjastate%==0 set /p ninja=Use Ninja build system instead of MsBuild (y/n); less storage device strain and maybe faster build:
 @if %pythonver% GEQ 3 if NOT %ninjastate%==0 echo.
-@if %pythonver% GEQ 3 if /I "%ninja%"=="y" if %ninjastate%==1 set PATH=%mesa%\ninja\;%PATH%
-@if %pythonver% GEQ 3 if /I "%ninja%"=="y" set buildconf=%buildconf%ninja
-@if %pythonver% GEQ 3 if /I "%ninja%"=="y" set buildcmd=ninja -j %throttle%
+@if /I "%ninja%"=="y" if %ninjastate%==1 set PATH=%mesa%\ninja\;%PATH%
+@if /I "%ninja%"=="y" set buildconf=%buildconf%ninja
+@if /I "%ninja%"=="y" set buildcmd=ninja -j %throttle%
 @if %pythonver% GEQ 3 if /I NOT "%ninja%"=="y" set buildconf=%buildconf%vs
 
 @if %pythonver% GEQ 3 set buildconf=%buildconf% --default-library=static --buildtype=release
@@ -163,7 +163,8 @@ GOTO skipmesa
 
 @rem Prepare build command line tools and set compiler and linker flags.
 @IF %toolchain%==msvc echo.
-@IF %toolchain%==msvc call %vsenv% %vsabi%
+@IF %toolchain%==msvc IF /I "%ninja%"=="y" call %vsenv% %abi%
+@IF %toolchain%==msvc IF /I NOT "%ninja%"=="y" call %vsenv% %vsabi%
 @IF %toolchain%==msvc echo.
 @IF %toolchain%==gcc set MSYSTEM=MINGW%minabi%
 @IF %toolchain%==gcc set CFLAGS=-march=core2 -pipe
