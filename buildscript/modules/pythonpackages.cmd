@@ -16,10 +16,6 @@
 @set pypack=Mako
 @GOTO pypackinstall
 )
-@if %pythonver%==2 if NOT EXIST %pythonloc:~0,-10%Scripts\wheel.exe (
-@set pypack=wheel
-@GOTO pypackinstall
-)
 @if %pythonver%==2 if NOT EXIST %pythonloc:~0,-10%Lib\site-packages\win32 (
 @set pypack=pywin32
 @GOTO pypackinstall
