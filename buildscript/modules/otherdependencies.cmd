@@ -35,7 +35,7 @@
 @IF %pythonver%==2 set pkgconfigstate=0
 @IF %pythonver%==2 GOTO doneenvcheck
 @set pkgconfigstate=1
-@rem IF %msysstate%==0 GOTO nonmingwpkgconfig
+@IF %msysstate%==0 GOTO nonmingwpkgconfig
 @GOTO nonmingwpkgconfig
 @call %mesa%\mesa-dist-win\buildscript\modules\msysupdate.cmd
 @%msysloc%\usr\bin\bash --login -c "pacman -S mingw-w64-%mingwabi%-pkg-config --needed --noconfirm --disable-download-timeout"

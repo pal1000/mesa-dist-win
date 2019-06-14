@@ -1,3 +1,13 @@
+@rem Select MSVC CRT to use as quickly as possible even if LLVM can't be built as we need this information later.
+@rem Currently using CRT MT, but it can be changed if necessary.
+@IF %pythonver%==2 set llvmlink=MT
+@set mesonver=0.00.0
+@IF %pythonver% GEQ 3 FOR /F "tokens=* USEBACKQ" %%a IN (`%mesonloc% --version`) DO @set mesonver=%%~a
+@IF %pythonver% GEQ 3 set llvmlink=MT
+@IF %pythonver% GEQ 3 IF %mesonver:~0,1%==0 IF %mesonver:~2,-2% LSS 48 set llvmlink=MT
+@echo Using CRT %llvmlink% Release...
+@echo.
+
 @rem Look for CMake build generator.
 @IF %cmakestate%==0 echo CMake is required for LLVM build. If you want to build Mesa3D anyway it will be without swr and llvmpipe drivers and osmesa will run with performance penalty.
 @IF %cmakestate%==0 GOTO skipllvm
@@ -9,16 +19,6 @@
 @rem Beginning LLVM build
 @if EXIST %mesa%\llvm\cmake set /p buildllvm=Begin LLVM build. Only needs to run once for each ABI and version. Proceed (y/n):
 @if EXIST %mesa%\llvm\cmake echo.
-
-@rem Select CRT to use. MT when using Python 2.7. MD when using Python 3 with Meson 0.48 and up.
-@rem MT when using Python 3 with Meson 0.47 or older.
-@IF %pythonver%==2 set llvmlink=MT
-@set mesonver=0.00.0
-@IF %pythonver% GEQ 3 FOR /F "tokens=* USEBACKQ" %%a IN (`%mesonloc% --version`) DO @set mesonver=%%~a
-@IF %pythonver% GEQ 3 set llvmlink=MT
-@IF %pythonver% GEQ 3 IF %mesonver:~0,1%==0 IF %mesonver:~2,-2% LSS 48 set llvmlink=MT
-@echo Using CRT %llvmlink% Release...
-@echo.
 
 @rem Always clean build
 @if /I NOT "%buildllvm%"=="y" if EXIST %mesa%\llvm\cmake IF NOT EXIST %mesa%\llvm\%abi%-%llvmlink% echo WARNING: Not building LLVM. If you want to build Mesa3D anyway it will be without swr and llvmpipe drivers and osmesa will run with performance penalty.

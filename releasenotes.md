@@ -5,7 +5,8 @@
 - Meson build: mention that buildcmd variable stores the build execution command;
 - Meson build with Ninja: VS Cross Tools is not supported so use 32-bit compiler instead;
 - Meson build: Disable lookup for Mingw pkg-config as it doesn't work anymore and also fix lookup for pkg-config-lite;
-- Python 2.x: wheel is no longer necessary to install scons if pip and setuptools are up-to-date.
+- Python 2.x: wheel is no longer necessary to install scons if pip and setuptools are up-to-date;
+- Set MSVC CRT even if LLVM build dependencies are missing avoiding a glitch with build environment information dumper when LLVM is missing.
 # 19.1.0
 - Updated Mesa3D to [19.1.0](https://www.mesa3d.org/relnotes/19.1.0.html).
 ### Build script
