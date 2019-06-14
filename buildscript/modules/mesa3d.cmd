@@ -1,12 +1,8 @@
 @rem Check environment
-@IF %flexstate%==0 (
-@echo Flex and bison are required to build Mesa3D.
-GOTO skipmesa
-)
-@if NOT EXIST mesa if %gitstate%==0 (
-@echo Fatal: Both Mesa3D code and Git are missing. At least one is required. Execution halted.
-@GOTO skipmesa
-)
+@IF %flexstate%==0 echo Flex and bison are required to build Mesa3D.
+@IF %flexstate%==0 GOTO skipmesa
+@if NOT EXIST mesa if %gitstate%==0 echo Fatal: Both Mesa3D code and Git are missing. At least one is required. Execution halted.
+@if NOT EXIST mesa if %gitstate%==0 GOTO skipmesa
 
 @rem Hide Meson support behind a parametter as it doesn't work yet. Also Meson MSYS2 Mingw-w64 build is completely unexplored
 @rem so disable it as well.
@@ -15,7 +11,7 @@ GOTO skipmesa
 @IF %toolchain%==gcc if %pythonver% GEQ 3 echo Mesa3D build: Unimplemented code path.
 @IF %toolchain%==gcc if %pythonver% GEQ 3 GOTO skipmesa
 
-@IF %pythonver% GEQ 3 IF %pkgconfigstate%==0 echo pkg-config is required to build Mesa3D with Meson. You can either use mingw-w64 or pkgconfiglite distribution, but mingw-w64 is the only up-to-date distribution.
+@IF %pythonver% GEQ 3 IF %pkgconfigstate%==0 echo pkg-config-lite is required to build Mesa3D with Meson.
 @IF %pythonver% GEQ 3 IF %pkgconfigstate%==0 GOTO skipmesa
 
 @REM Aquire Mesa3D source code if missing.
@@ -34,10 +30,8 @@ GOTO skipmesa
 @if NOT EXIST mesa IF %pythonver%==2 set mesarepo=https://gitlab.freedesktop.org/mesa/mesa.git
 @if NOT EXIST mesa IF %pythonver% GEQ 3 set mesarepo=https://gitlab.freedesktop.org/dbaker/mesa.git
 @if NOT EXIST mesa IF %pythonver% GEQ 3 set branch=meson-windows
-@if NOT EXIST mesa (
-@git clone --recurse-submodules --depth=1 --branch=%branch% %mesarepo% mesa
-@echo.
-)
+@if NOT EXIST mesa git clone --recurse-submodules --depth=1 --branch=%branch% %mesarepo% mesa
+@if NOT EXIST mesa echo.
 
 @if EXIST mesa if /i NOT "%buildmesa%"=="y" set /p buildmesa=Begin mesa build. Proceed (y/n):
 @if EXIST mesa if /i "%buildmesa%"=="y" echo.
