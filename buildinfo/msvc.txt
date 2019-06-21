@@ -16,7 +16,6 @@ pip        19.1.1
 pywin32    224    
 scons      3.0.5  
 setuptools 41.0.1 
-wheel      0.33.4 
 
 CMake 3.14.5
 Ninja 1.9.0
