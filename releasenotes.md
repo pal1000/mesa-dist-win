@@ -1,4 +1,5 @@
-# Next release
+# 19.1.1
+- Updated Mesa3D to [19.1.1](https://www.mesa3d.org/relnotes/19.1.1.html).
 ### Build script
 - Meson build: don't overwrite backend string, it is too risky;
 - Meson build: fix gles and shared glapi configuration;
