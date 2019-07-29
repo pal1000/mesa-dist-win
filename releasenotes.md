@@ -1,3 +1,6 @@
+# Next release
+### Deployment
+- Declare update operation in system wide depoyment as failed when no Mesa3D driver is installed. Related to #26.
 # 19.1.3
 - Updated Mesa3D to [19.1.3](https://www.mesa3d.org/relnotes/19.1.3.html).
 # 19.1.2
