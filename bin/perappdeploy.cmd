@@ -105,13 +105,11 @@ if '%errorlevel%' NEQ '0' (
 @echo.
 @set swr=n
 @if NOT %mesadll%==x64 GOTO opengles
-@set /p swr=Do you want swr driver - the new desktop OpenGL driver made by Intel (y/n):
-@echo.
+@IF EXIST "%mesaloc%\%mesadll%\swr*.dll" set /p swr=Do you want swr driver - the new desktop OpenGL driver made by Intel (y/n):
+@IF EXIST "%mesaloc%\%mesadll%\swr*.dll" echo.
 @IF /I NOT "%swr%"=="y" GOTO opengles
-@if EXIST "%dir%\swrAVX.dll" echo Updated swr driver deployment.
-@if EXIST "%dir%\swrAVX.dll" GOTO deployswr
-@if EXIST "%dir%\swrAVX2.dll" echo Updated swr driver deployment.
-@if EXIST "%dir%\swrAVX2.dll" GOTO deployswr
+@if EXIST "%dir%\swr*.dll" echo Updated swr driver deployment.
+@if EXIST "%dir%\swr*.dll" GOTO deployswr
 
 :deployswr
 @if EXIST "%dir%\swrAVX.dll" del "%dir%\swrAVX.dll"

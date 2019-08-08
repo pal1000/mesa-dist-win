@@ -48,7 +48,7 @@ if '%errorlevel%' NEQ '0' (
 @echo -------------------------------------
 @echo Please make a deployment choice:
 @echo 1. Desktop OpenGL drivers (softpipe and llvmpipe only);
-@IF /I %PROCESSOR_ARCHITECTURE%==AMD64 echo 2. Desktop OpenGL drivers (softpipe, llvmpipe and swr drivers);
+@IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%mesaloc%\x64\swr*.dll" echo 2. Desktop OpenGL drivers (softpipe, llvmpipe and swr drivers);
 @echo 3. Mesa3D off-screen render driver gallium version (osmesa gallium);
 @echo 4. Mesa3D off-screen render driver classic version (osmesa swrast);
 @echo 5. Mesa3D graw framework with display support (graw gdi);
@@ -72,6 +72,9 @@ if '%errorlevel%' NEQ '0' (
 @if "%deploychoice%"=="2" if /I NOT %PROCESSOR_ARCHITECTURE%==AMD64 echo Invalid choice. swr driver is only supported on X64/AMD64 systems.
 @if "%deploychoice%"=="2" if /I NOT %PROCESSOR_ARCHITECTURE%==AMD64 pause
 @if "%deploychoice%"=="2" if /I NOT %PROCESSOR_ARCHITECTURE%==AMD64 GOTO deploy
+@if "%deploychoice%"=="2" if /I %PROCESSOR_ARCHITECTURE%==AMD64 IF NOT EXIST "%mesaloc%\x64\swr*.dll" echo Invalid choice. swr driver is not included in MSYS2 Mingw-w64 build of Mesa3D.
+@if "%deploychoice%"=="2" if /I %PROCESSOR_ARCHITECTURE%==AMD64 IF NOT EXIST "%mesaloc%\x64\swr*.dll" pause
+@if "%deploychoice%"=="2" if /I %PROCESSOR_ARCHITECTURE%==AMD64 IF NOT EXIST "%mesaloc%\x64\swr*.dll" GOTO deploy
 @IF /I %PROCESSOR_ARCHITECTURE%==X86 copy "%mesaloc%\x86\opengl32.dll" "%windir%\System32\mesadrv.dll"
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 copy "%mesaloc%\x86\opengl32.dll" "%windir%\SysWOW64\mesadrv.dll"
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 copy "%mesaloc%\x64\opengl32.dll" "%windir%\System32\mesadrv.dll"

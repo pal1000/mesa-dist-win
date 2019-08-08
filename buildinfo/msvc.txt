@@ -4,13 +4,13 @@ Windows 10.0.18362
 Ressource Hacker 5.1.7.343
 7-Zip 19.00 ultra compression
 Git 2.22.0.1
-Visual Studio Community 2019 v16.2.0
+Visual Studio Community 2019 v16.2.1
 Windows SDK 10.0.18362.0
 Python 2.7.16
 
 Python packages
 ---------------
-Mako       1.0.14 
+Mako       1.1.0  
 MarkupSafe 1.1.1  
 pip        19.2.1 
 pywin32    224    

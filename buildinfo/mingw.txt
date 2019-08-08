@@ -52,7 +52,7 @@ libffi 3.2.1-3
 libgcrypt 1.8.4-1
 libgdbm 1.18.1-2
 libgettextpo 0.19.8.1-1
-libgnutls 3.6.8-2
+libgnutls 3.6.9-1
 libgpg-error 1.36-1
 libgpgme 1.13.1-1
 libhogweed 3.5.1-1
@@ -84,10 +84,10 @@ libunistring 0.9.10-1
 libutil-linux 2.34-1
 libxml2 2.9.9-4
 libxslt 1.1.33-2
-libzstd 1.4.1-1
+libzstd 1.4.2-1
 lndir 1.0.3-1
 m4 1.4.18-2
-mingw-w64-i686-binutils 2.30-6
+mingw-w64-i686-binutils 2.32-1
 mingw-w64-i686-crt-git 7.0.0.5491.fe45801e-1
 mingw-w64-i686-gcc 9.1.0-3
 mingw-w64-i686-gcc-libs 9.1.0-3
@@ -97,13 +97,13 @@ mingw-w64-i686-isl 0.21-1
 mingw-w64-i686-libffi 3.2.1-4
 mingw-w64-i686-libiconv 1.16-1
 mingw-w64-i686-libwinpthread-git 7.0.0.5480.e14d23be-1
-mingw-w64-i686-llvm 8.0.1-1
+mingw-w64-i686-llvm 8.0.1-3
 mingw-w64-i686-mpc 1.1.0-1
 mingw-w64-i686-mpfr 4.0.2-2
 mingw-w64-i686-windows-default-manifest 6.4-3
 mingw-w64-i686-winpthreads-git 7.0.0.5480.e14d23be-1
 mingw-w64-i686-zlib 1.2.11-7
-mingw-w64-x86_64-binutils 2.30-6
+mingw-w64-x86_64-binutils 2.32-1
 mingw-w64-x86_64-crt-git 7.0.0.5491.fe45801e-1
 mingw-w64-x86_64-gcc 9.1.0-3
 mingw-w64-x86_64-gcc-libs 9.1.0-3
@@ -113,7 +113,7 @@ mingw-w64-x86_64-isl 0.21-1
 mingw-w64-x86_64-libffi 3.2.1-4
 mingw-w64-x86_64-libiconv 1.16-1
 mingw-w64-x86_64-libwinpthread-git 7.0.0.5480.e14d23be-1
-mingw-w64-x86_64-llvm 8.0.1-1
+mingw-w64-x86_64-llvm 8.0.1-3
 mingw-w64-x86_64-mpc 1.1.0-1
 mingw-w64-x86_64-mpfr 4.0.2-2
 mingw-w64-x86_64-windows-default-manifest 6.4-3
