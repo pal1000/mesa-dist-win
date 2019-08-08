@@ -1,4 +1,5 @@
-# Next release
+# 19.1.4
+- Updated Mesa3D to [19.1.4](https://www.mesa3d.org/relnotes/19.1.4.html).
 ### Deployment
 - Declare update operation in system wide depoyment as failed when no Mesa3D driver is installed (bug reported in #26);
 - Made deployment tools aware of Mingw build lacking swr driver (bug reported in #26).
