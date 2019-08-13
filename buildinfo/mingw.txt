@@ -87,10 +87,10 @@ libxslt 1.1.33-2
 libzstd 1.4.2-1
 lndir 1.0.3-1
 m4 1.4.18-2
-mingw-w64-i686-binutils 2.32-1
+mingw-w64-i686-binutils 2.32-2
 mingw-w64-i686-crt-git 7.0.0.5491.fe45801e-1
-mingw-w64-i686-gcc 9.1.0-3
-mingw-w64-i686-gcc-libs 9.1.0-3
+mingw-w64-i686-gcc 9.2.0-1
+mingw-w64-i686-gcc-libs 9.2.0-1
 mingw-w64-i686-gmp 6.1.2-1
 mingw-w64-i686-headers-git 7.0.0.5490.9ec54ed1-1
 mingw-w64-i686-isl 0.21-1
@@ -103,10 +103,10 @@ mingw-w64-i686-mpfr 4.0.2-2
 mingw-w64-i686-windows-default-manifest 6.4-3
 mingw-w64-i686-winpthreads-git 7.0.0.5480.e14d23be-1
 mingw-w64-i686-zlib 1.2.11-7
-mingw-w64-x86_64-binutils 2.32-1
+mingw-w64-x86_64-binutils 2.32-2
 mingw-w64-x86_64-crt-git 7.0.0.5491.fe45801e-1
-mingw-w64-x86_64-gcc 9.1.0-3
-mingw-w64-x86_64-gcc-libs 9.1.0-3
+mingw-w64-x86_64-gcc 9.2.0-1
+mingw-w64-x86_64-gcc-libs 9.2.0-1
 mingw-w64-x86_64-gmp 6.1.2-1
 mingw-w64-x86_64-headers-git 7.0.0.5490.9ec54ed1-1
 mingw-w64-x86_64-isl 0.21-1
@@ -142,7 +142,7 @@ python2-funcsigs 1.0.2-1
 python2-mako 1.0.14-1
 python2-markupsafe 1.1.1-1
 rebase 4.4.4-1
-scons 3.1.0-1
+scons 3.1.1-1
 sed 4.7-1
 tftp-hpa 5.2-3
 time 1.9-1
