@@ -44,6 +44,9 @@ if '%errorlevel%' NEQ '0' (
 
 :deploy
 @cls
+@set mesainstalled=1
+@IF NOT EXIST "%windir%\System32\mesadrv.dll" IF NOT EXIST "%windir%\System32\graw.dll" IF NOT EXIST "%windir%\System32\osmesa.dll" set mesainstalled=0
+
 @echo Mesa3D system-wide deployment utility
 @echo -------------------------------------
 @echo Please make a deployment choice:
@@ -52,18 +55,20 @@ if '%errorlevel%' NEQ '0' (
 @echo 3. Mesa3D off-screen render driver gallium version (osmesa gallium);
 @echo 4. Mesa3D off-screen render driver classic version (osmesa swrast);
 @echo 5. Mesa3D graw framework with display support (graw gdi);
-@echo 6. Update system-wide deployment
-@echo 7. Remove system-wide deployments (uninstall);
-@echo 8. Exit
+@IF %mesainstalled%==1 echo 6. Update system-wide deployment
+@IF %mesainstalled%==1 echo 7. Remove system-wide deployments (uninstall);
+@IF %mesainstalled%==1 echo 8. Exit
+@IF %mesainstalled%==0 echo 6. Exit
 @set /p deploychoice=Enter choice:
 @if "%deploychoice%"=="1" GOTO desktopgl
 @if "%deploychoice%"=="2" GOTO desktopgl
 @if "%deploychoice%"=="3" GOTO osmesa
 @if "%deploychoice%"=="4" GOTO osmesa
 @if "%deploychoice%"=="5" GOTO graw
-@if "%deploychoice%"=="6" GOTO update
-@if "%deploychoice%"=="7" GOTO uninstall
-@if "%deploychoice%"=="8" GOTO exit
+@if "%deploychoice%"=="6" IF %mesainstalled%==1 GOTO update
+@if "%deploychoice%"=="7" IF %mesainstalled%==1 GOTO uninstall
+@if "%deploychoice%"=="8" IF %mesainstalled%==1 GOTO exit
+@if "%deploychoice%"=="6" IF %mesainstalled%==0 GOTO exit
 @echo Invaild entry
 @pause
 @GOTO deploy
@@ -116,10 +121,10 @@ if '%errorlevel%' NEQ '0' (
 @GOTO deploy
 
 :update
-@IF NOT EXIST "%windir%\System32\mesadrv.dll" IF NOT EXIST "%windir%\System32\graw.dll" IF NOT EXIST "%windir%\System32\osmesa.dll" echo.
-@IF NOT EXIST "%windir%\System32\mesadrv.dll" IF NOT EXIST "%windir%\System32\graw.dll" IF NOT EXIST "%windir%\System32\osmesa.dll" echo Error: No Mesa3D drivers installed.
-@IF NOT EXIST "%windir%\System32\mesadrv.dll" IF NOT EXIST "%windir%\System32\graw.dll" IF NOT EXIST "%windir%\System32\osmesa.dll" pause
-@IF NOT EXIST "%windir%\System32\mesadrv.dll" IF NOT EXIST "%windir%\System32\graw.dll" IF NOT EXIST "%windir%\System32\osmesa.dll" GOTO deploy
+@IF %mesainstalled%==0 echo.
+@IF %mesainstalled%==0 echo Error: No Mesa3D drivers installed.
+@IF %mesainstalled%==0 pause
+@IF %mesainstalled%==0 GOTO deploy
 
 @IF /I %PROCESSOR_ARCHITECTURE%==X86 IF EXIST "%windir%\System32\mesadrv.dll" copy "%mesaloc%\x86\opengl32.dll" "%windir%\System32\mesadrv.dll"
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%windir%\SysWOW64\mesadrv.dll" copy "%mesaloc%\x86\opengl32.dll" "%windir%\SysWOW64\mesadrv.dll"

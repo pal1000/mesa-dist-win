@@ -3,7 +3,7 @@ Build environment
 Windows 10.0.18362
 Ressource Hacker 5.1.7.343
 7-Zip 19.00 ultra compression
-Git 2.22.0.1
+Git 2.23.0.1
 
 MSYS2 environment
 -----------------
@@ -87,7 +87,7 @@ libxslt 1.1.33-2
 libzstd 1.4.2-1
 lndir 1.0.3-1
 m4 1.4.18-2
-mingw-w64-i686-binutils 2.32-2
+mingw-w64-i686-binutils 2.32-3
 mingw-w64-i686-crt-git 7.0.0.5491.fe45801e-1
 mingw-w64-i686-gcc 9.2.0-1
 mingw-w64-i686-gcc-libs 9.2.0-1
@@ -103,7 +103,7 @@ mingw-w64-i686-mpfr 4.0.2-2
 mingw-w64-i686-windows-default-manifest 6.4-3
 mingw-w64-i686-winpthreads-git 7.0.0.5480.e14d23be-1
 mingw-w64-i686-zlib 1.2.11-7
-mingw-w64-x86_64-binutils 2.32-2
+mingw-w64-x86_64-binutils 2.32-3
 mingw-w64-x86_64-crt-git 7.0.0.5491.fe45801e-1
 mingw-w64-x86_64-gcc 9.2.0-1
 mingw-w64-x86_64-gcc-libs 9.2.0-1
