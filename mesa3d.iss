@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Mesa3D software rendering drivers for Windows"
-#define MyAppVersion "19.1.5"
+#define MyAppVersion "19.1.6"
 #define MyAppPublisher "Pal100x"
 #define MyAppURL "https://github.com/pal1000/mesa-dist-win"
 #define MyAppExeName "mesa-{#MyAppVersion}-setup.exe"

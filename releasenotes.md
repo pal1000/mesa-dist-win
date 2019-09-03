@@ -1,3 +1,5 @@
+# 19.1.6
+- Updated Mesa3D to [19.1.6](https://www.mesa3d.org/relnotes/19.1.6.html).
 # 19.1.5
 - Updated Mesa3D to [19.1.5](https://www.mesa3d.org/relnotes/19.1.5.html).
 ### Deployment

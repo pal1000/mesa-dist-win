@@ -1,6 +1,6 @@
 Build environment
 -----------------
-Windows 10.0.18362
+Windows 10.0.18363
 Ressource Hacker 5.1.7.343
 7-Zip 19.00 ultra compression
 Git 2.23.0.1
@@ -12,7 +12,7 @@ Python packages
 ---------------
 Mako       1.1.0  
 MarkupSafe 1.1.1  
-pip        19.2.2 
+pip        19.2.3 
 pywin32    224    
 scons      3.1.1  
 setuptools 41.2.0 

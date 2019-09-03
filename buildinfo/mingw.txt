@@ -1,6 +1,6 @@
 Build environment
 -----------------
-Windows 10.0.18362
+Windows 10.0.18363
 Ressource Hacker 5.1.7.343
 7-Zip 19.00 ultra compression
 Git 2.23.0.1
@@ -88,36 +88,36 @@ libzstd 1.4.2-1
 lndir 1.0.3-1
 m4 1.4.18-2
 mingw-w64-i686-binutils 2.32-3
-mingw-w64-i686-crt-git 7.0.0.5491.fe45801e-1
-mingw-w64-i686-gcc 9.2.0-1
-mingw-w64-i686-gcc-libs 9.2.0-1
+mingw-w64-i686-crt-git 7.0.0.5524.2346384e-1
+mingw-w64-i686-gcc 9.2.0-2
+mingw-w64-i686-gcc-libs 9.2.0-2
 mingw-w64-i686-gmp 6.1.2-1
-mingw-w64-i686-headers-git 7.0.0.5490.9ec54ed1-1
+mingw-w64-i686-headers-git 7.0.0.5524.2346384e-1
 mingw-w64-i686-isl 0.21-1
 mingw-w64-i686-libffi 3.2.1-4
 mingw-w64-i686-libiconv 1.16-1
-mingw-w64-i686-libwinpthread-git 7.0.0.5480.e14d23be-1
+mingw-w64-i686-libwinpthread-git 7.0.0.5522.977a9720-1
 mingw-w64-i686-llvm 8.0.1-3
 mingw-w64-i686-mpc 1.1.0-1
 mingw-w64-i686-mpfr 4.0.2-2
 mingw-w64-i686-windows-default-manifest 6.4-3
-mingw-w64-i686-winpthreads-git 7.0.0.5480.e14d23be-1
+mingw-w64-i686-winpthreads-git 7.0.0.5522.977a9720-1
 mingw-w64-i686-zlib 1.2.11-7
 mingw-w64-x86_64-binutils 2.32-3
-mingw-w64-x86_64-crt-git 7.0.0.5491.fe45801e-1
-mingw-w64-x86_64-gcc 9.2.0-1
-mingw-w64-x86_64-gcc-libs 9.2.0-1
+mingw-w64-x86_64-crt-git 7.0.0.5524.2346384e-1
+mingw-w64-x86_64-gcc 9.2.0-2
+mingw-w64-x86_64-gcc-libs 9.2.0-2
 mingw-w64-x86_64-gmp 6.1.2-1
-mingw-w64-x86_64-headers-git 7.0.0.5490.9ec54ed1-1
+mingw-w64-x86_64-headers-git 7.0.0.5524.2346384e-1
 mingw-w64-x86_64-isl 0.21-1
 mingw-w64-x86_64-libffi 3.2.1-4
 mingw-w64-x86_64-libiconv 1.16-1
-mingw-w64-x86_64-libwinpthread-git 7.0.0.5480.e14d23be-1
+mingw-w64-x86_64-libwinpthread-git 7.0.0.5522.977a9720-1
 mingw-w64-x86_64-llvm 8.0.1-3
 mingw-w64-x86_64-mpc 1.1.0-1
 mingw-w64-x86_64-mpfr 4.0.2-2
 mingw-w64-x86_64-windows-default-manifest 6.4-3
-mingw-w64-x86_64-winpthreads-git 7.0.0.5480.e14d23be-1
+mingw-w64-x86_64-winpthreads-git 7.0.0.5522.977a9720-1
 mingw-w64-x86_64-zlib 1.2.11-7
 mintty 1~3.0.2-1
 mpfr 4.0.2-1
