@@ -1,7 +1,7 @@
 @cd ../../
 @set llvmlink=MT
 @set llvmmeson=bitwriter engine mcdisassembler mcjit
-@set llvmscons=engine mcjit bitwriter x86asmprinter irreader
+@set llvmscons=engine mcjit bitwriter mcdisassembler irreader
 @set format=ninjatargets
 @for %%a in ("%cd%") do @set mesa=%%~sa
 @IF NOT EXIST llvm GOTO error
