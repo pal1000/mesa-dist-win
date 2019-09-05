@@ -3,7 +3,7 @@
 @set llvmmeson=engine
 @set llvmscons=engine irreader
 @set format=pythonlist
-@set compiler=%llvmmeson%
+@set compiler=%llvmscons%
 @for %%a in ("%cd%") do @set mesa=%%~sa
 @IF NOT EXIST llvm GOTO error
 @cd llvm
