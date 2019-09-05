@@ -1,5 +1,4 @@
 @echo Building llvm-config tool...
-@echo.
 @ninja -j %throttle% install-llvm-config
 @echo.
 
