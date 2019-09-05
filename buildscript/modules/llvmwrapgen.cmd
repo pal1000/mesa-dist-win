@@ -1,4 +1,4 @@
-@FOR /F "tokens=* USEBACKQ" %%a IN (`%mesa%\llvm\%abi%-%llvmlink%\bin\llvm-config --libnames bitwriter engine mcdisassembler mcjit`) DO @SET llvmlibs=%%~a
+@FOR /F "tokens=* USEBACKQ" %%a IN (`%mesa%\llvm\%abi%-%llvmlink%\bin\llvm-config --libnames engine`) DO @SET llvmlibs=%%~a
 @FOR /F "tokens=* USEBACKQ" %%a IN (`%mesa%\llvm\%abi%-%llvmlink%\bin\llvm-config --version`) DO @SET llvmver=%%~a
 @set llvmlibs=%llvmlibs:.lib=%
 @set llvmlibs='%llvmlibs: =', '%'
