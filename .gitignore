@@ -9,3 +9,5 @@ lib/
 include/
 # Build script assets
 buildscript/assets/
+# Debug scripts output backup
+debug/llvm-config-old.txt

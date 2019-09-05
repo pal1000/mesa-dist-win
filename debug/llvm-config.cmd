@@ -1,8 +1,9 @@
 @cd ../../
 @set llvmlink=MT
-@set llvmmeson=bitwriter engine mcdisassembler mcjit
-@set llvmscons=engine mcjit bitwriter mcdisassembler irreader
-@set format=ninjatargets
+@set llvmmeson=engine
+@set llvmscons=engine irreader
+@set format=pythonlist
+@set compiler=%llvmmeson%
 @for %%a in ("%cd%") do @set mesa=%%~sa
 @IF NOT EXIST llvm GOTO error
 @cd llvm
@@ -12,15 +13,20 @@
 
 :writedebugoutput
 @IF NOT EXIST bin GOTO error
+@set skipper=
+@IF NOT EXIST lib set skipper=skip=1 
 @cd bin
 @if EXIST %mesa%\mesa-dist-win\debug\llvm-config-old.txt del %mesa%\mesa-dist-win\debug\llvm-config-old.txt
 @if EXIST %mesa%\mesa-dist-win\debug\llvm-config.txt REN %mesa%\mesa-dist-win\debug\llvm-config.txt llvm-config-old.txt
-@FOR /F "tokens=* USEBACKQ" %%b IN (`llvm-config --libnames %llvmscons%`) DO @SET llvmlibs=%%~b
+@set llvmlibs=
+@setlocal ENABLEDELAYEDEXPANSION
+@FOR /F "tokens=* %skipper%USEBACKQ" %%a IN (`llvm-config --libnames %compiler% 2^>^&1`) DO @SET llvmlibs=!llvmlibs! %%~na
+@endlocal&set llvmlibs=%llvmlibs:~1%
 @set llvmlibs=%llvmlibs:.lib=%
 @IF %format%==pythonlist set llvmlibs='%llvmlibs: =', '%'
 @if %format%==ninjatargets set llvmlibs=install-%llvmlibs: = install-%
 @echo LLVM config output updated.
-@echo %llvmlibs% > %mesa%\mesa-dist-win\debug\llvm-config.txt
+@echo %llvmlibs%>%mesa%\mesa-dist-win\debug\llvm-config.txt
 @GOTO finished
 
 :error
