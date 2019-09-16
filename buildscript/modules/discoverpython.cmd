@@ -85,13 +85,13 @@
 @IF %pythonloc%==python.exe set exitloop=1&FOR /F "tokens=* USEBACKQ" %%a IN (`where /f python.exe`) DO @IF defined exitloop set "exitloop="&SET pythonloc=%%~sa
 
 :loadpypath
-@REM Load Python in PATH to convince CMake to use the selected version.
+@REM Load Python in PATH to convince CMake to use the selected version and avoid other potential problems.
 @SET ERRORLEVEL=0
 @set pypath=1
 @where /q python.exe
 @IF ERRORLEVEL 1 set pypath=0
 @IF %pypath%==1 set exitloop=1&FOR /F "tokens=* USEBACKQ" %%a IN (`where /f python.exe`) DO @IF defined exitloop set "exitloop="&SET pypath=%%~sa
-@IF NOT %pypath%==%pythonloc% set PATH=%pythonloc:~0,-10%;%PATH%
+@IF NOT %pypath%==%pythonloc% set PATH=%pythonloc:~0,-10%;%pythonloc:~0,-10%Scripts\;%PATH%
 
 :pyver
 @rem Identify Python version.
