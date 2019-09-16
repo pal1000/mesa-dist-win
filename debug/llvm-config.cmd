@@ -3,7 +3,7 @@
 @set llvmmeson=engine
 @set llvmscons=engine irreader
 @set format=pythonlist
-@set compiler=%llvmscons%
+@set components=%llvmscons%
 @for %%a in ("%cd%") do @set mesa=%%~sa
 @IF NOT EXIST llvm GOTO error
 @cd llvm
@@ -13,14 +13,12 @@
 
 :writedebugoutput
 @IF NOT EXIST bin GOTO error
-@set skipper=
-@IF NOT EXIST lib set skipper=skip=1 
 @cd bin
 @if EXIST %mesa%\mesa-dist-win\debug\llvm-config-old.txt del %mesa%\mesa-dist-win\debug\llvm-config-old.txt
 @if EXIST %mesa%\mesa-dist-win\debug\llvm-config.txt REN %mesa%\mesa-dist-win\debug\llvm-config.txt llvm-config-old.txt
 @set llvmlibs=
 @setlocal ENABLEDELAYEDEXPANSION
-@FOR /F "tokens=* %skipper%USEBACKQ" %%a IN (`llvm-config --libnames %compiler% 2^>^&1`) DO @SET llvmlibs=!llvmlibs! %%~na
+@FOR /F "tokens=* USEBACKQ" %%a IN (`llvm-config --libnames %components% 2^>^&1`) DO @SET libname=%%~na&IF NOT "!libname:~0,5!"=="llvm-" SET llvmlibs=!llvmlibs! !libname!
 @endlocal&set llvmlibs=%llvmlibs:~1%
 @set llvmlibs=%llvmlibs:.lib=%
 @IF %format%==pythonlist set llvmlibs='%llvmlibs: =', '%'
