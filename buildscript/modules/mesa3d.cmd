@@ -57,6 +57,8 @@
 @call %mesa%\mesa-dist-win\buildscript\modules\applypatch.cmd s3tc
 @rem Fix MSYS2 Mingw-w64 GCC build
 @IF %toolchain%==gcc call %mesa%\mesa-dist-win\buildscript\modules\applypatch.cmd msys2-mingw_w64-fixes
+@rem Fix build with LLVM 9
+@call %mesa%\mesa-dist-win\buildscript\modules\applypatch.cmd llvm9
 
 :configmesabuild
 @rem Configure Mesa build.
