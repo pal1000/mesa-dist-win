@@ -1,3 +1,6 @@
+### Next release
+### Patches
+- Backport [this commit](https://gitlab.freedesktop.org/mesa/mesa/commit/88eb2a1f7e6277c7f10adfc95ebeaf3d2f73e862) to Mesa 19.1 in order for LLVM 9 compatibility fix to apply cleanly.
 # 19.1.7
 - Updated Mesa3D to [19.1.7](https://www.mesa3d.org/relnotes/19.1.7.html).
 ### Build script

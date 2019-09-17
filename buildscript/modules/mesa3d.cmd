@@ -58,6 +58,7 @@
 @rem Fix MSYS2 Mingw-w64 GCC build
 @IF %toolchain%==gcc call %mesa%\mesa-dist-win\buildscript\modules\applypatch.cmd msys2-mingw_w64-fixes
 @rem Fix build with LLVM 9
+@IF %intmesaver% LSS 19200 call %mesa%\mesa-dist-win\buildscript\modules\applypatch.cmd mingw-posix-flag-fix
 @call %mesa%\mesa-dist-win\buildscript\modules\applypatch.cmd llvm9
 
 :configmesabuild
