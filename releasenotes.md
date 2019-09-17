@@ -1,4 +1,5 @@
-# Next release
+# 19.1.7
+- Updated Mesa3D to [19.1.7](https://www.mesa3d.org/relnotes/19.1.7.html).
 ### Build script
 - LLVM build: Clean up component names used to call llvm-config with. Tests done with llvm-config indicate that only engine and irreader component names are needed to get the list of all necessary libraries for Mesa3D build, everything else being superfluous. This cleanup also made build script ready for LLVM 9;
 - LLVM build: Exclude LLVMAggressiveInstCombine from build as it's not used by Mesa3D;
