@@ -2,9 +2,9 @@ Build environment
 -----------------
 Windows 10.0.18363
 Ressource Hacker 5.1.7.343
-7-Zip 19.00 ultra compression
+7-Zip 19.02 ultra compression
 Git 2.23.0.1
-Visual Studio Community 2019 v16.2.5
+Visual Studio Community 2019 v16.3.0
 Windows SDK 10.0.18362.0
 Python 2.7.16
 
@@ -19,10 +19,10 @@ setuptools 41.2.0
 
 CMake 3.15.3
 Ninja 1.9.0
-LLVM 8.0.1
-Winflexbison package 2.5.18
+LLVM 9.0.0
+Winflexbison package 2.5.20
 flex 2.6.4
-Bison 3.3.2
+Bison 3.4.1
 
 Build commands
 --------------
