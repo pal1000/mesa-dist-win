@@ -1,4 +1,7 @@
-### 19.2.0
+# Next release
+### Patches
+- Simply MSYS2 compatibility patch now that Mesa3D properly sets Mingw posix flag.
+# 19.2.0
 - Updated Mesa3D to [19.2.0](https://www.mesa3d.org/relnotes/19.2.0.html).
 ### Patches
 - Backport [this commit](https://gitlab.freedesktop.org/mesa/mesa/commit/88eb2a1f7e6277c7f10adfc95ebeaf3d2f73e862) to Mesa 19.1 in order for LLVM 9 compatibility fix to apply cleanly.
