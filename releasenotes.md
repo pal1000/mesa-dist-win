@@ -3,7 +3,8 @@
 - Simplified MSYS2 compatibility patch.
 ### Build script
 - Restricted LLVM 9 and MSYS2 compatibility patches to Mesa 19.2 and below as they landed upstream;
-- Mesa3D build: Mention patch that is applied.
+- Mesa3D build: Mention patch that is applied;
+- LLVM build: Include coroutines component in order to enable compute shaders in Mesa3D llvmpipe driver as soon as [this merge request](https://gitlab.freedesktop.org/mesa/mesa/merge_requests/2162) lands.
 # 19.2.0
 - Updated Mesa3D to [19.2.0](https://www.mesa3d.org/relnotes/19.2.0.html).
 ### Patches
