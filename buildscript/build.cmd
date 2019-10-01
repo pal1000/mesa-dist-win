@@ -6,10 +6,6 @@
 @cd ..\..\
 @for %%a in ("%cd%") do @set mesa=%%~sa
 
-@rem Check if experimental features are requested.
-@set enablemeson=0
-@if /I "%1"=="/enablemeson" set enablemeson=1
-
 @rem Select target architecture
 @call %mesa%\mesa-dist-win\buildscript\modules\abi.cmd
 
@@ -24,6 +20,9 @@
 
 @rem If using MSVC search for Python. State tracking is pointless as it is loaded once and we are done. Hard fail if missing.
 @IF %toolchain%==msvc call %mesa%\mesa-dist-win\buildscript\modules\discoverpython.cmd
+
+@rem If using MSVC select build system to use with Mesa3D.
+@IF %toolchain%==msvc call %mesa%\mesa-dist-win\buildscript\modules\selectmesabldsys.cmd
 
 @rem If using MSVC search for Python packages. Install missing packages automatically. Ask to do an update to all packages.
 @IF %toolchain%==msvc call %mesa%\mesa-dist-win\buildscript\modules\pythonpackages.cmd

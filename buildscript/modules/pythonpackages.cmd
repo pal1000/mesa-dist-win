@@ -16,17 +16,17 @@
 @set pypack=Mako
 @GOTO pypackinstall
 )
-@if %pythonver%==2 if NOT EXIST %pythonloc:~0,-10%Lib\site-packages\win32 (
+@IF %mesabldsys%==scons if %pythonver%==2 if NOT EXIST %pythonloc:~0,-10%Lib\site-packages\win32 (
 @set pypack=pywin32
 @GOTO pypackinstall
 )
-@if %pythonver%==2 for /F "skip=2 delims= " %%a in ('%pythonloc% -W ignore -m pip list --disable-pip-version-check') do @IF /I "%%a"=="scons" set sconspypi=1
-@if %pythonver%==2 IF NOT "%sconspypi%"=="1" IF NOT EXIST %mesa%\scons (
+@IF %mesabldsys%==scons for /F "skip=2 delims= " %%a in ('%pythonloc% -W ignore -m pip list --disable-pip-version-check') do @IF /I "%%a"=="scons" set sconspypi=1
+@IF %mesabldsys%==scons IF NOT "%sconspypi%"=="1" IF NOT EXIST %mesa%\scons (
 @set pypack=scons
 @GOTO pypackinstall
 )
-@if %pythonver%==2 set mesonstate=0
-@if %pythonver%==2 GOTO pyupdate
+@if %mesabldsys%==scons set mesonstate=0
+@if %mesabldsys%==scons GOTO pyupdate
 
 @SET mesonloc=meson.exe
 @set mesonstate=2
@@ -68,7 +68,7 @@
 @if /I "%pyupd%"=="y" IF %pythonver%==2 powershell -Command Start-Process "%mesa%\mesa-dist-win\buildscript\modules\pywin32.cmd" -Args "%pythonloc%" -Verb runAs 2>nul
 
 :locatemeson
-@IF %pythonver%==2 GOTO endpython
+@IF %mesabldsys%==scons GOTO endpython
 @IF %mesonloc%==%pythonloc:~0,-10%Scripts\meson.py IF NOT EXIST %mesonloc% set mesonloc=%mesonloc:~0,-2%exe
 @IF %mesonloc%==%pythonloc:~0,-10%Scripts\meson.py IF EXIST %mesonloc% set mesonloc=%pythonloc% %mesonloc%
 

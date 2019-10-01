@@ -31,9 +31,9 @@
 @IF %flexloc%==%mesa%\flexbison\win_flex.exe set flexstate=1
 @IF %flexstate%==1 IF NOT EXIST %flexloc% set flexstate=0
 
-@rem pkg-config. Can be (1) present (0) missing/broken. Only valid for Python 3.x
-@IF %pythonver%==2 set pkgconfigstate=0
-@IF %pythonver%==2 GOTO doneenvcheck
+@rem pkg-config. Can be (1) present (0) missing/broken. Only valid for Meson build.
+@IF %mesabldsys%==scons set pkgconfigstate=0
+@IF %mesabldsys%==scons GOTO doneenvcheck
 @set pkgconfigstate=1
 @IF %msysstate%==0 GOTO nonmingwpkgconfig
 @GOTO nonmingwpkgconfig

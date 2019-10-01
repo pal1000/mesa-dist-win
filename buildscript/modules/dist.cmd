@@ -21,7 +21,7 @@
 @cd ..\include
 @if EXIST %abi% RD /S /Q %abi%
 @MD %abi%
-@IF %pythonver% GEQ 3 GOTO mesondist
+@IF %mesabldsys%==meson GOTO mesondist
 
 :sconsdist
 @rem Copy binaries

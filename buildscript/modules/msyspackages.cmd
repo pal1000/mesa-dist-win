@@ -1,23 +1,25 @@
 @rem Select build system for Mesa3D build
-@set pythonver=2
+@set selectmesabld=1
 
 :msyspython
-@rem IF %enablemeson%==1 echo Select build system for Mesa3D build
-@rem IF %enablemeson%==1 echo ------------------------------------
-@rem IF %enablemeson%==1 echo 2. Scons build with Python 2.7
-@rem IF %enablemeson%==1 echo 3. Meson build with Python 3
-@rem IF %enablemeson%==1 set /p pythonver=Select Python version:
-@rem IF %enablemeson%==1 echo.
-@IF NOT "%pythonver%"=="2" IF NOT "%pythonver%"=="3" (
+@rem echo Select build system for Mesa3D
+@rem echo ------------------------------
+@rem echo 1. Scons build with Python 2.7
+@rem echo 2. Meson build with Python 3
+@rem set /p selectmesabld=Select build system for Mesa3D build:
+@rem echo.
+@IF NOT "%selectmesabld%"=="1" IF NOT "%selectmesabld%"=="2" (
 @echo Invalid entry.
 @pause
 @cls
 @GOTO msyspython
 )
+@IF %selectmesabld%==1 set mesabldsys=scons
+@IF %selectmesabld%==2 set mesabldsys=meson
 
 @rem Get dependencies
-@IF %pythonver%==2 %msysloc%\usr\bin\bash --login -c "pacman -S python2-mako mingw-w64-%mingwabi%-llvm mingw-w64-%mingwabi%-gcc mingw-w64-%mingwabi%-zlib flex bison patch scons --needed --noconfirm --disable-download-timeout"
-@IF %pythonver% GEQ 3 %msysloc%\usr\bin\bash --login -c "pacman -S mingw-w64-%mingwabi%-python3-mako mingw-w64-%mingwabi%-llvm mingw-w64-%mingwabi%-gcc mingw-w64-%mingwabi%-zlib mingw-w64-%mingwabi%-meson flex bison patch --needed --noconfirm --disable-download-timeout"
+@IF %mesabldsys%==scons %msysloc%\usr\bin\bash --login -c "pacman -S python2-mako mingw-w64-%mingwabi%-llvm mingw-w64-%mingwabi%-gcc mingw-w64-%mingwabi%-zlib flex bison patch scons --needed --noconfirm --disable-download-timeout"
+@IF %mesabldsys%==meson %msysloc%\usr\bin\bash --login -c "pacman -S mingw-w64-%mingwabi%-python3-mako mingw-w64-%mingwabi%-llvm mingw-w64-%mingwabi%-gcc mingw-w64-%mingwabi%-zlib mingw-w64-%mingwabi%-meson flex bison patch --needed --noconfirm --disable-download-timeout"
 @echo.
 @set flexstate=2
 @set ninjastate=2

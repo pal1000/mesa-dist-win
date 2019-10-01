@@ -1,10 +1,10 @@
 @rem Select MSVC CRT to use as quickly as possible even if LLVM can't be built as we need this information later.
 @rem Currently using CRT MT, but it can be changed if necessary.
-@IF %pythonver%==2 set llvmlink=MT
+@IF %mesabldsys%==scons set llvmlink=MT
 @set mesonver=0.00.0
-@IF %pythonver% GEQ 3 FOR /F "tokens=* USEBACKQ" %%a IN (`%mesonloc% --version`) DO @set mesonver=%%~a
-@IF %pythonver% GEQ 3 set llvmlink=MT
-@IF %pythonver% GEQ 3 IF %mesonver:~0,1%==0 IF %mesonver:~2,-2% LSS 48 set llvmlink=MT
+@IF %mesabldsys%==meson FOR /F "tokens=* USEBACKQ" %%a IN (`%mesonloc% --version`) DO @set mesonver=%%~a
+@IF %mesabldsys%==meson set llvmlink=MT
+@IF %mesabldsys%==meson IF %mesonver:~0,1%==0 IF %mesonver:~2,-2% LSS 48 set llvmlink=MT
 @echo Using CRT %llvmlink% Release...
 @echo.
 

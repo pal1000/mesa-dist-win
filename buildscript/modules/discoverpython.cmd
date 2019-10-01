@@ -25,9 +25,7 @@
 @IF %pythontotal%==0 echo.
 @IF %pythontotal%==0 GOTO nopylauncher
 
-@rem Select Python installation to use
-@IF %enablemeson%==0 echo Select python installation. Note that experimental /enablemeson command-line argument is not set. We won't attempt to build Mesa3D if you pick any Python 3.x installation: & echo.
-@IF %enablemeson%==1 echo Select python installation. Note that experimental /enablemeson command-line argument is set. We will attempt to build Mesa3D regardless of Python installation selected: & echo.
+@echo Select Python installation
 @setlocal ENABLEDELAYEDEXPANSION
 @FOR /F "USEBACKQ tokens=1 skip=1" %%a IN (`py -0 2^>nul`) do @(
 @set pythoninstance=%%a
@@ -109,6 +107,3 @@
 @echo Using Python %fpythonver% from %pythonloc%.
 @echo.
 @set pythonver=%pythonver:~0,1%
-@if %pythonver% GEQ 3 IF %enablemeson%==1 echo WARNING: Python 3.x support is experimental.
-@if %pythonver% GEQ 3 IF %enablemeson%==0 echo WARNING: Selected a Python 3.x version. We will only build LLVM. We can only build Mesa3D with Python 2.7 for the time being.
-@if %pythonver% GEQ 3 echo.
