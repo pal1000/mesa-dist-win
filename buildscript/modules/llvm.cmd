@@ -9,20 +9,24 @@
 @echo.
 
 @rem Look for CMake build generator.
-@IF %cmakestate%==0 echo CMake is required for LLVM build. If you want to build Mesa3D anyway it will be without swr and llvmpipe drivers and osmesa will run with performance penalty.
+@IF %cmakestate%==0 IF EXIST %mesa%\llvm\%abi%-%llvmlink%\bin IF EXIST %mesa%\llvm\%abi%-%llvmlink%\include IF EXIST %mesa%\llvm\%abi%-%llvmlink%\lib echo CMake not found but LLVM is already built. Skipping LLVM build.
+@IF %cmakestate%==0 IF EXIST %mesa%\llvm\%abi%-%llvmlink%\bin IF EXIST %mesa%\llvm\%abi%-%llvmlink%\include IF EXIST %mesa%\llvm\%abi%-%llvmlink%\lib GOTO skipllvm
+@IF %cmakestate%==0 echo CMake is required for LLVM build. If you want to build Mesa3D anyway it will be without llvmpipe and swr drivers and high performance JIT won't be available for other drivers and libraries.
 @IF %cmakestate%==0 GOTO skipllvm
 
 @rem Look for LLVM source code and binaries.
-@if NOT EXIST %mesa%\llvm echo WARNING: Both LLVM source code and binaries not found. If you want to build Mesa3D anyway it will be without swr and llvmpipe drivers and osmesa will run with performance penalty.
+@if NOT EXIST %mesa%\llvm echo WARNING: Both LLVM source code and binaries not found. If you want to build Mesa3D anyway it will be without llvmpipe and swr drivers and high performance JIT won't be available for other drivers and libraries.
 @if NOT EXIST %mesa%\llvm GOTO skipllvm
 
-@rem Beginning LLVM build
+@rem Ask to do LLVM build
 @if EXIST %mesa%\llvm\cmake set /p buildllvm=Begin LLVM build. Only needs to run once for each ABI and version. Proceed (y/n):
 @if EXIST %mesa%\llvm\cmake echo.
 
-@rem Always clean build
-@if /I NOT "%buildllvm%"=="y" if EXIST %mesa%\llvm\cmake IF NOT EXIST %mesa%\llvm\%abi%-%llvmlink% echo WARNING: Not building LLVM. If you want to build Mesa3D anyway it will be without swr and llvmpipe drivers and osmesa will run with performance penalty.
+@rem LLVM source is found, binaries not found and LLVM build is refused.
+@if /I NOT "%buildllvm%"=="y" if EXIST %mesa%\llvm\cmake IF NOT EXIST %mesa%\llvm\%abi%-%llvmlink%\include echo WARNING: Not building LLVM. If you want to build Mesa3D anyway it will be without swr and llvmpipe drivers and high performance JIT won't be available for other drivers and libraries.
 @if /I NOT "%buildllvm%"=="y" GOTO skipllvm
+
+@rem Always clean build
 @cd %mesa%\llvm
 @echo Cleanning LLVM build. Please wait...
 @echo.
