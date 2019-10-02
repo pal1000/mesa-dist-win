@@ -84,12 +84,9 @@
 @if %mesabldsys%==meson if "%llvmlink%"=="MT" set buildconf=%buildconf% -Db_vscrt=mt
 
 @set llvmless=n
-@if %havellvm%==0 set /p llvmless=Build Mesa without LLVM (y=yes/q=quit). llvmpipe and swr drivers and high performance JIT won't be available for other drivers and libraries:
-@if %havellvm%==0 echo.
+@if %havellvm%==0 set llvmless=y
 @if %havellvm%==1 set /p llvmless=Build Mesa without LLVM (y/n). llvmpipe and swr drivers and high performance JIT won't be available for other drivers and libraries:
 @if %havellvm%==1 echo.
-@if /I NOT "%llvmless%"=="y" if %havellvm%==0 echo User refused to build Mesa without LLVM.
-@if /I NOT "%llvmless%"=="y" if %havellvm%==0 GOTO skipmesa
 @if %mesabldsys%==scons if /I "%llvmless%"=="y" set buildcmd=%buildcmd% llvm=no
 @if %mesabldsys%==meson if /I NOT "%llvmless%"=="y" call %mesa%\mesa-dist-win\buildscript\modules\llvmwrapgen.cmd
 @if %mesabldsys%==meson if /I NOT "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm-wrap=llvm -Dllvm=true
