@@ -7,7 +7,8 @@
 - LLVM build: Include coroutines component in order to enable compute shaders in Mesa3D llvmpipe driver on Mesa 19.3;
 - Mesa3D: Prepared for Scons build with Python 3;
 - Do not require CMake if LLVM is prebuilt as this causes the display of a misleading warning;
-- Mesa3D: Automatically build without LLVM if LLVM is missing. The appropriate warning is displayed close enough so this may look like warning spam to certain users.
+- Mesa3D: Automatically build without LLVM if LLVM is missing. The appropriate warning is displayed close enough so this may look like warning spam to certain users;
+- LLVM: Build LLVMAggressiveInstCombine library as it is needed by coroutines component introduced to enable compute shaders. This also needs this [upstream cntribution](https://gitlab.freedesktop.org/mesa/mesa/merge_requests/2215) in order to be effective.
 # 19.2.0
 - Updated Mesa3D to [19.2.0](https://www.mesa3d.org/relnotes/19.2.0.html).
 ### Patches
