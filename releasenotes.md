@@ -1,8 +1,9 @@
 # Next release
 ### Patches
-- Simplified MSYS2 compatibility patch.
+- Simplified MSYS2 compatibility patch;
+- MSYS2 patch: Do not create .orig backups.
 ### Build script
-- Restricted LLVM 9 and MSYS2 compatibility patches to Mesa 19.2 and below as they landed upstream;
+- Restricted LLVM 9, MSYS2 and Python 3 compatibility patches to Mesa 19.2.0/19.1.7 and below as they landed upstream;
 - Mesa3D build: Mention patch that is applied;
 - LLVM build: Include coroutines component in order to enable compute shaders in Mesa3D llvmpipe driver on Mesa 19.3;
 - Mesa3D: Prepared for Scons build with Python 3;
