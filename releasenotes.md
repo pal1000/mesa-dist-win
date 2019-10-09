@@ -1,4 +1,5 @@
-# Next release
+# 19.2.1
+- Updated Mesa3D to [19.2.1](https://www.mesa3d.org/relnotes/19.2.1.html).
 ### Patches
 - Simplified MSYS2 compatibility patch;
 - MSYS2 patch: Do not create .orig backups.
