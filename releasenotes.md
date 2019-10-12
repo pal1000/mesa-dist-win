@@ -1,3 +1,6 @@
+# Next release
+### Build script
+- Meson build: Fix pkg-config-lite detection.
 # 19.2.1
 - Updated Mesa3D to [19.2.1](https://www.mesa3d.org/relnotes/19.2.1.html).
 ### Patches
