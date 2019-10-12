@@ -1,6 +1,8 @@
 # Next release
 ### Build script
-- Meson build: Fix pkg-config-lite detection.
+- Meson build: Fix pkg-config-lite detection;
+- Meson build: Release from manual startup mode;
+- Meson build: Disable LLVM support until is enabled upstream.
 # 19.2.1
 - Updated Mesa3D to [19.2.1](https://www.mesa3d.org/relnotes/19.2.1.html).
 ### Patches

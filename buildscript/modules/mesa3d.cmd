@@ -17,12 +17,9 @@
 @if NOT EXIST mesa if /i "%buildmesa%"=="y" echo.
 @if NOT EXIST mesa if /i NOT "%buildmesa%"=="y" GOTO skipmesa
 @if NOT EXIST mesa set branch=master
-@if NOT EXIST mesa IF %mesabldsys%==scons set /p branch=Enter Mesa source code branch name - defaults to master:
-@if NOT EXIST mesa IF %mesabldsys%==scons echo.
-@if NOT EXIST mesa IF %mesabldsys%==scons set mesarepo=https://gitlab.freedesktop.org/mesa/mesa.git
-@if NOT EXIST mesa IF %mesabldsys%==meson set mesarepo=https://gitlab.freedesktop.org/dbaker/mesa.git
-@if NOT EXIST mesa IF %mesabldsys%==meson set branch=meson-windows
-@if NOT EXIST mesa git clone --recurse-submodules --depth=1 --branch=%branch% %mesarepo% mesa
+@if NOT EXIST mesa set /p branch=Enter Mesa source code branch name - defaults to master:
+@if NOT EXIST mesa echo.
+@if NOT EXIST mesa git clone --recurse-submodules --depth=1 --branch=%branch% https://gitlab.freedesktop.org/mesa/mesa.git mesa
 @if NOT EXIST mesa echo.
 
 @if EXIST mesa if /i NOT "%buildmesa%"=="y" set /p buildmesa=Begin mesa build. Proceed (y/n):
@@ -89,8 +86,10 @@
 
 @set llvmless=n
 @if %havellvm%==0 set llvmless=y
-@if %havellvm%==1 set /p llvmless=Build Mesa without LLVM (y/n). llvmpipe and swr drivers and high performance JIT won't be available for other drivers and libraries:
-@if %havellvm%==1 echo.
+@rem Disable LLVM for Meson build
+@if %mesabldsys%==meson set llvmless=y
+@if %havellvm%==1 if %mesabldsys%==scons set /p llvmless=Build Mesa without LLVM (y/n). llvmpipe and swr drivers and high performance JIT won't be available for other drivers and libraries:
+@if %havellvm%==1 if %mesabldsys%==scons echo.
 @if %mesabldsys%==scons if /I "%llvmless%"=="y" set buildcmd=%buildcmd% llvm=no
 @if %mesabldsys%==meson if /I NOT "%llvmless%"=="y" call %mesa%\mesa-dist-win\buildscript\modules\llvmwrapgen.cmd
 @if %mesabldsys%==meson if /I NOT "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm-wrap=llvm -Dllvm=true
@@ -164,14 +163,16 @@
 @IF %toolchain%==gcc set LDFLAGS=-static -s
 
 @rem Execute build.
-@if %mesabldsys%==scons echo Build command: %buildcmd%
-@if %mesabldsys%==scons echo.
-@if %mesabldsys%==scons %buildcmd%
-@if %mesabldsys%==scons IF %toolchain%==msvc echo.
-@if %mesabldsys%==meson echo Build configuration command is stored in buildconf variable.
-@if %mesabldsys%==meson echo Build execution command is stored in buildcmd variable.
+@if %mesabldsys%==meson echo Build configuration command: %buildconf%
 @if %mesabldsys%==meson echo.
-@if %mesabldsys%==meson cmd
+@if %mesabldsys%==meson %buildconf%
+@if %mesabldsys%==meson echo.
+@if %mesabldsys%==meson cd build\%abi%
+@echo Build command: %buildcmd%
+@echo.
+@%buildcmd%
+@echo.
+@if %mesabldsys%==meson cd ..\..\
 
 :skipmesa
 @rem Reset PATH after Mesa3D build to clean the environment again.
