@@ -44,6 +44,8 @@
 @if %gitstate%==0 IF %toolchain%==msvc GOTO configmesabuild
 @rem Enable S3TC texture cache
 @call %mesa%\mesa-dist-win\buildscript\modules\applypatch.cmd s3tc
+@rem Update Meson subprojects
+@IF EXIST %mesa%\mesa\subprojects call %mesa%\mesa-dist-win\buildscript\modules\applypatch.cmd subprojects-update
 @rem Fix MSYS2 Mingw-w64 GCC build
 @IF %intmesaver% LEQ 19157 IF %toolchain%==gcc call %mesa%\mesa-dist-win\buildscript\modules\applypatch.cmd msys2-mingw_w64-fixes
 @IF %intmesaver% GEQ 19200 IF %intmesaver% LSS 19251 IF %toolchain%==gcc call %mesa%\mesa-dist-win\buildscript\modules\applypatch.cmd msys2-mingw_w64-fixes
@@ -74,8 +76,8 @@
 @if %mesabldsys%==meson set buildcmd=msbuild /p^:Configuration=release,Platform=%platformabi% mesa.sln /m^:%throttle%
 
 @set ninja=n
-@if %mesabldsys%==meson if NOT %ninjastate%==0 set /p ninja=Use Ninja build system instead of MsBuild (y/n); less storage device strain and maybe faster build:
-@if %mesabldsys%==meson if NOT %ninjastate%==0 echo.
+@rem if %mesabldsys%==meson if NOT %ninjastate%==0 set /p ninja=Use Ninja build system instead of MsBuild (y/n); less storage device strain and maybe faster build:
+@rem if %mesabldsys%==meson if NOT %ninjastate%==0 echo.
 @if /I "%ninja%"=="y" if %ninjastate%==1 set PATH=%mesa%\ninja\;%PATH%
 @if /I "%ninja%"=="y" set buildconf=%buildconf%ninja
 @if /I "%ninja%"=="y" set buildcmd=ninja -j %throttle%
