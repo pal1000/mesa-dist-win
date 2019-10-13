@@ -7,6 +7,9 @@
 - Meson build: Disable Mesa3D build with Ninja until issue is investigated.
 ### Version information
 - Refactored code and added osmesa gallium solo and graw null support.
+### Distribution
+- Add libraries and headers for Meson build;
+- Don't create osmesa-gallium and osmesa-swrast folders when building with Meson as it may only support osmesa gallium long term.
 # 19.2.1
 - Updated Mesa3D to [19.2.1](https://www.mesa3d.org/relnotes/19.2.1.html).
 ### Patches

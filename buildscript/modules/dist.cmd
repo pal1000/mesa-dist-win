@@ -13,8 +13,8 @@
 @if EXIST %abi% RD /S /Q %abi%
 @MD %abi%
 @cd %abi%
-@MD osmesa-gallium
-@MD osmesa-swrast
+@IF %mesabldsys%==scons MD osmesa-gallium
+@IF %mesabldsys%==scons MD osmesa-swrast
 @cd ..\..\lib
 @if EXIST %abi% RD /S /Q %abi%
 @MD %abi%
@@ -40,8 +40,11 @@
 @GOTO distributed
 
 :mesondist
-@forfiles /p %mesa%\mesa\build\%abi% /s /m *.dll /c "cmd /c IF NOT @file==0x22graw.dll0x22 copy @path %mesa%\mesa-dist-win\bin\%abi%"
-@IF EXIST %mesa%\mesa\build\%abi%\src\gallium\targets\graw-gdi\graw.dll copy %mesa%\mesa\build\%abi%\src\gallium\targets\graw-gdi\graw.dll %mesa%\mesa-dist-win\bin\%abi%\graw.dll
+@forfiles /p %mesa%\mesa\build\%abi% /s /m *.dll /c "cmd /c copy @path %mesa%\mesa-dist-win\bin\%abi%"
+@rem Copy build development artifacts
+@xcopy %mesa%\mesa\build\%abi%\*.lib %mesa%\mesa-dist-win\lib\%abi% /E /I /G
+@xcopy %mesa%\mesa\build\%abi%\*.a %mesa%\mesa-dist-win\lib\%abi% /E /I /G
+@xcopy %mesa%\mesa\build\%abi%\*.h %mesa%\mesa-dist-win\include\%abi% /E /I /G
 @echo.
 
 :distributed
