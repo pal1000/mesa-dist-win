@@ -134,6 +134,9 @@ if '%errorlevel%' NEQ '0' (
 @if /I NOT "%osmesa%"=="y" GOTO graw
 @IF EXIST "%dir%\osmesa.dll" echo Updated Mesa3D off-screen rendering interface deployment.
 @IF EXIST "%dir%\osmesa.dll" del "%dir%\osmesa.dll"
+@IF EXIST "%dir%\osmesa.dll" IF EXIST "%mesaloc%\%mesadll%\osmesa.dll" mklink "%dir%\osmesa.dll" "%mesaloc%\%mesadll%\osmesa.dll"
+@IF EXIST "%dir%\osmesa.dll" IF EXIST "%mesaloc%\%mesadll%\osmesa.dll" echo.
+@IF EXIST "%dir%\osmesa.dll" IF EXIST "%mesaloc%\%mesadll%\osmesa.dll" GOTO graw
 @echo What version of osmesa off-screen rendering you want:
 @echo 1. Gallium based (faster, but lacks certain features);
 @echo 2. Swrast based (slower, but has unique OpenGL 2.1 features);
@@ -149,9 +152,12 @@ if '%errorlevel%' NEQ '0' (
 @echo.
 @if /I NOT "%graw%"=="y" GOTO restart
 @if EXIST "%dir%\graw.dll" echo Updated Mesa3D graw framework deployment.
-@if EXIST "%dir%\graw.dll" del "%dir%\graw.dll" 
+@if EXIST "%dir%\graw.dll" del "%dir%\graw.dll"
+@if EXIST "%dir%\graw_null.dll" del "%dir%\graw_null.dll"
 @mklink "%dir%\graw.dll" "%mesaloc%\%mesadll%\graw.dll"
 @echo.
+@IF EXIST "%mesaloc%\%mesadll%\graw_null.dll" mklink "%dir%\graw_null.dll" "%mesaloc%\%mesadll%\graw_null.dll"
+@IF EXIST "%mesaloc%\%mesadll%\graw_null.dll" echo.
 
 :restart
 @set /p rerun=More Mesa deployment? (y=yes):

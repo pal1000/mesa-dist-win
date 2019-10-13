@@ -10,6 +10,8 @@
 ### Distribution
 - Add libraries and headers for Meson build;
 - Don't create osmesa-gallium and osmesa-swrast folders when building with Meson as it may only support osmesa gallium long term.
+### Deployment
+- Per app deployment: Add osmesa gallium solo and graw null support.
 # 19.2.1
 - Updated Mesa3D to [19.2.1](https://www.mesa3d.org/relnotes/19.2.1.html).
 ### Patches
