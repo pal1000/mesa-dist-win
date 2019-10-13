@@ -19,45 +19,23 @@
 @echo.
 
 @rem Add version info to default desktop OpenGL driver
-@IF EXIST %mesa%\mesa-dist-win\bin\%abi%\opengl32.dll call %mesa%\mesa-dist-win\buildscript\modules\rcgen.cmd "Mesa3D default desktop OpenGL software rendering driver" opengl32 %abi% %mesaver% "VMware Inc."
-@IF EXIST %mesa%\mesa-dist-win\bin\%abi%\opengl32.dll ResourceHacker.exe -open %mesa%\mesa-dist-win\buildscript\assets\temp.rc -save %mesa%\mesa-dist-win\buildscript\assets\temp.res -action compile -log NUL
-@IF EXIST %mesa%\mesa-dist-win\bin\%abi%\opengl32.dll ResourceHacker.exe -open %mesa%\mesa-dist-win\bin\%abi%\opengl32.dll -save %mesa%\mesa-dist-win\bin\%abi%\opengl32.dll -action addoverwrite -resource %mesa%\mesa-dist-win\buildscript\assets\temp.res -log NUL
-
+@call %mesa%\mesa-dist-win\buildscript\modules\rcgen.cmd "Mesa3D default desktop OpenGL software rendering driver" %mesa%\mesa-dist-win\bin\%abi%\opengl32.dll %abi% %mesaver% "VMware Inc."
 @rem Add version info to shared glapi library
-@IF EXIST %mesa%\mesa-dist-win\bin\%abi%\libglapi.dll call %mesa%\mesa-dist-win\buildscript\modules\rcgen.cmd "Mesa3D shared glapi library" libglapi %abi% %mesaver% "VMware Inc."
-@IF EXIST %mesa%\mesa-dist-win\bin\%abi%\libglapi.dll ResourceHacker.exe -open %mesa%\mesa-dist-win\buildscript\assets\temp.rc -save %mesa%\mesa-dist-win\buildscript\assets\temp.res -action compile -log NUL
-@IF EXIST %mesa%\mesa-dist-win\bin\%abi%\libglapi.dll ResourceHacker.exe -open %mesa%\mesa-dist-win\bin\%abi%\libglapi.dll -save %mesa%\mesa-dist-win\bin\%abi%\libglapi.dll -action addoverwrite -resource %mesa%\mesa-dist-win\buildscript\assets\temp.res -log NUL
-
+@call %mesa%\mesa-dist-win\buildscript\modules\rcgen.cmd "Mesa3D shared glapi library" %mesa%\mesa-dist-win\bin\%abi%\libglapi.dll %abi% %mesaver% "VMware Inc."
 @rem Add version info to standalone OpenGL ES 1.x driver
-@IF EXIST %mesa%\mesa-dist-win\bin\%abi%\libGLESv1_CM.dll call %mesa%\mesa-dist-win\buildscript\modules\rcgen.cmd "Mesa3D standalone OpenGL ES 1.x driver" libGLESv1_CM %abi% %mesaver% "VMware Inc."
-@IF EXIST %mesa%\mesa-dist-win\bin\%abi%\libGLESv1_CM.dll ResourceHacker.exe -open %mesa%\mesa-dist-win\buildscript\assets\temp.rc -save %mesa%\mesa-dist-win\buildscript\assets\temp.res -action compile -log NUL
-@IF EXIST %mesa%\mesa-dist-win\bin\%abi%\libGLESv1_CM.dll ResourceHacker.exe -open %mesa%\mesa-dist-win\bin\%abi%\libGLESv1_CM.dll -save %mesa%\mesa-dist-win\bin\%abi%\libGLESv1_CM.dll -action addoverwrite -resource %mesa%\mesa-dist-win\buildscript\assets\temp.res -log NUL
-
+@call %mesa%\mesa-dist-win\buildscript\modules\rcgen.cmd "Mesa3D standalone OpenGL ES 1.x driver" %mesa%\mesa-dist-win\bin\%abi%\libGLESv1_CM.dll %abi% %mesaver% "VMware Inc."
 @rem Add version info to standalone OpenGL ES 2.x and 3.x driver
-@IF EXIST %mesa%\mesa-dist-win\bin\%abi%\libGLESv2.dll call %mesa%\mesa-dist-win\buildscript\modules\rcgen.cmd "Mesa3D standalone OpenGL ES 2.x and 3.x driver" libGLESv2 %abi% %mesaver% "VMware Inc."
-@IF EXIST %mesa%\mesa-dist-win\bin\%abi%\libGLESv2.dll ResourceHacker.exe -open %mesa%\mesa-dist-win\buildscript\assets\temp.rc -save %mesa%\mesa-dist-win\buildscript\assets\temp.res -action compile -log NUL
-@IF EXIST %mesa%\mesa-dist-win\bin\%abi%\libGLESv2.dll ResourceHacker.exe -open %mesa%\mesa-dist-win\bin\%abi%\libGLESv2.dll -save %mesa%\mesa-dist-win\bin\%abi%\libGLESv2.dll -action addoverwrite -resource %mesa%\mesa-dist-win\buildscript\assets\temp.res -log NUL
-
+@call %mesa%\mesa-dist-win\buildscript\modules\rcgen.cmd "Mesa3D standalone OpenGL ES 2.x and 3.x driver" %mesa%\mesa-dist-win\bin\%abi%\libGLESv2.dll %abi% %mesaver% "VMware Inc."
 @rem Add version info to Mesa3D test framework
-@IF EXIST %mesa%\mesa-dist-win\bin\%abi%\graw.dll call %mesa%\mesa-dist-win\buildscript\modules\rcgen.cmd "Mesa3D test framework with GDI window support" graw %abi% %mesaver% "VMware Inc."
-@IF EXIST %mesa%\mesa-dist-win\bin\%abi%\graw.dll ResourceHacker.exe -open %mesa%\mesa-dist-win\buildscript\assets\temp.rc -save %mesa%\mesa-dist-win\buildscript\assets\temp.res -action compile -log NUL
-@IF EXIST %mesa%\mesa-dist-win\bin\%abi%\graw.dll ResourceHacker.exe -open %mesa%\mesa-dist-win\bin\%abi%\graw.dll -save %mesa%\mesa-dist-win\bin\%abi%\graw.dll -action addoverwrite -resource %mesa%\mesa-dist-win\buildscript\assets\temp.res -log NUL
-
+@call %mesa%\mesa-dist-win\buildscript\modules\rcgen.cmd "Mesa3D test framework with GDI window support" %mesa%\mesa-dist-win\bin\%abi%\graw.dll %abi% %mesaver% "VMware Inc."
+@call %mesa%\mesa-dist-win\buildscript\modules\rcgen.cmd "Mesa3D test framework without window support" %mesa%\mesa-dist-win\bin\%abi%\graw_null.dll %abi% %mesaver% "VMware Inc."
 @rem Add version info to Intel swr desktop OpenGL driver
-@IF EXIST %mesa%\mesa-dist-win\bin\%abi%\swrAVX.dll call %mesa%\mesa-dist-win\buildscript\modules\rcgen.cmd "Mesa3D swr desktop OpenGL software rendering driver running on AVX instruction set" swrAVX null %mesaver% "Intel"
-@IF EXIST %mesa%\mesa-dist-win\bin\%abi%\swrAVX.dll ResourceHacker.exe -open %mesa%\mesa-dist-win\buildscript\assets\temp.rc -save %mesa%\mesa-dist-win\buildscript\assets\temp.res -action compile -log NUL
-@IF EXIST %mesa%\mesa-dist-win\bin\%abi%\swrAVX.dll ResourceHacker.exe -open %mesa%\mesa-dist-win\bin\%abi%\swrAVX.dll -save %mesa%\mesa-dist-win\bin\%abi%\swrAVX.dll -action addoverwrite -resource %mesa%\mesa-dist-win\buildscript\assets\temp.res -log NUL
-@IF EXIST %mesa%\mesa-dist-win\bin\%abi%\swrAVX2.dll call %mesa%\mesa-dist-win\buildscript\modules\rcgen.cmd "Mesa3D swr desktop OpenGL software rendering driver running on AVX2 instruction set" swrAVX2 null %mesaver% "Intel"
-@IF EXIST %mesa%\mesa-dist-win\bin\%abi%\swrAVX2.dll ResourceHacker.exe -open %mesa%\mesa-dist-win\buildscript\assets\temp.rc -save %mesa%\mesa-dist-win\buildscript\assets\temp.res -action compile -log NUL
-@IF EXIST %mesa%\mesa-dist-win\bin\%abi%\swrAVX2.dll ResourceHacker.exe -open %mesa%\mesa-dist-win\bin\%abi%\swrAVX2.dll -save %mesa%\mesa-dist-win\bin\%abi%\swrAVX2.dll -action addoverwrite -resource %mesa%\mesa-dist-win\buildscript\assets\temp.res -log NUL
-
+@call %mesa%\mesa-dist-win\buildscript\modules\rcgen.cmd "Mesa3D swr desktop OpenGL software rendering driver running on AVX instruction set" %mesa%\mesa-dist-win\bin\%abi%\swrAVX.dll null %mesaver% "Intel"
+@call %mesa%\mesa-dist-win\buildscript\modules\rcgen.cmd "Mesa3D swr desktop OpenGL software rendering driver running on AVX2 instruction set" %mesa%\mesa-dist-win\bin\%abi%\swrAVX2.dll null %mesaver% "Intel"
 @rem Add version info to Mesa3D off-screen rendering drivers
-@IF EXIST %mesa%\mesa-dist-win\bin\%abi%\osmesa-swrast\osmesa.dll call %mesa%\mesa-dist-win\buildscript\modules\rcgen.cmd "Mesa3D off-screen rendering classic driver" osmesa %abi% %mesaver% "VMware Inc."
-@IF EXIST %mesa%\mesa-dist-win\bin\%abi%\osmesa-swrast\osmesa.dll ResourceHacker.exe -open %mesa%\mesa-dist-win\buildscript\assets\temp.rc -save %mesa%\mesa-dist-win\buildscript\assets\temp.res -action compile -log NUL
-@IF EXIST %mesa%\mesa-dist-win\bin\%abi%\osmesa-swrast\osmesa.dll ResourceHacker.exe -open %mesa%\mesa-dist-win\bin\%abi%\osmesa-swrast\osmesa.dll -save %mesa%\mesa-dist-win\bin\%abi%\osmesa-swrast\osmesa.dll -action addoverwrite -resource %mesa%\mesa-dist-win\buildscript\assets\temp.res -log NUL
-@IF EXIST %mesa%\mesa-dist-win\bin\%abi%\osmesa-gallium\osmesa.dll call %mesa%\mesa-dist-win\buildscript\modules\rcgen.cmd "Mesa3D off-screen rendering gallium driver" osmesa %abi% %mesaver% "VMware Inc."
-@IF EXIST %mesa%\mesa-dist-win\bin\%abi%\osmesa-gallium\osmesa.dll ResourceHacker.exe -open %mesa%\mesa-dist-win\buildscript\assets\temp.rc -save %mesa%\mesa-dist-win\buildscript\assets\temp.res -action compile -log NUL
-@IF EXIST %mesa%\mesa-dist-win\bin\%abi%\osmesa-gallium\osmesa.dll ResourceHacker.exe -open %mesa%\mesa-dist-win\bin\%abi%\osmesa-gallium\osmesa.dll -save %mesa%\mesa-dist-win\bin\%abi%\osmesa-gallium\osmesa.dll -action addoverwrite -resource %mesa%\mesa-dist-win\buildscript\assets\temp.res -log NUL
+@call %mesa%\mesa-dist-win\buildscript\modules\rcgen.cmd "Mesa3D off-screen rendering classic driver" %mesa%\mesa-dist-win\bin\%abi%\osmesa-swrast\osmesa.dll %abi% %mesaver% "VMware Inc."
+@call %mesa%\mesa-dist-win\buildscript\modules\rcgen.cmd "Mesa3D off-screen rendering gallium driver" %mesa%\mesa-dist-win\bin\%abi%\osmesa-gallium\osmesa.dll %abi% %mesaver% "VMware Inc."
+@call %mesa%\mesa-dist-win\buildscript\modules\rcgen.cmd "Mesa3D off-screen rendering gallium driver" %mesa%\mesa-dist-win\bin\%abi%\osmesa.dll %abi% %mesaver% "VMware Inc."
 
 @echo Done
 @echo.

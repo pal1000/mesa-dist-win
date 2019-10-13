@@ -24,9 +24,9 @@ echo {
 echo VALUE "CompanyName", %5
 echo VALUE "FileDescription", %descriptionfield%
 echo VALUE "FileVersion", "%mesaver%.0"
-echo VALUE "InternalName", "%2.dll"
+echo VALUE "InternalName", "%~n2.dll"
 echo VALUE "LegalCopyright", "Copyright (C) 2019"
-echo VALUE "OriginalFilename", "%2.dll"
+echo VALUE "OriginalFilename", "%~n2.dll"
 echo VALUE "ProductName", "Mesa3D"
 echo VALUE "ProductVersion", "%mesaver%.0"
 echo }
@@ -36,4 +36,6 @@ echo {
 echo VALUE "Translation", 0x0409 0x04B0
 echo }
 echo })>%mesa%\mesa-dist-win\buildscript\assets\temp.rc
+@IF EXIST %2 ResourceHacker.exe -open %mesa%\mesa-dist-win\buildscript\assets\temp.rc -save %mesa%\mesa-dist-win\buildscript\assets\temp.res -action compile -log NUL
+@IF EXIST %2 ResourceHacker.exe -open %2 -save %2 -action addoverwrite -resource %mesa%\mesa-dist-win\buildscript\assets\temp.res -log NUL
 @endlocal
