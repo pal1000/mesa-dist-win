@@ -1,3 +1,8 @@
+@rem First remove Python UWP loader from PATH (see https://github.com/pal1000/mesa-dist-win/issues/23)
+@setlocal ENABLEDELAYEDEXPANSION
+@SET PATH=!PATH:;%LOCALAPPDATA%\Microsoft\WindowsApps=!
+@endlocal&set PATH=%PATH%
+
 @REM Try locating all Python versions via Python Launcher.
 @SET pythonloc=python.exe
 
@@ -65,11 +70,6 @@
 
 :nopylauncher
 @rem Missing Python launcher fallback code path.
-@rem First remove Python UWP loader from PATH (see https://github.com/pal1000/mesa-dist-win/issues/23)
-@setlocal ENABLEDELAYEDEXPANSION
-@SET PATH=!PATH:;%LOCALAPPDATA%\Microsoft\WindowsApps=!
-@endlocal&set PATH=%PATH%
-
 @rem Check if Python is in PATH or if it is provided as a local depedency.
 @SET ERRORLEVEL=0
 @IF %pythonloc%==python.exe where /q python.exe

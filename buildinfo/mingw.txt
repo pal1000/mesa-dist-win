@@ -9,7 +9,7 @@ MSYS2 environment
 -----------------
 bash 4.4.023-1
 bash-completion 2.9-1
-bison 3.4.1-1
+bison 3.4.2-1
 brotli 1.0.7-1
 bsdcpio 3.4.0-4
 bsdtar 3.4.0-4
@@ -47,7 +47,7 @@ libcrypt 2.1-2
 libcurl 7.66.0-1
 libdb 5.3.28-2
 libedit 20190324_3.1-1
-libexpat 2.2.7-1
+libexpat 2.2.9-1
 libffi 3.2.1-3
 libgcrypt 1.8.5-1
 libgdbm 1.18.1-2
@@ -76,7 +76,7 @@ libpcre32 8.43-2
 libpcrecpp 8.43-2
 libpcreposix 8.43-2
 libpsl 0.21.0-1
-libreadline 8.0.000-1
+libreadline 8.0.001-1
 libsqlite 3.28.0-1
 libssh2 1.9.0-1
 libtasn1 4.14-1
@@ -97,7 +97,7 @@ mingw-w64-i686-isl 0.21-1
 mingw-w64-i686-libffi 3.2.1-4
 mingw-w64-i686-libiconv 1.16-1
 mingw-w64-i686-libwinpthread-git 7.0.0.5522.977a9720-1
-mingw-w64-i686-llvm 8.0.1-3
+mingw-w64-i686-llvm 9.0.0-1
 mingw-w64-i686-mpc 1.1.0-1
 mingw-w64-i686-mpfr 4.0.2-2
 mingw-w64-i686-windows-default-manifest 6.4-3
@@ -113,13 +113,13 @@ mingw-w64-x86_64-isl 0.21-1
 mingw-w64-x86_64-libffi 3.2.1-4
 mingw-w64-x86_64-libiconv 1.16-1
 mingw-w64-x86_64-libwinpthread-git 7.0.0.5522.977a9720-1
-mingw-w64-x86_64-llvm 8.0.1-3
+mingw-w64-x86_64-llvm 9.0.0-1
 mingw-w64-x86_64-mpc 1.1.0-1
 mingw-w64-x86_64-mpfr 4.0.2-2
 mingw-w64-x86_64-windows-default-manifest 6.4-3
 mingw-w64-x86_64-winpthreads-git 7.0.0.5522.977a9720-1
 mingw-w64-x86_64-zlib 1.2.11-7
-mintty 1~3.0.5-1
+mintty 1~3.0.6-1
 mpfr 4.0.2-1
 msys2-keyring r9.397a52e-1
 msys2-launcher-git 0.3.32.56c2ba7-2
