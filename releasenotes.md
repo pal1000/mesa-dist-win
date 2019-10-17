@@ -5,7 +5,8 @@
 - Meson build: Disable LLVM support until is enabled upstream;
 - Meson build: Update subprojects;
 - Meson build: Disable Mesa3D build with Ninja until issue is investigated;
-- Remove UWP Python from PATH when using MSVC as soon as Python discovery routine begins as it may cause issues with Meson build.
+- Remove UWP Python from PATH when using MSVC as soon as Python discovery routine begins as it may cause issues with Meson build;
+- Meson build: Pause between configure and build phase similarly to LLVM.
 ### Version information
 - Refactored code and added osmesa gallium solo and graw null support.
 ### Distribution

@@ -108,7 +108,6 @@
 
 @IF %mesabldsys%==meson set /p gles=Do you want to build GLAPI as a shared library and standalone GLES libraries (y/n):
 @IF %mesabldsys%==meson echo.
-@if %mesabldsys%==meson if /I NOT "%gles%"=="y" set buildconf=%buildconf% -Dshared-glapi=false
 @if %mesabldsys%==meson if /I "%gles%"=="y" set buildconf=%buildconf% -Dshared-glapi=true -Dgles1=true -Dgles2=true
 
 @set expressmesabuild=n
@@ -172,6 +171,8 @@
 @if %mesabldsys%==meson cd build\%abi%
 @echo Build command: %buildcmd%
 @echo.
+@if %mesabldsys%==meson pause
+@if %mesabldsys%==meson echo.
 @%buildcmd%
 @echo.
 @if %mesabldsys%==meson cd ..\..\
