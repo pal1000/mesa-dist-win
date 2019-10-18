@@ -24,8 +24,4 @@
 @set flexstate=2
 @set ninjastate=2
 @set pkgconfigstate=1
-@set gitstate=2
-@SET ERRORLEVEL=0
-@where /q git.exe
-@IF ERRORLEVEL 1 set gitstate=0
 

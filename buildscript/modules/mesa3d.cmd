@@ -1,15 +1,18 @@
+@setlocal
 @rem Check environment
 @IF %flexstate%==0 echo Flex and bison are required to build Mesa3D.
 @IF %flexstate%==0 GOTO skipmesa
 @if NOT EXIST mesa if %gitstate%==0 echo Fatal: Both Mesa3D code and Git are missing. At least one is required. Execution halted.
+@if NOT EXIST mesa if %gitstate%==0 echo.
 @if NOT EXIST mesa if %gitstate%==0 GOTO skipmesa
-@IF %mesabldsys%==meson IF %pkgconfigstate%==0 echo pkg-config-lite is required to build Mesa3D with Meson.
+@IF %mesabldsys%==meson IF %pkgconfigstate%==0 echo No suitable pkg-config implementtion found. pkgconf or pkg-config-lite is required to build Mesa3D with Meson and MSVC.
+@IF %mesabldsys%==meson IF %pkgconfigstate%==0 echo.
 @IF %mesabldsys%==meson IF %pkgconfigstate%==0 GOTO skipmesa
 
 @REM Aquire Mesa3D source code if missing.
 @set buildmesa=n
 @cd %mesa%
-@if %gitstate%==0 IF %toolchain%==msvc echo Error: Git not found. Auto-patching disabled. If you try to build with shared glapi support and use quick configuration or try to build osmesa expect a build failure per https://bugs.freedesktop.org/show_bug.cgi?id=106843
+@if %gitstate%==0 IF %toolchain%==msvc echo Error: Git not found. Auto-patching disabled. This could have many consequences going all the way up to build failure.
 @if %gitstate%==0 IF %toolchain%==msvc echo.
 @if NOT EXIST mesa echo Warning: Mesa3D source code not found.
 @if NOT EXIST mesa echo.
@@ -142,7 +145,7 @@
 @IF %mesabldsys%==meson if /I "%cleanbuild%"=="y" for /d %%a in ("%mesa%\mesa\subprojects\expat-*") do @RD /S /Q "%%~a"
 
 @IF %toolchain%==msvc IF %flexstate%==1 set PATH=%mesa%\flexbison\;%PATH%
-@if %mesabldsys%==meson set PATH=%PKG_CONFIG_PATH%\;%PATH%
+@if %mesabldsys%==meson IF %toolchain%==msvc set PATH==%pkgconfigloc%\;%PATH%
 
 :build_mesa
 @rem Generate dummy heaader for MSVC build when git is missing.
@@ -178,6 +181,5 @@
 @if %mesabldsys%==meson cd ..\..\
 
 :skipmesa
-@rem Reset PATH after Mesa3D build to clean the environment again.
-@set PATH=%oldpath%
-@echo.
+@rem Reset environment.
+@endlocal

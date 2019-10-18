@@ -4,9 +4,11 @@
 - Meson build: Release from manual startup mode;
 - Meson build: Disable LLVM support until is enabled upstream;
 - Meson build: Update subprojects;
-- Meson build: Disable Mesa3D build with Ninja until issue is investigated;
 - Remove UWP Python from PATH when using MSVC as soon as Python discovery routine begins as it may cause issues with Meson build;
-- Meson build: Pause between configure and build phase similarly to LLVM.
+- Meson build: Pause between configure and build phase similarly to LLVM;
+- Meson build: Add support for pkgconf as pkg-config-lite alternative;
+- Split other dependencies to share git version control detection across the board;
+- Meson build: Disable Mesa3D and pkgconf build with Ninja until issue is investigated.
 ### Version information
 - Refactored code and added osmesa gallium solo and graw null support.
 ### Distribution

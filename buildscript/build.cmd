@@ -27,11 +27,17 @@
 @rem If using MSVC search for Python packages. Install missing packages automatically. Ask to do an update to all packages.
 @IF %toolchain%==msvc call %mesa%\mesa-dist-win\buildscript\modules\pythonpackages.cmd
 
-@rem If using MSVC check for remaining dependencies: cmake, ninja, winflexbison, git and pkg-config if applies.
-@IF %toolchain%==msvc call %mesa%\mesa-dist-win\buildscript\modules\otherdependencies.cmd
-
 @rem Build throttle.
 @call %mesa%\mesa-dist-win\buildscript\modules\throttle.cmd
+
+@rem Version control
+@call %mesa%\mesa-dist-win\buildscript\modules\git.cmd
+
+@rem If using MSVC check for remaining dependencies: cmake, ninja, winflexbison and pkg-config if applies.
+@IF %toolchain%==msvc call %mesa%\mesa-dist-win\buildscript\modules\cmake.cmd
+@IF %toolchain%==msvc call %mesa%\mesa-dist-win\buildscript\modules\ninja.cmd
+@IF %toolchain%==msvc call %mesa%\mesa-dist-win\buildscript\modules\winflexbison.cmd
+@IF %toolchain%==msvc call %mesa%\mesa-dist-win\buildscript\modules\pkg-config.cmd
 
 @rem Backup PATH before building anything to easily keep environment clean.
 @set oldpath=%PATH%
