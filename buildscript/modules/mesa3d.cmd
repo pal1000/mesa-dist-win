@@ -1,6 +1,7 @@
 @setlocal
 @rem Check environment
 @IF %flexstate%==0 echo Flex and bison are required to build Mesa3D.
+@IF %flexstate%==0 echo.
 @IF %flexstate%==0 GOTO skipmesa
 @if NOT EXIST mesa if %gitstate%==0 echo Fatal: Both Mesa3D code and Git are missing. At least one is required. Execution halted.
 @if NOT EXIST mesa if %gitstate%==0 echo.
@@ -17,7 +18,7 @@
 @if NOT EXIST mesa echo Warning: Mesa3D source code not found.
 @if NOT EXIST mesa echo.
 @if NOT EXIST mesa set /p buildmesa=Download mesa code and build (y/n):
-@if NOT EXIST mesa if /i "%buildmesa%"=="y" echo.
+@if NOT EXIST mesa echo.
 @if NOT EXIST mesa if /i NOT "%buildmesa%"=="y" GOTO skipmesa
 @if NOT EXIST mesa set branch=master
 @if NOT EXIST mesa set /p branch=Enter Mesa source code branch name - defaults to master:
@@ -25,8 +26,10 @@
 @if NOT EXIST mesa git clone --recurse-submodules --depth=1 --branch=%branch% https://gitlab.freedesktop.org/mesa/mesa.git mesa
 @if NOT EXIST mesa echo.
 
-@if EXIST mesa if /i NOT "%buildmesa%"=="y" set /p buildmesa=Begin mesa build. Proceed (y/n):
-@if EXIST mesa if /i "%buildmesa%"=="y" echo.
+@if EXIST mesa if /i NOT "%buildmesa%"=="y" (
+@set /p buildmesa=Begin mesa build. Proceed - y/n :
+@echo.
+)
 @if /i NOT "%buildmesa%"=="y" GOTO skipmesa
 @cd mesa
 
@@ -57,9 +60,6 @@
 @IF %intmesaver% GEQ 19200 IF %intmesaver% LSS 19251 call %mesa%\mesa-dist-win\buildscript\modules\applypatch.cmd mingw-posix-flag-fix
 @IF %intmesaver% LEQ 19157 call %mesa%\mesa-dist-win\buildscript\modules\applypatch.cmd llvm9
 @IF %intmesaver% GEQ 19200 IF %intmesaver% LSS 19251 call %mesa%\mesa-dist-win\buildscript\modules\applypatch.cmd llvm9
-@rem Scons Python 3 initial
-@IF %intmesaver% LEQ 19157 call %mesa%\mesa-dist-win\buildscript\modules\applypatch.cmd mesapy3
-@IF %intmesaver% GEQ 19200 IF %intmesaver% LSS 19251 call %mesa%\mesa-dist-win\buildscript\modules\applypatch.cmd mesapy3
 
 :configmesabuild
 @rem Configure Mesa build.
@@ -91,13 +91,11 @@
 
 @set llvmless=n
 @if %havellvm%==0 set llvmless=y
-@rem Disable LLVM for Meson build
-@if %mesabldsys%==meson set llvmless=y
-@if %havellvm%==1 if %mesabldsys%==scons set /p llvmless=Build Mesa without LLVM (y/n). llvmpipe and swr drivers and high performance JIT won't be available for other drivers and libraries:
-@if %havellvm%==1 if %mesabldsys%==scons echo.
+@if %havellvm%==1 set /p llvmless=Build Mesa without LLVM (y/n). llvmpipe and swr drivers and high performance JIT won't be available for other drivers and libraries:
+@if %havellvm%==1 echo.
 @if %mesabldsys%==scons if /I "%llvmless%"=="y" set buildcmd=%buildcmd% llvm=no
 @if %mesabldsys%==meson if /I NOT "%llvmless%"=="y" call %mesa%\mesa-dist-win\buildscript\modules\llvmwrapgen.cmd
-@if %mesabldsys%==meson if /I NOT "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm-wrap=llvm -Dllvm=true
+@if %mesabldsys%==meson if /I NOT "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm=true
 
 @if %mesabldsys%==scons IF %toolchain%==msvc set /p openmp=Build Mesa3D with OpenMP. Faster build and smaller binaries (y/n):
 @if %mesabldsys%==scons IF %toolchain%==msvc echo.

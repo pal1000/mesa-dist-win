@@ -8,7 +8,8 @@
 - Meson build: Pause between configure and build phase similarly to LLVM;
 - Meson build: Add support for pkgconf as pkg-config-lite alternative;
 - Split other dependencies to share git version control detection across the board;
-- Meson build: Disable Mesa3D and pkgconf build with Ninja until issue is investigated.
+- Meson build: Disable Mesa3D and pkgconf build with Ninja until issue is investigated;
+- Meson build: Enable llvmpipe and swr drivers.
 ### Version information
 - Refactored code and added osmesa gallium solo and graw null support.
 ### Distribution
@@ -18,7 +19,8 @@
 - Per app deployment: Add osmesa gallium solo and graw null support;
 - System wide deployment: Add osmesa gallium solo and graw null support.
 ### Patch
-- Meson build: Remove expat subproject update as it is no longer used on windows since mesa3d/mesa@4441da00.
+- Meson build: Remove expat subproject update as it is no longer used on windows since mesa3d/mesa@4441da00;
+- Drop Scons Python 3 compatibility patch as it's ineffective on Windows.
 # 19.2.1
 - Updated Mesa3D to [19.2.1](https://www.mesa3d.org/relnotes/19.2.1.html).
 ### Patches
