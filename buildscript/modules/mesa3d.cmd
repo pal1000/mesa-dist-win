@@ -34,7 +34,7 @@
 @cd mesa
 
 @rem Locate LLVM
-@IF %toolchain%==msvc set LLVM=%mesa%\llvm\%abi%-%llvmlink%
+@IF %toolchain%==msvc set LLVM=%mesa%\llvm\%abi%
 @IF %toolchain%==gcc set LLVM=/mingw%minabi%
 @set havellvm=0
 @IF EXIST %LLVM% set havellvm=1
@@ -85,9 +85,7 @@
 @if /I "%ninja%"=="y" set buildconf=%buildconf%ninja
 @if /I "%ninja%"=="y" set buildcmd=ninja -j %throttle%
 @if %mesabldsys%==meson if /I NOT "%ninja%"=="y" set buildconf=%buildconf%vs
-
-@if %mesabldsys%==meson set buildconf=%buildconf% --default-library=static --buildtype=release
-@if %mesabldsys%==meson if "%llvmlink%"=="MT" set buildconf=%buildconf% -Db_vscrt=mt
+@if %mesabldsys%==meson set buildconf=%buildconf% --default-library=static --buildtype=release -Db_vscrt=mt
 
 @set llvmless=n
 @if %havellvm%==0 set llvmless=y

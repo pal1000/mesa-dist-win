@@ -1,6 +1,6 @@
 @setlocal
-@FOR /F "tokens=* USEBACKQ" %%a IN (`%mesa%\llvm\%abi%-%llvmlink%\bin\llvm-config --libnames engine coroutines`) DO @SET llvmlibs=%%~a
-@FOR /F "tokens=* USEBACKQ" %%a IN (`%mesa%\llvm\%abi%-%llvmlink%\bin\llvm-config --version`) DO @SET llvmver=%%~a
+@FOR /F "tokens=* USEBACKQ" %%a IN (`%mesa%\llvm\%abi%\bin\llvm-config --libnames engine coroutines`) DO @SET llvmlibs=%%~a
+@FOR /F "tokens=* USEBACKQ" %%a IN (`%mesa%\llvm\%abi%\bin\llvm-config --version`) DO @SET llvmver=%%~a
 @set llvmlibs=%llvmlibs:.lib=%
 @set llvmlibs='%llvmlibs: =', '%'
 @IF NOT EXIST %mesa%\mesa\subprojects\llvm md %mesa%\mesa\subprojects\llvm

@@ -68,8 +68,8 @@
 @IF %toolchain%==msvc IF NOT "%ninjastate%"=="0" IF NOT "%ninjastate%"=="" for /f "USEBACKQ" %%a IN (`ninja --version`) do @echo Ninja %%a>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
 
 @rem Get LLVM version
-@IF %toolchain%==msvc IF EXIST %mesa%\llvm\%abi%-%llvmlink%\bin\llvm-config.exe FOR /F "USEBACKQ" %%a IN (`%mesa%\llvm\%abi%-%llvmlink%\bin\llvm-config.exe --version`) do @set llvmver=%%a
-@IF %toolchain%==msvc IF EXIST %mesa%\llvm\%abi%-%llvmlink%\bin\llvm-config.exe echo LLVM %llvmver%>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
+@IF %toolchain%==msvc IF EXIST %mesa%\llvm\%abi%\bin\llvm-config.exe FOR /F "USEBACKQ" %%a IN (`%mesa%\llvm\%abi%\bin\llvm-config.exe --version`) do @set llvmver=%%a
+@IF %toolchain%==msvc IF EXIST %mesa%\llvm\%abi%\bin\llvm-config.exe echo LLVM %llvmver%>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
 
 @rem Get flex and bison version
 @IF %toolchain%==msvc IF "%flexstate%"=="1" set PATH=%mesa%\flexbison\;%PATH%
@@ -95,8 +95,8 @@
 @IF %toolchain%==gcc echo [2] Navigate to Mesa3D source code in a MSYS2 MINGW32 shell and execute this command.>>%mesa%\mesa-dist-win\buildinfo\mingw.txt
 @IF %toolchain%==gcc echo [3] Navigate to Mesa3D source code in a MSYS2 MINGW64 shell and execute this command.>>%mesa%\mesa-dist-win\buildinfo\mingw.txt
 
-@IF %toolchain%==msvc echo [1] md buildsys-x86-%llvmlink%^&cd buildsys-x86-%llvmlink%^&cmake -G "Ninja" -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=%llvmlink% -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../x86-%llvmlink% ..>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
-@IF %toolchain%==msvc echo [2] md buildsys-x64-%llvmlink%^&cd buildsys-x64-%llvmlink%^&cmake -G "Ninja" -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=%llvmlink% -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../x64-%llvmlink% ..>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
+@IF %toolchain%==msvc echo [1] md buildsys-x86^&cd buildsys-x86^&cmake -G "Ninja" -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../x86 ..>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
+@IF %toolchain%==msvc echo [2] md buildsys-x64^&cd buildsys-x64^&cmake -G "Ninja" -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../x64 ..>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
 @IF %toolchain%==msvc echo [3] ninja install>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
 @IF %toolchain%==msvc echo [4] scons build=release platform=windows machine=x86 openmp=1 libgl-gdi osmesa graw-gdi>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
 @IF %toolchain%==msvc echo [4] scons build=release platform=windows machine=x86_64 swr=1 openmp=1 libgl-gdi osmesa graw-gdi>>%mesa%\mesa-dist-win\buildinfo\msvc.txt

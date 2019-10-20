@@ -1,12 +1,11 @@
 @cd ../../
-@set llvmlink=MT
 @set format=pythonlist
 @for %%a in ("%cd%") do @set mesa=%%~sa
 @IF NOT EXIST llvm GOTO error
 @cd llvm
-@if NOT EXIST x64-%llvmlink% if NOT EXIST x86-%llvmlink% GOTO error
-@if EXIST x64-%llvmlink% cd x64-%llvmlink%
-@if EXIST x86-%llvmlink% cd x86-%llvmlink%
+@if NOT EXIST x64 if NOT EXIST x86 GOTO error
+@if EXIST x64 cd x64
+@if EXIST x86 cd x86
 
 :writedebugoutput
 @IF NOT EXIST bin GOTO error
