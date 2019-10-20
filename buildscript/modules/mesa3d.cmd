@@ -143,7 +143,7 @@
 @IF %mesabldsys%==meson if /I "%cleanbuild%"=="y" for /d %%a in ("%mesa%\mesa\subprojects\expat-*") do @RD /S /Q "%%~a"
 
 @IF %toolchain%==msvc IF %flexstate%==1 set PATH=%mesa%\flexbison\;%PATH%
-@if %mesabldsys%==meson IF %toolchain%==msvc set PATH==%pkgconfigloc%\;%PATH%
+@if %mesabldsys%==meson IF %toolchain%==msvc set PATH=%pkgconfigloc%\;%PATH%
 
 :build_mesa
 @rem Generate dummy heaader for MSVC build when git is missing.

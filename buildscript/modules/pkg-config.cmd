@@ -1,3 +1,6 @@
+@setlocal
+@set pkgconfigloc=null
+
 @rem pkg-config. Can be (1) present (0) missing/broken. Only valid for Meson build.
 @IF %mesabldsys%==scons set pkgconfigstate=0
 @IF %mesabldsys%==scons GOTO doneenvcheck
@@ -42,3 +45,4 @@
 @set pkgconfigstate=0
 
 :doneenvcheck
+@endlocal&set pkgconfigstate=%pkgconfigstate%&set pkgconfigloc=%pkgconfigloc%

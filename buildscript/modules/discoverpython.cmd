@@ -1,7 +1,6 @@
-@rem First remove Python UWP loader from PATH (see https://github.com/pal1000/mesa-dist-win/issues/23)
 @setlocal ENABLEDELAYEDEXPANSION
+@rem First remove Python UWP loader from PATH (see https://github.com/pal1000/mesa-dist-win/issues/23)
 @SET PATH=!PATH:;%LOCALAPPDATA%\Microsoft\WindowsApps=!
-@endlocal&set PATH=%PATH%
 
 @REM Try locating all Python versions via Python Launcher.
 @SET pythonloc=python.exe
@@ -17,7 +16,6 @@
 @cls
 
 @rem Count supported python installations
-@setlocal ENABLEDELAYEDEXPANSION
 @FOR /F "USEBACKQ tokens=1 skip=1" %%a IN (`py -0 2^>nul`) do @(
 @set pythoninstance=%%a
 @set goodpython=0
@@ -25,13 +23,11 @@
 @IF !pythoninstance^:^~1^,-3! GEQ 3.5 set goodpython=1
 @IF !goodpython!==1 set /a pythontotal+=1
 )
-@endlocal&set pythontotal=%pythontotal%
 @IF %pythontotal%==0 echo WARNING: No suitable Python installation found by Python launcher. Note that Python 2.7 or Python 3.5 and newer is required.
 @IF %pythontotal%==0 echo.
 @IF %pythontotal%==0 GOTO nopylauncher
 
 @echo Select Python installation
-@setlocal ENABLEDELAYEDEXPANSION
 @FOR /F "USEBACKQ tokens=1 skip=1" %%a IN (`py -0 2^>nul`) do @(
 @set pythoninstance=%%a
 @set goodpython=0
@@ -40,7 +36,6 @@
 @IF !goodpython!==1 set /a pythoncount+=1
 @IF !goodpython!==1 echo !pythoncount!. Python !pythoninstance:~1,-3! !pythoninstance:~-2! bit
 )
-@endlocal
 @echo.
 @set /p pyselect=Select Python version by entering its index from the table above:
 @echo.
@@ -55,7 +50,6 @@
 @IF %pyselect% GTR %pythontotal% GOTO pylist
 
 @rem Locate selected Python installation
-@setlocal ENABLEDELAYEDEXPANSION
 @FOR /F "USEBACKQ tokens=1 skip=1" %%a IN (`py -0 2^>nul`) do @(
 @set pythoninstance=%%a
 @set goodpython=0
@@ -64,7 +58,6 @@
 @IF !goodpython!==1 set /a pythoncount+=1
 @IF !pythoncount!==%pyselect% set selectedpython=%%a
 )
-@endlocal&set selectedpython=%selectedpython%
 @FOR /F "tokens=* USEBACKQ" %%a IN (`py %selectedpython%  -c "import sys; print(sys.executable)"`) DO @set pythonloc=%%~sa
 @GOTO loadpypath
 
@@ -106,4 +99,4 @@
 
 @echo Using Python %fpythonver% from %pythonloc%.
 @echo.
-@set pythonver=%pythonver:~0,1%
+@endlocal&SET PATH=%PATH%&set pythonver=%fpythonver%&set pythonloc=%pythonloc%
