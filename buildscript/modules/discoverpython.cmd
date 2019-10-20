@@ -12,7 +12,6 @@
 
 :pylist
 @set pythontotal=0
-@set pythoncount=0
 @cls
 
 @rem Count supported python installations
@@ -28,6 +27,7 @@
 @IF %pythontotal%==0 GOTO nopylauncher
 
 @echo Select Python installation
+@set pythoncount=0
 @FOR /F "USEBACKQ tokens=1 skip=1" %%a IN (`py -0 2^>nul`) do @(
 @set pythoninstance=%%a
 @set goodpython=0
@@ -50,6 +50,7 @@
 @IF %pyselect% GTR %pythontotal% GOTO pylist
 
 @rem Locate selected Python installation
+@set pythoncount=0
 @FOR /F "USEBACKQ tokens=1 skip=1" %%a IN (`py -0 2^>nul`) do @(
 @set pythoninstance=%%a
 @set goodpython=0

@@ -16,7 +16,7 @@
 @set pypack=Mako
 @GOTO pypackinstall
 )
-@IF %mesabldsys%==scons if %pythonver%==2 if NOT EXIST %pythonloc:~0,-10%Lib\site-packages\win32 (
+@IF %mesabldsys%==scons if %pythonver:~0,1%==2 if NOT EXIST %pythonloc:~0,-10%Lib\site-packages\win32 (
 @set pypack=pywin32
 @GOTO pypackinstall
 )
@@ -64,8 +64,8 @@
 @echo.
 @if /I "%pyupd%"=="y" if EXIST "%LOCALAPPDATA%\pip" RD /S /Q "%LOCALAPPDATA%\pip"
 @if /I "%pyupd%"=="y" for /F "skip=2 delims= " %%a in ('%pythonloc% -W ignore -m pip list -o --disable-pip-version-check') do @%pythonloc% -W ignore -m pip install -U "%%a"
-@if /I "%pyupd%"=="y" IF %pythonver%==2 IF NOT EXIST "%windir%\system32\pythoncom27.dll" IF NOT EXIST "%windir%\syswow64\pythoncom27.dll" GOTO locatemeson
-@if /I "%pyupd%"=="y" IF %pythonver%==2 powershell -Command Start-Process "%mesa%\mesa-dist-win\buildscript\modules\pywin32.cmd" -Args "%pythonloc%" -Verb runAs 2>nul
+@if /I "%pyupd%"=="y" IF %pythonver:~0,1%==2 IF NOT EXIST "%windir%\system32\pythoncom27.dll" IF NOT EXIST "%windir%\syswow64\pythoncom27.dll" GOTO locatemeson
+@if /I "%pyupd%"=="y" IF %pythonver:~0,1%==2 powershell -Command Start-Process "%mesa%\mesa-dist-win\buildscript\modules\pywin32.cmd" -Args "%pythonloc%" -Verb runAs 2>nul
 
 :locatemeson
 @IF %mesabldsys%==scons GOTO endpython
