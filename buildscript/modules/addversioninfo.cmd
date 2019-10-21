@@ -1,13 +1,10 @@
+@setlocal
 @rem Get Mesa3D version
 @set /p mesaver=<%mesa%\mesa\VERSION
 @if "%mesaver:~5,2%"=="0-" set mesaver=%mesaver:~0,6%
 
 @rem Check if resource hacker can be reached.
-@set rhstate=2
-@set ERRORLEVEL=0
-@where /q ResourceHacker.exe
-@IF ERRORLEVEL 1 set rhstate=1
-@IF %rhstate%==1 IF NOT EXIST %mesa%\resource-hacker\ResourceHacker.exe set rhstate=0&GOTO noresourcehacker
+@IF %rhstate%==0 GOTO noresourcehacker
 @IF %rhstate%==1 SET PATH=%mesa%\resource-hacker\;%PATH%
 
 @rem Create folder to store generated resource files
@@ -41,3 +38,4 @@
 @echo.
 
 :noresourcehacker
+@endlocal

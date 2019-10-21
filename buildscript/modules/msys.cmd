@@ -1,3 +1,4 @@
+@setlocal
 @rem ABI format conversions for Mingw
 @set mingwabi=%longabi%
 @set minabi=%abi:~1%
@@ -9,4 +10,4 @@
 @set msysloc=%mesa%\msys64
 @IF NOT EXIST %msysloc% set msysloc=%mesa%\msys32
 @IF NOT EXIST %msysloc% set msysstate=0
-@set MSYSTEM=MSYS
+@endlocal&set mingwabi=%mingwabi%&set minabi=%minabi%&set msysstate=%msysstate%&set msysloc=%msysloc%

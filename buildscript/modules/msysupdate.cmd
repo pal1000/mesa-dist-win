@@ -1,5 +1,7 @@
+@setlocal
 @rem Check for updates
 @rem Initial upgrade
+@set MSYSTEM=MSYS
 @IF NOT EXIST %msysloc%\usr\bin\bison.exe (
 @%msysloc%\usr\bin\bash --login -c "pacman -Syu --noconfirm --disable-download-timeout"
 @echo.
@@ -13,3 +15,4 @@
 @IF /I "%msysupdate%"=="y" echo.
 @IF /I "%msysupdate%"=="y" %msysloc%\usr\bin\bash --login -c "pacman -Syu --noconfirm --disable-download-timeout"
 @IF /I "%msysupdate%"=="y" echo.
+@endlocal

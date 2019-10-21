@@ -1,3 +1,4 @@
+@setlocal
 @rem Look for CMake build generator.
 @IF %cmakestate%==0 IF EXIST %mesa%\llvm\%abi%\bin IF EXIST %mesa%\llvm\%abi%\include IF EXIST %mesa%\llvm\%abi%\lib echo CMake not found but LLVM is already built. Skipping LLVM build.
 @IF %cmakestate%==0 IF EXIST %mesa%\llvm\%abi%\bin IF EXIST %mesa%\llvm\%abi%\include IF EXIST %mesa%\llvm\%abi%\lib GOTO skipllvm
@@ -57,6 +58,6 @@
 
 :skipllvm
 @echo.
-@rem Reset PATH and current folder after LLVM build.
-@set PATH=%oldpath%
+@rem Reset environment after LLVM build.
+@endlocal
 @cd %mesa%

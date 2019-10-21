@@ -12,7 +12,7 @@ Python packages
 ---------------
 Mako       1.1.0  
 MarkupSafe 1.1.1  
-pip        19.2.3 
+pip        19.3.1 
 pywin32    225    
 scons      3.1.1  
 setuptools 41.4.0 
@@ -26,8 +26,8 @@ Bison 3.4.1
 
 Build commands
 --------------
-[1] md buildsys-x86-MT&cd buildsys-x86-MT&cmake -G "Ninja" -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../x86-MT ..
-[2] md buildsys-x64-MT&cd buildsys-x64-MT&cmake -G "Ninja" -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../x64-MT ..
+[1] md buildsys-x86&cd buildsys-x86&cmake -G "Ninja" -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../x86 ..
+[2] md buildsys-x64&cd buildsys-x64&cmake -G "Ninja" -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../x64 ..
 [3] ninja install
 [4] scons build=release platform=windows machine=x86 openmp=1 libgl-gdi osmesa graw-gdi
 [4] scons build=release platform=windows machine=x86_64 swr=1 openmp=1 libgl-gdi osmesa graw-gdi

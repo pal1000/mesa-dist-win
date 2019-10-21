@@ -73,6 +73,7 @@
 @if %mesabldsys%==scons if %toolchain%==gcc set buildcmd=%buildcmd% toolchain=mingw
 @if %mesabldsys%==scons if %toolchain%==msvc set buildcmd=%buildcmd% MSVC_USE_SCRIPT=%vsenv%
 
+@set buildconf=null
 @if %mesabldsys%==meson set buildconf=%mesonloc% build/%abi% --backend=
 @IF %mesabldsys%==meson set platformabi=Win32
 @IF %mesabldsys%==meson IF %abi%==x64 set platformabi=%abi%

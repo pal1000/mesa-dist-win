@@ -51,6 +51,9 @@
 @rem If using MSYS2 Mingw-w64 GCC install necessary packages
 @IF %toolchain%==gcc call %mesa%\mesa-dist-win\buildscript\modules\msyspackages.cmd
 
+@rem Binary resource editor
+@call %mesa%\mesa-dist-win\buildscript\modules\resourcehacker.cmd
+
 @rem Dump build environment information
 @call %mesa%\mesa-dist-win\buildscript\modules\envdump.cmd
 

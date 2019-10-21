@@ -1,3 +1,4 @@
+@setlocal
 @rem Create distribution.
 @if NOT EXIST %mesa%\mesa\build\windows-%longabi% if NOT EXIST %mesa%\mesa\build\%abi% GOTO exit
 @set /p dist=Create or update Mesa3D distribution package (y/n):
@@ -51,5 +52,6 @@
 @call %mesa%\mesa-dist-win\buildscript\modules\addversioninfo.cmd
 
 :exit
+@endlocal
 @pause
 @exit

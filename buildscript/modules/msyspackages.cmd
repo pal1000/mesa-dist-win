@@ -1,3 +1,4 @@
+@setlocal
 @rem Select build system for Mesa3D build
 @set selectmesabld=1
 
@@ -18,10 +19,8 @@
 @IF %selectmesabld%==2 set mesabldsys=meson
 
 @rem Get dependencies
+@set MSYSTEM=MSYS
 @IF %mesabldsys%==scons %msysloc%\usr\bin\bash --login -c "pacman -S python2-mako mingw-w64-%mingwabi%-llvm mingw-w64-%mingwabi%-gcc mingw-w64-%mingwabi%-zlib flex bison patch scons --needed --noconfirm --disable-download-timeout"
 @IF %mesabldsys%==meson %msysloc%\usr\bin\bash --login -c "pacman -S mingw-w64-%mingwabi%-python3-mako mingw-w64-%mingwabi%-llvm mingw-w64-%mingwabi%-gcc mingw-w64-%mingwabi%-zlib mingw-w64-%mingwabi%-meson flex bison patch --needed --noconfirm --disable-download-timeout"
 @echo.
-@set flexstate=2
-@set ninjastate=2
-@set pkgconfigstate=1
-
+@endlocal&set mesabldsys=%mesabldsys%&set flexstate=2&set ninjastate=2&set pkgconfigstate=1
