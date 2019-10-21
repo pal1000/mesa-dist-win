@@ -52,14 +52,6 @@
 @call %mesa%\mesa-dist-win\buildscript\modules\applypatch.cmd s3tc
 @rem Update Meson subprojects
 @IF EXIST %mesa%\mesa\subprojects call %mesa%\mesa-dist-win\buildscript\modules\applypatch.cmd subprojects-update
-@rem Fix MSYS2 Mingw-w64 GCC build
-@IF %intmesaver% LEQ 19157 IF %toolchain%==gcc call %mesa%\mesa-dist-win\buildscript\modules\applypatch.cmd msys2-mingw_w64-fixes
-@IF %intmesaver% GEQ 19200 IF %intmesaver% LSS 19251 IF %toolchain%==gcc call %mesa%\mesa-dist-win\buildscript\modules\applypatch.cmd msys2-mingw_w64-fixes
-@rem Fix build with LLVM 9
-@IF %intmesaver% LEQ 19157 call %mesa%\mesa-dist-win\buildscript\modules\applypatch.cmd mingw-posix-flag-fix
-@IF %intmesaver% GEQ 19200 IF %intmesaver% LSS 19251 call %mesa%\mesa-dist-win\buildscript\modules\applypatch.cmd mingw-posix-flag-fix
-@IF %intmesaver% LEQ 19157 call %mesa%\mesa-dist-win\buildscript\modules\applypatch.cmd llvm9
-@IF %intmesaver% GEQ 19200 IF %intmesaver% LSS 19251 call %mesa%\mesa-dist-win\buildscript\modules\applypatch.cmd llvm9
 
 :configmesabuild
 @rem Configure Mesa build.

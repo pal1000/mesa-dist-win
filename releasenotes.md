@@ -2,7 +2,6 @@
 ### Build script
 - Meson build: Fix pkg-config-lite detection;
 - Meson build: Release from manual startup mode;
-- Meson build: Disable LLVM support until is enabled upstream;
 - Meson build: Update subprojects;
 - Remove UWP Python from PATH when using MSVC as soon as Python discovery routine begins as it may cause issues with Meson build;
 - Meson build: Pause between configure and build phase similarly to LLVM;
@@ -20,7 +19,8 @@
 - System wide deployment: Add osmesa gallium solo and graw null support.
 ### Patch
 - Meson build: Remove expat subproject update as it is no longer used on windows since mesa3d/mesa@4441da00;
-- Drop Scons Python 3 compatibility patch as it's ineffective on Windows.
+- Drop Scons Python 3 compatibility patch as it's ineffective on Windows;
+- Drop LLVM 9 compatibility, posix flag fix and MSYS2 Mingw-w64 compatibility patches because they are present in all stable branches (19.1.8, 19.2.1 and master).
 # 19.2.1
 - Updated Mesa3D to [19.2.1](https://www.mesa3d.org/relnotes/19.2.1.html).
 ### Patches
