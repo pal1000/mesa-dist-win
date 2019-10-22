@@ -1,5 +1,8 @@
+@setlocal ENABLEDELAYEDEXPANSION
 @rem Find vswhere tool.
 @set toolchain=msvc
+@set msvcver=null
+@set msvcname=null
 @set vsabi=%abi%
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF %abi%==x86 set vsabi=x64_x86
 @IF /I %PROCESSOR_ARCHITECTURE%==x86 IF %abi%==x64 set vsabi=x86_x64
@@ -10,7 +13,7 @@
 :findcompilers
 @set vsenv=null
 @set toolset=0
-@setlocal ENABLEDELAYEDEXPANSION
+
 @set totaltoolchains=0
 @set totalmsvc=0
 @IF EXIST %vswhere% for /F "USEBACKQ tokens=*" %%a IN (`%vswhere% -prerelease -property catalog_productDisplayVersion`) do @set /a totalmsvc+=1&set /a totaltoolchains+=1&set msvcversions[!totalmsvc!]=%%a
@@ -40,7 +43,6 @@
 @IF "%selecttoolchain%"=="" (
 @echo Invalid entry
 @pause
-@endlocal
 @GOTO findcompilers
 )
 @IF %selecttoolchain% LEQ 0 set validtoolchain=0
@@ -48,7 +50,6 @@
 @IF %validtoolchain%==0 (
 @echo Invalid entry
 @pause
-@endlocal
 @GOTO findcompilers
 )
 
@@ -62,21 +63,18 @@
 @IF NOT EXIST %vsenv% set /p addvcpp=Add Desktop development with C++ workload - y/n:
 @IF NOT EXIST %vsenv% echo.
 @IF NOT EXIST %vsenv% IF /I NOT "%addvcpp%"=="y" pause
-@IF NOT EXIST %vsenv% IF /I NOT "%addvcpp%"=="y" endlocal
 @IF NOT EXIST %vsenv% IF /I NOT "%addvcpp%"=="y" GOTO findcompilers
 @IF NOT EXIST %vsenv% %vswhere:~0,-12%vs_installer.exe"
-@IF NOT EXIST %vsenv% endlocal
 @IF NOT EXIST %vsenv% GOTO findcompilers
 
 :selectedmsvc
 @set TITLE=%TITLE% using Visual Studio
-@endlocal&set vsenv=%vsenv%&set msvcver=%msvcver%&set msvcname=%msvcname%&set toolchain=%toolchain%&set TITLE=%TITLE%
 @set toolset=%msvcver:~0,2%
 @GOTO selectedcompiler
 
 :selectedgcc
 @set TITLE=%TITLE% using MSYS2 Mingw-w64 GCC
-@endlocal&set toolchain=%toolchain%&set TITLE=%TITLE%
 
 :selectedcompiler
 @TITLE %TITLE%
+@endlocal&set toolchain=%toolchain%&set vsabi=%vsabi%&set vsenv=%vsenv%&set toolset=%toolset%&set msvcname=%msvcname%&set msvcver=%msvcver%&set TITLE=%TITLE%

@@ -1,3 +1,4 @@
+@setlocal
 @rem Required parameters
 @rem %1 - description
 @rem %2 - filename
@@ -5,7 +6,6 @@
 @rem %4 - version
 @rem %5 - vendor
 
-@setlocal
 @set descriptionfield=%1
 @IF NOT %3==null set descriptionfield=%descriptionfield:~0,-1% (%3)"
 @set mesaver=%4

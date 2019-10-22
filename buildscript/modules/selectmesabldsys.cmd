@@ -1,3 +1,5 @@
+@setlocal
+
 :mesabldsys
 @set selectmesabld=1
 @IF %pythonver:~0,1% GEQ 3 set selectmesabld=2
@@ -17,3 +19,4 @@
 @cls
 @GOTO mesabldsys
 )
+@endlocal&set mesabldsys=%mesabldsys%

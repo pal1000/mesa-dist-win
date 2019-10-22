@@ -56,10 +56,10 @@
 :configmesabuild
 @rem Configure Mesa build.
 
-@if %mesabldsys%==scons if %toolchain%==msvc IF NOT "%sconspypi%"=="1" set sconsloc=%mesa%\scons\src\script\scons.py
-@if %mesabldsys%==scons if %toolchain%==msvc IF "%sconspypi%"=="1" set sconsloc=%pythonloc:~0,-10%Scripts\scons.py
-@if %mesabldsys%==scons if %toolchain%==msvc IF "%sconspypi%"=="1" IF NOT EXIST "%sconsloc%" set sconsloc=%pythonloc:~0,-10%Scripts\scons
-@if %mesabldsys%==scons if %toolchain%==msvc set buildcmd=%pythonloc% %sconsloc%
+@if %mesabldsys%==scons if %toolchain%==msvc IF NOT "%sconspypi%"=="1" set buildcmd=%mesa%\scons\src\script\scons.py
+@if %mesabldsys%==scons if %toolchain%==msvc IF "%sconspypi%"=="1" set buildcmd=%pythonloc:~0,-10%Scripts\scons.py
+@if %mesabldsys%==scons if %toolchain%==msvc IF "%sconspypi%"=="1" IF NOT EXIST "%buildcmd%" set buildcmd=%pythonloc:~0,-10%Scripts\scons
+@if %mesabldsys%==scons if %toolchain%==msvc set buildcmd=%pythonloc% %buildcmd%
 @if %mesabldsys%==scons if %toolchain%==gcc set buildcmd=%msysloc%\usr\bin\bash --login -c "cd $mesa/mesa;scons
 @if %mesabldsys%==scons set buildcmd=%buildcmd% -j%throttle% build=release platform=windows machine=%longabi%
 @if %mesabldsys%==scons if %toolchain%==gcc set buildcmd=%buildcmd% toolchain=mingw

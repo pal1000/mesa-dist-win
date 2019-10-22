@@ -13,15 +13,15 @@
 @IF NOT EXIST build\pkg-config.exe set buildpkgconf=y
 @IF NOT EXIST build\pkg-config.exe echo Begin pkgconf build...
 @IF NOT EXIST build\pkg-config.exe echo.
-@set ninja=n
 @IF EXIST build\pkg-config.exe set /p buildpkgconf=Do you want to rebuild pkgconf (y/n):
 @IF EXIST build\pkg-config.exe echo.
-@rem IF /I "%buildpkgconf%"=="y" IF %ninjastate% GTR 0 set /p ninja=Use Ninja build system instead of MsBuild (y/n):
-@rem IF /I "%buildpkgconf%"=="y" IF %ninjastate% GTR 0 echo.
 @IF /I "%buildpkgconf%"=="y" IF /I %PROCESSOR_ARCHITECTURE%==AMD64 call %vsenv% x64
 @IF /I "%buildpkgconf%"=="y" IF /I %PROCESSOR_ARCHITECTURE%==x86 call %vsenv% x86
 @IF /I "%buildpkgconf%"=="y" echo.
 @IF /I "%buildpkgconf%"=="y" IF EXIST build RD /S /Q build
+@set ninja=n
+@rem IF /I "%buildpkgconf%"=="y" IF %ninjastate% GTR 0 set /p ninja=Use Ninja build system instead of MsBuild (y/n):
+@rem IF /I "%buildpkgconf%"=="y" IF %ninjastate% GTR 0 echo.
 @IF /I "%ninja%"=="y" IF %ninjastate%==1 set PATH=%mesa%\ninja\;%PATH%
 @IF /I "%buildpkgconf%"=="y" IF /I NOT "%ninja%"=="y" echo Configuring pkgconf build with : meson build --backend=vs --buildtype=release -Dtests=false
 @IF /I "%buildpkgconf%"=="y" IF /I NOT "%ninja%"=="y" echo.
@@ -42,7 +42,7 @@
 @IF /I "%ninja%"=="y" echo.
 @IF /I "%ninja%"=="y" ninja
 @IF /I "%buildpkgconf%"=="y" echo.
-@IF /I "%buildpkgconf%"=="y" REN pkgconf.exe pkg-config.exe
+@IF /I "%buildpkgconf%"=="y" IF EXIST pkgconf.exe REN pkgconf.exe pkg-config.exe
 
 :missingpkgconf
 @endlocal
