@@ -71,13 +71,13 @@
 @IF %mesabldsys%==meson IF %abi%==x64 set platformabi=%abi%
 @if %mesabldsys%==meson set buildcmd=msbuild /p^:Configuration=release,Platform=%platformabi% mesa.sln /m^:%throttle%
 
-@set ninja=n
-@rem if %mesabldsys%==meson if NOT %ninjastate%==0 set /p ninja=Use Ninja build system instead of MsBuild (y/n); less storage device strain and maybe faster build:
-@rem if %mesabldsys%==meson if NOT %ninjastate%==0 echo.
-@if /I "%ninja%"=="y" if %ninjastate%==1 set PATH=%mesa%\ninja\;%PATH%
-@if /I "%ninja%"=="y" set buildconf=%buildconf%ninja
-@if /I "%ninja%"=="y" set buildcmd=ninja -j %throttle%
-@if %mesabldsys%==meson if /I NOT "%ninja%"=="y" set buildconf=%buildconf%vs
+@set useninja=n
+@if %mesabldsys%==meson if NOT %ninjastate%==0 set /p useninja=Use Ninja build system instead of MsBuild (y/n); less storage device strain and maybe faster build:
+@if %mesabldsys%==meson if NOT %ninjastate%==0 echo.
+@if /I "%useninja%"=="y" if %ninjastate%==1 set PATH=%mesa%\ninja\;%PATH%
+@if /I "%useninja%"=="y" set buildconf=%buildconf%ninja
+@if /I "%useninja%"=="y" set buildcmd=ninja -j %throttle%
+@if %mesabldsys%==meson if /I NOT "%useninja%"=="y" set buildconf=%buildconf%vs
 @if %mesabldsys%==meson set buildconf=%buildconf% --default-library=static --buildtype=release -Db_vscrt=mt
 
 @set llvmless=n
@@ -147,8 +147,8 @@
 
 @rem Prepare build command line tools and set compiler and linker flags.
 @IF %toolchain%==msvc echo.
-@IF %toolchain%==msvc IF /I "%ninja%"=="y" call %vsenv% %abi%
-@IF %toolchain%==msvc IF /I NOT "%ninja%"=="y" call %vsenv% %vsabi%
+@IF %toolchain%==msvc IF /I "%useninja%"=="y" call %vsenv% %abi%
+@IF %toolchain%==msvc IF /I NOT "%useninja%"=="y" call %vsenv% %vsabi%
 @IF %toolchain%==msvc echo.
 @IF %toolchain%==gcc set MSYSTEM=MINGW%minabi%
 @IF %toolchain%==gcc set CFLAGS=-march=core2 -pipe

@@ -7,7 +7,6 @@
 - Meson build: Pause between configure and build phase similarly to LLVM;
 - Meson build: Add support for pkgconf as pkg-config-lite alternative;
 - Split other dependencies to share git version control detection across the board;
-- Meson build: Disable Mesa3D and pkgconf build with Ninja until issue is investigated;
 - Meson build: Enable llvmpipe and swr drivers.
 ### Version information
 - Refactored code and added osmesa gallium solo and graw null support.
