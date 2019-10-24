@@ -7,7 +7,8 @@
 - Meson build: Pause between configure and build phase similarly to LLVM;
 - Meson build: Add support for pkgconf as pkg-config-lite alternative;
 - Split other dependencies to share git version control detection across the board;
-- Meson build: Enable llvmpipe and swr drivers.
+- Meson build: Enable llvmpipe and swr drivers;
+- Meson build: MSYS2 Mingw-w64 support to LLVM wrap generator.
 ### Version information
 - Refactored code and added osmesa gallium solo and graw null support.
 ### Distribution

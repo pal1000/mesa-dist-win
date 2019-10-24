@@ -1,7 +1,10 @@
 @setlocal
-@FOR /F "tokens=* USEBACKQ" %%a IN (`%mesa%\llvm\%abi%\bin\llvm-config --libnames engine coroutines`) DO @SET llvmlibs=%%~a
-@FOR /F "tokens=* USEBACKQ" %%a IN (`%mesa%\llvm\%abi%\bin\llvm-config --version`) DO @SET llvmver=%%~a
-@set llvmlibs=%llvmlibs:.lib=%
+@IF %toolchain%==msvc FOR /F "tokens=* USEBACKQ" %%a IN (`%LLVM%\bin\llvm-config --libnames engine coroutines`) DO @SET llvmlibs=%%~a
+@IF %toolchain%==msvc FOR /F "tokens=* USEBACKQ" %%a IN (`%LLVM%\bin\llvm-config --version`) DO @SET llvmver=%%~a
+@IF %toolchain%==gcc FOR /F "tokens=* USEBACKQ" %%a IN (`%msysloc%\usr\bin\bash --login -c "%LLVM%/bin/llvm-config --libnames engine coroutines"`) DO @SET llvmlibs=%%~a
+@IF %toolchain%==gcc FOR /F "tokens=* USEBACKQ" %%a IN (`%msysloc%\usr\bin\bash --login -c "%LLVM%/bin/llvm-config --version"`) DO @SET llvmver=%%~a
+@IF %toolchain%==gcc set llvmlibs=%llvmlibs:.a=%
+@IF %toolchain%==msvc set llvmlibs=%llvmlibs:.lib=%
 @set llvmlibs='%llvmlibs: =', '%'
 @IF NOT EXIST %mesa%\mesa\subprojects\llvm md %mesa%\mesa\subprojects\llvm
 @echo project('llvm', ['cpp']) > %mesa%\mesa\subprojects\llvm\meson.build
