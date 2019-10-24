@@ -52,6 +52,8 @@
 @call %mesa%\mesa-dist-win\buildscript\modules\applypatch.cmd s3tc
 @rem Update Meson subprojects
 @IF EXIST %mesa%\mesa\subprojects call %mesa%\mesa-dist-win\buildscript\modules\applypatch.cmd subprojects-update
+@rem Fix swrAVX52 build
+@IF EXIST %mesa%\mesa\subprojects call %mesa%\mesa-dist-win\buildscript\modules\applypatch.cmd swravx512
 
 :configmesabuild
 @rem Configure Mesa build.
