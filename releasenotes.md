@@ -20,6 +20,8 @@
 - Meson build: Remove expat subproject update as it is no longer used on windows since mesa3d/mesa@4441da00;
 - Drop Scons Python 3 compatibility patch as it's ineffective on Windows;
 - Drop LLVM 9 compatibility, posix flag fix and MSYS2 Mingw-w64 compatibility patches because they are present in all stable branches (19.1.8, 19.2.1 and master).
+### Distribution creation
+- Add Mesa3D test suite to release package when building with Meson.
 # 19.2.1
 - Updated Mesa3D to [19.2.1](https://www.mesa3d.org/relnotes/19.2.1.html).
 ### Patches

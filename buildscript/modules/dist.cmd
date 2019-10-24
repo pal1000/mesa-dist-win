@@ -42,6 +42,7 @@
 
 :mesondist
 @forfiles /p %mesa%\mesa\build\%abi% /s /m *.dll /c "cmd /c copy @path %mesa%\mesa-dist-win\bin\%abi%"
+@forfiles /p %mesa%\mesa\build\%abi% /s /m *.exe /c "cmd /c copy @path %mesa%\mesa-dist-win\bin\%abi%"
 @rem Copy build development artifacts
 @xcopy %mesa%\mesa\build\%abi%\*.lib %mesa%\mesa-dist-win\lib\%abi% /E /I /G
 @xcopy %mesa%\mesa\build\%abi%\*.a %mesa%\mesa-dist-win\lib\%abi% /E /I /G
