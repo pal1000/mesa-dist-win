@@ -11,12 +11,10 @@
 @IF %toolchain%==msvc echo ----------------->>%mesa%\mesa-dist-win\buildinfo\msvc.txt
 
 @rem Dump Windows version
-@FOR /F "USEBACKQ tokens=4" %%a IN (`ver`) DO @set winver=%%a
+@FOR /F "USEBACKQ tokens=2 delims=[" %%a IN (`ver`) DO @set winver=%%a
 @set winver=%winver:~0,-1%
-@IF %toolchain%==msvc FOR /F "USEBACKQ" %%a IN (`%pythonloc% -c "print('.'.join('%winver%'.split('.')[:3]))"`) do @set winver=%%a
-@IF %toolchain%==gcc echo /usr/bin/python2 -c "print('.'.join('%winver%'.split('.')[:3]))">%mesa%\mesa-dist-win\buildinfo\temp.sh
-@IF %toolchain%==gcc FOR /F "USEBACKQ" %%a IN (`%msysloc%\usr\bin\bash --login %mesa%\mesa-dist-win\buildinfo\temp.sh`) do @set winver=%%a
-@IF %toolchain%==gcc del %mesa%\mesa-dist-win\buildinfo\temp.sh
+@FOR /F "USEBACKQ tokens=2 delims= " %%a IN (`echo %winver%`) DO @set winver=%%a
+@FOR /F "USEBACKQ tokens=1-3 delims=." %%a IN (`echo %winver%`) DO @set winver=%%a.%%b.%%c
 @IF %toolchain%==gcc echo Windows %winver%>>%mesa%\mesa-dist-win\buildinfo\mingw.txt
 @IF %toolchain%==msvc echo Windows %winver%>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
 
