@@ -6,7 +6,7 @@
 @if NOT EXIST mesa if %gitstate%==0 echo Fatal: Both Mesa3D code and Git are missing. At least one is required. Execution halted.
 @if NOT EXIST mesa if %gitstate%==0 echo.
 @if NOT EXIST mesa if %gitstate%==0 GOTO skipmesa
-@IF %mesabldsys%==meson IF %pkgconfigstate%==0 echo No suitable pkg-config implementtion found. pkgconf or pkg-config-lite is required to build Mesa3D with Meson and MSVC.
+@IF %mesabldsys%==meson IF %pkgconfigstate%==0 echo No suitable pkg-config implementation found. pkgconf or pkg-config-lite is required to build Mesa3D with Meson and MSVC.
 @IF %mesabldsys%==meson IF %pkgconfigstate%==0 echo.
 @IF %mesabldsys%==meson IF %pkgconfigstate%==0 GOTO skipmesa
 
@@ -33,18 +33,14 @@
 @if /i NOT "%buildmesa%"=="y" GOTO skipmesa
 @cd mesa
 
-@rem Locate LLVM
-@IF %toolchain%==msvc set LLVM=%mesa%\llvm\%abi%
-@IF %toolchain%==gcc set LLVM=/mingw%minabi%
-@set havellvm=0
-@IF EXIST %LLVM% set havellvm=1
-@IF %toolchain%==gcc set havellvm=1
-
 @rem Get Mesa3D version as an integer
 @set /p mesaver=<VERSION
 @if "%mesaver:~-7%"=="0-devel" set /a intmesaver=%mesaver:~0,2%%mesaver:~3,1%00
 @if "%mesaver:~5,4%"=="0-rc" set /a intmesaver=%mesaver:~0,2%%mesaver:~3,1%00+%mesaver:~9%
 @if NOT "%mesaver:~5,2%"=="0-" set /a intmesaver=%mesaver:~0,2%%mesaver:~3,1%50+%mesaver:~5%
+@IF NOT EXIST %mesa%\mesa\subprojects if %mesabldsys%==meson echo Meson build support is only available in Mesa 19.3 and newer.
+@IF NOT EXIST %mesa%\mesa\subprojects if %mesabldsys%==meson echo.
+@IF NOT EXIST %mesa%\mesa\subprojects if %mesabldsys%==meson GOTO skipmesa
 
 @REM Collect information about Mesa3D code. Apply patches
 @if %gitstate%==0 IF %toolchain%==msvc GOTO configmesabuild
@@ -62,26 +58,22 @@
 @if %mesabldsys%==scons if %toolchain%==msvc IF "%sconspypi%"=="1" set buildcmd=%pythonloc:~0,-10%Scripts\scons.py
 @if %mesabldsys%==scons if %toolchain%==msvc IF "%sconspypi%"=="1" IF NOT EXIST "%buildcmd%" set buildcmd=%pythonloc:~0,-10%Scripts\scons
 @if %mesabldsys%==scons if %toolchain%==msvc set buildcmd=%pythonloc% %buildcmd%
-@if %mesabldsys%==scons if %toolchain%==gcc set buildcmd=%msysloc%\usr\bin\bash --login -c "cd $mesa/mesa;scons
+@if %mesabldsys%==scons if %toolchain%==gcc set buildcmd=%msysloc%\usr\bin\bash --login -c "cd $mesa/mesa;/usr/bin/scons
 @if %mesabldsys%==scons set buildcmd=%buildcmd% -j%throttle% build=release platform=windows machine=%longabi%
 @if %mesabldsys%==scons if %toolchain%==gcc set buildcmd=%buildcmd% toolchain=mingw
 @if %mesabldsys%==scons if %toolchain%==msvc set buildcmd=%buildcmd% MSVC_USE_SCRIPT=%vsenv%
 
 @set buildconf=null
-@if %mesabldsys%==meson set buildconf=%mesonloc% build/%abi% --backend=
-@IF %mesabldsys%==meson set platformabi=Win32
-@IF %mesabldsys%==meson IF %abi%==x64 set platformabi=%abi%
-@if %mesabldsys%==meson set buildcmd=msbuild /p^:Configuration=release,Platform=%platformabi% mesa.sln /m^:%throttle%
+@if %mesabldsys%==meson set buildconf=%mesonloc% build/%abi% --default-library=static --buildtype=release -Db_vscrt=mt
+@if %mesabldsys%==meson set buildcmd=msbuild /p^:Configuration=release,Platform=Win32 mesa.sln /m^:%throttle%
+@if %mesabldsys%==meson IF %abi%==x64 set buildcmd=msbuild /p^:Configuration=release,Platform=x64 mesa.sln /m^:%throttle%
 
-@set useninja=n
-@if %mesabldsys%==meson if NOT %ninjastate%==0 set /p useninja=Use Ninja build system instead of MsBuild (y/n); less storage device strain and maybe faster build:
-@if %mesabldsys%==meson if NOT %ninjastate%==0 echo.
-@if /I "%useninja%"=="y" if %ninjastate%==1 set PATH=%mesa%\ninja\;%PATH%
-@if /I "%useninja%"=="y" set buildconf=%buildconf%ninja
-@if /I "%useninja%"=="y" set buildcmd=ninja -j %throttle%
-@if %mesabldsys%==meson if /I NOT "%useninja%"=="y" set buildconf=%buildconf%vs
-@if %mesabldsys%==meson set buildconf=%buildconf% --default-library=static --buildtype=release -Db_vscrt=mt
-
+@IF %toolchain%==msvc set LLVM=%mesa%\llvm\%abi%
+@IF %toolchain%==gcc set LLVM=/mingw32
+@IF %toolchain%==gcc IF %abi%==x64 set LLVM=/mingw64
+@set havellvm=0
+@IF EXIST %LLVM% set havellvm=1
+@IF %toolchain%==gcc set havellvm=1
 @set llvmless=n
 @if %havellvm%==0 set llvmless=y
 @if %havellvm%==1 set /p llvmless=Build Mesa without LLVM (y/n). llvmpipe and swr drivers and high performance JIT won't be available for other drivers and libraries:
@@ -89,6 +81,16 @@
 @if %mesabldsys%==scons if /I "%llvmless%"=="y" set buildcmd=%buildcmd% llvm=no
 @if %mesabldsys%==meson if /I NOT "%llvmless%"=="y" call %mesa%\mesa-dist-win\buildscript\modules\llvmwrapgen.cmd
 @if %mesabldsys%==meson if /I NOT "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm=true
+
+@set useninja=n
+@if %mesabldsys%==meson IF %toolchain%==gcc set useninja=y
+@if %mesabldsys%==meson if NOT %ninjastate%==0 IF %toolchain%==msvc set /p useninja=Use Ninja build system instead of MsBuild (y/n); less storage device strain and maybe faster build:
+@if %mesabldsys%==meson if NOT %ninjastate%==0 IF %toolchain%==msvc echo.
+@if /I "%useninja%"=="y" if %ninjastate%==1 IF %toolchain%==msvc set PATH=%mesa%\ninja\;%PATH%
+@if /I "%useninja%"=="y" set buildconf=%buildconf% --backend=ninja
+@if /I "%useninja%"=="y" IF %toolchain%==msvc set buildcmd=ninja -j %throttle%
+@if /I "%useninja%"=="y" IF %toolchain%==gcc set buildcmd=%msysloc%\usr\bin\bash --login -c "cd $mesa/mesa/build/%abi%;%LLVM%/bin/ninja -j %throttle%"
+@if %mesabldsys%==meson if /I NOT "%useninja%"=="y" set buildconf=%buildconf% --backend=vs
 
 @if %mesabldsys%==scons IF %toolchain%==msvc set /p openmp=Build Mesa3D with OpenMP. Faster build and smaller binaries (y/n):
 @if %mesabldsys%==scons IF %toolchain%==msvc echo.
@@ -123,23 +125,24 @@
 @IF /I "%expressmesabuild%"=="y" set graw=y
 @if %mesabldsys%==meson if /I "%graw%"=="y" set buildconf=%buildconf% -Dbuild-tests=true
 
-@if %mesabldsys%==scons if %toolchain%==gcc set buildcmd=%buildcmd%"
+@if %toolchain%==gcc IF %mesabldsys%==scons set buildcmd=%buildcmd%"
+@if %toolchain%==gcc IF %mesabldsys%==meson set buildconf=%buildconf%"
 
 @set cleanbuild=n
+@IF %mesabldsys%==meson for /d %%a in ("%mesa%\mesa\subprojects\zlib-*") do @RD /S /Q "%%~a"
+@IF %mesabldsys%==meson for /d %%a in ("%mesa%\mesa\subprojects\expat-*") do @RD /S /Q "%%~a"
 @IF %mesabldsys%==scons if EXIST build\windows-%longabi% set /p cleanbuild=Do you want to clean build (y/n):
 @IF %mesabldsys%==scons if EXIST build\windows-%longabi% echo.
 @IF %mesabldsys%==meson if EXIST build\%abi% set /p cleanbuild=Do you want to clean build (y/n):
 @IF %mesabldsys%==meson if EXIST build\%abi% echo.
 @IF %mesabldsys%==scons if /I "%cleanbuild%"=="y" RD /S /Q build\windows-%longabi%
 @IF %mesabldsys%==meson if /I "%cleanbuild%"=="y" RD /S /Q build\%abi%
-@IF %mesabldsys%==meson if /I "%cleanbuild%"=="y" for /d %%a in ("%mesa%\mesa\subprojects\zlib-*") do @RD /S /Q "%%~a"
-@IF %mesabldsys%==meson if /I "%cleanbuild%"=="y" for /d %%a in ("%mesa%\mesa\subprojects\expat-*") do @RD /S /Q "%%~a"
 
 @IF %toolchain%==msvc IF %flexstate%==1 set PATH=%mesa%\flexbison\;%PATH%
 @if %mesabldsys%==meson IF %toolchain%==msvc set PATH=%pkgconfigloc%\;%PATH%
 
 :build_mesa
-@rem Generate dummy heaader for MSVC build when git is missing.
+@rem Generate dummy header for MSVC build when git is missing.
 @IF %toolchain%==msvc if NOT EXIST build md build
 @IF %toolchain%==msvc IF %mesabldsys%==scons if NOT EXIST build\windows-%longabi% md build\windows-%longabi%
 @IF %toolchain%==msvc IF %mesabldsys%==scons if NOT EXIST build\windows-%longabi%\git_sha1.h echo 0 > build\windows-%longabi%\git_sha1.h
@@ -152,7 +155,8 @@
 @IF %toolchain%==msvc IF /I "%useninja%"=="y" call %vsenv% %abi%
 @IF %toolchain%==msvc IF /I NOT "%useninja%"=="y" call %vsenv% %vsabi%
 @IF %toolchain%==msvc echo.
-@IF %toolchain%==gcc set MSYSTEM=MINGW%minabi%
+@IF %toolchain%==gcc set MSYSTEM=MINGW32
+@IF %toolchain%==gcc IF %abi%==x64 set MSYSTEM=MINGW64
 @IF %toolchain%==gcc set CFLAGS=-march=core2 -pipe
 @IF %toolchain%==gcc set CXXFLAGS=-march=core2 -pipe
 @IF %toolchain%==gcc set LDFLAGS=-static -s
@@ -162,14 +166,14 @@
 @if %mesabldsys%==meson echo.
 @if %mesabldsys%==meson %buildconf%
 @if %mesabldsys%==meson echo.
-@if %mesabldsys%==meson cd build\%abi%
+@if %mesabldsys%==meson IF %toolchain%==msvc cd build\%abi%
 @echo Build command: %buildcmd%
 @echo.
 @if %mesabldsys%==meson pause
 @if %mesabldsys%==meson echo.
 @%buildcmd%
 @echo.
-@if %mesabldsys%==meson cd ..\..\
+@if %mesabldsys%==meson IF %toolchain%==msvc cd ..\..\
 
 :skipmesa
 @rem Reset environment.

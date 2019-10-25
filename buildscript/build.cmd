@@ -21,8 +21,8 @@
 @rem If using MSVC search for Python. State tracking is pointless as it is loaded once and we are done. Hard fail if missing.
 @IF %toolchain%==msvc call %mesa%\mesa-dist-win\buildscript\modules\discoverpython.cmd
 
-@rem If using MSVC select build system to use with Mesa3D.
-@IF %toolchain%==msvc call %mesa%\mesa-dist-win\buildscript\modules\selectmesabldsys.cmd
+@rem Select build system to use with Mesa3D.
+@call %mesa%\mesa-dist-win\buildscript\modules\selectmesabldsys.cmd
 
 @rem If using MSVC search for Python packages. Install missing packages automatically. Ask to do an update to all packages.
 @IF %toolchain%==msvc call %mesa%\mesa-dist-win\buildscript\modules\pythonpackages.cmd
@@ -33,14 +33,14 @@
 @rem Version control
 @call %mesa%\mesa-dist-win\buildscript\modules\git.cmd
 
+@rem Get Meson build location
+@call %mesa%\mesa-dist-win\buildscript\modules\locatemeson.cmd
+
 @rem If using MSVC check for remaining dependencies: cmake, ninja, winflexbison and pkg-config if applies.
 @IF %toolchain%==msvc call %mesa%\mesa-dist-win\buildscript\modules\cmake.cmd
 @IF %toolchain%==msvc call %mesa%\mesa-dist-win\buildscript\modules\ninja.cmd
 @IF %toolchain%==msvc call %mesa%\mesa-dist-win\buildscript\modules\winflexbison.cmd
 @IF %toolchain%==msvc call %mesa%\mesa-dist-win\buildscript\modules\pkg-config.cmd
-
-@rem Backup PATH before building anything to easily keep environment clean.
-@set oldpath=%PATH%
 
 @rem If using MSVC do LLVM build.
 @IF %toolchain%==msvc call %mesa%\mesa-dist-win\buildscript\modules\llvm.cmd

@@ -1,3 +1,4 @@
+@setlocal
 @rem Install missing python packages.
 @rem State tracking is irrelevant for Python packages as they can easily be added via Pypi if missing.
 @rem Meson is the exception because its a Python 3 only package and as a result it can be missing.
@@ -20,6 +21,7 @@
 @set pypack=pywin32
 @GOTO pypackinstall
 )
+@set sconspypi=0
 @IF %mesabldsys%==scons for /F "skip=2 delims= " %%a in ('%pythonloc% -W ignore -m pip list --disable-pip-version-check') do @IF /I "%%a"=="scons" set sconspypi=1
 @IF %mesabldsys%==scons IF NOT "%sconspypi%"=="1" IF NOT EXIST %mesa%\scons (
 @set pypack=scons
@@ -28,12 +30,11 @@
 @if %mesabldsys%==scons set mesonstate=0
 @if %mesabldsys%==scons GOTO pyupdate
 
-@SET mesonloc=meson.exe
 @set mesonstate=2
 @SET ERRORLEVEL=0
 @where /q meson.exe
-@IF ERRORLEVEL 1 set mesonloc=%pythonloc:~0,-10%Scripts\meson.py
-@IF %mesonloc%==%pythonloc:~0,-10%Scripts\meson.py IF NOT EXIST %mesonloc% IF NOT EXIST %mesonloc:~0,-2%exe (
+@IF ERRORLEVEL 1 set mesonstate=1
+@IF NOT EXIST %pythonloc:~0,-10%Scripts\meson.py IF NOT EXIST %pythonloc:~0,-10%Scripts\meson.exe (
 @set pypack=meson
 @GOTO pypackinstall
 )
@@ -67,10 +68,6 @@
 @if /I "%pyupd%"=="y" IF %pythonver:~0,1%==2 IF NOT EXIST "%windir%\system32\pythoncom27.dll" IF NOT EXIST "%windir%\syswow64\pythoncom27.dll" GOTO locatemeson
 @if /I "%pyupd%"=="y" IF %pythonver:~0,1%==2 powershell -Command Start-Process "%mesa%\mesa-dist-win\buildscript\modules\pywin32.cmd" -Args "%pythonloc%" -Verb runAs 2>nul
 
-:locatemeson
-@IF %mesabldsys%==scons GOTO endpython
-@IF %mesonloc%==%pythonloc:~0,-10%Scripts\meson.py IF NOT EXIST %mesonloc% set mesonloc=%mesonloc:~0,-2%exe
-@IF %mesonloc%==%pythonloc:~0,-10%Scripts\meson.py IF EXIST %mesonloc% set mesonloc=%pythonloc% %mesonloc%
-
 :endpython
 @echo.
+@endlocal&set sconspypi=%sconspypi%&set mesonstate=%mesonstate%

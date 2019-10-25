@@ -8,7 +8,8 @@
 - Meson build: Add support for pkgconf as pkg-config-lite alternative;
 - Split other dependencies to share git version control detection across the board;
 - Meson build: Enable llvmpipe and swr drivers;
-- Meson build: MSYS2 Mingw-w64 support to LLVM wrap generator.
+- Meson build: Hooked untested MSYS2 Mingw-w64 support;
+- Implemented aggressive build environment cleanup.
 ### Version information
 - Refactored code and added osmesa gallium solo and graw null support.
 ### Distribution
@@ -20,7 +21,8 @@
 ### Patch
 - Meson build: Remove expat subproject update as it is no longer used on windows since mesa3d/mesa@4441da00;
 - Drop Scons Python 3 compatibility patch as it's ineffective on Windows;
-- Drop LLVM 9 compatibility, posix flag fix and MSYS2 Mingw-w64 compatibility patches because they are present in all stable branches (19.1.8, 19.2.1 and master).
+- Drop LLVM 9 compatibility, posix flag fix and MSYS2 Mingw-w64 compatibility patches because they are present in all stable branches (19.1.8, 19.2.1 and master);
+- Meson build: Add [tentative fix for swr AVX512](https://gitlab.freedesktop.org/mesa/mesa/issues/1990).
 ### Distribution creation
 - Add Mesa3D test suite to release package when building with Meson.
 # 19.2.1
