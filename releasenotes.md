@@ -25,6 +25,8 @@
 - Meson build: Add [tentative fix for swr AVX512](https://gitlab.freedesktop.org/mesa/mesa/issues/1990).
 ### Distribution creation
 - Add Mesa3D test suite to release package when building with Meson.
+### EXE Setup maker
+- Remove this feature. It bitrotted and maintaing it is even harder with Meson build.
 # 19.2.1
 - Updated Mesa3D to [19.2.1](https://www.mesa3d.org/relnotes/19.2.1.html).
 ### Patches
