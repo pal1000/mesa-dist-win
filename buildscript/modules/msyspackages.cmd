@@ -20,7 +20,7 @@
 
 @rem Get dependencies
 @set MSYSTEM=MSYS
-@IF %mesabldsys%==scons %msysloc%\usr\bin\bash --login -c "pacman -S python2-mako mingw-w64-%mingwabi%-llvm mingw-w64-%mingwabi%-gcc mingw-w64-%mingwabi%-zlib flex bison patch scons --needed --noconfirm --disable-download-timeout"
-@IF %mesabldsys%==meson %msysloc%\usr\bin\bash --login -c "pacman -S mingw-w64-%mingwabi%-python3-mako mingw-w64-%mingwabi%-llvm mingw-w64-%mingwabi%-gcc mingw-w64-%mingwabi%-zlib mingw-w64-%mingwabi%-meson flex bison patch --needed --noconfirm --disable-download-timeout"
+@IF %mesabldsys%==scons %msysloc%\usr\bin\bash --login -c "/usr/bin/pacman -S python2-mako %mingwabi%-llvm %mingwabi%-gcc %mingwabi%-zlib flex bison patch scons --needed --noconfirm --disable-download-timeout"
+@IF %mesabldsys%==meson %msysloc%\usr\bin\bash --login -c "/usr/bin/pacman -S %mingwabi%-python3-mako %mingwabi%-llvm %mingwabi%-gcc %mingwabi%-zlib %mingwabi%-meson flex bison patch --needed --noconfirm --disable-download-timeout"
 @echo.
 @endlocal&set mesabldsys=%mesabldsys%&set flexstate=2&set ninjastate=2&set pkgconfigstate=1

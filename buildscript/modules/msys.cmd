@@ -1,7 +1,7 @@
 @setlocal
 @rem ABI format conversions for Mingw
-@set mingwabi=%longabi%
-@IF %abi%==x86 set mingwabi=i686
+@set mingwabi=mingw-w64-%longabi%
+@IF %abi%==x86 set mingwabi=mingw-w64-i686
 
 @rem Load MSYS2 environment
 @set msysstate=1

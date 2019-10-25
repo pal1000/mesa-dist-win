@@ -1,3 +1,6 @@
+# Next release
+### Build script
+- MSYS2: Keep pacman cache size under control.
 # # 19.2.2
 - Updated Mesa3D to [19.2.2](https://www.mesa3d.org/relnotes/19.2.2.html).
 ### Build script
@@ -15,7 +18,7 @@
 - Refactored code and added osmesa gallium solo and graw null support.
 ### Distribution
 - Add libraries and headers for Meson build;
-- Don't create osmesa-gallium and osmesa-swrast folders when building with Meson as it may only support osmesa gallium long term.
+- Don't create osmesa-gallium and osmesa-swrast folders when building with Meson as [it may only support osmesa gallium long term](https://gitlab.freedesktop.org/mesa/mesa/merge_requests/1243).
 ### Deployment
 - Per app deployment: Add osmesa gallium solo and graw null support;
 - System wide deployment: Add osmesa gallium solo and graw null support.

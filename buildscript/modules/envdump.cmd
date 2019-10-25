@@ -14,14 +14,13 @@
 @FOR /F "USEBACKQ tokens=4" %%a IN (`ver`) DO @set winver=%%a
 @set winver=%winver:~0,-1%
 @IF %toolchain%==msvc FOR /F "USEBACKQ" %%a IN (`%pythonloc% -c "print('.'.join('%winver%'.split('.')[:3]))"`) do @set winver=%%a
-@IF %toolchain%==gcc echo python2 -c "print('.'.join('%winver%'.split('.')[:3]))">%mesa%\mesa-dist-win\buildinfo\temp.sh
+@IF %toolchain%==gcc echo /usr/bin/python2 -c "print('.'.join('%winver%'.split('.')[:3]))">%mesa%\mesa-dist-win\buildinfo\temp.sh
 @IF %toolchain%==gcc FOR /F "USEBACKQ" %%a IN (`%msysloc%\usr\bin\bash --login %mesa%\mesa-dist-win\buildinfo\temp.sh`) do @set winver=%%a
 @IF %toolchain%==gcc del %mesa%\mesa-dist-win\buildinfo\temp.sh
 @IF %toolchain%==gcc echo Windows %winver%>>%mesa%\mesa-dist-win\buildinfo\mingw.txt
 @IF %toolchain%==msvc echo Windows %winver%>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
 
 @rem Dump Resource Hacker version
-@call %mesa%\mesa-dist-win\buildscript\modules\resourcehacker.cmd
 @IF %rhstate%==1 SET PATH=%mesa%\resource-hacker\;%PATH%
 @IF %rhstate% GTR 0 FOR /F "USEBACKQ tokens=*" %%a IN (`where ResourceHacker.exe`) do @set rhloc="%%a"
 @IF %rhstate% GTR 0 ResourceHacker.exe -open %rhloc% -action extract -mask VERSIONINFO,, -save %mesa%\mesa-dist-win\buildscript\assets\temp.rc -log NUL
@@ -44,7 +43,7 @@
 @IF %toolchain%==gcc echo.>>%mesa%\mesa-dist-win\buildinfo\mingw.txt
 @IF %toolchain%==gcc echo MSYS2 environment>>%mesa%\mesa-dist-win\buildinfo\mingw.txt
 @IF %toolchain%==gcc echo ----------------->>%mesa%\mesa-dist-win\buildinfo\mingw.txt
-@IF %toolchain%==gcc %msysloc%\usr\bin\bash --login -c "pacman -Q">>%mesa%\mesa-dist-win\buildinfo\mingw.txt
+@IF %toolchain%==gcc %msysloc%\usr\bin\bash --login -c "/usr/bin/pacman -Q">>%mesa%\mesa-dist-win\buildinfo\mingw.txt
 
 @rem Dump Visual Studio environment
 @IF %toolchain%==msvc echo %msvcname% v%msvcver%>>%mesa%\mesa-dist-win\buildinfo\msvc.txt
