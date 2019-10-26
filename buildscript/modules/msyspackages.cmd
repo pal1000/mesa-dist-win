@@ -1,26 +1,9 @@
 @setlocal
-@rem Select build system for Mesa3D build
-@set selectmesabld=1
-
-:msyspython
-@rem echo Select build system for Mesa3D
-@rem echo ------------------------------
-@rem echo 1. Scons build with Python 2.7
-@rem echo 2. Meson build with Python 3
-@rem set /p selectmesabld=Select build system for Mesa3D build:
-@rem echo.
-@IF NOT "%selectmesabld%"=="1" IF NOT "%selectmesabld%"=="2" (
-@echo Invalid entry.
-@pause
-@cls
-@GOTO msyspython
-)
-@IF %selectmesabld%==1 set mesabldsys=scons
-@IF %selectmesabld%==2 set mesabldsys=meson
-
 @rem Get dependencies
 @set MSYSTEM=MSYS
 @IF %mesabldsys%==scons %msysloc%\usr\bin\bash --login -c "/usr/bin/pacman -S python2-mako %mingwabi%-llvm %mingwabi%-gcc %mingwabi%-zlib flex bison patch scons --needed --noconfirm --disable-download-timeout"
-@IF %mesabldsys%==meson %msysloc%\usr\bin\bash --login -c "/usr/bin/pacman -S %mingwabi%-python3-mako %mingwabi%-llvm %mingwabi%-gcc %mingwabi%-zlib %mingwabi%-meson flex bison patch --needed --noconfirm --disable-download-timeout"
+@IF %mesabldsys%==meson %msysloc%\usr\bin\bash --login -c "/usr/bin/pacman -S %mingwabi%-python3-mako %mingwabi%-llvm %mingwabi%-gcc %mingwabi%-zlib %mingwabi%-meson %mingwabi%-pkg-config flex bison patch --needed --noconfirm --disable-download-timeout"
+@echo.
+@%msysloc%\usr\bin\bash --login -c "/usr/bin/pacman -Sc --noconfirm"
 @echo.
 @endlocal&set mesabldsys=%mesabldsys%&set flexstate=2&set ninjastate=2&set pkgconfigstate=1
