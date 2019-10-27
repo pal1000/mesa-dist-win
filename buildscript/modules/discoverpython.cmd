@@ -19,7 +19,8 @@
 @set pythoninstance=%%a
 @set goodpython=0
 @IF !pythoninstance^:^~1^,-3! EQU 2.7 set goodpython=1
-@IF !pythoninstance^:^~1^,-3! GEQ 3.5 set goodpython=1
+@IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF NOT EXIST %mesa%\mesa set goodpython=1
+@IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF EXIST %mesa%\mesa IF NOT EXIST %mesa%\mesa\subprojects\.gitignore set goodpython=0
 @IF !goodpython!==1 set /a pythontotal+=1
 )
 @IF %pythontotal%==0 echo WARNING: No suitable Python installation found by Python launcher. Note that Python 2.7 or Python 3.5 and newer is required.
@@ -32,7 +33,8 @@
 @set pythoninstance=%%a
 @set goodpython=0
 @IF !pythoninstance^:^~1^,-3! EQU 2.7 set goodpython=1
-@IF !pythoninstance^:^~1^,-3! GEQ 3.5 set goodpython=1
+@IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF NOT EXIST %mesa%\mesa set goodpython=1
+@IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF EXIST %mesa%\mesa IF NOT EXIST %mesa%\mesa\subprojects\.gitignore set goodpython=0
 @IF !goodpython!==1 set /a pythoncount+=1
 @IF !goodpython!==1 echo !pythoncount!. Python !pythoninstance:~1,-3! !pythoninstance:~-2! bit
 )
@@ -55,7 +57,8 @@
 @set pythoninstance=%%a
 @set goodpython=0
 @IF !pythoninstance^:^~1^,-3! EQU 2.7 set goodpython=1
-@IF !pythoninstance^:^~1^,-3! GEQ 3.5 set goodpython=1
+@IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF NOT EXIST %mesa%\mesa set goodpython=1
+@IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF EXIST %mesa%\mesa IF NOT EXIST %mesa%\mesa\subprojects\.gitignore set goodpython=0
 @IF !goodpython!==1 set /a pythoncount+=1
 @IF !pythoncount!==%pyselect% set selectedpython=%%a
 )
@@ -93,6 +96,12 @@
 @FOR /F "USEBACKQ delims= " %%a IN (`%pythonloc% -c "import sys; print(str(sys.version_info[0])+'.'+str(sys.version_info[1]))"`) DO @SET pythonver=%%a
 @IF %pythonver% NEQ 2.7 IF %pythonver% LSS 3.5 (
 @echo Your Python version is too old. Only Python 2.7 or 3.5 and newer are supported.
+@echo.
+@pause
+@exit
+)
+@IF %pythonver% GEQ 3.5 IF EXIST %mesa%\mesa IF NOT EXIST %mesa%\mesa\subprojects\.gitignore (
+@echo Mesa3D source code you are using lacks Meson build support. Update Mesa3D source code to 19.3 or newer.
 @echo.
 @pause
 @exit
