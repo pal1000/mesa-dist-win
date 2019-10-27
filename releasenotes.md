@@ -2,7 +2,8 @@
 ### Build script
 - MSYS2: Keep pacman cache size under control;
 - Meson build: Get MSYS2 Mingw-w64 working;
-- Meson build: Hide it when it can't be used.
+- Meson build: Hide it when it can't be used;
+- More verbose errors about when build is impossible.
 # # 19.2.2
 - Updated Mesa3D to [19.2.2](https://www.mesa3d.org/relnotes/19.2.2.html).
 ### Build script

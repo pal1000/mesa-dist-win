@@ -31,14 +31,14 @@
 @IF NOT "%selectmesabld%"=="1" IF NOT "%selectmesabld%"=="2" (
 @echo Invalid entry.
 @echo.
-@puse
+@pause
 @cls
 @GOTO msmesabldsys
 )
 @IF "%selectmesabld%"=="2" IF EXIST %mesa%\mesa IF NOT EXIST %mesa%\mesa\subprojects\.gitignore (
 @echo Invalid entry.
 @echo.
-@puse
+@pause
 @cls
 @GOTO msmesabldsys
 )

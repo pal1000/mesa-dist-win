@@ -21,9 +21,14 @@
 @IF !pythoninstance^:^~1^,-3! EQU 2.7 set goodpython=1
 @IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF NOT EXIST %mesa%\mesa set goodpython=1
 @IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF EXIST %mesa%\mesa IF EXIST %mesa%\mesa\subprojects\.gitignore set goodpython=1
+@IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF EXIST %mesa%\mesa IF NOT EXIST %mesa%\mesa\subprojects\.gitignore echo Hiding Python !pythoninstance^:^~1! due to Mesa3D source code not having Meson Windows support.
+@IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF EXIST %mesa%\mesa IF NOT EXIST %mesa%\mesa\subprojects\.gitignore echo Note that Mesa3D 19.3 is required for Meson Windows support.
+@IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF EXIST %mesa%\mesa IF NOT EXIST %mesa%\mesa\subprojects\.gitignore echo.
 @IF !goodpython!==1 set /a pythontotal+=1
 )
-@IF %pythontotal%==0 echo WARNING: No suitable Python installation found by Python launcher. Note that Python 2.7 or Python 3.5 and newer is required.
+@IF %pythontotal%==0 echo WARNING: No suitable Python installation found by Python launcher.
+@IF %pythontotal%==0 echo Note that for Scons build Python 2.7 or for Meson build Python 3.5 and newer is required.
+@IF %pythontotal%==0 echo Also Meson build only works with Mesa3D 19.3. This is verified and if check fails Python 3.x detection is suppressed.
 @IF %pythontotal%==0 echo.
 @IF %pythontotal%==0 GOTO nopylauncher
 
