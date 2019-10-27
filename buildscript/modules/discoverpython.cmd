@@ -20,7 +20,7 @@
 @set goodpython=0
 @IF !pythoninstance^:^~1^,-3! EQU 2.7 set goodpython=1
 @IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF NOT EXIST %mesa%\mesa set goodpython=1
-@IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF EXIST %mesa%\mesa IF NOT EXIST %mesa%\mesa\subprojects\.gitignore set goodpython=0
+@IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF EXIST %mesa%\mesa IF EXIST %mesa%\mesa\subprojects\.gitignore set goodpython=1
 @IF !goodpython!==1 set /a pythontotal+=1
 )
 @IF %pythontotal%==0 echo WARNING: No suitable Python installation found by Python launcher. Note that Python 2.7 or Python 3.5 and newer is required.
@@ -34,7 +34,7 @@
 @set goodpython=0
 @IF !pythoninstance^:^~1^,-3! EQU 2.7 set goodpython=1
 @IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF NOT EXIST %mesa%\mesa set goodpython=1
-@IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF EXIST %mesa%\mesa IF NOT EXIST %mesa%\mesa\subprojects\.gitignore set goodpython=0
+@IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF EXIST %mesa%\mesa IF EXIST %mesa%\mesa\subprojects\.gitignore set goodpython=1
 @IF !goodpython!==1 set /a pythoncount+=1
 @IF !goodpython!==1 echo !pythoncount!. Python !pythoninstance:~1,-3! !pythoninstance:~-2! bit
 )
@@ -58,7 +58,7 @@
 @set goodpython=0
 @IF !pythoninstance^:^~1^,-3! EQU 2.7 set goodpython=1
 @IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF NOT EXIST %mesa%\mesa set goodpython=1
-@IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF EXIST %mesa%\mesa IF NOT EXIST %mesa%\mesa\subprojects\.gitignore set goodpython=0
+@IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF EXIST %mesa%\mesa IF EXIST %mesa%\mesa\subprojects\.gitignore set goodpython=1
 @IF !goodpython!==1 set /a pythoncount+=1
 @IF !pythoncount!==%pyselect% set selectedpython=%%a
 )
