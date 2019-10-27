@@ -32,7 +32,7 @@
 ### Distribution creation
 - Add Mesa3D test suite to release package when building with Meson.
 ### EXE Setup maker
-- Remove this feature. It bitrotted and maintaing it is even harder with Meson build.
+- Remove this feature. It bitrotted and maintaining it is even harder with Meson build.
 # 19.2.1
 - Updated Mesa3D to [19.2.1](https://www.mesa3d.org/relnotes/19.2.1.html).
 ### Patches
