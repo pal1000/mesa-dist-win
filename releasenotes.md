@@ -5,6 +5,8 @@
 - Meson build: Hide it when it can't be used;
 - More verbose errors about when build is impossible;
 - Meson build: Ensure LLVM is disabled when asked.
+### Debug
+- Add Meson standalone Mingw-w64 build debug script. Mostly for quickly testing these issues:[1](https://gitlab.freedesktop.org/mesa/mesa/issues/2012), [2](https://gitlab.freedesktop.org/mesa/mesa/issues/2013).
 # # 19.2.2
 - Updated Mesa3D to [19.2.2](https://www.mesa3d.org/relnotes/19.2.2.html).
 ### Build script
