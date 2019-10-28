@@ -82,6 +82,7 @@
 @if %mesabldsys%==scons if /I "%llvmless%"=="y" set buildcmd=%buildcmd% llvm=no
 @if %mesabldsys%==meson if /I NOT "%llvmless%"=="y" call %mesa%\mesa-dist-win\buildscript\modules\llvmwrapgen.cmd
 @if %mesabldsys%==meson if /I NOT "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm=true
+@if %mesabldsys%==meson if /I "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm=false
 
 @set useninja=n
 @if %mesabldsys%==meson IF %toolchain%==gcc set useninja=y
