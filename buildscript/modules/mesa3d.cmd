@@ -47,9 +47,11 @@
 @rem Enable S3TC texture cache
 @call %mesa%\mesa-dist-win\buildscript\modules\applypatch.cmd s3tc
 @rem Update Meson subprojects
-@IF EXIST %mesa%\mesa\subprojects call %mesa%\mesa-dist-win\buildscript\modules\applypatch.cmd subprojects-update
-@rem Fix swrAVX52 build
-@IF EXIST %mesa%\mesa\subprojects call %mesa%\mesa-dist-win\buildscript\modules\applypatch.cmd swravx512
+@IF EXIST %mesa%\mesa\subprojects\.gitignore call %mesa%\mesa-dist-win\buildscript\modules\applypatch.cmd subprojects-update
+@rem Fix swrAVX512 build
+@IF EXIST %mesa%\mesa\subprojects\.gitignore call %mesa%\mesa-dist-win\buildscript\modules\applypatch.cmd swravx512
+@rem Ensure filenames parity with Scons
+@IF EXIST %mesa%\mesa\subprojects\.gitignore call %mesa%\mesa-dist-win\buildscript\modules\applypatch.cmd filename-parity
 
 :configmesabuild
 @rem Configure Mesa build.

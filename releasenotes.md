@@ -10,6 +10,8 @@
 ### Deployment tools
 - Per app deployment: Fix osmesa gallium solo deployment;
 - Add support for swr AVX512 to deployment tools.
+### Patches
+- Add a patch that ensures filenames parity with Scons - https://gitlab.freedesktop.org/mesa/mesa/merge_requests/2496 .
 # # 19.2.2
 - Updated Mesa3D to [19.2.2](https://www.mesa3d.org/relnotes/19.2.2.html).
 ### Build script
