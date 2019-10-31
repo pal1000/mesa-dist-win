@@ -15,6 +15,8 @@
 - Allow building osmesa gallium and swrast simultaneously with Meson.
 ### Build environment information
 - Add pkg-config.
+### Version information
+- Add version information to swr AVX512 drivers.
 # 19.2.2
 - Updated Mesa3D to [19.2.2](https://www.mesa3d.org/relnotes/19.2.2.html).
 ### Build script

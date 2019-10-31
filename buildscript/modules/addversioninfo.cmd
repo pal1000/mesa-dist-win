@@ -29,6 +29,8 @@
 @rem Add version info to Intel swr desktop OpenGL driver
 @call %mesa%\mesa-dist-win\buildscript\modules\rcgen.cmd "Mesa3D swr desktop OpenGL software rendering driver running on AVX instruction set" %mesa%\mesa-dist-win\bin\%abi%\swrAVX.dll null %mesaver% "Intel"
 @call %mesa%\mesa-dist-win\buildscript\modules\rcgen.cmd "Mesa3D swr desktop OpenGL software rendering driver running on AVX2 instruction set" %mesa%\mesa-dist-win\bin\%abi%\swrAVX2.dll null %mesaver% "Intel"
+@call %mesa%\mesa-dist-win\buildscript\modules\rcgen.cmd "Mesa3D swr desktop OpenGL software rendering driver running on Skylake-X variant of AVX512 instruction set" %mesa%\mesa-dist-win\bin\%abi%\swrSKX.dll null %mesaver% "Intel"
+@call %mesa%\mesa-dist-win\buildscript\modules\rcgen.cmd "Mesa3D swr desktop OpenGL software rendering driver running on Knights Landing variant of AVX512 instruction set" %mesa%\mesa-dist-win\bin\%abi%\swrKNL.dll null %mesaver% "Intel"
 @rem Add version info to Mesa3D off-screen rendering drivers
 @call %mesa%\mesa-dist-win\buildscript\modules\rcgen.cmd "Mesa3D off-screen rendering classic driver" %mesa%\mesa-dist-win\bin\%abi%\osmesa-swrast\osmesa.dll %abi% %mesaver% "VMware Inc."
 @call %mesa%\mesa-dist-win\buildscript\modules\rcgen.cmd "Mesa3D off-screen rendering gallium driver" %mesa%\mesa-dist-win\bin\%abi%\osmesa-gallium\osmesa.dll %abi% %mesaver% "VMware Inc."
