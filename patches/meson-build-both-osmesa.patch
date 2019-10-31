@@ -49,20 +49,22 @@ index 898d025f066..d73818e7ce5 100644
    endif
    lines += 'OSMesa:          lib' + osmesa_lib_name + suffix
 diff --git a/meson_options.txt b/meson_options.txt
-index 626baf3d5c2..0a655ce88d7 100644
+index 626baf3d5c2..cb3dc3b383f 100644
 --- a/meson_options.txt
 +++ b/meson_options.txt
-@@ -295,8 +295,8 @@ option(
+@@ -295,9 +295,9 @@ option(
  )
  option(
    'osmesa',
 -  type : 'combo',
 -  value : 'none',
+-  choices : ['none', 'classic', 'gallium'],
 +  type : 'array',
 +  value : [],
-   choices : ['none', 'classic', 'gallium'],
++  choices : ['classic', 'gallium'],
    description : 'Build OSmesa.'
  )
+ option(
 diff --git a/src/gallium/meson.build b/src/gallium/meson.build
 index 1f81fcf1fd5..5a5a8d2f0a6 100644
 --- a/src/gallium/meson.build
