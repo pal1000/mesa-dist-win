@@ -14,8 +14,8 @@
 @if EXIST %abi% RD /S /Q %abi%
 @MD %abi%
 @cd %abi%
-@IF %mesabldsys%==scons MD osmesa-gallium
-@IF %mesabldsys%==scons MD osmesa-swrast
+@MD osmesa-gallium
+@MD osmesa-swrast
 @cd ..\..\lib
 @if EXIST %abi% RD /S /Q %abi%
 @MD %abi%
@@ -41,7 +41,9 @@
 @GOTO distributed
 
 :mesondist
-@forfiles /p %mesa%\mesa\build\%abi% /s /m *.dll /c "cmd /c copy @path %mesa%\mesa-dist-win\bin\%abi%"
+@forfiles /p %mesa%\mesa\build\%abi% /s /m *.dll /c "cmd /c IF NOT @file==0x22osmesa.dll0x22 copy @path %mesa%\mesa-dist-win\bin\%abi%"
+@IF EXIST %mesa%\mesa\build\%abi%\src\mesa\drivers\osmesa\osmesa.dll copy %mesa%\mesa\build\%abi%\src\mesa\drivers\osmesa\osmesa.dll %mesa%\mesa-dist-win\bin\%abi%\osmesa-swrast\osmesa.dll
+@IF EXIST %mesa%\mesa\build\%abi%\src\gallium\targets\osmesa\osmesa.dll copy %mesa%\mesa\build\%abi%\src\gallium\targets\osmesa\osmesa.dll %mesa%\mesa-dist-win\bin\%abi%\osmesa-gallium\osmesa.dll
 @forfiles /p %mesa%\mesa\build\%abi% /s /m *.exe /c "cmd /c copy @path %mesa%\mesa-dist-win\bin\%abi%"
 @rem Copy build development artifacts
 @xcopy %mesa%\mesa\build\%abi%\*.lib %mesa%\mesa-dist-win\lib\%abi% /E /I /G

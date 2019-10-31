@@ -52,6 +52,8 @@
 @IF EXIST %mesa%\mesa\subprojects\.gitignore call %mesa%\mesa-dist-win\buildscript\modules\applypatch.cmd swravx512
 @rem Ensure filenames parity with Scons
 @IF EXIST %mesa%\mesa\subprojects\.gitignore call %mesa%\mesa-dist-win\buildscript\modules\applypatch.cmd filename-parity
+@rem Make possible to build both osmesa gallium and swrast at the same time with Meson
+@IF EXIST %mesa%\mesa\subprojects\.gitignore call %mesa%\mesa-dist-win\buildscript\modules\applypatch.cmd meson-build-both-osmesa
 
 :configmesabuild
 @rem Configure Mesa build.
@@ -119,7 +121,8 @@
 @IF /I NOT "%expressmesabuild%"=="y" set /p osmesa=Do you want to build off-screen rendering drivers (y/n):
 @IF /I NOT "%expressmesabuild%"=="y" echo.
 @if %mesabldsys%==scons IF /I NOT "%expressmesabuild%"=="y" IF /I "%osmesa%"=="y" set buildcmd=%buildcmd% osmesa
-@if %mesabldsys%==meson IF /I "%osmesa%"=="y" set buildconf=%buildconf% -Dosmesa=gallium
+@if %mesabldsys%==meson IF /I "%osmesa%"=="y" set buildconf=%buildconf% -Dosmesa=gallium,swrast
+@if %mesabldsys%==meson IF /I "%osmesa%"=="y" if %gitstate%==0 IF %toolchain%==msvc set buildconf=%buildconf:~0,-7%
 @IF /I "%expressmesabuild%"=="y" set osmesa=y
 
 @set graw=n

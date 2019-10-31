@@ -11,7 +11,8 @@
 - Per app deployment: Fix osmesa gallium solo deployment;
 - Add support for swr AVX512 to deployment tools.
 ### Patches
-- Add a patch that ensures filenames parity with Scons - https://gitlab.freedesktop.org/mesa/mesa/merge_requests/2496 .
+- Add a patch that ensures filenames parity with Scons - https://gitlab.freedesktop.org/mesa/mesa/merge_requests/2496 ;
+- Allow building osmesa gallium and swrast simultaneously with Meson.
 ### Build environment information
 - Add pkg-config.
 # 19.2.2
