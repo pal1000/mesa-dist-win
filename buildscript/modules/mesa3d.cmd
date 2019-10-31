@@ -121,8 +121,8 @@
 @IF /I NOT "%expressmesabuild%"=="y" set /p osmesa=Do you want to build off-screen rendering drivers (y/n):
 @IF /I NOT "%expressmesabuild%"=="y" echo.
 @if %mesabldsys%==scons IF /I NOT "%expressmesabuild%"=="y" IF /I "%osmesa%"=="y" set buildcmd=%buildcmd% osmesa
-@if %mesabldsys%==meson IF /I "%osmesa%"=="y" set buildconf=%buildconf% -Dosmesa=gallium,swrast
-@if %mesabldsys%==meson IF /I "%osmesa%"=="y" if %gitstate%==0 IF %toolchain%==msvc set buildconf=%buildconf:~0,-7%
+@if %mesabldsys%==meson IF /I "%osmesa%"=="y" set buildconf=%buildconf% -Dosmesa=gallium,classic
+@if %mesabldsys%==meson IF /I "%osmesa%"=="y" if %gitstate%==0 IF %toolchain%==msvc set buildconf=%buildconf:~0,-8%
 @IF /I "%expressmesabuild%"=="y" set osmesa=y
 
 @set graw=n
