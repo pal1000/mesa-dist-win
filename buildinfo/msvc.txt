@@ -6,7 +6,7 @@ Ressource Hacker 5.1.7.343
 Git 2.23.0.1
 Visual Studio Community 2019 v16.3.6
 Windows SDK 10.0.18362.0
-Python 2.7.16
+Python 2.7.17
 
 Python packages
 ---------------
@@ -15,7 +15,7 @@ MarkupSafe 1.1.1
 pip        19.3.1 
 pywin32    225    
 scons      3.1.1  
-setuptools 41.4.0 
+setuptools 41.5.1 
 
 CMake 3.15.4
 Ninja 1.9.0

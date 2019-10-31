@@ -85,13 +85,6 @@ if '%errorlevel%' NEQ '0' (
 @echo.
 
 :desktopgl
-@rem Add Meson subprojects
-@if EXIST "%dir%\z.dll" del "%dir%\z.dll"
-@if EXIST "%dir%\expat-1.dll" del "%dir%\expat-1.dll"
-@IF EXIST "%mesaloc%\%mesadll%\z.dll" mklink "%dir%\z.dll" "%mesaloc%\%mesadll%\z.dll"
-@IF EXIST "%mesaloc%\%mesadll%\expat-1.dll" mklink "%dir%\expat-1.dll" "%mesaloc%\%mesadll%\expat-1.dll"
-@echo.
-
 @set desktopgl=y
 @set /p desktopgl=Do you want Desktop OpenGL drivers (y/n, defaults to yes):
 @echo.
@@ -108,21 +101,29 @@ if '%errorlevel%' NEQ '0' (
 @IF EXIST "%mesaloc%\%mesadll%\swr*.dll" set /p swr=Do you want swr driver - the new desktop OpenGL driver made by Intel (y/n):
 @IF EXIST "%mesaloc%\%mesadll%\swr*.dll" echo.
 @IF /I NOT "%swr%"=="y" GOTO opengles
-@if EXIST "%dir%\swr*.dll" echo Updated swr driver deployment.
-@if EXIST "%dir%\swr*.dll" GOTO deployswr
+@if EXIST "%dir%\swrAVX.dll" echo Updated swr driver deployment.&GOTO deployswr
+@if EXIST "%dir%\swrAVX2.dll" echo Updated swr driver deployment.&GOTO deployswr
+@if EXIST "%dir%\swrSKX.dll" echo Updated swr driver deployment.&GOTO deployswr
+@if EXIST "%dir%\swrKNL.dll" echo Updated swr driver deployment.&GOTO deployswr
 
 :deployswr
 @if EXIST "%dir%\swrAVX.dll" del "%dir%\swrAVX.dll"
 @if EXIST "%dir%\swrAVX2.dll" del "%dir%\swrAVX2.dll"
+@if EXIST "%dir%\swrSKX.dll" del "%dir%\swrSKX.dll"
+@if EXIST "%dir%\swrKNL.dll" del "%dir%\swrKNL.dll"
 @mklink "%dir%\swrAVX.dll" "%mesaloc%\x64\swrAVX.dll"
 @mklink "%dir%\swrAVX2.dll" "%mesaloc%\x64\swrAVX2.dll"
+@IF EXIST "%mesaloc%\x64\swrSKX.dll" mklink "%dir%\swrSKX.dll" "%mesaloc%\x64\swrSKX.dll"
+@IF EXIST "%mesaloc%\x64\swrKNL.dll" mklink "%dir%\swrKNL.dll" "%mesaloc%\x64\swrKNL.dll"
 @echo.
 
 :opengles
 @IF EXIST "%mesaloc%\%mesadll%\libglapi.dll" set /p opengles=Do you need OpenGL ES support (y/n):
 @IF /I NOT "%opengles%"=="y" GOTO osmesa
+@IF EXIST "%dir%\libglapi.dll" del "%dir%\libglapi.dll"
 @if EXIST "%dir%\libGLESv1_CM.dll" del "%dir%\libGLESv1_CM.dll"
 @if EXIST "%dir%\libGLESv2.dll" del "%dir%\libGLESv2.dll"
+@IF EXIST "%mesaloc%\%mesadll%\libglapi.dll" mklink "%dir%\libglapi.dll" "%mesaloc%\%mesadll%\libglapi.dll"
 @IF EXIST "%mesaloc%\%mesadll%\libGLESv1_CM.dll" mklink "%dir%\libGLESv1_CM.dll" "%mesaloc%\%mesadll%\libGLESv1_CM.dll"
 @IF EXIST "%mesaloc%\%mesadll%\libGLESv2.dll" mklink "%dir%\libGLESv2.dll" "%mesaloc%\%mesadll%\libGLESv2.dll"
 @echo.
@@ -134,9 +135,11 @@ if '%errorlevel%' NEQ '0' (
 @if /I NOT "%osmesa%"=="y" GOTO graw
 @IF EXIST "%dir%\osmesa.dll" echo Updated Mesa3D off-screen rendering interface deployment.
 @IF EXIST "%dir%\osmesa.dll" del "%dir%\osmesa.dll"
-@IF EXIST "%dir%\osmesa.dll" IF EXIST "%mesaloc%\%mesadll%\osmesa.dll" mklink "%dir%\osmesa.dll" "%mesaloc%\%mesadll%\osmesa.dll"
-@IF EXIST "%dir%\osmesa.dll" IF EXIST "%mesaloc%\%mesadll%\osmesa.dll" echo.
-@IF EXIST "%dir%\osmesa.dll" IF EXIST "%mesaloc%\%mesadll%\osmesa.dll" GOTO graw
+@IF EXIST "%dir%\libglapi.dll" del "%dir%\libglapi.dll"
+@IF EXIST "%mesaloc%\%mesadll%\osmesa.dll" mklink "%dir%\osmesa.dll" "%mesaloc%\%mesadll%\osmesa.dll"
+@IF EXIST "%mesaloc%\%mesadll%\libglapi.dll" mklink "%dir%\libglapi.dll" "%mesaloc%\%mesadll%\libglapi.dll"
+@echo.
+@IF EXIST "%mesaloc%\%mesadll%\osmesa.dll" GOTO graw
 @echo What version of osmesa off-screen rendering you want:
 @echo 1. Gallium based (faster, but lacks certain features);
 @echo 2. Swrast based (slower, but has unique OpenGL 2.1 features);
@@ -151,13 +154,17 @@ if '%errorlevel%' NEQ '0' (
 @set /p graw=Do you need graw library (y/n):
 @echo.
 @if /I NOT "%graw%"=="y" GOTO restart
-@if EXIST "%dir%\graw.dll" echo Updated Mesa3D graw framework deployment.
+@if EXIST "%dir%\graw.dll" echo Updated Mesa3D graw framework deployment.&GOTO deploygraw
+@if EXIST "%dir%\graw_null.dll" echo Updated Mesa3D graw framework deployment.&GOTO deploygraw
+
+:deploygraw
 @if EXIST "%dir%\graw.dll" del "%dir%\graw.dll"
 @if EXIST "%dir%\graw_null.dll" del "%dir%\graw_null.dll"
-@mklink "%dir%\graw.dll" "%mesaloc%\%mesadll%\graw.dll"
-@echo.
+@IF EXIST "%dir%\libglapi.dll" del "%dir%\libglapi.dll"
+@IF EXIST "%mesaloc%\%mesadll%\graw.dll" mklink "%dir%\graw.dll" "%mesaloc%\%mesadll%\graw.dll"
 @IF EXIST "%mesaloc%\%mesadll%\graw_null.dll" mklink "%dir%\graw_null.dll" "%mesaloc%\%mesadll%\graw_null.dll"
-@IF EXIST "%mesaloc%\%mesadll%\graw_null.dll" echo.
+@IF EXIST "%mesaloc%\%mesadll%\libglapi.dll" mklink "%dir%\libglapi.dll" "%mesaloc%\%mesadll%\libglapi.dll"
+@echo.
 
 :restart
 @set /p rerun=More Mesa deployment? (y=yes):

@@ -7,6 +7,9 @@
 - Meson build: Ensure LLVM is disabled when asked.
 ### Debug
 - Add Meson standalone Mingw-w64 build debug script. Mostly for quickly testing these issues:[1](https://gitlab.freedesktop.org/mesa/mesa/issues/2012), [2](https://gitlab.freedesktop.org/mesa/mesa/issues/2013).
+### Deployment tools
+- Per app deployment: Fix osmesa gallium solo deployment;
+- Add support for swr AVX512 to deployment tools.
 # # 19.2.2
 - Updated Mesa3D to [19.2.2](https://www.mesa3d.org/relnotes/19.2.2.html).
 ### Build script
