@@ -10,7 +10,7 @@ MSYS2 environment
 bash 4.4.023-1
 bash-completion 2.9-1
 bison 3.4.2-1
-brotli 1.0.7-1
+brotli 1.0.7-2
 bsdcpio 3.4.0-4
 bsdtar 3.4.0-4
 bzip2 1.0.8-1
@@ -190,15 +190,15 @@ ncurses 6.1.20190615-1
 nettle 3.5.1-1
 openssl 1.1.1.d-1
 p11-kit 0.23.18.1-1
-pacman 5.1.3-5
+pacman 5.2.1-1
 pacman-mirrors 20180604-2
 pactoys-git r2.07ca37f-1
 patch 2.7.6-1
 pax-git 20161104.2-1
 pcre 8.43-2
 pinentry 1.1.0-2
-pkgfile 20-1
-python2 2.7.16-1
+pkgfile 21-1
+python2 2.7.17-1
 python2-beaker 1.11.0-1
 python2-funcsigs 1.0.2-1
 python2-mako 1.0.14-1

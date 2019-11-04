@@ -4,7 +4,8 @@
 - Meson build: Get MSYS2 Mingw-w64 working;
 - Meson build: Hide it when it can't be used;
 - More verbose errors about when build is impossible;
-- Meson build: Ensure LLVM is disabled when asked.
+- Meson build: Ensure LLVM is disabled when asked;
+- Meson build: Use 64-bit compiler when using Ninja when possible.
 ### Debug
 - Add Meson standalone Mingw-w64 build debug script. Mostly for quickly testing these issues:[1](https://gitlab.freedesktop.org/mesa/mesa/issues/2012), [2](https://gitlab.freedesktop.org/mesa/mesa/issues/2013).
 ### Deployment tools

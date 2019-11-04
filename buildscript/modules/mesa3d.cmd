@@ -159,8 +159,7 @@
 
 @rem Prepare build command line tools and set compiler and linker flags.
 @IF %toolchain%==msvc echo.
-@IF %toolchain%==msvc IF /I "%useninja%"=="y" call %vsenv% %abi%
-@IF %toolchain%==msvc IF /I NOT "%useninja%"=="y" call %vsenv% %vsabi%
+@IF %toolchain%==msvc call %vsenv% %vsabi%
 @IF %toolchain%==msvc echo.
 @IF %toolchain%==gcc set MSYSTEM=MINGW32
 @IF %toolchain%==gcc IF %abi%==x64 set MSYSTEM=MINGW64
