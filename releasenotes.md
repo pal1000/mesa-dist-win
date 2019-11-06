@@ -1,4 +1,5 @@
-# Next release
+# 19.2.3
+- Updated Mesa3D to [19.2.3](https://www.mesa3d.org/relnotes/19.2.3.html).
 ### Build script
 - MSYS2: Keep pacman cache size under control;
 - Meson build: Get MSYS2 Mingw-w64 working;
@@ -6,9 +7,8 @@
 - More verbose errors about when build is impossible;
 - Meson build: Ensure LLVM is disabled when asked;
 - Meson build: Use 64-bit compiler when using Ninja when possible;
-- Meson: Always clean build.
-### Debug
-- Add Meson standalone Mingw-w64 build debug script. Mostly for quickly testing these issues:[1](https://gitlab.freedesktop.org/mesa/mesa/issues/2012), [2](https://gitlab.freedesktop.org/mesa/mesa/issues/2013).
+- Meson: Always clean build;
+- Add build system to Window title.
 ### Deployment tools
 - Per app deployment: Fix osmesa gallium solo deployment;
 - Add support for swr AVX512 to deployment tools.
