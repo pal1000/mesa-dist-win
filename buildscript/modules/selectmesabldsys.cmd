@@ -43,3 +43,5 @@
 @GOTO msmesabldsys
 )
 @endlocal&set mesabldsys=%mesabldsys%
+@set TITLE=%TITLE% and %mesabldsys%
+@TITLE %TITLE%
