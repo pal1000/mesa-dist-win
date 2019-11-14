@@ -1,3 +1,7 @@
+# 19.2.4
+- Updated Mesa3D to [19.2.4](https://www.mesa3d.org/relnotes/19.2.4.html).
+### Build script
+- Don't apply filename parity patch to Mesa3D < 19.3.
 # 19.2.3-2
 ### Build script
 - Meson build: Pause after clean build warning in order to give chance to cancel build.

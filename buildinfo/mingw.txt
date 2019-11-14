@@ -3,7 +3,7 @@ Build environment
 Windows 10.0.18363
 Ressource Hacker 5.1.7.343
 7-Zip 19.02 ultra compression
-Git 2.23.0.1
+Git 2.24.0.2
 
 MSYS2 environment
 -----------------
@@ -14,9 +14,9 @@ brotli 1.0.7-2
 bsdcpio 3.4.0-4
 bsdtar 3.4.0-4
 bzip2 1.0.8-1
-ca-certificates 20180409-1
+ca-certificates 20190110-1
 coreutils 8.31-1
-curl 7.66.0-1
+curl 7.67.0-1
 dash 0.5.10.2-1
 dtc 1.5.1-1
 file 5.37-1
@@ -44,9 +44,9 @@ libasprintf 0.19.8.1-1
 libassuan 2.5.3-1
 libbz2 1.0.8-1
 libcrypt 2.1-2
-libcurl 7.66.0-1
+libcurl 7.67.0-1
 libdb 5.3.28-2
-libedit 20190324_3.1-1
+libedit 20191025_3.1-1
 libexpat 2.2.9-1
 libffi 3.2.1-3
 libgcrypt 1.8.5-1
@@ -89,7 +89,7 @@ lndir 1.0.3-1
 m4 1.4.18-2
 mingw-w64-i686-binutils 2.33.1-1
 mingw-w64-i686-bzip2 1.0.8-1
-mingw-w64-i686-ca-certificates 20180409-5
+mingw-w64-i686-ca-certificates 20190110-1
 mingw-w64-i686-crt-git 7.0.0.5553.e922460c-1
 mingw-w64-i686-expat 2.2.9-1
 mingw-w64-i686-gcc 9.2.0-2
@@ -120,11 +120,11 @@ mingw-w64-i686-python3-attrs 19.3.0-1
 mingw-w64-i686-python3-beaker 1.11.0-1
 mingw-w64-i686-python3-mako 1.1.0-1
 mingw-w64-i686-python3-markupsafe 1.1.1-2
-mingw-w64-i686-python3-ordered-set 3.1-1
+mingw-w64-i686-python3-ordered-set 3.1.1-1
 mingw-w64-i686-python3-packaging 19.2-1
-mingw-w64-i686-python3-pyparsing 2.4.2-2
+mingw-w64-i686-python3-pyparsing 2.4.4-1
 mingw-w64-i686-python3-setuptools 41.4.0-1
-mingw-w64-i686-python3-six 1.12.0-2
+mingw-w64-i686-python3-six 1.13.0-1
 mingw-w64-i686-readline 8.0.001-2
 mingw-w64-i686-sqlite3 3.30.1-1
 mingw-w64-i686-tcl 8.6.9-2
@@ -136,7 +136,7 @@ mingw-w64-i686-xz 5.2.4-1
 mingw-w64-i686-zlib 1.2.11-7
 mingw-w64-x86_64-binutils 2.33.1-1
 mingw-w64-x86_64-bzip2 1.0.8-1
-mingw-w64-x86_64-ca-certificates 20180409-5
+mingw-w64-x86_64-ca-certificates 20190110-1
 mingw-w64-x86_64-crt-git 7.0.0.5553.e922460c-1
 mingw-w64-x86_64-expat 2.2.9-1
 mingw-w64-x86_64-gcc 9.2.0-2
@@ -167,11 +167,11 @@ mingw-w64-x86_64-python3-attrs 19.3.0-1
 mingw-w64-x86_64-python3-beaker 1.11.0-1
 mingw-w64-x86_64-python3-mako 1.1.0-1
 mingw-w64-x86_64-python3-markupsafe 1.1.1-2
-mingw-w64-x86_64-python3-ordered-set 3.1-1
+mingw-w64-x86_64-python3-ordered-set 3.1.1-1
 mingw-w64-x86_64-python3-packaging 19.2-1
-mingw-w64-x86_64-python3-pyparsing 2.4.2-2
+mingw-w64-x86_64-python3-pyparsing 2.4.4-1
 mingw-w64-x86_64-python3-setuptools 41.4.0-1
-mingw-w64-x86_64-python3-six 1.12.0-2
+mingw-w64-x86_64-python3-six 1.13.0-1
 mingw-w64-x86_64-readline 8.0.001-2
 mingw-w64-x86_64-sqlite3 3.30.1-1
 mingw-w64-x86_64-tcl 8.6.9-2
@@ -190,7 +190,7 @@ ncurses 6.1.20190615-1
 nettle 3.5.1-1
 openssl 1.1.1.d-1
 p11-kit 0.23.18.1-1
-pacman 5.2.1-1
+pacman 5.2.1-3
 pacman-mirrors 20180604-2
 pactoys-git r2.07ca37f-1
 patch 2.7.6-1
