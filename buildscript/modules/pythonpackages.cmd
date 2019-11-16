@@ -59,7 +59,6 @@
 @GOTO pypackmissing
 
 :pyupdate
-
 @rem Check for python packages updates.
 @set pyupd=n
 @set /p pyupd=Update python packages (y/n):
