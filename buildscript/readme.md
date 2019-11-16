@@ -38,11 +38,9 @@ Extract in `.\flexbison`.
 Use Python 2.7. Mesa3D Scons build system was written using Python 2 syntax. Trying to use Python 3 leads to Python crash at this moment. Use the installer. Make sure pip is installed. Sometimes it isn't. If it isn't get it from [here](https://pip.pypa.io/en/stable/installing/). If you don't want to add Python to PATH you can either install it in `.\python` or if you have Python launcher component of Python 3.x installed for whatever reason you can install it anywhere you want. If using Python launcher pick a Python 2.7 installation. Python 3.x can only build LLVM for now. It can't build Mes3D on Windows yet, but developers are working upstream on a Meson build for Mesa3D which is a Python 3.x native. For those who want to attempt a Mesa3D build with Meson there is the command line switch `/enablemeson`, but obviously it doesn't work yet due to lack of upstream support.
 - [pywin32 for Python 2.7](https://github.com/mhammond/pywin32/releases);
 
-It must match in architecture with Python. There is a bug in the installer. For true successful installation you have to open Command Prompt as admin, browse to the folder holding pywin32 installer using CD command and run it from there.
+It must match in architecture with Python.
 - Update setuptools for python via `python -m pip install -U setuptools` when Python is in PATH or currrent folder. You can successfully install Scons via Pypi without having to install wheel when setuptools is up-to-date if you are still on Python 2.7.14. For some reason with Python 2.7.15 wheel is mandatory. Install it with `python -m pip install -U wheel`. The build script updates setuptools and installs wheel automatically.
 - [Scons for python 2.7](https://sourceforge.net/projects/scons/files/scons/);
-
-Stay on Scons 3.0.1 until further notice.Scons 3.0.3 fails to build Mesa3D.
 - mako module for Python 2.7 and MarkupSafe dependency. Install with `python -m pip install mako`. This script installs mako automatically. It also attempts to update all Python modules.
 - Get this script.
 

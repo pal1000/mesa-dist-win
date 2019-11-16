@@ -17,7 +17,7 @@
 @set pypack=Mako
 @GOTO pypackinstall
 )
-@IF %mesabldsys%==scons if %pythonver:~0,1%==2 if NOT EXIST %pythonloc:~0,-10%Lib\site-packages\win32 (
+@IF %mesabldsys%==scons if %pythonver:~0,1%==2 if NOT EXIST %pythonloc:~0,-10%Scripts\pywin32_postinstall.py (
 @set pypack=pywin32
 @GOTO pypackinstall
 )
@@ -59,14 +59,24 @@
 @GOTO pypackmissing
 
 :pyupdate
+
 @rem Check for python packages updates.
 @set pyupd=n
-@set /p pyupd=Install/update python packages (y/n):
+@set /p pyupd=Update python packages (y/n):
 @echo.
-@if /I "%pyupd%"=="y" if EXIST "%LOCALAPPDATA%\pip" RD /S /Q "%LOCALAPPDATA%\pip"
-@if /I "%pyupd%"=="y" for /F "skip=2 delims= " %%a in ('%pythonloc% -W ignore -m pip list -o --disable-pip-version-check') do @%pythonloc% -W ignore -m pip install -U "%%a"
-@if /I "%pyupd%"=="y" IF %pythonver:~0,1%==2 IF NOT EXIST "%windir%\system32\pythoncom27.dll" IF NOT EXIST "%windir%\syswow64\pythoncom27.dll" GOTO locatemeson
-@if /I "%pyupd%"=="y" IF %pythonver:~0,1%==2 powershell -Command Start-Process "%mesa%\mesa-dist-win\buildscript\modules\pywin32.cmd" -Args "%pythonloc%" -Verb runAs 2>nul
+@set pywinsetup=2
+@set ERRORLEVEL=0
+@REG QUERY HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\pywin32-py2.7 >nul 2>&1
+@IF ERRORLEVEL 1 set pywinsetup=1
+@IF NOT EXIST "%windir%\system32\pythoncom27.dll" IF NOT EXIST "%windir%\syswow64\pythoncom27.dll" set pywinsetup=0
+@if /I NOT "%pyupd%"=="y" GOTO endpython
+@if EXIST "%LOCALAPPDATA%\pip" RD /S /Q "%LOCALAPPDATA%\pip"
+@for /F "skip=2 delims= " %%a in ('%pythonloc% -W ignore -m pip list -o --disable-pip-version-check') do @(
+IF NOT "%%a"=="pywin32" %pythonloc% -W ignore -m pip install -U "%%a"&echo.
+IF "%%a"=="pywin32" IF %pywinsetup% LSS 2 %pythonloc% -W ignore -m pip install -U "%%a"&echo.
+IF "%%a"=="pywin32" IF %pywinsetup% EQU 1 powershell -Command Start-Process "%mesa%\mesa-dist-win\buildscript\modules\pywin32.cmd" -Args "%pythonloc%" -Verb runAs 2>nul
+IF "%%a"=="pywin32" IF %pywinsetup% EQU 2 echo New version of pywin32 is available.&echo Visit https://github.com/mhammond/pywin32/releases to download it.&echo.
+)
 
 :endpython
 @echo.
