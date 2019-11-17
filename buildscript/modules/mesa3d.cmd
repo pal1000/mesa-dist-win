@@ -62,7 +62,7 @@
 @if %mesabldsys%==scons if %toolchain%==msvc IF "%sconspypi%"=="1" set buildcmd=%pythonloc:~0,-10%Scripts\scons.py
 @if %mesabldsys%==scons if %toolchain%==msvc IF "%sconspypi%"=="1" IF NOT EXIST "%buildcmd%" set buildcmd=%pythonloc:~0,-10%Scripts\scons
 @if %mesabldsys%==scons if %toolchain%==msvc set buildcmd=%pythonloc% %buildcmd%
-@if %mesabldsys%==scons if %toolchain%==gcc set buildcmd=%msysloc%\usr\bin\bash --login -c "cd $mesa/mesa;/usr/bin/scons
+@if %mesabldsys%==scons if %toolchain%==gcc set buildcmd=%msysloc%\usr\bin\bash --login -c "cd ${mesa}/mesa;/usr/bin/scons
 @if %mesabldsys%==scons set buildcmd=%buildcmd% -j%throttle% build=release platform=windows machine=%longabi%
 @if %mesabldsys%==scons if %toolchain%==gcc set buildcmd=%buildcmd% toolchain=mingw
 @if %mesabldsys%==scons if %toolchain%==msvc set buildcmd=%buildcmd% MSVC_USE_SCRIPT=%vsenv%
@@ -95,7 +95,7 @@
 @if /I "%useninja%"=="y" if %ninjastate%==1 IF %toolchain%==msvc set PATH=%mesa%\ninja\;%PATH%
 @if /I "%useninja%"=="y" set buildconf=%buildconf% --backend=ninja
 @if /I "%useninja%"=="y" IF %toolchain%==msvc set buildcmd=ninja -j %throttle%
-@if /I "%useninja%"=="y" IF %toolchain%==gcc set buildcmd=%msysloc%\usr\bin\bash --login -c "cd $mesa/mesa/build/%abi%;%LLVM%/bin/ninja -j %throttle%"
+@if /I "%useninja%"=="y" IF %toolchain%==gcc set buildcmd=%msysloc%\usr\bin\bash --login -c "cd ${mesa}/mesa/build/%abi%;%LLVM%/bin/ninja -j %throttle%"
 @if %mesabldsys%==meson if /I NOT "%useninja%"=="y" set buildconf=%buildconf% --backend=vs
 
 @if %mesabldsys%==scons IF %toolchain%==msvc set /p openmp=Build Mesa3D with OpenMP. Faster build and smaller binaries (y/n):
