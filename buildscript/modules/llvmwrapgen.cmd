@@ -25,7 +25,8 @@ echo   dependencies : _deps,
 echo   version : '%llvmver%',
 echo ^)
 echo.
-echo has_rtti = true
+IF %toolchain%==msvc echo has_rtti = true
+IF %toolchain%==gcc echo has_rtti = false
 IF %toolchain%==msvc echo irbuilder_h = files^('%LLVM:\=/%/include/llvm/IR/IRBuilder.h'^)
 IF %toolchain%==gcc echo irbuilder_h = files^('%msysloc:\=/%%LLVM:\=/%/include/llvm/IR/IRBuilder.h'^)
 )>%mesa%\mesa\subprojects\llvm\meson.build
