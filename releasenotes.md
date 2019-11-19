@@ -2,6 +2,8 @@
 ### Build script
 - pywin32 : Detect when installer was used and require it for updates;
 - MSYS2: Use braces when expanding shell script variables.
+### Deployment tools
+- Improve elevation routine based on pal1000/Realtek-UAD-Generic#18.
 # 19.2.4
 - Updated Mesa3D to [19.2.4](https://www.mesa3d.org/relnotes/19.2.4.html).
 ### Build script
