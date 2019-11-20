@@ -2,7 +2,8 @@
 ### Build script
 - pywin32 : Detect when installer was used and require it for updates;
 - MSYS2: Use braces when expanding shell script variables;
-- MSYS2/LLVM: Don't lie about RTTI support in Meson wrap file.
+- MSYS2/LLVM: Don't lie about RTTI support in Meson wrap file;
+- MSYS2: Install tar package to support PKGBUILD.
 ### Deployment tools
 - Improve elevation routine based on pal1000/Realtek-UAD-Generic#18.
 # 19.2.4
