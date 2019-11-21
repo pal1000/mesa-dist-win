@@ -206,6 +206,7 @@ python2-markupsafe 1.1.1-1
 rebase 4.4.4-1
 scons 3.1.1-1
 sed 4.7-1
+tar 1.32-1
 tftp-hpa 5.2-3
 time 1.9-1
 ttyrec 1.0.8-2

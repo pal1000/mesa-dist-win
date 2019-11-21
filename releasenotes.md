@@ -1,4 +1,5 @@
-# Next release
+# 19.2.5
+- Updated Mesa3D to [19.2.5](https://www.mesa3d.org/relnotes/19.2.5.html).
 ### Build script
 - pywin32 : Detect when installer was used and require it for updates;
 - MSYS2: Use braces when expanding shell script variables;

@@ -6,27 +6,52 @@
 
 ## 1. Acquire mesa source code, dependencies and build tools
 
-- Visual Studio 2017;
-
-Visual Studio has to be installed in its default location. You only need components from within Desktop Development with C++ category. Beside default selected components MFC, ATL and a Windows SDK is required. Latest Windows 10 SDK is highly recommended. You may opt-out in this exact order of CMake Tools and Windows 10 SDK in Visual Studio installer and manually install standalone version of Windows 10 SDK instead as it is sometimes newer. If you want to use standalone Windows 10 SDK make sure you install Windows SDK for Desktop C++ x86 and amd64 apps components.
 - [7-zip](http://www.7-zip.org/download.html) or [7-zip portable](https://portableapps.com/apps/utilities/7-zip_portable)
 
 We'll use this to extract all dependencies packed in tar.gz or tar.xz archives.
 Before continuing prepare an empty folder to extract the rest of dependencies into. I'll call this `.`.
+- Visual Studio 2019 or MSYS2 or both;
 
+Visual Studio can be installed anywhere as long as Microsoft vswhere included with Visual Studio installer can find it.
+All 3 editions (community, professional and enterprise) are supported.
+You only need components from within Desktop Development with C++ category.
+Beside default selected components MFC, ATL and a Windows SDK is required.
+Latest Windows 10 SDK is highly recommended. You may opt-out in this exact order of CMake Tools and Windows 10 SDK in Visual Studio installer and manually install standalone version of Windows 10 SDK instead as it is sometimes newer.
+If you want to use standalone Windows 10 SDK make sure you install Windows SDK for Desktop C++ x86 and amd64 apps components.
+
+If used MSYS2 has to be installed in `.\msys64` or `.\msys32`, then run these commands on a standard Command Prompt:
+````
+.\msys64\usr\bin\bsh --login -c "pacman -Syu"
+.\msys64\usr\bin\bsh --login -c "pacman -Syu"
+echo.
+````
+or
+````
+.\msys32\usr\bin\bsh --login -c "pacman -Syu"
+.\msys32\usr\bin\bsh --login -c "pacman -Syu"
+echo.
+````
+depending where you installed MSYS2.
 - [Git for Windows 32 or 64-bit](https://git-scm.com/download/win);
 
-Highly recommended, but not mandatory. Required if you want to build Mesa3D osmesa library having shared glapi support enabled, osmesa won’t have shared glapi support however. Also required if using LLVM 7.0 as we need to apply a patch to Mesa3D for swr driver to successfully build. You can use the portable version if you don't want to bloat your system too much, but you have to either launch the build script from within git-cmd.exe session (git-cmd.exe is located in Git installation directory) or run git-cmd.exe with this build script as argument (ex assuming git was installed in c:\dev\git and this project repository was cloned in c:\dev\mesa-dist-win , the build script launch command looks like this - "c:\dev\git\git-cmd.exe" "c:\dev\mesa-dist-win\buildscript\build.cmd").
+Highly recommended, but not mandatory. You can use the portable version if you don't want to bloat your system too much, but you have to either launch the build script from within git-cmd.exe session (git-cmd.exe is located in Git installation directory) or run git-cmd.exe with this build script as argument (ex assuming git was installed in c:\dev\git and this project repository was cloned in c:\dev\mesa-dist-win , the build script launch command looks like this - "c:\dev\git\git-cmd.exe" "c:\dev\mesa-dist-win\buildscript\build.cmd").
 - Mesa source code: [Mirror 1](https://gitlab.freedesktop.org/mesa/mesa), [Mirror 2](https://www.mesa3d.org/archive/), [Mirror 3](https://mesa.freedesktop.org/archive/);
 
 The build script can grab Mesa3D code if Git is in PATH. It asks for the branch to pull from. Otherwise manually extract in `.`. Be warned that the archive is double packed. Rename extracted folder to `mesa`.
-- [LLVM source code](http://llvm.org/);
+- [LLVM](http://llvm.org/);
 
-Extract LLVM code in `.`. Rename extracted folder to `llvm`. LLVM 4.0 is the minimum version supported by this build scrpt as Visual Studio 2017 is the only version supported. Required to build high-performance drivers llvmpipe and swr and JIT speed-up for other drivers and libraries. LLVM must be built in release mode with install target. This build script does it automatically or you can look [here](https://wiki.qt.io/MesaLlvmpipe).
+If using MSVC extract LLVM source code in `.`. Rename extracted folder to `llvm`.
+If using MSYS2 you have to install it via `/usr/bin/pacman -S mingw-w64-i686-llvm mingw-w64-x86_64-llvm --needed --noconfirm`.
+LLVM 8.0 is the minimum version supported by this build script as it assumes coroutines component is present to reduce complexity.
+Required to build high-performance drivers llvmpipe and swr and JIT speed-up for other drivers and libraries.
+When building LLVM from source mke sure it's a release build of install target.
+This build script does it automatically or you can look [here](https://wiki.qt.io/MesaLlvmpipe).
 - [Ninja build system](https://github.com/ninja-build/ninja/releases)
 
-Optional, it reduces LLVM build size as it works with single configuration and also it is much faster and gentler with the storage device unlike Visual Studio MsBuild which requires a Release and a Debug configuration at minimum. If used, extract Ninja in `.\ninja`. If ninja is available my script asks if you want to use it when building LLVM.
-
+Only required by Meson build with MSYS2, scenario in which it's installed automatically. Otherwise it's optional.
+It reduces LLVM build size as it works with single configuration and also it is much faster and gentler with the storage device unlike Visual Studio MsBuild.
+If used with MSVC, extract Ninja in `.\ninja`.
+If ninja is available my script asks if you want to use it when building LLVM and Mesa3D with Meson and MSVC.
 - [CMake 32 or 64 bit](https://cmake.org/download/#latest);
 
 You may use the installer or you can extract the zipped version in `.\cmake`. Required to build LLVM just-in-time recompiler used by Mesa high-performance drivers llvmpipe and swr and JIT speed-up for other drivers and libraries.
