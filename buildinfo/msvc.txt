@@ -4,7 +4,7 @@ Windows 10.0.18363
 Ressource Hacker 5.1.7.343
 7-Zip 19.02 ultra compression
 Git 2.24.0.2
-Visual Studio Community 2019 v16.3.10
+Visual Studio Community 2019 v16.4.0
 Windows SDK 10.0.18362.0
 Python 2.7.17
 
@@ -15,9 +15,9 @@ MarkupSafe 1.1.1
 pip        19.3.1 
 pywin32    227    
 scons      3.1.1  
-setuptools 41.6.0 
+setuptools 42.0.2 
 
-CMake 3.15.5
+CMake 3.16.0
 Ninja 1.9.0
 LLVM 9.0.0
 Winflexbison package 2.5.20
