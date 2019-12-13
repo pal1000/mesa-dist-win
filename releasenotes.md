@@ -1,3 +1,14 @@
+# 19.3.0
+- Updated Mesa3D to [19.3.0](https://www.mesa3d.org/relnotes/19.3.0.html).
+### New features and changes
+- switched MSVC packages to Meson build - [#7](https://github.com/pal1000/mesa-dist-win/issues/7);
+- enabled experimental swr AVX512 support thanks to switch to Meson build and an out of tree patch with progress on official support being tracked [here](https://gitlab.freedesktop.org/mesa/mesa/issues/1990) - [#2](https://github.com/pal1000/mesa-dist-win/issues/2);
+- restored standalone OpenGL ES drivers in MSVC release package thanks to switch to Meson build;
+- added Mesa3D test suite to MSVC release package thanks to switch to Meson build.
+### Documentation
+- Update end-user guide to reflect new features and changes.
+### Important notes about updating from older versions
+- You may experience errors related to missing `libglapi.dll` when updating from a release that isn't between 18.1.2.600-1 and 18.2.6 with programs that had any Mesa3D desktop OpenGL driver deployed with per app deployment tool. To correct them you have to re-deploy. If you don't remember if an affected program is 32-bit or 64-bit, right click on opengl32.dll shortcut in the folder where the program executable is located and select open file location. If location ends in x64 then it's 64-bit otherwise it's 32-bit.
 # 19.2.7
 - Updated Mesa3D to [19.2.7](https://www.mesa3d.org/relnotes/19.2.7.html).
 # 19.2.6
