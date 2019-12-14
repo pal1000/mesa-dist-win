@@ -1,6 +1,8 @@
 # 19.3.0-2
 ### Deployment
-- Avoid missing `libglapi.dll` related errors in 19.3.0 when switching from Mingw to MSVC release package with programs that had any Mesa3D desktop OpenGL driver deployed with per app deployment tool.
+- Avoid missing `libglapi.dll` related errors since 19.3.0 when switching from Mingw to MSVC release package with programs that use Mesa3D desktop OpenGL driver via per app deployment tool.
+### Known issue
+- You may encounter errors related to missing `libglapi.dll` if you used per app deployment. See [readme](#important-notes-about-errors-related-to-missing-libglapidll) for resolution.
 # 19.3.0
 - Updated Mesa3D to [19.3.0](https://www.mesa3d.org/relnotes/19.3.0.html).
 ### New features and changes
