@@ -45,7 +45,7 @@ Also, [Federico Dossena](https://github.com/adolfintel)'s [Mesainjector](http://
 [Build instructions for Mesainjector](http://fdossena.com/?p=mesa/injector_build.frag).
 ### Important notes about errors related to missing `libglapi.dll`
 You may experience them with programs that use any Mesa3D desktop OpenGL driver via per app deployment tool, system wide deployment is unaffected. You may experience them under following circumstances:
-- when using Mesa3D 19.3.0 and you switch from Mingw release package to MSVCrelease package;
+- when using Mesa3D 19.3.0 and you switch from Mingw release package to MSVC release package;
 - when updating from a release that isn't between 18.1.2.600-1 and 18.2.6.
 
 To correct them regardless of cause you have to re-deploy. If you don't remember if an affected program is 32-bit or 64-bit, right click on opengl32.dll shortcut in the folder where the program executable is located and select open file location. If location ends in x64 then it's 64-bit otherwise it's 32-bit.
