@@ -43,10 +43,13 @@ Most applications will use Mesa regardless of GPU capabilities, but some applica
 By providing the application filename, a .local file is generated in an attempt to force the application to use Mesa3D when it doesn't want to.
 Also, [Federico Dossena](https://github.com/adolfintel)'s [Mesainjector](http://downloads.fdossena.com/Projects/Mesa3D/Injector/index.php) can be used to workaround this issue as well.
 [Build instructions for Mesainjector](http://fdossena.com/?p=mesa/injector_build.frag).
-### Important notes about updating from older versions
-You may experience errors related to missing `libglapi.dll` when updating from a release that isn't between 18.1.2.600-1 and 18.2.6 with programs that had any Mesa3D desktop OpenGL driver deployed with per app deployment tool.
-To correct them you have to re-deploy. If you don't remember if an affected program is 32-bit or 64-bit, right click on opengl32.dll shortcut in the folder where the program executable is located and select open file location. If location ends in x64 then it's 64-bit otherwise it's 32-bit.
-Same problem with same solution applies to osmesa with per app deployment if you are upgrading from 17.3.5.501-1 or older.
+### Important notes about errors related to missing `libglapi.dll`
+You may experience them with programs that use any Mesa3D desktop OpenGL driver via per app deployment tool, system wide deployment is unaffected. You may experience them under following circumstances:
+- when using Mesa3D 19.3.0 and you switch from Mingw release package to MSVCrelease package;
+- when updating from a release that isn't between 18.1.2.600-1 and 18.2.6.
+
+To correct them regardless of cause you have to re-deploy. If you don't remember if an affected program is 32-bit or 64-bit, right click on opengl32.dll shortcut in the folder where the program executable is located and select open file location. If location ends in x64 then it's 64-bit otherwise it's 32-bit.
+Same problem with same solution applies to osmesa if you are upgrading from 17.3.5.501-1 or older.
 ### Usage notes
 - Old applications from early 200x and older may need MESA_EXTENSION_MAX_YEAR environment variable set, see [legacy software compatibility section](#legacy-software-compatibility).
 - Applications requiring OpenGL 3.2 or newer may need [OpenGL context configuration override](#opengl-context-configuration-override).
