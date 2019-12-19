@@ -144,8 +144,8 @@
 @IF %mesabldsys%==meson if EXIST build\%abi% echo WARNING: Meson build always performs clean build. This is last chance to cancel build.
 @IF %mesabldsys%==meson if EXIST build\%abi% pause
 @IF %mesabldsys%==meson if EXIST build\%abi% echo.
-@IF %mesabldsys%==scons if /I "%cleanbuild%"=="y" RD /S /Q build\windows-%longabi%
-@IF %mesabldsys%==meson if /I "%cleanbuild%"=="y" RD /S /Q build\%abi%
+@IF %mesabldsys%==scons if /I "%cleanbuild%"=="y" IF EXIST build\windows-%longabi% RD /S /Q build\windows-%longabi%
+@IF %mesabldsys%==meson if /I "%cleanbuild%"=="y" IF EXIST build\%abi% RD /S /Q build\%abi%
 
 @IF %toolchain%==msvc IF %flexstate%==1 set PATH=%mesa%\flexbison\;%PATH%
 @if %mesabldsys%==meson IF %toolchain%==msvc set PATH=%pkgconfigloc%\;%PATH%

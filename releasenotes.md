@@ -1,3 +1,5 @@
+# Next release
+- Mesa: Avoid harmless error when build is already clean.
 # 19.3.1
 - Updated Mesa3D to [19.3.1](https://www.mesa3d.org/relnotes/19.3.1.html).
 # 19.3.0-2
