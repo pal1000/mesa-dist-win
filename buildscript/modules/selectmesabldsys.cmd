@@ -20,7 +20,7 @@
 @echo --------------------------
 @echo 1. Scons (recommended)
 @IF NOT EXIST %mesa%\mesa echo 2. Meson (experimental)
-@IF EXIST %mesa%\mesa IF EXIST %mesa%\mesa\subprojects\.gitignore echo 2. Meson (experimental)
+@IF EXIST %mesa%\mesa\subprojects\.gitignore echo 2. Meson (experimental)
 @echo.
 @set /p selectmesabld=Select Mesa3D build system:
 @echo.

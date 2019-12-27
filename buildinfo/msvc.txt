@@ -6,7 +6,7 @@ Ressource Hacker 5.1.7.343
 Git 2.24.1.2
 Visual Studio Community 2019 v16.4.2
 Windows SDK 10.0.18362.0
-Python 3.8.0
+Python 3.8.1
 
 Python packages
 ---------------
@@ -16,9 +16,9 @@ meson      0.52.1
 pip        19.3.1 
 setuptools 42.0.2 
 
-CMake 3.16.1
+CMake 3.16.2
 Ninja 1.9.0
-LLVM 9.0.0
+LLVM 9.0.1
 Winflexbison package 2.5.20
 flex 2.6.4
 Bison 3.4.1

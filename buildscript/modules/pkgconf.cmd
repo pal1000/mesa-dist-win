@@ -6,8 +6,10 @@
 @cd %mesa%
 @if NOT EXIST %mesa%\pkgconf IF %gitstate% GTR 0 echo Getting pkgconf...
 @if NOT EXIST %mesa%\pkgconf IF %gitstate% GTR 0 echo.
-@if NOT EXIST %mesa%\pkgconf IF %gitstate% GTR 0 git clone https://github.com/pkgconf/pkgconf.git --recurse-submodules pkgconf
-@if NOT EXIST %mesa%\pkgconf IF %gitstate% GTR 0 echo.
+@if NOT EXIST %mesa%\pkgconf IF %gitstate% GTR 0 (
+@git clone https://github.com/pkgconf/pkgconf.git --recurse-submodules pkgconf
+@echo.
+)
 @cd pkgconf
 @IF EXIST build\pkg-config.exe set buildpkgconf=n
 @IF NOT EXIST build\pkg-config.exe set buildpkgconf=y
