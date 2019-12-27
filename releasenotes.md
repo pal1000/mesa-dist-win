@@ -1,8 +1,10 @@
 # Next release
 ### Build script
-- Mesa: Avoid harmless error when build is already clean.
+- Mesa: Avoid harmless error when build is already clean;
+- Ensure print of new line after git clone commands for Mesa3D and pkgconf codebases.
 ### Debug scripts
-- MSYS2: Update packages before openning interactive shell.
+- MSYS2: Update packages before openning interactive shell;
+- MSYS2: Switch to a prompt for command loop system.
 # 19.3.1
 - Updated Mesa3D to [19.3.1](https://www.mesa3d.org/relnotes/19.3.1.html).
 # 19.3.0-2
