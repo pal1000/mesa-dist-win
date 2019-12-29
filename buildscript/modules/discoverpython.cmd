@@ -20,7 +20,7 @@
 @set goodpython=0
 @IF !pythoninstance^:^~1^,-3! EQU 2.7 set goodpython=1
 @IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF NOT EXIST %mesa%\mesa set goodpython=1
-@IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF EXIST %mesa%\mesa IF EXIST %mesa%\mesa\subprojects\.gitignore set goodpython=1
+@IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF EXIST %mesa%\mesa\subprojects\.gitignore set goodpython=1
 @IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF EXIST %mesa%\mesa IF NOT EXIST %mesa%\mesa\subprojects\.gitignore echo Hiding Python !pythoninstance^:^~1! due to Mesa3D source code not having Meson Windows support.
 @IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF EXIST %mesa%\mesa IF NOT EXIST %mesa%\mesa\subprojects\.gitignore echo Note that Mesa3D 19.3 is required for Meson Windows support.
 @IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF EXIST %mesa%\mesa IF NOT EXIST %mesa%\mesa\subprojects\.gitignore echo.
@@ -39,7 +39,7 @@
 @set goodpython=0
 @IF !pythoninstance^:^~1^,-3! EQU 2.7 set goodpython=1
 @IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF NOT EXIST %mesa%\mesa set goodpython=1
-@IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF EXIST %mesa%\mesa IF EXIST %mesa%\mesa\subprojects\.gitignore set goodpython=1
+@IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF EXIST %mesa%\mesa\subprojects\.gitignore set goodpython=1
 @IF !goodpython!==1 set /a pythoncount+=1
 @IF !goodpython!==1 echo !pythoncount!. Python !pythoninstance:~1,-3! !pythoninstance:~-2! bit
 )
@@ -63,7 +63,7 @@
 @set goodpython=0
 @IF !pythoninstance^:^~1^,-3! EQU 2.7 set goodpython=1
 @IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF NOT EXIST %mesa%\mesa set goodpython=1
-@IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF EXIST %mesa%\mesa IF EXIST %mesa%\mesa\subprojects\.gitignore set goodpython=1
+@IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF EXIST %mesa%\mesa\subprojects\.gitignore set goodpython=1
 @IF !goodpython!==1 set /a pythoncount+=1
 @IF !pythoncount!==%pyselect% set selectedpython=%%a
 )

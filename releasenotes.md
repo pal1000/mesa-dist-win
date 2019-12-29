@@ -1,7 +1,8 @@
 # Next release
 ### Build script
 - Mesa: Avoid harmless error when build is already clean;
-- Ensure print of new line after git clone commands for Mesa3D and pkgconf codebases.
+- Ensure print of new line after git clone commands for Mesa3D and pkgconf codebases;
+- Disable osmesa classic when building with Meson and Mingw due to build failure.
 ### Debug scripts
 - MSYS2: Update packages before openning interactive shell;
 - MSYS2: Switch to a prompt for command loop system.

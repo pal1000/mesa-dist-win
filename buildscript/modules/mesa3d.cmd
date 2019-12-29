@@ -27,7 +27,7 @@
 @git clone --recurse-submodules https://gitlab.freedesktop.org/mesa/mesa.git mesa
 @echo.
 @cd mesa
-@git checkout %branch%
+@IF NOT "%branch%"=="master" git checkout %branch%
 @echo.
 @cd ..
 )
@@ -44,9 +44,9 @@
 @if "%mesaver:~-7%"=="0-devel" set /a intmesaver=%mesaver:~0,2%%mesaver:~3,1%00
 @if "%mesaver:~5,4%"=="0-rc" set /a intmesaver=%mesaver:~0,2%%mesaver:~3,1%00+%mesaver:~9%
 @if NOT "%mesaver:~5,2%"=="0-" set /a intmesaver=%mesaver:~0,2%%mesaver:~3,1%50+%mesaver:~5%
-@IF NOT EXIST %mesa%\mesa\subprojects if %mesabldsys%==meson echo Meson build support is only available in Mesa 19.3 and newer.
-@IF NOT EXIST %mesa%\mesa\subprojects if %mesabldsys%==meson echo.
-@IF NOT EXIST %mesa%\mesa\subprojects if %mesabldsys%==meson GOTO skipmesa
+@IF NOT EXIST %mesa%\mesa\subprojects\.gitignore if %mesabldsys%==meson echo Meson build support is only available in Mesa 19.3 and newer.
+@IF NOT EXIST %mesa%\mesa\subprojects\.gitignore if %mesabldsys%==meson echo.
+@IF NOT EXIST %mesa%\mesa\subprojects\.gitignore if %mesabldsys%==meson GOTO skipmesa
 
 @REM Collect information about Mesa3D code. Apply patches
 @if %gitstate%==0 IF %toolchain%==msvc GOTO configmesabuild
@@ -124,12 +124,14 @@
 @if %mesabldsys%==scons IF /I NOT "%expressmesabuild%"=="y" set buildcmd=%buildcmd% libgl-gdi
 
 @set osmesa=n
+@IF /I "%expressmesabuild%"=="y" set osmesa=y
 @IF /I NOT "%expressmesabuild%"=="y" set /p osmesa=Do you want to build off-screen rendering drivers (y/n):
 @IF /I NOT "%expressmesabuild%"=="y" echo.
 @if %mesabldsys%==scons IF /I NOT "%expressmesabuild%"=="y" IF /I "%osmesa%"=="y" set buildcmd=%buildcmd% osmesa
 @if %mesabldsys%==meson IF /I "%osmesa%"=="y" set buildconf=%buildconf% -Dosmesa=gallium,classic
 @if %mesabldsys%==meson IF /I "%osmesa%"=="y" if %gitstate%==0 IF %toolchain%==msvc set buildconf=%buildconf:~0,-8%
-@IF /I "%expressmesabuild%"=="y" set osmesa=y
+@rem Disable osmesa classic when building with Meson and Mingw due to build failure
+@if %mesabldsys%==meson IF /I "%osmesa%"=="y" IF %toolchain%==gcc set buildconf=%buildconf:~0,-8%
 
 @set graw=n
 @IF /I NOT "%expressmesabuild%"=="y" set /p graw=Do you want to build graw library (y/n):

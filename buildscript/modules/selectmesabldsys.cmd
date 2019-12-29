@@ -10,7 +10,7 @@
 @IF %pythonver:~0,1% GEQ 3 echo --------------------------
 @IF %pythonver:~0,1% GEQ 3 echo 1. Scons (recommended)
 @IF %pythonver:~0,1% GEQ 3 IF NOT EXIST %mesa%\mesa echo 2. Meson (experimental)
-@IF %pythonver:~0,1% GEQ 3 IF EXIST %mesa%\mesa IF EXIST %mesa%\mesa\subprojects\.gitignore echo 2. Meson (experimental)
+@IF %pythonver:~0,1% GEQ 3 IF EXIST %mesa%\mesa\subprojects\.gitignore echo 2. Meson (experimental)
 @IF %pythonver:~0,1% GEQ 3 echo.
 @IF %pythonver:~0,1% GEQ 3 set /p selectmesabld=Select Mesa3D build system:
 @IF %pythonver:~0,1% GEQ 3 echo.
