@@ -134,11 +134,17 @@
 @if %mesabldsys%==meson IF /I "%osmesa%"=="y" IF %toolchain%==gcc set buildconf=%buildconf:~0,-8%
 
 @set graw=n
+@IF /I "%expressmesabuild%"=="y" set graw=y
 @IF /I NOT "%expressmesabuild%"=="y" set /p graw=Do you want to build graw library (y/n):
 @IF /I NOT "%expressmesabuild%"=="y" echo.
 @if %mesabldsys%==scons if /I "%graw%"=="y" IF /I NOT "%expressmesabuild%"=="y" set buildcmd=%buildcmd% graw-gdi
-@IF /I "%expressmesabuild%"=="y" set graw=y
 @if %mesabldsys%==meson if /I "%graw%"=="y" set buildconf=%buildconf% -Dbuild-tests=true
+
+@set opencl=n
+@rem According to Mesa source code clover OpenCL state tracker requires LLVM built with RTTI so it won't work with Mingw and it depends on libclc.
+@rem IF %intmesaver% GEQ 20000 if %mesabldsys%==meson if /I NOT "%llvmless%"=="y" IF %toolchain%==msvc set /p opencl=Build Mesa3D clover OpenCL state tracker (y/):
+@rem IF %intmesaver% GEQ 20000 if %mesabldsys%==meson if /I NOT "%llvmless%"=="y" IF %toolchain%==msvc echo.
+@IF /I "%opencl%"=="y" set buildconf=%buildconf% -Dgallium-opencl=standalone
 
 @if %toolchain%==gcc IF %mesabldsys%==scons set buildcmd=%buildcmd%"
 @if %toolchain%==gcc IF %mesabldsys%==meson set buildconf=%buildconf%"

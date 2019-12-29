@@ -122,7 +122,7 @@ mingw-w64-i686-python-mako 1.1.0-1
 mingw-w64-i686-python-markupsafe 1.1.1-1
 mingw-w64-i686-python-ordered-set 3.1.1-1
 mingw-w64-i686-python-packaging 19.2-1
-mingw-w64-i686-python-pyparsing 2.4.5-1
+mingw-w64-i686-python-pyparsing 2.4.6-1
 mingw-w64-i686-python-setuptools 42.0.2-1
 mingw-w64-i686-python-six 1.13.0-1
 mingw-w64-i686-readline 8.0.001-2
@@ -169,7 +169,7 @@ mingw-w64-x86_64-python-mako 1.1.0-1
 mingw-w64-x86_64-python-markupsafe 1.1.1-1
 mingw-w64-x86_64-python-ordered-set 3.1.1-1
 mingw-w64-x86_64-python-packaging 19.2-1
-mingw-w64-x86_64-python-pyparsing 2.4.5-1
+mingw-w64-x86_64-python-pyparsing 2.4.6-1
 mingw-w64-x86_64-python-setuptools 42.0.2-1
 mingw-w64-x86_64-python-six 1.13.0-1
 mingw-w64-x86_64-readline 8.0.001-2
