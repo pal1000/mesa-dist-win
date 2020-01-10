@@ -108,11 +108,13 @@
 @if %mesabldsys%==scons IF %toolchain%==msvc echo.
 @if %mesabldsys%==scons if /I "%openmp%"=="y" set buildcmd=%buildcmd% openmp=1
 
+@if %mesabldsys%==meson set buildconf=%buildconf% -Dgallium-drivers=swrast
+
 @set swrdrv=n
 @if /I NOT "%llvmless%"=="y" if %abi%==x64 IF %toolchain%==msvc set /p swrdrv=Do you want to build swr drivers? (y=yes):
 @if /I NOT "%llvmless%"=="y" if %abi%==x64 IF %toolchain%==msvc echo.
 @if %mesabldsys%==scons if /I "%swrdrv%"=="y" set buildcmd=%buildcmd% swr=1
-@if %mesabldsys%==meson if /I "%swrdrv%"=="y" set buildconf=%buildconf% -Dgallium-drivers=swrast,swr -Dswr-arches=avx,avx2,skx,knl
+@if %mesabldsys%==meson if /I "%swrdrv%"=="y" set buildconf=%buildconf%,swr -Dswr-arches=avx,avx2,skx,knl
 
 @IF %mesabldsys%==meson set /p gles=Do you want to build GLAPI as a shared library and standalone GLES libraries (y/n):
 @IF %mesabldsys%==meson echo.
