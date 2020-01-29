@@ -1,3 +1,6 @@
+# Next release
+### Build script
+- Meson: Fix zlib wrap update.
 # 19.3.3
 - Updated Mesa3D to [19.3.3](https://www.mesa3d.org/relnotes/19.3.3.html).
 ### Deployment
