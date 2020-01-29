@@ -1,3 +1,6 @@
+# Next release
+### Deployment
+- Use Powershell to request admin rights for better compatibility.
 # 19.3.2
 - Updated Mesa3D to [19.3.2](https://www.mesa3d.org/relnotes/19.3.2.html).
 ### Build script
