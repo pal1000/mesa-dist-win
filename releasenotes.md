@@ -1,10 +1,12 @@
-# Next release
-### Build script
-- Meson: Fix zlib wrap update.
+# 20.0.0rc1
+### Out of tree patches
+- Update swr AVX512 build fix patch to work with 20.0 and keep old version for 19.3.
 # 19.3.3
 - Updated Mesa3D to [19.3.3](https://www.mesa3d.org/relnotes/19.3.3.html).
 ### Deployment
 - Use Powershell to request admin rights for better compatibility.
+### Build script
+- Meson: Fix zlib wrap update.
 # 19.3.2
 - Updated Mesa3D to [19.3.2](https://www.mesa3d.org/relnotes/19.3.2.html).
 ### Build script
