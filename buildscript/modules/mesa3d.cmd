@@ -55,7 +55,8 @@
 @rem Update Meson subprojects
 @IF EXIST %mesa%\mesa\subprojects\.gitignore copy /Y %mesa%\mesa-dist-win\patches\zlib.wrap %mesa%\mesa\subprojects\zlib.wrap
 @rem Fix swrAVX512 build
-@IF EXIST %mesa%\mesa\subprojects\.gitignore call %mesa%\mesa-dist-win\buildscript\modules\applypatch.cmd swravx512
+@IF EXIST %mesa%\mesa\subprojects\.gitignore IF %intmesaver% LSS 20000 call %mesa%\mesa-dist-win\buildscript\modules\applypatch.cmd swravx512
+@IF %intmesaver% GEQ 20000 call %mesa%\mesa-dist-win\buildscript\modules\applypatch.cmd swravx512-post-static-link
 @rem Ensure filenames parity with Scons
 @IF EXIST %mesa%\mesa\subprojects\.gitignore IF %intmesaver% LSS 19303 call %mesa%\mesa-dist-win\buildscript\modules\applypatch.cmd filename-parity
 @rem Make possible to build both osmesa gallium and swrast at the same time with Meson
