@@ -19,11 +19,11 @@
 @set pythoninstance=%%a
 @set goodpython=0
 @IF !pythoninstance^:^~1^,-3! EQU 2.7 set goodpython=1
-@IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF NOT EXIST %mesa%\mesa set goodpython=1
-@IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF EXIST %mesa%\mesa\subprojects\.gitignore set goodpython=1
-@IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF EXIST %mesa%\mesa IF NOT EXIST %mesa%\mesa\subprojects\.gitignore echo Hiding Python !pythoninstance^:^~1! due to Mesa3D source code not having Meson Windows support.
-@IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF EXIST %mesa%\mesa IF NOT EXIST %mesa%\mesa\subprojects\.gitignore echo Note that Mesa3D 19.3 is required for Meson Windows support.
-@IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF EXIST %mesa%\mesa IF NOT EXIST %mesa%\mesa\subprojects\.gitignore echo.
+@IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF NOT EXIST %devroot%\mesa set goodpython=1
+@IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF EXIST %devroot%\mesa\subprojects\.gitignore set goodpython=1
+@IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF EXIST %devroot%\mesa IF NOT EXIST %devroot%\mesa\subprojects\.gitignore echo Hiding Python !pythoninstance^:^~1! due to Mesa3D source code not having Meson Windows support.
+@IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF EXIST %devroot%\mesa IF NOT EXIST %devroot%\mesa\subprojects\.gitignore echo Note that Mesa3D 19.3 is required for Meson Windows support.
+@IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF EXIST %devroot%\mesa IF NOT EXIST %devroot%\mesa\subprojects\.gitignore echo.
 @IF !goodpython!==1 set /a pythontotal+=1
 )
 @IF %pythontotal%==0 echo WARNING: No suitable Python installation found by Python launcher.
@@ -38,8 +38,8 @@
 @set pythoninstance=%%a
 @set goodpython=0
 @IF !pythoninstance^:^~1^,-3! EQU 2.7 set goodpython=1
-@IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF NOT EXIST %mesa%\mesa set goodpython=1
-@IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF EXIST %mesa%\mesa\subprojects\.gitignore set goodpython=1
+@IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF NOT EXIST %devroot%\mesa set goodpython=1
+@IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF EXIST %devroot%\mesa\subprojects\.gitignore set goodpython=1
 @IF !goodpython!==1 set /a pythoncount+=1
 @IF !goodpython!==1 echo !pythoncount!. Python !pythoninstance:~1,-3! !pythoninstance:~-2! bit
 )
@@ -62,8 +62,8 @@
 @set pythoninstance=%%a
 @set goodpython=0
 @IF !pythoninstance^:^~1^,-3! EQU 2.7 set goodpython=1
-@IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF NOT EXIST %mesa%\mesa set goodpython=1
-@IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF EXIST %mesa%\mesa\subprojects\.gitignore set goodpython=1
+@IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF NOT EXIST %devroot%\mesa set goodpython=1
+@IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF EXIST %devroot%\mesa\subprojects\.gitignore set goodpython=1
 @IF !goodpython!==1 set /a pythoncount+=1
 @IF !pythoncount!==%pyselect% set selectedpython=%%a
 )
@@ -75,8 +75,8 @@
 @rem Check if Python is in PATH or if it is provided as a local depedency.
 @SET ERRORLEVEL=0
 @IF %pythonloc%==python.exe where /q python.exe
-@IF ERRORLEVEL 1 set pythonloc=%mesa%\python\python.exe
-@IF %pythonloc%==%mesa%\python\python.exe IF NOT EXIST %pythonloc% (
+@IF ERRORLEVEL 1 set pythonloc=%devroot%\python\python.exe
+@IF %pythonloc%==%devroot%\python\python.exe IF NOT EXIST %pythonloc% (
 @echo Python is unreachable. Cannot continue.
 @echo.
 @pause
@@ -105,7 +105,7 @@
 @pause
 @exit
 )
-@IF %pythonver% GEQ 3.5 IF EXIST %mesa%\mesa IF NOT EXIST %mesa%\mesa\subprojects\.gitignore (
+@IF %pythonver% GEQ 3.5 IF EXIST %devroot%\mesa IF NOT EXIST %devroot%\mesa\subprojects\.gitignore (
 @echo Mesa3D source code you are using lacks Meson build support. Update Mesa3D source code to 19.3 or newer.
 @echo.
 @pause

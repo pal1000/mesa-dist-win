@@ -23,7 +23,7 @@
 )
 @set sconspypi=0
 @IF %mesabldsys%==scons for /F "skip=2 delims= " %%a in ('%pythonloc% -W ignore -m pip list --disable-pip-version-check') do @IF /I "%%a"=="scons" set sconspypi=1
-@IF %mesabldsys%==scons IF NOT "%sconspypi%"=="1" IF NOT EXIST %mesa%\scons (
+@IF %mesabldsys%==scons IF NOT "%sconspypi%"=="1" IF NOT EXIST %devroot%\scons (
 @set pypack=scons
 @GOTO pypackinstall
 )
@@ -54,7 +54,7 @@
 @IF NOT %pypack%==0 echo.
 @IF %pypack%==pywin32 set /p pywin32com=Do you want to install COM and services support - y/n. You'll be asked for admin privileges:
 @IF %pypack%==pywin32 echo.
-@IF %pypack%==pywin32 IF /I "%pywin32com%"=="y" powershell -Command Start-Process "%mesa%\mesa-dist-win\buildscript\modules\pywin32.cmd" -Args "%pythonloc%" -Verb runAs 2>nul
+@IF %pypack%==pywin32 IF /I "%pywin32com%"=="y" powershell -Command Start-Process "%devroot%\mesa-dist-win\buildscript\modules\pywin32.cmd" -Args "%pythonloc%" -Verb runAs 2>nul
 @set pypack=0
 @GOTO pypackmissing
 
@@ -73,7 +73,7 @@
 @for /F "skip=2 delims= " %%a in ('%pythonloc% -W ignore -m pip list -o --disable-pip-version-check') do @(
 IF NOT "%%a"=="pywin32" %pythonloc% -W ignore -m pip install -U "%%a"&echo.
 IF "%%a"=="pywin32" IF %pywinsetup% LSS 2 %pythonloc% -W ignore -m pip install -U "%%a"&echo.
-IF "%%a"=="pywin32" IF %pywinsetup% EQU 1 powershell -Command Start-Process "%mesa%\mesa-dist-win\buildscript\modules\pywin32.cmd" -Args "%pythonloc%" -Verb runAs 2>nul
+IF "%%a"=="pywin32" IF %pywinsetup% EQU 1 powershell -Command Start-Process "%devroot%\mesa-dist-win\buildscript\modules\pywin32.cmd" -Args "%pythonloc%" -Verb runAs 2>nul
 IF "%%a"=="pywin32" IF %pywinsetup% EQU 2 echo New version of pywin32 is available.&echo Visit https://github.com/mhammond/pywin32/releases to download it.&echo.
 )
 

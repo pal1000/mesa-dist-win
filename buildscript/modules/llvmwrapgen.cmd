@@ -9,7 +9,7 @@
 @IF %toolchain%==msvc set llvmlibs=%llvmlibs:.lib=%
 @IF %toolchain%==gcc set llvmlibs=%llvmlibs:.a=%
 @set llvmlibs='%llvmlibs: =', '%'
-@IF NOT EXIST %mesa%\mesa\subprojects\llvm md %mesa%\mesa\subprojects\llvm
+@IF NOT EXIST %devroot%\mesa\subprojects\llvm md %devroot%\mesa\subprojects\llvm
 @(echo project^('llvm', ['cpp']^)
 echo.
 echo cpp = meson.get_compiler^('cpp'^)
@@ -31,5 +31,5 @@ echo.
 echo has_rtti = %RTTI%
 IF %toolchain%==msvc echo irbuilder_h = files^('%LLVM:\=/%/include/llvm/IR/IRBuilder.h'^)
 IF %toolchain%==gcc echo irbuilder_h = files^('%msysloc:\=/%%LLVM:\=/%/include/llvm/IR/IRBuilder.h'^)
-)>%mesa%\mesa\subprojects\llvm\meson.build
+)>%devroot%\mesa\subprojects\llvm\meson.build
 @endlocal

@@ -1,16 +1,16 @@
 @setlocal
 
 :msmesabldsys
-@set selectmesabld=1
 @IF %toolchain%==gcc GOTO gccmesabldsys
+@set selectmesabld=1
 @IF %pythonver:~0,1% GEQ 3 set selectmesabld=2
 @GOTO donemesabldsys
 
 @IF %pythonver:~0,1% GEQ 3 echo Select Mesa3D build system
 @IF %pythonver:~0,1% GEQ 3 echo --------------------------
 @IF %pythonver:~0,1% GEQ 3 echo 1. Scons (recommended)
-@IF %pythonver:~0,1% GEQ 3 IF NOT EXIST %mesa%\mesa echo 2. Meson (experimental)
-@IF %pythonver:~0,1% GEQ 3 IF EXIST %mesa%\mesa\subprojects\.gitignore echo 2. Meson (experimental)
+@IF %pythonver:~0,1% GEQ 3 IF NOT EXIST %devroot%\mesa echo 2. Meson (experimental)
+@IF %pythonver:~0,1% GEQ 3 IF EXIST %devroot%\mesa\subprojects\.gitignore echo 2. Meson (experimental)
 @IF %pythonver:~0,1% GEQ 3 echo.
 @IF %pythonver:~0,1% GEQ 3 set /p selectmesabld=Select Mesa3D build system:
 @IF %pythonver:~0,1% GEQ 3 echo.
@@ -19,8 +19,8 @@
 @echo Select Mesa3D build system
 @echo --------------------------
 @echo 1. Scons (recommended)
-@IF NOT EXIST %mesa%\mesa echo 2. Meson (experimental)
-@IF EXIST %mesa%\mesa\subprojects\.gitignore echo 2. Meson (experimental)
+@IF NOT EXIST %devroot%\mesa echo 2. Meson (experimental)
+@IF EXIST %devroot%\mesa\subprojects\.gitignore echo 2. Meson (experimental)
 @echo.
 @set /p selectmesabld=Select Mesa3D build system:
 @echo.
@@ -35,7 +35,7 @@
 @cls
 @GOTO msmesabldsys
 )
-@IF "%selectmesabld%"=="2" IF EXIST %mesa%\mesa IF NOT EXIST %mesa%\mesa\subprojects\.gitignore (
+@IF "%selectmesabld%"=="2" IF EXIST %devroot%\mesa IF NOT EXIST %devroot%\mesa\subprojects\.gitignore (
 @echo Invalid entry.
 @echo.
 @pause

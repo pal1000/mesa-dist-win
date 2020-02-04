@@ -213,6 +213,7 @@ tftp-hpa 5.2-3
 time 1.9-1
 ttyrec 1.0.8-2
 tzcode 2019.a-1
+u-boot-tools 2020.01-1
 util-linux 2.35-1
 wget 1.20.3-1
 which 2.21-2

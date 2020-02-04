@@ -1,12 +1,12 @@
 @setlocal
 @rem Get and build pkgconf as best pkg-config implementation for Mesa3D Meson build.
-@if NOT EXIST %mesa%\pkgconf IF %gitstate%==0 echo Couldn't get pkgconf. Falling back to pkg-config...
-@if NOT EXIST %mesa%\pkgconf IF %gitstate%==0 echo.
-@if NOT EXIST %mesa%\pkgconf IF %gitstate%==0 GOTO missingpkgconf
-@cd %mesa%
-@if NOT EXIST %mesa%\pkgconf IF %gitstate% GTR 0 echo Getting pkgconf...
-@if NOT EXIST %mesa%\pkgconf IF %gitstate% GTR 0 echo.
-@if NOT EXIST %mesa%\pkgconf IF %gitstate% GTR 0 (
+@if NOT EXIST %devroot%\pkgconf IF %gitstate%==0 echo Couldn't get pkgconf. Falling back to pkg-config...
+@if NOT EXIST %devroot%\pkgconf IF %gitstate%==0 echo.
+@if NOT EXIST %devroot%\pkgconf IF %gitstate%==0 GOTO missingpkgconf
+@cd %devroot%
+@if NOT EXIST %devroot%\pkgconf IF %gitstate% GTR 0 echo Getting pkgconf...
+@if NOT EXIST %devroot%\pkgconf IF %gitstate% GTR 0 echo.
+@if NOT EXIST %devroot%\pkgconf IF %gitstate% GTR 0 (
 @git clone https://github.com/pkgconf/pkgconf.git --recurse-submodules pkgconf
 @echo.
 )
@@ -24,7 +24,7 @@
 @set useninja=n
 @IF /I "%buildpkgconf%"=="y" IF %ninjastate% GTR 0 set /p useninja=Use Ninja build system instead of MsBuild (y/n):
 @IF /I "%buildpkgconf%"=="y" IF %ninjastate% GTR 0 echo.
-@IF /I "%useninja%"=="y" IF %ninjastate%==1 set PATH=%mesa%\ninja\;%PATH%
+@IF /I "%useninja%"=="y" IF %ninjastate%==1 set PATH=%devroot%\ninja\;%PATH%
 @IF /I "%buildpkgconf%"=="y" IF /I NOT "%useninja%"=="y" echo Configuring pkgconf build with : %mesonloc% build --backend=vs --buildtype=release -Dtests=false
 @IF /I "%buildpkgconf%"=="y" IF /I NOT "%useninja%"=="y" echo.
 @IF /I "%buildpkgconf%"=="y" IF /I NOT "%useninja%"=="y" %mesonloc% build --backend=vs --buildtype=release -Dtests=false
@@ -48,4 +48,4 @@
 
 :missingpkgconf
 @endlocal
-@cd %mesa%
+@cd %devroot%

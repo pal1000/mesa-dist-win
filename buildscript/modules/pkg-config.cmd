@@ -7,14 +7,14 @@
 
 @rem Try building pkgconf
 @set pkgconfigstate=1
-@call %mesa%\mesa-dist-win\buildscript\modules\pkgconf.cmd
-@IF EXIST %mesa%\pkgconf\build\pkg-config.exe set pkgconfigloc=%mesa%\pkgconf\build
-@IF EXIST %mesa%\pkgconf\build\pkg-config.exe GOTO doneenvcheck
+@call %devroot%\mesa-dist-win\buildscript\modules\pkgconf.cmd
+@IF EXIST %devroot%\pkgconf\build\pkg-config.exe set pkgconfigloc=%devroot%\pkgconf\build
+@IF EXIST %devroot%\pkgconf\build\pkg-config.exe GOTO doneenvcheck
 
 @rem pkg-config fallback code
 @IF %msysstate%==0 GOTO nonmingwpkgconfig
 @GOTO nonmingwpkgconfig
-@call %mesa%\mesa-dist-win\buildscript\modules\msysupdate.cmd
+@call %devroot%\mesa-dist-win\buildscript\modules\msysupdate.cmd
 @%msysloc%\usr\bin\bash --login -c "/usr/bin/pacman -S %mingwabi%-pkg-config --needed --noconfirm --disable-download-timeout"
 @echo.
 @set pkgconfigloc=%msysloc%\mingw32\bin
@@ -23,22 +23,22 @@
 
 :nonmingwpkgconfig
 @rem Look for pkg-config-lite and standalone pkg-config
-@set pkgconfigloc=%mesa%\pkgconfig\bin
+@set pkgconfigloc=%devroot%\pkgconfig\bin
 @IF EXIST %pkgconfigloc%\pkg-config.exe IF NOT EXIST %pkgconfigloc%\x86_64-w64-mingw32-pkg-config.exe IF NOT EXIST %pkgconfigloc%\i686-w64-mingw32-pkg-config.exe GOTO doneenvcheck
 @IF EXIST %pkgconfigloc%\pkg-config.exe IF EXIST %pkgconfigloc%\x86_64-w64-mingw32-pkg-config.exe IF EXIST %pkgconfigloc%\libwinpthread-1.dll GOTO doneenvcheck
 @IF EXIST %pkgconfigloc%\pkg-config.exe IF EXIST %pkgconfigloc%\i686-w64-mingw32-pkg-config.exe IF EXIST %pkgconfigloc%\libwinpthread-1.dll GOTO doneenvcheck
 
-@set pkgconfigloc=%mesa%\pkg-config\bin
+@set pkgconfigloc=%devroot%\pkg-config\bin
 @IF EXIST %pkgconfigloc%\pkg-config.exe IF NOT EXIST %pkgconfigloc%\x86_64-w64-mingw32-pkg-config.exe IF NOT EXIST %pkgconfigloc%\i686-w64-mingw32-pkg-config.exe GOTO doneenvcheck
 @IF EXIST %pkgconfigloc%\pkg-config.exe IF EXIST %pkgconfigloc%\x86_64-w64-mingw32-pkg-config.exe IF EXIST %pkgconfigloc%\libwinpthread-1.dll GOTO doneenvcheck
 @IF EXIST %pkgconfigloc%\pkg-config.exe IF EXIST %pkgconfigloc%\i686-w64-mingw32-pkg-config.exe IF EXIST %pkgconfigloc%\libwinpthread-1.dll GOTO doneenvcheck
 
-@set pkgconfigloc=%mesa%\pkgconfiglite\bin
+@set pkgconfigloc=%devroot%\pkgconfiglite\bin
 @IF EXIST %pkgconfigloc%\pkg-config.exe IF NOT EXIST %pkgconfigloc%\x86_64-w64-mingw32-pkg-config.exe IF NOT EXIST %pkgconfigloc%\i686-w64-mingw32-pkg-config.exe GOTO doneenvcheck
 @IF EXIST %pkgconfigloc%\pkg-config.exe IF EXIST %pkgconfigloc%\x86_64-w64-mingw32-pkg-config.exe IF EXIST %pkgconfigloc%\libwinpthread-1.dll GOTO doneenvcheck
 @IF EXIST %pkgconfigloc%\pkg-config.exe IF EXIST %pkgconfigloc%\i686-w64-mingw32-pkg-config.exe IF EXIST %pkgconfigloc%\libwinpthread-1.dll GOTO doneenvcheck
 
-@set pkgconfigloc=%mesa%\pkg-config-lite\bin
+@set pkgconfigloc=%devroot%\pkg-config-lite\bin
 @IF EXIST %pkgconfigloc%\pkg-config.exe IF NOT EXIST %pkgconfigloc%\x86_64-w64-mingw32-pkg-config.exe IF NOT EXIST %pkgconfigloc%\i686-w64-mingw32-pkg-config.exe GOTO doneenvcheck
 @IF EXIST %pkgconfigloc%\pkg-config.exe IF EXIST %pkgconfigloc%\x86_64-w64-mingw32-pkg-config.exe IF EXIST %pkgconfigloc%\libwinpthread-1.dll GOTO doneenvcheck
 @IF EXIST %pkgconfigloc%\pkg-config.exe IF EXIST %pkgconfigloc%\i686-w64-mingw32-pkg-config.exe IF EXIST %pkgconfigloc%\libwinpthread-1.dll GOTO doneenvcheck

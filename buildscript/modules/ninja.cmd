@@ -4,5 +4,5 @@
 @SET ERRORLEVEL=0
 @where /q ninja.exe
 @IF ERRORLEVEL 1 set ninjastate=1
-@IF %ninjastate%==1 IF NOT EXIST %mesa%\ninja\ninja.exe set ninjastate=0
+@IF %ninjastate%==1 IF NOT EXIST %devroot%\ninja\ninja.exe set ninjastate=0
 @endlocal&set ninjastate=%ninjastate%

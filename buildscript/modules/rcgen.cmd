@@ -35,7 +35,7 @@ echo BLOCK "VarFileInfo"
 echo {
 echo VALUE "Translation", 0x0409 0x04B0
 echo }
-echo })>%mesa%\mesa-dist-win\buildscript\assets\temp.rc
-@IF EXIST %2 ResourceHacker.exe -open %mesa%\mesa-dist-win\buildscript\assets\temp.rc -save %mesa%\mesa-dist-win\buildscript\assets\temp.res -action compile -log NUL
-@IF EXIST %2 ResourceHacker.exe -open %2 -save %2 -action addoverwrite -resource %mesa%\mesa-dist-win\buildscript\assets\temp.res -log NUL
+echo })>%devroot%\mesa-dist-win\buildscript\assets\temp.rc
+@IF EXIST %2 ResourceHacker.exe -open %devroot%\mesa-dist-win\buildscript\assets\temp.rc -save %devroot%\mesa-dist-win\buildscript\assets\temp.res -action compile -log NUL
+@IF EXIST %2 ResourceHacker.exe -open %2 -save %2 -action addoverwrite -resource %devroot%\mesa-dist-win\buildscript\assets\temp.res -log NUL
 @endlocal

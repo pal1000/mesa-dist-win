@@ -12,7 +12,7 @@
 
 @REM Aquire Mesa3D source code if missing.
 @set buildmesa=n
-@cd %mesa%
+@cd %devroot%
 @if %gitstate%==0 IF %toolchain%==msvc echo Error: Git not found. Auto-patching disabled. This could have many consequences going all the way up to build failure.
 @if %gitstate%==0 IF %toolchain%==msvc echo.
 @if NOT EXIST mesa echo Warning: Mesa3D source code not found.
@@ -44,32 +44,32 @@
 @if "%mesaver:~-7%"=="0-devel" set /a intmesaver=%mesaver:~0,2%%mesaver:~3,1%00
 @if "%mesaver:~5,4%"=="0-rc" set /a intmesaver=%mesaver:~0,2%%mesaver:~3,1%00+%mesaver:~9%
 @if NOT "%mesaver:~5,2%"=="0-" set /a intmesaver=%mesaver:~0,2%%mesaver:~3,1%50+%mesaver:~5%
-@IF NOT EXIST %mesa%\mesa\subprojects\.gitignore if %mesabldsys%==meson echo Meson build support is only available in Mesa 19.3 and newer.
-@IF NOT EXIST %mesa%\mesa\subprojects\.gitignore if %mesabldsys%==meson echo.
-@IF NOT EXIST %mesa%\mesa\subprojects\.gitignore if %mesabldsys%==meson GOTO skipmesa
+@IF NOT EXIST %devroot%\mesa\subprojects\.gitignore if %mesabldsys%==meson echo Meson build support is only available in Mesa 19.3 and newer.
+@IF NOT EXIST %devroot%\mesa\subprojects\.gitignore if %mesabldsys%==meson echo.
+@IF NOT EXIST %devroot%\mesa\subprojects\.gitignore if %mesabldsys%==meson GOTO skipmesa
 
 @REM Collect information about Mesa3D code. Apply patches
 @if %gitstate%==0 IF %toolchain%==msvc GOTO configmesabuild
 @rem Enable S3TC texture cache
-@call %mesa%\mesa-dist-win\buildscript\modules\applypatch.cmd s3tc
+@call %devroot%\mesa-dist-win\buildscript\modules\applypatch.cmd s3tc
 @rem Update Meson subprojects
-@IF EXIST %mesa%\mesa\subprojects\.gitignore copy /Y %mesa%\mesa-dist-win\patches\zlib.wrap %mesa%\mesa\subprojects\zlib.wrap
+@IF EXIST %devroot%\mesa\subprojects\.gitignore copy /Y %devroot%\mesa-dist-win\patches\zlib.wrap %devroot%\mesa\subprojects\zlib.wrap
 @rem Fix swrAVX512 build
-@IF EXIST %mesa%\mesa\subprojects\.gitignore IF %intmesaver% LSS 20000 call %mesa%\mesa-dist-win\buildscript\modules\applypatch.cmd swravx512
-@IF %intmesaver% GEQ 20000 call %mesa%\mesa-dist-win\buildscript\modules\applypatch.cmd swravx512-post-static-link
+@IF EXIST %devroot%\mesa\subprojects\.gitignore IF %intmesaver% LSS 20000 call %devroot%\mesa-dist-win\buildscript\modules\applypatch.cmd swravx512
+@IF %intmesaver% GEQ 20000 call %devroot%\mesa-dist-win\buildscript\modules\applypatch.cmd swravx512-post-static-link
 @rem Ensure filenames parity with Scons
-@IF EXIST %mesa%\mesa\subprojects\.gitignore IF %intmesaver% LSS 19303 call %mesa%\mesa-dist-win\buildscript\modules\applypatch.cmd filename-parity
+@IF EXIST %devroot%\mesa\subprojects\.gitignore IF %intmesaver% LSS 19303 call %devroot%\mesa-dist-win\buildscript\modules\applypatch.cmd filename-parity
 @rem Make possible to build both osmesa gallium and swrast at the same time with Meson
-@IF EXIST %mesa%\mesa\subprojects\.gitignore call %mesa%\mesa-dist-win\buildscript\modules\applypatch.cmd meson-build-both-osmesa
+@IF EXIST %devroot%\mesa\subprojects\.gitignore call %devroot%\mesa-dist-win\buildscript\modules\applypatch.cmd meson-build-both-osmesa
 
 :configmesabuild
 @rem Configure Mesa build.
 
-@if %mesabldsys%==scons if %toolchain%==msvc IF NOT "%sconspypi%"=="1" set buildcmd=%mesa%\scons\src\script\scons.py
+@if %mesabldsys%==scons if %toolchain%==msvc IF NOT "%sconspypi%"=="1" set buildcmd=%devroot%\scons\src\script\scons.py
 @if %mesabldsys%==scons if %toolchain%==msvc IF "%sconspypi%"=="1" set buildcmd=%pythonloc:~0,-10%Scripts\scons.py
 @if %mesabldsys%==scons if %toolchain%==msvc IF "%sconspypi%"=="1" IF NOT EXIST "%buildcmd%" set buildcmd=%pythonloc:~0,-10%Scripts\scons
 @if %mesabldsys%==scons if %toolchain%==msvc set buildcmd=%pythonloc% %buildcmd%
-@if %mesabldsys%==scons if %toolchain%==gcc set buildcmd=%msysloc%\usr\bin\bash --login -c "cd ${mesa}/mesa;/usr/bin/scons
+@if %mesabldsys%==scons if %toolchain%==gcc set buildcmd=%msysloc%\usr\bin\bash --login -c "cd ${devroot}/mesa;/usr/bin/scons
 @if %mesabldsys%==scons set buildcmd=%buildcmd% -j%throttle% build=release platform=windows machine=%longabi%
 @if %mesabldsys%==scons if %toolchain%==gcc set buildcmd=%buildcmd% toolchain=mingw
 @if %mesabldsys%==scons if %toolchain%==msvc set buildcmd=%buildcmd% MSVC_USE_SCRIPT=%vsenv%
@@ -80,7 +80,7 @@
 @if %mesabldsys%==meson set buildcmd=msbuild /p^:Configuration=release,Platform=Win32 mesa.sln /m^:%throttle%
 @if %mesabldsys%==meson IF %abi%==x64 set buildcmd=msbuild /p^:Configuration=release,Platform=x64 mesa.sln /m^:%throttle%
 
-@IF %toolchain%==msvc set LLVM=%mesa%\llvm\%abi%
+@IF %toolchain%==msvc set LLVM=%devroot%\llvm\%abi%
 @IF %toolchain%==gcc set LLVM=/mingw32
 @IF %toolchain%==gcc IF %abi%==x64 set LLVM=/mingw64
 @set havellvm=0
@@ -91,7 +91,7 @@
 @if %havellvm%==1 set /p llvmless=Build Mesa without LLVM (y/n). llvmpipe and swr drivers and high performance JIT won't be available for other drivers and libraries:
 @if %havellvm%==1 echo.
 @if %mesabldsys%==scons if /I "%llvmless%"=="y" set buildcmd=%buildcmd% llvm=no
-@if %mesabldsys%==meson if /I NOT "%llvmless%"=="y" call %mesa%\mesa-dist-win\buildscript\modules\llvmwrapgen.cmd
+@if %mesabldsys%==meson if /I NOT "%llvmless%"=="y" call %devroot%\mesa-dist-win\buildscript\modules\llvmwrapgen.cmd
 @if %mesabldsys%==meson if /I NOT "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm=true
 @if %mesabldsys%==meson if /I "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm=false
 
@@ -99,10 +99,10 @@
 @if %mesabldsys%==meson IF %toolchain%==gcc set useninja=y
 @if %mesabldsys%==meson if NOT %ninjastate%==0 IF %toolchain%==msvc set /p useninja=Use Ninja build system instead of MsBuild (y/n); less storage device strain and maybe faster build:
 @if %mesabldsys%==meson if NOT %ninjastate%==0 IF %toolchain%==msvc echo.
-@if /I "%useninja%"=="y" if %ninjastate%==1 IF %toolchain%==msvc set PATH=%mesa%\ninja\;%PATH%
+@if /I "%useninja%"=="y" if %ninjastate%==1 IF %toolchain%==msvc set PATH=%devroot%\ninja\;%PATH%
 @if /I "%useninja%"=="y" set buildconf=%buildconf% --backend=ninja
 @if /I "%useninja%"=="y" IF %toolchain%==msvc set buildcmd=ninja -j %throttle%
-@if /I "%useninja%"=="y" IF %toolchain%==gcc set buildcmd=%msysloc%\usr\bin\bash --login -c "cd ${mesa}/mesa/build/%abi%;%LLVM%/bin/ninja -j %throttle%"
+@if /I "%useninja%"=="y" IF %toolchain%==gcc set buildcmd=%msysloc%\usr\bin\bash --login -c "cd ${devroot}/mesa/build/%abi%;%LLVM%/bin/ninja -j %throttle%"
 @if %mesabldsys%==meson if /I NOT "%useninja%"=="y" set buildconf=%buildconf% --backend=vs
 
 @if %mesabldsys%==scons IF %toolchain%==msvc set /p openmp=Build Mesa3D with OpenMP. Faster build and smaller binaries (y/n):
@@ -110,6 +110,11 @@
 @if %mesabldsys%==scons if /I "%openmp%"=="y" set buildcmd=%buildcmd% openmp=1
 
 @if %mesabldsys%==meson set buildconf=%buildconf% -Dgallium-drivers=swrast
+
+@set zink=n
+@rem IF %mesabldsys%==meson IF %toolchain%==gcc set /p zink=Do you want to build Mesa3D OpenGL driver over Vulkan - zink (y/n):
+@rem IF %mesabldsys%==meson IF %toolchain%==gcc echo.
+@IF /I "%zink%"=="y" set buildconf=%buildconf%,zink
 
 @set swrdrv=n
 @if /I NOT "%llvmless%"=="y" if %abi%==x64 IF %toolchain%==msvc set /p swrdrv=Do you want to build swr drivers? (y=yes):
@@ -154,8 +159,8 @@
 
 @set cleanbuild=n
 @IF %mesabldsys%==meson set cleanbuild=y
-@IF %mesabldsys%==meson for /d %%a in ("%mesa%\mesa\subprojects\zlib-*") do @RD /S /Q "%%~a"
-@IF %mesabldsys%==meson for /d %%a in ("%mesa%\mesa\subprojects\expat-*") do @RD /S /Q "%%~a"
+@IF %mesabldsys%==meson for /d %%a in ("%devroot%\mesa\subprojects\zlib-*") do @RD /S /Q "%%~a"
+@IF %mesabldsys%==meson for /d %%a in ("%devroot%\mesa\subprojects\expat-*") do @RD /S /Q "%%~a"
 @IF %mesabldsys%==scons if EXIST build\windows-%longabi% set /p cleanbuild=Do you want to clean build (y/n):
 @IF %mesabldsys%==scons if EXIST build\windows-%longabi% echo.
 @IF %mesabldsys%==meson if EXIST build\%abi% echo WARNING: Meson build always performs clean build. This is last chance to cancel build.
@@ -164,7 +169,7 @@
 @IF %mesabldsys%==scons if /I "%cleanbuild%"=="y" IF EXIST build\windows-%longabi% RD /S /Q build\windows-%longabi%
 @IF %mesabldsys%==meson if /I "%cleanbuild%"=="y" IF EXIST build\%abi% RD /S /Q build\%abi%
 
-@IF %toolchain%==msvc IF %flexstate%==1 set PATH=%mesa%\flexbison\;%PATH%
+@IF %toolchain%==msvc IF %flexstate%==1 set PATH=%devroot%\flexbison\;%PATH%
 @if %mesabldsys%==meson IF %toolchain%==msvc set PATH=%pkgconfigloc%\;%PATH%
 
 :build_mesa

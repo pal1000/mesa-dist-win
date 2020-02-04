@@ -4,5 +4,5 @@
 @SET ERRORLEVEL=0
 @where /q win_flex.exe
 @IF ERRORLEVEL 1 set flexstate=1
-@IF %flexstate%==1 IF NOT EXIST %mesa%\flexbison\win_flex.exe set flexstate=0
+@IF %flexstate%==1 IF NOT EXIST %devroot%\flexbison\win_flex.exe set flexstate=0
 @endlocal&set flexstate=%flexstate%
