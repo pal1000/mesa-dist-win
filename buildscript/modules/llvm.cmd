@@ -38,6 +38,7 @@
 @rem Construct build configuration command.
 @set buildconf=cmake -G
 @if /I NOT "%ninja%"=="y" set buildconf=%buildconf% "Visual Studio %toolset%"
+@if %abi%==x86 if /I NOT "%ninja%"=="y" set buildconf=%buildconf% -A Win32
 @if %abi%==x64 if /I NOT "%ninja%"=="y" set buildconf=%buildconf% -A x64
 @if /I NOT "%ninja%"=="y" IF /I %PROCESSOR_ARCHITECTURE%==AMD64 set buildconf=%buildconf% -Thost=x64
 @if /I "%ninja%"=="y" set buildconf=%buildconf% "Ninja"

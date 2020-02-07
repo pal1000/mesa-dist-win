@@ -1,6 +1,8 @@
 # Next release
 ### Build script
-- Explicitly request static libraries from LLVM.
+- Explicitly request static libraries from LLVM;
+- Refactor code to easily share it with related projects;
+- Fix 32-bit LLVM build with MsBuild.
 # 20.0.0rc1
 ### Out of tree patches
 - Update swr AVX512 build fix patch to work with 20.0 and keep old version for 19.3.
