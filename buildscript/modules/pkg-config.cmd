@@ -7,14 +7,14 @@
 
 @rem Try building pkgconf
 @set pkgconfigstate=1
-@call %devroot%\mesa-dist-win\buildscript\modules\pkgconf.cmd
+@call %devroot%\%projectname%\buildscript\modules\pkgconf.cmd
 @IF EXIST %devroot%\pkgconf\build\pkg-config.exe set pkgconfigloc=%devroot%\pkgconf\build
 @IF EXIST %devroot%\pkgconf\build\pkg-config.exe GOTO doneenvcheck
 
 @rem pkg-config fallback code
 @IF %msysstate%==0 GOTO nonmingwpkgconfig
 @GOTO nonmingwpkgconfig
-@call %devroot%\mesa-dist-win\buildscript\modules\msysupdate.cmd
+@call %devroot%\%projectname%\buildscript\modules\msysupdate.cmd
 @%msysloc%\usr\bin\bash --login -c "/usr/bin/pacman -S %mingwabi%-pkg-config --needed --noconfirm --disable-download-timeout"
 @echo.
 @set pkgconfigloc=%msysloc%\mingw32\bin

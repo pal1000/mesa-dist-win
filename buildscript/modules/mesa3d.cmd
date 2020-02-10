@@ -51,16 +51,16 @@
 @REM Collect information about Mesa3D code. Apply patches
 @if %gitstate%==0 IF %toolchain%==msvc GOTO configmesabuild
 @rem Enable S3TC texture cache
-@call %devroot%\mesa-dist-win\buildscript\modules\applypatch.cmd s3tc
+@call %devroot%\%projectname%\buildscript\modules\applypatch.cmd s3tc
 @rem Update Meson subprojects
-@IF EXIST %devroot%\mesa\subprojects\.gitignore copy /Y %devroot%\mesa-dist-win\patches\zlib.wrap %devroot%\mesa\subprojects\zlib.wrap
+@IF EXIST %devroot%\mesa\subprojects\.gitignore copy /Y %devroot%\%projectname%\patches\zlib.wrap %devroot%\mesa\subprojects\zlib.wrap
 @rem Fix swrAVX512 build
-@IF EXIST %devroot%\mesa\subprojects\.gitignore IF %intmesaver% LSS 20000 call %devroot%\mesa-dist-win\buildscript\modules\applypatch.cmd swravx512
-@IF %intmesaver% GEQ 20000 call %devroot%\mesa-dist-win\buildscript\modules\applypatch.cmd swravx512-post-static-link
+@IF EXIST %devroot%\mesa\subprojects\.gitignore IF %intmesaver% LSS 20000 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swravx512
+@IF %intmesaver% GEQ 20000 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swravx512-post-static-link
 @rem Ensure filenames parity with Scons
-@IF EXIST %devroot%\mesa\subprojects\.gitignore IF %intmesaver% LSS 19303 call %devroot%\mesa-dist-win\buildscript\modules\applypatch.cmd filename-parity
+@IF EXIST %devroot%\mesa\subprojects\.gitignore IF %intmesaver% LSS 19303 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd filename-parity
 @rem Make possible to build both osmesa gallium and swrast at the same time with Meson
-@IF EXIST %devroot%\mesa\subprojects\.gitignore call %devroot%\mesa-dist-win\buildscript\modules\applypatch.cmd meson-build-both-osmesa
+@IF EXIST %devroot%\mesa\subprojects\.gitignore call %devroot%\%projectname%\buildscript\modules\applypatch.cmd meson-build-both-osmesa
 
 :configmesabuild
 @rem Configure Mesa build.
@@ -91,7 +91,7 @@
 @if %havellvm%==1 set /p llvmless=Build Mesa without LLVM (y/n). llvmpipe and swr drivers and high performance JIT won't be available for other drivers and libraries:
 @if %havellvm%==1 echo.
 @if %mesabldsys%==scons if /I "%llvmless%"=="y" set buildcmd=%buildcmd% llvm=no
-@if %mesabldsys%==meson if /I NOT "%llvmless%"=="y" call %devroot%\mesa-dist-win\buildscript\modules\llvmwrapgen.cmd
+@if %mesabldsys%==meson if /I NOT "%llvmless%"=="y" call %devroot%\%projectname%\buildscript\modules\llvmwrapgen.cmd
 @if %mesabldsys%==meson if /I NOT "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm=true
 @if %mesabldsys%==meson if /I "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm=false
 

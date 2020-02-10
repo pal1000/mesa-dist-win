@@ -54,7 +54,7 @@
 @IF NOT %pypack%==0 echo.
 @IF %pypack%==pywin32 set /p pywin32com=Do you want to install COM and services support - y/n. You'll be asked for admin privileges:
 @IF %pypack%==pywin32 echo.
-@IF %pypack%==pywin32 IF /I "%pywin32com%"=="y" powershell -Command Start-Process "%devroot%\mesa-dist-win\buildscript\modules\pywin32.cmd" -Args "%pythonloc%" -Verb runAs 2>nul
+@IF %pypack%==pywin32 IF /I "%pywin32com%"=="y" powershell -Command Start-Process "%devroot%\%projectname%\buildscript\modules\pywin32.cmd" -Args "%pythonloc%" -Verb runAs 2>nul
 @set pypack=0
 @GOTO pypackmissing
 
@@ -79,7 +79,7 @@ IF "%%a"=="pywin32" IF %pywinsetup% LSS 2 (
 %pythonloc% -W ignore -m pip install -U "%%a"
 echo.
 )
-IF "%%a"=="pywin32" IF %pywinsetup% EQU 1 powershell -Command Start-Process "%devroot%\mesa-dist-win\buildscript\modules\pywin32.cmd" -Args "%pythonloc%" -Verb runAs 2>nul
+IF "%%a"=="pywin32" IF %pywinsetup% EQU 1 powershell -Command Start-Process "%devroot%\%projectname%\buildscript\modules\pywin32.cmd" -Args "%pythonloc%" -Verb runAs 2>nul
 IF "%%a"=="pywin32" IF %pywinsetup% EQU 2 (
 echo New version of pywin32 is available.
 echo Visit https://github.com/mhammond/pywin32/releases to download it.
