@@ -2,7 +2,7 @@ Build environment
 -----------------
 Windows 10.0.18363
 Ressource Hacker 5.1.7.343
-7-Zip 19.02 ultra compression
+7-Zip 20.00 ultra compression
 Git 2.25.0.1
 Visual Studio Community 2019 v16.4.5
 Windows SDK 10.0.18362.0
