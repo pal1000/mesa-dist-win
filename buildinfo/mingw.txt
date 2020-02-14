@@ -9,7 +9,7 @@ MSYS2 environment
 -----------------
 bash 4.4.023-1
 bash-completion 2.10-1
-bison 3.5-1
+bison 3.5.1-1
 brotli 1.0.7-2
 bsdcpio 3.4.1-1
 bsdtar 3.4.1-1
@@ -20,7 +20,7 @@ curl 7.68.0-1
 dash 0.5.10.2-1
 dtc 1.5.1-1
 file 5.38-1
-filesystem 2020.01-1
+filesystem 2020.02-1
 findutils 4.7.0-1
 flex 2.6.4-1
 gawk 5.0.1-1
@@ -52,7 +52,7 @@ libffi 3.2.1-3
 libgcrypt 1.8.5-1
 libgdbm 1.18.1-2
 libgettextpo 0.19.8.1-1
-libgnutls 3.6.11.1-1
+libgnutls 3.6.12-1
 libgpg-error 1.36-1
 libgpgme 1.13.1-1
 libhogweed 3.5.1-1
@@ -68,7 +68,7 @@ libnettle 3.5.1-1
 libnghttp2 1.40.0-1
 libnpth 1.6-1
 libopenssl 1.1.1.d-1
-libp11-kit 0.23.19-1
+libp11-kit 0.23.20-1
 libpcre 8.43-2
 libpcre16 8.43-2
 libpcre2_8 10.34-1
@@ -79,7 +79,7 @@ libpsl 0.21.0-1
 libreadline 8.0.001-1
 libsqlite 3.30.0-1
 libssh2 1.9.0-1
-libtasn1 4.15.0-1
+libtasn1 4.16.0-1
 libunistring 0.9.10-1
 libutil-linux 2.35-1
 libxml2 2.9.10-2
@@ -95,7 +95,7 @@ mingw-w64-i686-expat 2.2.9-1
 mingw-w64-i686-gcc 9.2.0-2
 mingw-w64-i686-gcc-libs 9.2.0-2
 mingw-w64-i686-gettext 0.19.8.1-8
-mingw-w64-i686-gmp 6.1.2-1
+mingw-w64-i686-gmp 6.2.0-1
 mingw-w64-i686-headers-git 8.0.0.5576.34082b63-1
 mingw-w64-i686-isl 0.22-1
 mingw-w64-i686-libffi 3.2.1-4
@@ -121,10 +121,10 @@ mingw-w64-i686-python-beaker 1.11.0-1
 mingw-w64-i686-python-mako 1.1.0-1
 mingw-w64-i686-python-markupsafe 1.1.1-1
 mingw-w64-i686-python-ordered-set 3.1.1-1
-mingw-w64-i686-python-packaging 19.2-1
+mingw-w64-i686-python-packaging 20.1-1
 mingw-w64-i686-python-pyparsing 2.4.6-1
-mingw-w64-i686-python-setuptools 43.0.0-1
-mingw-w64-i686-python-six 1.13.0-1
+mingw-w64-i686-python-setuptools 45.1.0-1
+mingw-w64-i686-python-six 1.14.0-1
 mingw-w64-i686-readline 8.0.001-2
 mingw-w64-i686-sqlite3 3.31.0-1
 mingw-w64-i686-tcl 8.6.10-1
@@ -143,7 +143,7 @@ mingw-w64-x86_64-expat 2.2.9-1
 mingw-w64-x86_64-gcc 9.2.0-2
 mingw-w64-x86_64-gcc-libs 9.2.0-2
 mingw-w64-x86_64-gettext 0.19.8.1-8
-mingw-w64-x86_64-gmp 6.1.2-1
+mingw-w64-x86_64-gmp 6.2.0-1
 mingw-w64-x86_64-headers-git 8.0.0.5576.34082b63-1
 mingw-w64-x86_64-isl 0.22-1
 mingw-w64-x86_64-libffi 3.2.1-4
@@ -169,10 +169,10 @@ mingw-w64-x86_64-python-beaker 1.11.0-1
 mingw-w64-x86_64-python-mako 1.1.0-1
 mingw-w64-x86_64-python-markupsafe 1.1.1-1
 mingw-w64-x86_64-python-ordered-set 3.1.1-1
-mingw-w64-x86_64-python-packaging 19.2-1
+mingw-w64-x86_64-python-packaging 20.1-1
 mingw-w64-x86_64-python-pyparsing 2.4.6-1
-mingw-w64-x86_64-python-setuptools 43.0.0-1
-mingw-w64-x86_64-python-six 1.13.0-1
+mingw-w64-x86_64-python-setuptools 45.1.0-1
+mingw-w64-x86_64-python-six 1.14.0-1
 mingw-w64-x86_64-readline 8.0.001-2
 mingw-w64-x86_64-sqlite3 3.31.0-1
 mingw-w64-x86_64-tcl 8.6.10-1
@@ -191,7 +191,7 @@ msys2-runtime 3.0.7-6
 ncurses 6.1.20191228-1
 nettle 3.5.1-1
 openssl 1.1.1.d-1
-p11-kit 0.23.19-1
+p11-kit 0.23.20-1
 pacman 5.2.1-6
 pacman-mirrors 20180604-2
 pactoys-git r2.07ca37f-1

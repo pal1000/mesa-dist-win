@@ -1,4 +1,5 @@
-# Next release
+# 19.3.4
+- Updated Mesa3D to [19.3.4](https://www.mesa3d.org/relnotes/19.3.4.html).
 ### Build script
 - Explicitly request static libraries from LLVM;
 - Refactor code to easily share it with related projects;
