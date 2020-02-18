@@ -17,7 +17,7 @@
 @set pypack=Mako
 @GOTO pypackinstall
 )
-@IF %mesabldsys%==scons if %pythonver:~0,1%==2 if NOT EXIST %pythonloc:~0,-10%Scripts\pywin32_postinstall.py (
+@IF %mesabldsys%==scons if NOT EXIST %pythonloc:~0,-10%Scripts\pywin32_postinstall.py (
 @set pypack=pywin32
 @GOTO pypackinstall
 )
@@ -65,10 +65,9 @@
 @echo.
 @if /I NOT "%pyupd%"=="y" GOTO endpython
 @set pywinsetup=2
-@set ERRORLEVEL=0
-@REG QUERY HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\pywin32-py2.7 >nul 2>&1
-@IF ERRORLEVEL 1 set pywinsetup=1
-@IF NOT EXIST "%windir%\system32\pythoncom27.dll" IF NOT EXIST "%windir%\syswow64\pythoncom27.dll" set pywinsetup=0
+@for /f "tokens=1,2 delims=." %%a IN ("%pythonver%") DO @set spyver=%%a%%b
+@IF NOT EXIST %pythonloc:~0,-10%Removepywin32.exe set pywinsetup=1
+@IF NOT EXIST "%windir%\system32\pythoncom%spyver%.dll" IF NOT EXIST "%windir%\syswow64\pythoncom%spyver%.dll" set pywinsetup=0
 @if EXIST "%LOCALAPPDATA%\pip" RD /S /Q "%LOCALAPPDATA%\pip"
 @for /F "skip=2 delims= " %%a in ('%pythonloc% -W ignore -m pip list -o --disable-pip-version-check') do @(
 IF NOT "%%a"=="pywin32" (
