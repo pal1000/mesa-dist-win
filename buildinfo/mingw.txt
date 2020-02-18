@@ -7,12 +7,12 @@ Git 2.25.0.1
 
 MSYS2 environment
 -----------------
-bash 4.4.023-1
+bash 4.4.023-2
 bash-completion 2.10-1
-bison 3.5.1-1
+bison 3.5.2-1
 brotli 1.0.7-2
-bsdcpio 3.4.1-1
-bsdtar 3.4.1-1
+bsdcpio 3.4.2-1
+bsdtar 3.4.2-1
 bzip2 1.0.8-1
 ca-certificates 20190110-1
 coreutils 8.31-1
@@ -25,11 +25,10 @@ findutils 4.7.0-1
 flex 2.6.4-1
 gawk 5.0.1-1
 gcc-libs 9.1.0-2
-gdbm 1.18.1-2
 getent 2.18.90-2
 gettext 0.19.8.1-1
 glib2 2.54.3-1
-gmp 6.1.2-1
+gmp 6.2.0-1
 gnupg 2.2.19-1
 grep 3.0-2
 gzip 1.10-1
@@ -38,7 +37,7 @@ icu 65.1-1
 inetutils 1.9.4-2
 info 6.6-1
 less 551-1
-libarchive 3.4.1-1
+libarchive 3.4.2-1
 libargp 20110921-2
 libasprintf 0.19.8.1-1
 libassuan 2.5.3-1
@@ -50,7 +49,6 @@ libedit 20191231_3.1-1
 libexpat 2.2.9-1
 libffi 3.2.1-3
 libgcrypt 1.8.5-1
-libgdbm 1.18.1-2
 libgettextpo 0.19.8.1-1
 libgnutls 3.6.12-1
 libgpg-error 1.36-1
@@ -76,7 +74,7 @@ libpcre32 8.43-2
 libpcrecpp 8.43-2
 libpcreposix 8.43-2
 libpsl 0.21.0-1
-libreadline 8.0.001-1
+libreadline 8.0.004-1
 libsqlite 3.30.0-1
 libssh2 1.9.0-1
 libtasn1 4.16.0-1
@@ -184,11 +182,12 @@ mingw-w64-x86_64-xz 5.2.4-1
 mingw-w64-x86_64-z3 4.8.7-1
 mingw-w64-x86_64-zlib 1.2.11-7
 mintty 1~3.1.0-1
+mpdecimal 2.4.2-2
 mpfr 4.0.2-1
 msys2-keyring r9.397a52e-1
 msys2-launcher-git 0.3.32.56c2ba7-2
 msys2-runtime 3.0.7-6
-ncurses 6.1.20191228-1
+ncurses 6.2-1
 nettle 3.5.1-1
 openssl 1.1.1.d-1
 p11-kit 0.23.20-1
@@ -200,13 +199,12 @@ pax-git 20161104.2-1
 pcre 8.43-2
 pinentry 1.1.0-2
 pkgfile 21-1
-python2 2.7.17-1
-python2-beaker 1.11.0-1
-python2-funcsigs 1.0.2-1
-python2-mako 1.0.14-1
-python2-markupsafe 1.1.1-1
+python 3.7.4-1
+python3-beaker 1.11.0-1
+python3-mako 1.0.14-1
+python3-markupsafe 1.1.1-1
 rebase 4.4.4-1
-scons 3.1.2-1
+scons 3.1.2-2
 sed 4.8-1
 tar 1.32-1
 tftp-hpa 5.2-3
