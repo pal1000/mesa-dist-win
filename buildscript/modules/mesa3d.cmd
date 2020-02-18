@@ -53,14 +53,14 @@
 @rem Enable S3TC texture cache
 @call %devroot%\%projectname%\buildscript\modules\applypatch.cmd s3tc
 @rem Update Meson subprojects
-@IF EXIST %devroot%\mesa\subprojects\.gitignore copy /Y %devroot%\%projectname%\patches\zlib.wrap %devroot%\mesa\subprojects\zlib.wrap
+@if %mesabldsys%==meson copy /Y %devroot%\%projectname%\patches\zlib.wrap %devroot%\mesa\subprojects\zlib.wrap
 @rem Fix swrAVX512 build
-@IF EXIST %devroot%\mesa\subprojects\.gitignore IF %intmesaver% LSS 20000 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swravx512
-@IF %intmesaver% GEQ 20000 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swravx512-post-static-link
+@if %mesabldsys%==meson IF %intmesaver% LSS 20000 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swravx512
+@if %mesabldsys%==meson IF %intmesaver% GEQ 20000 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swravx512-post-static-link
 @rem Ensure filenames parity with Scons
-@IF EXIST %devroot%\mesa\subprojects\.gitignore IF %intmesaver% LSS 19303 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd filename-parity
+@if %mesabldsys%==meson IF %intmesaver% LSS 19303 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd filename-parity
 @rem Make possible to build both osmesa gallium and swrast at the same time with Meson
-@IF EXIST %devroot%\mesa\subprojects\.gitignore call %devroot%\%projectname%\buildscript\modules\applypatch.cmd meson-build-both-osmesa
+@if %mesabldsys%==meson call %devroot%\%projectname%\buildscript\modules\applypatch.cmd meson-build-both-osmesa
 
 :configmesabuild
 @rem Configure Mesa build.
