@@ -14,6 +14,8 @@ Mako       1.1.1
 MarkupSafe 1.1.1  
 meson      0.53.1 
 pip        20.0.2 
+pywin32    227    
+scons      3.1.2  
 setuptools 45.2.0 
 
 CMake 3.16.4

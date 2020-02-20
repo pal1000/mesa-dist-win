@@ -1,4 +1,5 @@
-# Next release
+# 20.0.0
+- Updated Mesa3D to [20.0.0](https://www.mesa3d.org/relnotes/20.0.0.html).
 ### Build script
 - Support Scons with Python 3 in MSYS2;
 - Don't apply Meson related patches when using Scons;
