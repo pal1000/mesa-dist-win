@@ -1,3 +1,5 @@
+# 20.0.1
+- Updated Mesa3D to [20.0.1](https://www.mesa3d.org/relnotes/20.0.1.html).
 # 20.0.0
 - Updated Mesa3D to [20.0.0](https://www.mesa3d.org/relnotes/20.0.0.html).
 ### Build script

@@ -21,6 +21,7 @@
 @set msvccount=0
 @IF EXIST %vswhere% for /F "USEBACKQ tokens=*" %%a IN (`%vswhere% -prerelease -property displayName`) do @set /a msvccount+=1&set msvcnames[!msvccount!]=%%a
 @cls
+@echo Available compilers
 @IF %totalmsvc% GTR 0 FOR /L %%a IN (1,1,%totalmsvc%) do @echo %%a.!msvcnames[%%a]! v!msvcversions[%%a]!
 @IF NOT %msysstate%==0 echo %totaltoolchains%. MSYS2 Mingw-w64 GCC
 @echo.
