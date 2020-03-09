@@ -127,7 +127,7 @@
 @if %mesabldsys%==meson if /I "%gles%"=="y" set buildconf=%buildconf% -Dshared-glapi=true -Dgles1=true -Dgles2=true
 
 @set expressmesabuild=n
-@if %mesabldsys%==scons set /p expressmesabuild=Do you want to build Mesa with quick configuration - includes libgl-gdi, graw-gdi, graw-null, tests, osmesa and shared glapi and shared GLES libraries if glapi is a shared library:
+@if %mesabldsys%==scons set /p expressmesabuild=Do you want to build Mesa with quick configuration - includes libgl-gdi, graw-gdi, graw-null, tests and osmesa:
 @if %mesabldsys%==scons echo.
 @if %mesabldsys%==scons IF /I NOT "%expressmesabuild%"=="y" set buildcmd=%buildcmd% libgl-gdi
 

@@ -1,3 +1,6 @@
+# Next release
+### Patching
+- Prefer MSYS2 GNU patch for applying patches when available as it supports both CRLF and LF simultaneously.
 # 20.0.1
 - Updated Mesa3D to [20.0.1](https://www.mesa3d.org/relnotes/20.0.1.html).
 # 20.0.0
