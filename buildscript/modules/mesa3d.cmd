@@ -77,6 +77,7 @@
 @set buildconf=null
 @if %mesabldsys%==meson set buildconf=%mesonloc% build/%abi% --default-library=static --buildtype=release
 @if %mesabldsys%==meson IF %toolchain%==msvc set buildconf=%buildconf% -Db_vscrt=mt
+@if %mesabldsys%==meson IF %toolchain%==gcc set buildconf=%buildconf% --wrap-mode=forcefallback
 @if %mesabldsys%==meson set buildcmd=msbuild /p^:Configuration=release,Platform=Win32 mesa.sln /m^:%throttle%
 @if %mesabldsys%==meson IF %abi%==x64 set buildcmd=msbuild /p^:Configuration=release,Platform=x64 mesa.sln /m^:%throttle%
 
