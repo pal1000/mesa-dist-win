@@ -4,9 +4,14 @@
 @set /p dist=Create or update Mesa3D distribution package (y/n):
 @echo.
 @if /I NOT "%dist%"=="y" GOTO exit
-@cd %devroot%
-@if NOT EXIST %projectname% MD %projectname%
-@cd %projectname%
+@cd %devroot%\%projectname%
+
+@set legacydist=1
+@IF %legacydist% EQU 1 GOTO legacydist
+@IF %toolchain%==gcc IF EXIST %devroot%\mesa\build\%abi% %mesonloc% install -C ${devroot}/mesa/build/${abi}"
+@GOTO exit
+
+:legacydist
 @if NOT EXIST bin MD bin
 @if NOT EXIST lib MD lib
 @if NOT EXIST include MD include

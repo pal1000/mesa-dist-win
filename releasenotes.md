@@ -6,6 +6,8 @@
 - Use current name for Python 3 mako group.
 ### MSYS2 MinGW-w64 build
 - Get static linking with Meson working, avoiding [this problem](https://gitlab.freedesktop.org/mesa/mesa/issues/2012).
+### Work in progress (disabled)
+- Use Meson install for collecting binaries, libraries and headers.
 # 20.0.1
 - Updated Mesa3D to [20.0.1](https://www.mesa3d.org/relnotes/20.0.1.html).
 # 20.0.0
