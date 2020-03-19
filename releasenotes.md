@@ -1,4 +1,6 @@
 # Next release
+### End-user docs
+- Update to reflect changes triggered by MSYS2 MinGW-w64 build switch to Meson.
 ### Patching
 - Prefer MSYS2 GNU patch for applying patches when available as it supports both CRLF and LF simultaneously.
 ### MSYS2 build dependencies
@@ -6,7 +8,7 @@
 - Use current name for Python 3 mako group.
 ### MSYS2 MinGW-w64 build
 - Get static linking with Meson working, avoiding [this problem](https://gitlab.freedesktop.org/mesa/mesa/issues/2012).
-### Per aplicatioon deployment
+### Per aplication deployment
 - Only ask for osmesa type if both swrast and gallium are available in release package.
 ### Work in progress (disabled)
 - Use Meson install for collecting binaries, libraries and headers.
