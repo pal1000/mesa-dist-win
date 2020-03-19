@@ -1,4 +1,6 @@
-# Next release
+# 20.0.2
+- Updated Mesa3D to [20.0.2](https://www.mesa3d.org/relnotes/20.0.2.html);
+- Switched MSYS2 MinGW-w64 build to Meson.
 ### End-user docs
 - Update to reflect changes triggered by MSYS2 MinGW-w64 build switch to Meson.
 ### Patching
