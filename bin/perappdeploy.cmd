@@ -117,11 +117,11 @@
 @IF EXIST "%mesaloc%\%mesadll%\libglapi.dll" mklink "%dir%\libglapi.dll" "%mesaloc%\%mesadll%\libglapi.dll"
 @echo.
 @IF EXIST "%mesaloc%\%mesadll%\osmesa.dll" GOTO graw
-@echo What version of osmesa off-screen rendering you want:
-@echo 1. Gallium based (faster, but lacks certain features);
-@echo 2. Swrast based (slower, but has unique OpenGL 2.1 features);
-@set /p osmesatype=Enter choice:
-@echo.
+@IF EXIST "%mesaloc%\%mesadll%\osmesa-gallium\osmesa.dll" IF EXIST "%mesaloc%\%mesadll%\osmesa-swrast\osmesa.dll" echo What version of osmesa off-screen rendering you want:
+@IF EXIST "%mesaloc%\%mesadll%\osmesa-gallium\osmesa.dll" IF EXIST "%mesaloc%\%mesadll%\osmesa-swrast\osmesa.dll" echo 1. Gallium based (faster, but lacks certain features)
+@IF EXIST "%mesaloc%\%mesadll%\osmesa-gallium\osmesa.dll" IF EXIST "%mesaloc%\%mesadll%\osmesa-swrast\osmesa.dll" echo 2. Swrast based (slower, but has unique OpenGL 2.1 features)
+@IF EXIST "%mesaloc%\%mesadll%\osmesa-gallium\osmesa.dll" IF EXIST "%mesaloc%\%mesadll%\osmesa-swrast\osmesa.dll" set /p osmesatype=Enter choice:
+@IF EXIST "%mesaloc%\%mesadll%\osmesa-gallium\osmesa.dll" IF EXIST "%mesaloc%\%mesadll%\osmesa-swrast\osmesa.dll" echo.
 @if "%osmesatype%"=="1" mklink "%dir%\osmesa.dll" "%mesaloc%\%mesadll%\osmesa-gallium\osmesa.dll"
 @if "%osmesatype%"=="2" mklink "%dir%\osmesa.dll" "%mesaloc%\%mesadll%\osmesa-swrast\osmesa.dll"
 @if "%osmesatype%"=="1" echo.

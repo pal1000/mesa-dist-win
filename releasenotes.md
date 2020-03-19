@@ -6,6 +6,8 @@
 - Use current name for Python 3 mako group.
 ### MSYS2 MinGW-w64 build
 - Get static linking with Meson working, avoiding [this problem](https://gitlab.freedesktop.org/mesa/mesa/issues/2012).
+### Per aplicatioon deployment
+- Only ask for osmesa type if both swrast and gallium are available in release package.
 ### Work in progress (disabled)
 - Use Meson install for collecting binaries, libraries and headers.
 # 20.0.1
