@@ -9,7 +9,20 @@
 @set legacydist=1
 @IF %legacydist% EQU 1 GOTO legacydist
 @IF %toolchain%==gcc IF EXIST %devroot%\mesa\build\%abi% %mesonloc% install -C ${devroot}/mesa/build/${abi}"
-@GOTO exit
+@IF %toolchain%==gcc IF EXIST %devroot%\mesa\build\%abi% GOTO distributed
+
+@if NOT EXIST dist MD dist
+@if EXIST dist\%abi% RD /S /Q dist\%abi%
+@md dist\%abi%
+@MD dist\%abi%\bin
+@MD dist\%abi%\lib
+@MD dist\%abi%\lib\pkgconfig
+@MD dist\%abi%\include
+@MD dist\%abi%\bin\osmesa-gallium
+@MD dist\%abi%\bin\osmesa-swrast
+@MD dist\%abi%\share
+@MD dist\%abi%\share\drirc.d
+@GOTO mesondist
 
 :legacydist
 @if NOT EXIST bin MD bin

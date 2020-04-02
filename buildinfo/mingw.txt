@@ -3,7 +3,7 @@ Build environment
 Windows 10.0.18363
 Ressource Hacker 5.1.7.343
 7-Zip 20.00 ultra compression
-Git 2.25.1.1
+Git 2.26.0.1
 
 MSYS2 environment
 -----------------
@@ -26,14 +26,14 @@ filesystem 2020.02-2
 findutils 4.7.0-1
 flex 2.6.4-1
 gawk 5.0.1-1
-gcc-libs 9.1.0-2
+gcc-libs 9.3.0-1
 gdbm 1.18.1-2
 getent 2.18.90-2
 gettext 0.19.8.1-1
-git 2.25.2-1
+git 2.26.0-1
 glib2 2.54.3-2
 gmp 6.2.0-1
-gnupg 2.2.19-1
+gnupg 2.2.20-1
 grep 3.0-2
 gzip 1.10-1
 heimdal 7.7.0-1
@@ -84,7 +84,7 @@ libsqlite 3.30.0-1
 libssh2 1.9.0-1
 libtasn1 4.16.0-1
 libunistring 0.9.10-1
-libutil-linux 2.35-1
+libutil-linux 2.35.1-1
 libxml2 2.9.10-2
 libxslt 1.1.34-1
 libzstd 1.4.4-2
@@ -108,7 +108,7 @@ mingw-w64-i686-libtasn1 4.16.0-1
 mingw-w64-i686-libtre-git r128.6fb7206-2
 mingw-w64-i686-libwinpthread-git 8.0.0.5680.0df6b89f-1
 mingw-w64-i686-llvm 9.0.1-1
-mingw-w64-i686-meson 0.53.2-1
+mingw-w64-i686-meson 0.54.0-1
 mingw-w64-i686-mpc 1.1.0-1
 mingw-w64-i686-mpdecimal 2.4.2-1
 mingw-w64-i686-mpfr 4.0.2-2
@@ -126,7 +126,7 @@ mingw-w64-i686-python-markupsafe 1.1.1-1
 mingw-w64-i686-python-ordered-set 3.1.1-1
 mingw-w64-i686-python-packaging 20.3-1
 mingw-w64-i686-python-pyparsing 2.4.6-1
-mingw-w64-i686-python-setuptools 46.0.0-1
+mingw-w64-i686-python-setuptools 46.1.3-1
 mingw-w64-i686-python-six 1.14.0-1
 mingw-w64-i686-readline 8.0.004-1
 mingw-w64-i686-sqlite3 3.31.1-1
@@ -156,7 +156,7 @@ mingw-w64-x86_64-libtasn1 4.16.0-1
 mingw-w64-x86_64-libtre-git r128.6fb7206-2
 mingw-w64-x86_64-libwinpthread-git 8.0.0.5680.0df6b89f-1
 mingw-w64-x86_64-llvm 9.0.1-1
-mingw-w64-x86_64-meson 0.53.2-1
+mingw-w64-x86_64-meson 0.54.0-1
 mingw-w64-x86_64-mpc 1.1.0-1
 mingw-w64-x86_64-mpdecimal 2.4.2-1
 mingw-w64-x86_64-mpfr 4.0.2-2
@@ -174,7 +174,7 @@ mingw-w64-x86_64-python-markupsafe 1.1.1-1
 mingw-w64-x86_64-python-ordered-set 3.1.1-1
 mingw-w64-x86_64-python-packaging 20.3-1
 mingw-w64-x86_64-python-pyparsing 2.4.6-1
-mingw-w64-x86_64-python-setuptools 46.0.0-1
+mingw-w64-x86_64-python-setuptools 46.1.3-1
 mingw-w64-x86_64-python-six 1.14.0-1
 mingw-w64-x86_64-readline 8.0.004-1
 mingw-w64-x86_64-sqlite3 3.31.1-1
@@ -202,7 +202,7 @@ pactoys-git r2.07ca37f-1
 patch 2.7.6-1
 pax-git 20161104.2-1
 pcre 8.44-1
-perl 5.30.1-1
+perl 5.30.2-1
 perl-Authen-SASL 2.16-2
 perl-Convert-BinHex 1.125-1
 perl-Encode-Locale 1.05-1
@@ -239,7 +239,7 @@ time 1.9-1
 ttyrec 1.0.8-2
 tzcode 2019.a-1
 u-boot-tools 2020.01-1
-util-linux 2.35-1
+util-linux 2.35.1-1
 vim 8.2.0121-1
 wget 1.20.3-1
 which 2.21-2
