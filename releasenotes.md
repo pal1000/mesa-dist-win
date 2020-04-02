@@ -1,4 +1,5 @@
-# Next release
+# 20.0.3
+- Updated Mesa3D to [20.0.3](https://www.mesa3d.org/relnotes/20.0.3.html).
 ### Distribution creation
 WIP: Disabled: Use Meson install in MSYS2;
 WIP: Disabled: Replicated layout of MSVC Meson install.
