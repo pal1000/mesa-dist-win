@@ -2,6 +2,8 @@
 ### Distribution creation
 WIP: Disabled: Use Meson install in MSYS2;
 WIP: Disabled: Replicated layout of MSVC Meson install.
+### Meson wrap
+- Do not clear unpacked zlib source code as Meson builds suprojects under main project now.
 # 20.0.2
 - Updated Mesa3D to [20.0.2](https://www.mesa3d.org/relnotes/20.0.2.html);
 - Switched MSYS2 MinGW-w64 build to Meson.

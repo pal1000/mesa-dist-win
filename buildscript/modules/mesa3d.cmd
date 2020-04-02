@@ -160,8 +160,6 @@
 
 @set cleanbuild=n
 @IF %mesabldsys%==meson set cleanbuild=y
-@IF %mesabldsys%==meson for /d %%a in ("%devroot%\mesa\subprojects\zlib-*") do @RD /S /Q "%%~a"
-@IF %mesabldsys%==meson for /d %%a in ("%devroot%\mesa\subprojects\expat-*") do @RD /S /Q "%%~a"
 @IF %mesabldsys%==scons if EXIST build\windows-%longabi% set /p cleanbuild=Do you want to clean build (y/n):
 @IF %mesabldsys%==scons if EXIST build\windows-%longabi% echo.
 @IF %mesabldsys%==meson if EXIST build\%abi% echo WARNING: Meson build always performs clean build. This is last chance to cancel build.
