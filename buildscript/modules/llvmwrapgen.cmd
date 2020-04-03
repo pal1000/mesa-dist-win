@@ -15,21 +15,18 @@ echo.
 echo cpp = meson.get_compiler^('cpp'^)
 echo.
 echo _deps = []
-IF %toolchain%==msvc echo _search = '%LLVM:\=/%/lib'
-IF %toolchain%==gcc echo _search = '%msysloc:\=/%%LLVM:\=/%/lib'
+echo _search = run_command^('%devroot:\=/%/%projectname%/buildscript/modules/llvmloc.cmd', '/lib'^).stdout^(^).strip^(^)
 echo foreach d ^: [%llvmlibs%]
 echo   _deps += cpp.find_library^(d, dirs ^: _search^)
 echo endforeach
 echo.
 echo dep_llvm = declare_dependency^(
-IF %toolchain%==msvc echo   include_directories ^: include_directories^('%LLVM:\=/%/include'^),
-IF %toolchain%==gcc echo   include_directories ^: include_directories^('%msysloc:\=/%%LLVM:\=/%/include'^),
+echo   include_directories ^: include_directories^(run_command^('%devroot:\=/%/%projectname%/buildscript/modules/llvmloc.cmd', '/include'^).stdout^(^).strip^(^)^),
 echo   dependencies ^: _deps,
 echo   version ^: '%llvmver%',
 echo ^)
 echo.
 echo has_rtti = %RTTI%
-IF %toolchain%==msvc echo irbuilder_h = files^('%LLVM:\=/%/include/llvm/IR/IRBuilder.h'^)
-IF %toolchain%==gcc echo irbuilder_h = files^('%msysloc:\=/%%LLVM:\=/%/include/llvm/IR/IRBuilder.h'^)
+echo irbuilder_h = files^(run_command^('%devroot:\=/%/%projectname%/buildscript/modules/llvmloc.cmd', '/include/llvm/IR/IRBuilder.h'^).stdout^(^).strip^(^)^)
 )>%devroot%\mesa\subprojects\llvm\meson.build
 @endlocal

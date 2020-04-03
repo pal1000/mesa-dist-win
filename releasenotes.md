@@ -1,8 +1,11 @@
+# Next release
+### Mesa3D Meson build
+- Support building both x86 and x64 simultaneously.
 # 20.0.3
 - Updated Mesa3D to [20.0.3](https://www.mesa3d.org/relnotes/20.0.3.html).
 ### Distribution creation
 WIP: Disabled: Use Meson install in MSYS2;
-WIP: Disabled: Replicated layout of MSVC Meson install.
+WIP: Disabled: Replicate layout of MSVC Meson install.
 ### Meson wrap
 - Do not clear unpacked zlib source code as Meson builds suprojects under main project now.
 # 20.0.2

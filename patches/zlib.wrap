@@ -1,5 +1,5 @@
 [wrap-file]
-directory = zlib-1.2.11
+directory = zlib
 
 source_url = http://zlib.net/fossils/zlib-1.2.11.tar.gz
 source_filename = zlib-1.2.11.tar.gz
