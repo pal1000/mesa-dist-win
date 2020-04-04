@@ -1,4 +1,5 @@
-# Next release
+# 20.0.4
+- Updated Mesa3D to [20.0.4](https://www.mesa3d.org/relnotes/20.0.4.html).
 ### Mesa3D Meson build
 - Support building both x86 and x64 simultaneously.
 # 20.0.3

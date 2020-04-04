@@ -114,7 +114,7 @@ mingw-w64-i686-mpdecimal 2.4.2-1
 mingw-w64-i686-mpfr 4.0.2-2
 mingw-w64-i686-ncurses 6.2-1
 mingw-w64-i686-ninja 1.10.0-1
-mingw-w64-i686-openssl 1.1.1.e-2
+mingw-w64-i686-openssl 1.1.1.f-1
 mingw-w64-i686-p11-kit 0.23.20-1
 mingw-w64-i686-pkg-config 0.29.2-1
 mingw-w64-i686-python 3.8.2-1
@@ -162,7 +162,7 @@ mingw-w64-x86_64-mpdecimal 2.4.2-1
 mingw-w64-x86_64-mpfr 4.0.2-2
 mingw-w64-x86_64-ncurses 6.2-1
 mingw-w64-x86_64-ninja 1.10.0-1
-mingw-w64-x86_64-openssl 1.1.1.e-2
+mingw-w64-x86_64-openssl 1.1.1.f-1
 mingw-w64-x86_64-p11-kit 0.23.20-1
 mingw-w64-x86_64-pkg-config 0.29.2-1
 mingw-w64-x86_64-python 3.8.2-1
