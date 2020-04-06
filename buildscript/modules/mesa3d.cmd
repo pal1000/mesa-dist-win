@@ -77,7 +77,7 @@
 @set buildconf=null
 @if %mesabldsys%==meson set buildconf=%mesonloc% build/%abi% --default-library=static --buildtype=release --prefix=%devroot:\=/%/%projectname%/dist/%abi%
 @if %mesabldsys%==meson IF %toolchain%==msvc set buildconf=%buildconf% -Db_vscrt=mt
-@if %mesabldsys%==meson IF %toolchain%==gcc set buildconf=%buildconf% --wrap-mode=forcefallback
+@if %mesabldsys%==meson IF %toolchain%==gcc set buildconf=%buildconf% --wrap-mode=forcefallback -Dc_args='-march=core2 -pipe'  -Dcpp_args='-march=core2 -pipe' -Dc_link_args='-static -s' -Dcpp_link_args='-static -s'
 @if %mesabldsys%==meson set buildcmd=msbuild /p^:Configuration=release,Platform=Win32 mesa.sln /m^:%throttle%
 @if %mesabldsys%==meson IF %abi%==x64 set buildcmd=msbuild /p^:Configuration=release,Platform=x64 mesa.sln /m^:%throttle%
 
@@ -186,9 +186,9 @@
 @IF %toolchain%==msvc echo.
 @IF %toolchain%==gcc set MSYSTEM=MINGW32
 @IF %toolchain%==gcc IF %abi%==x64 set MSYSTEM=MINGW64
-@IF %toolchain%==gcc set CFLAGS=-march=core2 -pipe
-@IF %toolchain%==gcc set CXXFLAGS=-march=core2 -pipe
-@IF %toolchain%==gcc set LDFLAGS=-static -s
+@IF %mesabldsys%==scons IF %toolchain%==gcc set CFLAGS=-march=core2 -pipe
+@IF %mesabldsys%==scons IF %toolchain%==gcc set CXXFLAGS=-march=core2 -pipe
+@IF %mesabldsys%==scons IF %toolchain%==gcc set LDFLAGS=-static -s
 
 @rem Execute build.
 @if %mesabldsys%==meson echo Build configuration command: %buildconf%
