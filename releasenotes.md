@@ -1,6 +1,8 @@
 # Next release
 ### Build script
 - MSYS2: Use Meson builtin options to pass compiler and linker flags.
+### .gitignore
+- Prepare for binary distribution using Meson install layout.
 ### Remove Scons build support
 - [x] Make it unreachable;
 - [ ] Remove Scons code path - `IF %mesabldsys%==scons `;

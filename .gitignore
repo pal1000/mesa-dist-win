@@ -5,8 +5,11 @@
 *.tmp
 *.7z
 # Libraries and headers
-lib/
-include/
+/lib/
+/include/
+# Meson install prefix
+/dist/x86/
+/dist/x64/
 # Build script assets
 buildscript/assets/
 # Debug scripts output backup
