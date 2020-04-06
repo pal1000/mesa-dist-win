@@ -18,17 +18,12 @@
 @FOR /F "USEBACKQ tokens=1 skip=1" %%a IN (`py -0 2^>nul`) do @(
 @set pythoninstance=%%a
 @set goodpython=0
-@IF !pythoninstance^:^~1^,-3! EQU 2.7 set goodpython=1
 @IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF NOT EXIST %devroot%\mesa set goodpython=1
 @IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF EXIST %devroot%\mesa\subprojects\.gitignore set goodpython=1
-@IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF EXIST %devroot%\mesa IF NOT EXIST %devroot%\mesa\subprojects\.gitignore echo Hiding Python !pythoninstance^:^~1! due to Mesa3D source code not having Meson Windows support.
-@IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF EXIST %devroot%\mesa IF NOT EXIST %devroot%\mesa\subprojects\.gitignore echo Note that Mesa3D 19.3 is required for Meson Windows support.
-@IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF EXIST %devroot%\mesa IF NOT EXIST %devroot%\mesa\subprojects\.gitignore echo.
 @IF !goodpython!==1 set /a pythontotal+=1
 )
 @IF %pythontotal%==0 echo WARNING: No suitable Python installation found by Python launcher.
-@IF %pythontotal%==0 echo Note that for Scons build Python 2.7 or for Meson build Python 3.5 and newer is required.
-@IF %pythontotal%==0 echo Also Meson build only works with Mesa3D 19.3. This is verified and if check fails Python 3.x detection is suppressed.
+@IF %pythontotal%==0 echo Python 3.5 and newer is required.
 @IF %pythontotal%==0 echo.
 @IF %pythontotal%==0 GOTO nopylauncher
 
@@ -37,7 +32,6 @@
 @FOR /F "USEBACKQ tokens=1 skip=1" %%a IN (`py -0 2^>nul`) do @(
 @set pythoninstance=%%a
 @set goodpython=0
-@IF !pythoninstance^:^~1^,-3! EQU 2.7 set goodpython=1
 @IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF NOT EXIST %devroot%\mesa set goodpython=1
 @IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF EXIST %devroot%\mesa\subprojects\.gitignore set goodpython=1
 @IF !goodpython!==1 set /a pythoncount+=1
@@ -61,7 +55,6 @@
 @FOR /F "USEBACKQ tokens=1 skip=1" %%a IN (`py -0 2^>nul`) do @(
 @set pythoninstance=%%a
 @set goodpython=0
-@IF !pythoninstance^:^~1^,-3! EQU 2.7 set goodpython=1
 @IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF NOT EXIST %devroot%\mesa set goodpython=1
 @IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF EXIST %devroot%\mesa\subprojects\.gitignore set goodpython=1
 @IF !goodpython!==1 set /a pythoncount+=1
@@ -82,7 +75,11 @@
 @pause
 @exit
 )
-@IF %pythonloc%==python.exe set exitloop=1&FOR /F "tokens=* USEBACKQ" %%a IN (`where /f python.exe`) DO @IF defined exitloop set "exitloop="&SET pythonloc=%%~sa
+@IF %pythonloc%==python.exe set exitloop=1
+@IF %pythonloc%==python.exe FOR /F "tokens=* USEBACKQ" %%a IN (`where /f python.exe`) DO @IF defined exitloop (
+set "exitloop="
+SET pythonloc=%%~sa
+)
 
 :loadpypath
 @REM Load Python in PATH to convince CMake to use the selected version and avoid other potential problems.
@@ -90,7 +87,11 @@
 @set pypath=1
 @where /q python.exe
 @IF ERRORLEVEL 1 set pypath=0
-@IF %pypath%==1 set exitloop=1&FOR /F "tokens=* USEBACKQ" %%a IN (`where /f python.exe`) DO @IF defined exitloop set "exitloop="&SET pypath=%%~sa
+@IF %pypath%==1 set exitloop=1
+@IF %pypath%==1 FOR /F "tokens=* USEBACKQ" %%a IN (`where /f python.exe`) DO @IF defined exitloop (
+set "exitloop="
+SET pypath=%%~sa
+)
 @IF NOT %pypath%==%pythonloc% set PATH=%pythonloc:~0,-10%;%pythonloc:~0,-10%Scripts\;%PATH%
 
 :pyver
@@ -99,14 +100,14 @@
 
 @rem Check if Python version is not too old.
 @FOR /F "USEBACKQ delims= " %%a IN (`%pythonloc% -c "import sys; print(str(sys.version_info[0])+'.'+str(sys.version_info[1]))"`) DO @SET pythonver=%%a
-@IF %pythonver% NEQ 2.7 IF %pythonver% LSS 3.5 (
-@echo Your Python version is too old. Only Python 2.7 or 3.5 and newer are supported.
+@IF %pythonver% LSS 3.5 (
+@echo Your Python version is too old. Only Python 3.5 and newer is supported.
 @echo.
 @pause
 @exit
 )
-@IF %pythonver% GEQ 3.5 IF EXIST %devroot%\mesa IF NOT EXIST %devroot%\mesa\subprojects\.gitignore (
-@echo Mesa3D source code you are using lacks Meson build support. Update Mesa3D source code to 19.3 or newer.
+@IF EXIST %devroot%\mesa IF NOT EXIST %devroot%\mesa\subprojects\.gitignore (
+@echo Mesa3D source code you are using is too old. Update to 19.3 or newer.
 @echo.
 @pause
 @exit
