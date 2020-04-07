@@ -5,7 +5,7 @@
 - Prepare for binary distribution using Meson install layout.
 ### Remove Scons build support
 - [x] Make it unreachable;
-- [ ] Remove Scons code path - `IF %mesabldsys%==scons `;
+- [x] Remove Scons code path - `IF %mesabldsys%==scons `;
 - [ ] Cleanup Python packages and improve their management;
 - [x] Remove `IF %mesabldsys%==meson ` checks.
 # 20.0.4

@@ -64,16 +64,6 @@
 
 :configmesabuild
 @rem Configure Mesa build.
-
-@if %mesabldsys%==scons if %toolchain%==msvc IF NOT "%sconspypi%"=="1" set buildcmd=%devroot%\scons\src\script\scons.py
-@if %mesabldsys%==scons if %toolchain%==msvc IF "%sconspypi%"=="1" set buildcmd=%pythonloc:~0,-10%Scripts\scons.py
-@if %mesabldsys%==scons if %toolchain%==msvc IF "%sconspypi%"=="1" IF NOT EXIST "%buildcmd%" set buildcmd=%pythonloc:~0,-10%Scripts\scons
-@if %mesabldsys%==scons if %toolchain%==msvc set buildcmd=%pythonloc% %buildcmd%
-@if %mesabldsys%==scons if %toolchain%==gcc set buildcmd=%msysloc%\usr\bin\bash --login -c "cd ${devroot}/mesa;/usr/bin/scons
-@if %mesabldsys%==scons set buildcmd=%buildcmd% -j%throttle% build=release platform=windows machine=%longabi%
-@if %mesabldsys%==scons if %toolchain%==gcc set buildcmd=%buildcmd% toolchain=mingw
-@if %mesabldsys%==scons if %toolchain%==msvc set buildcmd=%buildcmd% MSVC_USE_SCRIPT=%vsenv%
-
 @set buildconf=%mesonloc% build/%abi% --default-library=static --buildtype=release --prefix=%devroot:\=/%/%projectname%/dist/%abi%
 @IF %toolchain%==msvc set buildconf=%buildconf% -Db_vscrt=mt
 @IF %toolchain%==gcc set buildconf=%buildconf% --wrap-mode=forcefallback -Dc_args='-march=core2 -pipe'  -Dcpp_args='-march=core2 -pipe' -Dc_link_args='-static -s' -Dcpp_link_args='-static -s'
@@ -90,7 +80,6 @@
 @if %havellvm%==0 set llvmless=y
 @if %havellvm%==1 set /p llvmless=Build Mesa without LLVM (y/n). llvmpipe and swr drivers and high performance JIT won't be available for other drivers and libraries:
 @if %havellvm%==1 echo.
-@if %mesabldsys%==scons if /I "%llvmless%"=="y" set buildcmd=%buildcmd% llvm=no
 @if /I NOT "%llvmless%"=="y" call %devroot%\%projectname%\buildscript\modules\llvmwrapgen.cmd
 @if /I NOT "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm=true
 @if /I "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm=false
@@ -105,10 +94,6 @@
 @if /I "%useninja%"=="y" IF %toolchain%==gcc set buildcmd=%msysloc%\usr\bin\bash --login -c "cd ${devroot}/mesa/build/%abi%;%LLVM%/bin/ninja -j %throttle%"
 @if /I NOT "%useninja%"=="y" set buildconf=%buildconf% --backend=vs
 
-@if %mesabldsys%==scons IF %toolchain%==msvc set /p openmp=Build Mesa3D with OpenMP. Faster build and smaller binaries (y/n):
-@if %mesabldsys%==scons IF %toolchain%==msvc echo.
-@if %mesabldsys%==scons if /I "%openmp%"=="y" set buildcmd=%buildcmd% openmp=1
-
 @set buildconf=%buildconf% -Dgallium-drivers=swrast
 
 @set zink=n
@@ -119,33 +104,23 @@
 @set swrdrv=n
 @if /I NOT "%llvmless%"=="y" if %abi%==x64 IF %toolchain%==msvc set /p swrdrv=Do you want to build swr drivers? (y=yes):
 @if /I NOT "%llvmless%"=="y" if %abi%==x64 IF %toolchain%==msvc echo.
-@if %mesabldsys%==scons if /I "%swrdrv%"=="y" set buildcmd=%buildcmd% swr=1
 @if /I "%swrdrv%"=="y" set buildconf=%buildconf%,swr -Dswr-arches=avx,avx2,skx,knl
 
 @set /p gles=Do you want to build GLAPI as a shared library and standalone GLES libraries (y/n):
 @echo.
 @if /I "%gles%"=="y" set buildconf=%buildconf% -Dshared-glapi=true -Dgles1=true -Dgles2=true
 
-@set expressmesabuild=n
-@if %mesabldsys%==scons set /p expressmesabuild=Do you want to build Mesa with quick configuration - includes libgl-gdi, graw-gdi, graw-null, tests and osmesa:
-@if %mesabldsys%==scons echo.
-@if %mesabldsys%==scons IF /I NOT "%expressmesabuild%"=="y" set buildcmd=%buildcmd% libgl-gdi
-
 @set osmesa=n
-@IF /I "%expressmesabuild%"=="y" set osmesa=y
-@IF /I NOT "%expressmesabuild%"=="y" set /p osmesa=Do you want to build off-screen rendering drivers (y/n):
-@IF /I NOT "%expressmesabuild%"=="y" echo.
-@if %mesabldsys%==scons IF /I NOT "%expressmesabuild%"=="y" IF /I "%osmesa%"=="y" set buildcmd=%buildcmd% osmesa
+@set /p osmesa=Do you want to build off-screen rendering drivers (y/n):
+@echo.
 @IF /I "%osmesa%"=="y" set buildconf=%buildconf% -Dosmesa=gallium,classic
 @IF /I "%osmesa%"=="y" if %gitstate%==0 IF %toolchain%==msvc set buildconf=%buildconf:~0,-8%
 @rem Disable osmesa classic when building with Meson and Mingw due to build failure
 @IF /I "%osmesa%"=="y" IF %toolchain%==gcc set buildconf=%buildconf:~0,-8%
 
 @set graw=n
-@IF /I "%expressmesabuild%"=="y" set graw=y
-@IF /I NOT "%expressmesabuild%"=="y" set /p graw=Do you want to build graw library (y/n):
-@IF /I NOT "%expressmesabuild%"=="y" echo.
-@if %mesabldsys%==scons if /I "%graw%"=="y" IF /I NOT "%expressmesabuild%"=="y" set buildcmd=%buildcmd% graw-gdi
+@set /p graw=Do you want to build graw library (y/n):
+@echo.
 @if /I "%graw%"=="y" set buildconf=%buildconf% -Dbuild-tests=true
 
 @set opencl=n
@@ -154,18 +129,12 @@
 @rem IF %intmesaver% GEQ 20000 if /I NOT "%llvmless%"=="y" IF %toolchain%==msvc echo.
 @IF /I "%opencl%"=="y" set buildconf=%buildconf% -Dgallium-opencl=standalone
 
-@if %toolchain%==gcc IF %mesabldsys%==scons set buildcmd=%buildcmd%"
 @if %toolchain%==gcc set buildconf=%buildconf%"
 
-@set cleanbuild=n
-@set cleanbuild=y
-@IF %mesabldsys%==scons if EXIST build\windows-%longabi% set /p cleanbuild=Do you want to clean build (y/n):
-@IF %mesabldsys%==scons if EXIST build\windows-%longabi% echo.
 @if EXIST build\%abi% echo WARNING: Meson build always performs clean build. This is last chance to cancel build.
 @if EXIST build\%abi% pause
 @if EXIST build\%abi% echo.
-@IF %mesabldsys%==scons if /I "%cleanbuild%"=="y" IF EXIST build\windows-%longabi% RD /S /Q build\windows-%longabi%
-@if /I "%cleanbuild%"=="y" IF EXIST build\%abi% RD /S /Q build\%abi%
+@IF EXIST build\%abi% RD /S /Q build\%abi%
 
 @IF %toolchain%==msvc IF %flexstate%==1 set PATH=%devroot%\flexbison\;%PATH%
 @IF %toolchain%==msvc set PATH=%pkgconfigloc%\;%PATH%
@@ -173,8 +142,6 @@
 :build_mesa
 @rem Generate dummy header for MSVC build when git is missing.
 @IF %toolchain%==msvc if NOT EXIST build md build
-@IF %toolchain%==msvc IF %mesabldsys%==scons if NOT EXIST build\windows-%longabi% md build\windows-%longabi%
-@IF %toolchain%==msvc IF %mesabldsys%==scons if NOT EXIST build\windows-%longabi%\git_sha1.h echo 0 > build\windows-%longabi%\git_sha1.h
 @if NOT EXIST build\%abi% md build\%abi%
 @if NOT EXIST build\%abi%\src md build\%abi%\src
 @if NOT EXIST build\%abi%\src\git_sha1.h echo 0 > build\%abi%\src\git_sha1.h
@@ -185,9 +152,6 @@
 @IF %toolchain%==msvc echo.
 @IF %toolchain%==gcc set MSYSTEM=MINGW32
 @IF %toolchain%==gcc IF %abi%==x64 set MSYSTEM=MINGW64
-@IF %mesabldsys%==scons IF %toolchain%==gcc set CFLAGS=-march=core2 -pipe
-@IF %mesabldsys%==scons IF %toolchain%==gcc set CXXFLAGS=-march=core2 -pipe
-@IF %mesabldsys%==scons IF %toolchain%==gcc set LDFLAGS=-static -s
 
 @rem Execute build.
 @echo Build configuration command: %buildconf%
