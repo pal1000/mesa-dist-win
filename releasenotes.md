@@ -7,7 +7,7 @@
 - [x] Make it unreachable;
 - [ ] Remove Scons code path - `IF %mesabldsys%==scons `;
 - [ ] Cleanup Python packages and improve their management;
-- [ ] Remove `IF %mesabldsys%==meson ` checks.
+- [x] Remove `IF %mesabldsys%==meson ` checks.
 # 20.0.4
 - Updated Mesa3D to [20.0.4](https://www.mesa3d.org/relnotes/20.0.4.html).
 ### Mesa3D Meson build

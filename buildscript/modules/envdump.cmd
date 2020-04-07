@@ -76,7 +76,7 @@
 
 @rem Get pkgconf/pkg-config version
 @set pkgconfigver=null
-@IF %toolchain%==msvc IF %mesabldsys%==meson IF %pkgconfigstate% GTR 0 FOR /F "USEBACKQ" %%a IN (`%pkgconfigloc%\pkg-config.exe --version`) do @set pkgconfigver=%%a
+@IF %toolchain%==msvc IF %pkgconfigstate% GTR 0 FOR /F "USEBACKQ" %%a IN (`%pkgconfigloc%\pkg-config.exe --version`) do @set pkgconfigver=%%a
 @IF NOT "%pkgconfigver%"=="null" IF %pkgconfigver:~0,1%==0 set pkgconfigver=pkg-config %pkgconfigver%
 @IF NOT "%pkgconfigver%"=="null" IF NOT %pkgconfigver:~0,1%==0 set pkgconfigver=pkgconf %pkgconfigver%
 @IF NOT "%pkgconfigver%"=="null" echo %pkgconfigver%>>%devroot%\%projectname%\buildinfo\msvc.txt

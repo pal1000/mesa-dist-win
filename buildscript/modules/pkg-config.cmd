@@ -1,10 +1,7 @@
 @setlocal
 @set pkgconfigloc=null
 
-@rem pkg-config. Can be (1) present (0) missing/broken. Only valid for Meson build.
-@IF %mesabldsys%==scons set pkgconfigstate=0
-@IF %mesabldsys%==scons GOTO doneenvcheck
-
+@rem pkg-config. Can be (1) present (0) missing/broken.
 @rem Try building pkgconf
 @set pkgconfigstate=1
 @call %devroot%\%projectname%\buildscript\modules\pkgconf.cmd

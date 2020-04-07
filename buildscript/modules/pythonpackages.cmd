@@ -17,18 +17,6 @@
 @set pypack=Mako
 @GOTO pypackinstall
 )
-@IF %mesabldsys%==scons if NOT EXIST %pythonloc:~0,-10%Scripts\pywin32_postinstall.py (
-@set pypack=pywin32
-@GOTO pypackinstall
-)
-@set sconspypi=0
-@IF %mesabldsys%==scons for /F "skip=2 delims= " %%a in ('%pythonloc% -W ignore -m pip list --disable-pip-version-check') do @IF /I "%%a"=="scons" set sconspypi=1
-@IF %mesabldsys%==scons IF NOT "%sconspypi%"=="1" IF NOT EXIST %devroot%\scons (
-@set pypack=scons
-@GOTO pypackinstall
-)
-@if %mesabldsys%==scons set mesonstate=0
-@if %mesabldsys%==scons GOTO pyupdate
 
 @set mesonstate=2
 @SET ERRORLEVEL=0
@@ -88,4 +76,4 @@ echo.
 
 :endpython
 @echo.
-@endlocal&set sconspypi=%sconspypi%&set mesonstate=%mesonstate%
+@endlocal&set mesonstate=%mesonstate%

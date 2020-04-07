@@ -40,23 +40,6 @@
 @cd ..\include
 @if EXIST %abi% RD /S /Q %abi%
 @MD %abi%
-@IF %mesabldsys%==meson GOTO mesondist
-
-:sconsdist
-@rem Copy binaries
-@IF EXIST %devroot%\mesa\build\windows-%longabi%\bin RD /S /Q %devroot%\mesa\build\windows-%longabi%\bin
-@forfiles /p %devroot%\mesa\build\windows-%longabi% /s /m *.dll /c "cmd /c IF NOT @file==0x22osmesa.dll0x22 IF NOT @file==0x22graw.dll0x22 copy @path %devroot%\%projectname%\bin\%abi%"
-@IF EXIST %devroot%\mesa\build\windows-%longabi%\mesa\drivers\osmesa\osmesa.dll copy %devroot%\mesa\build\windows-%longabi%\mesa\drivers\osmesa\osmesa.dll %devroot%\%projectname%\bin\%abi%\osmesa-swrast\osmesa.dll
-@IF EXIST %devroot%\mesa\build\windows-%longabi%\gallium\targets\osmesa\osmesa.dll copy %devroot%\mesa\build\windows-%longabi%\gallium\targets\osmesa\osmesa.dll %devroot%\%projectname%\bin\%abi%\osmesa-gallium\osmesa.dll
-@IF EXIST %devroot%\mesa\build\windows-%longabi%\gallium\targets\graw-gdi\graw.dll copy %devroot%\mesa\build\windows-%longabi%\gallium\targets\graw-gdi\graw.dll %devroot%\%projectname%\bin\%abi%\graw.dll
-
-@rem Copy build development artifacts
-@xcopy %devroot%\mesa\build\windows-%longabi%\*.lib %devroot%\%projectname%\lib\%abi% /E /I /G
-@xcopy %devroot%\mesa\build\windows-%longabi%\*.a %devroot%\%projectname%\lib\%abi% /E /I /G
-@xcopy %devroot%\mesa\build\windows-%longabi%\*.h %devroot%\%projectname%\include\%abi% /E /I /G
-
-@echo.
-@GOTO distributed
 
 :mesondist
 @forfiles /p %devroot%\mesa\build\%abi% /s /m *.dll /c "cmd /c IF NOT @file==0x22osmesa.dll0x22 copy @path %devroot%\%projectname%\bin\%abi%"
