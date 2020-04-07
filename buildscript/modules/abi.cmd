@@ -5,6 +5,4 @@
 @if /I "%x64%"=="y" set abi=x64
 @set TITLE=%TITLE% %abi%
 @TITLE %TITLE%
-@set longabi=%abi%
-@if %abi%==x64 set longabi=x86_64
-@endlocal&set abi=%abi%&set TITLE=%TITLE%&set longabi=%longabi%
+@endlocal&set abi=%abi%&set TITLE=%TITLE%

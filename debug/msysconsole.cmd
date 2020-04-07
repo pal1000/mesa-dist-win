@@ -2,8 +2,6 @@
 @cd ..\..\
 @for %%a in ("%cd%") do @set devroot=%%~sa
 @set abi=x86
-@set longabi=%abi%
-@if %abi%==x64 set longabi=x86_64
 @call %devroot%\mesa-dist-win\buildscript\modules\msys.cmd
 @%msysloc%\usr\bin\bash --login -c "/usr/bin/pacman -Syu --noconfirm --disable-download-timeout"
 @echo.
