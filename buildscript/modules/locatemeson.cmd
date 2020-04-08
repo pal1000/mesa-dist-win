@@ -1,6 +1,5 @@
 @setlocal
-@IF %toolchain%==gcc IF %abi%==x86 set mesonloc=%msysloc%\usr\bin\bash --login -c "cd ${devroot}/mesa;/mingw32/bin/meson
-@IF %toolchain%==gcc IF %abi%==x64 set mesonloc=%msysloc%\usr\bin\bash --login -c "cd ${devroot}/mesa;/mingw64/bin/meson
+@IF %toolchain%==gcc set mesonloc=%msysloc%\usr\bin\bash --login -c "cd ${devroot}/mesa;${MINGW_PREFIX}/bin/meson
 @IF %toolchain%==gcc GOTO foundmeson
 @IF %mesonstate%==2 set mesonloc=meson.exe
 @IF %mesonstate%==2 GOTO foundmeson
