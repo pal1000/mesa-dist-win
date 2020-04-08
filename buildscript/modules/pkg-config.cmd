@@ -12,7 +12,7 @@
 @IF %msysstate%==0 GOTO nonmingwpkgconfig
 @GOTO nonmingwpkgconfig
 @call %devroot%\%projectname%\buildscript\modules\msysupdate.cmd
-@%msysloc%\usr\bin\bash --login -c "/usr/bin/pacman -S %mingwabi%-pkg-config --needed --noconfirm --disable-download-timeout"
+@%msysloc%\usr\bin\bash --login -c "/usr/bin/pacman -S ${MINGW_PACKAGE_PREFIX}-pkg-config --needed --noconfirm --disable-download-timeout"
 @echo.
 @set pkgconfigloc=%msysloc%\mingw32\bin
 @IF %abi%==x64 set pkgconfigloc=%msysloc%\mingw64\bin

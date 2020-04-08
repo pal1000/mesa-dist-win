@@ -150,8 +150,6 @@
 @IF %toolchain%==msvc echo.
 @IF %toolchain%==msvc call %vsenv% %vsabi%
 @IF %toolchain%==msvc echo.
-@IF %toolchain%==gcc set MSYSTEM=MINGW32
-@IF %toolchain%==gcc IF %abi%==x64 set MSYSTEM=MINGW64
 
 @rem Execute build.
 @echo Build configuration command: %buildconf%
