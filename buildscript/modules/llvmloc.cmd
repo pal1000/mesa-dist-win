@@ -1,2 +1,2 @@
-@IF %toolchain%==msvc echo %LLVM:\=/%%1
-@IF %toolchain%==gcc cygpath -m %LLVM%%1
+@IF %toolchain%==msvc echo %devroot:\=/%/llvm/%abi%%1
+@IF %toolchain%==gcc cygpath -m /mingw%MSYSTEM:~-2%%1

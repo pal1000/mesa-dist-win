@@ -70,11 +70,8 @@
 @set buildcmd=msbuild /p^:Configuration=release,Platform=Win32 mesa.sln /m^:%throttle%
 @IF %abi%==x64 set buildcmd=msbuild /p^:Configuration=release,Platform=x64 mesa.sln /m^:%throttle%
 
-@IF %toolchain%==msvc set LLVM=%devroot%\llvm\%abi%
-@IF %toolchain%==gcc set LLVM=/mingw32
-@IF %toolchain%==gcc IF %abi%==x64 set LLVM=/mingw64
 @set havellvm=0
-@IF EXIST %LLVM% set havellvm=1
+@IF EXIST %devroot%\llvm\%abi% set havellvm=1
 @IF %toolchain%==gcc set havellvm=1
 @set llvmless=n
 @if %havellvm%==0 set llvmless=y

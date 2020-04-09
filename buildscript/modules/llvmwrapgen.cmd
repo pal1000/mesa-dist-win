@@ -1,8 +1,8 @@
 @setlocal
 @set RTTI=false
-@IF %toolchain%==msvc FOR /F "tokens=* USEBACKQ" %%a IN (`%LLVM%\bin\llvm-config --link-static --libnames engine coroutines`) DO @SET llvmlibs=%%~a
-@IF %toolchain%==msvc FOR /F "tokens=* USEBACKQ" %%a IN (`%LLVM%\bin\llvm-config --version`) DO @SET llvmver=%%~a
-@IF %toolchain%==msvc FOR /F "tokens=* USEBACKQ" %%a IN (`%LLVM%\bin\llvm-config --has-rtti`) DO @IF /I "%%a"=="YES" SET RTTI=true
+@IF %toolchain%==msvc FOR /F "tokens=* USEBACKQ" %%a IN (`%devroot%\llvm\%abi%\bin\llvm-config --link-static --libnames engine coroutines`) DO @SET llvmlibs=%%~a
+@IF %toolchain%==msvc FOR /F "tokens=* USEBACKQ" %%a IN (`%devroot%\llvm\%abi%\bin\llvm-config --version`) DO @SET llvmver=%%~a
+@IF %toolchain%==msvc FOR /F "tokens=* USEBACKQ" %%a IN (`%devroot%\llvm\%abi%\bin\llvm-config --has-rtti`) DO @IF /I "%%a"=="YES" SET RTTI=true
 @IF %toolchain%==gcc FOR /F "tokens=* USEBACKQ" %%a IN (`%msysloc%\usr\bin\bash --login -c "${MINGW_PREFIX}/bin/llvm-config --link-static --libnames engine coroutines"`) DO @SET llvmlibs=%%~a
 @IF %toolchain%==gcc FOR /F "tokens=* USEBACKQ" %%a IN (`%msysloc%\usr\bin\bash --login -c "${MINGW_PREFIX}/bin/llvm-config --version"`) DO @SET llvmver=%%~a
 @IF %toolchain%==gcc FOR /F "tokens=* USEBACKQ" %%a IN (`%msysloc%\usr\bin\bash --login -c "${MINGW_PREFIX}/bin/llvm-config --has-rtti"`) DO @IF /I "%%a"=="YES" SET RTTI=true
