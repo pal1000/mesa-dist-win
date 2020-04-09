@@ -8,7 +8,7 @@
 
 @set legacydist=1
 @IF %legacydist% EQU 1 GOTO legacydist
-@IF %toolchain%==gcc IF EXIST %devroot%\mesa\build\%abi% %mesonloc% install -C ${devroot}/mesa/build/${abi}"
+@IF %toolchain%==gcc IF EXIST %devroot%\mesa\build\%abi% %mesonloc% install -C $(/usr/bin/cygpath -m ${devroot})/mesa/build/${abi}"
 @IF %toolchain%==gcc IF EXIST %devroot%\mesa\build\%abi% GOTO distributed
 
 @if NOT EXIST dist MD dist
