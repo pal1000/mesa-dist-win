@@ -3,7 +3,8 @@
 - MSYS2: Use Meson builtin options to pass compiler and linker flags;
 - Remove Scons build support;
 - Refactor: cleanup variaables defined for Scons build;
-- Refactor: use a consistent path format in MSYS2.
+- Refactor: use a consistent path format in MSYS2;
+- MSYS2: Add a hardcoded libraries list and version info to use when llvm-config is busted.
 ### .gitignore
 - Prepare for binary distribution using Meson install layout.
 # 20.0.4

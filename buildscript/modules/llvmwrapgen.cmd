@@ -9,6 +9,9 @@
 @IF %toolchain%==msvc set llvmlibs=%llvmlibs:.lib=%
 @IF %toolchain%==gcc set llvmlibs=%llvmlibs:.a=%
 @set llvmlibs='%llvmlibs: =', '%'
+@set llvmconfigbusted=0
+@IF %toolchain%==gcc IF %llvmconfigbusted%==1 set llvmlibs='libLLVMCoroutines', 'libLLVMipo', 'libLLVMInstrumentation', 'libLLVMVectorize', 'libLLVMLinker', 'libLLVMIRReader', 'libLLVMAsmParser', 'libLLVMX86Disassembler', 'libLLVMX86AsmParser', 'libLLVMX86CodeGen', 'libLLVMCFGuard', 'libLLVMGlobalISel', 'libLLVMSelectionDAG', 'libLLVMAsmPrinter', 'libLLVMDebugInfoDWARF', 'libLLVMCodeGen', 'libLLVMScalarOpts', 'libLLVMInstCombine', 'libLLVMAggressiveInstCombine', 'libLLVMTransformUtils', 'libLLVMBitWriter', 'libLLVMX86Desc', 'libLLVMMCDisassembler', 'libLLVMX86Utils', 'libLLVMX86Info', 'libLLVMMCJIT', 'libLLVMExecutionEngine', 'libLLVMTarget', 'libLLVMAnalysis', 'libLLVMProfileData', 'libLLVMRuntimeDyld', 'libLLVMObject', 'libLLVMTextAPI', 'libLLVMMCParser', 'libLLVMBitReader', 'libLLVMMC', 'libLLVMDebugInfoCodeView', 'libLLVMDebugInfoMSF', 'libLLVMCore', 'libLLVMRemarks', 'libLLVMBitstreamReader', 'libLLVMBinaryFormat', 'libLLVMSupport', 'libLLVMDemangle'
+@IF %toolchain%==gcc IF %llvmconfigbusted%==1 set llvmver=10.0.0
 @IF NOT EXIST %devroot%\mesa\subprojects\llvm md %devroot%\mesa\subprojects\llvm
 @(echo project^('llvm', ['cpp']^)
 echo.
