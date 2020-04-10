@@ -1,14 +1,11 @@
 # Next release
 ### Build script
-- MSYS2: Use Meson builtin options to pass compiler and linker flags.
+- MSYS2: Use Meson builtin options to pass compiler and linker flags;
+- Remove Scons build support;
+- Refactor: cleanup variaables defined for Scons build;
+- Refactor: use a consistent path format in MSYS2.
 ### .gitignore
 - Prepare for binary distribution using Meson install layout.
-### Remove Scons build support
-- [x] Make it unreachable;
-- [x] Remove Scons code path - `IF %mesabldsys%==scons `;
-- [ ] Cleanup Python packages and improve their management;
-- [x] Remove `IF %mesabldsys%==meson ` checks;
-- [ ] Cleanup variables.
 # 20.0.4
 - Updated Mesa3D to [20.0.4](https://www.mesa3d.org/relnotes/20.0.4.html).
 ### Mesa3D Meson build
