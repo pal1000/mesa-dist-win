@@ -49,7 +49,7 @@
 @IF NOT EXIST %devroot%\mesa\subprojects\.gitignore GOTO skipmesa
 
 @REM Collect information about Mesa3D code. Apply patches
-@if %gitstate%==0 IF %toolchain%==msvc GOTO configmesabuild
+@if %gitstate%==0 IF NOT EXIST %msysloc%\usr\bin\patch.exe IF %toolchain%==msvc GOTO configmesabuild
 @rem Enable S3TC texture cache
 @call %devroot%\%projectname%\buildscript\modules\applypatch.cmd s3tc
 @rem Update Meson subprojects

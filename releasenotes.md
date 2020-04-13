@@ -5,7 +5,8 @@
 - Refactor: cleanup variaables defined for Scons build;
 - Refactor: use a consistent path format in MSYS2;
 - MSYS2: Add a hardcoded libraries list to use when llvm-config is busted;
-- MSYS2: Use pacman to find LLVM version in Meson wrap generator.
+- MSYS2: Use pacman to find LLVM version in Meson wrap generator;
+- Don't fail to apply Mesa3D patches via MSYS2 GNU patch if available when building with MSVC and git is missing.
 ### .gitignore
 - Prepare for binary distribution using Meson install layout.
 # 20.0.4
