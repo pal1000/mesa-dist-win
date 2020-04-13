@@ -4,7 +4,8 @@
 - Remove Scons build support;
 - Refactor: cleanup variaables defined for Scons build;
 - Refactor: use a consistent path format in MSYS2;
-- MSYS2: Add a hardcoded libraries list and version info to use when llvm-config is busted.
+- MSYS2: Add a hardcoded libraries list to use when llvm-config is busted;
+- MSYS2: Use pacman to find LLVM version in Meson wrap generator.
 ### .gitignore
 - Prepare for binary distribution using Meson install layout.
 # 20.0.4
