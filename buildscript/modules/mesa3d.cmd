@@ -11,10 +11,9 @@
 @IF %pkgconfigstate%==0 GOTO skipmesa
 
 @REM Aquire Mesa3D source code if missing.
-@set buildmesa=n
 @cd %devroot%
-@if %gitstate%==0 IF %toolchain%==msvc echo Error: Git not found. Auto-patching disabled. This could have many consequences going all the way up to build failure.
-@if %gitstate%==0 IF %toolchain%==msvc echo.
+@if %gitstate%==0 IF NOT EXIST %msysloc%\usr\bin\patch.exe IF %toolchain%==msvc echo Error: Git and MSYS2 GNU patch are both missing. Auto-patching disabled. This could have many consequences going all the way up to build failure.
+@if %gitstate%==0 IF NOT EXIST %msysloc%\usr\bin\patch.exe IF %toolchain%==msvc echo.
 @if NOT EXIST mesa echo Warning: Mesa3D source code not found.
 @if NOT EXIST mesa echo.
 @if NOT EXIST mesa set /p buildmesa=Download mesa code and build (y/n):
@@ -52,13 +51,12 @@
 @if %gitstate%==0 IF NOT EXIST %msysloc%\usr\bin\patch.exe IF %toolchain%==msvc GOTO configmesabuild
 @rem Enable S3TC texture cache
 @call %devroot%\%projectname%\buildscript\modules\applypatch.cmd s3tc
-@rem Update Meson subprojects
-@copy /Y %devroot%\%projectname%\patches\zlib.wrap %devroot%\mesa\subprojects\zlib.wrap
-@rem IF %toolchain%==msvc copy /Y %devroot%\%projectname%\patches\zlib.wrap %devroot%\mesa\subprojects\zlib.wrap
-@rem IF %toolchain%==msvc IF EXIST "%devroot%\mesa\subprojects\zlib\" RD /S /Q %devroot%\mesa\subprojects\zlib
-@rem IF %toolchain%==gcc call %devroot%\%projectname%\buildscript\modules\zlibwrapgen.cmd
-@rem IF %toolchain%==gcc for /d %%a in ("%devroot%\mesa\subprojects\zlib-*") do @RD /S /Q "%%~a"
-@rem IF %toolchain%==gcc IF EXIST %devroot%\mesa\subprojects\zlib.wrap del %devroot%\mesa\subprojects\zlib.wrap
+@rem Wrap zlib static library as Meson subproject.
+@IF %toolchain%==msvc copy /Y %devroot%\%projectname%\patches\zlib.wrap %devroot%\mesa\subprojects\zlib.wrap
+@IF %toolchain%==msvc IF EXIST "%devroot%\mesa\subprojects\zlib\" RD /S /Q %devroot%\mesa\subprojects\zlib
+@IF %toolchain%==gcc call %devroot%\%projectname%\buildscript\modules\zlibwrapgen.cmd
+@IF %toolchain%==gcc for /d %%a in ("%devroot%\mesa\subprojects\zlib-*") do @RD /S /Q "%%~a"
+@IF %toolchain%==gcc IF EXIST %devroot%\mesa\subprojects\zlib.wrap del %devroot%\mesa\subprojects\zlib.wrap
 @rem Fix swrAVX512 build
 @IF %intmesaver% LSS 20000 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swravx512
 @IF %intmesaver% GEQ 20000 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swravx512-post-static-link
@@ -92,7 +90,7 @@
 @if NOT %ninjastate%==0 IF %toolchain%==msvc echo.
 @if /I "%useninja%"=="y" if %ninjastate%==1 IF %toolchain%==msvc set PATH=%devroot%\ninja\;%PATH%
 @if /I "%useninja%"=="y" set buildconf=%buildconf% --backend=ninja
-@if /I "%useninja%"=="y" IF %toolchain%==msvc set buildcmd=ninja -j %throttle%
+@if /I "%useninja%"=="y" IF %toolchain%==msvc set buildcmd=ninja -C %devroot:\=/%/mesa/build/%abi% -j %throttle%
 @if /I "%useninja%"=="y" IF %toolchain%==gcc set buildcmd=%msysloc%\usr\bin\bash --login -c "${MINGW_PREFIX}/bin/ninja -C $(/usr/bin/cygpath -m ${devroot})/mesa/build/${abi} -j ${throttle}"
 @if /I NOT "%useninja%"=="y" set buildconf=%buildconf% --backend=vs
 
@@ -144,11 +142,11 @@
 :build_mesa
 @rem Generate dummy header for MSVC build when git is missing.
 @IF %toolchain%==msvc if NOT EXIST build md build
-@if NOT EXIST build\%abi% md build\%abi%
-@if NOT EXIST build\%abi%\src md build\%abi%\src
-@if NOT EXIST build\%abi%\src\git_sha1.h echo 0 > build\%abi%\src\git_sha1.h
+@IF %toolchain%==msvc if NOT EXIST build\%abi% md build\%abi%
+@IF %toolchain%==msvc if NOT EXIST build\%abi%\src md build\%abi%\src
+@IF %toolchain%==msvc if NOT EXIST build\%abi%\src\git_sha1.h echo 0 > build\%abi%\src\git_sha1.h
 
-@rem Prepare build command line tools and set compiler and linker flags.
+@rem Load MSVC environment if used.
 @IF %toolchain%==msvc echo.
 @IF %toolchain%==msvc call %vsenv% %vsabi%
 @IF %toolchain%==msvc echo.
@@ -158,14 +156,14 @@
 @echo.
 @%buildconf%
 @echo.
-@IF %toolchain%==msvc cd build\%abi%
+@if /I NOT "%useninja%"=="y" cd build\%abi%
 @echo Build command: %buildcmd%
 @echo.
 @pause
 @echo.
 @%buildcmd%
 @echo.
-@IF %toolchain%==msvc cd ..\..\
+@if /I NOT "%useninja%"=="y" cd ..\..\
 
 :skipmesa
 @rem Reset environment.
