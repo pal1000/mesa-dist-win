@@ -48,12 +48,17 @@
 @IF NOT EXIST %devroot%\mesa\subprojects\.gitignore echo.
 @IF NOT EXIST %devroot%\mesa\subprojects\.gitignore GOTO skipmesa
 
-@REM Collect information about Mesa3D code. Apply patches
+@REM Collect information about Mesa3D code. Apply patches and wrap suprojects.
 @if %gitstate%==0 IF NOT EXIST %msysloc%\usr\bin\patch.exe IF %toolchain%==msvc GOTO configmesabuild
 @rem Enable S3TC texture cache
 @call %devroot%\%projectname%\buildscript\modules\applypatch.cmd s3tc
 @rem Update Meson subprojects
 @copy /Y %devroot%\%projectname%\patches\zlib.wrap %devroot%\mesa\subprojects\zlib.wrap
+@rem IF %toolchain%==msvc copy /Y %devroot%\%projectname%\patches\zlib.wrap %devroot%\mesa\subprojects\zlib.wrap
+@rem IF %toolchain%==msvc IF EXIST "%devroot%\mesa\subprojects\zlib\" RD /S /Q %devroot%\mesa\subprojects\zlib
+@rem IF %toolchain%==gcc call %devroot%\%projectname%\buildscript\modules\zlibwrapgen.cmd
+@rem IF %toolchain%==gcc for /d %%a in ("%devroot%\mesa\subprojects\zlib-*") do @RD /S /Q "%%~a"
+@rem IF %toolchain%==gcc IF EXIST %devroot%\mesa\subprojects\zlib.wrap del %devroot%\mesa\subprojects\zlib.wrap
 @rem Fix swrAVX512 build
 @IF %intmesaver% LSS 20000 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swravx512
 @IF %intmesaver% GEQ 20000 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swravx512-post-static-link
@@ -66,7 +71,7 @@
 @rem Configure Mesa build.
 @set buildconf=%mesonloc% build/%abi% --default-library=static --buildtype=release --prefix=%devroot:\=/%/%projectname%/dist/%abi%
 @IF %toolchain%==msvc set buildconf=%buildconf% -Db_vscrt=mt
-@IF %toolchain%==gcc set buildconf=%buildconf% --wrap-mode=forcefallback -Dc_args='-march=core2 -pipe'  -Dcpp_args='-march=core2 -pipe' -Dc_link_args='-static -s' -Dcpp_link_args='-static -s'
+@IF %toolchain%==gcc set buildconf=%buildconf% --wrap-mode=forcefallback -Dc_args='-march=core2 -pipe' -Dcpp_args='-march=core2 -pipe' -Dc_link_args='-static -s' -Dcpp_link_args='-static -s'
 @set buildcmd=msbuild /p^:Configuration=release,Platform=Win32 mesa.sln /m^:%throttle%
 @IF %abi%==x64 set buildcmd=msbuild /p^:Configuration=release,Platform=x64 mesa.sln /m^:%throttle%
 
