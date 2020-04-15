@@ -21,7 +21,7 @@ IF %toolchain%==msvc echo llvmloc = run_command^('cmd', '/c', 'echo %devroot:\=/
 IF %toolchain%==gcc echo llvmloc = run_command^('%devroot:\=/%/%projectname%/buildscript/modules/msysmingwruntimeloc.cmd'^).stdout^(^).strip^(^)
 echo _search = llvmloc + '/lib'
 echo foreach d ^: [%llvmlibs%]
-echo   _deps += cpp.find_library^(d, dirs ^: _search^)
+echo   _deps += cpp.find_library^(d, dirs ^: _search, static ^: true^)
 echo endforeach
 echo.
 echo dep_llvm = declare_dependency^(

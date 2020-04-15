@@ -2,12 +2,13 @@
 ### Build script
 - MSYS2: Use Meson builtin options to pass compiler and linker flags;
 - Remove Scons build support;
-- Refactor: cleanup variaables defined for Scons build;
+- Refactor: cleanup variables defined for Scons build;
 - Refactor: use a consistent path format in MSYS2;
 - MSYS2: Add a hardcoded libraries list to use when llvm-config is busted;
 - MSYS2: Use pacman to find LLVM version in Meson wrap generator;
 - Don't fail to apply Mesa3D patches via MSYS2 GNU patch if available when building with MSVC and git is missing;
-- Support wrapping MSYS2 mingw-w64-zlib static library.
+- Support custom wrapping MSYS2 mingw-w64-zlib static library;
+- Always explicity request static libraries in custom wrap generators.
 ### .gitignore
 - Prepare for binary distribution using Meson install layout.
 # 20.0.4

@@ -9,7 +9,7 @@ echo _deps = []
 echo zlibloc = run_command^('%devroot:\=/%/%projectname%/buildscript/modules/msysmingwruntimeloc.cmd'^).stdout^(^).strip^(^)
 echo _search = zlibloc + '/lib'
 echo foreach d ^: ['libz']
-echo   _deps += cpp.find_library^(d, dirs ^: _search, static^: true^)
+echo   _deps += cpp.find_library^(d, dirs ^: _search, static ^: true^)
 echo endforeach
 echo.
 echo zlib_dep = declare_dependency^(
