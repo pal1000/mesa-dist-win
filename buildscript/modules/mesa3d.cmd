@@ -49,6 +49,10 @@
 
 @REM Collect information about Mesa3D code. Apply patches and wrap suprojects.
 @if %gitstate%==0 IF NOT EXIST %msysloc%\usr\bin\patch.exe IF %toolchain%==msvc GOTO configmesabuild
+@set disablemesapatch=0
+@IF %disablemesapatch%==1 echo WARNING: Patching is forcefully disabled!
+@IF %disablemesapatch%==1 echo.
+@IF %disablemesapatch%==1 GOTO configmesabuild
 @rem Enable S3TC texture cache
 @call %devroot%\%projectname%\buildscript\modules\applypatch.cmd s3tc
 @rem Wrap zlib static library as Meson subproject.

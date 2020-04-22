@@ -8,7 +8,8 @@
 - MSYS2: Use pacman to find LLVM version in Meson wrap generator;
 - Don't fail to apply Mesa3D patches via MSYS2 GNU patch if available when building with MSVC and git is missing;
 - Support custom wrapping MSYS2 mingw-w64-zlib static library;
-- Always explicity request static libraries in custom wrap generators.
+- Always explicity request static libraries in custom wrap generators;
+- Provide support for disabling out of tree patches to ease upstreaming.
 ### .gitignore
 - Prepare for binary distribution using Meson install layout.
 # 20.0.4
