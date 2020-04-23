@@ -18,8 +18,8 @@
 @MD dist\%abi%\lib
 @MD dist\%abi%\lib\pkgconfig
 @MD dist\%abi%\include
-@MD dist\%abi%\bin\osmesa-gallium
-@MD dist\%abi%\bin\osmesa-swrast
+@IF %toolchain%==msvc MD dist\%abi%\bin\osmesa-gallium
+@IF %toolchain%==msvc MD dist\%abi%\bin\osmesa-swrast
 @MD dist\%abi%\share
 @MD dist\%abi%\share\drirc.d
 @GOTO mesondist
@@ -32,8 +32,8 @@
 @if EXIST %abi% RD /S /Q %abi%
 @MD %abi%
 @cd %abi%
-@MD osmesa-gallium
-@MD osmesa-swrast
+@IF %toolchain%==msvc MD osmesa-gallium
+@IF %toolchain%==msvc MD osmesa-swrast
 @cd ..\..\lib
 @if EXIST %abi% RD /S /Q %abi%
 @MD %abi%
@@ -42,9 +42,10 @@
 @MD %abi%
 
 :mesondist
-@forfiles /p %devroot%\mesa\build\%abi% /s /m *.dll /c "cmd /c IF NOT @file==0x22osmesa.dll0x22 copy @path %devroot%\%projectname%\bin\%abi%"
-@IF EXIST %devroot%\mesa\build\%abi%\src\mesa\drivers\osmesa\osmesa.dll copy %devroot%\mesa\build\%abi%\src\mesa\drivers\osmesa\osmesa.dll %devroot%\%projectname%\bin\%abi%\osmesa-swrast\osmesa.dll
-@IF EXIST %devroot%\mesa\build\%abi%\src\gallium\targets\osmesa\osmesa.dll copy %devroot%\mesa\build\%abi%\src\gallium\targets\osmesa\osmesa.dll %devroot%\%projectname%\bin\%abi%\osmesa-gallium\osmesa.dll
+@IF %toolchain%==msvc forfiles /p %devroot%\mesa\build\%abi% /s /m *.dll /c "cmd /c IF NOT @file==0x22osmesa.dll0x22 copy @path %devroot%\%projectname%\bin\%abi%"
+@IF %toolchain%==msvc IF EXIST %devroot%\mesa\build\%abi%\src\mesa\drivers\osmesa\osmesa.dll copy %devroot%\mesa\build\%abi%\src\mesa\drivers\osmesa\osmesa.dll %devroot%\%projectname%\bin\%abi%\osmesa-swrast\osmesa.dll
+@IF %toolchain%==msvc IF EXIST %devroot%\mesa\build\%abi%\src\gallium\targets\osmesa\osmesa.dll copy %devroot%\mesa\build\%abi%\src\gallium\targets\osmesa\osmesa.dll %devroot%\%projectname%\bin\%abi%\osmesa-gallium\osmesa.dll
+@IF %toolchain%==gcc forfiles /p %devroot%\mesa\build\%abi% /s /m *.dll /c "cmd /c copy @path %devroot%\%projectname%\bin\%abi%"
 @forfiles /p %devroot%\mesa\build\%abi% /s /m *.exe /c "cmd /c copy @path %devroot%\%projectname%\bin\%abi%"
 @rem Copy build development artifacts
 @xcopy %devroot%\mesa\build\%abi%\*.lib %devroot%\%projectname%\lib\%abi% /E /I /G
