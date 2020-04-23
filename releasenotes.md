@@ -1,4 +1,5 @@
-# Next release
+# 20.0.5
+- Updated Mesa3D to [20.0.5](https://www.mesa3d.org/relnotes/20.0.5.html).
 ### Build script
 - MSYS2: Use Meson builtin options to pass compiler and linker flags;
 - Remove Scons build support;
