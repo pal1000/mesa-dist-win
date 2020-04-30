@@ -4,6 +4,8 @@
 ### Build configure
 - zlib: Unify MSVC and MSYS2 wrap generators in a single module;
 - Meson: Avoid reconfiguration by ensuring wrap files don't get dirty if unchanged.
+### Patches
+- Fix regression with native mingw builds affecting 20.1 and master branches.
 # 20.0.5
 - Updated Mesa3D to [20.0.5](https://www.mesa3d.org/relnotes/20.0.5.html).
 ### Build script

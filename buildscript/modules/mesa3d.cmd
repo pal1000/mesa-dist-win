@@ -47,7 +47,10 @@
 @IF NOT EXIST %devroot%\mesa\subprojects\.gitignore echo.
 @IF NOT EXIST %devroot%\mesa\subprojects\.gitignore GOTO skipmesa
 
-@REM Collect information about Mesa3D code. Apply patches and wrap suprojects.
+@rem Wrap zlib static library as Meson subproject.
+@call %devroot%\%projectname%\buildscript\modules\zlibwrapgen.cmd
+
+@REM Collect information about Mesa3D code. Apply patches.
 @if %gitstate%==0 IF NOT EXIST %msysloc%\usr\bin\patch.exe IF %toolchain%==msvc GOTO configmesabuild
 @set disablemesapatch=0
 @IF %disablemesapatch%==1 echo WARNING: Patching is forcefully disabled!
@@ -55,8 +58,6 @@
 @IF %disablemesapatch%==1 GOTO configmesabuild
 @rem Enable S3TC texture cache
 @call %devroot%\%projectname%\buildscript\modules\applypatch.cmd s3tc
-@rem Wrap zlib static library as Meson subproject.
-@call %devroot%\%projectname%\buildscript\modules\zlibwrapgen.cmd
 @rem Fix swrAVX512 build
 @IF %intmesaver% LSS 20000 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swravx512
 @IF %intmesaver% GEQ 20000 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swravx512-post-static-link
@@ -64,6 +65,8 @@
 @IF %intmesaver% LSS 19303 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd filename-parity
 @rem Make possible to build both osmesa gallium and swrast at the same time with Meson
 @call %devroot%\%projectname%\buildscript\modules\applypatch.cmd meson-build-both-osmesa
+@rem Fix regression when building with native mingw toolchains affecting Mesa 20.1 branch and master
+@IF %intmesaver% GEQ 20100 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd winepath
 
 :configmesabuild
 @rem Configure Mesa build.
