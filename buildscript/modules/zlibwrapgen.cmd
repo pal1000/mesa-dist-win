@@ -1,11 +1,14 @@
 @setlocal
-@IF %toolchain%==msvc copy /Y %devroot%\%projectname%\patches\zlib.wrap %devroot%\mesa\subprojects\zlib.wrap
+@set ERRORLEVEL=0
+@IF %toolchain%==msvc FC /B %devroot%\%projectname%\patches\zlib.wrap %devroot%\mesa\subprojects\zlib.wrap>NUL 2>&1
+@IF ERRORLEVEL 1 copy /Y %devroot%\%projectname%\patches\zlib.wrap %devroot%\mesa\subprojects\zlib.wrap
 @IF %toolchain%==msvc IF EXIST "%devroot%\mesa\subprojects\zlib\" RD /S /Q %devroot%\mesa\subprojects\zlib
 @IF %toolchain%==msvc SET zlibver=none
 @IF %toolchain%==gcc for /d %%a in ("%devroot%\mesa\subprojects\zlib-*") do @RD /S /Q "%%~a"
 @IF %toolchain%==gcc IF EXIST %devroot%\mesa\subprojects\zlib.wrap del %devroot%\mesa\subprojects\zlib.wrap
 @IF %toolchain%==gcc FOR /F USEBACKQ^ tokens^=5^ delims^=-^  %%a IN (`%msysloc%\usr\bin\bash --login -c "/usr/bin/pacman -Q ${MINGW_PACKAGE_PREFIX}-zlib"`) DO @SET zlibver=%%~a
-@IF %toolchain%==gcc IF NOT EXIST %devroot%\mesa\subprojects\zlib md %devroot%\mesa\subprojects\zlib
+@IF %toolchain%==gcc IF NOT EXIST "%devroot%\mesa\subprojects\zlib\" md %devroot%\mesa\subprojects\zlib
+@IF %toolchain%==gcc IF NOT EXIST "%devroot%\%projectname%\buildscript\assets\" md %devroot%\%projectname%\buildscript\assets
 @IF %toolchain%==gcc (
 echo project^('zlib', ['cpp']^)
 echo.
@@ -23,5 +26,8 @@ echo   include_directories ^: include_directories^(zlibloc + '/include'^),
 echo   dependencies ^: _deps,
 echo   version ^: '%zlibver%',
 echo ^)
-)>%devroot%\mesa\subprojects\zlib\meson.build
+)>%devroot%\%projectname%\buildscript\assets\zlib-wrap.txt
+@set ERRORLEVEL=0
+@IF %toolchain%==gcc FC /B %devroot%\%projectname%\buildscript\assets\zlib-wrap.txt %devroot%\mesa\subprojects\zlib\meson.build>NUL 2>&1
+@IF ERRORLEVEL 1 copy /Y %devroot%\%projectname%\buildscript\assets\zlib-wrap.txt %devroot%\mesa\subprojects\zlib\meson.build
 @endlocal

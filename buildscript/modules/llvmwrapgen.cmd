@@ -11,7 +11,8 @@
 @set llvmlibs='%llvmlibs: =', '%'
 @set llvmconfigbusted=0
 @IF %toolchain%==gcc IF %llvmconfigbusted%==1 set llvmlibs='libLLVMCoroutines', 'libLLVMipo', 'libLLVMInstrumentation', 'libLLVMVectorize', 'libLLVMLinker', 'libLLVMIRReader', 'libLLVMAsmParser', 'libLLVMX86Disassembler', 'libLLVMX86AsmParser', 'libLLVMX86CodeGen', 'libLLVMCFGuard', 'libLLVMGlobalISel', 'libLLVMSelectionDAG', 'libLLVMAsmPrinter', 'libLLVMDebugInfoDWARF', 'libLLVMCodeGen', 'libLLVMScalarOpts', 'libLLVMInstCombine', 'libLLVMAggressiveInstCombine', 'libLLVMTransformUtils', 'libLLVMBitWriter', 'libLLVMX86Desc', 'libLLVMMCDisassembler', 'libLLVMX86Utils', 'libLLVMX86Info', 'libLLVMMCJIT', 'libLLVMExecutionEngine', 'libLLVMTarget', 'libLLVMAnalysis', 'libLLVMProfileData', 'libLLVMRuntimeDyld', 'libLLVMObject', 'libLLVMTextAPI', 'libLLVMMCParser', 'libLLVMBitReader', 'libLLVMMC', 'libLLVMDebugInfoCodeView', 'libLLVMDebugInfoMSF', 'libLLVMCore', 'libLLVMRemarks', 'libLLVMBitstreamReader', 'libLLVMBinaryFormat', 'libLLVMSupport', 'libLLVMDemangle'
-@IF NOT EXIST %devroot%\mesa\subprojects\llvm md %devroot%\mesa\subprojects\llvm
+@IF NOT EXIST "%devroot%\mesa\subprojects\llvm\" md %devroot%\mesa\subprojects\llvm
+@IF NOT EXIST "%devroot%\%projectname%\buildscript\assets\" md %devroot%\%projectname%\buildscript\assets
 @(echo project^('llvm', ['cpp']^)
 echo.
 echo cpp = meson.get_compiler^('cpp'^)
@@ -32,5 +33,8 @@ echo ^)
 echo.
 echo has_rtti = %RTTI%
 echo irbuilder_h = files^(llvmloc + '/include/llvm/IR/IRBuilder.h'^)
-)>%devroot%\mesa\subprojects\llvm\meson.build
+)>%devroot%\%projectname%\buildscript\assets\llvm-wrap.txt
+@set ERRORLEVEL=0
+@FC /B %devroot%\%projectname%\buildscript\assets\llvm-wrap.txt %devroot%\mesa\subprojects\llvm\meson.build>NUL 2>&1
+@IF ERRORLEVEL 1 copy /Y %devroot%\%projectname%\buildscript\assets\llvm-wrap.txt %devroot%\mesa\subprojects\llvm\meson.build
 @endlocal

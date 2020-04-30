@@ -2,7 +2,8 @@
 ### Distribution creation
 - Take into account that osmesa swrast is missing from MSYS2 MinGW-w64 release package.
 ### Build configure
-- zlib: Unify MSVC and MSYS2 wrap generators in a single module.
+- zlib: Unify MSVC and MSYS2 wrap generators in a single module;
+- Meson: Avoid reconfiguration by ensuring wrap files don't get dirty if unchanged.
 # 20.0.5
 - Updated Mesa3D to [20.0.5](https://www.mesa3d.org/relnotes/20.0.5.html).
 ### Build script
