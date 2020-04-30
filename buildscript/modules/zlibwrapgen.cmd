@@ -1,7 +1,13 @@
 @setlocal
-@FOR /F USEBACKQ^ tokens^=5^ delims^=-^  %%a IN (`%msysloc%\usr\bin\bash --login -c "/usr/bin/pacman -Q ${MINGW_PACKAGE_PREFIX}-zlib"`) DO @SET zlibver=%%~a
-@IF NOT EXIST %devroot%\mesa\subprojects\zlib md %devroot%\mesa\subprojects\zlib
-@(echo project^('zlib', ['cpp']^)
+@IF %toolchain%==msvc copy /Y %devroot%\%projectname%\patches\zlib.wrap %devroot%\mesa\subprojects\zlib.wrap
+@IF %toolchain%==msvc IF EXIST "%devroot%\mesa\subprojects\zlib\" RD /S /Q %devroot%\mesa\subprojects\zlib
+@IF %toolchain%==msvc SET zlibver=none
+@IF %toolchain%==gcc for /d %%a in ("%devroot%\mesa\subprojects\zlib-*") do @RD /S /Q "%%~a"
+@IF %toolchain%==gcc IF EXIST %devroot%\mesa\subprojects\zlib.wrap del %devroot%\mesa\subprojects\zlib.wrap
+@IF %toolchain%==gcc FOR /F USEBACKQ^ tokens^=5^ delims^=-^  %%a IN (`%msysloc%\usr\bin\bash --login -c "/usr/bin/pacman -Q ${MINGW_PACKAGE_PREFIX}-zlib"`) DO @SET zlibver=%%~a
+@IF %toolchain%==gcc IF NOT EXIST %devroot%\mesa\subprojects\zlib md %devroot%\mesa\subprojects\zlib
+@IF %toolchain%==gcc (
+echo project^('zlib', ['cpp']^)
 echo.
 echo cpp = meson.get_compiler^('cpp'^)
 echo.

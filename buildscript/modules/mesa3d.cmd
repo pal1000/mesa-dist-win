@@ -56,11 +56,7 @@
 @rem Enable S3TC texture cache
 @call %devroot%\%projectname%\buildscript\modules\applypatch.cmd s3tc
 @rem Wrap zlib static library as Meson subproject.
-@IF %toolchain%==msvc copy /Y %devroot%\%projectname%\patches\zlib.wrap %devroot%\mesa\subprojects\zlib.wrap
-@IF %toolchain%==msvc IF EXIST "%devroot%\mesa\subprojects\zlib\" RD /S /Q %devroot%\mesa\subprojects\zlib
-@IF %toolchain%==gcc call %devroot%\%projectname%\buildscript\modules\zlibwrapgen.cmd
-@IF %toolchain%==gcc for /d %%a in ("%devroot%\mesa\subprojects\zlib-*") do @RD /S /Q "%%~a"
-@IF %toolchain%==gcc IF EXIST %devroot%\mesa\subprojects\zlib.wrap del %devroot%\mesa\subprojects\zlib.wrap
+@call %devroot%\%projectname%\buildscript\modules\zlibwrapgen.cmd
 @rem Fix swrAVX512 build
 @IF %intmesaver% LSS 20000 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swravx512
 @IF %intmesaver% GEQ 20000 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swravx512-post-static-link
