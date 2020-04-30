@@ -1,4 +1,5 @@
-# Next release
+# 20.0.6
+- Updated Mesa3D to [20.0.6](https://www.mesa3d.org/relnotes/20.0.6.html).
 ### Distribution creation
 - Take into account that osmesa swrast is missing from MSYS2 MinGW-w64 release package.
 ### Build configure
