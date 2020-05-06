@@ -1,7 +1,7 @@
 @setlocal
-@set ERRORLEVEL=0
+@CMD /C EXIT 0
 @IF %toolchain%==msvc FC /B %devroot%\%projectname%\patches\zlib.wrap %devroot%\mesa\subprojects\zlib.wrap>NUL 2>&1
-@IF ERRORLEVEL 1 (
+@if NOT "%ERRORLEVEL%"=="0" (
 @copy /Y %devroot%\%projectname%\patches\zlib.wrap %devroot%\mesa\subprojects\zlib.wrap
 @echo.
 )
@@ -30,9 +30,9 @@ echo   dependencies ^: _deps,
 echo   version ^: '%zlibver%',
 echo ^)
 )>%devroot%\%projectname%\buildscript\assets\zlib-wrap.txt
-@set ERRORLEVEL=0
+@CMD /C EXIT 0
 @IF %toolchain%==gcc FC /B %devroot%\%projectname%\buildscript\assets\zlib-wrap.txt %devroot%\mesa\subprojects\zlib\meson.build>NUL 2>&1
-@IF ERRORLEVEL 1 (
+@if NOT "%ERRORLEVEL%"=="0" (
 @copy /Y %devroot%\%projectname%\buildscript\assets\zlib-wrap.txt %devroot%\mesa\subprojects\zlib\meson.build
 @echo.
 )

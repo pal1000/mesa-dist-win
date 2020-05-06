@@ -19,9 +19,9 @@
 )
 
 @set mesonstate=2
-@SET ERRORLEVEL=0
+@CMD /C EXIT 0
 @where /q meson.exe
-@IF ERRORLEVEL 1 set mesonstate=1
+@if NOT "%ERRORLEVEL%"=="0" set mesonstate=1
 @IF NOT EXIST %pythonloc:~0,-10%Scripts\meson.py IF NOT EXIST %pythonloc:~0,-10%Scripts\meson.exe (
 @set pypack=meson
 @GOTO pypackinstall

@@ -7,6 +7,7 @@
 @for %%a in ("%cd%") do @set devroot=%%~sa
 
 @set projectname=mesa-dist-win
+@set "ERRORLEVEL="
 
 @rem Select target architecture
 @call %devroot%\%projectname%\buildscript\modules\abi.cmd

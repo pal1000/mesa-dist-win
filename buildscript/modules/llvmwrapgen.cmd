@@ -34,9 +34,9 @@ echo.
 echo has_rtti = %RTTI%
 echo irbuilder_h = files^(llvmloc + '/include/llvm/IR/IRBuilder.h'^)
 )>%devroot%\%projectname%\buildscript\assets\llvm-wrap.txt
-@set ERRORLEVEL=0
+@CMD /C EXIT 0
 @FC /B %devroot%\%projectname%\buildscript\assets\llvm-wrap.txt %devroot%\mesa\subprojects\llvm\meson.build>NUL 2>&1
-@IF ERRORLEVEL 1 (
+@if NOT "%ERRORLEVEL%"=="0" (
 @copy /Y %devroot%\%projectname%\buildscript\assets\llvm-wrap.txt %devroot%\mesa\subprojects\llvm\meson.build
 @echo.
 )
