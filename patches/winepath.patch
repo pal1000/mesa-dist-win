@@ -1,17 +1,21 @@
 diff --git a/src/util/meson.build b/src/util/meson.build
-index 68ae31f421b20bc01f1d51ae285459d3cb9d923c..12d6cc277367530876764a719b70918bd38113e5 100644
+index 2851c0c9880bf407c8c846710bf036611c01f3c7..9fc2fee482a3fd5e16d1674ebf2dbf2a6d89019d 100644
 --- a/src/util/meson.build
 +++ b/src/util/meson.build
-@@ -287,8 +287,10 @@ if with_tests
+@@ -287,10 +287,13 @@ if with_tests
      dependencies : idep_mesautil,
      c_args : [c_msvc_compat_args],
    )
 -  if (host_machine.system() == 'windows' and cc.get_id() == 'gcc')
 -    # This conversion is only required on mingw
-+  if (host_machine.system() == 'windows' and cc.get_id() == 'gcc' and find_program('winepath', required : false).found())
++  if (host_machine.system() == 'windows' and build_machine.system() != 'windows' and cc.get_id() == 'gcc')
 +    # This conversion is only required on mingw crosscompilers, otherwise we hit at least one of these issues
 +    # https://gitlab.freedesktop.org/mesa/mesa/-/issues/2690
 +    # https://gitlab.freedesktop.org/mesa/mesa/-/issues/2788
++    prog_winepath = find_program('winepath')
      process_test_exe_full_path = run_command(
-       'winepath', '-w', process_test_exe.full_path()
+-      'winepath', '-w', process_test_exe.full_path()
++      prog_winepath, '-w', process_test_exe.full_path()
      ).stdout().strip()
+   else
+     process_test_exe_full_path = process_test_exe.full_path()

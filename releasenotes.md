@@ -1,3 +1,8 @@
+# Next release
+### Build script
+- Misc: Fix setting and testing against errorlevels.
+### Patches
+- Update native mingw buildfix patch for 20.1 and above to v2.
 # 20.0.6
 - Updated Mesa3D to [20.0.6](https://www.mesa3d.org/relnotes/20.0.6.html).
 ### Distribution creation
