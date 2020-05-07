@@ -1,4 +1,6 @@
 # Next release
+### Debug
+- Add a minimal standalone MinGW-W64 build with TDM-GCC.
 ### Build script
 - Misc: Fix setting and testing against errorlevels.
 ### Patches
