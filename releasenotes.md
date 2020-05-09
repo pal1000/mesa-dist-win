@@ -2,9 +2,10 @@
 ### Debug
 - Add a minimal standalone MinGW-W64 build with TDM-GCC.
 ### Build script
-- Misc: Fix setting and testing against errorlevels.
+- Misc: Fix setting and testing against errorlevels;
+- Misc: Load Git for Windows in MSYS2 when available to get commit hash when building with MSYS2 MinGW-w64.
 ### Patches
-- Update native mingw buildfix patch for 20.1 and above to v2.
+- Update native mingw buildfix patch for 20.1 and above to its merged form.
 # 20.0.6
 - Updated Mesa3D to [20.0.6](https://www.mesa3d.org/relnotes/20.0.6.html).
 ### Distribution creation

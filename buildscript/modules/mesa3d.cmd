@@ -66,7 +66,7 @@
 @rem Make possible to build both osmesa gallium and swrast at the same time with Meson
 @call %devroot%\%projectname%\buildscript\modules\applypatch.cmd meson-build-both-osmesa
 @rem Fix regression when building with native mingw toolchains affecting Mesa 20.1 branch and master
-@IF %intmesaver% GEQ 20100 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd winepath
+@IF %intmesaver% GEQ 20100 IF %intmesaver% LSS 20103 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd winepath
 
 :configmesabuild
 @rem Configure Mesa build.
@@ -94,7 +94,9 @@
 @if /I "%useninja%"=="y" if %ninjastate%==1 IF %toolchain%==msvc set PATH=%devroot%\ninja\;%PATH%
 @if /I "%useninja%"=="y" set buildconf=%buildconf% --backend=ninja
 @if /I "%useninja%"=="y" IF %toolchain%==msvc set buildcmd=ninja -C %devroot:\=/%/mesa/build/%abi% -j %throttle%
-@if /I "%useninja%"=="y" IF %toolchain%==gcc set buildcmd=%msysloc%\usr\bin\bash --login -c "${MINGW_PREFIX}/bin/ninja -C $(/usr/bin/cygpath -m ${devroot})/mesa/build/${abi} -j ${throttle}"
+@IF %toolchain%==gcc set buildcmd=%msysloc%\usr\bin\bash --login -c "
+@IF %toolchain%==gcc IF /I NOT %gitloc%==null set buildcmd=%buildcmd%PATH=${PATH}:${gitloc};
+@IF %toolchain%==gcc set buildcmd=%buildcmd%${MINGW_PREFIX}/bin/ninja -C $(/usr/bin/cygpath -m ${devroot})/mesa/build/${abi} -j ${throttle}"
 @if /I NOT "%useninja%"=="y" set buildconf=%buildconf% --backend=vs
 
 @set buildconf=%buildconf% -Dgallium-drivers=swrast

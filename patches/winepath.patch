@@ -1,5 +1,5 @@
 diff --git a/src/util/meson.build b/src/util/meson.build
-index 2851c0c9880bf407c8c846710bf036611c01f3c7..9fc2fee482a3fd5e16d1674ebf2dbf2a6d89019d 100644
+index 2851c0c9880bf407c8c846710bf036611c01f3c7..7ea125e5ac8442c4dfc2c0924e29805a6324d446 100644
 --- a/src/util/meson.build
 +++ b/src/util/meson.build
 @@ -287,10 +287,13 @@ if with_tests
@@ -8,7 +8,7 @@ index 2851c0c9880bf407c8c846710bf036611c01f3c7..9fc2fee482a3fd5e16d1674ebf2dbf2a
    )
 -  if (host_machine.system() == 'windows' and cc.get_id() == 'gcc')
 -    # This conversion is only required on mingw
-+  if (host_machine.system() == 'windows' and build_machine.system() != 'windows' and cc.get_id() == 'gcc')
++  if (host_machine.system() == 'windows' and build_machine.system() != 'windows')
 +    # This conversion is only required on mingw crosscompilers, otherwise we hit at least one of these issues
 +    # https://gitlab.freedesktop.org/mesa/mesa/-/issues/2690
 +    # https://gitlab.freedesktop.org/mesa/mesa/-/issues/2788

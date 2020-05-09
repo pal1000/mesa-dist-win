@@ -6,6 +6,7 @@
 @IF %abi%==x86 set minabi=32
 @set PATH=%devroot%\flexbison\;%devroot%\TDM-GCC-64\bin\;%devroot%\ninja\;%devroot%\pkgconf\build\;%PATH%
 @call %devroot%\mesa-dist-win\buildscript\modules\discoverpython.cmd
+@echo.
 @cd mesa
 @git checkout .
 @set buildconf=meson build/%abi% --default-library=static --buildtype=release -Dllvm=false -Dbuild-tests=true

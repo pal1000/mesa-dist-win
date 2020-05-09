@@ -3,6 +3,7 @@
 @for %%a in ("%cd%") do @set devroot=%%~sa
 @set abi=x86
 @call %devroot%\mesa-dist-win\buildscript\modules\msys.cmd
+@call %devroot%\mesa-dist-win\buildscript\modules\git.cmd
 @%msysloc%\usr\bin\bash --login -c "/usr/bin/pacman -Syu --noconfirm --disable-download-timeout"
 @echo.
 @%msysloc%\usr\bin\bash --login -c "/usr/bin/pacman -Syu --noconfirm --disable-download-timeout"
@@ -13,8 +14,12 @@
 @IF /I "%clean%"=="y" echo.
 
 :command
+@set msyscmd=
 @set /p msyscmd=Enter MSYS2 command:
 @echo.
-@IF /I NOT "%msyscmd%"=="exit" %msysloc%\usr\bin\bash --login -c "%msyscmd%"
-@IF /I NOT "%msyscmd%"=="exit" echo.
-@IF /I NOT "%msyscmd%"=="exit" GOTO command
+@IF /I "%msyscmd%"=="exit" exit
+
+@IF /I NOT %gitloc%==null %msysloc%\usr\bin\bash --login -c "PATH=${PATH}:${gitloc};%msyscmd%"
+@IF /I %gitloc%==null %msysloc%\usr\bin\bash --login -c "%msyscmd%"
+@echo.
+@GOTO command

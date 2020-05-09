@@ -4,4 +4,12 @@
 @set gitstate=2
 @where /q git.exe
 @if NOT "%ERRORLEVEL%"=="0" set gitstate=0
-@endlocal&set gitstate=%gitstate%
+
+@set gitloc=null
+@IF %gitstate% GTR 0 set exitloop=1
+@IF %gitstate% GTR 0 FOR /F "tokens=* USEBACKQ" %%a IN (`where /f git.exe`) DO @IF defined exitloop (
+set "exitloop="
+SET gitloc=%%~a
+)
+@set gitloc=/%gitloc:~0,1%%gitloc:~2,-8%
+@endlocal&set gitstate=%gitstate%&set gitloc=%gitloc:\=/%
