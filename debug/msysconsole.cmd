@@ -3,11 +3,8 @@
 @for %%a in ("%cd%") do @set devroot=%%~sa
 @set abi=x86
 @call %devroot%\mesa-dist-win\buildscript\modules\msys.cmd
+@call %devroot%\mesa-dist-win\buildscript\modules\msysupdate.cmd
 @call %devroot%\mesa-dist-win\buildscript\modules\git.cmd
-@%msysloc%\usr\bin\bash --login -c "/usr/bin/pacman -Syu --noconfirm --disable-download-timeout"
-@echo.
-@%msysloc%\usr\bin\bash --login -c "/usr/bin/pacman -Syu --noconfirm --disable-download-timeout"
-@echo.
 @set /p clean=Clear MSYS2 cache (y/n):
 @echo.
 @IF /I "%clean%"=="y" %msysloc%\usr\bin\bash --login -c "/usr/bin/pacman -Sc --noconfirm"

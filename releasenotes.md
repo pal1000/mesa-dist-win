@@ -1,6 +1,7 @@
 # Next release
 ### Debug
-- Add a minimal standalone MinGW-W64 build with TDM-GCC.
+- Add a minimal standalone MinGW-W64 build with TDM-GCC;
+- MSYS2: Prompt for updates check instead of always doing it.
 ### Build script
 - Misc: Fix setting and testing against errorlevels;
 - Misc: Load Git for Windows in MSYS2 when available to get commit hash when building with MSYS2 MinGW-w64.
