@@ -4,7 +4,8 @@
 - MSYS2: Prompt for updates check instead of always doing it.
 ### Build script
 - Misc: Fix setting and testing against errorlevels;
-- Misc: Load Git for Windows in MSYS2 when available to get commit hash when building with MSYS2 MinGW-w64.
+- Misc: Load Git for Windows in MSYS2 when available to get commit hash when building with MSYS2 MinGW-w64;
+- Ensure git for windows is used over MSYS2 git, when available.
 ### Patches
 - Update native mingw buildfix patch for 20.1 and above to its merged form.
 # 20.0.6

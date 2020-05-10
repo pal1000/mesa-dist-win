@@ -16,7 +16,7 @@
 @echo.
 @IF /I "%msyscmd%"=="exit" exit
 
-@IF /I NOT %gitloc%==null %msysloc%\usr\bin\bash --login -c "PATH=${PATH}:${gitloc};%msyscmd%"
-@IF /I %gitloc%==null %msysloc%\usr\bin\bash --login -c "%msyscmd%"
+@IF %gitstate% GTR 0 %msysloc%\usr\bin\bash --login -c "PATH=${PATH}:${gitloc};%msyscmd%"
+@IF %gitstate% EQU 0 %msysloc%\usr\bin\bash --login -c "%msyscmd%"
 @echo.
 @GOTO command

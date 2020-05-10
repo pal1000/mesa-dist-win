@@ -11,5 +11,5 @@
 set "exitloop="
 SET gitloc=%%~a
 )
-@set gitloc=/%gitloc:~0,1%%gitloc:~2,-8%
+@IF %gitstate% GTR 0 set gitloc=/%gitloc:~0,1%%gitloc:~2,-8%
 @endlocal&set gitstate=%gitstate%&set gitloc=%gitloc:\=/%
