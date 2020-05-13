@@ -45,11 +45,11 @@
 @rem If using MSVC do LLVM build.
 @IF %toolchain%==msvc call %devroot%\%projectname%\buildscript\modules\llvm.cmd
 
-@rem If using MSYS2 Mingw-w64 GCC update MSYS2 packages
-@IF %toolchain%==gcc call %devroot%\%projectname%\buildscript\modules\msysupdate.cmd
+@rem If using MSYS2 Mingw-w64 update MSYS2 packages
+@IF NOT %toolchain%==msvc call %devroot%\%projectname%\buildscript\modules\msysupdate.cmd
 
-@rem If using MSYS2 Mingw-w64 GCC install necessary packages
-@IF %toolchain%==gcc call %devroot%\%projectname%\buildscript\modules\msyspackages.cmd
+@rem If using MSYS2 Mingw-w64 install necessary packages
+@IF NOT %toolchain%==msvc call %devroot%\%projectname%\buildscript\modules\msyspackages.cmd
 
 @rem Binary resource editor
 @call %devroot%\%projectname%\buildscript\modules\resourcehacker.cmd

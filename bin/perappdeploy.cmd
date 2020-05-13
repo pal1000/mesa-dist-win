@@ -80,10 +80,22 @@
 @IF EXIST "%mesaloc%\%mesadll%\swr*.dll" set /p swr=Do you want swr driver - the new desktop OpenGL driver made by Intel (y/n):
 @IF EXIST "%mesaloc%\%mesadll%\swr*.dll" echo.
 @IF /I NOT "%swr%"=="y" GOTO opengles
-@if EXIST "%dir%\swrAVX.dll" echo Updated swr driver deployment.&GOTO deployswr
-@if EXIST "%dir%\swrAVX2.dll" echo Updated swr driver deployment.&GOTO deployswr
-@if EXIST "%dir%\swrSKX.dll" echo Updated swr driver deployment.&GOTO deployswr
-@if EXIST "%dir%\swrKNL.dll" echo Updated swr driver deployment.&GOTO deployswr
+@if EXIST "%dir%\swrAVX.dll" (
+@echo Updated swr driver deployment.
+@GOTO deployswr
+)
+@if EXIST "%dir%\swrAVX2.dll" (
+@echo Updated swr driver deployment.
+@GOTO deployswr
+)
+@if EXIST "%dir%\swrSKX.dll" (
+@echo Updated swr driver deployment.
+@GOTO deployswr
+)
+@if EXIST "%dir%\swrKNL.dll" (
+@echo Updated swr driver deployment.
+@GOTO deployswr
+)
 
 :deployswr
 @if EXIST "%dir%\swrAVX.dll" del "%dir%\swrAVX.dll"
@@ -133,8 +145,14 @@
 @set /p graw=Do you need graw library (y/n):
 @echo.
 @if /I NOT "%graw%"=="y" GOTO restart
-@if EXIST "%dir%\graw.dll" echo Updated Mesa3D graw framework deployment.&GOTO deploygraw
-@if EXIST "%dir%\graw_null.dll" echo Updated Mesa3D graw framework deployment.&GOTO deploygraw
+@if EXIST "%dir%\graw.dll" (
+@echo Updated Mesa3D graw framework deployment.
+@GOTO deploygraw
+)
+@if EXIST "%dir%\graw_null.dll" (
+@echo Updated Mesa3D graw framework deployment.
+@GOTO deploygraw
+)
 
 :deploygraw
 @if EXIST "%dir%\graw.dll" del "%dir%\graw.dll"

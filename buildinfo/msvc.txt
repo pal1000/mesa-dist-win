@@ -4,7 +4,7 @@ Windows 10.0.18363
 Ressource Hacker 5.1.7.343
 7-Zip 20.00 ultra compression
 Git 2.26.2.1
-Visual Studio Community 2019 v16.5.4
+Visual Studio Community 2019 v16.5.5
 Windows SDK 10.0.18362.0
 Python 3.8.2
 
@@ -14,7 +14,7 @@ Mako       1.1.2
 MarkupSafe 1.1.1
 meson      0.54.1
 pip        20.1
-setuptools 46.1.3
+setuptools 46.2.0
 
 CMake 3.17.2
 Ninja 1.10.0
@@ -23,19 +23,3 @@ Winflexbison package 2.5.22
 flex 2.6.4
 Bison 3.5.0
 pkgconf 1.6.3
-
-Build commands
---------------
-[1] md buildsys-x86&cd buildsys-x86&cmake -G "Ninja" -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../x86 ..
-[2] md buildsys-x64&cd buildsys-x64&cmake -G "Ninja" -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DCMAKE_INSTALL_PREFIX=../x64 ..
-[3] ninja install
-[4] scons build=release platform=windows machine=x86 openmp=1 libgl-gdi osmesa graw-gdi
-[4] scons build=release platform=windows machine=x86_64 swr=1 openmp=1 libgl-gdi osmesa graw-gdi
-
-Notes
------
-[0] Apply mesa-dist-win\patches\s3tc.patch to enable S3TC texture cache.
-[1] Natigate to LLVM source code in a Visual Studio x64_x86 Cross Tools Command Prompt and execute this command.
-[2] Natigate to LLVM source code in a Visual Studio x64 Native Tools Command Prompt and execute this command.
-[3] Execute this command after [1] and [2] respectively on same Visual Studio command line console.
-[4] Navigate to Mesa3D source code in a standard Windows Command Prompt and execute any or both these commands.

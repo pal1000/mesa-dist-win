@@ -13,17 +13,26 @@
 :findcompilers
 @set vsenv=null
 @set toolset=0
-
 @set totaltoolchains=0
 @set totalmsvc=0
-@IF EXIST %vswhere% for /F "USEBACKQ tokens=*" %%a IN (`%vswhere% -prerelease -property catalog_productDisplayVersion`) do @set /a totalmsvc+=1&set /a totaltoolchains+=1&set msvcversions[!totalmsvc!]=%%a
-@IF NOT %msysstate%==0 set /a totaltoolchains+=1
+@set gcctoolchain=0
+@IF EXIST %vswhere% for /F "USEBACKQ tokens=*" %%a IN (`%vswhere% -prerelease -property catalog_productDisplayVersion`) do @(
+set /a totalmsvc+=1
+set /a totaltoolchains+=1
+set msvcversions[!totalmsvc!]=%%a
+)
+@IF NOT %msysstate%==0 set /a gcctoolchain=%totaltoolchains%+1
+@IF NOT %msysstate%==0 set /a totaltoolchains+=2
 @set msvccount=0
-@IF EXIST %vswhere% for /F "USEBACKQ tokens=*" %%a IN (`%vswhere% -prerelease -property displayName`) do @set /a msvccount+=1&set msvcnames[!msvccount!]=%%a
+@IF EXIST %vswhere% for /F "USEBACKQ tokens=*" %%a IN (`%vswhere% -prerelease -property displayName`) do @(
+set /a msvccount+=1
+set msvcnames[!msvccount!]=%%a
+)
 @cls
 @echo Available compilers
 @IF %totalmsvc% GTR 0 FOR /L %%a IN (1,1,%totalmsvc%) do @echo %%a.!msvcnames[%%a]! v!msvcversions[%%a]!
-@IF NOT %msysstate%==0 echo %totaltoolchains%. MSYS2 Mingw-w64 GCC
+@IF NOT %msysstate%==0 echo %gcctoolchain%. MSYS2 Mingw-w64 GCC
+@IF NOT %msysstate%==0 echo %totaltoolchains%. MSYS2 Mingw-w64 clang
 @echo.
 @IF %totaltoolchains%==0 (
 @echo Error: No compiler found. Cannot continue.
@@ -37,6 +46,10 @@
 @set /p selecttoolchain=Select compiler:
 @echo.
 @IF "%selecttoolchain%"=="%totaltoolchains%" IF NOT %msysstate%==0 (
+@set toolchain=clang
+@GOTO selectedclang
+)
+@IF "%selecttoolchain%"=="%gcctoolchain%" IF NOT %msysstate%==0 (
 @set toolchain=gcc
 @GOTO selectedgcc
 )
@@ -56,8 +69,14 @@
 
 @rem Determine version and build enviroment launcher PATH for selected Visual Studio installation
 @set msvccount=0
-@for /F "USEBACKQ tokens=*" %%a IN (`%vswhere% -prerelease -property installationPath`) do @set /a msvccount+=1&IF !msvccount!==%selecttoolchain% set vsenv="%%a\VC\Auxiliary\Build\vcvarsall.bat"
-@FOR /L %%a IN (1,1,%totalmsvc%) do @IF "%%a"=="%selecttoolchain%" set msvcname=!msvcnames[%%a]!&IF "%%a"=="%selecttoolchain%" set msvcver=!msvcversions[%%a]!
+@for /F "USEBACKQ tokens=*" %%a IN (`%vswhere% -prerelease -property installationPath`) do @(
+set /a msvccount+=1
+IF !msvccount!==%selecttoolchain% set vsenv="%%a\VC\Auxiliary\Build\vcvarsall.bat"
+)
+@FOR /L %%a IN (1,1,%totalmsvc%) do @(
+IF "%%a"=="%selecttoolchain%" set msvcname=!msvcnames[%%a]!
+IF "%%a"=="%selecttoolchain%" set msvcver=!msvcversions[%%a]!
+)
 
 :novcpp
 @IF NOT EXIST %vsenv% echo Error: Selected Visual Studio installation lacks Desktop development with C++ workload necessary to build Mesa3D.
@@ -75,6 +94,9 @@
 
 :selectedgcc
 @set TITLE=%TITLE% using MSYS2 Mingw-w64 GCC
+
+:selectedclang
+@set TITLE=%TITLE% using MSYS2 Mingw-w64 clang
 
 :selectedcompiler
 @TITLE %TITLE%

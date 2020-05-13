@@ -65,20 +65,22 @@
 @IF %intmesaver% LSS 19303 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd filename-parity
 @rem Make possible to build both osmesa gallium and swrast at the same time with Meson
 @call %devroot%\%projectname%\buildscript\modules\applypatch.cmd meson-build-both-osmesa
-@rem Fix regression when building with native mingw toolchains affecting Mesa 20.1 branch and master
+@rem Fix regression when building with native mingw toolchains affecting Mesa 20.1 branch
 @IF %intmesaver% GEQ 20100 IF %intmesaver% LSS 20103 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd winepath
 
 :configmesabuild
 @rem Configure Mesa build.
 @set buildconf=%mesonloc% build/%abi% --default-library=static --buildtype=release --prefix=%devroot:\=/%/%projectname%/dist/%abi%
 @IF %toolchain%==msvc set buildconf=%buildconf% -Db_vscrt=mt
-@IF %toolchain%==gcc set buildconf=%buildconf% --wrap-mode=forcefallback -Dc_args='-march=core2 -pipe' -Dcpp_args='-march=core2 -pipe' -Dc_link_args='-static -s' -Dcpp_link_args='-static -s'
+@IF NOT %toolchain%==msvc set buildconf=%buildconf% --wrap-mode=forcefallback -Dc_args='-march=core2 -pipe' -Dcpp_args='-march=core2 -pipe' -Dc_link_args='-static -s' -Dcpp_link_args='-static -s'
+@IF %toolchain%==clang set CC=clang
+@IF %toolchain%==clang set CXX=clang++
 @set buildcmd=msbuild /p^:Configuration=release,Platform=Win32 mesa.sln /m^:%throttle%
 @IF %abi%==x64 set buildcmd=msbuild /p^:Configuration=release,Platform=x64 mesa.sln /m^:%throttle%
 
 @set havellvm=0
 @IF EXIST %devroot%\llvm\%abi% set havellvm=1
-@IF %toolchain%==gcc set havellvm=1
+@IF NOT %toolchain%==msvc set havellvm=1
 @set llvmless=n
 @if %havellvm%==0 set llvmless=y
 @if %havellvm%==1 set /p llvmless=Build Mesa without LLVM (y/n). llvmpipe and swr drivers and high performance JIT won't be available for other drivers and libraries:
@@ -88,22 +90,22 @@
 @if /I "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm=false
 
 @set useninja=n
-@IF %toolchain%==gcc set useninja=y
+@IF NOT %toolchain%==msvc set useninja=y
 @if NOT %ninjastate%==0 IF %toolchain%==msvc set /p useninja=Use Ninja build system instead of MsBuild (y/n); less storage device strain and maybe faster build:
 @if NOT %ninjastate%==0 IF %toolchain%==msvc echo.
 @if /I "%useninja%"=="y" if %ninjastate%==1 IF %toolchain%==msvc set PATH=%devroot%\ninja\;%PATH%
 @if /I "%useninja%"=="y" set buildconf=%buildconf% --backend=ninja
 @if /I "%useninja%"=="y" IF %toolchain%==msvc set buildcmd=ninja -C %devroot:\=/%/mesa/build/%abi% -j %throttle%
-@IF %toolchain%==gcc set buildcmd=%msysloc%\usr\bin\bash --login -c "
-@IF %toolchain%==gcc IF %gitstate% GTR 0 set buildcmd=%buildcmd%PATH=${PATH}:${gitloc};
-@IF %toolchain%==gcc set buildcmd=%buildcmd%${MINGW_PREFIX}/bin/ninja -C $(/usr/bin/cygpath -m ${devroot})/mesa/build/${abi} -j ${throttle}"
+@IF NOT %toolchain%==msvc set buildcmd=%msysloc%\usr\bin\bash --login -c "
+@IF NOT %toolchain%==msvc IF %gitstate% GTR 0 set buildcmd=%buildcmd%PATH=${PATH}:${gitloc};
+@IF NOT %toolchain%==msvc set buildcmd=%buildcmd%${MINGW_PREFIX}/bin/ninja -C $(/usr/bin/cygpath -m ${devroot})/mesa/build/${abi} -j ${throttle}"
 @if /I NOT "%useninja%"=="y" set buildconf=%buildconf% --backend=vs
 
 @set buildconf=%buildconf% -Dgallium-drivers=swrast
 
 @set zink=n
-@rem IF %toolchain%==gcc set /p zink=Do you want to build Mesa3D OpenGL driver over Vulkan - zink (y/n):
-@rem IF %toolchain%==gcc echo.
+@rem IF NOT %toolchain%==msvc set /p zink=Do you want to build Mesa3D OpenGL driver over Vulkan - zink (y/n):
+@rem IF NOT %toolchain%==msvc echo.
 @IF /I "%zink%"=="y" set buildconf=%buildconf%,zink
 
 @set swrdrv=n
@@ -120,8 +122,8 @@
 @echo.
 @IF /I "%osmesa%"=="y" set buildconf=%buildconf% -Dosmesa=gallium,classic
 @IF /I "%osmesa%"=="y" if %gitstate%==0 IF %toolchain%==msvc set buildconf=%buildconf:~0,-8%
-@rem Disable osmesa classic when building with Meson and Mingw due to build failure
-@IF /I "%osmesa%"=="y" IF %toolchain%==gcc set buildconf=%buildconf:~0,-8%
+@rem Disable osmesa classic when building with Meson and Mingw toolchains due to build failure
+@IF /I "%osmesa%"=="y" IF NOT %toolchain%==msvc set buildconf=%buildconf:~0,-8%
 
 @set graw=n
 @set /p graw=Do you want to build graw library (y/n):
@@ -134,7 +136,7 @@
 @rem IF %intmesaver% GEQ 20000 if /I NOT "%llvmless%"=="y" IF %toolchain%==msvc echo.
 @IF /I "%opencl%"=="y" set buildconf=%buildconf% -Dgallium-opencl=standalone
 
-@if %toolchain%==gcc set buildconf=%buildconf%"
+@if NOT %toolchain%==msvc set buildconf=%buildconf%"
 
 @if EXIST build\%abi% echo WARNING: Meson build always performs clean build. This is last chance to cancel build.
 @if EXIST build\%abi% pause

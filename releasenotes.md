@@ -5,9 +5,12 @@
 ### Build script
 - Misc: Fix setting and testing against errorlevels;
 - Misc: Load Git for Windows in MSYS2 when available to get commit hash when building with MSYS2 MinGW-w64;
-- Ensure git for windows is used over MSYS2 git, when available.
+- Ensure git for windows is used over MSYS2 git, when available;
+- Support MSYS2 MinGW-W64 clang compiler.
 ### Patches
 - Update native mingw buildfix patch for 20.1 and above to its merged form.
+### Build enviroment information document
+- Remove build commands section due to bit rot.
 # 20.0.6
 - Updated Mesa3D to [20.0.6](https://www.mesa3d.org/relnotes/20.0.6.html).
 ### Distribution creation
