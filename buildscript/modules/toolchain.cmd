@@ -94,6 +94,7 @@ IF "%%a"=="%selecttoolchain%" set msvcver=!msvcversions[%%a]!
 
 :selectedgcc
 @set TITLE=%TITLE% using MSYS2 Mingw-w64 GCC
+@GOTO selectedcompiler
 
 :selectedclang
 @set TITLE=%TITLE% using MSYS2 Mingw-w64 clang

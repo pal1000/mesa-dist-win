@@ -1,4 +1,5 @@
-# Next release
+# 20.0.7
+- Updated Mesa3D to [20.0.7](https://www.mesa3d.org/relnotes/20.0.7.html).
 ### Debug
 - Add a minimal standalone MinGW-W64 build with TDM-GCC;
 - MSYS2: Prompt for updates check instead of always doing it.
