@@ -6,7 +6,8 @@
 - Misc: Fix setting and testing against errorlevels;
 - Misc: Load Git for Windows in MSYS2 when available to get commit hash when building with MSYS2 MinGW-w64;
 - Ensure git for windows is used over MSYS2 git, when available;
-- Support MSYS2 MinGW-W64 clang compiler.
+- Support MSYS2 MinGW-W64 clang compiler;
+- LLVM: Remove some unnecessary build targets from configuration.
 ### Patches
 - Update native mingw buildfix patch for 20.1 and above to its merged form.
 ### Build enviroment information document
