@@ -2,15 +2,14 @@
 @cd ..\..\
 @for %%a in ("%cd%") do @set devroot=%%~sa
 @set abi=x64
-@set minabi=64
-@IF %abi%==x86 set minabi=32
 @set PATH=%devroot%\flexbison\;%devroot%\TDM-GCC-64\bin\;%devroot%\ninja\;%devroot%\pkgconf\build\;%PATH%
 @call %devroot%\mesa-dist-win\buildscript\modules\discoverpython.cmd
-@echo.
+@call %devroot%\mesa-dist-win\buildscript\modules\pythonpackages.cmd
 @cd mesa
 @git checkout .
-@set buildconf=meson build/%abi% --default-library=static --buildtype=release -Dllvm=false -Dbuild-tests=true
-@set buildcmd=ninja -C build/%abi%
+@echo.
+@set buildconf=meson build/%abi% --default-library=static --buildtype=release -Dllvm=false -Dosmesa=classic -Dbuild-tests=true
+@set buildcmd=ninja -C build/%abi% -j 2
 @for /d %%a in ("%devroot%\mesa\subprojects\zlib-*") do @RD /S /Q "%%~a"
 @IF EXIST "%devroot%\mesa\subprojects\zlib\" RD /S /Q %devroot%\mesa\subprojects\zlib
 @IF EXIST build\%abi% RD /S /Q build\%abi%

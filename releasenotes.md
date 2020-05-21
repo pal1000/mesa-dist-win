@@ -1,3 +1,7 @@
+# Next release
+### Patches
+- Update dual osmesa patch to keep working after gallium state trackers rename to frontends;
+- Remove filenames parity patch as it's from before 19.3.0 stable.
 # 20.0.7
 - Updated Mesa3D to [20.0.7](https://www.mesa3d.org/relnotes/20.0.7.html).
 ### Debug

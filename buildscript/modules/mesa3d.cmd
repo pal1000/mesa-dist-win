@@ -61,10 +61,10 @@
 @rem Fix swrAVX512 build
 @IF %intmesaver% LSS 20000 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swravx512
 @IF %intmesaver% GEQ 20000 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swravx512-post-static-link
-@rem Ensure filenames parity with Scons
-@IF %intmesaver% LSS 19303 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd filename-parity
 @rem Make possible to build both osmesa gallium and swrast at the same time with Meson
-@call %devroot%\%projectname%\buildscript\modules\applypatch.cmd meson-build-both-osmesa
+@call %devroot%\%projectname%\buildscript\modules\applypatch.cmd dual-osmesa
+@IF %intmesaver% LSS 20200 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd dual-osmesa-part2a
+@IF %intmesaver% GEQ 20200 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd dual-osmesa-part2b
 @rem Fix regression when building with native mingw toolchains affecting Mesa 20.1 branch
 @IF %intmesaver% GEQ 20100 IF %intmesaver% LSS 20103 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd winepath
 

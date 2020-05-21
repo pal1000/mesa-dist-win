@@ -65,19 +65,6 @@ index 626baf3d5c2..cb3dc3b383f 100644
    description : 'Build OSmesa.'
  )
  option(
-diff --git a/src/gallium/meson.build b/src/gallium/meson.build
-index 1f81fcf1fd5..5a5a8d2f0a6 100644
---- a/src/gallium/meson.build
-+++ b/src/gallium/meson.build
-@@ -175,7 +175,7 @@ if with_dri
-   subdir('state_trackers/dri')
-   subdir('targets/dri')
- endif
--if with_osmesa == 'gallium'
-+if with_osmesa.contains('gallium')
-   subdir('state_trackers/osmesa')
-   subdir('targets/osmesa')
- endif
 diff --git a/src/mesa/meson.build b/src/mesa/meson.build
 index fa5c54cc6fb..f7b223862fa 100644
 --- a/src/mesa/meson.build

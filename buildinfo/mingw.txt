@@ -1,6 +1,6 @@
 Build environment
 -----------------
-Windows 10.0.18363
+Windows 10.0.19041
 Ressource Hacker 5.1.7.343
 7-Zip 20.00 ultra compression
 Git 2.26.2.1
@@ -9,10 +9,10 @@ MSYS2 environment
 -----------------
 bash 4.4.023-2
 bash-completion 2.10-1
-bison 3.5.4-1
+bison 3.6.2-1
 brotli 1.0.7-3
-bsdcpio 3.4.2-2
-bsdtar 3.4.2-2
+bsdcpio 3.4.2-3
+bsdtar 3.4.2-3
 bzip2 1.0.8-2
 ca-certificates 20190110-1
 coreutils 8.32-1
@@ -37,7 +37,7 @@ icu 65.1-1
 inetutils 1.9.4-2
 info 6.7-1
 less 551-1
-libarchive 3.4.2-2
+libarchive 3.4.2-3
 libargp 20110921-2
 libasprintf 0.19.8.1-1
 libassuan 2.5.3-1
@@ -50,10 +50,10 @@ libexpat 2.2.9-1
 libffi 3.3-1
 libgcrypt 1.8.5-1
 libgettextpo 0.19.8.1-1
-libgnutls 3.6.13-1
+libgnutls 3.6.13-2
 libgpg-error 1.37-1
-libgpgme 1.13.1-3
-libhogweed 3.5.1-1
+libgpgme 1.13.1-4
+libhogweed 3.6-1
 libiconv 1.16-1
 libidn2 2.3.0-1
 libintl 0.19.8.1-1
@@ -61,14 +61,14 @@ libksba 1.3.5-1
 liblz4 1.9.2-1
 liblzma 5.2.5-1
 libmetalink 0.1.3-2
-libnettle 3.5.1-1
+libnettle 3.6-1
 libnghttp2 1.40.0-1
 libnpth 1.6-1
 libopenssl 1.1.1.g-1
 libp11-kit 0.23.20-2
 libpcre 8.44-1
 libpcre16 8.44-1
-libpcre2_8 10.34-1
+libpcre2_8 10.35-1
 libpcre32 8.44-1
 libpcrecpp 8.44-1
 libpcreposix 8.44-1
@@ -189,12 +189,12 @@ mintty 1~3.1.4-1
 mpfr 4.0.2-1
 msys2-keyring r9.397a52e-1
 msys2-launcher-git 0.3.32.56c2ba7-2
-msys2-runtime 3.0.7-6
+msys2-runtime 3.1.4-2
 ncurses 6.2-1
-nettle 3.5.1-1
+nettle 3.6-1
 openssl 1.1.1.g-1
 p11-kit 0.23.20-2
-pacman 5.2.1-6
+pacman 5.2.1-7
 pacman-mirrors 20200329-1
 pactoys-git r2.07ca37f-1
 patch 2.7.6-1
@@ -209,7 +209,7 @@ tftp-hpa 5.2-3
 time 1.9-1
 ttyrec 1.0.8-2
 tzcode 2020a-1
-u-boot-tools 2020.04-1
+u-boot-tools 2020.04-2
 util-linux 2.35.1-1
 wget 1.20.3-1
 which 2.21-2
