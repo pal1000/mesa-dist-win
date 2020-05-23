@@ -1,0 +1,12 @@
+[binaries]
+c = ['armv7-w64-mingw32-clang']
+cpp = ['armv7-w64-mingw32-clang++']
+strip = ['armv7-w64-mingw32-strip']
+
+[host_machine]
+system = 'windows'
+cpu_family = 'arm'
+cpu = 'arm'
+endian = 'little'
+
+; vim: ft=dosini

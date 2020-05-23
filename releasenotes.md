@@ -2,6 +2,8 @@
 ### Patches
 - Update dual osmesa patch to keep working after gallium state trackers rename to frontends;
 - Remove filenames parity patch as it's from before 19.3.0 stable.
+### Debug and work-in-progress development
+- Draft ARM and ARM64 builds using [standalone MinGW-W64 clang toolchain](https://github.com/mstorsjo/llvm-mingw/releases), that unfortunately fail to link for now - [#35](https://github.com/pal1000/mesa-dist-win/issues/35).
 # 20.0.7
 - Updated Mesa3D to [20.0.7](https://www.mesa3d.org/relnotes/20.0.7.html).
 ### Debug
