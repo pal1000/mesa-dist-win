@@ -3,9 +3,6 @@
 @set toolchain=msvc
 @set msvcver=null
 @set msvcname=null
-@set vsabi=%abi%
-@IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF %abi%==x86 set vsabi=x64_x86
-@IF /I %PROCESSOR_ARCHITECTURE%==x86 IF %abi%==x64 set vsabi=x86_x64
 @set vswhere="%ProgramFiles%
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 set vswhere=%vswhere% (x86)
 @set vswhere=%vswhere%\Microsoft Visual Studio\Installer\vswhere.exe"
@@ -101,4 +98,4 @@ IF "%%a"=="%selecttoolchain%" set msvcver=!msvcversions[%%a]!
 
 :selectedcompiler
 @TITLE %TITLE%
-@endlocal&set toolchain=%toolchain%&set vsabi=%vsabi%&set vsenv=%vsenv%&set toolset=%toolset%&set msvcname=%msvcname%&set msvcver=%msvcver%&set TITLE=%TITLE%
+@endlocal&set toolchain=%toolchain%&set vsenv=%vsenv%&set toolset=%toolset%&set msvcname=%msvcname%&set msvcver=%msvcver%&set TITLE=%TITLE%

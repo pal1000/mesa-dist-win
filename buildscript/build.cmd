@@ -9,9 +9,6 @@
 @set projectname=mesa-dist-win
 @set "ERRORLEVEL="
 
-@rem Select target architecture
-@call %devroot%\%projectname%\buildscript\modules\abi.cmd
-
 @rem Analyze environment. Get each dependency status: 0=missing, 1=standby/load manually in PATH, 2=cannot be unloaded.
 @rem Not all dependencies can have all these states.
 
@@ -20,6 +17,9 @@
 
 @rem Search for compiler toolchain. Hard fail if none found
 @call %devroot%\%projectname%\buildscript\modules\toolchain.cmd
+
+@rem Select target architecture
+@call %devroot%\%projectname%\buildscript\modules\abi.cmd
 
 @rem If using MSVC search for Python. State tracking is pointless as it is loaded once and we are done. Hard fail if missing.
 @IF %toolchain%==msvc call %devroot%\%projectname%\buildscript\modules\discoverpython.cmd

@@ -1,8 +1,8 @@
 @cd "%~dp0"
 @cd ..\..\
 @for %%a in ("%cd%") do @set devroot=%%~sa
-@call %devroot%\mesa-dist-win\buildscript\modules\abi.cmd
 @call %devroot%\mesa-dist-win\buildscript\modules\msys.cmd
+@call %devroot%\mesa-dist-win\buildscript\modules\abi.cmd
 @call %devroot%\mesa-dist-win\buildscript\modules\msysupdate.cmd
 @call %devroot%\mesa-dist-win\buildscript\modules\git.cmd
 @set /p clean=Clear MSYS2 cache (y/n):

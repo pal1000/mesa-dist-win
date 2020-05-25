@@ -1,4 +1,6 @@
 # Next release
+### Build script
+- Select ABI after toolchain which opens possibility to filter supported ABIs per toolchain - required for [#35](https://github.com/pal1000/mesa-dist-win/issues/35).
 ### Patches
 - Update dual osmesa patch to keep working after gallium state trackers rename to frontends;
 - Remove filenames parity patch as it's from before 19.3.0 stable.
