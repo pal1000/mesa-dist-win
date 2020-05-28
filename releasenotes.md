@@ -1,4 +1,5 @@
-# Next release
+# 20.1.0
+- Updated Mesa3D to [20.1.0](https://www.mesa3d.org/relnotes/20.1.0.html).
 ### Build script
 - Select ABI after toolchain which opens possibility to filter supported ABIs per toolchain - required for [#35](https://github.com/pal1000/mesa-dist-win/issues/35).
 ### Patches
