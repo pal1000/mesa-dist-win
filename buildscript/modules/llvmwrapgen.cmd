@@ -1,8 +1,8 @@
 @setlocal
 @set RTTI=false
-@IF %toolchain%==msvc FOR /F "tokens=* USEBACKQ" %%a IN (`%devroot%\llvm\%abi%\bin\llvm-config --link-static --libnames engine coroutines`) DO @SET llvmlibs=%%~a
-@IF %toolchain%==msvc FOR /F "tokens=* USEBACKQ" %%a IN (`%devroot%\llvm\%abi%\bin\llvm-config --version`) DO @SET llvmver=%%~a
-@IF %toolchain%==msvc FOR /F "tokens=* USEBACKQ" %%a IN (`%devroot%\llvm\%abi%\bin\llvm-config --has-rtti`) DO @IF /I "%%a"=="YES" SET RTTI=true
+@IF %toolchain%==msvc FOR /F "tokens=* USEBACKQ" %%a IN (`%llvmloc%\%abi%\bin\llvm-config --link-static --libnames engine coroutines`) DO @SET llvmlibs=%%~a
+@IF %toolchain%==msvc FOR /F "tokens=* USEBACKQ" %%a IN (`%llvmloc%\%abi%\bin\llvm-config --version`) DO @SET llvmver=%%~a
+@IF %toolchain%==msvc FOR /F "tokens=* USEBACKQ" %%a IN (`%llvmloc%\%abi%\bin\llvm-config --has-rtti`) DO @IF /I "%%a"=="YES" SET RTTI=true
 @IF NOT %toolchain%==msvc FOR /F "tokens=* USEBACKQ" %%a IN (`%msysloc%\usr\bin\bash --login -c "${MINGW_PREFIX}/bin/llvm-config --link-static --libnames engine coroutines" 2^>^&1`) DO @SET llvmlibs=%%~a
 @IF NOT %toolchain%==msvc FOR /F USEBACKQ^ tokens^=5^ delims^=-^  %%a IN (`%msysloc%\usr\bin\bash --login -c "/usr/bin/pacman -Q ${MINGW_PACKAGE_PREFIX}-llvm"`) DO @SET llvmver=%%~a
 @IF NOT %toolchain%==msvc FOR /F "tokens=* USEBACKQ" %%a IN (`%msysloc%\usr\bin\bash --login -c "${MINGW_PREFIX}/bin/llvm-config --has-rtti" 2^>^&1`) DO @IF /I "%%a"=="YES" SET RTTI=true
@@ -18,7 +18,7 @@ echo.
 echo cpp = meson.get_compiler^('cpp'^)
 echo.
 echo _deps = []
-IF %toolchain%==msvc echo llvmloc = run_command^('cmd', '/c', 'echo %devroot:\=/%/llvm/%%abi%%'^).stdout^(^).strip^(^)
+IF %toolchain%==msvc echo llvmloc = run_command^('cmd', '/c', 'echo %llvmloc:\=/%/%%abi%%'^).stdout^(^).strip^(^)
 IF NOT %toolchain%==msvc echo llvmloc = run_command^('%devroot:\=/%/%projectname%/buildscript/modules/msysmingwruntimeloc.cmd'^).stdout^(^).strip^(^)
 echo _search = llvmloc + '/lib'
 echo foreach d ^: [%llvmlibs%]

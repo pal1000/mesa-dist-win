@@ -73,8 +73,8 @@ echo CMake %%a>>%devroot%\%projectname%\buildinfo\msvc.txt
 @IF %toolchain%==msvc IF NOT "%ninjastate%"=="0" IF NOT "%ninjastate%"=="" for /f "USEBACKQ" %%a IN (`ninja --version`) do @echo Ninja %%a>>%devroot%\%projectname%\buildinfo\msvc.txt
 
 @rem Get LLVM version
-@IF %toolchain%==msvc IF EXIST %devroot%\llvm\%abi%\bin\llvm-config.exe FOR /F "USEBACKQ" %%a IN (`%devroot%\llvm\%abi%\bin\llvm-config.exe --version`) do @set llvmver=%%a
-@IF %toolchain%==msvc IF EXIST %devroot%\llvm\%abi%\bin\llvm-config.exe echo LLVM %llvmver%>>%devroot%\%projectname%\buildinfo\msvc.txt
+@IF %toolchain%==msvc IF EXIST %llvmloc%\%abi%\bin\llvm-config.exe FOR /F "USEBACKQ" %%a IN (`%llvmloc%\%abi%\bin\llvm-config.exe --version`) do @set llvmver=%%a
+@IF %toolchain%==msvc IF EXIST %llvmloc%\%abi%\bin\llvm-config.exe echo LLVM %llvmver%>>%devroot%\%projectname%\buildinfo\msvc.txt
 
 @rem Get flex and bison version
 @IF %toolchain%==msvc IF "%flexstate%"=="1" set PATH=%devroot%\flexbison\;%PATH%

@@ -79,7 +79,7 @@
 @IF %abi%==x64 set buildcmd=msbuild /p^:Configuration=release,Platform=x64 mesa.sln /m^:%throttle%
 
 @set havellvm=0
-@IF EXIST %devroot%\llvm\%abi% set havellvm=1
+@IF EXIST %llvmloc%\%abi% set havellvm=1
 @IF NOT %toolchain%==msvc set havellvm=1
 @set llvmless=n
 @if %havellvm%==0 set llvmless=y

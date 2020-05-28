@@ -1,4 +1,6 @@
 @setlocal
+@set llvmloc=%devroot%\llvm
+
 @rem Look for CMake build generator.
 @IF %cmakestate%==0 IF EXIST %devroot%\llvm\%abi%\bin IF EXIST %devroot%\llvm\%abi%\include IF EXIST %devroot%\llvm\%abi%\lib echo CMake not found but LLVM is already built. Skipping LLVM build.
 @IF %cmakestate%==0 IF EXIST %devroot%\llvm\%abi%\bin IF EXIST %devroot%\llvm\%abi%\include IF EXIST %devroot%\llvm\%abi%\lib GOTO skipllvm
@@ -60,5 +62,5 @@
 :skipllvm
 @echo.
 @rem Reset environment after LLVM build.
-@endlocal
+@endlocal&set llvmloc=%llvmloc%
 @cd %devroot%
