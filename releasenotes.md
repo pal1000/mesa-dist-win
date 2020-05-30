@@ -1,3 +1,6 @@
+# Next release
+### Build script
+- Simplify zlib dependency wrap and avoid using hardcoded libraries names.
 # 20.1.0
 - Updated Mesa3D to [20.1.0](https://www.mesa3d.org/relnotes/20.1.0.html).
 ### Build script
