@@ -3,23 +3,23 @@ Build environment
 Windows 10.0.19041
 Ressource Hacker 5.1.7.343
 7-Zip 20.00 ultra compression
-Git 2.26.2.1
-Visual Studio Community 2019 v16.6.0
+Git 2.27.0.1
+Visual Studio Community 2019 v16.6.1
 Windows SDK 10.0.19041.0
 Python 3.8.3
 
 Python packages
 ---------------
-Mako       1.1.2
+Mako       1.1.3
 MarkupSafe 1.1.1
 meson      0.54.2
 pip        20.1.1
-setuptools 47.1.0
+setuptools 47.1.1
 
-CMake 3.17.2
+CMake 3.17.3
 Ninja 1.10.0
 LLVM 10.0.0
 Winflexbison package 2.5.22
 flex 2.6.4
 Bison 3.5.0
-pkgconf 1.7.2
+pkgconf 1.7.3
