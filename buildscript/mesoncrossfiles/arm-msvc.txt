@@ -1,0 +1,7 @@
+[host_machine]
+system = 'windows'
+cpu_family = 'arm'
+cpu = 'arm'
+endian = 'little'
+
+; vim: ft=dosini
