@@ -1,0 +1,13 @@
+diff --git a/meson.build b/meson.build
+index 1932410fcf7..ffdbd592665 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1311,7 +1311,7 @@ else
+ endif
+ 
+ # TODO: some of these may be conditional
+-dep_zlib = dependency('zlib', version : '>= 1.2.3', fallback : ['zlib', 'zlib_dep'])
++dep_zlib = dependency('zlib', static : true, version : '>= 1.2.3', fallback : ['zlib', 'zlib_dep'])
+ pre_args += '-DHAVE_ZLIB'
+ 
+ _zstd = get_option('zstd')

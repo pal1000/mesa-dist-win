@@ -1,6 +1,7 @@
 # Next release
 ### Build script
-- Simplify zlib dependency wrap and avoid using hardcoded libraries names.
+- Simplify zlib dependency wrap and avoid hardcoding its library name;
+- LLVM: Automatically wrap runtime dependency whenever possible - required by [#28](https://github.com/pal1000/mesa-dist-win/issues/28) and [#34](https://github.com/pal1000/mesa-dist-win/issues/34).
 ### Early development
 - Add MSVC ARM and ARM64 Meson cross files - [#35](https://github.com/pal1000/mesa-dist-win/issues/35).
 # 20.1.0

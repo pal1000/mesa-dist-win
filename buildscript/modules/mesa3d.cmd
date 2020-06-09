@@ -47,15 +47,14 @@
 @IF NOT EXIST %devroot%\mesa\subprojects\.gitignore echo.
 @IF NOT EXIST %devroot%\mesa\subprojects\.gitignore GOTO skipmesa
 
-@rem Wrap zlib static library as Meson subproject.
-@call %devroot%\%projectname%\buildscript\modules\zlibwrapgen.cmd
-
 @REM Collect information about Mesa3D code. Apply patches.
 @if %gitstate%==0 IF NOT EXIST %msysloc%\usr\bin\patch.exe IF %toolchain%==msvc GOTO configmesabuild
 @set disablemesapatch=0
 @IF %disablemesapatch%==1 echo WARNING: Patching is forcefully disabled!
 @IF %disablemesapatch%==1 echo.
 @IF %disablemesapatch%==1 GOTO configmesabuild
+@rem Force static linking zlib in MSYS2
+@call %devroot%\%projectname%\buildscript\modules\applypatch.cmd forcestaticzlib
 @rem Enable S3TC texture cache
 @call %devroot%\%projectname%\buildscript\modules\applypatch.cmd s3tc
 @rem Fix swrAVX512 build
@@ -72,21 +71,24 @@
 @rem Configure Mesa build.
 @set buildconf=%mesonloc% build/%abi% --default-library=static --buildtype=release --prefix=%devroot:\=/%/%projectname%/dist/%abi%
 @IF %toolchain%==msvc set buildconf=%buildconf% -Db_vscrt=mt
-@IF NOT %toolchain%==msvc set buildconf=%buildconf% --wrap-mode=forcefallback -Dc_args='-march=core2 -pipe' -Dcpp_args='-march=core2 -pipe' -Dc_link_args='-static -s' -Dcpp_link_args='-static -s'
+@IF NOT %toolchain%==msvc set buildconf=%buildconf% -Dc_args='-march=core2 -pipe' -Dcpp_args='-march=core2 -pipe' -Dc_link_args='-static -s' -Dcpp_link_args='-static -s'
 @IF %toolchain%==clang set CC=clang
 @IF %toolchain%==clang set CXX=clang++
 @set buildcmd=msbuild /p^:Configuration=release,Platform=Win32 mesa.sln /m^:%throttle%
 @IF %abi%==x64 set buildcmd=msbuild /p^:Configuration=release,Platform=x64 mesa.sln /m^:%throttle%
 
 @set havellvm=0
-@IF EXIST %llvmloc%\%abi% set havellvm=1
+@IF %toolchain%==msvc IF EXIST %llvmloc%\%abi% set havellvm=1
 @IF NOT %toolchain%==msvc set havellvm=1
 @set llvmless=n
 @if %havellvm%==0 set llvmless=y
 @if %havellvm%==1 set /p llvmless=Build Mesa without LLVM (y/n). llvmpipe and swr drivers and high performance JIT won't be available for other drivers and libraries:
 @if %havellvm%==1 echo.
-@if /I NOT "%llvmless%"=="y" call %devroot%\%projectname%\buildscript\modules\llvmwrapgen.cmd
+@call %devroot%\%projectname%\buildscript\modules\mesonsubprojects.cmd
+@if /I NOT "%llvmless%"=="y" IF %toolchain%==msvc SET PATH=%llvmloc%\%abi%\bin\;%PATH%
 @if /I NOT "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm=true
+@if /I NOT "%llvmless%"=="y" IF %llvmconfigbusted% EQU 0 set buildconf=%buildconf% -Dshared-llvm=false
+@if /I NOT "%llvmless%"=="y" IF %llvmconfigbusted% EQU 1 set buildconf=%buildconf% -Dwrap_mode=forcefallback
 @if /I "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm=false
 
 @set useninja=n
