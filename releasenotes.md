@@ -1,3 +1,6 @@
+# Next release
+### Build script
+- Mesa3D: Make build config aware of out of tree patching being disabled or unsupported.
 # 20.1.1
 - Updated Mesa3D to [20.1.1](https://www.mesa3d.org/relnotes/20.1.1.html).
 ### Known issue

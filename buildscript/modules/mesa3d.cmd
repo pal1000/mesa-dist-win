@@ -12,8 +12,6 @@
 
 @REM Aquire Mesa3D source code if missing.
 @cd %devroot%
-@if %gitstate%==0 IF NOT EXIST %msysloc%\usr\bin\patch.exe IF %toolchain%==msvc echo Error: Git and MSYS2 GNU patch are both missing. Auto-patching disabled. This could have many consequences going all the way up to build failure.
-@if %gitstate%==0 IF NOT EXIST %msysloc%\usr\bin\patch.exe IF %toolchain%==msvc echo.
 @if NOT EXIST mesa echo Warning: Mesa3D source code not found.
 @if NOT EXIST mesa echo.
 @if NOT EXIST mesa set /p buildmesa=Download mesa code and build (y/n):
@@ -48,10 +46,17 @@
 @IF NOT EXIST %devroot%\mesa\subprojects\.gitignore GOTO skipmesa
 
 @REM Collect information about Mesa3D code. Apply patches.
-@if %gitstate%==0 IF NOT EXIST %msysloc%\usr\bin\patch.exe IF %toolchain%==msvc GOTO configmesabuild
 @set disablemesapatch=0
-@IF %disablemesapatch%==1 echo WARNING: Patching is forcefully disabled!
-@IF %disablemesapatch%==1 echo.
+@set cannotmesapatch=0
+@if %gitstate%==0 IF NOT EXIST %msysloc%\usr\bin\patch.exe IF %toolchain%==msvc set cannotmesapatch=1
+@IF %cannotmesapatch%==1 set disablemesapatch=1
+@IF %cannotmesapatch%==1 echo Error: Git and MSYS2 GNU patch are both missing. Auto-patching disabled. This could have many consequences going all the way up to build failure.
+@IF %cannotmesapatch%==1 echo.
+@IF %disablemesapatch%==1 IF %cannotmesapatch%==0 echo WARNING: Patching is forcefully disabled!
+@IF %disablemesapatch%==1 IF %cannotmesapatch%==0 echo.
+@IF %disablemesapatch%==1 if NOT %gitstate%==0 echo Reverting out of tree patches...
+@IF %disablemesapatch%==1 if NOT %gitstate%==0 git checkout .
+@IF %disablemesapatch%==1 if NOT %gitstate%==0 echo.
 @IF %disablemesapatch%==1 GOTO configmesabuild
 @rem Force static linking zlib in MSYS2
 @call %devroot%\%projectname%\buildscript\modules\applypatch.cmd forcestaticzlib
@@ -113,7 +118,8 @@
 @set swrdrv=n
 @if /I NOT "%llvmless%"=="y" if %abi%==x64 IF %toolchain%==msvc set /p swrdrv=Do you want to build swr drivers? (y=yes):
 @if /I NOT "%llvmless%"=="y" if %abi%==x64 IF %toolchain%==msvc echo.
-@if /I "%swrdrv%"=="y" set buildconf=%buildconf%,swr -Dswr-arches=avx,avx2,skx,knl
+@if /I "%swrdrv%"=="y" set buildconf=%buildconf%,swr
+@if /I "%swrdrv%"=="y" IF %disablemesapatch%==0 set buildconf=%buildconf% -Dswr-arches=avx,avx2,skx,knl
 
 @set /p gles=Do you want to build GLAPI as a shared library and standalone GLES libraries (y/n):
 @echo.
@@ -123,7 +129,7 @@
 @set /p osmesa=Do you want to build off-screen rendering drivers (y/n):
 @echo.
 @IF /I "%osmesa%"=="y" set buildconf=%buildconf% -Dosmesa=gallium,classic
-@IF /I "%osmesa%"=="y" if %gitstate%==0 IF %toolchain%==msvc set buildconf=%buildconf:~0,-8%
+@IF /I "%osmesa%"=="y" IF %toolchain%==msvc IF %disablemesapatch%==1 set buildconf=%buildconf:~0,-8%
 @rem Disable osmesa classic when building with Meson and Mingw toolchains due to build failure
 @IF /I "%osmesa%"=="y" IF NOT %toolchain%==msvc set buildconf=%buildconf:~0,-8%
 
