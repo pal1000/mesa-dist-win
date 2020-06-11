@@ -57,7 +57,8 @@
 @pause
 @echo.
 @if /I NOT "%ninja%"=="y" cmake --build . -j %throttle% --config Release --target install
-@if /I "%ninja%"=="y" call %devroot%\%projectname%\buildscript\modules\ninjallvmbuild.cmd
+@rem if /I "%ninja%"=="y" call %devroot%\%projectname%\buildscript\modules\ninjallvmbuild.cmd
+@if /I "%ninja%"=="y" ninja -j %throttle% install
 
 :skipllvm
 @echo.

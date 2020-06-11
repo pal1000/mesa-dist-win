@@ -1,7 +1,8 @@
 # Next release
 ### Build script
 - Simplify zlib dependency wrap and avoid hardcoding its library name;
-- LLVM: Automatically wrap runtime dependency whenever possible - required by [#28](https://github.com/pal1000/mesa-dist-win/issues/28) and [#34](https://github.com/pal1000/mesa-dist-win/issues/34).
+- LLVM: Automatically wrap runtime dependency whenever possible - required by [#28](https://github.com/pal1000/mesa-dist-win/issues/28) and [#34](https://github.com/pal1000/mesa-dist-win/issues/34);
+- MSVC: Disable LLVM build reduction used with Ninja due incompatibility with Meson runtime dependency wrap.
 ### Early development
 - Add MSVC ARM and ARM64 Meson cross files - [#35](https://github.com/pal1000/mesa-dist-win/issues/35).
 # 20.1.0
