@@ -1,4 +1,7 @@
-# Next release
+# 20.1.1
+- Updated Mesa3D to [20.1.1](https://www.mesa3d.org/relnotes/20.1.1.html).
+### Known issue
+- swr driver is missing from this release due to build failure.
 ### Build script
 - Simplify zlib dependency wrap and avoid hardcoding its library name;
 - LLVM: Automatically wrap runtime dependency whenever possible - required by [#28](https://github.com/pal1000/mesa-dist-win/issues/28) and [#34](https://github.com/pal1000/mesa-dist-win/issues/34);
