@@ -42,6 +42,7 @@ echo irbuilder_h ^= files^(llvmloc + '/include/llvm/IR/IRBuilder.h'^)
 @CMD /C EXIT 0
 @FC /B %devroot%\%projectname%\buildscript\mesonsubprojects\llvm-meson.build %devroot%\mesa\subprojects\llvm\meson.build>NUL 2>&1
 @if NOT "%ERRORLEVEL%"=="0" (
+@echo Using binary wrap to find LLVM...
 @copy /Y %devroot%\%projectname%\buildscript\mesonsubprojects\llvm-meson.build %devroot%\mesa\subprojects\llvm\meson.build
 @echo.
 )
@@ -50,6 +51,7 @@ echo irbuilder_h ^= files^(llvmloc + '/include/llvm/IR/IRBuilder.h'^)
 @CMD /C EXIT 0
 @IF %toolchain%==msvc FC /B %devroot%\%projectname%\buildscript\mesonsubprojects\zlib.wrap %devroot%\mesa\subprojects\zlib.wrap>NUL 2>&1
 @if NOT "%ERRORLEVEL%"=="0" (
+@echo Using wrap file version 1.2.11-4 from Meson wrapdb to build zlib...
 @copy /Y %devroot%\%projectname%\buildscript\mesonsubprojects\zlib.wrap %devroot%\mesa\subprojects\zlib.wrap
 @echo.
 )
@@ -62,6 +64,7 @@ echo irbuilder_h ^= files^(llvmloc + '/include/llvm/IR/IRBuilder.h'^)
 @CMD /C EXIT 0
 @FC /B %devroot%\%projectname%\buildscript\mesonsubprojects\zlib-meson.build %devroot%\mesa\subprojects\zlib\meson.build>NUL 2>&1
 @if NOT "%ERRORLEVEL%"=="0" (
+@echo Using binary wrap to find zlib...
 @copy /Y %devroot%\%projectname%\buildscript\mesonsubprojects\zlib-meson.build %devroot%\mesa\subprojects\zlib\meson.build
 @echo.
 )
