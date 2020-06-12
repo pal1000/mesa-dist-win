@@ -1,7 +1,8 @@
 # Next release
 ### Build script
 - Mesa3D: Make build config aware of out of tree patching being disabled or unsupported;
-- Use a command line option to disable out of tree patches for Mesa3D.
+- Use a command line option to disable out of tree patches for Mesa3D;
+- Show in title bar when out of tree patches are disabled via command line.
 ### Debug
 - LLVM: Add install modifier tool.
 # 20.1.1
