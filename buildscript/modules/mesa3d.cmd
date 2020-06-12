@@ -46,7 +46,7 @@
 @IF NOT EXIST %devroot%\mesa\subprojects\.gitignore GOTO skipmesa
 
 @REM Collect information about Mesa3D code. Apply patches.
-@set disablemesapatch=0
+@IF NOT defined disablemesapatch set disablemesapatch=0
 @set cannotmesapatch=0
 @if %gitstate%==0 IF NOT EXIST %msysloc%\usr\bin\patch.exe IF %toolchain%==msvc set cannotmesapatch=1
 @IF %cannotmesapatch%==1 set disablemesapatch=1

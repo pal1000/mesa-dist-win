@@ -9,6 +9,9 @@
 @set projectname=mesa-dist-win
 @set "ERRORLEVEL="
 
+@rem Command line option to disable out tree patches for Mesa3D
+@IF "%1"=="disablemesapatch" set disablemesapatch=1
+
 @rem Analyze environment. Get each dependency status: 0=missing, 1=standby/load manually in PATH, 2=cannot be unloaded.
 @rem Not all dependencies can have all these states.
 
