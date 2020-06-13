@@ -5,8 +5,8 @@
 @rem Try building pkgconf
 @set pkgconfigstate=1
 @call %devroot%\%projectname%\buildscript\modules\pkgconf.cmd
-@IF EXIST %devroot%\pkgconf\build\pkg-config.exe set pkgconfigloc=%devroot%\pkgconf\build
-@IF EXIST %devroot%\pkgconf\build\pkg-config.exe GOTO doneenvcheck
+@IF EXIST %devroot%\pkgconf\pkgconf\pkg-config.exe set pkgconfigloc=%devroot%\pkgconf\pkgconf
+@IF EXIST %devroot%\pkgconf\pkgconf\pkg-config.exe GOTO doneenvcheck
 
 @rem pkg-config fallback code
 @IF %msysstate%==0 GOTO nonmingwpkgconfig

@@ -3,7 +3,8 @@
 - Mesa3D: Make build config aware of out of tree patching being disabled or unsupported;
 - Use a command line option to disable out of tree patches for Mesa3D;
 - Show in title bar when out of tree patches are disabled via command line;
-- Be verbose about Meson wraps fallbacks.
+- Be verbose about Meson wraps fallbacks;
+- Move pkgconf build files from `pkgconf\build` to `pkgconf\pkgconf` to have them ignored by git.
 ### Debug
 - LLVM: Add install modifier tool.
 # 20.1.1

@@ -2,7 +2,7 @@
 @cd ..\..\
 @for %%a in ("%cd%") do @set devroot=%%~sa
 @set abi=x64
-@set PATH=%devroot%\flexbison\;%devroot%\TDM-GCC-64\bin\;%devroot%\ninja\;%devroot%\pkgconf\build\;%PATH%
+@set PATH=%devroot%\flexbison\;%devroot%\TDM-GCC-64\bin\;%devroot%\ninja\;%devroot%\pkgconf\pkgconf\;%PATH%
 @call %devroot%\mesa-dist-win\buildscript\modules\discoverpython.cmd
 @call %devroot%\mesa-dist-win\buildscript\modules\pythonpackages.cmd
 @cd mesa
