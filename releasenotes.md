@@ -1,4 +1,5 @@
-# Next release
+# 20.1.1-2
+- This is a re-release of 20.1.1 with swr driver restored.
 ### Build script
 - Mesa3D: Make build config aware of out of tree patching being disabled or unsupported;
 - Use a command line option to disable out of tree patches for Mesa3D;
