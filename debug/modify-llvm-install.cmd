@@ -8,12 +8,15 @@
 @call %devroot%\%projectname%\buildscript\modules\discoverpython.cmd
 @call %devroot%\%projectname%\buildscript\modules\pythonpackages.cmd
 @call %devroot%\%projectname%\buildscript\modules\throttle.cmd
-@IF %toolchain%==msvc call %devroot%\%projectname%\buildscript\modules\cmake.cmd
-@IF %toolchain%==msvc call %devroot%\%projectname%\buildscript\modules\ninja.cmd
+@call %devroot%\%projectname%\buildscript\modules\cmake.cmd
+@call %devroot%\%projectname%\buildscript\modules\ninja.cmd
+@IF %ninjastate% EQU 1 SET PATH=%devroot%\ninja\;%PATH%
+@IF %cmakestate% EQU 1 SET PATH=%devroot%\cmake\bin\;%PATH%
 @call %vsenv% %vsabi%
-@IF NOT EXIST %devroot%\llvm\buildsys-%abi% echo FATAL^: LLVM build is not configured.
-@IF NOT EXIST %devroot%\llvm\buildsys-%abi% echo.
-@IF NOT EXIST %devroot%\llvm\buildsys-%abi% pause
-@IF NOT EXIST %devroot%\llvm\buildsys-%abi% exit
-@cd %devroot%\llvm\buildsys-%abi%
+@set llvmloc=%devroot%\llvm
+@IF NOT EXIST %llvmloc%\buildsys-%abi% echo FATAL^: LLVM build is not configured.
+@IF NOT EXIST %llvmloc%\buildsys-%abi% echo.
+@IF NOT EXIST %llvmloc%\buildsys-%abi% pause
+@IF NOT EXIST %llvmloc%\buildsys-%abi% exit
+@cd %llvmloc%\buildsys-%abi%
 @cmd
