@@ -1,0 +1,16 @@
+diff --git a/src/gallium/drivers/swr/rasterizer/common/os.h b/src/gallium/drivers/swr/rasterizer/common/os.h
+index a52bc0e0db60b7d61db72218766798659fe4c9dc..bda114d64e2faeef2b095085cf5d59c80382cf79 100644
+--- a/src/gallium/drivers/swr/rasterizer/common/os.h
++++ b/src/gallium/drivers/swr/rasterizer/common/os.h
+@@ -33,9 +33,11 @@
+ #define SWR_VISIBLE __declspec(dllexport)
+ 
+ #ifndef NOMINMAX
++#undef UNICODE
+ #define NOMINMAX
+ #include <windows.h>
+ #undef NOMINMAX
++#define UNICODE
+ #else
+ #include <windows.h>
+ #endif

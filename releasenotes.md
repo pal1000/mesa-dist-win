@@ -7,6 +7,8 @@
 - Move pkgconf build files from `pkgconf\build` to `pkgconf\pkgconf` to have them ignored by git.
 ### Debug
 - LLVM: Add install modifier tool.
+### Out of tree patching
+- Add MSVC swr build fix - [!5166](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/5166).
 # 20.1.1
 - Updated Mesa3D to [20.1.1](https://www.mesa3d.org/relnotes/20.1.1.html).
 ### Known issue
