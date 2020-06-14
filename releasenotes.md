@@ -1,4 +1,6 @@
 # Next release
+### Build script
+- Restore some LLVM build reduction used with Ninja that doesn't break Meson runtime dependency detection.
 ### Debug
 - Fix fatal flaw in LLVM install modifier tool.
 # 20.1.1-2
