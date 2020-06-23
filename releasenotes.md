@@ -4,7 +4,8 @@
 - Support building LLVM core from monorepo;
 - Display LLVM build configuration command on screen.
 ### Debug
-- Fix fatal flaw in LLVM install modifier tool.
+- Fix fatal flaw in LLVM install modifier tool;
+- Add monorepo support to LLVM install modifier tool.
 # 20.1.1-2
 - This is a re-release of 20.1.1 with swr driver restored.
 ### Build script
