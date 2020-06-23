@@ -5,7 +5,7 @@
 @set llvmbinaries=0
 @IF EXIST %devroot%\llvm\%abi%\bin IF EXIST %devroot%\llvm\%abi%\include IF EXIST %devroot%\llvm\%abi%\lib set llvmbinaries=1
 
-@rem Check lf LLVM sources are available
+@rem Check lf LLVM sources are available or obtainable
 @set llvmsources=1
 @if NOT EXIST %devroot%\llvm\cmake if NOT EXIST %devroot%\llvm-project IF %gitstate EQU 0 set llvmsources=0
 
@@ -23,20 +23,23 @@
 @set /p buildllvm=Begin LLVM build. Only needs to run once for each ABI and version. Proceed (y/n):
 @echo.
 
-@rem LLVM source is found, binaries not found and LLVM build is refused.
+@rem LLVM source is found or is obtainable, binaries not found and LLVM build is refused.
 @IF %llvmsources% EQU 1 IF %llvmbinaries% EQU 0 if /I NOT "%buildllvm%"=="y" echo WARNING: Not building LLVM. If you want to build Mesa3D anyway it will be without swr and llvmpipe drivers and high performance JIT won't be available for other drivers and libraries.
 @if /I NOT "%buildllvm%"=="y" GOTO skipllvm
 
-@rem Handle unimplemented LLVM build from monorepo gracefully
-@IF %llvmsources% EQU 1 if NOT EXIST %devroot%\llvm\cmake echo WARNING: Build from LLVM monorepo is not yet implemented.
-@IF %llvmsources% EQU 1 if NOT EXIST %devroot%\llvm\cmake IF %llvmbinaries% EQU 0 echo WARNING: Both LLVM source code and binaries not found. If you want to build Mesa3D anyway it will be without llvmpipe and swr drivers and high performance JIT won't be available for other drivers and libraries.
-@IF %llvmsources% EQU 1 if NOT EXIST %devroot%\llvm\cmake GOTO skipllvm
+@rem Getting LLVM monorepo if LLVM source is missing
+@if NOT EXIST %devroot%\llvm\cmake if NOT EXIST %devroot%\llvm-project (
+@echo Getting LLVM source code...
+@git clone https://github.com/llvm/llvm-project.git --branch=llvmorg-10.0.0 --depth=1 %devroot%\llvm-project
+@echo.
+)
 
 @rem Always clean build
-@cd %devroot%\llvm
+@if NOT EXIST %devroot%\llvm-project cd %devroot%\llvm
+@if EXIST %devroot%\llvm-project cd %devroot%\llvm-project
 @echo Cleanning LLVM build. Please wait...
 @echo.
-@if EXIST %abi% RD /S /Q %abi%
+@if EXIST %devroot%\llvm\%abi% RD /S /Q %devroot%\llvm\%abi%
 @if EXIST buildsys-%abi% RD /S /Q buildsys-%abi%
 @md buildsys-%abi%
 @cd buildsys-%abi%
@@ -57,11 +60,15 @@
 @if %abi%==x64 if /I NOT "%ninja%"=="y" set buildconf=%buildconf% -A x64
 @if /I NOT "%ninja%"=="y" IF /I %PROCESSOR_ARCHITECTURE%==AMD64 set buildconf=%buildconf% -Thost=x64
 @if /I "%ninja%"=="y" set buildconf=%buildconf% "Ninja"
-@set buildconf=%buildconf% -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DLLVM_INCLUDE_TESTS=OFF -DLLVM_INCLUDE_EXAMPLES=OFF -DLLVM_INCLUDE_BENCHMARKS=OFF -DCMAKE_INSTALL_PREFIX=../%abi% ..
+@set buildconf=%buildconf% -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DLLVM_INCLUDE_TESTS=OFF -DLLVM_INCLUDE_EXAMPLES=OFF -DLLVM_INCLUDE_BENCHMARKS=OFF -DCMAKE_INSTALL_PREFIX=%devroot:\=/%/llvm/%abi%
+@if EXIST %devroot%\llvm-project set buildconf=%buildconf% -DLLVM_ENABLE_PROJECTS=""
+@set buildconf=%buildconf% ..
+@if EXIST %devroot%\llvm-project set buildconf=%buildconf%/llvm
 
 @rem Load Visual Studio environment. Can only be loaded in the background when using MsBuild.
 @if /I "%ninja%"=="y" call %vsenv% %vsabi%
-@if /I "%ninja%"=="y" cd %devroot%\llvm\buildsys-%abi%
+@if /I "%ninja%"=="y" if NOT EXIST %devroot%\llvm-project cd %devroot%\llvm\buildsys-%abi%
+@if /I "%ninja%"=="y" if EXIST %devroot%\llvm-project cd %devroot%\llvm-project\buildsys-%abi%
 @if /I "%ninja%"=="y" echo.
 
 @rem Configure and execute the build with the configuration made above.
