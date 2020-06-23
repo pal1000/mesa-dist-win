@@ -72,6 +72,8 @@
 @if /I "%ninja%"=="y" echo.
 
 @rem Configure and execute the build with the configuration made above.
+@echo LLVM build configuration command^: %buildconf%
+@echo.
 @%buildconf%
 @echo.
 @pause

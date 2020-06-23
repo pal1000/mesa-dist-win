@@ -1,7 +1,8 @@
 # Next release
 ### Build script
 - Restore some LLVM build reduction used with Ninja that doesn't break Meson runtime dependency detection;
-- Support building LLVM core from monorepo.
+- Support building LLVM core from monorepo;
+- Display LLVM build configuration command on screen.
 ### Debug
 - Fix fatal flaw in LLVM install modifier tool.
 # 20.1.1-2
