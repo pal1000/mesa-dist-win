@@ -90,7 +90,7 @@
 @IF %abi%==x64 set buildcmd=msbuild /p^:Configuration=release,Platform=x64 mesa.sln /m^:%throttle%
 
 @set havellvm=0
-@IF %toolchain%==msvc IF EXIST %llvmloc%\%abi% set havellvm=1
+@IF %toolchain%==msvc IF EXIST %devroot%\llvm\%abi% set havellvm=1
 @IF NOT %toolchain%==msvc set havellvm=1
 @set llvmless=n
 @if %havellvm%==0 set llvmless=y
@@ -99,7 +99,7 @@
 @call %devroot%\%projectname%\buildscript\modules\mesonsubprojects.cmd
 @if /I NOT "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm=true
 @if /I NOT "%llvmless%"=="y" IF %llvmconfigbusted% EQU 0 set buildconf=%buildconf% -Dshared-llvm=false
-@if /I NOT "%llvmless%"=="y" IF %toolchain%==msvc SET PATH=%llvmloc%\%abi%\bin\;%PATH%
+@if /I NOT "%llvmless%"=="y" IF %toolchain%==msvc SET PATH=%devroot%\llvm\%abi%\bin\;%PATH%
 @if /I NOT "%llvmless%"=="y" IF %llvmconfigbusted% EQU 1 set buildconf=%buildconf% -Dwrap_mode=forcefallback
 @if /I "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm=false
 

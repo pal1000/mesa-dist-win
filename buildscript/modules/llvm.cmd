@@ -1,5 +1,4 @@
 @setlocal
-@set llvmloc=%devroot%\llvm
 
 @rem Check lf LLVM binaries are available
 @set llvmbinaries=0
@@ -84,5 +83,5 @@
 :skipllvm
 @echo.
 @rem Reset environment after LLVM build.
-@endlocal&set llvmloc=%llvmloc%
+@endlocal
 @cd %devroot%
