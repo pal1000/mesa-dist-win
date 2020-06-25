@@ -1,4 +1,5 @@
-# Next release
+# 20.1.2
+- Updated Mesa3D to [20.1.2](https://www.mesa3d.org/relnotes/20.1.2.html).
 ### Build script
 - Restore some LLVM build reduction used with Ninja that doesn't break Meson runtime dependency detection;
 - Support building LLVM core from monorepo;
