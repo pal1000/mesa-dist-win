@@ -7,9 +7,11 @@
 @cd %devroot%\%projectname%
 
 @set legacydist=1
+@set dualosmesa=0
 @IF %legacydist% EQU 1 GOTO legacydist
-@IF NOT %toolchain%==msvc IF EXIST %devroot%\mesa\_build\%abi% %mesonloc% install -C $(/usr/bin/cygpath -m ${devroot})/mesa/_build/${abi}"
-@IF NOT %toolchain%==msvc IF EXIST %devroot%\mesa\_build\%abi% GOTO distributed
+@IF EXIST %devroot%\mesa\_build\%abi%\src\mesa\drivers\osmesa\osmesa.dll IF EXIST %devroot%\mesa\_build\%abi%\src\gallium\targets\osmesa\osmesa.dll set dualosmesa=1
+@IF %dualosmesa% EQU 0 %mesonloc% install -C $(/usr/bin/cygpath -m ${devroot})/mesa/_build/${abi}"
+@IF %dualosmesa% EQU 0 GOTO distributed
 
 @if NOT EXIST dist MD dist
 @if EXIST dist\%abi% RD /S /Q dist\%abi%
@@ -32,8 +34,8 @@
 @if EXIST %abi% RD /S /Q %abi%
 @MD %abi%
 @cd %abi%
-@IF %toolchain%==msvc MD osmesa-gallium
-@IF %toolchain%==msvc MD osmesa-swrast
+@IF %dualosmesa% EQU 1 MD osmesa-gallium
+@IF %dualosmesa% EQU 1 MD osmesa-swrast
 @cd ..\..\lib
 @if EXIST %abi% RD /S /Q %abi%
 @MD %abi%
@@ -42,10 +44,10 @@
 @MD %abi%
 
 :mesondist
-@IF %toolchain%==msvc forfiles /p %devroot%\mesa\_build\%abi% /s /m *.dll /c "cmd /c IF NOT @file==0x22osmesa.dll0x22 copy @path %devroot%\%projectname%\bin\%abi%"
-@IF %toolchain%==msvc IF EXIST %devroot%\mesa\_build\%abi%\src\mesa\drivers\osmesa\osmesa.dll copy %devroot%\mesa\_build\%abi%\src\mesa\drivers\osmesa\osmesa.dll %devroot%\%projectname%\bin\%abi%\osmesa-swrast\osmesa.dll
-@IF %toolchain%==msvc IF EXIST %devroot%\mesa\_build\%abi%\src\gallium\targets\osmesa\osmesa.dll copy %devroot%\mesa\_build\%abi%\src\gallium\targets\osmesa\osmesa.dll %devroot%\%projectname%\bin\%abi%\osmesa-gallium\osmesa.dll
-@IF NOT %toolchain%==msvc forfiles /p %devroot%\mesa\_build\%abi% /s /m *.dll /c "cmd /c copy @path %devroot%\%projectname%\bin\%abi%"
+@IF %dualosmesa% EQU 1 forfiles /p %devroot%\mesa\_build\%abi% /s /m *.dll /c "cmd /c IF NOT @file==0x22osmesa.dll0x22 copy @path %devroot%\%projectname%\bin\%abi%"
+@IF %dualosmesa% EQU 1 copy %devroot%\mesa\_build\%abi%\src\mesa\drivers\osmesa\osmesa.dll %devroot%\%projectname%\bin\%abi%\osmesa-swrast\osmesa.dll
+@IF %dualosmesa% EQU 1 copy %devroot%\mesa\_build\%abi%\src\gallium\targets\osmesa\osmesa.dll %devroot%\%projectname%\bin\%abi%\osmesa-gallium\osmesa.dll
+@IF %dualosmesa% EQU 0 forfiles /p %devroot%\mesa\_build\%abi% /s /m *.dll /c "cmd /c copy @path %devroot%\%projectname%\bin\%abi%"
 @forfiles /p %devroot%\mesa\_build\%abi% /s /m *.exe /c "cmd /c copy @path %devroot%\%projectname%\bin\%abi%"
 @rem Copy build development artifacts
 @xcopy %devroot%\mesa\_build\%abi%\*.lib %devroot%\%projectname%\lib\%abi% /E /I /G
