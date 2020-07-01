@@ -81,7 +81,7 @@
 
 :configmesabuild
 @rem Configure Mesa build.
-@set buildconf=%mesonloc% build/%abi% --default-library=static --buildtype=release --prefix=%devroot:\=/%/%projectname%/dist/%abi%
+@set buildconf=%mesonloc% _build/%abi% --default-library=static --buildtype=release --prefix=%devroot:\=/%/%projectname%/dist/%abi%
 @IF %toolchain%==msvc set buildconf=%buildconf% -Db_vscrt=mt
 @IF NOT %toolchain%==msvc set buildconf=%buildconf% -Dc_args='-march=core2 -pipe' -Dcpp_args='-march=core2 -pipe' -Dc_link_args='-static -s' -Dcpp_link_args='-static -s'
 @IF %toolchain%==clang set CC=clang
@@ -109,10 +109,10 @@
 @if NOT %ninjastate%==0 IF %toolchain%==msvc echo.
 @if /I "%useninja%"=="y" if %ninjastate%==1 IF %toolchain%==msvc set PATH=%devroot%\ninja\;%PATH%
 @if /I "%useninja%"=="y" set buildconf=%buildconf% --backend=ninja
-@if /I "%useninja%"=="y" IF %toolchain%==msvc set buildcmd=ninja -C %devroot:\=/%/mesa/build/%abi% -j %throttle%
+@if /I "%useninja%"=="y" IF %toolchain%==msvc set buildcmd=ninja -C %devroot:\=/%/mesa/_build/%abi% -j %throttle%
 @IF NOT %toolchain%==msvc set buildcmd=%msysloc%\usr\bin\bash --login -c "
 @IF NOT %toolchain%==msvc IF %gitstate% GTR 0 set buildcmd=%buildcmd%PATH=${PATH}:${gitloc};
-@IF NOT %toolchain%==msvc set buildcmd=%buildcmd%${MINGW_PREFIX}/bin/ninja -C $(/usr/bin/cygpath -m ${devroot})/mesa/build/${abi} -j ${throttle}"
+@IF NOT %toolchain%==msvc set buildcmd=%buildcmd%${MINGW_PREFIX}/bin/ninja -C $(/usr/bin/cygpath -m ${devroot})/mesa/_build/${abi} -j ${throttle}"
 @if /I NOT "%useninja%"=="y" set buildconf=%buildconf% --backend=vs
 
 @set buildconf=%buildconf% -Dgallium-drivers=swrast
@@ -155,10 +155,10 @@
 
 @if NOT %toolchain%==msvc set buildconf=%buildconf%"
 
-@if EXIST build\%abi% echo WARNING: Meson build always performs clean build. This is last chance to cancel build.
-@if EXIST build\%abi% pause
-@if EXIST build\%abi% echo.
-@IF EXIST build\%abi% RD /S /Q build\%abi%
+@if EXIST _build\%abi% echo WARNING: Meson build always performs clean build. This is last chance to cancel build.
+@if EXIST _build\%abi% pause
+@if EXIST _build\%abi% echo.
+@IF EXIST _build\%abi% RD /S /Q _build\%abi%
 
 @IF %toolchain%==msvc IF %flexstate%==1 set PATH=%devroot%\flexbison\;%PATH%
 @IF %toolchain%==msvc set PATH=%pkgconfigloc%\;%PATH%
@@ -166,9 +166,9 @@
 :build_mesa
 @rem Generate dummy header for MSVC build when git is missing.
 @IF %toolchain%==msvc if NOT EXIST build md build
-@IF %toolchain%==msvc if NOT EXIST build\%abi% md build\%abi%
-@IF %toolchain%==msvc if NOT EXIST build\%abi%\src md build\%abi%\src
-@IF %toolchain%==msvc if NOT EXIST build\%abi%\src\git_sha1.h echo 0 > build\%abi%\src\git_sha1.h
+@IF %toolchain%==msvc if NOT EXIST _build\%abi% md _build\%abi%
+@IF %toolchain%==msvc if NOT EXIST _build\%abi%\src md _build\%abi%\src
+@IF %toolchain%==msvc if NOT EXIST _build\%abi%\src\git_sha1.h echo 0 > _build\%abi%\src\git_sha1.h
 
 @rem Load MSVC environment if used.
 @IF %toolchain%==msvc echo.
@@ -180,7 +180,7 @@
 @echo.
 @%buildconf%
 @echo.
-@if /I NOT "%useninja%"=="y" cd build\%abi%
+@if /I NOT "%useninja%"=="y" cd _build\%abi%
 @echo Build command: %buildcmd%
 @echo.
 @pause
