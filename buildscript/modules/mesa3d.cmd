@@ -45,6 +45,12 @@
 @IF NOT EXIST %devroot%\mesa\subprojects\.gitignore echo.
 @IF NOT EXIST %devroot%\mesa\subprojects\.gitignore GOTO skipmesa
 
+@rem Support Mesa3D enabled/disabled style booleans for build options as the true/false ones will be removed at some point
+@IF %intmesaver% LSS 20200 set mesonbooltrue=true
+@IF %intmesaver% LSS 20200 set mesonboolfalse=false
+@IF %intmesaver% GEQ 20200 set mesonbooltrue=enabled
+@IF %intmesaver% GEQ 20200 set mesonboolfalse=disabled
+
 @REM Verify if out of tree patches can be applied.
 @IF NOT defined disablemesapatch set disablemesapatch=0
 @set cannotmesapatch=0
@@ -97,11 +103,11 @@
 @if %havellvm%==1 set /p llvmless=Build Mesa without LLVM (y/n). llvmpipe and swr drivers and high performance JIT won't be available for other drivers and libraries:
 @if %havellvm%==1 echo.
 @call %devroot%\%projectname%\buildscript\modules\mesonsubprojects.cmd
-@if /I NOT "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm=true
-@if /I NOT "%llvmless%"=="y" IF %llvmconfigbusted% EQU 0 set buildconf=%buildconf% -Dshared-llvm=false
+@if /I NOT "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm=%mesonbooltrue%
+@if /I NOT "%llvmless%"=="y" IF %llvmconfigbusted% EQU 0 set buildconf=%buildconf% -Dshared-llvm=%mesonboolfalse%
 @if /I NOT "%llvmless%"=="y" IF %toolchain%==msvc SET PATH=%devroot%\llvm\%abi%\bin\;%PATH%
 @if /I NOT "%llvmless%"=="y" IF %llvmconfigbusted% EQU 1 set buildconf=%buildconf% -Dwrap_mode=forcefallback
-@if /I "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm=false
+@if /I "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm=%mesonboolfalse%
 
 @set useninja=n
 @IF NOT %toolchain%==msvc set useninja=y
@@ -132,7 +138,7 @@
 
 @set /p gles=Do you want to build GLAPI as a shared library and standalone GLES libraries (y/n):
 @echo.
-@if /I "%gles%"=="y" set buildconf=%buildconf% -Dshared-glapi=true -Dgles1=true -Dgles2=true
+@if /I "%gles%"=="y" set buildconf=%buildconf% -Dshared-glapi=%mesonbooltrue% -Dgles1=%mesonbooltrue% -Dgles2=%mesonbooltrue%
 
 @set osmesa=n
 @set /p osmesa=Do you want to build off-screen rendering drivers (y/n):
@@ -145,7 +151,7 @@
 @set graw=n
 @set /p graw=Do you want to build graw library (y/n):
 @echo.
-@if /I "%graw%"=="y" set buildconf=%buildconf% -Dbuild-tests=true
+@if /I "%graw%"=="y" set buildconf=%buildconf% -Dbuild-tests=%mesonbooltrue%
 
 @set opencl=n
 @rem According to Mesa source code clover OpenCL state tracker requires LLVM built with RTTI so it won't work with Mingw and it depends on libclc.
