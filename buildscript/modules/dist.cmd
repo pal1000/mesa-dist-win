@@ -6,10 +6,14 @@
 @if /I NOT "%dist%"=="y" GOTO exit
 @cd %devroot%\%projectname%
 
-@set legacydist=1
+@rem Detect if both osmesa classic and gallium are present
 @set dualosmesa=0
-@IF %legacydist% EQU 1 GOTO legacydist
 @IF EXIST %devroot%\mesa\_build\%abi%\src\mesa\drivers\osmesa\osmesa.dll IF EXIST %devroot%\mesa\_build\%abi%\src\gallium\targets\osmesa\osmesa.dll set dualosmesa=1
+
+@rem Use legacy dist until osmesa classic is removed
+@set legacydist=1
+@IF %legacydist% EQU 1 GOTO legacydist
+
 @IF %dualosmesa% EQU 0 %mesonloc% install -C $(/usr/bin/cygpath -m ${devroot})/mesa/_build/${abi}"
 @IF %dualosmesa% EQU 0 GOTO distributed
 
