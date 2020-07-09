@@ -2,7 +2,8 @@
 ### Build script
 - Support both old and new style booleans of Mesa3D build options.
 ### Distribution creation
-- Detect and handle dual and single osmesa without relying on toolchain type.
+- Detect and handle dual and single osmesa without relying on toolchain type;
+- Update vendor string following upstream lead in [mesa3d/mesa#5483](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/5483).
 # 20.1.2
 - Updated Mesa3D to [20.1.2](https://www.mesa3d.org/relnotes/20.1.2.html).
 ### Build script
