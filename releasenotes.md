@@ -1,4 +1,5 @@
-# Next release
+# 20.1.3
+- Updated Mesa3D to [20.1.3](https://www.mesa3d.org/relnotes/20.1.3.html).
 ### Build script
 - Support both old and new style booleans of Mesa3D build options.
 ### Distribution creation
