@@ -1,6 +1,5 @@
 # Next release
 ### Build script
-- Switched Mesa3D internal libraries to shared linking like [upstream](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/5689/diffs?commit_id=ee056dfef6e3567d49e82fe4af8604885ef736f5);
 - Support both old and new style booleans of Mesa3D build options.
 ### Distribution creation
 - Detect and handle dual and single osmesa without relying on toolchain type.
