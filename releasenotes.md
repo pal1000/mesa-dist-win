@@ -1,5 +1,5 @@
 # 20.1.3
-- Updated Mesa3D to [20.1.3](https://www.mesa3d.org/relnotes/20.1.3.html).
+- Updated Mesa3D to [20.1.3](https://docs.mesa3d.org/relnotes/20.1.3.html).
 ### Build script
 - Switched Mesa3D internal libraries to shared linking like [upstream](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/5689/diffs?commit_id=ee056dfef6e3567d49e82fe4af8604885ef736f5);
 - Support both old and new style booleans of Mesa3D build options.
@@ -7,7 +7,7 @@
 - Detect and handle dual and single osmesa without relying on toolchain type;
 - Update vendor string following upstream lead in [mesa3d/mesa#5483](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/5483).
 # 20.1.2
-- Updated Mesa3D to [20.1.2](https://www.mesa3d.org/relnotes/20.1.2.html).
+- Updated Mesa3D to [20.1.2](https://docs.mesa3d.org/relnotes/20.1.2.html).
 ### Build script
 - Restore some LLVM build reduction used with Ninja that doesn't break Meson runtime dependency detection;
 - Support building LLVM core from monorepo;
