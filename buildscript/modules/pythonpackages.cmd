@@ -36,8 +36,8 @@
 @echo.
 @%pythonloc% -W ignore -m pip install -U setuptools
 @echo.
-@set firstpyinstall=0
 )
+@set firstpyinstall=0
 @IF NOT %pypack%==0 %pythonloc% -W ignore -m pip install -U %pypack%
 @IF NOT %pypack%==0 echo.
 @IF %pypack%==pywin32 set /p pywin32com=Do you want to install COM and services support - y/n. You'll be asked for admin privileges:
@@ -75,5 +75,4 @@ echo.
 )
 
 :endpython
-@echo.
 @endlocal&set mesonstate=%mesonstate%
