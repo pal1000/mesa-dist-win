@@ -4,9 +4,9 @@ Windows 10.0.19041
 Ressource Hacker 5.1.7.343
 7-Zip 20.00 ultra compression
 Git 2.27.0.1
-Visual Studio Community 2019 v16.6.4
+Visual Studio Community 2019 v16.6.5
 Windows SDK 10.0.19041.0
-Python 3.8.4
+Python 3.8.5
 
 Python packages
 ---------------
@@ -18,7 +18,7 @@ setuptools 49.2.0
 
 CMake 3.18.0
 Ninja 1.10.0
-LLVM 10.0.0
+LLVM 10.0.1
 Winflexbison package 2.5.22
 flex 2.6.4
 Bison 3.5.0
