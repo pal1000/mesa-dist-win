@@ -70,7 +70,7 @@
 
 @REM Collect information about Mesa3D code. Apply out of tree patches.
 @rem Force static linking zlib in MSYS2
-@call %devroot%\%projectname%\buildscript\modules\applypatch.cmd forcestaticzlib
+@IF NOT %toolchain%==msvc call %devroot%\%projectname%\buildscript\modules\applypatch.cmd forcestaticzlib
 @rem Enable S3TC texture cache
 @call %devroot%\%projectname%\buildscript\modules\applypatch.cmd s3tc
 @rem Fix swrAVX512 build
