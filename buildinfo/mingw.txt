@@ -3,7 +3,7 @@ Build environment
 Windows 10.0.19041
 Ressource Hacker 5.1.7.343
 7-Zip 20.00 ultra compression
-Git 2.27.0.1
+Git 2.28.0.1
 
 MSYS2 environment
 -----------------
@@ -17,8 +17,8 @@ bzip2 1.0.8-2
 ca-certificates 20190110-1
 coreutils 8.32-1
 curl 7.71.1-1
-dash 0.5.11.1-1
-db 5.3.28-2
+dash 0.5.11.1-2
+db 5.3.28-3
 file 5.39-1
 filesystem 2020.02-5
 findutils 4.7.0-1
@@ -44,7 +44,7 @@ libassuan 2.5.3-1
 libbz2 1.0.8-2
 libcrypt 2.1-2
 libcurl 7.71.1-1
-libdb 5.3.28-2
+libdb 5.3.28-3
 libedit 20191231_3.1-1
 libexpat 2.2.9-1
 libffi 3.3-1
@@ -84,13 +84,13 @@ mingw-w64-i686-binutils 2.34-3
 mingw-w64-i686-bzip2 1.0.8-1
 mingw-w64-i686-ca-certificates 20190110-1
 mingw-w64-i686-clang 10.0.0-3
-mingw-w64-i686-crt-git 8.0.0.5941.736c7a24-1
+mingw-w64-i686-crt-git 8.0.0.5966.f5da805f-1
 mingw-w64-i686-expat 2.2.9-1
-mingw-w64-i686-gcc 10.1.0-3
-mingw-w64-i686-gcc-libs 10.1.0-3
+mingw-w64-i686-gcc 10.2.0-1
+mingw-w64-i686-gcc-libs 10.2.0-1
 mingw-w64-i686-gettext 0.19.8.1-9
 mingw-w64-i686-gmp 6.2.0-1
-mingw-w64-i686-headers-git 8.0.0.5941.736c7a24-1
+mingw-w64-i686-headers-git 8.0.0.5966.f5da805f-1
 mingw-w64-i686-isl 0.22.1-1
 mingw-w64-i686-libffi 3.3-1
 mingw-w64-i686-libiconv 1.16-1
@@ -134,13 +134,13 @@ mingw-w64-x86_64-binutils 2.34-3
 mingw-w64-x86_64-bzip2 1.0.8-1
 mingw-w64-x86_64-ca-certificates 20190110-1
 mingw-w64-x86_64-clang 10.0.0-3
-mingw-w64-x86_64-crt-git 8.0.0.5941.736c7a24-1
+mingw-w64-x86_64-crt-git 8.0.0.5966.f5da805f-1
 mingw-w64-x86_64-expat 2.2.9-1
-mingw-w64-x86_64-gcc 10.1.0-3
-mingw-w64-x86_64-gcc-libs 10.1.0-3
+mingw-w64-x86_64-gcc 10.2.0-1
+mingw-w64-x86_64-gcc-libs 10.2.0-1
 mingw-w64-x86_64-gettext 0.19.8.1-9
 mingw-w64-x86_64-gmp 6.2.0-1
-mingw-w64-x86_64-headers-git 8.0.0.5941.736c7a24-1
+mingw-w64-x86_64-headers-git 8.0.0.5966.f5da805f-1
 mingw-w64-x86_64-isl 0.22.1-1
 mingw-w64-x86_64-libffi 3.3-1
 mingw-w64-x86_64-libiconv 1.16-1

@@ -1,6 +1,8 @@
 ### Next release
 ### Out of tree patching
 - Don't apply force static zlib link patch when building with MSVC as it's not necessary.
+### Debug
+- Add a minimal Scons build with MSVC and Python 3.
 # 20.1.4
 - Updated Mesa3D to [20.1.4](https://docs.mesa3d.org/relnotes/20.1.4.html).
 # 20.1.3
