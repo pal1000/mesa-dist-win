@@ -1,4 +1,5 @@
-### Next release
+# 20.1.5
+- Updated Mesa3D to [20.1.5](https://docs.mesa3d.org/relnotes/20.1.5.html).
 ### Out of tree patching
 - Don't apply force static zlib link patch when building with MSVC as it's not necessary.
 ### Debug
