@@ -1,3 +1,6 @@
+# Next release
+### Build script
+- Fix build of Mesa 20.2 and higher, regression from 5f35c3e4.
 # 20.1.5
 - Updated Mesa3D to [20.1.5](https://docs.mesa3d.org/relnotes/20.1.5.html).
 ### Out of tree patching

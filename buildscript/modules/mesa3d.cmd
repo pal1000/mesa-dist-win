@@ -151,7 +151,7 @@
 @set graw=n
 @set /p graw=Do you want to build graw library (y/n):
 @echo.
-@if /I "%graw%"=="y" set buildconf=%buildconf% -Dbuild-tests=%mesonbooltrue%
+@if /I "%graw%"=="y" set buildconf=%buildconf% -Dbuild-tests=true
 
 @set opencl=n
 @rem According to Mesa source code clover OpenCL state tracker requires LLVM built with RTTI so it won't work with Mingw and it depends on libclc.
