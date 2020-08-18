@@ -1,5 +1,0 @@
-project('zlib', ['cpp'])
-
-cpp = meson.get_compiler('cpp')
-
-zlib_dep = dependency('zlib', static : true)

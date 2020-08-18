@@ -48,6 +48,7 @@ echo irbuilder_h ^= files^(llvmloc + '/include/llvm/IR/IRBuilder.h'^)
 )
 
 :zlibwrap
+@IF %toolchain%==msvc IF EXIST "%devroot%\mesa\subprojects\zlib\" RD /S /Q %devroot%\mesa\subprojects\zlib
 @CMD /C EXIT 0
 @IF %toolchain%==msvc FC /B %devroot%\%projectname%\buildscript\mesonsubprojects\zlib.wrap %devroot%\mesa\subprojects\zlib.wrap>NUL 2>&1
 @if NOT "%ERRORLEVEL%"=="0" (
@@ -55,17 +56,34 @@ echo irbuilder_h ^= files^(llvmloc + '/include/llvm/IR/IRBuilder.h'^)
 @copy /Y %devroot%\%projectname%\buildscript\mesonsubprojects\zlib.wrap %devroot%\mesa\subprojects\zlib.wrap
 @echo.
 )
-@IF NOT %toolchain%==msvc for /d %%a in ("%devroot%\mesa\subprojects\zlib-*") do @RD /S /Q "%%~a"
-@IF NOT %toolchain%==msvc IF EXIST %devroot%\mesa\subprojects\zlib.wrap del %devroot%\mesa\subprojects\zlib.wrap
-@IF %llvmconfigbusted% EQU 0 IF EXIST "%devroot%\mesa\subprojects\zlib\" RD /S /Q %devroot%\mesa\subprojects\zlib
-@IF %llvmconfigbusted% EQU 0 GOTO donewrap
-
+@IF %toolchain%==msvc GOTO donewrap
+@for /d %%a in ("%devroot%\mesa\subprojects\zlib-*") do @RD /S /Q "%%~a"
+@IF EXIST %devroot%\mesa\subprojects\zlib.wrap del %devroot%\mesa\subprojects\zlib.wrap
+@FOR /F USEBACKQ^ tokens^=5^ delims^=-^  %%a IN (`%msysloc%\usr\bin\bash --login -c "/usr/bin/pacman -Q ${MINGW_PACKAGE_PREFIX}-zlib"`) DO @SET zlibver=%%~a
 @IF NOT EXIST "%devroot%\mesa\subprojects\zlib\" md %devroot%\mesa\subprojects\zlib
+@(
+echo project^('zlib', ['cpp']^)
+echo.
+echo cpp ^= meson.get_compiler^('cpp'^)
+echo.
+echo _deps ^= []
+echo zlibloc ^= run_command^('%devroot:\=/%/%projectname%/buildscript/modules/msysmingwruntimeloc.cmd'^).stdout^(^).strip^(^)
+echo _search ^= zlibloc + '/lib'
+echo foreach d ^: ['libz']
+echo   _deps ^+^= cpp.find_library^(d, dirs ^: _search, static ^: true^)
+echo endforeach
+echo.
+echo zlib_dep ^= declare_dependency^(
+echo   include_directories ^: include_directories^(zlibloc + '/include'^),
+echo   dependencies ^: _deps,
+echo   version ^: '%zlibver%',
+echo ^)
+)>%devroot%\%projectname%\buildscript\mesonsubprojects\zlib_meson.build
 @CMD /C EXIT 0
-@FC /B %devroot%\%projectname%\buildscript\mesonsubprojects\zlib-meson.build %devroot%\mesa\subprojects\zlib\meson.build>NUL 2>&1
+@FC /B %devroot%\%projectname%\buildscript\mesonsubprojects\zlib_meson.build %devroot%\mesa\subprojects\zlib\meson.build>NUL 2>&1
 @if NOT "%ERRORLEVEL%"=="0" (
 @echo Using binary wrap to find zlib...
-@copy /Y %devroot%\%projectname%\buildscript\mesonsubprojects\zlib-meson.build %devroot%\mesa\subprojects\zlib\meson.build
+@copy /Y %devroot%\%projectname%\buildscript\mesonsubprojects\zlib_meson.build %devroot%\mesa\subprojects\zlib\meson.build
 @echo.
 )
 
