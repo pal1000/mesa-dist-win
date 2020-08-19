@@ -5,6 +5,8 @@
 - MSYS2/zlib subproject: Request static library via per subproject wrap force fallback feature introduced in Meson 0.55 instead of a dirty old patch to Mesa source code;
 - Move out of tree patches applicability test before pkgconf and LLVM build;
 - MSYS2 patch: Support patching multiple source repositories.
+### Out of tree patching
+- LLVM: Add patch to fix build with Visual Studio 16.7 and newer.
 # 20.1.5
 - Updated Mesa3D to [20.1.5](https://docs.mesa3d.org/relnotes/20.1.5.html).
 ### Out of tree patching

@@ -33,6 +33,16 @@
 @echo.
 )
 
+@rem Apply is_trivially_copyable patch
+@if NOT EXIST %devroot%\llvm-project cd %devroot%
+@if NOT EXIST %devroot%\llvm-project set msyspatchdir=%devroot%
+@if EXIST %devroot%\llvm-project cd %devroot%\llvm-project
+@if EXIST %devroot%\llvm-project set msyspatchdir=%devroot%\llvm-project
+@IF %disablemesapatch%==0 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd llvm-vs-16_7
+@IF %disablemesapatch%==1 if EXIST %msysloc%\usr\bin\patch.exe echo Reverting out of tree patches...
+@IF %disablemesapatch%==1 IF EXIST %msysloc%\usr\bin\patch.exe %msysloc%\usr\bin\bash --login -c "cd $(/usr/bin/cygpath -m ${msyspatchdir});patch -Np1 --no-backup-if-mismatch -R -r - -i $(/usr/bin/cygpath -m ${devroot})/${projectname}/patches/llvm-vs-16_7.patch"
+@IF %disablemesapatch%==1 if EXIST %msysloc%\usr\bin\patch.exe echo.
+
 @rem Always clean build
 @if NOT EXIST %devroot%\llvm-project cd %devroot%\llvm
 @if EXIST %devroot%\llvm-project cd %devroot%\llvm-project
