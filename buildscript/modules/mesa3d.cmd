@@ -61,6 +61,7 @@
 @IF %disablemesapatch%==1 GOTO configmesabuild
 
 @REM Collect information about Mesa3D code. Apply out of tree patches.
+@set msyspatchdir=%devroot%\mesa
 @rem Enable S3TC texture cache
 @call %devroot%\%projectname%\buildscript\modules\applypatch.cmd s3tc
 @rem Fix swrAVX512 build
