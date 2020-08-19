@@ -2,7 +2,8 @@
 ### Build script
 - Fix build of Mesa 20.2 and higher, regression from 5f35c3e4;
 - LLVM build: Use relative path in CMAKE_INSTALL_PREFIX;
-- MSYS2/zlib subproject: Request static library via per subproject wrap force fallback feature introduced in Meson 0.55 instead of a dirty old patch to Mesa source code.
+- MSYS2/zlib subproject: Request static library via per subproject wrap force fallback feature introduced in Meson 0.55 instead of a dirty old patch to Mesa source code;
+- Move out of tree patches applicability test before pkgconf and LLVM build.
 # 20.1.5
 - Updated Mesa3D to [20.1.5](https://docs.mesa3d.org/relnotes/20.1.5.html).
 ### Out of tree patching

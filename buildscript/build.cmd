@@ -38,6 +38,9 @@
 @rem Version control
 @call %devroot%\%projectname%\buildscript\modules\git.cmd
 
+@rem Verify if out of tree patches can be applied.
+@call %devroot%\%projectname%\buildscript\modules\patching.cmd
+
 @rem Get Meson build location
 @call %devroot%\%projectname%\buildscript\modules\locatemeson.cmd
 

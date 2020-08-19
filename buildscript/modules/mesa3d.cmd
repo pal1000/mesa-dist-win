@@ -51,18 +51,10 @@
 @IF %intmesaver% GEQ 20200 set mesonbooltrue=enabled
 @IF %intmesaver% GEQ 20200 set mesonboolfalse=disabled
 
-@REM Verify if out of tree patches can be applied.
-@IF NOT defined disablemesapatch set disablemesapatch=0
-@set cannotmesapatch=0
-@if %gitstate%==0 IF NOT EXIST %msysloc%\usr\bin\patch.exe IF %toolchain%==msvc set cannotmesapatch=1
-@IF %cannotmesapatch%==1 set disablemesapatch=1
-@IF %cannotmesapatch%==1 echo Error: Git and MSYS2 GNU patch are both missing. Auto-patching disabled. This could have many consequences going all the way up to build failure.
-@IF %cannotmesapatch%==1 echo.
+@REM Handle lack of out of tree patches support.
 @IF %disablemesapatch%==1 IF %intmesaver% GEQ 20100 IF %intmesaver% LSS 20103 IF NOT %toolchain%==msvc echo FATAL: Mesa 20.1-devel through 20.1.0-rc2 cannot be built with MinGW without out of tree patches.
 @IF %disablemesapatch%==1 IF %intmesaver% GEQ 20100 IF %intmesaver% LSS 20103 IF NOT %toolchain%==msvc echo.
 @IF %disablemesapatch%==1 IF %intmesaver% GEQ 20100 IF %intmesaver% LSS 20103 IF NOT %toolchain%==msvc GOTO skipmesa
-@IF %disablemesapatch%==1 IF %cannotmesapatch%==0 echo WARNING: Patching is forcefully disabled for debugging purposes.
-@IF %disablemesapatch%==1 IF %cannotmesapatch%==0 echo.
 @IF %disablemesapatch%==1 if NOT %gitstate%==0 echo Reverting out of tree patches...
 @IF %disablemesapatch%==1 if NOT %gitstate%==0 git checkout .
 @IF %disablemesapatch%==1 if NOT %gitstate%==0 echo.
