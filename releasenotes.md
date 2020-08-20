@@ -1,4 +1,5 @@
-# Next release
+# 20.1.6
+- Updated Mesa3D to [20.1.6](https://docs.mesa3d.org/relnotes/20.1.6.html).
 ### Build script
 - Fix build of Mesa 20.2 and higher, regression from 5f35c3e4;
 - LLVM build: Use relative path in CMAKE_INSTALL_PREFIX;
