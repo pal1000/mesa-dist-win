@@ -120,10 +120,11 @@
 @IF /I "%zink%"=="y" set buildconf=%buildconf%,zink
 
 @set swrdrv=n
-@if /I NOT "%llvmless%"=="y" if %abi%==x64 IF %toolchain%==msvc IF %intmesaver% LSS 20152 IF %disablemesapatch%==0 set /p swrdrv=Do you want to build swr drivers? (y=yes):
-@if /I NOT "%llvmless%"=="y" if %abi%==x64 IF %toolchain%==msvc IF %intmesaver% LSS 20152 IF %disablemesapatch%==0 echo.
-@if /I NOT "%llvmless%"=="y" if %abi%==x64 IF %toolchain%==msvc IF %intmesaver% GEQ 20152 set /p swrdrv=Do you want to build swr drivers? (y=yes):
-@if /I NOT "%llvmless%"=="y" if %abi%==x64 IF %toolchain%==msvc IF %intmesaver% GEQ 20152 echo.
+@set canswr=0
+@if /I NOT "%llvmless%"=="y" if %abi%==x64 IF %toolchain%==msvc IF %intmesaver% LSS 20152 IF %disablemesapatch%==0 set canswr=1
+@if /I NOT "%llvmless%"=="y" if %abi%==x64 IF %toolchain%==msvc IF %intmesaver% GEQ 20152 set canswr=1
+@if %canswr% EQU 1 set /p swrdrv=Do you want to build swr drivers? (y=yes):
+@if %canswr% EQU 1 echo.
 @if /I "%swrdrv%"=="y" set buildconf=%buildconf%,swr
 @if /I "%swrdrv%"=="y" IF %disablemesapatch%==0 set buildconf=%buildconf% -Dswr-arches=avx,avx2,skx,knl
 
