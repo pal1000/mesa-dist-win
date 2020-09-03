@@ -1,7 +1,8 @@
-# Next release
+# 20.1.7
+- Updated Mesa3D to [20.1.7](https://docs.mesa3d.org/relnotes/20.1.7.html);
+- Added swr driver to mingw package.
 ### Build script
-- Refactor check that determines if swr driver is buildable to support adding more cases to it;
-- swr: Support build with mingw.
+- Refactor check that determines if swr driver is buildable to support mingw.
 # 20.1.6
 - Updated Mesa3D to [20.1.6](https://docs.mesa3d.org/relnotes/20.1.6.html).
 ### Build script
