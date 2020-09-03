@@ -21,7 +21,7 @@ setuptools 49.6.0
 CMake 3.18.2
 Ninja 1.10.1
 LLVM 10.0.1
-Winflexbison package 2.5.22
+Winflexbison package 2.5.23
 flex 2.6.4
-Bison 3.5.0
+Bison 3.7.1
 pkgconf 1.7.3
