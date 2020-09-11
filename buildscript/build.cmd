@@ -10,9 +10,9 @@
 @set "ERRORLEVEL="
 
 @rem Command line option to disable out of tree patches for Mesa3D
-@IF "%1"=="disablemesapatch" set disablemesapatch=1
-@IF "%disablemesapatch%"=="1" set TITLE=%TITLE% ^(out of tree patches disabled^)
-@IF "%disablemesapatch%"=="1" TITLE %TITLE%
+@IF "%1"=="disableootpatch" set disableootpatch=1
+@IF "%disableootpatch%"=="1" set TITLE=%TITLE% ^(out of tree patches disabled^)
+@IF "%disableootpatch%"=="1" TITLE %TITLE%
 
 @rem Analyze environment. Get each dependency status: 0=missing, 1=standby/load manually in PATH, 2=cannot be unloaded.
 @rem Not all dependencies can have all these states.

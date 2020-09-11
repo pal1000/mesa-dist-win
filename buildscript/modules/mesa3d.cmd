@@ -52,13 +52,13 @@
 @IF %intmesaver% GEQ 20200 set mesonboolfalse=disabled
 
 @REM Handle lack of out of tree patches support.
-@IF %disablemesapatch%==1 IF %intmesaver% GEQ 20100 IF %intmesaver% LSS 20103 IF NOT %toolchain%==msvc echo FATAL: Mesa 20.1-devel through 20.1.0-rc2 cannot be built with MinGW without out of tree patches.
-@IF %disablemesapatch%==1 IF %intmesaver% GEQ 20100 IF %intmesaver% LSS 20103 IF NOT %toolchain%==msvc echo.
-@IF %disablemesapatch%==1 IF %intmesaver% GEQ 20100 IF %intmesaver% LSS 20103 IF NOT %toolchain%==msvc GOTO skipmesa
-@IF %disablemesapatch%==1 if NOT %gitstate%==0 echo Reverting out of tree patches...
-@IF %disablemesapatch%==1 if NOT %gitstate%==0 git checkout .
-@IF %disablemesapatch%==1 if NOT %gitstate%==0 echo.
-@IF %disablemesapatch%==1 GOTO configmesabuild
+@IF %disableootpatch%==1 IF %intmesaver% GEQ 20100 IF %intmesaver% LSS 20103 IF NOT %toolchain%==msvc echo FATAL: Mesa 20.1-devel through 20.1.0-rc2 cannot be built with MinGW without out of tree patches.
+@IF %disableootpatch%==1 IF %intmesaver% GEQ 20100 IF %intmesaver% LSS 20103 IF NOT %toolchain%==msvc echo.
+@IF %disableootpatch%==1 IF %intmesaver% GEQ 20100 IF %intmesaver% LSS 20103 IF NOT %toolchain%==msvc GOTO skipmesa
+@IF %disableootpatch%==1 if NOT %gitstate%==0 echo Reverting out of tree patches...
+@IF %disableootpatch%==1 if NOT %gitstate%==0 git checkout .
+@IF %disableootpatch%==1 if NOT %gitstate%==0 echo.
+@IF %disableootpatch%==1 GOTO configmesabuild
 
 @REM Collect information about Mesa3D code. Apply out of tree patches.
 @set msyspatchdir=%devroot%\mesa
@@ -123,13 +123,13 @@
 
 @set swrdrv=n
 @set canswr=0
-@if /I NOT "%llvmless%"=="y" if %abi%==x64 IF %toolchain%==msvc IF %intmesaver% LSS 20152 IF %disablemesapatch%==0 set canswr=1
+@if /I NOT "%llvmless%"=="y" if %abi%==x64 IF %toolchain%==msvc IF %intmesaver% LSS 20152 IF %disableootpatch%==0 set canswr=1
 @if /I NOT "%llvmless%"=="y" if %abi%==x64 IF %toolchain%==msvc IF %intmesaver% GEQ 20152 set canswr=1
-@if /I NOT "%llvmless%"=="y" if %abi%==x64 IF NOT %toolchain%==msvc IF %disablemesapatch%==0 set canswr=1
+@if /I NOT "%llvmless%"=="y" if %abi%==x64 IF NOT %toolchain%==msvc IF %disableootpatch%==0 set canswr=1
 @if %canswr% EQU 1 set /p swrdrv=Do you want to build swr drivers? (y=yes):
 @if %canswr% EQU 1 echo.
 @if /I "%swrdrv%"=="y" set buildconf=%buildconf%,swr
-@if /I "%swrdrv%"=="y" IF %disablemesapatch%==0 set buildconf=%buildconf% -Dswr-arches=avx,avx2,skx,knl
+@if /I "%swrdrv%"=="y" IF %disableootpatch%==0 set buildconf=%buildconf% -Dswr-arches=avx,avx2,skx,knl
 
 @set /p gles=Do you want to build GLAPI as a shared library and standalone GLES libraries (y/n):
 @echo.
@@ -139,7 +139,7 @@
 @set /p osmesa=Do you want to build off-screen rendering drivers (y/n):
 @echo.
 @IF /I "%osmesa%"=="y" set buildconf=%buildconf% -Dosmesa=gallium,classic
-@IF /I "%osmesa%"=="y" IF %toolchain%==msvc IF %disablemesapatch%==1 set buildconf=%buildconf:~0,-8%
+@IF /I "%osmesa%"=="y" IF %toolchain%==msvc IF %disableootpatch%==1 set buildconf=%buildconf:~0,-8%
 @rem Disable osmesa classic when building with Meson and Mingw toolchains due to build failure
 @IF /I "%osmesa%"=="y" IF NOT %toolchain%==msvc set buildconf=%buildconf:~0,-8%
 
