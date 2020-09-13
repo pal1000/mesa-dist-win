@@ -81,7 +81,7 @@
 
 :configmesabuild
 @rem Configure Mesa build.
-@set buildconf=%mesonloc% build/%abi% --default-library=shared --buildtype=release --prefix=%devroot:\=/%/%projectname%/dist/%abi%
+@set buildconf=%mesonloc% build/%abi% --buildtype=release --prefix=%devroot:\=/%/%projectname%/dist/%abi%
 @IF %toolchain%==msvc set buildconf=%buildconf% -Db_vscrt=mt -Dzlib:default_library=static
 @IF NOT %toolchain%==msvc set buildconf=%buildconf% -Dc_args='-march=core2 -pipe' -Dcpp_args='-march=core2 -pipe' -Dc_link_args='-static -s' -Dcpp_link_args='-static -s' --force-fallback-for=zlib
 @IF %toolchain%==clang set CC=clang
