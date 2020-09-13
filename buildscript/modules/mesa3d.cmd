@@ -76,7 +76,8 @@
 @rem Fix swr build
 @IF %intmesaver% LSS 20152 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swrbuildfix
 @rem Get swr building with Mingw
-@call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swr-mingw
+@IF %intmesaver% LSS 20158 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swr-mingw
+@IF %intmesaver% GEQ 20200 IF %intmesaver% LSS 20250 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swr-mingw
 
 :configmesabuild
 @rem Configure Mesa build.
@@ -126,6 +127,8 @@
 @if /I NOT "%llvmless%"=="y" if %abi%==x64 IF %toolchain%==msvc IF %intmesaver% LSS 20152 IF %disableootpatch%==0 set canswr=1
 @if /I NOT "%llvmless%"=="y" if %abi%==x64 IF %toolchain%==msvc IF %intmesaver% GEQ 20152 set canswr=1
 @if /I NOT "%llvmless%"=="y" if %abi%==x64 IF NOT %toolchain%==msvc IF %disableootpatch%==0 set canswr=1
+@if /I NOT "%llvmless%"=="y" if %abi%==x64 IF NOT %toolchain%==msvc IF %disableootpatch%==1 IF %intmesaver% GEQ 20158 IF %intmesaver% LSS 20200 set canswr=1
+@if /I NOT "%llvmless%"=="y" if %abi%==x64 IF NOT %toolchain%==msvc IF %disableootpatch%==1 IF %intmesaver% GEQ 20250 set canswr=1
 @if %canswr% EQU 1 set /p swrdrv=Do you want to build swr drivers? (y=yes):
 @if %canswr% EQU 1 echo.
 @if /I "%swrdrv%"=="y" set buildconf=%buildconf%,swr
