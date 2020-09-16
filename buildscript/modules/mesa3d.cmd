@@ -81,9 +81,10 @@
 
 :configmesabuild
 @rem Configure Mesa build.
-@set buildconf=%mesonloc% build/%abi% --buildtype=release --prefix=%devroot:\=/%/%projectname%/dist/%abi%
-@IF %toolchain%==msvc set buildconf=%buildconf% -Db_vscrt=mt -Dzlib:default_library=static
-@IF NOT %toolchain%==msvc set buildconf=%buildconf% -Dc_args='-march=core2 -pipe' -Dcpp_args='-march=core2 -pipe' -Dc_link_args='-static -s' -Dcpp_link_args='-static -s' --force-fallback-for=zlib
+@set buildconf=%mesonloc% build/%abi% -Dzlib:default_library=static --buildtype=release --prefix=%devroot:\=/%/%projectname%/dist/%abi%
+@IF %toolchain%==msvc set buildconf=%buildconf% -Db_vscrt=mt
+@IF NOT %toolchain%==msvc set buildconf=%buildconf% -Dc_args='-march=core2 -pipe' -Dcpp_args='-march=core2 -pipe' -Dc_link_args='-static -s' -Dcpp_link_args='-static -s'
+@IF NOT %toolchain%==msvc IF %intmesaver% GTR 20000 set buildconf=%buildconf% -Dzstd=%mesonbooltrue% -Dlibzstd:default_library=static
 @IF %toolchain%==clang set CC=clang
 @IF %toolchain%==clang set CXX=clang++
 @set buildcmd=msbuild /p^:Configuration=release,Platform=Win32 mesa.sln /m^:%throttle%
@@ -97,7 +98,7 @@
 @if %havellvm%==1 set /p llvmless=Build Mesa without LLVM (y/n). llvmpipe and swr drivers and high performance JIT won't be available for other drivers and libraries:
 @if %havellvm%==1 echo.
 @call %devroot%\%projectname%\buildscript\modules\mesonsubprojects.cmd
-@if /I NOT "%llvmless%"=="y" IF %llvmconfigbusted% EQU 1 set buildconf=%buildconf%,llvm
+@if /I NOT "%llvmless%"=="y" IF %llvmconfigbusted% EQU 1 set buildconf=%buildconf% --force-fallback-for=llvm
 @if /I NOT "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm=%mesonbooltrue%
 @if /I NOT "%llvmless%"=="y" IF %llvmconfigbusted% EQU 0 set buildconf=%buildconf% -Dshared-llvm=%mesonboolfalse%
 @if /I NOT "%llvmless%"=="y" IF %toolchain%==msvc SET PATH=%devroot%\llvm\%abi%\bin\;%PATH%

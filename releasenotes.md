@@ -1,6 +1,7 @@
 # Next release
 ### Build script
-- Limit swr driver mingw build compatibility patch to Mesa 20.1 before 20.1.8 and 20.2 before 20.2.0 stable.
+- Limit swr driver mingw build compatibility patch to Mesa 20.1 before 20.1.8 and 20.2 before 20.2.0 stable;
+- MSYS2: Use a very brutal but simpler approach to static linking zlib and reuse it for zstd.
 # 20.1.7
 - Updated Mesa3D to [20.1.7](https://docs.mesa3d.org/relnotes/20.1.7.html);
 - Added swr driver to mingw package.
