@@ -1,4 +1,6 @@
-# Next release
+# 20.1.8
+- Updated Mesa3D to [20.1.8](https://docs.mesa3d.org/relnotes/20.1.8.html);
+- ZSTD is now used for certain compression tasks in MinGW package.
 ### Build script
 - Limit swr driver mingw build compatibility patch to Mesa 20.1 before 20.1.8 and 20.2 before 20.2.0 stable;
 - MSYS2: Use a very brutal but simpler approach to static linking zlib and reuse it for zstd.

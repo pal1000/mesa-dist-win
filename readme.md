@@ -8,13 +8,14 @@
 - [OpenGL context configuration override](#opengl-context-configuration-override)
 - [How to set environment variables](#how-to-set-environment-variables)
 # Downloads
-Mesa 20.1.7 builds with Visual Studio and MSYS2 Mingw-w64 are now available in [releases section](https://github.com/pal1000/mesa-dist-win/releases).
+Mesa 20.1.8 builds with Visual Studio and MSYS2 Mingw-w64 are now available in [releases section](https://github.com/pal1000/mesa-dist-win/releases).
 # Note for enterprise environments
 IT security policy may restrict or even outright prohibit running 3rd-party unsigned executables. If this is the case you can extract Mesa3D drivers using [7-Zip](https://www.7-zip.org/).
 # About Mingw package
-Mingw package is recommended in most cases over MSVC as it has better performance but it also has some caveats:
+Mingw package is recommended in most cases over MSVC as it has better performance but there are some differences:
 - it requires a CPU with [SSSE3](https://en.wikipedia.org/wiki/SSSE3#CPUs_with_SSSE3);
-- [osmesa classic](https://gitlab.freedesktop.org/mesa/mesa/issues/2297) is not available due to build failure.
+- [osmesa classic](https://gitlab.freedesktop.org/mesa/mesa/issues/2297) is not available due to build failure;
+- ZSTD is used for certain compression tasks since 20.1.8.
 
 If you need to migrate from Mingw to MSVC binaries you just need to replace Mesa binaries folder from Mingw package with MSVC counterpart.
 # Mingw and MSVC Package contents
