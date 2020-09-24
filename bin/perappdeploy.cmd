@@ -20,7 +20,7 @@
 @echo To overcome this you may enter the program executable filename and a .local
 @echo file is generated for it or use Mesainjector made by Federico Dossena.
 @echo However Mesainjector does not work with Windows 10 Version 1803 and newer.
-@echo Download: http://downloads.fdossena.com/Projects/Mesa3D/Injector/index.php
+@echo Download: https://downloads.fdossena.com/Projects/Mesa3D/Injector/index.php
 @echo Build Mesainjector - https://fdossena.com/?p=mesa/injector_build.frag
 @echo.
 @pause
