@@ -1,4 +1,5 @@
-# Next release
+# 20.2.0
+- Updated Mesa3D to [20.2.0](https://docs.mesa3d.org/relnotes/20.2.0.html).
 ### Build script
 - Mesa3D: Avoid using Meson options that don't work with toolchain in use.
 ### Debug
