@@ -1,3 +1,6 @@
+# Next release
+### Debug
+- MSYS2: Add setup command to install Mesa3D build dependencies.
 # 20.1.8
 - Updated Mesa3D to [20.1.8](https://docs.mesa3d.org/relnotes/20.1.8.html);
 - ZSTD is now used for certain compression tasks in MinGW package.
