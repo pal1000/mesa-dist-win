@@ -1,4 +1,6 @@
 # Next release
+### Build script
+- Mesa3D: Avoid using Meson options that don't work with toolchain in use.
 ### Debug
 - MSYS2: Add setup command to install Mesa3D build dependencies.
 # 20.1.8
