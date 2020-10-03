@@ -1,3 +1,6 @@
+# Next release
+### Docs
+- Update end-user guide.
 # 20.2.0
 - Updated Mesa3D to [20.2.0](https://docs.mesa3d.org/relnotes/20.2.0.html).
 ### Build script
