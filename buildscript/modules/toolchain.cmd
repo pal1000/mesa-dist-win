@@ -12,41 +12,34 @@
 @set toolset=0
 @set totaltoolchains=0
 @set totalmsvc=0
-@set gcctoolchain=0
 @IF EXIST %vswhere% for /F "USEBACKQ tokens=*" %%a IN (`%vswhere% -prerelease -property catalog_productDisplayVersion`) do @(
 set /a totalmsvc+=1
 set /a totaltoolchains+=1
 set msvcversions[!totalmsvc!]=%%a
 )
-@IF NOT %msysstate%==0 set /a gcctoolchain=%totaltoolchains%+1
-@IF NOT %msysstate%==0 set /a totaltoolchains+=2
-@set msvccount=0
-@IF EXIST %vswhere% for /F "USEBACKQ tokens=*" %%a IN (`%vswhere% -prerelease -property displayName`) do @(
-set /a msvccount+=1
-set msvcnames[!msvccount!]=%%a
-)
-@cls
-@echo Available compilers
-@IF %totalmsvc% GTR 0 FOR /L %%a IN (1,1,%totalmsvc%) do @echo %%a.!msvcnames[%%a]! v!msvcversions[%%a]!
-@IF NOT %msysstate%==0 echo %gcctoolchain%. MSYS2 Mingw-w64 GCC
-@IF NOT %msysstate%==0 echo %totaltoolchains%. MSYS2 Mingw-w64 clang
-@echo.
+@IF NOT %msysstate%==0 set /a totaltoolchains+=1
 @IF %totaltoolchains%==0 (
 @echo Error: No compiler found. Cannot continue.
 @echo.
 @pause
 @exit
 )
+@set msvccount=0
+@IF EXIST %vswhere% for /F "USEBACKQ tokens=*" %%a IN (`%vswhere% -prerelease -property displayName`) do @(
+set /a msvccount+=1
+set msvcnames[!msvccount!]=%%a
+)
+@cls
+@echo Available compile toolchains
+@IF %totalmsvc% GTR 0 FOR /L %%a IN (1,1,%totalmsvc%) do @echo %%a.!msvcnames[%%a]! v!msvcversions[%%a]!
+@IF NOT %msysstate%==0 echo %totaltoolchains%. MSYS2 Mingw-w64
+@echo.
 
-@rem Select compiler
+@rem Select toolchain
 @set selecttoolchain=0
-@set /p selecttoolchain=Select compiler:
+@set /p selecttoolchain=Select toolchain:
 @echo.
 @IF "%selecttoolchain%"=="%totaltoolchains%" IF NOT %msysstate%==0 (
-@set toolchain=clang
-@GOTO selectedclang
-)
-@IF "%selecttoolchain%"=="%gcctoolchain%" IF NOT %msysstate%==0 (
 @set toolchain=gcc
 @GOTO selectedgcc
 )
@@ -90,11 +83,8 @@ IF "%%a"=="%selecttoolchain%" set msvcver=!msvcversions[%%a]!
 @GOTO selectedcompiler
 
 :selectedgcc
-@set TITLE=%TITLE% using MSYS2 Mingw-w64 GCC
+@set TITLE=%TITLE% using MSYS2 Mingw-w64
 @GOTO selectedcompiler
-
-:selectedclang
-@set TITLE=%TITLE% using MSYS2 Mingw-w64 clang
 
 :selectedcompiler
 @TITLE %TITLE%

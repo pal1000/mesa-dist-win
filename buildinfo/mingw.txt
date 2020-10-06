@@ -80,7 +80,7 @@ libxml2 2.9.10-6
 libxslt 1.1.34-3
 libzstd 1.4.5-2
 m4 1.4.18-2
-mingw-w64-i686-binutils 2.35-8
+mingw-w64-i686-binutils 2.35.1-2
 mingw-w64-i686-bzip2 1.0.8-1
 mingw-w64-i686-ca-certificates 20200601-1
 mingw-w64-i686-clang 10.0.1-1
@@ -130,7 +130,7 @@ mingw-w64-i686-xz 5.2.5-1
 mingw-w64-i686-z3 4.8.8-1
 mingw-w64-i686-zlib 1.2.11-7
 mingw-w64-i686-zstd 1.4.5-1
-mingw-w64-x86_64-binutils 2.35-8
+mingw-w64-x86_64-binutils 2.35.1-2
 mingw-w64-x86_64-bzip2 1.0.8-1
 mingw-w64-x86_64-ca-certificates 20200601-1
 mingw-w64-x86_64-clang 10.0.1-1

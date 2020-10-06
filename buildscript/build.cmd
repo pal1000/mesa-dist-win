@@ -26,6 +26,9 @@
 @rem Select target architecture
 @call %devroot%\%projectname%\buildscript\modules\abi.cmd
 
+@rem Offer option to build with clang
+@call %devroot%\%projectname%\buildscript\modules\clang.cmd
+
 @rem If using MSVC search for Python. State tracking is pointless as it is loaded once and we are done. Hard fail if missing.
 @IF %toolchain%==msvc call %devroot%\%projectname%\buildscript\modules\discoverpython.cmd
 

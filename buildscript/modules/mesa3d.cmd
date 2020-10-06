@@ -85,8 +85,6 @@
 @IF %toolchain%==msvc set buildconf=%buildconf% -Db_vscrt=mt -Dzlib:default_library=static
 @IF NOT %toolchain%==msvc set buildconf=%buildconf% -Dc_args='-march=core2 -pipe' -Dcpp_args='-march=core2 -pipe' -Dc_link_args='-static -s' -Dcpp_link_args='-static -s'
 @IF NOT %toolchain%==msvc IF %intmesaver% GTR 20000 set buildconf=%buildconf% -Dzstd=%mesonbooltrue%
-@IF %toolchain%==clang set CC=clang
-@IF %toolchain%==clang set CXX=clang++
 @set buildcmd=msbuild /p^:Configuration=release,Platform=Win32 mesa.sln /m^:%throttle%
 @IF %abi%==x64 set buildcmd=msbuild /p^:Configuration=release,Platform=x64 mesa.sln /m^:%throttle%
 
@@ -112,7 +110,7 @@
 @if /I "%useninja%"=="y" set buildconf=%buildconf% --backend=ninja
 @if /I "%useninja%"=="y" IF %toolchain%==msvc set buildcmd=ninja -C %devroot:\=/%/mesa/build/%abi% -j %throttle%
 @IF NOT %toolchain%==msvc set buildcmd=%msysloc%\usr\bin\bash --login -c "
-@IF NOT %toolchain%==msvc IF %gitstate% GTR 0 set buildcmd=%buildcmd%PATH=${PATH}:${gitloc};
+@IF NOT %toolchain%==msvc IF %gitstate% GTR 0 set buildcmd=%buildcmd%PATH^=${PATH}^:${gitloc};
 @IF NOT %toolchain%==msvc set buildcmd=%buildcmd%${MINGW_PREFIX}/bin/ninja -C $(/usr/bin/cygpath -m ${devroot})/mesa/build/${abi} -j ${throttle}"
 @if /I NOT "%useninja%"=="y" set buildconf=%buildconf% --backend=vs
 
