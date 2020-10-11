@@ -6,7 +6,7 @@ Ressource Hacker 5.1.7.343
 Git 2.28.0.1
 Visual Studio Community 2019 v16.7.5
 Windows SDK 10.0.19041.0
-Python 3.8.6
+Python 3.9.0
 
 Python packages
 ---------------

@@ -8,7 +8,7 @@
 @cd mesa
 @git checkout .
 @echo.
-@set buildconf=meson build/%abi% --default-library=static --buildtype=release -Dllvm=false -Dosmesa=classic -Dbuild-tests=true
+@set buildconf=meson build/%abi% --buildtype=release -Dllvm=false -Dosmesa=classic -Dbuild-tests=true
 @set buildcmd=ninja -C build/%abi% -j 2
 @for /d %%a in ("%devroot%\mesa\subprojects\zlib-*") do @RD /S /Q "%%~a"
 @IF EXIST "%devroot%\mesa\subprojects\zlib\" RD /S /Q %devroot%\mesa\subprojects\zlib

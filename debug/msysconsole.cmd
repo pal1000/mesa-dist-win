@@ -2,13 +2,27 @@
 @cd ..\..\
 @for %%a in ("%cd%") do @set devroot=%%~sa
 @call %devroot%\mesa-dist-win\buildscript\modules\msys.cmd
-@call %devroot%\mesa-dist-win\buildscript\modules\abi.cmd
 @call %devroot%\mesa-dist-win\buildscript\modules\msysupdate.cmd
 @call %devroot%\mesa-dist-win\buildscript\modules\git.cmd
 @set /p clean=Clear MSYS2 cache (y/n):
 @echo.
 @IF /I "%clean%"=="y" %msysloc%\usr\bin\bash --login -c "/usr/bin/pacman -Sc --noconfirm"
 @IF /I "%clean%"=="y" echo.
+
+:selectshell
+@echo Select shell:
+@echo 1. MSYS2 (default)
+@echo 2 MINGW32
+@echo 3 MINGW64
+@set /p shell=Enter choice:
+@echo.
+@IF "%shell%"=="" GOTO command
+@IF "%shell%"=="1" GOTO command
+@IF "%shell%"=="2" set MSYSTEM=MINGW32
+@IF "%shell%"=="2" GOTO command
+@IF "%shell%"=="3" set MSYSTEM=MINGW64
+@IF "%shell%"=="3" GOTO command
+@GOTO selectshell
 
 :command
 @set msyscmd=
