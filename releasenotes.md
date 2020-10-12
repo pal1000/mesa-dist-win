@@ -2,9 +2,12 @@
 ### Docs
 - Update end-user guide.
 ### Build script
-- Add experimental build with MSVC and clang (currently disabled).
+- Add experimental build with MSVC and clang (currently disabled);
+- Get LLVM 11.0.0 by default if LLVM is missing.
 ### Debug
 - MSYS2: Allow selecting MSYS2 shell.
+### Patching
+- Disable LLVM build fix patch for MSVC>=16.7.0 as it's no longer needed with LLVM>=11.0.0.
 # 20.2.0
 - Updated Mesa3D to [20.2.0](https://docs.mesa3d.org/relnotes/20.2.0.html).
 ### Build script

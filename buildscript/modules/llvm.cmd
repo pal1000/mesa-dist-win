@@ -29,7 +29,7 @@
 @rem Getting LLVM monorepo if LLVM source is missing
 @if NOT EXIST %devroot%\llvm\cmake if NOT EXIST %devroot%\llvm-project (
 @echo Getting LLVM source code...
-@git clone https://github.com/llvm/llvm-project.git --branch=llvmorg-10.0.1 --depth=1 %devroot%\llvm-project
+@git clone https://github.com/llvm/llvm-project.git --branch=llvmorg-11.0.0 --depth=1 %devroot%\llvm-project
 @echo.
 )
 
@@ -38,7 +38,9 @@
 @if NOT EXIST %devroot%\llvm-project set msyspatchdir=%devroot%
 @if EXIST %devroot%\llvm-project cd %devroot%\llvm-project
 @if EXIST %devroot%\llvm-project set msyspatchdir=%devroot%\llvm-project
-@IF %disableootpatch%==0 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd llvm-vs-16_7
+
+@rem Uncomment next line if still using LLVM<11 and build goes on fire
+@rem IF %disableootpatch%==0 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd llvm-vs-16_7
 @IF %disableootpatch%==1 if EXIST %msysloc%\usr\bin\patch.exe echo Reverting out of tree patches...
 @IF %disableootpatch%==1 IF EXIST %msysloc%\usr\bin\patch.exe %msysloc%\usr\bin\bash --login -c "cd $(/usr/bin/cygpath -m ${msyspatchdir});patch -Np1 --no-backup-if-mismatch -R -r - -i $(/usr/bin/cygpath -m ${devroot})/${projectname}/patches/llvm-vs-16_7.patch"
 @IF %disableootpatch%==1 if EXIST %msysloc%\usr\bin\patch.exe echo.
