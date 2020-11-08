@@ -1,4 +1,5 @@
 # 20.2.2
+- Updated Mesa3D to [20.2.2](https://docs.mesa3d.org/relnotes/20.2.2.html).
 ### Build script
 - MinGW: Use pkgconf as pkg-config implementation.
 # 20.2.1
