@@ -4,6 +4,12 @@
 @call %devroot%\mesa-dist-win\buildscript\modules\msys.cmd
 @call %devroot%\mesa-dist-win\buildscript\modules\msysupdate.cmd
 @call %devroot%\mesa-dist-win\buildscript\modules\git.cmd
+@IF %msysstate% EQU 0 (
+@echo Fatal error: MSYS2 is missing.
+@pause
+@exit
+)
+
 @set /p clean=Clear MSYS2 cache (y/n):
 @echo.
 @IF /I "%clean%"=="y" %msysloc%\usr\bin\bash --login -c "/usr/bin/pacman -Sc --noconfirm"
