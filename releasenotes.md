@@ -1,6 +1,9 @@
 # 20.2.3
+- Updated Mesa3D to [20.2.3](https://docs.mesa3d.org/relnotes/20.2.3.html).
 ### Debug
 - Add patch test tool.
+### Build script
+- Initial preparation for zink driver.
 # 20.2.2
 - Updated Mesa3D to [20.2.2](https://docs.mesa3d.org/relnotes/20.2.2.html).
 ### Build script
