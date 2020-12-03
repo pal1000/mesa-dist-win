@@ -45,7 +45,7 @@ libbz2 1.0.8-2
 libcrypt 2.1-2
 libcurl 7.73.0-2
 libdb 5.3.28-3
-libedit 20191231_3.1-1
+libedit 20191231_3.1-2
 libexpat 2.2.10-1
 libffi 3.3-1
 libgcrypt 1.8.7-1
@@ -104,10 +104,10 @@ mingw-w64-i686-mpc 1.2.0-2
 mingw-w64-i686-mpdecimal 2.5.0-1
 mingw-w64-i686-mpfr 4.1.0-3
 mingw-w64-i686-ncurses 6.2-2
-mingw-w64-i686-ninja 1.10.1-1
+mingw-w64-i686-ninja 1.10.2-1
 mingw-w64-i686-openssl 1.1.1.h-1
 mingw-w64-i686-p11-kit 0.23.21-4
-mingw-w64-i686-pkgconf 1.7.3-2
+mingw-w64-i686-pkgconf 1.7.3-5
 mingw-w64-i686-python 3.8.6-6
 mingw-w64-i686-python-appdirs 1.4.3-1
 mingw-w64-i686-python-attrs 19.3.0-1
@@ -159,10 +159,10 @@ mingw-w64-x86_64-mpc 1.2.0-2
 mingw-w64-x86_64-mpdecimal 2.5.0-1
 mingw-w64-x86_64-mpfr 4.1.0-3
 mingw-w64-x86_64-ncurses 6.2-2
-mingw-w64-x86_64-ninja 1.10.1-1
+mingw-w64-x86_64-ninja 1.10.2-1
 mingw-w64-x86_64-openssl 1.1.1.h-1
 mingw-w64-x86_64-p11-kit 0.23.21-4
-mingw-w64-x86_64-pkgconf 1.7.3-2
+mingw-w64-x86_64-pkgconf 1.7.3-5
 mingw-w64-x86_64-python 3.8.6-6
 mingw-w64-x86_64-python-appdirs 1.4.3-1
 mingw-w64-x86_64-python-attrs 19.3.0-1

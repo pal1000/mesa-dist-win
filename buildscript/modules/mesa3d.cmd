@@ -78,8 +78,6 @@
 @rem Get swr building with Mingw
 @IF %intmesaver% LSS 20158 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swr-mingw
 @IF %intmesaver% GEQ 20200 IF %intmesaver% LSS 20250 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swr-mingw
-@rem Get zink driver working
-@IF %intmesaver% GEQ 20301 IF %intmesaver% LSS 21000 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd zink-win32
 
 :configmesabuild
 @rem Configure Mesa build.
@@ -119,13 +117,10 @@
 @set buildconf=%buildconf% -Dgallium-drivers=swrast
 
 @set zink=n
-@set canzink=0
-@IF NOT %toolchain%==msvc IF %intmesaver% GEQ 20301 IF %intmesaver% LSS 21000 IF %disableootpatch%==0 set canzink=1
-@IF NOT %toolchain%==msvc IF %intmesaver% GEQ 21000 set canzink=1
-@IF %canzink% EQU 1 set /p zink=Do you want to build Mesa3D OpenGL driver over Vulkan - zink (y/n):
-@IF %canzink% EQU 1 echo.
-@rem IF /I "%zink%"=="y" IF NOT %toolchain%==msvc IF defined VK_SDK_PATH set "VK_SDK_PATH="
-@rem IF /I "%zink%"=="y" IF NOT %toolchain%==msvc IF defined VULKAN_SDK set "VULKAN_SDK="
+@IF NOT %toolchain%==msvc IF %intmesaver% GEQ 21000 set /p zink=Do you want to build Mesa3D OpenGL driver over Vulkan - zink (y/n):
+@IF NOT %toolchain%==msvc IF %intmesaver% GEQ 21000 echo.
+@IF /I "%zink%"=="y" IF NOT %toolchain%==msvc IF defined VK_SDK_PATH set "VK_SDK_PATH="
+@IF /I "%zink%"=="y" IF NOT %toolchain%==msvc IF defined VULKAN_SDK set "VULKAN_SDK="
 @IF /I "%zink%"=="y" set buildconf=%buildconf%,zink
 
 @set swrdrv=n
