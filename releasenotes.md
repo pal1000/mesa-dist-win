@@ -1,4 +1,5 @@
 # 20.3.0
+- Updated Mesa3D to [20.3.0](https://docs.mesa3d.org/relnotes/20.3.0.html).
 ### Build script
 - zink driver support is postponed to 21.0 series.
 # 20.2.3
