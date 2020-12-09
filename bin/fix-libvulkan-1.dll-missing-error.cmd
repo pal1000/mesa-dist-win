@@ -10,7 +10,8 @@
 :--------------------------------------
 @TITLE Compatibility hotfix with LunarG build of KhronosGroup Vulkan loader for programs buiilt with MSYS2 MinGW-W64
 @IF NOT EXIST "%windir%\system32\vulkan-1.dll" (
-@echo FATAL ERROR: KhronosGroup Vulkan loader is missing. Download latest Vulkan runtime from https://vulkan.lunarg.com/
+@echo FATAL ERROR: KhronosGroup Vulkan loader is missing. Please download and install latest Vulkan runtime from
+@echo https://vulkan.lunarg.com/
 @echo.
 @pause
 @exit
