@@ -3,7 +3,7 @@ Build environment
 Windows 10.0.19042
 Ressource Hacker 5.1.8.360
 7-Zip 20.02 ultra compression
-Git 2.29.2.2
+Git 2.29.2.3
 
 MSYS2 environment
 -----------------
