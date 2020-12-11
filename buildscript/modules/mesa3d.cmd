@@ -67,10 +67,10 @@
 @rem Fix swrAVX512 build
 @IF %intmesaver% LSS 20000 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swravx512
 @IF %intmesaver% GEQ 20000 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swravx512-post-static-link
-@rem Make possible to build both osmesa gallium and swrast at the same time with Meson
-@call %devroot%\%projectname%\buildscript\modules\applypatch.cmd dual-osmesa
+@rem Make it possible to build both osmesa gallium and swrast at the same time with Meson. Applies to Mesa 20.3 and older.
+@IF %intmesaver% LSS 21000 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd dual-osmesa
 @IF %intmesaver% LSS 20200 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd dual-osmesa-part2a
-@IF %intmesaver% GEQ 20200 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd dual-osmesa-part2b
+@IF %intmesaver% GEQ 20200 IF %intmesaver% LSS 21000 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd dual-osmesa-part2b
 @rem Fix regression when building with native mingw toolchains affecting Mesa 20.1 branch
 @IF %intmesaver% GEQ 20100 IF %intmesaver% LSS 20103 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd winepath
 @rem Fix swr build
@@ -140,12 +140,16 @@
 @if /I "%gles%"=="y" set buildconf=%buildconf% -Dshared-glapi=%mesonbooltrue% -Dgles1=%mesonbooltrue% -Dgles2=%mesonbooltrue%
 
 @set osmesa=n
-@set /p osmesa=Do you want to build off-screen rendering drivers (y/n):
+@IF %intmesaver% LSS 21000 set /p osmesa=Do you want to build off-screen rendering drivers (y/n):
+IF %intmesaver% GEQ 21000 set /p osmesa=Do you want to build off-screen rendering driver (y/n):
 @echo.
-@IF /I "%osmesa%"=="y" set buildconf=%buildconf% -Dosmesa=gallium,classic
-@IF /I "%osmesa%"=="y" IF %toolchain%==msvc IF %disableootpatch%==1 set buildconf=%buildconf:~0,-8%
+@rem osmesa classic is gone in Mesa 21.0 and newer
+@IF /I "%osmesa%"=="y" IF %intmesaver% GEQ 21000 set buildconf=%buildconf% -Dosmesa=true
+@IF /I "%osmesa%"=="y" IF %intmesaver% LSS 21000 set buildconf=%buildconf% -Dosmesa=gallium,classic
+@rem Building both osmesa gallium and classic requires out of tree patches
+@IF /I "%osmesa%"=="y" IF %intmesaver% LSS 21000 IF %toolchain%==msvc IF %disableootpatch%==1 set buildconf=%buildconf:~0,-8%
 @rem Disable osmesa classic when building with Meson and Mingw toolchains due to build failure
-@IF /I "%osmesa%"=="y" IF NOT %toolchain%==msvc set buildconf=%buildconf:~0,-8%
+@IF /I "%osmesa%"=="y" IF %intmesaver% LSS 21000 IF NOT %toolchain%==msvc set buildconf=%buildconf:~0,-8%
 
 @set graw=n
 @set /p graw=Do you want to build graw library (y/n):

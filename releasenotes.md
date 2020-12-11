@@ -1,8 +1,10 @@
 # 20.3.1
 ### Release utilities
 - Add tool to fix error related to `libvulkan-1.dll` being missing which can occur if Mesa3D was built with zink driver - [issue 30](https://github.com/pal1000/mesa-dist-win/issues/30).
-### Build script
+### Build dependencies
 - Update LLVM binary wrap fallback for LLVM 11.
+### Build script
+- Take into account osmesa classic removal in Mesa 21.0.
 # 20.3.0
 - Updated Mesa3D to [20.3.0](https://docs.mesa3d.org/relnotes/20.3.0.html).
 ### Build script
