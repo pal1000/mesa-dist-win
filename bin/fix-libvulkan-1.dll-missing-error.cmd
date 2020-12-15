@@ -8,7 +8,7 @@
 @exit
 )
 :--------------------------------------
-@TITLE Compatibility hotfix with LunarG build of KhronosGroup Vulkan loader for programs buiilt with MSYS2 MinGW-W64
+@TITLE Compatibility hotfix with LunarG build of KhronosGroup Vulkan loader for programs built with MSYS2 MinGW-W64
 @IF NOT EXIST "%windir%\system32\vulkan-1.dll" (
 @echo FATAL ERROR: KhronosGroup Vulkan loader is missing. Please download and install latest Vulkan runtime from
 @echo https://vulkan.lunarg.com/
@@ -17,7 +17,7 @@
 @exit
 )
 @echo This tool implements a compatibility hotfix with LunarG build of KhronosGroup Vulkan loader for programs
-@echo buiilt with MSYS2 MinGW-W64. LunarG build of KhronosGroup Vulkan loader is avaible as both
+@echo built with MSYS2 MinGW-W64. LunarG build of KhronosGroup Vulkan loader is avaible as both
 @echo standalone download and as a component of Vulkan graphics drivers.
 @echo If the compatibility hotfix is in place, this tool offers the option to remove it.
 @echo.
