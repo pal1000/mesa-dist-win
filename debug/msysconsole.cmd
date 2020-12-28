@@ -22,20 +22,16 @@
 @echo 3 MINGW64
 @set /p shell=Enter choice:
 @echo.
-@IF "%shell%"=="" GOTO command
-@IF "%shell%"=="1" GOTO command
 @IF "%shell%"=="2" set MSYSTEM=MINGW32
-@IF "%shell%"=="2" GOTO command
 @IF "%shell%"=="3" set MSYSTEM=MINGW64
-@IF "%shell%"=="3" GOTO command
-@GOTO selectshell
+@IF NOT "%shell%"=="" IF NOT "%shell%"=="1" IF NOT "%shell%"=="2" IF NOT "%shell%"=="3" GOTO selectshell
 
 :command
 @set msyscmd=
 @set /p msyscmd=Enter MSYS2 command:
 @echo.
 @IF /I "%msyscmd%"=="exit" exit
-@IF /I "%msyscmd%"=="setup" set msyscmd=pacman -S flex bison patch tar mingw-w64-i686-python-mako mingw-w64-i686-meson mingw-w64-i686-pkgconf mingw-w64-i686-clang mingw-w64-i686-vulkan-devel mingw-w64-x86_64-python-mako mingw-w64-x86_64-meson mingw-w64-x86_64-pkgconf mingw-w64-x86_64-clang mingw-w64-x86_64-vulkan-devel --needed
+@IF /I "%msyscmd%"=="setup" set msyscmd=pacman -S flex bison patch tar mingw-w64-i686-{python-mako,meson,pkgconf,clang,vulkan-devel} mingw-w64-x86_64-{python-mako,meson,pkgconf,clang,vulkan-devel} --needed;echo;pacman -Sc --noconfirm
 
 @IF %gitstate% GTR 0 %msysloc%\usr\bin\bash --login -c "PATH=${PATH}:${gitloc};%msyscmd%"
 @IF %gitstate% EQU 0 %msysloc%\usr\bin\bash --login -c "%msyscmd%"
