@@ -29,7 +29,7 @@
 @rem Getting LLVM monorepo if LLVM source is missing
 @if NOT EXIST %devroot%\llvm\cmake if NOT EXIST %devroot%\llvm-project (
 @echo Getting LLVM source code...
-@git clone https://github.com/llvm/llvm-project.git --branch=llvmorg-11.0.0 --depth=1 %devroot%\llvm-project
+@git clone https://github.com/llvm/llvm-project.git --branch=llvmorg-11.0.1 --depth=1 %devroot%\llvm-project
 @echo.
 )
 
@@ -71,8 +71,11 @@
 @if %abi%==x64 if /I NOT "%ninja%"=="y" set buildconf=%buildconf% -A x64
 @if /I NOT "%ninja%"=="y" IF /I %PROCESSOR_ARCHITECTURE%==AMD64 set buildconf=%buildconf% -Thost=x64
 @if /I "%ninja%"=="y" set buildconf=%buildconf% "Ninja"
-@set buildconf=%buildconf% -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DLLVM_INCLUDE_TESTS=OFF -DLLVM_INCLUDE_EXAMPLES=OFF -DLLVM_INCLUDE_BENCHMARKS=OFF -DCMAKE_INSTALL_PREFIX=../../llvm/%abi%
-@if EXIST %devroot%\llvm-project set buildconf=%buildconf% -DLLVM_ENABLE_PROJECTS=""
+@set buildconf=%buildconf% -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DLLVM_OPTIMIZED_TABLEGEN=TRUE -DLLVM_INCLUDE_UTILS=OFF -DLLVM_INCLUDE_RUNTIMES=OFF -DLLVM_INCLUDE_TESTS=OFF -DLLVM_INCLUDE_GO_TESTS=OFF -DLLVM_INCLUDE_EXAMPLES=OFF -DLLVM_INCLUDE_BENCHMARKS=OFF -DLLVM_BUILD_LLVM_C_DYLIB=OFF -DLLVM_ENABLE_DIA_SDK=OFF -DCMAKE_INSTALL_PREFIX=../../llvm/%abi%
+@if EXIST %devroot%\llvm-project set /p buildclang=Build clang - required for OpenCL (y/n):
+@if EXIST %devroot%\llvm-project echo.
+@if EXIST %devroot%\llvm-project IF /I NOT "%buildclang%"=="y" set buildconf=%buildconf% -DLLVM_ENABLE_PROJECTS=""
+@IF /I "%buildclang%"=="y" set buildconf=%buildconf% -DLLVM_ENABLE_PROJECTS="clang;lld"
 @set buildconf=%buildconf% ..
 @if EXIST %devroot%\llvm-project set buildconf=%buildconf%/llvm
 
