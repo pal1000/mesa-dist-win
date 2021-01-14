@@ -1,3 +1,6 @@
+# Next release
+### Build dependencies
+- Update zlib wrap to 1.2.11-5.
 # 20.3.3
 - Updated Mesa3D to [20.3.3](https://docs.mesa3d.org/relnotes/20.3.3.html).
 ### Build script
