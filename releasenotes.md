@@ -1,4 +1,5 @@
-# Next release
+# 20.3.3
+- Updated Mesa3D to [20.3.3](https://docs.mesa3d.org/relnotes/20.3.3.html).
 ### Build script
 - LLVM: Add support for building LLVM with clang and lld;
 - Update pkgconf source code before build.
