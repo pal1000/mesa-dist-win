@@ -2,6 +2,8 @@
 ### Build dependencies
 - Update zlib wrap to 1.2.11-5;
 - Update DirectX headers before build.
+### Release utilities
+- Make immprovements to `libvulkan-1.dll` error fixing tool.
 # 20.3.3
 - Updated Mesa3D to [20.3.3](https://docs.mesa3d.org/relnotes/20.3.3.html).
 ### Build script
