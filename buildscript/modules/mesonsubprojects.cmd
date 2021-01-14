@@ -56,11 +56,20 @@ echo irbuilder_h ^= files^(llvmloc + '/include/llvm/IR/IRBuilder.h'^)
 @copy /Y %devroot%\%projectname%\buildscript\mesonsubprojects\zlib.wrap %devroot%\mesa\subprojects\zlib.wrap
 @echo.
 )
-@IF %toolchain%==msvc GOTO donewrap
+@IF %toolchain%==msvc GOTO dxheaderswrap
 @for /d %%a in ("%devroot%\mesa\subprojects\zlib-*") do @RD /S /Q "%%~a"
 @IF EXIST %devroot%\mesa\subprojects\zlib.wrap del %devroot%\mesa\subprojects\zlib.wrap
 @IF EXIST %msysloc%\%MSYSTEM%\lib\libz.dll.a del %msysloc%\%MSYSTEM%\lib\libz.dll.a
 @IF EXIST %msysloc%\%MSYSTEM%\lib\libzstd.dll.a del %msysloc%\%MSYSTEM%\lib\libzstd.dll.a
+
+:dxheaderswrap
+@for /d %%a in ("%devroot%\mesa\subprojects\DirectX-Headers-*") do @IF EXIST "%%~a" IF %gitstate% GTR 0 (
+cd /D "%%~a"
+echo Refreshing DirectX-Headers...
+git pull -v --progress --recurse-submodules origin
+echo.
+cd /D %devroot%\mesa
+)
 
 :donewrap
 @endlocal&set RTTI=%RTTI%&set llvmconfigbusted=%llvmconfigbusted%
