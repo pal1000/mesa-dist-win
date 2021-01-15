@@ -52,6 +52,8 @@
 @IF %dualosmesa% EQU 1 copy %devroot%\mesa\build\%abi%\src\mesa\drivers\osmesa\osmesa.dll %devroot%\%projectname%\bin\%abi%\osmesa-swrast\osmesa.dll
 @IF %dualosmesa% EQU 1 copy %devroot%\mesa\build\%abi%\src\gallium\targets\osmesa\osmesa.dll %devroot%\%projectname%\bin\%abi%\osmesa-gallium\osmesa.dll
 @IF %dualosmesa% EQU 0 forfiles /p %devroot%\mesa\build\%abi% /s /m *.dll /c "cmd /c copy @path %devroot%\%projectname%\bin\%abi%"
+@IF EXIST %devroot%\%projectname%\bin\%abi%\openglon12.dll IF /I %PROCESSOR_ARCHITECTURE%==AMD64 copy "%ProgramFiles% (x86)\Windows Kits\10\Redist\D3D\%abi%\dxil.dll" %devroot%\%projectname%\bin\%abi%
+@IF EXIST %devroot%\%projectname%\bin\%abi%\openglon12.dll IF /I NOT %PROCESSOR_ARCHITECTURE%==AMD64 copy "%ProgramFiles%\Windows Kits\10\Redist\D3D\%abi%\dxil.dll" %devroot%\%projectname%\bin\%abi%
 @forfiles /p %devroot%\mesa\build\%abi% /s /m *.exe /c "cmd /c copy @path %devroot%\%projectname%\bin\%abi%"
 @rem Copy build development artifacts
 @xcopy %devroot%\mesa\build\%abi%\*.lib %devroot%\%projectname%\lib\%abi% /E /I /G
