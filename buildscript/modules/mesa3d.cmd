@@ -123,6 +123,11 @@
 @IF /I "%zink%"=="y" IF NOT %toolchain%==msvc IF defined VULKAN_SDK set "VULKAN_SDK="
 @IF /I "%zink%"=="y" set buildconf=%buildconf%,zink
 
+@set d3d12=n
+@for /d %%a in ("%devroot%\mesa\subprojects\DirectX-Headers-*") do @IF EXIST "%%~a" IF %intmesaver% GEQ 21000 IF %toolchain%==msvc set /p d3d12=Do you want to build Mesa3D OpenGL driver over D3D12 - GLonD3D12 (y/n):
+@for /d %%a in ("%devroot%\mesa\subprojects\DirectX-Headers-*") do @IF EXIST "%%~a" IF %intmesaver% GEQ 21000 IF %toolchain%==msvc echo.
+@IF /I "%d3d12%"=="y" set buildconf=%buildconf%,d3d12
+
 @set swrdrv=n
 @set canswr=0
 @if /I NOT "%llvmless%"=="y" if %abi%==x64 IF %toolchain%==msvc IF %intmesaver% LSS 20152 IF %disableootpatch%==0 set canswr=1

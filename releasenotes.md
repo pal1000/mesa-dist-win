@@ -1,4 +1,6 @@
 # Next release
+### Build script
+- Add support for Microsoft OpenGL over D3D12 driver.
 ### Build dependencies
 - Update zlib wrap to 1.2.11-5;
 - Update DirectX headers before build.
