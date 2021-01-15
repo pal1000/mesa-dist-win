@@ -68,11 +68,13 @@
 @set /p desktopgl=Do you want Desktop OpenGL drivers (y/n, defaults to yes):
 @echo.
 @IF /I "%desktopgl%"=="n" GOTO opengles
-@IF EXIST "%dir%\opengl32.dll" echo Updated softpipe and llvmpipe deployment.
+@IF EXIST "%dir%\opengl32.dll" echo Updated core desktop OpenGL deployment.
 @IF EXIST "%dir%\opengl32.dll" del "%dir%\opengl32.dll"
 @IF EXIST "%dir%\libglapi.dll" del "%dir%\libglapi.dll"
+@IF EXIST "%dir%\dxil.dll" del "%dir%\dxil.dll"
 @mklink "%dir%\opengl32.dll" "%mesaloc%\%mesadll%\opengl32.dll"
-@mklink "%dir%\libglapi.dll" "%mesaloc%\%mesadll%\libglapi.dll"
+@IF EXIST "%mesaloc%\%mesadll%\libglapi.dll" mklink "%dir%\libglapi.dll" "%mesaloc%\%mesadll%\libglapi.dll"
+@IF EXIST "%mesaloc%\%mesadll%\dxil.dll" mklink "%dir%\dxil.dll" "%mesaloc%\%mesadll%\dxil.dll"
 @IF NOT "%dir%\%appexe%"=="%dir%\" echo dummy > "%dir%\%appexe%.local"
 @echo.
 @set swr=n
