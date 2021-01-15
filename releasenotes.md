@@ -5,7 +5,8 @@
 ### Release utilities
 - Make immprovements to `libvulkan-1.dll` error fixing tool.
 ### Distribution creation
-- Collect DXIL runtime from Windows SDK if GLonD3D12 is present in release package.
+- Collect DXIL runtime from Windows SDK if GLonD3D12 is present in release package;
+- Add version info to ICD build of Microsoft OpenGL over D3D12 driver.
 # 20.3.3
 - Updated Mesa3D to [20.3.3](https://docs.mesa3d.org/relnotes/20.3.3.html).
 ### Build script

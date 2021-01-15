@@ -17,6 +17,8 @@
 
 @rem Add version info to default desktop OpenGL driver
 @call %devroot%\%projectname%\buildscript\modules\rcgen.cmd "Mesa3D default desktop OpenGL software rendering driver" %devroot%\%projectname%\bin\%abi%\opengl32.dll %abi% %mesaver% "Mesa/X.org"
+@rem Add version info to Microsoft desktop OpenGL over D3D12 driver
+@call %devroot%\%projectname%\buildscript\modules\rcgen.cmd "Mesa3D desktop OpenGL over D3D12 driver" %devroot%\%projectname%\bin\%abi%\openglon12.dll %abi% %mesaver% "Microsoft Corporation"
 @rem Add version info to shared glapi library
 @call %devroot%\%projectname%\buildscript\modules\rcgen.cmd "Mesa3D shared glapi library" %devroot%\%projectname%\bin\%abi%\libglapi.dll %abi% %mesaver% "Mesa/X.org"
 @rem Add version info to standalone OpenGL ES 1.x driver
