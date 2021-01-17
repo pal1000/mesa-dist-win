@@ -1,6 +1,7 @@
 # Next release
 ### Build script
-- Add support for Microsoft OpenGL over D3D12 driver.
+- Add support for Microsoft OpenGL over D3D12 driver;
+- Make it possible to re-try Mesa3D build on failure.
 ### Build dependencies
 - Update zlib wrap to 1.2.11-5;
 - Update DirectX headers before build.

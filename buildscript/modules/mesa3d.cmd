@@ -189,18 +189,24 @@
 @IF %toolchain%==msvc call %vsenv% %vsabi%
 @IF %toolchain%==msvc echo.
 
-@rem Execute build.
+@rem Execute build configuration.
 @echo Build configuration command: %buildconf%
 @echo.
 @%buildconf%
 @echo.
 @if /I NOT "%useninja%"=="y" cd build\%abi%
+
+:execmesabld
 @echo Build command: %buildcmd%
 @echo.
 @pause
 @echo.
 @%buildcmd%
 @echo.
+@set retrymesabld=n
+@if /I "%useninja%"=="y" set /p retrymesabld=Re-try Mesa3D build (y/n):
+@if /I "%useninja%"=="y" echo.
+@if /I "%retrymesabld%"=="y" GOTO execmesabld
 @if /I NOT "%useninja%"=="y" cd ..\..\
 
 :skipmesa
