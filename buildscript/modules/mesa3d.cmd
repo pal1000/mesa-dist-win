@@ -195,18 +195,25 @@
 @%buildconf%
 @echo.
 @if /I NOT "%useninja%"=="y" cd build\%abi%
-
-:execmesabld
 @echo Build command: %buildcmd%
 @echo.
 @pause
 @echo.
+@set "retrymesabld="
+
+:execmesabld
 @%buildcmd%
 @echo.
-@set retrymesabld=n
-@if /I "%useninja%"=="y" set /p retrymesabld=Re-try Mesa3D build (y/n):
-@if /I "%useninja%"=="y" echo.
-@if /I "%retrymesabld%"=="y" GOTO execmesabld
+
+:retrymesabld
+@if /I "%useninja%"=="y" if "%retrymesabld%"=="" set /p retrymesabld=Number of Mesa3D build retries (0^=end, 1^=ask again, ^>1 automatically retry n-1 times)
+@if /I "%useninja%"=="y" if "%retrymesabld%"=="1" set /p retrymesabld=Number of Mesa3D build retries (0^=end, 1^=ask again, ^>1 automatically retry n-1 times)
+@if /I "%useninja%"=="y" if "%retrymesabld%"=="" echo.
+@if /I "%useninja%"=="y" if "%retrymesabld%"=="1" echo.
+@if %retrymesabld% GTR 1 (
+@set /a retrymesabld-=1
+GOTO execmesabld
+)
 @if /I NOT "%useninja%"=="y" cd ..\..\
 
 :skipmesa
