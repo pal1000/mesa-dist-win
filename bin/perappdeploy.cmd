@@ -73,7 +73,7 @@
 @IF EXIST "%dir%\libglapi.dll" del "%dir%\libglapi.dll"
 @IF EXIST "%dir%\dxil.dll" del "%dir%\dxil.dll"
 @mklink "%dir%\opengl32.dll" "%mesaloc%\%mesadll%\opengl32.dll"
-@IF EXIST "%mesaloc%\%mesadll%\libglapi.dll" mklink "%dir%\libglapi.dll" "%mesaloc%\%mesadll%\libglapi.dll"
+@mklink "%dir%\libglapi.dll" "%mesaloc%\%mesadll%\libglapi.dll"
 @IF EXIST "%mesaloc%\%mesadll%\dxil.dll" mklink "%dir%\dxil.dll" "%mesaloc%\%mesadll%\dxil.dll"
 @IF NOT "%dir%\%appexe%"=="%dir%\" echo dummy > "%dir%\%appexe%.local"
 @echo.
@@ -130,7 +130,7 @@
 @IF EXIST "%dir%\osmesa.dll" del "%dir%\osmesa.dll"
 @IF EXIST "%dir%\libglapi.dll" del "%dir%\libglapi.dll"
 @IF EXIST "%mesaloc%\%mesadll%\osmesa.dll" mklink "%dir%\osmesa.dll" "%mesaloc%\%mesadll%\osmesa.dll"
-@IF EXIST "%mesaloc%\%mesadll%\libglapi.dll" mklink "%dir%\libglapi.dll" "%mesaloc%\%mesadll%\libglapi.dll"
+@mklink "%dir%\libglapi.dll" "%mesaloc%\%mesadll%\libglapi.dll"
 @echo.
 @IF EXIST "%mesaloc%\%mesadll%\osmesa.dll" GOTO graw
 @IF EXIST "%mesaloc%\%mesadll%\osmesa-gallium\osmesa.dll" IF EXIST "%mesaloc%\%mesadll%\osmesa-swrast\osmesa.dll" echo What version of osmesa off-screen rendering you want:
@@ -162,7 +162,7 @@
 @IF EXIST "%dir%\libglapi.dll" del "%dir%\libglapi.dll"
 @IF EXIST "%mesaloc%\%mesadll%\graw.dll" mklink "%dir%\graw.dll" "%mesaloc%\%mesadll%\graw.dll"
 @IF EXIST "%mesaloc%\%mesadll%\graw_null.dll" mklink "%dir%\graw_null.dll" "%mesaloc%\%mesadll%\graw_null.dll"
-@IF EXIST "%mesaloc%\%mesadll%\libglapi.dll" mklink "%dir%\libglapi.dll" "%mesaloc%\%mesadll%\libglapi.dll"
+@mklink "%dir%\libglapi.dll" "%mesaloc%\%mesadll%\libglapi.dll"
 @echo.
 
 :restart
