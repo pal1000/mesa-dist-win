@@ -47,10 +47,10 @@
 
 :askforappexe
 @set /p appexe=Application executable name with or without extension (optional, forces some programs to use Mesa3D which would otherwise bypass it):
-@IF "%appexe%"=="" echo.
+@echo.
+@IF "%appexe%"=="" IF EXIST "%dir%\*.exe.local" del "%dir%\*.exe.local"
 @IF "%appexe%"=="" GOTO ask_for_app_abi
 @IF /I NOT "%appexe:~-4%"==".exe" set appexe=%appexe%.exe
-@IF NOT EXIST "%dir%\%appexe%" echo.
 @IF NOT EXIST "%dir%\%appexe%" echo Error: File not found.
 @IF NOT EXIST "%dir%\%appexe%" pause
 @IF NOT EXIST "%dir%\%appexe%" cls
