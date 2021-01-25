@@ -10,8 +10,7 @@
 )
 :--------------------------------------
 @IF "%*"=="" TITLE Mesa3D system-wide deployment utility
-@set intromenu=6
-@set deployresult=3
+@set deployresult=1
 @IF "%*"=="" echo -------------------------------------
 @IF "%*"=="" echo Mesa3D system-wide deployment utility
 @IF "%*"=="" echo -------------------------------------
@@ -58,7 +57,7 @@
 @echo Invaild entry
 @IF "%1"=="" pause
 @IF "%1"=="" GOTO deploy
-@IF NOT "%1"=="" CHOICE /N /T %intromenu% /C y /D y >nul 2>&1
+@IF NOT "%1"=="" CHOICE /N /T %deployresult% /C y /D y >nul 2>&1
 @IF NOT "%1"=="" GOTO exit
 
 :desktopgl
