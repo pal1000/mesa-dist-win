@@ -10,27 +10,27 @@
 )
 :--------------------------------------
 @IF "%*"=="" TITLE Mesa3D system-wide deployment utility
-@IF NOT "%*"=="" cls
 @set intromenu=6
 @set deployresult=3
-@echo Mesa3D system-wide deployment utility
-@echo -------------------------------------
-@echo This deployment utility targets systems without working GPUs and any use case
-@echo where hardware accelerated OpenGL is not available. This mainly covers
-@echo virtual machines in cloud environments and RDP connections. It can be
-@echo used to replace Microsoft Windows inbox OpenGL 1.1 software render
-@echo driver with Mesa3D OpenGL drivers.
-@echo.
-@IF "%1"=="" pause
-@IF NOT "%1"=="" CHOICE /N /T %intromenu% /C y /D y >nul 2>&1
+@IF "%*"=="" echo -------------------------------------
+@IF "%*"=="" echo Mesa3D system-wide deployment utility
+@IF "%*"=="" echo -------------------------------------
+@IF "%*"=="" echo This deployment utility targets systems without working GPUs and any use case
+@IF "%*"=="" echo where hardware accelerated OpenGL is not available. This mainly covers
+@IF "%*"=="" echo virtual machines in cloud environments and RDP connections. It can be
+@IF "%*"=="" echo used to replace Microsoft Windows inbox OpenGL 1.1 software render
+@IF "%*"=="" echo driver with Mesa3D OpenGL drivers.
+@IF "%*"=="" echo.
+@IF "%*"=="" pause
 @set mesaloc=%~dp0
 @IF "%mesaloc:~-1%"=="\" set mesaloc=%mesaloc:~0,-1%
 
 :deploy
-@cls
+@IF "%*"=="" cls
 @set mesainstalled=1
 @IF NOT EXIST "%windir%\System32\mesadrv.dll" IF NOT EXIST "%windir%\System32\graw.dll" IF NOT EXIST "%windir%\System32\osmesa.dll" set mesainstalled=0
 
+@echo -------------------------------------
 @echo Mesa3D system-wide deployment utility
 @echo -------------------------------------
 @echo Please make a deployment choice:
