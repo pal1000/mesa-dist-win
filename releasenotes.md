@@ -16,6 +16,8 @@
 - Create symlink for libglapi even if missing from release package;
 - Support for unattended mode in system wide deployment tool - [#48](https://github.com/pal1000/mesa-dist-win/issues/48);
 - Per-app deployment: Remove .local files if no filename is provided to help with reversing per-app deployment actions if necessary.
+### Debug
+- Tweak standalone MinGW-W64 build test to reproduce https://gitlab.freedesktop.org/mesa/mesa/-/issues/4151 [21.0+].
 # 20.3.3
 - Updated Mesa3D to [20.3.3](https://docs.mesa3d.org/relnotes/20.3.3.html).
 ### Build script
