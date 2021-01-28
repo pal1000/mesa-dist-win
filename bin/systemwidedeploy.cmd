@@ -57,19 +57,19 @@
 @echo Invaild entry
 @IF "%1"=="" pause
 @IF "%1"=="" GOTO deploy
-@IF NOT "%1"=="" CHOICE /N /T %deployresult% /C y /D y >nul 2>&1
+@IF NOT "%1"=="" timeout %deployresult% > nul
 @IF NOT "%1"=="" GOTO exit
 
 :desktopgl
 @if "%deploychoice%"=="2" if /I NOT %PROCESSOR_ARCHITECTURE%==AMD64 echo Invalid choice. swr driver is only supported on X64/AMD64 systems.
 @if "%deploychoice%"=="2" if /I NOT %PROCESSOR_ARCHITECTURE%==AMD64 IF "%1"=="" pause
 @if "%deploychoice%"=="2" if /I NOT %PROCESSOR_ARCHITECTURE%==AMD64 IF "%1"=="" GOTO deploy
-@if "%deploychoice%"=="2" if /I NOT %PROCESSOR_ARCHITECTURE%==AMD64 IF NOT "%1"=="" CHOICE /N /T %deployresult% /C y /D y >nul 2>&1
+@if "%deploychoice%"=="2" if /I NOT %PROCESSOR_ARCHITECTURE%==AMD64 IF NOT "%1"=="" timeout %deployresult% > nul
 @if "%deploychoice%"=="2" if /I NOT %PROCESSOR_ARCHITECTURE%==AMD64 IF NOT "%1"=="" GOTO exit
 @if "%deploychoice%"=="2" if /I %PROCESSOR_ARCHITECTURE%==AMD64 IF NOT EXIST "%mesaloc%\x64\swr*.dll" echo Invalid choice. swr driver is not included in this Mesa3D release package.
 @if "%deploychoice%"=="2" if /I %PROCESSOR_ARCHITECTURE%==AMD64 IF NOT EXIST "%mesaloc%\x64\swr*.dll" IF "%1"=="" pause
 @if "%deploychoice%"=="2" if /I %PROCESSOR_ARCHITECTURE%==AMD64 IF NOT EXIST "%mesaloc%\x64\swr*.dll" IF "%1"=="" GOTO deploy
-@if "%deploychoice%"=="2" if /I %PROCESSOR_ARCHITECTURE%==AMD64 IF NOT EXIST "%mesaloc%\x64\swr*.dll" IF NOT "%1"=="" CHOICE /N /T %deployresult% /C y /D y >nul 2>&1
+@if "%deploychoice%"=="2" if /I %PROCESSOR_ARCHITECTURE%==AMD64 IF NOT EXIST "%mesaloc%\x64\swr*.dll" IF NOT "%1"=="" timeout %deployresult% > nul
 @if "%deploychoice%"=="2" if /I %PROCESSOR_ARCHITECTURE%==AMD64 IF NOT EXIST "%mesaloc%\x64\swr*.dll" IF NOT "%1"=="" GOTO exit
 @IF /I %PROCESSOR_ARCHITECTURE%==X86 copy "%mesaloc%\x86\opengl32.dll" "%windir%\System32\mesadrv.dll"
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 copy "%mesaloc%\x86\opengl32.dll" "%windir%\SysWOW64\mesadrv.dll"
@@ -93,7 +93,7 @@
 @echo Desktop OpenGL drivers deploy complete.
 @IF "%1"=="" pause
 @IF "%1"=="" GOTO deploy
-@IF NOT "%1"=="" CHOICE /N /T %deployresult% /C y /D y >nul 2>&1
+@IF NOT "%1"=="" timeout %deployresult% > nul
 @IF NOT "%1"=="" GOTO exit
 
 :osmesa
@@ -104,7 +104,7 @@
 @if "%deploychoice%"=="4" IF EXIST %mesaloc%\x86\osmesa.dll IF EXIST %mesaloc%\x64\osmesa.dll echo osmesa swrast is not available on its own.
 @if "%deploychoice%"=="4" IF EXIST %mesaloc%\x86\osmesa.dll IF EXIST %mesaloc%\x64\osmesa.dll IF "%1"=="" pause
 @if "%deploychoice%"=="4" IF EXIST %mesaloc%\x86\osmesa.dll IF EXIST %mesaloc%\x64\osmesa.dll IF "%1"=="" GOTO deploy
-@if "%deploychoice%"=="4" IF EXIST %mesaloc%\x86\osmesa.dll IF EXIST %mesaloc%\x64\osmesa.dll IF NOT "%1"=="" CHOICE /N /T %deployresult% /C y /D y >nul 2>&1
+@if "%deploychoice%"=="4" IF EXIST %mesaloc%\x86\osmesa.dll IF EXIST %mesaloc%\x64\osmesa.dll IF NOT "%1"=="" timeout %deployresult% > nul
 @if "%deploychoice%"=="4" IF EXIST %mesaloc%\x86\osmesa.dll IF EXIST %mesaloc%\x64\osmesa.dll IF NOT "%1"=="" GOTO exit
 @IF /I %PROCESSOR_ARCHITECTURE%==X86 IF EXIST "%mesaloc%\x86\libglapi.dll" copy "%mesaloc%\x86\libglapi.dll" "%windir%\System32"
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%mesaloc%\x86\libglapi.dll" copy "%mesaloc%\x86\libglapi.dll" "%windir%\SysWOW64"
@@ -120,7 +120,7 @@
 @echo Off-screen render driver deploy complete.
 @IF "%1"=="" pause
 @IF "%1"=="" GOTO deploy
-@IF NOT "%1"=="" CHOICE /N /T %deployresult% /C y /D y >nul 2>&1
+@IF NOT "%1"=="" timeout %deployresult% > nul
 @IF NOT "%1"=="" GOTO exit
 
 :graw
@@ -137,7 +137,7 @@
 @echo graw framework deploy complete.
 @IF "%1"=="" pause
 @IF "%1"=="" GOTO deploy
-@IF NOT "%1"=="" CHOICE /N /T %deployresult% /C y /D y >nul 2>&1
+@IF NOT "%1"=="" timeout %deployresult% > nul
 @IF NOT "%1"=="" GOTO exit
 
 :update
@@ -145,7 +145,7 @@
 @IF %mesainstalled%==0 echo Error: No Mesa3D drivers installed.
 @IF %mesainstalled%==0 IF "%1"=="" pause
 @IF %mesainstalled%==0 IF "%1"=="" GOTO deploy
-@IF %mesainstalled%==0 IF NOT "%1"=="" CHOICE /N /T %deployresult% /C y /D y >nul 2>&1
+@IF %mesainstalled%==0 IF NOT "%1"=="" timeout %deployresult% > nul
 @IF %mesainstalled%==0 IF NOT "%1"=="" GOTO exit
 
 @IF /I %PROCESSOR_ARCHITECTURE%==X86 IF EXIST "%windir%\System32\mesadrv.dll" copy "%mesaloc%\x86\opengl32.dll" "%windir%\System32\mesadrv.dll"
@@ -191,7 +191,7 @@
 @echo Update complete.
 @IF "%1"=="" pause
 @IF "%1"=="" GOTO deploy
-@IF NOT "%1"=="" CHOICE /N /T %deployresult% /C y /D y >nul 2>&1
+@IF NOT "%1"=="" timeout %deployresult% > nul
 @IF NOT "%1"=="" GOTO exit
 
 :uninstall
@@ -217,7 +217,7 @@
 @echo Uninstall complete.
 @IF "%1"=="" pause
 @IF "%1"=="" GOTO deploy
-@IF NOT "%1"=="" CHOICE /N /T %deployresult% /C y /D y >nul 2>&1
+@IF NOT "%1"=="" timeout %deployresult% > nul
 @IF NOT "%1"=="" GOTO exit
 
 :bye
@@ -225,4 +225,4 @@
 @IF "%1"=="" pause
 
 :exit
-@IF NOT "%1"=="" CHOICE /N /T %deployresult% /C y /D y >nul 2>&1
+@IF NOT "%1"=="" timeout %deployresult% > nul
