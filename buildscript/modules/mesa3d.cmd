@@ -119,8 +119,6 @@
 @set zink=n
 @IF NOT %toolchain%==msvc IF %intmesaver% GEQ 21000 set /p zink=Do you want to build Mesa3D OpenGL driver over Vulkan - zink (y/n):
 @IF NOT %toolchain%==msvc IF %intmesaver% GEQ 21000 echo.
-@IF /I "%zink%"=="y" IF NOT %toolchain%==msvc IF defined VK_SDK_PATH set "VK_SDK_PATH="
-@IF /I "%zink%"=="y" IF NOT %toolchain%==msvc IF defined VULKAN_SDK set "VULKAN_SDK="
 @IF /I "%zink%"=="y" set buildconf=%buildconf%,zink
 
 @set d3d12=n

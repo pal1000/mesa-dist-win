@@ -62,6 +62,9 @@
 @rem If using MSYS2 Mingw-w64 install necessary packages
 @IF NOT %toolchain%==msvc call %devroot%\%projectname%\buildscript\modules\msyspackages.cmd
 
+@rem If using MSYS2 Mingw-w64 select Vulkan SDK
+@IF NOT %toolchain%==msvc call %devroot%\%projectname%\buildscript\modules\vulkan.cmd
+
 @rem Binary resource editor
 @call %devroot%\%projectname%\buildscript\modules\resourcehacker.cmd
 

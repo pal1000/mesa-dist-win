@@ -60,6 +60,8 @@ echo irbuilder_h ^= files^(llvmloc + '/include/llvm/IR/IRBuilder.h'^)
 @for /d %%a in ("%devroot%\mesa\subprojects\zlib-*") do @RD /S /Q "%%~a"
 @IF EXIST %devroot%\mesa\subprojects\zlib.wrap del %devroot%\mesa\subprojects\zlib.wrap
 @IF EXIST %msysloc%\%MSYSTEM%\lib\libz.dll.a del %msysloc%\%MSYSTEM%\lib\libz.dll.a
+
+:zstdwrap
 @IF EXIST %msysloc%\%MSYSTEM%\lib\libzstd.dll.a del %msysloc%\%MSYSTEM%\lib\libzstd.dll.a
 
 :dxheaderswrap

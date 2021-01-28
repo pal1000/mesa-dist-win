@@ -1,17 +1,18 @@
 # Next release
 ### Build script
-- Add support for Microsoft OpenGL over D3D12 driver;
-- Make it possible to re-try Mesa3D build on failure.
+- Add support for Microsoft OpenGL over D3D12 driver [21.0+];
+- Make it possible to re-try Mesa3D build on failure;
+- Support chosing Vulkan SDK to use with Mesa3D zink driver build [21.0+].
 ### Build dependencies
 - Update zlib wrap to 1.2.11-5;
-- Update DirectX headers before build.
+- Update DirectX headers before build [21.0+].
 ### Release utilities
-- Make immprovements to `libvulkan-1.dll` error fixing tool.
+- Make immprovements to `libvulkan-1.dll` error fixing tool [21.0+].
 ### Distribution creation
-- Collect DXIL runtime from Windows SDK if GLonD3D12 is present in release package;
-- Add version info to ICD build of Microsoft OpenGL over D3D12 driver.
+- Collect DXIL runtime from Windows SDK if GLonD3D12 is present in release package [21.0+];
+- Add version info to ICD build of Microsoft OpenGL over D3D12 driver [21.0+].
 ### Deployment tools
-- Add support for DirectX IL runtime;
+- Add support for DirectX IL runtime [21.0+];
 - Create symlink for libglapi even if missing from release package;
 - Support for unattended mode in system wide deployment tool - [#48](https://github.com/pal1000/mesa-dist-win/issues/48);
 - Per-app deployment: Remove .local files if no filename is provided to help with reversing per-app deployment actions if necessary.

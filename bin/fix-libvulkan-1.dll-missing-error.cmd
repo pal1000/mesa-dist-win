@@ -9,12 +9,16 @@
 )
 :--------------------------------------
 @TITLE Hotfix for libvulkan-1.dll missing error
-@echo This tool is intended to troubleshoot an error complaining about libvulkan-1.dll being missing
-@echo which affects any program using a Mesa3D build that contains zink driver even if you don't use zink.
-@echo Learn more: https://gitlab.freedesktop.org/mesa/mesa/-/issues/3855
+@echo This tool is intended to troubleshoot an error complaining about libvulkan-1.dll being missing which
+@echo can affect any program using a Mesa3D build that contains zink driver even if you don't use zink.
+@echo This issue only manifests if Mesa3D is built against MSYS2 MinGW-W64 vulkan-devel SDK.
+@echo Some Mesa MinGW releases containing zink driver are made with LunarG Vulkan SDK while others are made
+@echo with MSYS2 MinGW-W64 vulkan-devel SDK, depending on which is more up-to-date at release time.
+@echo As for why this issue manifests even if you don't use zink, learn more here:
+@echo https://gitlab.freedesktop.org/mesa/mesa/-/issues/3855
 @echo.
 @echo To solve this problem this tool relies on LunarG build of KhronosGroup Vulkan loader
-@echo and implements a compatibility hotfix with it when MSYS2 MinGW-W64 is involved.
+@echo and implements a compatibility hotfix with it when MSYS2 MinGW-W64 vulkan-devel SDK is involved.
 @echo LunarG build of KhronosGroup Vulkan loader is avaible as both standalone download and
 @echo as a component of Vulkan graphics drivers.
 @echo If the compatibility hotfix is in place, this tool offers the option to remove it.
