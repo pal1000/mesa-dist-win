@@ -1,4 +1,5 @@
-# Next release
+# 20.3.4
+- Updated Mesa3D to [20.3.4](https://docs.mesa3d.org/relnotes/20.3.4.html).
 ### Build script
 - Add support for Microsoft OpenGL over D3D12 driver [21.0+];
 - Make it possible to re-try Mesa3D build on failure;
