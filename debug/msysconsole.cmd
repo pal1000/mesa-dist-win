@@ -31,7 +31,7 @@
 @set /p msyscmd=Enter MSYS2 command:
 @echo.
 @IF /I "%msyscmd%"=="exit" exit
-@IF /I "%msyscmd%"=="setup" set msyscmd=pacman -S flex bison patch tar mingw-w64-i686-{python-mako,meson,pkgconf,clang,vulkan-devel} mingw-w64-x86_64-{python-mako,meson,pkgconf,clang,vulkan-devel} --needed;echo;pacman -Sc --noconfirm
+@IF /I "%msyscmd%"=="setup" set msyscmd=pacman -S flex bison patch tar mingw-w64-i686-{python-mako,meson,pkgconf,clang,vulkan-devel,libbacktrace,gdb} mingw-w64-x86_64-{python-mako,meson,pkgconf,clang,vulkan-devel,libbacktrace,gdb} --needed;echo;pacman -Sc --noconfirm
 
 @IF %gitstate% GTR 0 %msysloc%\usr\bin\bash --login -c "PATH=${PATH}:${gitloc};%msyscmd%"
 @IF %gitstate% EQU 0 %msysloc%\usr\bin\bash --login -c "%msyscmd%"

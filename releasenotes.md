@@ -1,14 +1,17 @@
+# Next release
+### Debug
+- Install some MSYS2 packages to help with debugging MinGW-W64 build.
 # 20.3.4
 - Updated Mesa3D to [20.3.4](https://docs.mesa3d.org/relnotes/20.3.4.html).
 ### Build script
 - Add support for Microsoft OpenGL over D3D12 driver [21.0+];
 - Make it possible to re-try Mesa3D build on failure;
-- Support chosing Vulkan SDK to use with Mesa3D zink driver build [21.0+].
+- Support choosing Vulkan SDK to use with Mesa3D zink driver build [21.0+].
 ### Build dependencies
 - Update zlib wrap to 1.2.11-5;
 - Update DirectX headers before build [21.0+].
 ### Release utilities
-- Make immprovements to `libvulkan-1.dll` error fixing tool [21.0+].
+- Make improvements to `libvulkan-1.dll` error fixing tool [21.0+].
 ### Distribution creation
 - Collect DXIL runtime from Windows SDK if GLonD3D12 is present in release package [21.0+];
 - Add version info to ICD build of Microsoft OpenGL over D3D12 driver [21.0+].
