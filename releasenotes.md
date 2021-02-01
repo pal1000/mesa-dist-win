@@ -1,6 +1,7 @@
 # Next release
 ### Debug
-- Install some MSYS2 packages to help with debugging MinGW-W64 build.
+- Install some MSYS2 packages to help with debugging MinGW-W64 build;
+- Standalone MinGW-W64 test: Add zink driver and multilib support.
 # 20.3.4
 - Updated Mesa3D to [20.3.4](https://docs.mesa3d.org/relnotes/20.3.4.html).
 ### Build script

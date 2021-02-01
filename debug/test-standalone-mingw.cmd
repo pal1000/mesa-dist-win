@@ -1,15 +1,22 @@
 @cd "%~dp0"
 @cd ..\..\
 @for %%a in ("%cd%") do @set devroot=%%~sa
-@set abi=x86
-@set PATH=%devroot%\mingw32\bin\;%devroot%\flexbison\;%devroot%\ninja\;%devroot%\pkgconf\pkgconf\;%PATH%
+@set PATH=%devroot%\flexbison\;%devroot%\ninja\;%devroot%\pkgconf\pkgconf\;%PATH%
+@call %devroot%\mesa-dist-win\buildscript\modules\abi.cmd
+@set multilib=0
+@IF NOT "%multilib%"=="1" set PATH=%devroot%\%MSYSTEM%\bin\;%PATH%
+@IF "%multilib%"=="1" set PATH=%devroot%\mingw64\bin\;%PATH%
 @call %devroot%\mesa-dist-win\buildscript\modules\discoverpython.cmd
 @call %devroot%\mesa-dist-win\buildscript\modules\pythonpackages.cmd
 @cd mesa
 @git checkout .
 @echo.
-@set buildconf=meson build/%abi% --buildtype=release -Dllvm=false -Dzlib:default_library=static
+@set buildconf=meson build/%abi% --buildtype=release -Dllvm=disabled -Dzlib:default_library=static -Dgallium-drivers=swrast,zink
+@IF NOT EXIST "%VK_SDK_PATH%" IF NOT EXIST "%VULKAN_SDK%" set buildconf=%buildconf:~0,-5%
 @set LDFLAGS=-static
+@IF "%multilib%"=="1" set CFLAGS=-m32
+@IF "%multilib%"=="1" set CXXFLAGS=-m32
+@IF "%multilib%"=="1" set LDFLAGS=%LDFLAGS% -m32
 @set buildcmd=ninja -C build/%abi% -j 3
 @for /d %%a in ("%devroot%\mesa\subprojects\zlib-*") do @RD /S /Q "%%~a"
 @IF EXIST "%devroot%\mesa\subprojects\zlib\" RD /S /Q %devroot%\mesa\subprojects\zlib
