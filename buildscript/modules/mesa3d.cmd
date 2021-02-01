@@ -137,6 +137,7 @@
 @if %canswr% EQU 1 echo.
 @if /I "%swrdrv%"=="y" set buildconf=%buildconf%,swr
 @if /I "%swrdrv%"=="y" IF %disableootpatch%==0 set buildconf=%buildconf% -Dswr-arches=avx,avx2,skx,knl
+@if /I "%swrdrv%"=="y" IF %disableootpatch%==1 IF NOT %toolchain%==msvc set buildconf=%buildconf% -Dswr-arches=avx,avx2,skx,knl
 
 @set /p gles=Do you want to build GLAPI as a shared library and standalone GLES libraries (y/n):
 @echo.
