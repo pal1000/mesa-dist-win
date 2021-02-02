@@ -5,6 +5,8 @@
 - Standalone MinGW-W64 test: Switch to debug optimiized build.
 ### Build script
 - Allow building SWR AVX512 with MinGW-W64 when out of tree patches are disabled.
+### Deployment tools
+- Drop delay support from system wide deployment tool unattended mode.
 # 20.3.4
 - Updated Mesa3D to [20.3.4](https://docs.mesa3d.org/relnotes/20.3.4.html).
 ### Build script
