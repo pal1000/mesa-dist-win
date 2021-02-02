@@ -1,7 +1,8 @@
 # Next release
 ### Debug
 - Install some MSYS2 packages to help with debugging MinGW-W64 build;
-- Standalone MinGW-W64 test: Add zink driver and multilib support.
+- Standalone MinGW-W64 test: Add zink driver and multilib support;
+- Standalone MinGW-W64 test: Switch to debug optimiized build.
 ### Build script
 - Allow building SWR AVX512 with MinGW-W64 when out of tree patches are disabled.
 # 20.3.4

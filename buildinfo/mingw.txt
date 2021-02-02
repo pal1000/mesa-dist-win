@@ -93,7 +93,6 @@ mingw-w64-i686-gettext 0.19.8.1-10
 mingw-w64-i686-gmp 6.2.1-1
 mingw-w64-i686-headers-git 9.0.0.6090.ad98746a-1
 mingw-w64-i686-isl 0.23-1
-mingw-w64-i686-libbacktrace r53.1da441c-2
 mingw-w64-i686-libffi 3.3-3
 mingw-w64-i686-libiconv 1.16-2
 mingw-w64-i686-libsystre 1.0.1-4
@@ -151,7 +150,6 @@ mingw-w64-x86_64-gettext 0.19.8.1-10
 mingw-w64-x86_64-gmp 6.2.1-1
 mingw-w64-x86_64-headers-git 9.0.0.6090.ad98746a-1
 mingw-w64-x86_64-isl 0.23-1
-mingw-w64-x86_64-libbacktrace r53.1da441c-2
 mingw-w64-x86_64-libffi 3.3-3
 mingw-w64-x86_64-libiconv 1.16-2
 mingw-w64-x86_64-libsystre 1.0.1-4
