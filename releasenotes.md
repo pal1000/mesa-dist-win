@@ -1,12 +1,12 @@
 # Next release
 ### Debug
-- Install some MSYS2 packages to help with debugging MinGW-W64 build;
+- Install gdb to help with debugging MinGW-W64 build;
 - Standalone MinGW-W64 test: Add zink driver and multilib support;
 - Standalone MinGW-W64 test: Switch to debug optimiized build.
 ### Build script
 - Allow building SWR AVX512 with MinGW-W64 when out of tree patches are disabled.
 ### Deployment tools
-- Drop delay support from system wide deployment tool unattended mode.
+- Drop problematic delay support from system wide deployment tool unattended mode.
 # 20.3.4
 - Updated Mesa3D to [20.3.4](https://docs.mesa3d.org/relnotes/20.3.4.html).
 ### Build script

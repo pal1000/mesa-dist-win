@@ -17,3 +17,5 @@ debug/llvm-config-old.txt
 # Dynamically generated Meson subprojects wraps
 /buildscript/mesonsubprojects/llvm-meson.build
 /buildscript/mesonsubprojects/zlib_meson.build
+# Dynamically generated Meson native/cross files
+# /buildscript/mesonconffiles/...
