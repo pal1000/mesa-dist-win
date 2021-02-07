@@ -81,7 +81,12 @@
 
 :configmesabuild
 @rem Configure Mesa build.
-@set buildconf=%mesonloc% build/%abi% --buildtype=release --prefix=%devroot:\=/%/%projectname%/dist/%abi%
+@set buildconf=%mesonloc%
+@if EXIST build\%abi% set /p cleanmesabld=Perform clean build (y/n):
+@if EXIST build\%abi% echo.
+@IF /I "%cleanmesabld%"=="y" RD /S /Q build\%abi%
+@IF /I NOT "%cleanmesabld%"=="y" if EXIST build\%abi% set buildconf=%mesonloc% configure
+@set buildconf=%buildconf% build/%abi% --buildtype=release -Db_ndebug=true --prefix=%devroot:\=/%/%projectname%/dist/%abi%
 @IF %toolchain%==msvc set buildconf=%buildconf% -Db_vscrt=mt -Dzlib:default_library=static
 @IF NOT %toolchain%==msvc set buildconf=%buildconf% -Dc_args='-march=core2 -pipe' -Dcpp_args='-march=core2 -pipe' -Dc_link_args='-static -s' -Dcpp_link_args='-static -s'
 @IF NOT %toolchain%==msvc IF %intmesaver% GTR 20000 set buildconf=%buildconf% -Dzstd=%mesonbooltrue%
@@ -97,8 +102,7 @@
 @if %havellvm%==1 echo.
 @call %devroot%\%projectname%\buildscript\modules\mesonsubprojects.cmd
 @if /I NOT "%llvmless%"=="y" IF %llvmconfigbusted% EQU 1 set buildconf=%buildconf% --force-fallback-for=llvm
-@if /I NOT "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm=%mesonbooltrue%
-@if /I NOT "%llvmless%"=="y" IF %llvmconfigbusted% EQU 0 set buildconf=%buildconf% -Dshared-llvm=%mesonboolfalse%
+@if /I NOT "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm=%mesonbooltrue% -Dshared-llvm=%mesonboolfalse%
 @if /I NOT "%llvmless%"=="y" IF %toolchain%==msvc SET PATH=%devroot%\llvm\%abi%\bin\;%PATH%
 @if /I "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm=%mesonboolfalse%
 
@@ -142,6 +146,7 @@
 @set /p gles=Do you want to build GLAPI as a shared library and standalone GLES libraries (y/n):
 @echo.
 @if /I "%gles%"=="y" set buildconf=%buildconf% -Dshared-glapi=%mesonbooltrue% -Dgles1=%mesonbooltrue% -Dgles2=%mesonbooltrue%
+@if /I NOT "%gles%"=="y" set buildconf=%buildconf% -Dshared-glapi=auto -Dgles1=auto -Dgles2=auto
 
 @set osmesa=n
 @IF %intmesaver% LSS 21000 set /p osmesa=Do you want to build off-screen rendering drivers (y/n):
@@ -154,11 +159,15 @@
 @IF /I "%osmesa%"=="y" IF %intmesaver% LSS 21000 IF %toolchain%==msvc IF %disableootpatch%==1 set buildconf=%buildconf:~0,-8%
 @rem Disable osmesa classic when building with Meson and Mingw toolchains due to build failure
 @IF /I "%osmesa%"=="y" IF %intmesaver% LSS 21000 IF NOT %toolchain%==msvc set buildconf=%buildconf:~0,-8%
+@rem Explicitly disable osmesa when asked, for incremental build consistency
+@IF /I NOT "%osmesa%"=="y" IF %intmesaver% LSS 21000 set buildconf=%buildconf% -Dosmesa=
+@IF /I NOT "%osmesa%"=="y" IF %intmesaver% GEQ 21000 set buildconf=%buildconf% -Dosmesa=false
 
 @set graw=n
 @set /p graw=Do you want to build graw library (y/n):
 @echo.
 @if /I "%graw%"=="y" set buildconf=%buildconf% -Dbuild-tests=true
+@if /I NOT "%graw%"=="y" set buildconf=%buildconf% -Dbuild-tests=false
 
 @set opencl=n
 @rem According to Mesa source code clover OpenCL state tracker requires LLVM built with RTTI so it won't work with Mingw and it depends on libclc.
@@ -168,11 +177,7 @@
 
 @if NOT %toolchain%==msvc set buildconf=%buildconf%"
 
-@if EXIST build\%abi% echo WARNING: Meson build always performs clean build. This is last chance to cancel build.
-@if EXIST build\%abi% pause
-@if EXIST build\%abi% echo.
-@IF EXIST build\%abi% RD /S /Q build\%abi%
-
+@rem Load MSVC specific build dependencies
 @IF %toolchain%==msvc IF %flexstate%==1 set PATH=%devroot%\flexbison\;%PATH%
 @IF %toolchain%==msvc set PATH=%pkgconfigloc%\;%PATH%
 
