@@ -63,6 +63,8 @@
 
 :distributed
 @call %devroot%\%projectname%\buildscript\modules\addversioninfo.cmd
+@rem IF EXIST %devroot%\%projectname%\lib\%abi%\src\gallium\targets\libgl-gdi\opengl32.dll.a IF EXIST %msysloc%\%MSYSTEM%\bin\strip.exe IF EXIST %msysloc%\%MSYSTEM%\bin\objcopy.exe echo.
+@rem IF EXIST %devroot%\%projectname%\lib\%abi%\src\gallium\targets\libgl-gdi\opengl32.dll.a IF EXIST %msysloc%\%MSYSTEM%\bin\strip.exe call %devroot%\%projectname%\buildscript\modules\collectdebugsymbols.cmd
 
 :exit
 @endlocal

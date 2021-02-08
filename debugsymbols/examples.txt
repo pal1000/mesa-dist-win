@@ -1,0 +1,3 @@
+GALLIUM_DRIVER=zink gdb -ex 'symbol-file c:/Software/Development/projects/mesa-dist-win/debugsymbols/x86/opengl32.dll.symbols' -ex 'target exec c:/Software/systools/GPU/GPU_Caps_Viewer/GPU_Caps_Viewer.exe' -ex 'run'
+
+gdb -ex 'symbol-file c:/Software/Development/projects/mesa-dist-win/debugsymbols/x86/opengl32.dll.symbols' -ex 'target exec c:/Software/Development/projects/ppsspp/PPSSPPWindows.exe' -ex 'run'

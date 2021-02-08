@@ -19,3 +19,6 @@ debug/llvm-config-old.txt
 /buildscript/mesonsubprojects/zlib_meson.build
 # Dynamically generated Meson native/cross files
 # /buildscript/mesonconffiles/...
+# Debug symbols
+/debugsymbols/x86/
+/debugsymbols/x64/
