@@ -10,8 +10,9 @@
 @call %devroot%\mesa-dist-win\buildscript\modules\pythonpackages.cmd
 @cd mesa
 @git checkout .
+@copy /Y %devroot%\mesa-dist-win\buildscript\mesonsubprojects\zlib.wrap %devroot%\mesa\subprojects\zlib.wrap
 @echo.
-@set buildconf=meson build/%abi% -Dbuildtype=debugoptimized -Db_ndebug=true -Dllvm=disabled -Dzlib:default_library=static -Dgallium-drivers=swrast,zink
+@set buildconf=meson build/%abi% -Dbuildtype=debugoptimized -Dllvm=disabled -Dzlib:default_library=static -Dgallium-drivers=swrast,zink
 @IF NOT EXIST "%VK_SDK_PATH%" IF NOT EXIST "%VULKAN_SDK%" set buildconf=%buildconf:~0,-5%
 @set LDFLAGS=-static
 @IF "%multilib%"=="1" set CFLAGS=-m32
