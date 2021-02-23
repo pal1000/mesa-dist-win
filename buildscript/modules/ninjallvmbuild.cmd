@@ -15,4 +15,6 @@ echo.
 )
 @echo Installing headers...
 @ninja -j %throttle% install-llvm-headers
+@echo Installing CMake modules
+@ninja -j %throttle% cmake/modules/install
 @endlocal

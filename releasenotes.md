@@ -5,7 +5,8 @@
 - Standalone MinGW-W64 test: Switch to debug optimiized build.
 ### Build script
 - Allow building SWR AVX512 with MinGW-W64 when out of tree patches are disabled;
-- Restore incremental build support to Mesa3D.
+- Restore incremental build support to Mesa3D;
+- LLVM build: Install CMake modules.
 ### Deployment tools
 - Drop problematic delay support from system wide deployment tool unattended mode.
 # 20.3.4
