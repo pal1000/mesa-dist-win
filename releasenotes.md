@@ -6,7 +6,8 @@
 ### Build script
 - Allow building SWR AVX512 with MinGW-W64 when out of tree patches are disabled;
 - Restore incremental build support to Mesa3D;
-- LLVM build: Install CMake modules.
+- LLVM build: Install CMake modules;
+- Add support for lavapipe driver.
 ### Deployment tools
 - Drop problematic delay support from system wide deployment tool unattended mode.
 # 20.3.4

@@ -143,6 +143,11 @@
 @if /I "%swrdrv%"=="y" IF %disableootpatch%==0 set buildconf=%buildconf% -Dswr-arches=avx,avx2,skx,knl
 @if /I "%swrdrv%"=="y" IF %disableootpatch%==1 IF NOT %toolchain%==msvc set buildconf=%buildconf% -Dswr-arches=avx,avx2,skx,knl
 
+@set lavapipe=n
+@if /I NOT "%llvmless%"=="y" IF %intmesaver% GEQ 21100 set /p lavapipe=Build Mesa3D Vulkan software renderer (y/n):
+@if /I NOT "%llvmless%"=="y" IF %intmesaver% GEQ 21100 echo.
+@if /I "%lavapipe%"=="y" set buildconf=%buildconf% -Dvulkan-drivers=swrast
+
 @set /p gles=Do you want to build GLAPI as a shared library and standalone GLES libraries (y/n):
 @echo.
 @if /I "%gles%"=="y" set buildconf=%buildconf% -Dshared-glapi=%mesonbooltrue% -Dgles1=%mesonbooltrue% -Dgles2=%mesonbooltrue%

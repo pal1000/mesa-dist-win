@@ -1,5 +1,6 @@
 # Binaries and their backups
-*.dll
+/bin/x86/
+/bin/x64/
 # 7-zip artifacts
 *.exe
 *.tmp
