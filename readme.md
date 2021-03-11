@@ -93,7 +93,7 @@ Default values: 140 for Mesa 18.1 and 130 for Mesa 18.0 if MESA_GL_VERSION_OVERR
 # How to set environment variables
 Under Windows the easiest way to set environment variables is by writing batch files. You'll most likely need to do so:
 - for every application requiring OpenGL 3.2 or newer in compatibility profile or 4.0 for swr and 4.6 for llvmpipe or newer in core profile;
-- if your want to use swr instead of llvmpipe for desktop OpenGL;
+- if you want to use swr instead of llvmpipe for desktop OpenGL;
 - if you need to trim extensions list for old programs compatibility.
 
 Simply open Notepad, write the batch script. When saving, end the file name with .bat or .cmd, change save as type to all files and change save location to where the application executable is located. If you have some skill with batch scripts you can change the current directory during script execution using CD command opening the possibility to save the script anywhere you want as shown in [rpcs3](https://github.com/pal1000/mesa-dist-win/blob/master/examples/rpcs3.cmd) and [GPU Caps Viewer](https://github.com/pal1000/mesa-dist-win/blob/master/examples/GPUCapsViewer.cmd) examples.
