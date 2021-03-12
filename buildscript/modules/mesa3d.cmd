@@ -126,8 +126,8 @@
 @IF /I "%zink%"=="y" set buildconf=%buildconf%,zink
 
 @set d3d12=n
-@for /d %%a in ("%devroot%\mesa\subprojects\DirectX-Headers-*") do @IF EXIST "%%~a" IF %intmesaver% GEQ 21000 IF %toolchain%==msvc set /p d3d12=Do you want to build Mesa3D OpenGL driver over D3D12 - GLonD3D12 (y/n):
-@for /d %%a in ("%devroot%\mesa\subprojects\DirectX-Headers-*") do @IF EXIST "%%~a" IF %intmesaver% GEQ 21000 IF %toolchain%==msvc echo.
+@IF EXIST %devroot%\mesa\subprojects\DirectX-Headers.wrap IF %intmesaver% GEQ 21000 IF %toolchain%==msvc set /p d3d12=Do you want to build Mesa3D OpenGL driver over D3D12 - GLonD3D12 (y/n):
+@IF EXIST %devroot%\mesa\subprojects\DirectX-Headers.wrap IF %intmesaver% GEQ 21000 IF %toolchain%==msvc echo.
 @IF /I "%d3d12%"=="y" set buildconf=%buildconf%,d3d12
 
 @set swrdrv=n
@@ -147,6 +147,11 @@
 @if /I NOT "%llvmless%"=="y" IF %intmesaver% GEQ 21100 set /p lavapipe=Build Mesa3D Vulkan software renderer (y/n):
 @if /I NOT "%llvmless%"=="y" IF %intmesaver% GEQ 21100 echo.
 @if /I "%lavapipe%"=="y" set buildconf=%buildconf% -Dvulkan-drivers=swrast
+
+@set spirvtodxil=n
+@IF EXIST %devroot%\mesa\subprojects\DirectX-Headers.wrap IF %intmesaver% GEQ 21000 IF %toolchain%==msvc set /p spirvtodxil=Do you want to build SPIR-V to DXIL tool (y/n):
+@IF EXIST %devroot%\mesa\subprojects\DirectX-Headers.wrap IF %intmesaver% GEQ 21000 IF %toolchain%==msvc echo.
+@IF /I "%spirvtodxil%"=="y" set buildconf=%buildconf% -Dspirv-to-dxil=true
 
 @set /p gles=Do you want to build GLAPI as a shared library and standalone GLES libraries (y/n):
 @echo.
