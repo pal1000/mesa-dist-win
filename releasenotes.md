@@ -1,4 +1,5 @@
-# Next release
+# 21.0.0
+- Updated Mesa3D to [21.0.0](https://docs.mesa3d.org/relnotes/21.0.0.html).
 ### Debug
 - Install gdb to help with debugging MinGW-W64 build;
 - Standalone MinGW-W64 test: Add zink driver and multilib support;
