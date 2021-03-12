@@ -34,25 +34,25 @@
 @echo Please make a deployment choice:
 @echo 1. Core desktop OpenGL drivers
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%mesaloc%\x64\swr*.dll" echo 2. Core desktop OpenGL drivers + Intel swr
-@echo 3. Mesa3D off-screen render driver gallium version (osmesa gallium)
-@IF NOT EXIST "%mesaloc%\x86\osmesa.dll" IF NOT EXIST "%mesaloc%\x64\osmesa.dll" echo 4. Mesa3D off-screen render driver classic version (osmesa swrast)
-@echo 5. Mesa3D graw test framework
-@IF %mesainstalled%==1 echo 6. Update system-wide deployment
-@IF %mesainstalled%==1 echo 7. Remove system-wide deployments (uninstall)
-@IF "%1"=="" IF %mesainstalled%==1 echo 8. Exit
-@IF "%1"=="" IF %mesainstalled%==0 echo 6. Exit
+@echo 4. Mesa3D off-screen render driver gallium version (osmesa gallium)
+@IF NOT EXIST "%mesaloc%\x86\osmesa.dll" IF NOT EXIST "%mesaloc%\x64\osmesa.dll" echo 5. Mesa3D off-screen render driver classic version (osmesa swrast)
+@echo 6. Mesa3D graw test framework
+@IF %mesainstalled%==1 echo 7. Update system-wide deployment
+@IF %mesainstalled%==1 echo 8. Remove system-wide deployments (uninstall)
+@IF "%1"=="" IF %mesainstalled%==1 echo 9. Exit
+@IF "%1"=="" IF %mesainstalled%==0 echo 7. Exit
 @IF "%1"=="" set /p deploychoice=Enter choice:
 @IF NOT "%1"=="" echo Enter choice:%1
 @IF NOT "%1"=="" set deploychoice=%1
 @if "%deploychoice%"=="1" GOTO desktopgl
 @if "%deploychoice%"=="2" GOTO desktopgl
-@if "%deploychoice%"=="3" GOTO osmesa
 @if "%deploychoice%"=="4" GOTO osmesa
-@if "%deploychoice%"=="5" GOTO graw
-@if "%deploychoice%"=="6" IF %mesainstalled%==1 GOTO update
-@if "%deploychoice%"=="7" IF %mesainstalled%==1 GOTO uninstall
-@IF "%1"=="" if "%deploychoice%"=="8" IF %mesainstalled%==1 GOTO bye
-@IF "%1"=="" if "%deploychoice%"=="6" IF %mesainstalled%==0 GOTO bye
+@if "%deploychoice%"=="5" GOTO osmesa
+@if "%deploychoice%"=="6" GOTO graw
+@if "%deploychoice%"=="7" IF %mesainstalled%==1 GOTO update
+@if "%deploychoice%"=="8" IF %mesainstalled%==1 GOTO uninstall
+@IF "%1"=="" if "%deploychoice%"=="9" IF %mesainstalled%==1 GOTO bye
+@IF "%1"=="" if "%deploychoice%"=="7" IF %mesainstalled%==0 GOTO bye
 @echo Invaild entry
 @IF "%1"=="" pause
 @IF "%1"=="" GOTO deploy
@@ -92,19 +92,19 @@
 @IF NOT "%1"=="" GOTO exit
 
 :osmesa
-@if "%deploychoice%"=="3" IF /I %PROCESSOR_ARCHITECTURE%==X86 IF EXIST "%mesaloc%\x86\osmesa.dll" copy "%mesaloc%\x86\osmesa.dll" "%windir%\System32"
-@if "%deploychoice%"=="3" IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%mesaloc%\x86\osmesa.dll" copy "%mesaloc%\x86\osmesa.dll" "%windir%\SysWOW64"
-@if "%deploychoice%"=="3" IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%mesaloc%\x64\osmesa.dll" copy "%mesaloc%\x64\osmesa.dll" "%windir%\System32"
-@if "%deploychoice%"=="3" IF EXIST %mesaloc%\x86\osmesa.dll IF EXIST %mesaloc%\x64\osmesa.dll GOTO doneosmesa
-@if "%deploychoice%"=="4" IF EXIST %mesaloc%\x86\osmesa.dll IF EXIST %mesaloc%\x64\osmesa.dll echo osmesa swrast is not available on its own.
-@if "%deploychoice%"=="4" IF EXIST %mesaloc%\x86\osmesa.dll IF EXIST %mesaloc%\x64\osmesa.dll IF "%1"=="" pause
-@if "%deploychoice%"=="4" IF EXIST %mesaloc%\x86\osmesa.dll IF EXIST %mesaloc%\x64\osmesa.dll IF "%1"=="" GOTO deploy
-@if "%deploychoice%"=="4" IF EXIST %mesaloc%\x86\osmesa.dll IF EXIST %mesaloc%\x64\osmesa.dll IF NOT "%1"=="" GOTO exit
+@if "%deploychoice%"=="4" IF /I %PROCESSOR_ARCHITECTURE%==X86 IF EXIST "%mesaloc%\x86\osmesa.dll" copy "%mesaloc%\x86\osmesa.dll" "%windir%\System32"
+@if "%deploychoice%"=="4" IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%mesaloc%\x86\osmesa.dll" copy "%mesaloc%\x86\osmesa.dll" "%windir%\SysWOW64"
+@if "%deploychoice%"=="4" IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%mesaloc%\x64\osmesa.dll" copy "%mesaloc%\x64\osmesa.dll" "%windir%\System32"
+@if "%deploychoice%"=="4" IF EXIST %mesaloc%\x86\osmesa.dll IF EXIST %mesaloc%\x64\osmesa.dll GOTO doneosmesa
+@if "%deploychoice%"=="5" IF EXIST %mesaloc%\x86\osmesa.dll IF EXIST %mesaloc%\x64\osmesa.dll echo osmesa swrast is not available on its own.
+@if "%deploychoice%"=="5" IF EXIST %mesaloc%\x86\osmesa.dll IF EXIST %mesaloc%\x64\osmesa.dll IF "%1"=="" pause
+@if "%deploychoice%"=="5" IF EXIST %mesaloc%\x86\osmesa.dll IF EXIST %mesaloc%\x64\osmesa.dll IF "%1"=="" GOTO deploy
+@if "%deploychoice%"=="5" IF EXIST %mesaloc%\x86\osmesa.dll IF EXIST %mesaloc%\x64\osmesa.dll IF NOT "%1"=="" GOTO exit
 @IF /I %PROCESSOR_ARCHITECTURE%==X86 IF EXIST "%mesaloc%\x86\libglapi.dll" copy "%mesaloc%\x86\libglapi.dll" "%windir%\System32"
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%mesaloc%\x86\libglapi.dll" copy "%mesaloc%\x86\libglapi.dll" "%windir%\SysWOW64"
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%mesaloc%\x64\libglapi.dll" copy "%mesaloc%\x64\libglapi.dll" "%windir%\System32"
-@if "%deploychoice%"=="3" set osmesatype=gallium
-@if "%deploychoice%"=="4" set osmesatype=swrast
+@if "%deploychoice%"=="4" set osmesatype=gallium
+@if "%deploychoice%"=="5" set osmesatype=swrast
 @IF /I %PROCESSOR_ARCHITECTURE%==X86 copy "%mesaloc%\x86\osmesa-%osmesatype%\osmesa.dll" "%windir%\System32"
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 copy "%mesaloc%\x86\osmesa-%osmesatype%\osmesa.dll" "%windir%\SysWOW64"
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 copy "%mesaloc%\x64\osmesa-%osmesatype%\osmesa.dll" "%windir%\System32"
