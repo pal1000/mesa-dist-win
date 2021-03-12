@@ -3,17 +3,17 @@
 ### Debug
 - Install gdb to help with debugging MinGW-W64 build;
 - Standalone MinGW-W64 test: Add zink driver and multilib support;
-- Standalone MinGW-W64 test: Switch to debug optimiized build.
+- Standalone MinGW-W64 test: Switch to debug optimized build.
 ### Build script
 - Allow building SWR AVX512 with MinGW-W64 when out of tree patches are disabled;
 - Restore incremental build support to Mesa3D;
 - LLVM build: Install CMake modules;
-- Add support for lavapipe driver;
+- Add support for lavapipe driver [21.1+];
 - Add support for SPIR-V to DXIL tool - Fixes [#49](https://github.com/pal1000/mesa-dist-win/issues/49).
 ### Deployment tools
 - Drop problematic delay support from system wide deployment tool unattended mode;
 - Support deploying DirectX IL for redistribution only in system wide deployment tool;
-- Support keepping DirectX IL for redistribution in system wide deployment tool during uninstall.
+- Support keeping DirectX IL for redistribution in system wide deployment tool during uninstall.
 # 20.3.4
 - Updated Mesa3D to [20.3.4](https://docs.mesa3d.org/relnotes/20.3.4.html).
 ### Build script
