@@ -10,7 +10,9 @@
 - Add support for lavapipe driver;
 - Add support for SPIR-V to DXIL tool - Fixes [#49](https://github.com/pal1000/mesa-dist-win/issues/49).
 ### Deployment tools
-- Drop problematic delay support from system wide deployment tool unattended mode.
+- Drop problematic delay support from system wide deployment tool unattended mode;
+- Support deploying DirectX IL for redistribution only in system wide deployment tool;
+- Support keepping DirectX IL for redistribution in system wide deployment tool during uninstall.
 # 20.3.4
 - Updated Mesa3D to [20.3.4](https://docs.mesa3d.org/relnotes/20.3.4.html).
 ### Build script

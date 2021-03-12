@@ -34,6 +34,7 @@
 @echo Please make a deployment choice:
 @echo 1. Core desktop OpenGL drivers
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%mesaloc%\x64\swr*.dll" echo 2. Core desktop OpenGL drivers + Intel swr
+@IF EXIST "%mesaloc%\x86\dxil.dll" IF EXIST "%mesaloc%\x64\dxil.dll" echo 3. Install DirectX IL for redistribution only
 @echo 4. Mesa3D off-screen render driver gallium version (osmesa gallium)
 @IF NOT EXIST "%mesaloc%\x86\osmesa.dll" IF NOT EXIST "%mesaloc%\x64\osmesa.dll" echo 5. Mesa3D off-screen render driver classic version (osmesa swrast)
 @echo 6. Mesa3D graw test framework
@@ -46,6 +47,7 @@
 @IF NOT "%1"=="" set deploychoice=%1
 @if "%deploychoice%"=="1" GOTO desktopgl
 @if "%deploychoice%"=="2" GOTO desktopgl
+@if "%deploychoice%"=="3" GOTO instdxil
 @if "%deploychoice%"=="4" GOTO osmesa
 @if "%deploychoice%"=="5" GOTO osmesa
 @if "%deploychoice%"=="6" GOTO graw
@@ -87,6 +89,21 @@
 @REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\OpenGLDrivers\MSOGL" /v "Version" /t REG_DWORD /d "2" /f
 @echo.
 @echo Desktop OpenGL drivers deploy complete.
+@IF "%1"=="" pause
+@IF "%1"=="" GOTO deploy
+@IF NOT "%1"=="" GOTO exit
+
+:instdxil
+@IF NOT EXIST "%mesaloc%\x64\dxil.dll" IF NOT EXIST "%mesaloc%\x86\dxil.dll" echo DirectX IL for redistribution is not available in this release package.
+@IF NOT EXIST "%mesaloc%\x64\dxil.dll" IF NOT EXIST "%mesaloc%\x86\dxil.dll" echo.
+@IF NOT EXIST "%mesaloc%\x64\dxil.dll" IF NOT EXIST "%mesaloc%\x86\dxil.dll" IF "%1"=="" pause
+@IF NOT EXIST "%mesaloc%\x64\dxil.dll" IF NOT EXIST "%mesaloc%\x86\dxil.dll" IF "%1"=="" GOTO deploy
+@IF NOT EXIST "%mesaloc%\x64\dxil.dll" IF NOT EXIST "%mesaloc%\x86\dxil.dll" IF NOT "%1"=="" GOTO exit
+@IF /I %PROCESSOR_ARCHITECTURE%==X86 IF EXIST "%mesaloc%\x86\dxil.dll" copy "%mesaloc%\x86\dxil.dll" "%windir%\System32"
+@IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%mesaloc%\x86\dxil.dll" copy "%mesaloc%\x86\dxil.dll" "%windir%\SysWOW64"
+@IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%mesaloc%\x64\dxil.dll" copy "%mesaloc%\x64\dxil.dll" "%windir%\System32"
+@echo.
+@echo Install DirectX IL for redistribution complete.
 @IF "%1"=="" pause
 @IF "%1"=="" GOTO deploy
 @IF NOT "%1"=="" GOTO exit
@@ -185,11 +202,14 @@
 @IF NOT "%1"=="" GOTO exit
 
 :uninstall
+@IF "%1"=="" set keepdxil=y
+@IF "%1"=="" set /p keepdxil=Do you want to keep DirectX IL for redistribution (y/n, default - y):
+@IF NOT "%1"=="" set keepdxil=n
 @REG DELETE "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\OpenGLDrivers\MSOGL" /f
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 REG DELETE "HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Windows NT\CurrentVersion\OpenGLDrivers\MSOGL" /f
 @IF EXIST "%windir%\System32\mesadrv.dll" del "%windir%\System32\mesadrv.dll"
 @IF EXIST "%windir%\System32\libglapi.dll" del "%windir%\System32\libglapi.dll"
-@IF EXIST "%windir%\System32\dxil.dll" del "%windir%\System32\dxil.dll"
+@IF /I "%keepdxil%"=="n" IF EXIST "%windir%\System32\dxil.dll" del "%windir%\System32\dxil.dll"
 @IF EXIST "%windir%\System32\graw.dll" del "%windir%\System32\graw.dll"
 @IF EXIST "%windir%\System32\graw_null.dll" del "%windir%\System32\graw_null.dll"
 @IF EXIST "%windir%\System32\osmesa.dll" del "%windir%\System32\osmesa.dll"
@@ -199,7 +219,7 @@
 @IF EXIST "%windir%\System32\swrKNL.dll" del "%windir%\System32\swrKNL.dll"
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%windir%\SysWOW64\mesadrv.dll" del "%windir%\SysWOW64\mesadrv.dll"
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%windir%\SysWOW64\libglapi.dll" del "%windir%\SysWOW64\libglapi.dll"
-@IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%windir%\SysWOW64\dxil.dll" del "%windir%\SysWOW64\dxil.dll"
+@IF /I "%keepdxil%"=="n" IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%windir%\SysWOW64\dxil.dll" del "%windir%\SysWOW64\dxil.dll"
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%windir%\SysWOW64\osmesa.dll" del "%windir%\SysWOW64\osmesa.dll"
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%windir%\SysWOW64\graw.dll" del "%windir%\SysWOW64\graw.dll"
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%windir%\SysWOW64\graw_null.dll" del "%windir%\SysWOW64\graw_null.dll"
