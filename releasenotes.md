@@ -1,3 +1,6 @@
+# Next release
+### Build script
+- MSVC build: Switch LLVM discovery method from config tool to cmake.
 # 21.0.0
 - Updated Mesa3D to [21.0.0](https://docs.mesa3d.org/relnotes/21.0.0.html).
 ### Debug

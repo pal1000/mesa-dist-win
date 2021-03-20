@@ -3,7 +3,7 @@
 :llvmwrap
 @set RTTI=false
 @set llvmconfigbusted=0
-@IF %toolchain%==msvc if /I NOT "%llvmless%"=="y" FOR /F "tokens=* USEBACKQ" %%a IN (`%devroot%\llvm\%abi%\bin\llvm-config --has-rtti`) DO @IF /I "%%a"=="YES" SET RTTI=true
+@IF %toolchain%==msvc if /I NOT "%llvmless%"=="y" SET RTTI=true
 @IF NOT %toolchain%==msvc if /I NOT "%llvmless%"=="y" FOR /F "tokens=* USEBACKQ" %%a IN (`%msysloc%\usr\bin\bash --login -c "${MINGW_PREFIX}/bin/llvm-config --has-rtti" 2^>^&1`) DO @(
 IF /I "%%a"=="YES" SET RTTI=true
 IF /I NOT "%%a"=="YES" IF /I NOT "%%a"=="NO" set llvmconfigbusted=1

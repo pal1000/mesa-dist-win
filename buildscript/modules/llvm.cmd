@@ -2,7 +2,7 @@
 
 @rem Check lf LLVM binaries are available
 @set llvmbinaries=0
-@IF EXIST %devroot%\llvm\%abi%\bin IF EXIST %devroot%\llvm\%abi%\include IF EXIST %devroot%\llvm\%abi%\lib set llvmbinaries=1
+@IF EXIST %devroot%\llvm\%abi%\include IF EXIST %devroot%\llvm\%abi%\lib set llvmbinaries=1
 
 @rem Check lf LLVM sources are available or obtainable
 @set llvmsources=1
@@ -29,7 +29,7 @@
 @rem Getting LLVM monorepo if LLVM source is missing
 @if NOT EXIST %devroot%\llvm\cmake if NOT EXIST %devroot%\llvm-project (
 @echo Getting LLVM source code...
-@git clone https://github.com/llvm/llvm-project.git --branch=llvmorg-11.0.1 --depth=1 %devroot%\llvm-project
+@git clone https://github.com/llvm/llvm-project.git --branch=llvmorg-11.1.0 --depth=1 %devroot%\llvm-project
 @echo.
 )
 
@@ -93,7 +93,7 @@
 @pause
 @echo.
 @if /I NOT "%ninja%"=="y" cmake --build . -j %throttle% --config Release --target install
-@if /I "%ninja%"=="y" call %devroot%\%projectname%\buildscript\modules\ninjallvmbuild.cmd
+@if /I "%ninja%"=="y" ninja -j %throttle% install-llvm-libraries install-llvm-headers install-cmake-exports tools/install utils/TableGen/install
 
 :skipllvm
 @echo.

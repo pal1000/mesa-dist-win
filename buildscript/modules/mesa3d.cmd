@@ -94,7 +94,7 @@
 @IF %abi%==x64 set buildcmd=msbuild /p^:Configuration=release,Platform=x64 mesa.sln /m^:%throttle%
 
 @set havellvm=0
-@IF %toolchain%==msvc IF EXIST %devroot%\llvm\%abi% set havellvm=1
+@IF %toolchain%==msvc IF EXIST %devroot%\llvm\%abi% IF %cmakestate% GTR 0 set havellvm=1
 @IF NOT %toolchain%==msvc set havellvm=1
 @set llvmless=n
 @if %havellvm%==0 set llvmless=y
@@ -103,7 +103,8 @@
 @call %devroot%\%projectname%\buildscript\modules\mesonsubprojects.cmd
 @if /I NOT "%llvmless%"=="y" IF %llvmconfigbusted% EQU 1 set buildconf=%buildconf% --force-fallback-for=llvm
 @if /I NOT "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm=%mesonbooltrue% -Dshared-llvm=%mesonboolfalse%
-@if /I NOT "%llvmless%"=="y" IF %toolchain%==msvc SET PATH=%devroot%\llvm\%abi%\bin\;%PATH%
+@if /I NOT "%llvmless%"=="y" IF %toolchain%==msvc set buildconf=%buildconf% --cmake-prefix-path=%devroot:\=/%/llvm/%abi%
+@if /I NOT "%llvmless%"=="y" IF %toolchain%==msvc IF %cmakestate% EQU 1 SET PATH=%devroot%\cmake\bin\;%PATH%
 @if /I "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm=%mesonboolfalse%
 
 @set useninja=n

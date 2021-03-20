@@ -13,4 +13,4 @@ IF /I NOT "%%a"=="error" IF %gitstate% GTR 0 echo.
 )
 @%msysloc%\usr\bin\bash --login -c "/usr/bin/pacman -Sc --noconfirm"
 @echo.
-@endlocal&set flexstate=2&set ninjastate=2&set pkgconfigstate=1
+@endlocal&set flexstate=2&set ninjastate=2&set pkgconfigstate=1&set cmakestate=0
