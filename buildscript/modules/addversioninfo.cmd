@@ -39,6 +39,7 @@
 @call %devroot%\%projectname%\buildscript\modules\rcgen.cmd "Mesa3D off-screen rendering classic driver" %devroot%\%projectname%\bin\%abi%\osmesa-swrast\osmesa.dll %abi% %mesaver% "Mesa/X.org"
 @call %devroot%\%projectname%\buildscript\modules\rcgen.cmd "Mesa3D off-screen rendering gallium driver" %devroot%\%projectname%\bin\%abi%\osmesa-gallium\osmesa.dll %abi% %mesaver% "Mesa/X.org"
 @call %devroot%\%projectname%\buildscript\modules\rcgen.cmd "Mesa3D off-screen rendering gallium driver" %devroot%\%projectname%\bin\%abi%\osmesa.dll %abi% %mesaver% "Mesa/X.org"
+@call %devroot%\%projectname%\buildscript\modules\rcgen.cmd "Microsoft SPIR-V to DXIL library" %devroot%\%projectname%\bin\%abi%\spirv_to_dxil.dll %abi% %mesaver% "Microsoft Corporation"
 
 @echo Done
 @echo.
