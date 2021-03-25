@@ -14,9 +14,9 @@ Mako       1.1.4
 MarkupSafe 1.1.1
 meson      0.57.1
 pip        21.0.1
-setuptools 54.1.2
+setuptools 54.2.0
 
-CMake 3.19.7
+CMake 3.20.0
 Ninja 1.10.2
 LLVM 11.1.0
 Winflexbison package 2.5.24

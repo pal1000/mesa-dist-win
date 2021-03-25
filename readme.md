@@ -8,13 +8,14 @@
 - [OpenGL context configuration override](#opengl-context-configuration-override)
 - [How to set environment variables](#how-to-set-environment-variables)
 # Downloads
-Mesa 21.0.0 builds with Visual Studio and MSYS2 Mingw-w64 are now available in [releases section](https://github.com/pal1000/mesa-dist-win/releases).
+Mesa 21.0.1 builds with Visual Studio and MSYS2 Mingw-w64 are now available in [releases section](https://github.com/pal1000/mesa-dist-win/releases).
 # Note for enterprise environments
 IT security policy may restrict or even outright prohibit running 3rd-party unsigned executables. If this is the case you can extract Mesa3D drivers using [7-Zip](https://www.7-zip.org/).
 # About Mingw package
 Mingw package is recommended in most cases over MSVC as it has better performance but there are some differences:
 - it requires a CPU with [SSSE3](https://en.wikipedia.org/wiki/SSSE3#CPUs_with_SSSE3);
-- [osmesa classic](https://gitlab.freedesktop.org/mesa/mesa/issues/2297) is not available due to build failure;
+- it contains zink driver since 21.0.0 while MSVC package introduced GLonD3D12;
+- SPIR-V to DXIL tool introduced in 21.0.0 is not available;
 - ZSTD is used for certain compression tasks since 20.1.8.
 
 If you need to migrate from Mingw to MSVC binaries you just need to replace Mesa binaries folder from Mingw package with MSVC counterpart.
@@ -22,10 +23,13 @@ If you need to migrate from Mingw to MSVC binaries you just need to replace Mesa
 The following Mesa3D drivers and build artifacts are shipped in each release:
 - [llvmpipe](https://www.mesa3d.org/llvmpipe.html) and softpipe bundle. File name: opengl32.dll. llvmpipe is the default desktop OpenGL driver. Both llvmpipe and softpipe are available for both x86 and x64. softpipe can be selected by setting environment variable GALLIUM_DRIVER=softpipe.
 - [GLAPI shared library](https://www.mesa3d.org/egl.html). File name: libglapi.dll. Required by llvmpipe, softpipe and swr if Mesa3D is built with shared glapi. Since 20.0.2 it is available in both MSVC and MSYS2 Mingw-w64 packages. 
+- [GLonD3D12](https://docs.mesa3d.org/drivers/d3d12.html). Standalone ICD filename: openglon12.dll. This driver introduced in 21.0.0 is operating as wrapper returning D3D12 API calls. Due to this nature it can use GPU accelleration. Select it via GALLIUM_DRIVER environment variable, but note that it's only available in MSVC package. By default it requires at least 1 D3D12 GPU with driver, but it can be tested with WARP via `LIBGL_ALWAYS_SOFTWARE=1`.
+- [zink](https://docs.mesa3d.org/drivers/zink.html). This driver introduced for Windows in 21.0.0 is operating as wrapper returning Vulkan API calls. Due to this nature it can use GPU accelleration. Select it via GALLIUM_DRIVER environment variable, but note that it's only available in MinGW package. zink ignores Vulkan CPU type devices unless `ZINK_USE_LAVAPIPE=1` environment variable is set. zink requires at least 1 Vulkan device and Vulkan loader to initialize.
 - [swr](https://openswr.org/). File names: swrAVX.dll, swrAVX2.dll, swrSKX.dll, swrKNL.dll. An alternative desktop OpenGL driver developed by Intel.  Available in MSVC package and since 20.1.7 in MinGW package as well. It only supports x64, x86 is [officially unsupported](https://bugs.freedesktop.org/show_bug.cgi?id=102564#c5). There are currently 4 DLLs, only one being loaded based on what the user CPU can do. By default Mesa uses llvmpipe. You can switch to swr by setting GALLIUM_DRIVER environment variable value to swr either globally or in a batch file. See [How to set environment variables](#how-to-set-environment-variables).
 - [OpenGL ES standalone drivers](https://www.mesa3d.org/opengles.html). File names: libGLESv1_CM.dll and libGLESv2.dll. OpenGL ES 1.x, 2.0 and 3.0 standalone drivers available for 32-bit and 64-bit applications. Since 20.0.2 they are available in both MSVC and MSYS2 Mingw-w64 packages.
-- [osmesa](https://www.mesa3d.org/osmesa.html). File name: osmesa.dll. 2 versions of osmesa, off-screen rendering driver. They are located in osmesa-gallium and osmesa-swrast subdirectories. Available for both x86 and x64. This driver is used in special cases by software that is designed to use Mesa code to render without any kind of window system or operating system dependency. osmesa gallium supports OpenGL 3.x and newer while osmesa swrast also known as osmesa classic only supports OpenGL 2.1 but it has some unique capabilities. Since 20.0.2 osmesa integration with standalone GLLES drivers is available in both MSVC and MSYS2 Mingw-w64 packages.
+- [osmesa](https://www.mesa3d.org/osmesa.html). File name: osmesa.dll. Available for both x86 and x64. This driver is used in special cases by software that is designed to use Mesa code to render without any kind of window system or operating system dependency. Since 21.0.0 only osmesa gallium remained. It supports OpenGL 3.x and newer. Since 20.0.2 osmesa integration with standalone GLLES drivers is available in both MSVC and MSYS2 Mingw-w64 packages.
 - graw. File names: graw.dll, graw_null.dll. This is Mesa3D plug-in library. It is not a driver. Available for both x86 and x64 and in full (with window system support) and headless (no window) versions. This is used in special cases by software that is designed to use Mesa3D code internal APIs. Since 20.0.2 both full and headless versions are available in both MSVC and MSYS2 Mingw-w64 packages.
+- SPIR-V to DXIL tool and library are only available in MSVC package since 21.0.0. File names: spirv_to_dxil.dll and spirv2dxil.exe.
 - test suite. Many executable unit tests.
 - libraries and headers generated at build time for both 32-bit and 64-bit builds are located in a separate archive called development pack. Note that build time generated headers depend on source code headers, so you may need Mesa3D source code because only build time headers are included.
 

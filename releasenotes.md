@@ -1,9 +1,12 @@
-# Next release
+# 21.0.1
+- Updated Mesa3D to [21.0.1](https://docs.mesa3d.org/relnotes/21.0.1.html).
 ### Build script
 - MSVC build: Switch LLVM discovery method from config tool to cmake;
 - LLVM: Build install target again now that configuration has been optimized.
 ### Deployment
 - Add version info for Microsoft SPIR-V to DXIL library.
+### Documentation
+- Add info about zink, GLonD3D12 and SPIR-V to DXIL tool to end user guide.
 # 21.0.0
 - Updated Mesa3D to [21.0.0](https://docs.mesa3d.org/relnotes/21.0.0.html).
 ### Debug
