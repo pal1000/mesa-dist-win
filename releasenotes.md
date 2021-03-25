@@ -1,6 +1,7 @@
 # Next release
 ### Build script
-- MSVC build: Switch LLVM discovery method from config tool to cmake.
+- MSVC build: Switch LLVM discovery method from config tool to cmake;
+- LLVM: Build install target again now that configuration has been optimized.
 ### Deployment
 - Add version info for Microsoft SPIR-V to DXIL library.
 # 21.0.0
