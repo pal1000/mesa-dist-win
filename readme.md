@@ -1,7 +1,7 @@
 # Table of Contents
 - [Downloads](#downloads)
-- [Note for enterprise environments](#note-for-enterprise-environments)
-- [About Mingw package](#about-mingw-package)
+- [Known issues](#known-issues)
+- [Differences between MSVC and MinGW packages](#differences-between-msvc-and-mingw-packages)
 - [Mingw and MSVC Package contents](#mingw-and-msvc-package-contents)
 - [Installation and usage](#installation-and-usage)
 - [Legacy software compatibility](#legacy-software-compatibility)
@@ -9,21 +9,38 @@
 - [How to set environment variables](#how-to-set-environment-variables)
 # Downloads
 Mesa 21.0.1 builds with Visual Studio and MSYS2 Mingw-w64 are now available in [releases section](https://github.com/pal1000/mesa-dist-win/releases).
-# Note for enterprise environments
-IT security policy may restrict or even outright prohibit running 3rd-party unsigned executables. If this is the case you can extract Mesa3D drivers using [7-Zip](https://www.7-zip.org/).
-# About Mingw package
-Mingw package is recommended in most cases over MSVC as it has better performance but there are some differences:
-- it requires a CPU with [SSSE3](https://en.wikipedia.org/wiki/SSSE3#CPUs_with_SSSE3);
-- it contains zink driver since 21.0.0 while MSVC package introduced GLonD3D12;
-- SPIR-V to DXIL tool introduced in 21.0.0 is not available;
-- ZSTD is used for certain compression tasks since 20.1.8.
+# Known issues
+- 64-bit binaries in both MSVC and MinGW packages require a CPU with AVX even though they shouldn't
+
+This is due to 64-bit binaries containing swr driver which leaks AVX usage into common code. This is an upstream bug reported [here](https://gitlab.freedesktop.org/mesa/mesa/-/issues/4437), [here](https://gitlab.freedesktop.org/mesa/mesa/-/issues/3860) and [here](https://github.com/msys2/MINGW-packages/issues/7530).
+- Mesa `opengl32.dll` from MinGW package depends on [Vulkan runtime](https://vulkan.lunarg.com/sdk/home#windows) since 21.0.0
+
+This is an [upstream regression](https://gitlab.freedesktop.org/mesa/mesa/-/issues/3855) introduced when zink driver was patched to support Windows.
+- [zink driver cannot be tested with SwiftShader on Windows](https://gitlab.freedesktop.org/mesa/mesa/-/issues/4292)
+
+`ZINK_USE_LAVAPIPE=true` doesn't work.
+- Programs can behave like there is no OpenGL support when using Mesa `opengl32.dll` since 21.0.0
+
+This is not a defect but rather a behavior change of Mesa when environment variables are misconfigured. It usually happens when selecting a Mesa driver that doesn't exist in release package used or it fails to initialize due to host system not meeting hardware requirements or lacking dependencies. Reading [differences between MSVC and MinGW packages](#differences-between-msvc-and-mingw-packages) and [Mingw and MSVC Package contents](#mingw-and-msvc-package-contents) should aid in troubleshooting.
+- Important notes about errors related to missing `libglapi.dll`
+
+You may experience them with programs that use any Mesa3D desktop OpenGL driver via per app deployment tool, system wide deployment is unaffected. You may experience them if shared glapi is missing from release package. shared glapi has been consistently available in both MSVC and MinGW packages since 20.0.2.
+
+To correct these errors regardless of cause you have to re-deploy. If you don't remember if an affected program is 32-bit or 64-bit, right click on opengl32.dll shortcut in the folder where the program executable is located and select open file location. If location ends in x64 then it's 64-bit, otherwise it's 32-bit.
+
+Same problem with same solution applies to osmesa if you are upgrading from 17.3.5.501-1 or older.
+# Differences between MSVC and MinGW packages
+- MinGW package requires a CPU with [SSSE3](https://en.wikipedia.org/wiki/SSSE3#CPUs_with_SSSE3) with benefit of providing 3-5% performance boost with software rendering drivers;
+- MinGW package contains zink driver since 21.0.0 while MSVC package introduced GLonD3D12 at the same time;
+- SPIR-V to DXIL tool introduced in 21.0.0 is only available in MSVC package;
+- MinGW package uses ZSTD for certain compression tasks since 20.1.8.
 
 If you need to migrate from Mingw to MSVC binaries you just need to replace Mesa binaries folder from Mingw package with MSVC counterpart.
 # Mingw and MSVC Package contents
 The following Mesa3D drivers and build artifacts are shipped in each release:
-- [llvmpipe](https://www.mesa3d.org/llvmpipe.html) and softpipe bundle. File name: opengl32.dll. llvmpipe is the default desktop OpenGL driver. Both llvmpipe and softpipe are available for both x86 and x64. softpipe can be selected by setting environment variable GALLIUM_DRIVER=softpipe.
+- [llvmpipe](https://www.mesa3d.org/llvmpipe.html) and softpipe bundle. File name: opengl32.dll. llvmpipe is the default desktop OpenGL driver. Both llvmpipe and softpipe are available for both x86 and x64. softpipe can be selected by setting environment variable `GALLIUM_DRIVER=softpipe`.
 - [GLAPI shared library](https://www.mesa3d.org/egl.html). File name: libglapi.dll. Required by llvmpipe, softpipe and swr if Mesa3D is built with shared glapi. Since 20.0.2 it is available in both MSVC and MSYS2 Mingw-w64 packages. 
-- [GLonD3D12](https://docs.mesa3d.org/drivers/d3d12.html). Standalone ICD filename: openglon12.dll. This driver introduced in 21.0.0 is operating as wrapper returning D3D12 API calls. Due to this nature it can use GPU accelleration. Select it via `GALLIUM_DRIVER=d3d12` environment variable, but note that it's only available in MSVC package. By default it requires at least 1 D3D12 capable GPU with driver, but it can be tested with WARP via `LIBGL_ALWAYS_SOFTWARE=1`. It also depends on DirectX IL for redistribution which can be installed via [deployment tools]((#installation-and-usage). The standalone ICD only contains GLonD3D12 which means it always uses it without caring about GALLIUM_DRIVER value.
+- [GLonD3D12](https://docs.mesa3d.org/drivers/d3d12.html). Standalone ICD filename: openglon12.dll. This driver introduced in 21.0.0 is operating as wrapper returning D3D12 API calls. Due to this nature it can use GPU accelleration. Select it via `GALLIUM_DRIVER=d3d12` environment variable, but note that it's only available in MSVC package. By default it requires at least 1 D3D12 capable GPU with driver, but it can be tested with WARP via `LIBGL_ALWAYS_SOFTWARE=1`. It also depends on DirectX IL for redistribution which can be installed via [deployment tools](#installation-and-usage). The standalone ICD only contains GLonD3D12 which means it always uses it without caring about GALLIUM_DRIVER value.
 - [zink](https://docs.mesa3d.org/drivers/zink.html). This driver introduced for Windows in 21.0.0 is operating as wrapper returning Vulkan API calls. Due to this nature it can use GPU accelleration. Select it via `GALLIUM_DRIVER=zink` environment variable, but note that it's only available in MinGW package. zink ignores Vulkan CPU type devices, so you can't test it with SwiftShader. zink requires at least 1 Vulkan device and Vulkan loader/[runtime](https://vulkan.lunarg.com/sdk/home#windows) to initialize.
 - [swr](https://openswr.org/). File names: swrAVX.dll, swrAVX2.dll, swrSKX.dll, swrKNL.dll. An alternative desktop OpenGL driver developed by Intel.  Available in MSVC package and since 20.1.7 in MinGW package as well. It only supports x64, x86 is [officially unsupported](https://bugs.freedesktop.org/show_bug.cgi?id=102564#c5). There are currently 4 DLLs, only one being loaded based on what the user CPU can do. By default Mesa uses llvmpipe. You can switch to swr by setting GALLIUM_DRIVER environment variable value to swr either globally or in a batch file. See [How to set environment variables](#how-to-set-environment-variables).
 - [OpenGL ES standalone drivers](https://www.mesa3d.org/opengles.html). File names: libGLESv1_CM.dll and libGLESv2.dll. OpenGL ES 1.x, 2.0 and 3.0 standalone drivers available for 32-bit and 64-bit applications. Since 20.0.2 they are available in both MSVC and MSYS2 Mingw-w64 packages.
@@ -35,7 +52,7 @@ The following Mesa3D drivers and build artifacts are shipped in each release:
 
 Build instructions, if you want to replicate my builds, are available [here](https://github.com/pal1000/mesa-dist-win/tree/master/buildscript).
 # Installation and usage
-First choose between Mingw and MSVC package. See [About Mingw package](#about-mingw-package) section for details. Before extracting release package close all programs that use Mesa if any is running. After extraction you will have access to 2 deployment options, both located in the directory you installed Mesa. Both deployment utilities have a start-over mechanism so you can do all deployments you need in one session.
+First choose between Mingw and MSVC package. See [About Mingw package](#about-mingw-package) section for details. Before [extracting](https://www.7-zip.org/) release package close all programs that use Mesa if any is running. After extraction you will have access to 2 deployment options, both located in the directory you installed Mesa. Both deployment utilities have a start-over mechanism so you can do all deployments you need in one session.
 - A system-wide deployment tool. While intended for systems lacking hardware accelerated OpenGL support like virtual machines in cloud environments, it can also be used on any Windows system to replace the inbox software rendering OpenGL 1.1 driver extending OpenGL support for use cases where hardware accelerated OpenGL is not available like RDP connections. Due to potential issues with Virtualbox VMs running Windows it is recommended to disable 3D acceleration in such VMs if Mesa3D desktop OpenGL driver is installed inside them using the system-wide deployment tool, see [#9](https://github.com/pal1000/mesa-dist-win/issues/9).
 - A per-application deployment tool, used to deploy Mesa3D for a single program regardless of hardware accelerated OpenGL support being present or not.
 Per-app deployment utility changes are persistent and are being kept across upgrades and re-installations.
@@ -47,12 +64,6 @@ Most applications will use Mesa regardless of GPU capabilities, but some applica
 By providing the application filename, a .local file is generated in an attempt to force the application to use Mesa3D when it doesn't want to.
 Also, [Federico Dossena](https://github.com/adolfintel)'s [Mesainjector](https://downloads.fdossena.com/Projects/Mesa3D/Injector/index.php) can be used to workaround this issue as well.
 [Build instructions for Mesainjector](https://fdossena.com/?p=mesa/injector_build.frag).
-### Important notes about errors related to missing `libglapi.dll`
-You may experience them with programs that use any Mesa3D desktop OpenGL driver via per app deployment tool, system wide deployment is unaffected. You may experience them if shared glapi is missing from release package. shared glapi has been consistently available in both MSVC and MinGW packages since 20.0.2.
-
-To correct these errors regardless of cause you have to re-deploy. If you don't remember if an affected program is 32-bit or 64-bit, right click on opengl32.dll shortcut in the folder where the program executable is located and select open file location. If location ends in x64 then it's 64-bit, otherwise it's 32-bit.
-
-Same problem with same solution applies to osmesa if you are upgrading from 17.3.5.501-1 or older.
 ### Usage notes
 - Old applications from early 200x and older may need MESA_EXTENSION_MAX_YEAR environment variable set, see [legacy software compatibility section](#legacy-software-compatibility).
 - Applications requiring OpenGL 3.2 or newer may need [OpenGL context configuration override](#opengl-context-configuration-override).
