@@ -1,6 +1,8 @@
 # Next release
 ### Deployment
 - Add support for GLonD3D12 standalone driver in system wide deployment tool.
+### Documentation
+-  README: Add known issues section and drop obsolete info.
 # 21.0.1
 - Updated Mesa3D to [21.0.1](https://docs.mesa3d.org/relnotes/21.0.1.html).
 ### Build script
