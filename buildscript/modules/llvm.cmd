@@ -74,7 +74,8 @@
 @set buildconf=%buildconf% -DLLVM_TARGETS_TO_BUILD=X86 -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DLLVM_OPTIMIZED_TABLEGEN=TRUE -DLLVM_INCLUDE_UTILS=OFF -DLLVM_INCLUDE_RUNTIMES=OFF -DLLVM_INCLUDE_TESTS=OFF -DLLVM_INCLUDE_GO_TESTS=OFF -DLLVM_INCLUDE_EXAMPLES=OFF -DLLVM_INCLUDE_BENCHMARKS=OFF -DLLVM_BUILD_LLVM_C_DYLIB=OFF -DLLVM_ENABLE_DIA_SDK=OFF -DCMAKE_INSTALL_PREFIX=../../llvm/%abi%
 @if EXIST %devroot%\llvm-project set /p buildclang=Build clang - required for OpenCL (y/n):
 @if EXIST %devroot%\llvm-project echo.
-@if EXIST %devroot%\llvm-project IF /I NOT "%buildclang%"=="y" set buildconf=%buildconf% -DLLVM_ENABLE_PROJECTS="" -DLLVM_BUILD_TOOLS=OFF -DLLVM_INCLUDE_TOOLS=OFF
+@if EXIST %devroot%\llvm-project IF /I NOT "%buildclang%"=="y" set buildconf=%buildconf% -DLLVM_ENABLE_PROJECTS="" -DLLVM_BUILD_TOOLS=OFF
+@if EXIST %devroot%\llvm-project IF /I NOT "%buildclang%"=="y" IF NOT %abi%==x64 set buildconf=%buildconf% -DLLVM_INCLUDE_TOOLS=OFF
 @IF /I "%buildclang%"=="y" set buildconf=%buildconf% -DLLVM_ENABLE_PROJECTS="clang;lld"
 @set buildconf=%buildconf% ..
 @if EXIST %devroot%\llvm-project set buildconf=%buildconf%/llvm
@@ -94,6 +95,8 @@
 @echo.
 @if /I NOT "%ninja%"=="y" cmake --build . -j %throttle% --config Release --target install
 @if /I "%ninja%"=="y" ninja -j %throttle% install
+@if /I "%ninja%"=="y" IF /I NOT "%buildclang%"=="y" IF %abi%==x64 ninja -j %throttle% llvm-config
+@if /I "%ninja%"=="y" IF /I NOT "%buildclang%"=="y" IF %abi%==x64 copy .\bin\llvm-config.exe ..\..\llvm\%abi%\bin\
 
 :skipllvm
 @echo.
