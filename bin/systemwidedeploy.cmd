@@ -111,6 +111,11 @@
 @IF NOT "%1"=="" GOTO exit
 
 :instglon12
+@IF NOT EXIST "%mesaloc%\x64\openglon12.dll" IF NOT EXIST "%mesaloc%\x86\openglon12.dll" echo Microsoft OpenGL over D3D12 driver is not available in this release package.
+@IF NOT EXIST "%mesaloc%\x64\openglon12.dll" IF NOT EXIST "%mesaloc%\x86\openglon12.dll" echo.
+@IF NOT EXIST "%mesaloc%\x64\openglon12.dll" IF NOT EXIST "%mesaloc%\x86\openglon12.dll" IF "%1"=="" pause
+@IF NOT EXIST "%mesaloc%\x64\openglon12.dll" IF NOT EXIST "%mesaloc%\x86\openglon12.dll" IF "%1"=="" GOTO deploy
+@IF NOT EXIST "%mesaloc%\x64\openglon12.dll" IF NOT EXIST "%mesaloc%\x86\openglon12.dll" IF NOT "%1"=="" GOTO exit
 @IF /I %PROCESSOR_ARCHITECTURE%==X86 copy "%mesaloc%\x86\openglon12.dll" "%windir%\System32"
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 copy "%mesaloc%\x86\openglon12.dll" "%windir%\SysWOW64"
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 copy "%mesaloc%\x64\openglon12.dll" "%windir%\System32"
@@ -234,9 +239,13 @@
 :uninstall
 @IF "%1"=="" set keepdxil=y
 @IF "%1"=="" set /p keepdxil=Do you want to keep DirectX IL for redistribution (y/n, default - y):
+@IF "%1"=="" echo.
 @IF NOT "%1"=="" set keepdxil=n
+@IF NOT EXIST "%windir%\System32\mesadrv.dll" IF NOT EXIST "%windir%\System32\openglon12.dll" GOTO uninstp2
 @REG DELETE "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\OpenGLDrivers\MSOGL" /f
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 REG DELETE "HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Windows NT\CurrentVersion\OpenGLDrivers\MSOGL" /f
+
+:uninstp2
 @IF EXIST "%windir%\System32\mesadrv.dll" del "%windir%\System32\mesadrv.dll"
 @IF EXIST "%windir%\System32\libglapi.dll" del "%windir%\System32\libglapi.dll"
 @IF /I "%keepdxil%"=="n" IF EXIST "%windir%\System32\dxil.dll" del "%windir%\System32\dxil.dll"

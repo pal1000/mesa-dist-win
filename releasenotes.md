@@ -1,6 +1,7 @@
 # Next release
 ### Deployment
-- Add support for GLonD3D12 standalone driver in system wide deployment tool.
+- Add support for GLonD3D12 standalone driver in system wide deployment tool;
+- Avoid potential errors during uninstall in system-wide deployment tool.
 ### Documentation
 -  README: Add known issues section and drop obsolete info.
 ### Build script
