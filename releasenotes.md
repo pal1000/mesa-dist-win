@@ -5,6 +5,8 @@
 -  README: Add known issues section and drop obsolete info.
 ### Build script
 - Restore x64 llvm-config tool build as it's needed during build environment info dump.
+### Debug tools
+- MSYS2: Drop clang from setup command and break between packages install and cache clearing.
 # 21.0.1
 - Updated Mesa3D to [21.0.1](https://docs.mesa3d.org/relnotes/21.0.1.html).
 ### Build script

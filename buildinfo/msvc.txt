@@ -3,10 +3,10 @@ Build environment
 Windows 10.0.19042
 Ressource Hacker 5.1.8.360
 7-Zip 21.01 ultra compression
-Git 2.31.0.1
-Visual Studio Community 2019 v16.9.2
+Git 2.31.1.1
+Visual Studio Community 2019 v16.9.3
 Windows SDK 10.0.19041.0
-Python 3.9.2
+Python 3.9.4
 
 Python packages
 ---------------
