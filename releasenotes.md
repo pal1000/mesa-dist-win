@@ -1,9 +1,12 @@
-# Next release
+# 21.0.2
+- Updated Mesa3D to [21.0.2](https://docs.mesa3d.org/relnotes/21.0.2.html).
 ### Deployment
 - Add support for GLonD3D12 standalone driver in system wide deployment tool;
 - Avoid potential errors during uninstall in system-wide deployment tool.
-### Documentation
--  README: Add known issues section and drop obsolete info.
+### End-user documentation
+- Add known issues section;
+- Drop obsolete info;
+- Expand description of Mesa3D drivers available on Windows. See [#55](https://github.com/pal1000/mesa-dist-win/issues/55) and [#59](https://github.com/pal1000/mesa-dist-win/issues/59) for support tickets hinting that there is not enough info in documentation.
 ### Build script
 - Restore x64 llvm-config tool build as it's needed during build environment info dump.
 ### Debug tools
