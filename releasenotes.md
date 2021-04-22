@@ -1,4 +1,5 @@
-# Next release
+# 21.0.3
+- Updated Mesa3D to [21.0.3](https://docs.mesa3d.org/relnotes/21.0.3.html).
 ### End-user documentation
 - Make it clear that `libglapi.dll` is required by all OpenGL/GLES drivers when present in release package.
 ### Debugging
