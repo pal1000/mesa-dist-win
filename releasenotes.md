@@ -2,7 +2,7 @@
 ### End-user documentation
 - Make it clear that `libglapi.dll` is required by all OpenGL/GLES drivers when present in release package.
 ### Debugging
-- Implemented list and revert commands in patch tester.
+- Implemented list, git and current folder showing commands in patch tester.
 # 21.0.2
 - Updated Mesa3D to [21.0.2](https://docs.mesa3d.org/relnotes/21.0.2.html).
 ### Deployment
