@@ -1,3 +1,6 @@
+# Next release
+### Build sript
+- LLVM: Show build configuration command before wiping existing build.
 # 21.0.3
 - Updated Mesa3D to [21.0.3](https://docs.mesa3d.org/relnotes/21.0.3.html).
 ### End-user documentation

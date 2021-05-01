@@ -45,16 +45,6 @@
 @IF %disableootpatch%==1 IF EXIST %msysloc%\usr\bin\patch.exe %msysloc%\usr\bin\bash --login -c "cd $(/usr/bin/cygpath -m ${msyspatchdir});patch -Np1 --no-backup-if-mismatch -R -r - -i $(/usr/bin/cygpath -m ${devroot})/${projectname}/patches/llvm-vs-16_7.patch"
 @IF %disableootpatch%==1 if EXIST %msysloc%\usr\bin\patch.exe echo.
 
-@rem Always clean build
-@if NOT EXIST %devroot%\llvm-project cd %devroot%\llvm
-@if EXIST %devroot%\llvm-project cd %devroot%\llvm-project
-@echo Cleanning LLVM build. Please wait...
-@echo.
-@if EXIST %devroot%\llvm\%abi% RD /S /Q %devroot%\llvm\%abi%
-@if EXIST buildsys-%abi% RD /S /Q buildsys-%abi%
-@md buildsys-%abi%
-@cd buildsys-%abi%
-
 @rem Ask for Ninja use if exists. Load it if opted for it.
 @set ninja=n
 @if NOT %ninjastate%==0 set /p ninja=Use Ninja build system instead of MsBuild (y/n); less storage device strain, faster and more efficient build:
@@ -79,6 +69,22 @@
 @IF /I "%buildclang%"=="y" set buildconf=%buildconf% -DLLVM_ENABLE_PROJECTS="clang;lld"
 @set buildconf=%buildconf% ..
 @if EXIST %devroot%\llvm-project set buildconf=%buildconf%/llvm
+@echo LLVM build configuration command^: %buildconf%
+@echo.
+
+@rem Always clean build
+@if NOT EXIST %devroot%\llvm-project cd %devroot%\llvm
+@if EXIST %devroot%\llvm-project cd %devroot%\llvm-project
+@pause
+@echo.
+@echo Cleanning LLVM build. Please wait...
+@echo.
+@if EXIST %devroot%\llvm\%abi% RD /S /Q %devroot%\llvm\%abi%
+@if EXIST buildsys-%abi% RD /S /Q buildsys-%abi%
+@md buildsys-%abi%
+@cd buildsys-%abi%
+@pause
+@echo.
 
 @rem Load Visual Studio environment. Can only be loaded in the background when using MsBuild.
 @if /I "%ninja%"=="y" call %vsenv% %vsabi%
@@ -87,8 +93,6 @@
 @if /I "%ninja%"=="y" echo.
 
 @rem Configure and execute the build with the configuration made above.
-@echo LLVM build configuration command^: %buildconf%
-@echo.
 @%buildconf%
 @echo.
 @pause
