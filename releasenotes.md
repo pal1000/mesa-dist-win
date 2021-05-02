@@ -1,6 +1,7 @@
 # Next release
 ### Build sript
-- LLVM: Show build configuration command before wiping existing build.
+- LLVM: Show build configuration command before wiping existing build;
+- LLVM: Build clang tools with clang and lld - fixes eb27094.
 # 21.0.3
 - Updated Mesa3D to [21.0.3](https://docs.mesa3d.org/relnotes/21.0.3.html).
 ### End-user documentation

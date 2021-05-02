@@ -66,7 +66,7 @@
 @if EXIST %devroot%\llvm-project echo.
 @if EXIST %devroot%\llvm-project IF /I NOT "%buildclang%"=="y" set buildconf=%buildconf% -DLLVM_ENABLE_PROJECTS="" -DLLVM_BUILD_TOOLS=OFF
 @if EXIST %devroot%\llvm-project IF /I NOT "%buildclang%"=="y" IF NOT %abi%==x64 set buildconf=%buildconf% -DLLVM_INCLUDE_TOOLS=OFF
-@IF /I "%buildclang%"=="y" set buildconf=%buildconf% -DLLVM_ENABLE_PROJECTS="clang;lld"
+@IF /I "%buildclang%"=="y" set buildconf=%buildconf% -DLLVM_ENABLE_PROJECTS="clang;lld" -DCLANG_BUILD_TOOLS=ON
 @set buildconf=%buildconf% ..
 @if EXIST %devroot%\llvm-project set buildconf=%buildconf%/llvm
 @echo LLVM build configuration command^: %buildconf%
