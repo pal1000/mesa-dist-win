@@ -64,7 +64,7 @@
 @set msyspatchdir=%devroot%\mesa
 @rem Enable S3TC texture cache
 @call %devroot%\%projectname%\buildscript\modules\applypatch.cmd s3tc
-@rem Fix swrAVX512 build
+@rem Fix swrAVX512 build with MSVC
 @IF %intmesaver% LSS 20000 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swravx512
 @IF %intmesaver% GEQ 20000 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swravx512-post-static-link
 @rem Make it possible to build both osmesa gallium and swrast at the same time with Meson. Applies to Mesa 20.3 and older.
@@ -78,6 +78,8 @@
 @rem Get swr building with Mingw
 @IF %intmesaver% LSS 20158 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swr-mingw
 @IF %intmesaver% GEQ 20200 IF %intmesaver% LSS 20250 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swr-mingw
+@rem Fix lavapipe build with MinGW
+@IF %intmesaver% GEQ 21100 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd lavapipe-mingw
 
 :configmesabuild
 @rem Configure Mesa build.
@@ -145,8 +147,8 @@
 @if /I "%swrdrv%"=="y" IF %disableootpatch%==1 IF NOT %toolchain%==msvc set buildconf=%buildconf% -Dswr-arches=avx,avx2,skx,knl
 
 @set lavapipe=n
-@if /I NOT "%llvmless%"=="y" IF %intmesaver% GEQ 21100 set /p lavapipe=Build Mesa3D Vulkan software renderer (y/n):
-@if /I NOT "%llvmless%"=="y" IF %intmesaver% GEQ 21100 echo.
+@if /I NOT "%llvmless%"=="y" IF %intmesaver% GEQ 21100 IF %disableootpatch%==0 set /p lavapipe=Build Mesa3D Vulkan software renderer (y/n):
+@if /I NOT "%llvmless%"=="y" IF %intmesaver% GEQ 21100 IF %disableootpatch%==0 echo.
 @if /I "%lavapipe%"=="y" set buildconf=%buildconf% -Dvulkan-drivers=swrast
 
 @set spirvtodxil=n
