@@ -29,7 +29,7 @@
 @rem Getting LLVM monorepo if LLVM source is missing
 @if NOT EXIST %devroot%\llvm\cmake if NOT EXIST %devroot%\llvm-project (
 @echo Getting LLVM source code...
-@git clone https://github.com/llvm/llvm-project.git --branch=llvmorg-11.1.0 --depth=1 %devroot%\llvm-project
+@git clone https://github.com/llvm/llvm-project.git --branch=llvmorg-12.0.0 --depth=1 %devroot%\llvm-project
 @echo.
 )
 
@@ -98,6 +98,8 @@
 @pause
 @echo.
 @if /I NOT "%ninja%"=="y" cmake --build . -j %throttle% --config Release --target install
+@if /I NOT "%ninja%"=="y" IF /I NOT "%buildclang%"=="y" IF %abi%==x64 cmake --build . -j %throttle% --config Release --target llvm-config
+@if /I NOT "%ninja%"=="y" IF /I NOT "%buildclang%"=="y" IF %abi%==x64 copy .\Release\bin\llvm-config.exe ..\..\llvm\%abi%\bin\
 @if /I "%ninja%"=="y" ninja -j %throttle% install
 @if /I "%ninja%"=="y" IF /I NOT "%buildclang%"=="y" IF %abi%==x64 ninja -j %throttle% llvm-config
 @if /I "%ninja%"=="y" IF /I NOT "%buildclang%"=="y" IF %abi%==x64 copy .\bin\llvm-config.exe ..\..\llvm\%abi%\bin\
