@@ -78,8 +78,12 @@
 @rem Get swr building with Mingw
 @IF %intmesaver% LSS 20158 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swr-mingw
 @IF %intmesaver% GEQ 20200 IF %intmesaver% LSS 20250 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swr-mingw
-@rem Fix lavapipe build with MinGW
-@IF %intmesaver% GEQ 21100 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd lavapipe-mingw
+@rem Fix lavapipe build with MinGW static CRT
+@IF %intmesaver% GEQ 21100 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd lavapipe-mingw-buildfix-static-CRT
+@rem Fix lavapipe crash when built with MinGW
+@IF %intmesaver:~0,3% EQU 211 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd lavapipe-mingw-crashfix
+@rem Fix lavapipe build with MSVC 32-bit
+@IF %intmesaver% GEQ 21100 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd lavapipe-32-bit-msvc-buildfix
 
 :configmesabuild
 @rem Configure Mesa build.

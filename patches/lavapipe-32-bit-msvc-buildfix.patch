@@ -1,0 +1,33 @@
+diff --git a/src/vulkan/util/vk_entrypoints_gen.py b/src/vulkan/util/vk_entrypoints_gen.py
+index 6e4cdc9006527e08f977c5952f31c608fb1b974c..a663d10e1143c7391621ca40bf491a41bc3e4893 100644
+--- a/src/vulkan/util/vk_entrypoints_gen.py
++++ b/src/vulkan/util/vk_entrypoints_gen.py
+@@ -109,6 +109,10 @@ TEMPLATE_C = Template(COPYRIGHT + """
+ /* Weak aliases for all potential implementations. These will resolve to
+  * NULL if they're not defined, which lets the resolve_entrypoint() function
+  * either pick the correct entry point.
++ *
++ * MSVC uses different decorated names for 32-bit versus 64-bit. Declare
++ * all argument sizes for 32-bit because computing the actual size would be
++ * difficult.
+  */
+ 
+ <%def name="entrypoint_table(type, entrypoints, prefixes)">
+@@ -119,10 +123,14 @@ TEMPLATE_C = Template(COPYRIGHT + """
+     % endif
+     % for p in prefixes:
+ #ifdef _MSC_VER
+-    #pragma comment(linker, "/alternatename:${p}_${e.name}_Weak=${p}_${e.name}_Null")
+-    #pragma comment(linker, "/alternatename:${p}_${e.name}=${p}_${e.name}_Weak")
+     ${e.return_type} (*${p}_${e.name}_Null)(${e.decl_params()}) = 0;
+-    ${e.return_type} ${p}_${e.name}_Weak(${e.decl_params()});
++#ifdef _M_IX86
++      % for args_size in [4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48, 60, 104]:
++    #pragma comment(linker, "/alternatename:_${p}_${e.name}@${args_size}=_${p}_${e.name}_Null")
++      % endfor
++#else
++    #pragma comment(linker, "/alternatename:${p}_${e.name}=${p}_${e.name}_Null")
++#endif
+ #else
+     VKAPI_ATTR ${e.return_type} VKAPI_CALL ${p}_${e.name}(${e.decl_params()}) __attribute__ ((weak));
+ #endif
