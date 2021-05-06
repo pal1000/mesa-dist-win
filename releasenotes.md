@@ -2,7 +2,8 @@
 ### Build sript
 - LLVM: Show build configuration command before wiping existing build;
 - LLVM: Build clang tools with clang and lld - fixes eb27094;
-- LLVM: Restore config tool build for x64 when using VS backend - fixes e155b4c.
+- LLVM: Restore config tool build for x64 when using VS backend - fixes e155b4c;
+- Mesa3D: Retry build logic improvements.
 ### Out of tree patches
 - Add lavapipe build fix for MinGW static CRT - [MR 10305](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/10305);
 - Add lavapipe crash fix for MinGW - [MR 10379](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/10379);

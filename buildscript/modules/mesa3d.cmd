@@ -226,17 +226,14 @@
 @set "ERRORLEVEL="
 @CMD /C EXIT 0
 @%buildcmd%
-@if NOT "%ERRORLEVEL%"=="0" set retrymesabld=1
+@if NOT "%ERRORLEVEL%"=="0" if %retrymesabld% EQU 0 set retrymesabld=1
 @echo.
 
 :retrymesabld
-@if /I "%useninja%"=="y" if "%retrymesabld%"=="" (
-@set /p retrymesabld=Number of Mesa3D build retries ^(0^=end, 1^=ask again, ^>1 automatically retry n-1 times^)^:
-@echo.
-)
 @if /I "%useninja%"=="y" if "%retrymesabld%"=="1" (
 @set /p retrymesabld=Number of Mesa3D build retries ^(0^=end, 1^=ask again, ^>1 automatically retry n-1 times^)^:
 @echo.
+@if "%retrymesabld%"=="1" GOTO retrymesabld
 )
 @if /I "%useninja%"=="y" if %retrymesabld% GTR 1 (
 @set /a retrymesabld-=1
