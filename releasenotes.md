@@ -7,7 +7,9 @@
 ### Out of tree patches
 - Add lavapipe build fix for MinGW static CRT - [MR 10305](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/10305);
 - Add lavapipe crash fix for MinGW - [MR 10379](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/10379);
-- Add lavapipe build fix for MSVC x86 32-bit - [MR 10573](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/10573)
+- Add lavapipe build fix for MSVC x86 32-bit - [MR 10573](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/10573).
+### Documentation
+- Document lavapipe support in 21.1.0 and beyond.
 # 21.0.3
 - Updated Mesa3D to [21.0.3](https://docs.mesa3d.org/relnotes/21.0.3.html).
 ### End-user documentation
