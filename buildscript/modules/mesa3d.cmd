@@ -78,8 +78,6 @@
 @rem Get swr building with Mingw
 @IF %intmesaver% LSS 20158 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swr-mingw
 @IF %intmesaver% GEQ 20200 IF %intmesaver% LSS 20250 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swr-mingw
-@rem Fix lavapipe build with MinGW static CRT
-@IF %intmesaver% GEQ 21100 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd lavapipe-mingw-buildfix-static-CRT
 @rem Fix lavapipe crash when built with MinGW
 @IF %intmesaver:~0,3% EQU 211 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd lavapipe-mingw-crashfix
 @rem Fix lavapipe build with MSVC 32-bit
@@ -94,7 +92,8 @@
 @IF /I NOT "%cleanmesabld%"=="y" if EXIST build\%abi% set buildconf=%mesonloc% configure
 @set buildconf=%buildconf% build/%abi% --buildtype=release -Db_ndebug=true --prefix=%devroot:\=/%/%projectname%/dist/%abi%
 @IF %toolchain%==msvc set buildconf=%buildconf% -Db_vscrt=mt -Dzlib:default_library=static
-@IF NOT %toolchain%==msvc set buildconf=%buildconf% -Dc_args='-march=core2 -pipe' -Dcpp_args='-march=core2 -pipe' -Dc_link_args='-static -s' -Dcpp_link_args='-static -s'
+@IF NOT %toolchain%==msvc set buildconf=%buildconf% -Dc_args='-march=core2 -pipe' -Dcpp_args='-march=core2 -pipe'
+@IF NOT %toolchain%==msvc set LDFLAGS=-static -s
 @IF NOT %toolchain%==msvc IF %intmesaver% GTR 20000 set buildconf=%buildconf% -Dzstd=%mesonbooltrue%
 @set buildcmd=msbuild /p^:Configuration=release,Platform=Win32 mesa.sln /m^:%throttle%
 @IF %abi%==x64 set buildcmd=msbuild /p^:Configuration=release,Platform=x64 mesa.sln /m^:%throttle%
@@ -154,6 +153,7 @@
 @if /I NOT "%llvmless%"=="y" IF %intmesaver% GEQ 21100 IF %disableootpatch%==0 set /p lavapipe=Build Mesa3D Vulkan software renderer (y/n):
 @if /I NOT "%llvmless%"=="y" IF %intmesaver% GEQ 21100 IF %disableootpatch%==0 echo.
 @if /I "%lavapipe%"=="y" set buildconf=%buildconf% -Dvulkan-drivers=swrast
+@if /I "%lavapipe%"=="y" set LDFLAGS=%LDFLAGS% -ltre -lintl -liconv
 
 @set spirvtodxil=n
 @IF EXIST %devroot%\mesa\subprojects\DirectX-Headers.wrap IF %intmesaver% GEQ 21000 IF %toolchain%==msvc set /p spirvtodxil=Do you want to build SPIR-V to DXIL tool (y/n):
@@ -192,7 +192,7 @@
 @rem IF %intmesaver% GEQ 20000 if /I NOT "%llvmless%"=="y" IF %toolchain%==msvc echo.
 @IF /I "%opencl%"=="y" set buildconf=%buildconf% -Dgallium-opencl=standalone
 
-@if NOT %toolchain%==msvc set buildconf=%buildconf%"
+@if NOT %toolchain%==msvc set buildconf=%buildconf% -Dc_link_args='%LDFLAGS%' -Dcpp_link_args='%LDFLAGS%'"
 
 @rem Load MSVC specific build dependencies
 @IF %toolchain%==msvc IF %flexstate%==1 set PATH=%devroot%\flexbison\;%PATH%
@@ -213,6 +213,7 @@
 @rem Execute build configuration.
 @echo Build configuration command: %buildconf%
 @echo.
+@set LDFLAGS=
 @%buildconf%
 @echo.
 @if /I NOT "%useninja%"=="y" cd build\%abi%
