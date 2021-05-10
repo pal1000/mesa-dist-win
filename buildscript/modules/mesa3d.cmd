@@ -106,7 +106,8 @@
 @if %havellvm%==1 set /p llvmless=Build Mesa without LLVM (y/n). llvmpipe and swr drivers and high performance JIT won't be available for other drivers and libraries:
 @if %havellvm%==1 echo.
 @call %devroot%\%projectname%\buildscript\modules\mesonsubprojects.cmd
-@if /I NOT "%llvmless%"=="y" IF %llvmconfigbusted% EQU 1 set buildconf=%buildconf% --force-fallback-for=llvm
+@set buildconf=%buildconf% --force-fallback-for=zlib
+@if /I NOT "%llvmless%"=="y" IF %llvmconfigbusted% EQU 1 set buildconf=%buildconf%,llvm
 @if /I NOT "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm=%mesonbooltrue% -Dshared-llvm=%mesonboolfalse%
 @if /I NOT "%llvmless%"=="y" IF %toolchain%==msvc set buildconf=%buildconf% --cmake-prefix-path=%devroot:\=/%/llvm/%abi%
 @if /I NOT "%llvmless%"=="y" IF %toolchain%==msvc IF %cmakestate% EQU 1 SET PATH=%devroot%\cmake\bin\;%PATH%
