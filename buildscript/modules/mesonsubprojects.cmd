@@ -1,6 +1,6 @@
 @setlocal
 
-:llvmwrap
+@rem Find LLVM dependency
 @set RTTI=false
 @set llvmconfigbusted=0
 @IF %toolchain%==msvc if /I NOT "%llvmless%"=="y" SET RTTI=true
@@ -9,7 +9,7 @@ IF /I "%%a"=="YES" SET RTTI=true
 IF /I NOT "%%a"=="YES" IF /I NOT "%%a"=="NO" set llvmconfigbusted=1
 )
 @IF %llvmconfigbusted% EQU 0 IF EXIST "%devroot%\mesa\subprojects\llvm\" RD /S /Q %devroot%\mesa\subprojects\llvm
-@IF %llvmconfigbusted% EQU 0 GOTO zlibwrap
+@IF %llvmconfigbusted% EQU 0 GOTO compressionwrap
 
 @rem llvmlibs must match the output of 'llvm-config --link-static --libnames engine coroutines' stripped of ending newline.
 @rem Current llvmlibs is valid for LLVM 11.* series.
@@ -47,8 +47,10 @@ echo irbuilder_h ^= files^(llvmloc + '/include/llvm/IR/IRBuilder.h'^)
 @echo.
 )
 
-:zlibwrap
+:compressionwrap
+@rem MSVC
 @IF %toolchain%==msvc IF EXIST "%devroot%\mesa\subprojects\zlib\" RD /S /Q %devroot%\mesa\subprojects\zlib
+@IF %toolchain%==msvc IF EXIST "%devroot%\mesa\subprojects\libzstd\" RD /S /Q %devroot%\mesa\subprojects\libzstd
 @CMD /C EXIT 0
 @IF %toolchain%==msvc FC /B %devroot%\%projectname%\buildscript\mesonsubprojects\zlib.wrap %devroot%\mesa\subprojects\zlib.wrap>NUL 2>&1
 @if NOT "%ERRORLEVEL%"=="0" (
@@ -57,38 +59,53 @@ echo irbuilder_h ^= files^(llvmloc + '/include/llvm/IR/IRBuilder.h'^)
 @echo.
 )
 @IF %toolchain%==msvc GOTO dxheaderswrap
+
+@rem MinGW
+@rem Override zlib dependency
 @for /d %%a in ("%devroot%\mesa\subprojects\zlib-*") do @RD /S /Q "%%~a"
 @IF EXIST %devroot%\mesa\subprojects\zlib.wrap del %devroot%\mesa\subprojects\zlib.wrap
 @FOR /F USEBACKQ^ tokens^=5^ delims^=-^  %%a IN (`%msysloc%\usr\bin\bash --login -c "/usr/bin/pacman -Q ${MINGW_PACKAGE_PREFIX}-zlib"`) DO @SET zlibver=%%~a
 @IF NOT EXIST "%devroot%\mesa\subprojects\zlib\" MD %devroot%\mesa\subprojects\zlib
 @(
-echo project^('zlib', ['cpp']^)
+echo project^('zlib', ['cpp'], version ^: '%zlibver%'^)
 echo.
-echo cpp ^= meson.get_compiler^('cpp'^)
-echo.
-echo _deps ^= []
-echo zlibloc ^= run_command^('%devroot:\=/%/%projectname%/buildscript/modules/msysmingwruntimeloc.cmd'^).stdout^(^).strip^(^)
-echo _search ^= zlibloc + '/lib'
-echo foreach d ^: ['libz']
-echo   _deps ^+^= cpp.find_library^(d, dirs ^: _search, static ^: true^)
-echo endforeach
+echo _deps ^= meson.get_compiler^('cpp'^).find_library^('libz', static ^: true^)
 echo.
 echo zlib_dep ^= declare_dependency^(
-echo   include_directories ^: include_directories^(zlibloc + '/include'^),
 echo   dependencies ^: _deps,
-echo   version ^: '%zlibver%',
+echo   version ^: '%zlibver%'
 echo ^)
 )>%devroot%\%projectname%\buildscript\mesonsubprojects\zlib-meson.build
 @CMD /C EXIT 0
 @FC /B %devroot%\%projectname%\buildscript\mesonsubprojects\zlib-meson.build %devroot%\mesa\subprojects\zlib\meson.build>NUL 2>&1
 @if NOT "%ERRORLEVEL%"=="0" (
-@echo Using binary wrap to find zlib...
+@echo Overriding zlib dependency...
 @copy /Y %devroot%\%projectname%\buildscript\mesonsubprojects\zlib-meson.build %devroot%\mesa\subprojects\zlib\meson.build
 @echo.
 )
 
-:zstdwrap
-@IF EXIST %msysloc%\%MSYSTEM%\lib\libzstd.dll.a del %msysloc%\%MSYSTEM%\lib\libzstd.dll.a
+@rem Override ZSTD dependency
+@FOR /F USEBACKQ^ tokens^=5^ delims^=-^  %%a IN (`%msysloc%\usr\bin\bash --login -c "/usr/bin/pacman -Q ${MINGW_PACKAGE_PREFIX}-zstd"`) DO @SET zstdver=%%~a
+@IF NOT EXIST "%devroot%\mesa\subprojects\libzstd\" MD %devroot%\mesa\subprojects\libzstd
+@(
+echo project^('libzstd', ['cpp'], version ^: '%zstdver%'^)
+echo.
+echo _deps ^= meson.get_compiler^('cpp'^).find_library^('libzstd', static ^: true^)
+echo.
+echo zstd_override ^= declare_dependency^(
+echo   dependencies ^: _deps,
+echo   version ^: '%zstdver%'
+echo ^)
+echo.
+echo meson.override_dependency^('libzstd', zstd_override^)
+)>%devroot%\%projectname%\buildscript\mesonsubprojects\zstd-meson.build
+@CMD /C EXIT 0
+@FC /B %devroot%\%projectname%\buildscript\mesonsubprojects\zstd-meson.build %devroot%\mesa\subprojects\libzstd\meson.build>NUL 2>&1
+@if NOT "%ERRORLEVEL%"=="0" (
+@echo Overriding ZSTD dependency...
+@copy /Y %devroot%\%projectname%\buildscript\mesonsubprojects\zstd-meson.build %devroot%\mesa\subprojects\libzstd\meson.build
+@echo.
+)
 
 :dxheaderswrap
 @for /d %%a in ("%devroot%\mesa\subprojects\DirectX-Headers-*") do @IF EXIST "%%~a" IF %gitstate% GTR 0 (
