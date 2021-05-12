@@ -2,6 +2,8 @@
 ### Build script
 - Fix lavapipe build with MinGW static CRT without using out of tree patch;
 - MSYS2: Use Meson find_library to switch zlib and ZSTD dependencies to static linking.
+### Out of tree patches
+- Limit lavapipe crash fix for MinGW patch to 21.1 before 21.1.1 stable as patch was backported.
 # 21.1.0
 - Updated Mesa3D to [21.1.0](https://docs.mesa3d.org/relnotes/21.1.0.html).
 ### Build script
