@@ -51,36 +51,43 @@
 @if NOT %ninjastate%==0 echo.
 @if /I "%ninja%"=="y" if %ninjastate%==1 set PATH=%devroot%\ninja\;%PATH%
 
-@rem Load cmake into build environment.
-@if %cmakestate%==1 set PATH=%devroot%\cmake\bin\;%PATH%
-
-@rem Construct build configuration command.
-@set buildconf=cmake -G
-@if /I NOT "%ninja%"=="y" set buildconf=%buildconf% "Visual Studio %toolset%"
-@if %abi%==x86 if /I NOT "%ninja%"=="y" set buildconf=%buildconf% -A Win32
-@if %abi%==x64 if /I NOT "%ninja%"=="y" set buildconf=%buildconf% -A x64
-@if /I NOT "%ninja%"=="y" IF /I %PROCESSOR_ARCHITECTURE%==AMD64 set buildconf=%buildconf% -Thost=x64
-@if /I "%ninja%"=="y" set buildconf=%buildconf% "Ninja"
-@set buildconf=%buildconf% -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF -DLLVM_OPTIMIZED_TABLEGEN=TRUE -DLLVM_INCLUDE_UTILS=OFF -DLLVM_INCLUDE_RUNTIMES=OFF -DLLVM_INCLUDE_TESTS=OFF -DLLVM_INCLUDE_GO_TESTS=OFF -DLLVM_INCLUDE_EXAMPLES=OFF -DLLVM_INCLUDE_BENCHMARKS=OFF -DLLVM_BUILD_LLVM_C_DYLIB=OFF -DLLVM_ENABLE_DIA_SDK=OFF -DCMAKE_INSTALL_PREFIX=../../llvm/%abi% -DLLVM_TARGETS_TO_BUILD=X86
-
-@rem Build AMDGPU target
+@rem AMDGPU target
 @set /p amdgpu=Build AMDGPU target - required by RADV (y/n):
 @echo.
-@IF /I "%amdgpu%"=="y" set buildconf=%buildconf%;AMDGPU
 
-@rem Clang build
+@rem Clang and LLD
 @if EXIST %devroot%\llvm-project set /p buildclang=Build clang - required for OpenCL (y/n):
 @if EXIST %devroot%\llvm-project echo.
-@if EXIST %devroot%\llvm-project IF /I NOT "%buildclang%"=="y" set buildconf=%buildconf% -DLLVM_ENABLE_PROJECTS="" -DLLVM_BUILD_TOOLS=OFF
-@if EXIST %devroot%\llvm-project IF /I NOT "%buildclang%"=="y" IF NOT %abi%==x64 set buildconf=%buildconf% -DLLVM_INCLUDE_TOOLS=OFF
-@IF /I "%buildclang%"=="y" set buildconf=%buildconf% -DLLVM_ENABLE_PROJECTS="clang;lld" -DCLANG_BUILD_TOOLS=ON
 
-@rem SPIRV-LLVM-Translator build
+@rem SPIRV-LLVM-Translator
 @set canllvmspirv=1
 @if NOT EXIST %devroot%\llvm-project set canllvmspirv=0
 @if EXIST %devroot%\llvm-project IF NOT EXIST %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator IF %gitstate% EQU 0 set canllvmspirv=0
 @IF %canllvmspirv% EQU 1 set /p buildllvmspirv=Build SPIRV LLVM Translator - required for OpenCL (y/n):
 @IF %canllvmspirv% EQU 1 echo.
+
+@rem Load cmake into build environment.
+@if %cmakestate%==1 set PATH=%devroot%\cmake\bin\;%PATH%
+
+@rem Construct build configuration command.
+@set buildconf=cmake ..
+@if EXIST %devroot%\llvm-project set buildconf=%buildconf%/llvm
+@set buildconf=%buildconf% -G
+@if /I NOT "%ninja%"=="y" set buildconf=%buildconf% "Visual Studio %toolset%"
+@if %abi%==x86 if /I NOT "%ninja%"=="y" set buildconf=%buildconf% -A Win32
+@if %abi%==x64 if /I NOT "%ninja%"=="y" set buildconf=%buildconf% -A x64
+@if /I NOT "%ninja%"=="y" IF /I %PROCESSOR_ARCHITECTURE%==AMD64 set buildconf=%buildconf% -Thost=x64
+@if /I "%ninja%"=="y" set buildconf=%buildconf%Ninja
+@set buildconf=%buildconf% -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DCMAKE_INSTALL_PREFIX="../../llvm/%abi%"
+@if EXIST %devroot%\llvm-project IF /I NOT "%buildclang%"=="y" set buildconf=%buildconf% -DLLVM_ENABLE_PROJECTS=""
+@IF /I "%buildclang%"=="y" set buildconf=%buildconf% -DLLVM_ENABLE_PROJECTS="clang;lld"
+@set buildconf=%buildconf% -DLLVM_TARGETS_TO_BUILD=
+@IF /I "%amdgpu%"=="y" set buildconf=%buildconf%AMDGPU;
+@set buildconf=%buildconf%X86 -DLLVM_OPTIMIZED_TABLEGEN=TRUE -DLLVM_INCLUDE_UTILS=OFF -DLLVM_INCLUDE_RUNTIMES=OFF -DLLVM_INCLUDE_TESTS=OFF -DLLVM_INCLUDE_EXAMPLES=OFF -DLLVM_INCLUDE_GO_TESTS=OFF -DLLVM_INCLUDE_BENCHMARKS=OFF -DLLVM_BUILD_LLVM_C_DYLIB=OFF -DLLVM_ENABLE_DIA_SDK=OFF
+@if EXIST %devroot%\llvm-project IF /I NOT "%buildclang%"=="y" set buildconf=%buildconf% -DLLVM_BUILD_TOOLS=OFF
+@if EXIST %devroot%\llvm-project IF /I NOT "%buildclang%"=="y" IF NOT %abi%==x64 set buildconf=%buildconf% -DLLVM_INCLUDE_TOOLS=OFF
+@IF /I "%buildclang%"=="y" set buildconf=%buildconf% -DCLANG_BUILD_TOOLS=ON
+
 @if /I "%buildllvmspirv%"=="y" set buildconf=%buildconf% -DLLVM_SPIRV_INCLUDE_TESTS=OFF
 @if /I "%buildllvmspirv%"=="y" IF NOT EXIST %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator (
 @git clone -b llvm_release_120 https://github.com/KhronosGroup/SPIRV-LLVM-Translator %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator
@@ -93,8 +100,8 @@
 )
 @if /I NOT "%buildllvmspirv%"=="y" IF EXIST %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator RD /S /Q %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator
 
-@set buildconf=%buildconf% ..
-@if EXIST %devroot%\llvm-project set buildconf=%buildconf%/llvm
+@set buildconf=%buildconf% -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF
+
 @echo LLVM build configuration command^: %buildconf%
 @echo.
 

@@ -3,7 +3,8 @@
 - Fix lavapipe build with MinGW static CRT without using out of tree patch;
 - MSYS2: Use Meson find_library to switch zlib and ZSTD dependencies to static linking;
 - LLVM: Add SPIRV LLVM Translator build required by CLonD3D12;
-- LLVM: Add AMDGPU target required by RADV.
+- LLVM: Add AMDGPU target required by RADV;
+- LLVM: Refactor build configuration command to match Mesa3D CI as much as possible.
 ### Out of tree patches
 - Limit lavapipe crash fix for MinGW patch to 21.1 before 21.1.1 stable as patch was backported.
 # 21.1.0
