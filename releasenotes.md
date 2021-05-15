@@ -7,6 +7,8 @@
 - LLVM: Refactor build configuration command to match Mesa3D CI as much as possible.
 ### Out of tree patches
 - Limit lavapipe crash fix for MinGW patch to 21.1 before 21.1.1 stable as patch was backported.
+### Build environment info dumper
+- Always use x64 config tool to find LLVM, fixes e2587645.
 # 21.1.0
 - Updated Mesa3D to [21.1.0](https://docs.mesa3d.org/relnotes/21.1.0.html).
 ### Build script
