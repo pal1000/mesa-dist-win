@@ -4,7 +4,8 @@
 - MSYS2: Use Meson find_library to switch zlib and ZSTD dependencies to static linking;
 - LLVM: Add SPIRV LLVM Translator build required by CLonD3D12;
 - LLVM: Add AMDGPU target required by RADV;
-- LLVM: Refactor build configuration command to match Mesa3D CI as much as possible.
+- LLVM: Refactor build configuration command to match Mesa3D CI as much as possible;
+- Mesa3D source fetch: Adjust default branch to main.
 ### Out of tree patches
 - Limit lavapipe patches to 21.1 before 21.1.1 stable as both got backported.
 ### Build environment info dumper

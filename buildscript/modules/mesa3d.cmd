@@ -17,14 +17,14 @@
 @if NOT EXIST mesa set /p buildmesa=Download mesa code and build (y/n):
 @if NOT EXIST mesa echo.
 @if NOT EXIST mesa if /i NOT "%buildmesa%"=="y" GOTO skipmesa
-@if NOT EXIST mesa set branch=master
-@if NOT EXIST mesa set /p branch=Enter Mesa source code branch name - defaults to master:
+@if NOT EXIST mesa set branch=main
+@if NOT EXIST mesa set /p branch=Enter Mesa source code branch name - defaults to main:
 @if NOT EXIST mesa echo.
 @if NOT EXIST mesa (
 @git clone --recurse-submodules https://gitlab.freedesktop.org/mesa/mesa.git mesa
 @echo.
 @cd mesa
-@IF NOT "%branch%"=="master" git checkout %branch%
+@IF NOT "%branch%"=="main" git checkout %branch%
 @echo.
 @cd ..
 )
