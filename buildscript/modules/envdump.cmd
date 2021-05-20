@@ -31,15 +31,20 @@ set rhver=%%a
 @IF %rhstate% GTR 0 IF %toolchain%==msvc echo Ressource Hacker %rhver:,=.%>>%devroot%\%projectname%\buildinfo\msvc.txt
 
 @rem Dump 7-Zip version and compression level
-@IF EXIST %devroot%\%projectname%\buildscript\assets\sevenzip.txt set /p sevenzipver=<%devroot%\%projectname%\buildscript\assets\sevenzip.txt
-@IF NOT %toolchain%==msvc IF defined sevenzipver echo 7-Zip %sevenzipver% ultra compression>>%devroot%\%projectname%\buildinfo\mingw.txt
-@IF %toolchain%==msvc IF defined sevenzipver echo 7-Zip %sevenzipver% ultra compression>>%devroot%\%projectname%\buildinfo\msvc.txt
+@set sevenzipver=21.02
+@IF NOT %toolchain%==msvc echo 7-Zip %sevenzipver% ultra compression>>%devroot%\%projectname%\buildinfo\mingw.txt
+@IF %toolchain%==msvc echo 7-Zip %sevenzipver% ultra compression>>%devroot%\%projectname%\buildinfo\msvc.txt
 
 @rem Get Git version
 @IF NOT %gitstate%==0 FOR /F "USEBACKQ tokens=3" %%a IN (`git --version`) do @set gitver=%%a
 @IF NOT %gitstate%==0 set "gitver=%gitver:.windows=%"
 @IF defined gitver IF NOT %toolchain%==msvc echo Git %gitver%>>%devroot%\%projectname%\buildinfo\mingw.txt
 @IF defined gitver IF %toolchain%==msvc echo Git %gitver%>>%devroot%\%projectname%\buildinfo\msvc.txt
+
+@rem Get Vulkan SDK version
+@set vksdkstd=1
+@IF NOT defined VULKAN_SDK IF NOT defined VK_SDK_PATH set vksdkstd=0
+@IF %vksdkstd% EQU 1 echo Vulkan SDK 1.2.176.1 (LunarG)>>%devroot%\%projectname%\buildinfo\mingw.txt
 
 @rem Dump MSYS2 environment
 @IF NOT %toolchain%==msvc echo.>>%devroot%\%projectname%\buildinfo\mingw.txt

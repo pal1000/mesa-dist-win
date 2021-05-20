@@ -9,7 +9,8 @@
 ### Out of tree patches
 - Limit lavapipe patches to 21.1 before 21.1.1 stable as both got backported.
 ### Build environment info dumper
-- Always use x64 config tool to find LLVM, fixes e2587645.
+- Always use x64 config tool to find LLVM, fixes e2587645;
+- Add manually updated Vulkan SDK version.
 # 21.1.0
 - Updated Mesa3D to [21.1.0](https://docs.mesa3d.org/relnotes/21.1.0.html).
 ### Build script
