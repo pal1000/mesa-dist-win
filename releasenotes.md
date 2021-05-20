@@ -1,4 +1,5 @@
-# Next release
+# 21.1.1
+- Updated Mesa3D to [21.1.1](https://docs.mesa3d.org/relnotes/21.1.1.html).
 ### Build script
 - Fix lavapipe build with MinGW static CRT without using out of tree patch;
 - MSYS2: Use Meson find_library to switch zlib and ZSTD dependencies to static linking;
