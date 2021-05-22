@@ -44,7 +44,7 @@ set rhver=%%a
 @rem Get Vulkan SDK version
 @set vksdkstd=1
 @IF NOT defined VULKAN_SDK IF NOT defined VK_SDK_PATH set vksdkstd=0
-@IF %vksdkstd% EQU 1 IF NOT %toolchain%==msvc echo Vulkan SDK 1.2.176.1 (LunarG)>>%devroot%\%projectname%\buildinfo\mingw.txt
+@IF %vksdkstd% EQU 1 IF NOT %toolchain%==msvc echo LunarG Vulkan SDK 1.2.176.1>>%devroot%\%projectname%\buildinfo\mingw.txt
 
 @rem Dump MSYS2 environment
 @IF NOT %toolchain%==msvc echo.>>%devroot%\%projectname%\buildinfo\mingw.txt

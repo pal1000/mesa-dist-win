@@ -4,7 +4,7 @@ Windows 10.0.19042
 Ressource Hacker 5.1.8.360
 7-Zip 21.02 ultra compression
 Git 2.31.1.1
-Vulkan SDK 1.2.176.1 (LunarG)
+LunarG Vulkan SDK 1.2.176.1
 
 MSYS2 environment
 -----------------
@@ -113,7 +113,7 @@ mingw-w64-i686-pkgconf 1.7.4-2
 mingw-w64-i686-python 3.8.9-2
 mingw-w64-i686-python-beaker 1.11.0-1
 mingw-w64-i686-python-mako 1.1.4-2
-mingw-w64-i686-python-markupsafe 2.0.0-1
+mingw-w64-i686-python-markupsafe 2.0.1-1
 mingw-w64-i686-readline 8.0.004-2
 mingw-w64-i686-spirv-headers 1.5.4.2-1
 mingw-w64-i686-spirv-tools 2020.6-2
@@ -162,7 +162,7 @@ mingw-w64-x86_64-pkgconf 1.7.4-2
 mingw-w64-x86_64-python 3.8.9-2
 mingw-w64-x86_64-python-beaker 1.11.0-1
 mingw-w64-x86_64-python-mako 1.1.4-2
-mingw-w64-x86_64-python-markupsafe 2.0.0-1
+mingw-w64-x86_64-python-markupsafe 2.0.1-1
 mingw-w64-x86_64-readline 8.0.004-2
 mingw-w64-x86_64-spirv-headers 1.5.4.2-1
 mingw-w64-x86_64-spirv-tools 2020.6-2
