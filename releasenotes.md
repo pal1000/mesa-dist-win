@@ -1,3 +1,6 @@
+# Next release
+### Binary version info
+- Set revision in a single central spot.
 # 21.1.1
 - Updated Mesa3D to [21.1.1](https://docs.mesa3d.org/relnotes/21.1.1.html).
 ### Build script

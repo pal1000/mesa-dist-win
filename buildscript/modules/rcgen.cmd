@@ -8,12 +8,12 @@
 
 @set descriptionfield=%1
 @IF NOT %3==null set descriptionfield=%descriptionfield:~0,-1% (%3)"
-@set prodver=%4
+@set prodver=%4.0
 
 @(echo.
 echo 1 VERSIONINFO
-echo FILEVERSION %prodver:.=,%,0
-echo PRODUCTVERSION %prodver:.=,%,0
+echo FILEVERSION %prodver:.=,%
+echo PRODUCTVERSION %prodver:.=,%
 echo FILEOS 0x40004
 echo FILETYPE 0x0
 echo {
@@ -23,12 +23,12 @@ echo BLOCK "040904b0"
 echo {
 echo VALUE "CompanyName", %5
 echo VALUE "FileDescription", %descriptionfield%
-echo VALUE "FileVersion", "%prodver%.0"
+echo VALUE "FileVersion", "%prodver%"
 echo VALUE "InternalName", "%~n2.dll"
-echo VALUE "LegalCopyright", "Copyright (C) 2020"
+echo VALUE "LegalCopyright", "Copyright (C) 2021"
 echo VALUE "OriginalFilename", "%~n2.dll"
 echo VALUE "ProductName", "Mesa3D"
-echo VALUE "ProductVersion", "%prodver%.0"
+echo VALUE "ProductVersion", "%prodver%"
 echo }
 echo }
 echo BLOCK "VarFileInfo"
