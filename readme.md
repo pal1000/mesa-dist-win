@@ -21,7 +21,7 @@ This is an [upstream regression](https://gitlab.freedesktop.org/mesa/mesa/-/issu
 This is not a defect but rather a behavior change of Mesa when environment variables are misconfigured. It usually happens when selecting a Mesa driver that doesn't exist in release package used or it fails to initialize due to host system not meeting hardware requirements or lacking dependencies. Reading [differences between MSVC and MinGW packages](#differences-between-msvc-and-mingw-packages) and [Mingw and MSVC Package contents](#mingw-and-msvc-package-contents) should aid in troubleshooting.
 - Important notes about errors related to missing `libglapi.dll`
 
-You may experience them with programs that use any Mesa3D desktop OpenGL driver via per app deployment tool, system wide deployment is unaffected. You may experience them if shared glapi is missing from release package. shared glapi has been consistently available in both MSVC and MinGW packages since 20.0.2.
+You may experience them with programs that use any Mesa3D desktop OpenGL driver via per app deployment tool, system wide deployment is unaffected. You may experience them if per app deployment was done before shared glapi support was introduced. shared glapi has been consistently available in both MSVC and MinGW packages since 20.0.2.
 
 To correct these errors regardless of cause you have to re-deploy. If you don't remember if an affected program is 32-bit or 64-bit, right click on opengl32.dll shortcut in the folder where the program executable is located and select open file location. If location ends in x64 then it's 64-bit, otherwise it's 32-bit.
 
