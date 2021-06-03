@@ -4,6 +4,8 @@
 ### Documentation
 - End user guide: Document that zink driver now works with Vulkan CPU devices when `ZINK_USE_LAVAPIPE=true` is set as expected;
 - End user guide: Correct scenario description that leads to `libglapi.dll` missing error.
+### Build script
+- MSYS2: Disable clang compiler support.
 # 21.1.1
 - Updated Mesa3D to [21.1.1](https://docs.mesa3d.org/relnotes/21.1.1.html).
 ### Build script
