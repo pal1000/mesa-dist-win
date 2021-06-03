@@ -56,7 +56,7 @@
 @echo.
 
 @rem Clang and LLD
-@if EXIST %devroot%\llvm-project set /p buildclang=Build clang - required for OpenCL (y/n):
+@if EXIST %devroot%\llvm-project set /p buildclang=Build clang and LLD - required for OpenCL (y/n):
 @if EXIST %devroot%\llvm-project echo.
 
 @rem SPIRV-LLVM-Translator

@@ -5,7 +5,8 @@
 - End user guide: Document that zink driver now works with Vulkan CPU devices when `ZINK_USE_LAVAPIPE=true` is set as expected;
 - End user guide: Correct scenario description that leads to `libglapi.dll` missing error.
 ### Build script
-- MSYS2: Disable clang compiler support.
+- MSYS2: Disable clang compiler support;
+- LLVM: Initial libclc build support.
 ### Utilities
 - Implement unattended mode in MinGW vulkan loader compatibility tool.
 # 21.1.1
