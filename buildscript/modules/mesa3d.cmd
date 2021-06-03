@@ -187,11 +187,18 @@
 @if /I "%graw%"=="y" set buildconf=%buildconf% -Dbuild-tests=true
 @if /I NOT "%graw%"=="y" set buildconf=%buildconf% -Dbuild-tests=false
 
-@set opencl=n
-@rem According to Mesa source code clover OpenCL state tracker requires LLVM built with RTTI so it won't work with Mingw and it depends on libclc.
-@rem IF %intmesaver% GEQ 20000 if /I NOT "%llvmless%"=="y" IF %toolchain%==msvc set /p opencl=Build Mesa3D clover OpenCL state tracker (y/):
-@rem IF %intmesaver% GEQ 20000 if /I NOT "%llvmless%"=="y" IF %toolchain%==msvc echo.
-@IF /I "%opencl%"=="y" set buildconf=%buildconf% -Dgallium-opencl=standalone
+@rem According to Mesa source code CLonD3D12 requires SPIRV tools and LLVM built with clang, LLD, SPIRV translator and libclc and it doesn't support Mingw.
+@set canopencl=1
+@IF NOT EXIST %devroot%\mesa\subprojects\DirectX-Headers.wrap set canopencl=0
+@IF %intmesaver% LSS 21000 set canopencl=0
+@IF NOT %toolchain%==msvc set canopencl=0
+@IF NOT EXIST %devroot%\llvm\%abi%\lib\pkgconfig set canopencl=0
+@IF NOT EXIST %devroot%\llvm\%abi%\share\pkgconfig set canopencl=0
+@IF NOT EXIST %devroot%\spirv-tools\%abi%\lib\pkgconfig set canopencl=0
+@IF %canopencl% EQU 1 set /p opencl=Build Mesa3D Microsoft OpenCL on D3D12 driver (y/):
+@IF %canopencl% EQU 1 echo.
+@IF /I "%opencl%"=="y" set buildconf=%buildconf% --pkg-config-path=%devroot:\=/%/llvm/%abi%/lib/pkgconfig;%devroot:\=/%/llvm/%abi%/share/pkgconfig;%devroot:\=/%/spirv-tools/%abi%/lib/pkgconfig -Dmicrosoft-clc=enabled -Dstatic-libclc=all
+@IF /I NOT "%opencl%"=="y" set buildconf=%buildconf% -Dmicrosoft-clc=disabled
 
 @if NOT %toolchain%==msvc set buildconf=%buildconf% -Dc_link_args='%LDFLAGS%' -Dcpp_link_args='%LDFLAGS%'"
 

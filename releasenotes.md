@@ -6,7 +6,8 @@
 - End user guide: Correct scenario description that leads to `libglapi.dll` missing error.
 ### Build script
 - MSYS2: Disable clang compiler support;
-- LLVM: Initial libclc build support.
+- LLVM: Initial libclc build support;
+- Prepare Mesa3D build for CLonD3D12 driver.
 ### Utilities
 - Implement unattended mode in MinGW vulkan loader compatibility tool.
 # 21.1.1
