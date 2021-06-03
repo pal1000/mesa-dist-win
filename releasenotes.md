@@ -6,6 +6,8 @@
 - End user guide: Correct scenario description that leads to `libglapi.dll` missing error.
 ### Build script
 - MSYS2: Disable clang compiler support.
+### Utilities
+- Implement unattended mode in MinGW vulkan loader compatibility tool.
 # 21.1.1
 - Updated Mesa3D to [21.1.1](https://docs.mesa3d.org/relnotes/21.1.1.html).
 ### Build script
