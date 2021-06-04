@@ -10,12 +10,16 @@
 
 @rem Verify if LLVM can be used.
 @IF %llvmbinaries% EQU 1 IF %llvmsources% EQU 0 echo LLVM source code not found but LLVM is already built. Skipping LLVM build.
+@IF %llvmbinaries% EQU 1 IF %llvmsources% EQU 0 echo.
 @IF %llvmbinaries% EQU 1 IF %llvmsources% EQU 0 GOTO skipllvm
 @IF %cmakestate%==0 IF %llvmbinaries% EQU 1 echo CMake not found but LLVM is already built. Skipping LLVM build.
+@IF %cmakestate%==0 IF %llvmbinaries% EQU 1 echo.
 @IF %cmakestate%==0 IF %llvmbinaries% EQU 1 GOTO skipllvm
 @IF %cmakestate%==0 echo CMake is required for LLVM build. If you want to build Mesa3D anyway it will be without llvmpipe and swr drivers and high performance JIT won't be available for other drivers and libraries.
+@IF %cmakestate%==0 echo.
 @IF %cmakestate%==0 GOTO skipllvm
 @IF %llvmbinaries% EQU 0 IF %llvmsources% EQU 0 echo WARNING: Both LLVM source code and binaries not found. If you want to build Mesa3D anyway it will be without llvmpipe and swr drivers and high performance JIT won't be available for other drivers and libraries.
+@IF %llvmbinaries% EQU 0 IF %llvmsources% EQU 0 echo.
 @IF %llvmbinaries% EQU 0 IF %llvmsources% EQU 0 GOTO skipllvm
 
 @rem Ask to do LLVM build
@@ -24,6 +28,7 @@
 
 @rem LLVM source is found or is obtainable, binaries not found and LLVM build is refused.
 @IF %llvmsources% EQU 1 IF %llvmbinaries% EQU 0 if /I NOT "%buildllvm%"=="y" echo WARNING: Not building LLVM. If you want to build Mesa3D anyway it will be without swr and llvmpipe drivers and high performance JIT won't be available for other drivers and libraries.
+@IF %llvmsources% EQU 1 IF %llvmbinaries% EQU 0 if /I NOT "%buildllvm%"=="y" echo.
 @if /I NOT "%buildllvm%"=="y" GOTO skipllvm
 
 @rem Getting LLVM monorepo if LLVM source is missing
@@ -136,9 +141,9 @@
 @if /I "%ninja%"=="y" ninja -j %throttle% install
 @if /I "%ninja%"=="y" IF /I NOT "%buildclang%"=="y" IF %abi%==x64 ninja -j %throttle% llvm-config
 @if /I "%ninja%"=="y" IF /I NOT "%buildclang%"=="y" IF %abi%==x64 copy .\bin\llvm-config.exe ..\..\llvm\%abi%\bin\
+@echo.
 
 :skipllvm
-@echo.
 @rem Reset environment after LLVM build.
 @endlocal
 @cd %devroot%

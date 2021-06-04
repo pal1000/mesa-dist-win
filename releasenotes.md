@@ -1,6 +1,7 @@
 # Next release
 ### Build script
-- Improve libclc build cleaning.
+- Improve libclc build cleaning;
+- LLVM: Don't print 2 new lines when skipping build on demand.
 # 21.1.2
 - Updated Mesa3D to [21.1.2](https://docs.mesa3d.org/relnotes/21.1.2.html).
 ### Binary version info
@@ -9,7 +10,7 @@
 - End user guide: Document that zink driver now works with Vulkan CPU devices when `ZINK_USE_LAVAPIPE=true` is set as expected;
 - End user guide: Correct scenario description that leads to `libglapi.dll` missing error.
 ### Build script
-- MSYS2: Disable clang compiler support;
+- MSYS2: Disable option to use clang compiler instead of GCC as Mesa3D fails to build with it most of the time;
 - LLVM: Initial libclc build support;
 - Prepare Mesa3D build for CLonD3D12 driver.
 ### Utilities
