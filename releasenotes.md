@@ -1,7 +1,8 @@
 # Next release
 ### Build script
 - Improve libclc build cleaning;
-- LLVM: Don't print 2 new lines when skipping build on demand.
+- LLVM: Don't print 2 new lines when skipping build on demand;
+- Display generated libclc build configuration command.
 # 21.1.2
 - Updated Mesa3D to [21.1.2](https://docs.mesa3d.org/relnotes/21.1.2.html).
 ### Binary version info
