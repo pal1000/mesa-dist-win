@@ -19,13 +19,11 @@
 @cd %devroot%\llvm-project
 @echo Cleanning libclc build...
 @echo.
-@if EXIST clc-%abi% RD /S /Q clc-%abi%
-@if EXIST %devroot%\llvm\%abi%\share\clc RD /S /Q %devroot%\llvm\%abi%\share\clc
-@if EXIST %devroot%\llvm\%abi%\share\pkgconfig RD /S /Q %devroot%\llvm\%abi%\share\pkgconfig
-@if EXIST %devroot%\llvm\%abi%\include\clc RD /S /Q %devroot%\llvm\%abi%\include\clc
-@md clc-%abi%
-@cd clc-%abi%
-@set buildconf=cmake ../libclc -GNinja -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS="-m%MSYSTEM:~-2%" -DCMAKE_POLICY_DEFAULT_CMP0091=NEW -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded -DCMAKE_INSTALL_PREFIX="../../llvm/%abi%" -DLIBCLC_TARGETS_TO_BUILD="spirv-mesa3d-;spirv64-mesa3d-"
+@if EXIST buildsys-clc RD /S /Q buildsys-clc
+@if EXIST %devroot%\llvm\clc RD /S /Q %devroot%\llvm\clc
+@md buildsys-clc
+@cd buildsys-clc
+@set buildconf=cmake ../libclc -GNinja -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS="-m%MSYSTEM:~-2%" -DCMAKE_POLICY_DEFAULT_CMP0091=NEW -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded -DCMAKE_INSTALL_PREFIX="../../llvm/clc" -DLIBCLC_TARGETS_TO_BUILD="spirv-mesa3d-;spirv64-mesa3d-" -DCMAKE_PREFIX_PATH="../../llvm/%abi%"
 @echo Build configuration command: %buildconf%
 @echo.
 @%buildconf%
