@@ -5,6 +5,8 @@
 - Display generated libclc build configuration command;
 - Only build libclc with x64 LLVM to avoid needless duplicated work and install it separated from x64 and x86 LLVM due to being non-machine code, see https://gitlab.freedesktop.org/mesa/mesa/-/issues/4888 for more information;
 - Fix logic determining when lavapipe cannot build.
+### Documentation
+- Document `libvulkan-1.dll` being missing error.
 # 21.1.2
 - Updated Mesa3D to [21.1.2](https://docs.mesa3d.org/relnotes/21.1.2.html).
 ### Binary version info

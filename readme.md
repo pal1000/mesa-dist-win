@@ -10,6 +10,9 @@
 # Downloads
 Mesa 21.1.2 builds with Visual Studio and MSYS2 Mingw-w64 are now available in [releases section](https://github.com/pal1000/mesa-dist-win/releases).
 # Known issues
+- `libvulkan-1.dll` missing error with Mesa3D `opengl32.dll` from MinGW release package
+
+Run `fix-libvulkan-1.dll-missing-error.cmd` from MinGW release package to correct it.  This tool supports unattended execution via `auto` command line option. This tool is only bundled in MinGW release package when needed because only releases for which zink driver was built with MSYS2 MinGW-W64 vulkan-devel package group are affected. The decision to use this Vulkan SDK over LunarG's is done based on which comes with newer loader and headers.
 - 64-bit binaries in both MSVC and MinGW packages require a CPU with AVX even though they shouldn't
 
 This is due to 64-bit binaries containing swr driver which leaks AVX usage into common code. This is an upstream bug reported [here](https://gitlab.freedesktop.org/mesa/mesa/-/issues/4437), [here](https://gitlab.freedesktop.org/mesa/mesa/-/issues/3860) and [here](https://github.com/msys2/MINGW-packages/issues/7530).
