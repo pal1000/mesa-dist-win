@@ -1,4 +1,5 @@
-# Next release
+# 21.1.3
+- Updated Mesa3D to [21.1.3](https://docs.mesa3d.org/relnotes/21.1.3.html).
 ### Build script
 - Improve libclc build cleaning;
 - LLVM: Don't print 2 new lines when skipping build on demand;
