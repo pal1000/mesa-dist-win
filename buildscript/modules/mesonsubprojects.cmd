@@ -12,8 +12,8 @@ IF /I NOT "%%a"=="YES" IF /I NOT "%%a"=="NO" set llvmconfigbusted=1
 @IF %llvmconfigbusted% EQU 0 GOTO compressionwrap
 
 @rem llvmlibs must match the output of 'llvm-config --link-static --libnames engine coroutines' stripped of ending newline.
-@rem Current llvmlibs is valid for LLVM 11.* series.
-@set llvmlibs=libLLVMCoroutines.a libLLVMipo.a libLLVMInstrumentation.a libLLVMVectorize.a libLLVMLinker.a libLLVMIRReader.a libLLVMAsmParser.a libLLVMFrontendOpenMP.a libLLVMX86Disassembler.a libLLVMX86AsmParser.a libLLVMX86CodeGen.a libLLVMCFGuard.a libLLVMGlobalISel.a libLLVMSelectionDAG.a libLLVMAsmPrinter.a libLLVMDebugInfoDWARF.a libLLVMCodeGen.a libLLVMScalarOpts.a libLLVMInstCombine.a libLLVMAggressiveInstCombine.a libLLVMTransformUtils.a libLLVMBitWriter.a libLLVMX86Desc.a libLLVMMCDisassembler.a libLLVMX86Info.a libLLVMMCJIT.a libLLVMExecutionEngine.a libLLVMTarget.a libLLVMAnalysis.a libLLVMProfileData.a libLLVMRuntimeDyld.a libLLVMObject.a libLLVMTextAPI.a libLLVMMCParser.a libLLVMBitReader.a libLLVMMC.a libLLVMDebugInfoCodeView.a libLLVMDebugInfoMSF.a libLLVMCore.a libLLVMRemarks.a libLLVMBitstreamReader.a libLLVMBinaryFormat.a libLLVMSupport.a libLLVMDemangle.a
+@rem Current llvmlibs is valid for LLVM 12.* series.
+@set llvmlibs=libLLVMCoroutines.a libLLVMipo.a libLLVMInstrumentation.a libLLVMVectorize.a libLLVMLinker.a libLLVMIRReader.a libLLVMAsmParser.a libLLVMFrontendOpenMP.a libLLVMInterpreter.a libLLVMExecutionEngine.a libLLVMRuntimeDyld.a libLLVMCodeGen.a libLLVMTarget.a libLLVMScalarOpts.a libLLVMInstCombine.a libLLVMAggressiveInstCombine.a libLLVMTransformUtils.a libLLVMBitWriter.a libLLVMAnalysis.a libLLVMProfileData.a libLLVMObject.a libLLVMTextAPI.a libLLVMMCParser.a libLLVMMC.a libLLVMDebugInfoCodeView.a libLLVMDebugInfoMSF.a libLLVMBitReader.a libLLVMCore.a libLLVMRemarks.a libLLVMBitstreamReader.a libLLVMBinaryFormat.a libLLVMSupport.a libLLVMDemangle.a
 @set llvmlibs=%llvmlibs:.a=%
 @set llvmlibs='%llvmlibs: =', '%'
 @FOR /F USEBACKQ^ tokens^=5^ delims^=-^  %%a IN (`%msysloc%\usr\bin\bash --login -c "/usr/bin/pacman -Q ${MINGW_PACKAGE_PREFIX}-llvm"`) DO @SET llvmver=%%~a
@@ -114,6 +114,16 @@ echo Refreshing DirectX-Headers...
 git pull -v --progress --recurse-submodules origin
 echo.
 cd /D %devroot%\mesa
+)
+
+:libsystre
+@IF %toolchain%==msvc GOTO donewrap
+@CMD /C EXIT 0
+@FC /B %devroot%\%projectname%\buildscript\mesonsubprojects\regex-%abi%.pc %msysloc%\%MSYSTEM%\lib\pkgconfig\regex.pc>NUL 2>&1
+@if NOT "%ERRORLEVEL%"=="0" (
+@echo Fixing regex dependency...
+@copy /Y %devroot%\%projectname%\buildscript\mesonsubprojects\regex-%abi%.pc %msysloc%\%MSYSTEM%\lib\pkgconfig\regex.pc
+@echo.
 )
 
 :donewrap

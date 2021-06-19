@@ -151,8 +151,12 @@
 @if /I "%swrdrv%"=="y" IF %disableootpatch%==1 IF NOT %toolchain%==msvc set buildconf=%buildconf% -Dswr-arches=avx,avx2,skx,knl
 
 @set lavapipe=n
-@if /I NOT "%llvmless%"=="y" IF %intmesaver% GEQ 21100 IF %disableootpatch%==0 set /p lavapipe=Build Mesa3D Vulkan software renderer (y/n):
-@if /I NOT "%llvmless%"=="y" IF %intmesaver% GEQ 21100 IF %disableootpatch%==0 echo.
+@set canlavapipe=1
+@if /I "%llvmless%"=="y" set canlavapipe=0
+@IF %intmesaver% LSS 21100 set canlavapipe=0
+@IF %intmesaver:~0,3% EQU 211 IF %intmesaver% LSS 21151 IF %toolchain%==msvc if %abi%==x86 IF %disableootpatch%==1 set canlavapipe=0
+@IF %canlavapipe% EQU 1 set /p lavapipe=Build Mesa3D Vulkan software renderer (y/n):
+@IF %canlavapipe% EQU 1 echo.
 @if /I "%lavapipe%"=="y" set buildconf=%buildconf% -Dvulkan-drivers=swrast
 @if /I "%lavapipe%"=="y" set LDFLAGS=%LDFLAGS% -ltre -lintl -liconv
 

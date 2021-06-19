@@ -1,0 +1,11 @@
+prefix=/mingw32
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: regex
+Description: Regular Expressions library
+Version: 1.0.0
+Requires: tre
+Libs: -L${libdir} -lregex
+Cflags: -I${includedir}
