@@ -51,6 +51,9 @@
 @IF %intmesaver% GEQ 20200 set mesonbooltrue=enabled
 @IF %intmesaver% GEQ 20200 set mesonboolfalse=disabled
 
+@rem Treat all files as UTF-8 encoded, port mesa3d/mesa@b437fb81
+@set PYTHONUTF8=1
+
 @REM Handle lack of out of tree patches support.
 @IF %disableootpatch%==1 IF %intmesaver% GEQ 20100 IF %intmesaver% LSS 20103 IF NOT %toolchain%==msvc echo FATAL: Mesa 20.1-devel through 20.1.0-rc2 cannot be built with MinGW without out of tree patches.
 @IF %disableootpatch%==1 IF %intmesaver% GEQ 20100 IF %intmesaver% LSS 20103 IF NOT %toolchain%==msvc echo.
