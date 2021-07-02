@@ -31,7 +31,7 @@ getent 2.18.90-2
 gettext 0.19.8.1-1
 glib2 2.68.1-1
 gmp 6.2.1-1
-gnupg 2.2.28-1
+gnupg 2.2.28-3
 grep 3.0-2
 gzip 1.10-1
 heimdal-libs 7.7.0-2
@@ -191,7 +191,7 @@ openssl 1.1.1.k-1
 p11-kit 0.23.22-2
 pacman 6.0.0-4
 pacman-contrib 1.4.0-2
-pacman-mirrors 20210423-2
+pacman-mirrors 20210627-2
 patch 2.7.6-1
 perl 5.32.1-1
 pinentry 1.1.1-1

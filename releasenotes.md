@@ -1,4 +1,5 @@
-# Next release
+# 21.1.4
+- Updated Mesa3D to [21.1.4](https://docs.mesa3d.org/relnotes/21.1.4.html).
 ### Build script
 - Mesa3D: Treat all files as UTF-8 encoded, port mesa3d/mesa@b437fb81.
 # 21.1.3

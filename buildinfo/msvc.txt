@@ -4,7 +4,7 @@ Windows 10.0.19043
 Ressource Hacker 5.1.8.360
 7-Zip 21.02 ultra compression
 Git 2.32.0.1
-Visual Studio Community 2019 v16.10.2
+Visual Studio Community 2019 v16.10.3
 Windows SDK 10.0.19041.0
 Python 3.9.6
 
