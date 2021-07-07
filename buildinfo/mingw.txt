@@ -4,7 +4,7 @@ Windows 10.0.19043
 Ressource Hacker 5.1.8.360
 7-Zip 21.02 ultra compression
 Git 2.32.0.1
-LunarG Vulkan SDK 1.2.176.1
+LunarG Vulkan SDK 1.2.182.0
 
 MSYS2 environment
 -----------------
@@ -18,7 +18,7 @@ bzip2 1.0.8-2
 ca-certificates 20210119-1
 coreutils 8.32-1
 curl 7.76.1-1
-dash 0.5.11.3-1
+dash 0.5.11.4-1
 db 5.3.28-3
 file 5.40-2
 filesystem 2021.06-1
@@ -46,7 +46,7 @@ libbz2 1.0.8-2
 libcrypt 2.1-3
 libcurl 7.76.1-1
 libdb 5.3.28-3
-libedit 20210216_3.1-1
+libedit 20210522_3.1-1
 libexpat 2.3.0-1
 libffi 3.3-1
 libgcrypt 1.9.2-1
@@ -54,12 +54,12 @@ libgdbm 1.19-1
 libgettextpo 0.19.8.1-1
 libgnutls 3.7.2-1
 libgpg-error 1.42-1
-libgpgme 1.15.1-2
+libgpgme 1.16.0-1
 libhogweed 3.7.3-1
 libiconv 1.16-2
 libidn2 2.3.1-2
 libintl 0.19.8.1-1
-libksba 1.4.0-1
+libksba 1.6.0-1
 liblz4 1.9.3-1
 liblzma 5.2.5-1
 libmetalink 0.1.3-3
@@ -86,8 +86,8 @@ mingw-w64-i686-bzip2 1.0.8-2
 mingw-w64-i686-ca-certificates 20200601-3
 mingw-w64-i686-crt-git 9.0.0.6246.ae63cde27-1
 mingw-w64-i686-expat 2.4.1-1
-mingw-w64-i686-gcc 10.3.0-2
-mingw-w64-i686-gcc-libs 10.3.0-2
+mingw-w64-i686-gcc 10.3.0-5
+mingw-w64-i686-gcc-libs 10.3.0-5
 mingw-w64-i686-gdb 10.2-1
 mingw-w64-i686-gettext 0.19.8.1-10
 mingw-w64-i686-gmp 6.2.1-2
@@ -100,7 +100,7 @@ mingw-w64-i686-libtasn1 4.17.0-1
 mingw-w64-i686-libtre-git r128.6fb7206-2
 mingw-w64-i686-libwinpthread-git 9.0.0.6246.ae63cde27-1
 mingw-w64-i686-libxml2 2.9.12-1
-mingw-w64-i686-llvm 12.0.0-7
+mingw-w64-i686-llvm 12.0.0-8
 mingw-w64-i686-meson 0.58.1-1
 mingw-w64-i686-mpc 1.2.1-1
 mingw-w64-i686-mpdecimal 2.5.0-2
@@ -117,7 +117,7 @@ mingw-w64-i686-python-markupsafe 2.0.1-1
 mingw-w64-i686-readline 8.0.004-2
 mingw-w64-i686-spirv-headers 1.5.4.2.r336.2e1bc6d-1
 mingw-w64-i686-spirv-tools 2021.1-1
-mingw-w64-i686-sqlite3 3.35.5-1
+mingw-w64-i686-sqlite3 3.36.0-1
 mingw-w64-i686-tcl 8.6.11-3
 mingw-w64-i686-termcap 1.3.1-6
 mingw-w64-i686-tk 8.6.11.1-2
@@ -135,8 +135,8 @@ mingw-w64-x86_64-bzip2 1.0.8-2
 mingw-w64-x86_64-ca-certificates 20200601-3
 mingw-w64-x86_64-crt-git 9.0.0.6246.ae63cde27-1
 mingw-w64-x86_64-expat 2.4.1-1
-mingw-w64-x86_64-gcc 10.3.0-2
-mingw-w64-x86_64-gcc-libs 10.3.0-2
+mingw-w64-x86_64-gcc 10.3.0-5
+mingw-w64-x86_64-gcc-libs 10.3.0-5
 mingw-w64-x86_64-gdb 10.2-1
 mingw-w64-x86_64-gettext 0.19.8.1-10
 mingw-w64-x86_64-gmp 6.2.1-2
@@ -149,7 +149,7 @@ mingw-w64-x86_64-libtasn1 4.17.0-1
 mingw-w64-x86_64-libtre-git r128.6fb7206-2
 mingw-w64-x86_64-libwinpthread-git 9.0.0.6246.ae63cde27-1
 mingw-w64-x86_64-libxml2 2.9.12-1
-mingw-w64-x86_64-llvm 12.0.0-7
+mingw-w64-x86_64-llvm 12.0.0-8
 mingw-w64-x86_64-meson 0.58.1-1
 mingw-w64-x86_64-mpc 1.2.1-1
 mingw-w64-x86_64-mpdecimal 2.5.0-2
@@ -166,7 +166,7 @@ mingw-w64-x86_64-python-markupsafe 2.0.1-1
 mingw-w64-x86_64-readline 8.0.004-2
 mingw-w64-x86_64-spirv-headers 1.5.4.2.r336.2e1bc6d-1
 mingw-w64-x86_64-spirv-tools 2021.1-1
-mingw-w64-x86_64-sqlite3 3.35.5-1
+mingw-w64-x86_64-sqlite3 3.36.0-1
 mingw-w64-x86_64-tcl 8.6.11-3
 mingw-w64-x86_64-termcap 1.3.1-6
 mingw-w64-x86_64-tk 8.6.11.1-2
@@ -183,7 +183,7 @@ mintty 1~3.5.0-1
 mpfr 4.1.0-1
 msys2-keyring 1~20210213-2
 msys2-launcher 1.3-2
-msys2-runtime 3.2.0-13
+msys2-runtime 3.2.0-14
 nano 5.8-1
 ncurses 6.2-1
 nettle 3.7.3-1
@@ -191,7 +191,7 @@ openssl 1.1.1.k-1
 p11-kit 0.23.22-2
 pacman 6.0.0-4
 pacman-contrib 1.4.0-2
-pacman-mirrors 20210627-2
+pacman-mirrors 20210703-1
 patch 2.7.6-1
 perl 5.32.1-1
 pinentry 1.1.1-1
