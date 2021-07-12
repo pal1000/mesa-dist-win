@@ -165,15 +165,21 @@
 @if /I "%swrdrv%"=="y" set buildconf=%buildconf%swr,
 @IF %galliumcount% GTR 0 set buildconf=%buildconf:~0,-1%
 
-@set lavapipe=n
+@set mesavkcount=0
+
 @set canlavapipe=1
 @if /I "%llvmless%"=="y" set canlavapipe=0
 @IF %intmesaver% LSS 21100 set canlavapipe=0
+@if /I NOT "%glswrast%"=="y" set canlavapipe=0
 @IF %intmesaver:~0,3% EQU 211 IF %intmesaver% LSS 21151 IF %toolchain%==msvc if %abi%==x86 IF %disableootpatch%==1 set canlavapipe=0
 @IF %canlavapipe% EQU 1 set /p lavapipe=Build Mesa3D Vulkan software renderer (y/n):
 @IF %canlavapipe% EQU 1 echo.
-@if /I "%lavapipe%"=="y" set buildconf=%buildconf% -Dvulkan-drivers=swrast
 @if /I "%lavapipe%"=="y" set LDFLAGS=%LDFLAGS% -ltre -lintl -liconv
+@if /I "%lavapipe%"=="y" set /a mesavkcount+=1
+
+@if %mesavkcount% GTR 0 set buildconf=%buildconf% -Dvulkan-drivers=
+@if /I "%lavapipe%"=="y" set buildconf=%buildconf%swrast,
+@IF %mesavkcount% GTR 0 set buildconf=%buildconf:~0,-1%
 
 @set spirvtodxil=n
 @IF EXIST %devroot%\mesa\subprojects\DirectX-Headers.wrap IF %intmesaver% GEQ 21000 IF %toolchain%==msvc set /p spirvtodxil=Do you want to build SPIR-V to DXIL tool (y/n):

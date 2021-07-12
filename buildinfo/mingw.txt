@@ -3,7 +3,7 @@ Build environment
 Windows 10.0.19043
 Ressource Hacker 5.1.8.360
 7-Zip 21.02 ultra compression
-Git 2.32.0.1
+Git 2.32.0.2
 LunarG Vulkan SDK 1.2.182.0
 
 MSYS2 environment
@@ -37,7 +37,7 @@ gzip 1.10-1
 heimdal-libs 7.7.0-2
 icu 68.2-1
 inetutils 1.9.4-2
-info 6.7-3
+info 6.8-1
 less 581-1
 libargp 20110921-2
 libasprintf 0.19.8.1-1
@@ -189,9 +189,9 @@ ncurses 6.2-1
 nettle 3.7.3-1
 openssl 1.1.1.k-1
 p11-kit 0.23.22-2
-pacman 6.0.0-4
+pacman 6.0.0-5
 pacman-contrib 1.4.0-2
-pacman-mirrors 20210703-1
+pacman-mirrors 20210706-1
 patch 2.7.6-1
 perl 5.32.1-1
 pinentry 1.1.1-1
