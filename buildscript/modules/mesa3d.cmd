@@ -128,19 +128,24 @@
 @IF NOT %toolchain%==msvc set buildcmd=%buildcmd%${MINGW_PREFIX}/bin/ninja -C $(/usr/bin/cygpath -m ${devroot})/mesa/build/${abi} -j ${throttle}"
 @if /I NOT "%useninja%"=="y" set buildconf=%buildconf% --backend=vs
 
-@set buildconf=%buildconf% -Dgallium-drivers=swrast
+@set galliumcount=0
 
-@set zink=n
-@IF NOT %toolchain%==msvc IF %intmesaver% GEQ 21000 set /p zink=Do you want to build Mesa3D OpenGL driver over Vulkan - zink (y/n):
-@IF NOT %toolchain%==msvc IF %intmesaver% GEQ 21000 echo.
-@IF /I "%zink%"=="y" set buildconf=%buildconf%,zink
+@if /I NOT "%llvmless%"=="y" set /p glswrast=Do you want to build Mesa3D softpipe and llvmpipe drivers (y/n):
+@if /I "%llvmless%"=="y" set /p glswrast=Do you want to build Mesa3D softpipe driver (y/n):
+@echo.
+@if /I "%glswrast%"=="y" set /a galliumcount+=1
 
-@set d3d12=n
+@set canzink=0
+@IF NOT %toolchain%==msvc IF %intmesaver% GEQ 21000 set canzink=1
+@IF %toolchain%==msvc IF %intmesaver% GEQ 21200 set canzink=1
+@IF %canzink% EQU 1 set /p zink=Do you want to build Mesa3D OpenGL driver over Vulkan - zink (y/n):
+@IF %canzink% EQU 1 echo.
+@IF /I "%zink%"=="y" set /a galliumcount+=1
+
 @IF EXIST %devroot%\mesa\subprojects\DirectX-Headers.wrap IF %intmesaver% GEQ 21000 IF %toolchain%==msvc set /p d3d12=Do you want to build Mesa3D OpenGL driver over D3D12 - GLonD3D12 (y/n):
 @IF EXIST %devroot%\mesa\subprojects\DirectX-Headers.wrap IF %intmesaver% GEQ 21000 IF %toolchain%==msvc echo.
-@IF /I "%d3d12%"=="y" set buildconf=%buildconf%,d3d12
+@IF /I "%d3d12%"=="y" set /a galliumcount+=1
 
-@set swrdrv=n
 @set canswr=0
 @if /I NOT "%llvmless%"=="y" if %abi%==x64 IF %toolchain%==msvc IF %intmesaver% LSS 20152 IF %disableootpatch%==0 set canswr=1
 @if /I NOT "%llvmless%"=="y" if %abi%==x64 IF %toolchain%==msvc IF %intmesaver% GEQ 20152 set canswr=1
@@ -149,9 +154,16 @@
 @if /I NOT "%llvmless%"=="y" if %abi%==x64 IF NOT %toolchain%==msvc IF %disableootpatch%==1 IF %intmesaver% GEQ 20250 set canswr=1
 @if %canswr% EQU 1 set /p swrdrv=Do you want to build swr drivers? (y=yes):
 @if %canswr% EQU 1 echo.
-@if /I "%swrdrv%"=="y" set buildconf=%buildconf%,swr
 @if /I "%swrdrv%"=="y" IF %disableootpatch%==0 set buildconf=%buildconf% -Dswr-arches=avx,avx2,skx,knl
 @if /I "%swrdrv%"=="y" IF %disableootpatch%==1 IF NOT %toolchain%==msvc set buildconf=%buildconf% -Dswr-arches=avx,avx2,skx,knl
+@if /I "%swrdrv%"=="y" set /a galliumcount+=1
+
+@IF %galliumcount% GTR 0 set buildconf=%buildconf% -Dgallium-drivers=
+@IF /I "%glswrast%"=="y" set buildconf=%buildconf%swrast,
+@IF /I "%zink%"=="y" set buildconf=%buildconf%zink,
+@IF /I "%d3d12%"=="y" set buildconf=%buildconf%d3d12,
+@if /I "%swrdrv%"=="y" set buildconf=%buildconf%swr,
+@IF %galliumcount% GTR 0 set buildconf=%buildconf:~0,-1%
 
 @set lavapipe=n
 @set canlavapipe=1
