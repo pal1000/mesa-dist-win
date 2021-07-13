@@ -138,6 +138,7 @@
 @set canzink=0
 @IF NOT %toolchain%==msvc IF %intmesaver% GEQ 21000 set canzink=1
 @IF %toolchain%==msvc IF %intmesaver% GEQ 21200 set canzink=1
+@IF %toolchain%==msvc IF %canzink% EQU 1 IF NOT EXIST "%VK_SDK_PATH%" IF NOT EXIST "%VULKAN_SDK%" set canzink=0
 @IF %canzink% EQU 1 set /p zink=Do you want to build Mesa3D OpenGL driver over Vulkan - zink (y/n):
 @IF %canzink% EQU 1 echo.
 @IF %toolchain%==msvc IF /I "%zink%"=="y" set LDFLAGS=/DELAYLOAD:vulkan-1.dll
