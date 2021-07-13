@@ -158,7 +158,7 @@
 @if /I "%swrdrv%"=="y" IF %disableootpatch%==1 IF NOT %toolchain%==msvc set buildconf=%buildconf% -Dswr-arches=avx,avx2,skx,knl
 @if /I "%swrdrv%"=="y" set /a galliumcount+=1
 
-@IF %galliumcount% GTR 0 set buildconf=%buildconf% -Dgallium-drivers=
+@set buildconf=%buildconf% -Dgallium-drivers=
 @IF /I "%glswrast%"=="y" set buildconf=%buildconf%swrast,
 @IF /I "%zink%"=="y" set buildconf=%buildconf%zink,
 @IF /I "%d3d12%"=="y" set buildconf=%buildconf%d3d12,
@@ -177,7 +177,7 @@
 @if /I "%lavapipe%"=="y" set LDFLAGS=%LDFLAGS% -ltre -lintl -liconv
 @if /I "%lavapipe%"=="y" set /a mesavkcount+=1
 
-@if %mesavkcount% GTR 0 set buildconf=%buildconf% -Dvulkan-drivers=
+@set buildconf=%buildconf% -Dvulkan-drivers=
 @if /I "%lavapipe%"=="y" set buildconf=%buildconf%swrast,
 @IF %mesavkcount% GTR 0 set buildconf=%buildconf:~0,-1%
 
