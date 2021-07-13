@@ -1,7 +1,7 @@
 # Next release
 ### Build script
 - Support building Mesa3D without softpipe and llvmpipe;
-- Support building zink with MSVC [21.2+]
+- Support building zink with MSVC and delay load Vulkan runtime for it [21.2+].
 # 21.1.4-2
 - Restore swr driver in MinGW package.
 # 21.1.4

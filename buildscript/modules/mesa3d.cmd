@@ -140,6 +140,7 @@
 @IF %toolchain%==msvc IF %intmesaver% GEQ 21200 set canzink=1
 @IF %canzink% EQU 1 set /p zink=Do you want to build Mesa3D OpenGL driver over Vulkan - zink (y/n):
 @IF %canzink% EQU 1 echo.
+@IF %toolchain%==msvc IF /I "%zink%"=="y" set LDFLAGS=/DELAYLOAD:vulkan-1.dll
 @IF /I "%zink%"=="y" set /a galliumcount+=1
 
 @IF EXIST %devroot%\mesa\subprojects\DirectX-Headers.wrap IF %intmesaver% GEQ 21000 IF %toolchain%==msvc set /p d3d12=Do you want to build Mesa3D OpenGL driver over D3D12 - GLonD3D12 (y/n):
@@ -174,7 +175,7 @@
 @IF %intmesaver:~0,3% EQU 211 IF %intmesaver% LSS 21151 IF %toolchain%==msvc if %abi%==x86 IF %disableootpatch%==1 set canlavapipe=0
 @IF %canlavapipe% EQU 1 set /p lavapipe=Build Mesa3D Vulkan software renderer (y/n):
 @IF %canlavapipe% EQU 1 echo.
-@if /I "%lavapipe%"=="y" set LDFLAGS=%LDFLAGS% -ltre -lintl -liconv
+@if NOT %toolchain%==msvc if /I "%lavapipe%"=="y" set LDFLAGS=%LDFLAGS% -ltre -lintl -liconv
 @if /I "%lavapipe%"=="y" set /a mesavkcount+=1
 
 @set buildconf=%buildconf% -Dvulkan-drivers=
@@ -225,7 +226,8 @@
 @IF /I "%opencl%"=="y" set buildconf=%buildconf% --pkg-config-path=%devroot:\=/%/llvm/%abi%/lib/pkgconfig;%devroot:\=/%/llvm/clc/share/pkgconfig;%devroot:\=/%/spirv-tools/%abi%/lib/pkgconfig -Dmicrosoft-clc=enabled -Dstatic-libclc=all
 @IF /I NOT "%opencl%"=="y" set buildconf=%buildconf% -Dmicrosoft-clc=disabled
 
-@if NOT %toolchain%==msvc set buildconf=%buildconf% -Dc_link_args='%LDFLAGS%' -Dcpp_link_args='%LDFLAGS%'"
+@if defined LDFLAGS set buildconf=%buildconf% -Dc_link_args='%LDFLAGS%' -Dcpp_link_args='%LDFLAGS%'
+@if NOT %toolchain%==msvc set buildconf=%buildconf%"
 
 @rem Load MSVC specific build dependencies
 @IF %toolchain%==msvc IF %flexstate%==1 set PATH=%devroot%\flexbison\;%PATH%
