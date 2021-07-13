@@ -42,9 +42,10 @@ set rhver=%%a
 @IF defined gitver IF %toolchain%==msvc echo Git %gitver%>>%devroot%\%projectname%\buildinfo\msvc.txt
 
 @rem Get Vulkan SDK version
-@set vksdkstd=1
-@IF NOT defined VULKAN_SDK IF NOT defined VK_SDK_PATH set vksdkstd=0
-@IF %vksdkstd% EQU 1 IF NOT %toolchain%==msvc echo LunarG Vulkan SDK 1.2.182.0>>%devroot%\%projectname%\buildinfo\mingw.txt
+@set vksdkver=1.2.182.0
+@IF NOT defined VULKAN_SDK IF NOT defined VK_SDK_PATH set vksdkver=0
+@IF NOT %vksdkver%==0 IF NOT %toolchain%==msvc echo LunarG Vulkan SDK %vksdkver%>>%devroot%\%projectname%\buildinfo\mingw.txt
+@IF NOT %vksdkver%==0 IF %toolchain%==msvc echo LunarG Vulkan SDK %vksdkver%>>%devroot%\%projectname%\buildinfo\msvc.txt
 
 @rem Dump MSYS2 environment
 @IF NOT %toolchain%==msvc echo.>>%devroot%\%projectname%\buildinfo\mingw.txt
