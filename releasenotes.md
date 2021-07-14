@@ -2,7 +2,8 @@
 ### Build script
 - Support building Mesa3D without softpipe and llvmpipe;
 - Support building zink with MSVC and delay load Vulkan runtime for it [21.2+];
-- CLonD3D12 also depends on LLVM core.
+- CLonD3D12 also depends on LLVM core;
+- Support AMD Vulkan driver - radv [21.2+].
 ### Build environmment information
 - Add LunarG Vulkan SDK version to MSVC build environmment information.
 ### Dependencies

@@ -184,8 +184,19 @@
 @if NOT %toolchain%==msvc if /I "%lavapipe%"=="y" set LDFLAGS=%LDFLAGS% -ltre -lintl -liconv
 @if /I "%lavapipe%"=="y" set /a mesavkcount+=1
 
+@set radv=n
+@set canradv=1
+@if /I "%llvmless%"=="y" set canradv=0
+@IF %intmesaver% LSS 21200 set canradv=0
+@IF %toolchain%==msvc IF NOT EXIST %devroot%\llvm\%abi%\lib\LLVMAMDGPU*.lib set canradv=0
+@IF %canradv% EQU 1 set /p radv=Build AMD Vulkan driver - radv (y/n):
+@IF %canradv% EQU 1 echo.
+@if /I "%radv%"=="y" set buildconf=%buildconf% -Dc_std=c17 -Dcpp_std=vc++latest
+@if /I "%radv%"=="y" set /a mesavkcount+=1
+
 @set buildconf=%buildconf% -Dvulkan-drivers=
 @if /I "%lavapipe%"=="y" set buildconf=%buildconf%swrast,
+@if /I "%radv%"=="y" set buildconf=%buildconf%amd,
 @IF %mesavkcount% GTR 0 set buildconf=%buildconf:~0,-1%
 
 @set spirvtodxil=n
