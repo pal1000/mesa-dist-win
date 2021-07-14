@@ -146,6 +146,7 @@
 @IF %toolchain%==msvc IF /I "%zink%"=="y" set LDFLAGS=/DELAYLOAD:vulkan-1.dll
 @IF /I "%zink%"=="y" set /a galliumcount+=1
 
+@set d3d12=n
 @IF EXIST %devroot%\mesa\subprojects\DirectX-Headers.wrap IF %intmesaver% GEQ 21000 IF %toolchain%==msvc set /p d3d12=Do you want to build Mesa3D OpenGL driver over D3D12 - GLonD3D12 (y/n):
 @IF EXIST %devroot%\mesa\subprojects\DirectX-Headers.wrap IF %intmesaver% GEQ 21000 IF %toolchain%==msvc echo.
 @IF /I "%d3d12%"=="y" set /a galliumcount+=1
@@ -223,6 +224,7 @@
 @IF NOT EXIST %devroot%\mesa\subprojects\DirectX-Headers.wrap set canopencl=0
 @IF %intmesaver% LSS 21000 set canopencl=0
 @IF NOT %toolchain%==msvc set canopencl=0
+@if /I "%llvmless%"=="y" set canopencl=0
 @IF NOT EXIST %devroot%\llvm\%abi%\lib\pkgconfig set canopencl=0
 @IF NOT EXIST %devroot%\llvm\clc\share\pkgconfig set canopencl=0
 @IF NOT EXIST %devroot%\spirv-tools\%abi%\lib\pkgconfig set canopencl=0
