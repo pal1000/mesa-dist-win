@@ -4,6 +4,8 @@
 - Support building zink with MSVC and delay load Vulkan runtime for it [21.2+].
 ### Build environmment information
 - Add LunarG Vulkan SDK version to MSVC build environmment information.
+### Dependencies
+- Fetch LLVM 12.0.1 if LLVM source code is missing.
 # 21.1.4-2
 - Restore swr driver in MinGW package.
 # 21.1.4
