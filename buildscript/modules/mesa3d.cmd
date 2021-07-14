@@ -130,11 +130,13 @@
 
 @set galliumcount=0
 
+@set glswrast=n
 @if /I NOT "%llvmless%"=="y" set /p glswrast=Do you want to build Mesa3D softpipe and llvmpipe drivers (y/n):
 @if /I "%llvmless%"=="y" set /p glswrast=Do you want to build Mesa3D softpipe driver (y/n):
 @echo.
 @if /I "%glswrast%"=="y" set /a galliumcount+=1
 
+@set zink=n
 @set canzink=0
 @IF NOT %toolchain%==msvc IF %intmesaver% GEQ 21000 set canzink=1
 @IF %toolchain%==msvc IF %intmesaver% GEQ 21200 set canzink=1
@@ -148,6 +150,7 @@
 @IF EXIST %devroot%\mesa\subprojects\DirectX-Headers.wrap IF %intmesaver% GEQ 21000 IF %toolchain%==msvc echo.
 @IF /I "%d3d12%"=="y" set /a galliumcount+=1
 
+@set swrdrv=n
 @set canswr=0
 @if /I NOT "%llvmless%"=="y" if %abi%==x64 IF %toolchain%==msvc IF %intmesaver% LSS 20152 IF %disableootpatch%==0 set canswr=1
 @if /I NOT "%llvmless%"=="y" if %abi%==x64 IF %toolchain%==msvc IF %intmesaver% GEQ 20152 set canswr=1
@@ -169,6 +172,7 @@
 
 @set mesavkcount=0
 
+@set lavapipe=n
 @set canlavapipe=1
 @if /I "%llvmless%"=="y" set canlavapipe=0
 @IF %intmesaver% LSS 21100 set canlavapipe=0
@@ -194,9 +198,9 @@
 @if /I NOT "%gles%"=="y" set buildconf=%buildconf% -Dshared-glapi=auto -Dgles1=auto -Dgles2=auto
 
 @set osmesa=n
-@IF %intmesaver% LSS 21000 set /p osmesa=Do you want to build off-screen rendering drivers (y/n):
-@IF %intmesaver% GEQ 21000 set /p osmesa=Do you want to build off-screen rendering driver (y/n):
-@echo.
+@if /I "%glswrast%"=="y" IF %intmesaver% LSS 21000 set /p osmesa=Do you want to build off-screen rendering drivers (y/n):
+@if /I "%glswrast%"=="y" IF %intmesaver% GEQ 21000 set /p osmesa=Do you want to build off-screen rendering driver (y/n):
+@if /I "%glswrast%"=="y" echo.
 @rem osmesa classic is gone in Mesa 21.0 and newer
 @IF /I "%osmesa%"=="y" IF %intmesaver% GEQ 21000 set buildconf=%buildconf% -Dosmesa=true
 @IF /I "%osmesa%"=="y" IF %intmesaver% LSS 21000 set buildconf=%buildconf% -Dosmesa=gallium,classic
