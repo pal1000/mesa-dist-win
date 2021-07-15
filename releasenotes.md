@@ -1,4 +1,5 @@
-# Next release
+# 21.1.5
+- Updated Mesa3D to [21.1.5](https://docs.mesa3d.org/relnotes/21.1.5.html).
 ### Build script
 - Support building Mesa3D without softpipe and llvmpipe;
 - Support building zink with MSVC and delay load Vulkan runtime for it [21.2+];
