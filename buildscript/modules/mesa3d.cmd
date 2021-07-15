@@ -199,10 +199,17 @@
 @if /I "%radv%"=="y" set buildconf=%buildconf%amd,
 @IF %mesavkcount% GTR 0 set buildconf=%buildconf:~0,-1%
 
+@set d3d10umd=n
+@IF %intmesaver% GEQ 21200 if /I "%glswrast%"=="y" set /p d3d10umd=Build Mesa3D D3D10 software renderer (y/n):
+@IF %intmesaver% GEQ 21200 if /I "%glswrast%"=="y" echo.
+@if /I "%d3d10umd%"=="y" set buildconf=%buildconf% -Dgallium-d3d10umd=true
+@if /I NOT "%d3d10umd%"=="y" IF %intmesaver% GEQ 21200 set buildconf=%buildconf% -Dgallium-d3d10umd=false
+
 @set spirvtodxil=n
 @IF EXIST %devroot%\mesa\subprojects\DirectX-Headers.wrap IF %intmesaver% GEQ 21000 IF %toolchain%==msvc set /p spirvtodxil=Do you want to build SPIR-V to DXIL tool (y/n):
 @IF EXIST %devroot%\mesa\subprojects\DirectX-Headers.wrap IF %intmesaver% GEQ 21000 IF %toolchain%==msvc echo.
 @IF /I "%spirvtodxil%"=="y" set buildconf=%buildconf% -Dspirv-to-dxil=true
+@IF /I NOT "%spirvtodxil%"=="y" IF %intmesaver% GEQ 21000 set buildconf=%buildconf% -Dspirv-to-dxil=false
 
 @set /p gles=Do you want to build GLAPI as a shared library and standalone GLES libraries (y/n):
 @echo.
@@ -239,10 +246,10 @@
 @IF NOT EXIST %devroot%\llvm\%abi%\lib\pkgconfig set canopencl=0
 @IF NOT EXIST %devroot%\llvm\clc\share\pkgconfig set canopencl=0
 @IF NOT EXIST %devroot%\spirv-tools\%abi%\lib\pkgconfig set canopencl=0
-@IF %canopencl% EQU 1 set /p opencl=Build Mesa3D Microsoft OpenCL on D3D12 driver (y/):
+@IF %canopencl% EQU 1 set /p opencl=Build Mesa3D Microsoft OpenCL on D3D12 driver (y/n):
 @IF %canopencl% EQU 1 echo.
 @IF /I "%opencl%"=="y" set buildconf=%buildconf% --pkg-config-path=%devroot:\=/%/llvm/%abi%/lib/pkgconfig;%devroot:\=/%/llvm/clc/share/pkgconfig;%devroot:\=/%/spirv-tools/%abi%/lib/pkgconfig -Dmicrosoft-clc=enabled -Dstatic-libclc=all
-@IF /I NOT "%opencl%"=="y" set buildconf=%buildconf% -Dmicrosoft-clc=disabled
+@IF /I NOT "%opencl%"=="y" IF %intmesaver% GEQ 21000 set buildconf=%buildconf% -Dmicrosoft-clc=disabled
 
 @if defined LDFLAGS set buildconf=%buildconf% -Dc_link_args='%LDFLAGS%' -Dcpp_link_args='%LDFLAGS%'
 @if NOT %toolchain%==msvc set buildconf=%buildconf%"
