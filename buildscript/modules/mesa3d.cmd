@@ -122,10 +122,10 @@
 @if NOT %ninjastate%==0 IF %toolchain%==msvc echo.
 @if /I "%useninja%"=="y" if %ninjastate%==1 IF %toolchain%==msvc set PATH=%devroot%\ninja\;%PATH%
 @if /I "%useninja%"=="y" set buildconf=%buildconf% --backend=ninja
-@if /I "%useninja%"=="y" IF %toolchain%==msvc set buildcmd=ninja -C %devroot:\=/%/mesa/build/%abi% -j %throttle%
+@if /I "%useninja%"=="y" IF %toolchain%==msvc set buildcmd=ninja -C %devroot:\=/%/mesa/build/%abi% -j %throttle% -k 0
 @IF NOT %toolchain%==msvc set buildcmd=%msysloc%\usr\bin\bash --login -c "
 @IF NOT %toolchain%==msvc IF %gitstate% GTR 0 set buildcmd=%buildcmd%PATH=${PATH}:${gitloc};
-@IF NOT %toolchain%==msvc set buildcmd=%buildcmd%${MINGW_PREFIX}/bin/ninja -C $(/usr/bin/cygpath -m ${devroot})/mesa/build/${abi} -j ${throttle}"
+@IF NOT %toolchain%==msvc set buildcmd=%buildcmd%${MINGW_PREFIX}/bin/ninja -C $(/usr/bin/cygpath -m ${devroot})/mesa/build/${abi} -j ${throttle} -k 0"
 @if /I NOT "%useninja%"=="y" set buildconf=%buildconf% --backend=vs
 
 @set galliumcount=0
