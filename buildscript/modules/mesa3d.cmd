@@ -251,8 +251,9 @@
 @IF /I "%opencl%"=="y" set buildconf=%buildconf% --pkg-config-path=%devroot:\=/%/llvm/%abi%/lib/pkgconfig;%devroot:\=/%/llvm/clc/share/pkgconfig;%devroot:\=/%/spirv-tools/%abi%/lib/pkgconfig -Dmicrosoft-clc=enabled -Dstatic-libclc=all
 @IF /I NOT "%opencl%"=="y" IF %intmesaver% GEQ 21000 set buildconf=%buildconf% -Dmicrosoft-clc=disabled
 
-@if defined LDFLAGS set buildconf=%buildconf% -Dc_link_args='%LDFLAGS%' -Dcpp_link_args='%LDFLAGS%'
-@if NOT %toolchain%==msvc set buildconf=%buildconf%"
+@rem Pass additional linker flags
+@if %toolchain%==msvc if defined LDFLAGS set buildconf=%buildconf% -Dc_link_args="%LDFLAGS%" -Dcpp_link_args="%LDFLAGS%"
+@if NOT %toolchain%==msvc set buildconf=%buildconf% -Dc_link_args='%LDFLAGS%' -Dcpp_link_args='%LDFLAGS%'"
 
 @rem Load MSVC specific build dependencies
 @IF %toolchain%==msvc IF %flexstate%==1 set PATH=%devroot%\flexbison\;%PATH%
