@@ -58,7 +58,8 @@
 @forfiles /p %devroot%\mesa\build\%abi%\src /s /m *.json /c "cmd /c copy @path %devroot%\%projectname%\bin\%abi%"
 
 @rem Patch Vulkan drivers JSONs
-@IF EXIST %devroot%\%projectname%\bin\%abi%\lvp_icd.*.json call %devroot%\%projectname%\buildscript\modules\lavapipejson.cmd
+@IF EXIST %devroot%\%projectname%\bin\%abi%\lvp_icd.*.json call %devroot%\%projectname%\buildscript\modules\fixvulkanjsons.cmd lvp
+@IF EXIST %devroot%\%projectname%\bin\%abi%\radeon_icd.*.json call %devroot%\%projectname%\buildscript\modules\fixvulkanjsons.cmd radeon
 
 @rem Copy build development artifacts
 @xcopy %devroot%\mesa\build\%abi%\*.lib %devroot%\%projectname%\lib\%abi% /E /I /G
