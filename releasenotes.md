@@ -4,7 +4,8 @@
 - Mesa3D build: Keep going as far as possible on build failure;
 - Fix radv build with MinGW and disable it for 32-bit [21.2+].
 ### Distribution
-- Fix JSON for radv [21.2+].
+- Fix JSON for radv [21.2+];
+- Add version info to RADV [21.2+].
 ### Debugging
 - Remove obsolete scons MSVC sample.
 # 21.1.5

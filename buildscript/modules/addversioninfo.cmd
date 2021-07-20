@@ -27,6 +27,8 @@
 @call %devroot%\%projectname%\buildscript\modules\rcgen.cmd "Mesa3D standalone OpenGL ES 2.x and 3.x driver" %devroot%\%projectname%\bin\%abi%\libGLESv2.dll %abi% %mesaver% "Mesa/X.org"
 @rem Add version info to Mesa3D Vulkan software rendering driver
 @call %devroot%\%projectname%\buildscript\modules\rcgen.cmd "Mesa3D Vulkan software rendering driver" %devroot%\%projectname%\bin\%abi%\vulkan_lvp.dll %abi% %mesaver% "Mesa/X.org"
+@rem Add version info to Mesa3D Vulkan driver for AMD cards
+@call %devroot%\%projectname%\buildscript\modules\rcgen.cmd "Mesa3D Vulkan driver for AMD cards" %devroot%\%projectname%\bin\%abi%\vulkan_radeon.dll %abi% %mesaver% "Mesa/X.org"
 @rem Add version info to Mesa3D test framework
 @call %devroot%\%projectname%\buildscript\modules\rcgen.cmd "Mesa3D test framework with GDI window support" %devroot%\%projectname%\bin\%abi%\graw.dll %abi% %mesaver% "Mesa/X.org"
 @call %devroot%\%projectname%\buildscript\modules\rcgen.cmd "Mesa3D test framework without window support" %devroot%\%projectname%\bin\%abi%\graw_null.dll %abi% %mesaver% "Mesa/X.org"
