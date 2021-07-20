@@ -5,6 +5,8 @@
 - Fix radv build with MinGW and disable it for 32-bit [21.2+].
 ### Distribution
 - Fix JSON for radv [21.2+].
+### Debugging
+- Remove obsolete scons MSVC sample.
 # 21.1.5
 - Updated Mesa3D to [21.1.5](https://docs.mesa3d.org/relnotes/21.1.5.html).
 ### Build script
