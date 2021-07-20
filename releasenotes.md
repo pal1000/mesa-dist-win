@@ -1,7 +1,8 @@
 # Next release
 ### Build script
-- zink MSVC build: Fix Vulkan runtime delay load;
-- Mesa3D build: Keep going as far as possible on build failure.
+- zink MSVC build: Fix Vulkan runtime delay load [21.2+];
+- Mesa3D build: Keep going as far as possible on build failure;
+- Fix radv build with MinGW and disable it for 32-bit [21.2+].
 ### Distribution
 - Fix JSON for radv [21.2+].
 # 21.1.5

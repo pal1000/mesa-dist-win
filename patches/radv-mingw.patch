@@ -1,0 +1,120 @@
+diff --git a/src/amd/common/ac_gpu_info.c b/src/amd/common/ac_gpu_info.c
+index f7a9a5b5a47aedc4e2952ce5a30425fcee55a420..dea103bb758b0b8624737c6232b960ccdcd7a515 100644
+--- a/src/amd/common/ac_gpu_info.c
++++ b/src/amd/common/ac_gpu_info.c
+@@ -136,76 +136,76 @@ struct amdgpu_gpu_info {
+    uint32_t vce_harvest_config;
+    uint32_t pci_rev_id;
+ };
+-int drmGetCap(int fd, uint64_t capability, uint64_t *value)
++static int drmGetCap(int fd, uint64_t capability, uint64_t *value)
+ {
+    return -EINVAL;
+ }
+-void drmFreeDevice(drmDevicePtr *device)
++static void drmFreeDevice(drmDevicePtr *device)
+ {
+ }
+-int drmGetDevice2(int fd, uint32_t flags, drmDevicePtr *device)
++static int drmGetDevice2(int fd, uint32_t flags, drmDevicePtr *device)
+ {
+    return -ENODEV;
+ }
+-int amdgpu_bo_alloc(amdgpu_device_handle dev,
++static int amdgpu_bo_alloc(amdgpu_device_handle dev,
+    struct amdgpu_bo_alloc_request *alloc_buffer,
+    amdgpu_bo_handle *buf_handle)
+ {
+    return -EINVAL;
+ }
+-int amdgpu_bo_free(amdgpu_bo_handle buf_handle)
++static int amdgpu_bo_free(amdgpu_bo_handle buf_handle)
+ {
+    return -EINVAL;
+ }
+-int amdgpu_query_buffer_size_alignment(amdgpu_device_handle dev,
++static int amdgpu_query_buffer_size_alignment(amdgpu_device_handle dev,
+    struct amdgpu_buffer_size_alignments
+    *info)
+ {
+    return -EINVAL;
+ }
+-int amdgpu_query_firmware_version(amdgpu_device_handle dev, unsigned fw_type,
++static int amdgpu_query_firmware_version(amdgpu_device_handle dev, unsigned fw_type,
+    unsigned ip_instance, unsigned index,
+    uint32_t *version, uint32_t *feature)
+ {
+    return -EINVAL;
+ }
+-int amdgpu_query_hw_ip_info(amdgpu_device_handle dev, unsigned type,
++static int amdgpu_query_hw_ip_info(amdgpu_device_handle dev, unsigned type,
+    unsigned ip_instance,
+    struct drm_amdgpu_info_hw_ip *info)
+ {
+    return -EINVAL;
+ }
+-int amdgpu_query_heap_info(amdgpu_device_handle dev, uint32_t heap,
++static int amdgpu_query_heap_info(amdgpu_device_handle dev, uint32_t heap,
+    uint32_t flags, struct amdgpu_heap_info *info)
+ {
+    return -EINVAL;
+ }
+-int amdgpu_query_gpu_info(amdgpu_device_handle dev,
++static int amdgpu_query_gpu_info(amdgpu_device_handle dev,
+    struct amdgpu_gpu_info *info)
+ {
+    return -EINVAL;
+ }
+-int amdgpu_query_info(amdgpu_device_handle dev, unsigned info_id,
++static int amdgpu_query_info(amdgpu_device_handle dev, unsigned info_id,
+    unsigned size, void *value)
+ {
+    return -EINVAL;
+ }
+-int amdgpu_query_sw_info(amdgpu_device_handle dev, enum amdgpu_sw_info info,
++static int amdgpu_query_sw_info(amdgpu_device_handle dev, enum amdgpu_sw_info info,
+    void *value)
+ {
+    return -EINVAL;
+ }
+-int amdgpu_query_gds_info(amdgpu_device_handle dev,
++static int amdgpu_query_gds_info(amdgpu_device_handle dev,
+    struct amdgpu_gds_resource_info *gds_info)
+ {
+    return -EINVAL;
+ }
+-int amdgpu_query_video_caps_info(amdgpu_device_handle dev, unsigned cap_type,
++static int amdgpu_query_video_caps_info(amdgpu_device_handle dev, unsigned cap_type,
+                                  unsigned size, void *value)
+ {
+    return -EINVAL;
+ }
+-const char *amdgpu_get_marketing_name(amdgpu_device_handle dev)
++static const char *amdgpu_get_marketing_name(amdgpu_device_handle dev)
+ {
+    return NULL;
+ }
+diff --git a/src/amd/vulkan/meson.build b/src/amd/vulkan/meson.build
+index 629dd04c43146e0ca2c40b7fcececb0262ac0cea..898029866bef11370c7f531b1ad6972c5d1b36d4 100644
+--- a/src/amd/vulkan/meson.build
++++ b/src/amd/vulkan/meson.build
+@@ -138,7 +138,6 @@ endif
+ if with_platform_windows
+   radv_flags += [
+     '-DVK_USE_PLATFORM_WIN32_KHR',
+-    '-DVK_NO_PROTOTYPES',
+   ]
+ endif
+ 
+diff --git a/src/amd/vulkan/radv_device.c b/src/amd/vulkan/radv_device.c
+index 8f8a0194c01fe38faec2d7a74d1f5b36e68c4ec8..6dc532837eeb752989f9b7e72457d3dcd014e3b8 100644
+--- a/src/amd/vulkan/radv_device.c
++++ b/src/amd/vulkan/radv_device.c
+@@ -55,6 +55,7 @@ typedef void *drmDevicePtr;
+ #include "git_sha1.h"
+ #include "sid.h"
+ #include "vk_format.h"
++#include "vulkan/vk_icd.h"
+ 
+ /* The number of IBs per submit isn't infinite, it depends on the ring type
+  * (ie. some initial setup needed for a submit) and the number of IBs (4 DW).

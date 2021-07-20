@@ -85,6 +85,8 @@
 @IF %intmesaver:~0,3% EQU 211 IF %intmesaver% LSS 21151 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd lavapipe-mingw-crashfix
 @rem Fix lavapipe build with MSVC 32-bit
 @IF %intmesaver:~0,3% EQU 211 IF %intmesaver% LSS 21151 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd lavapipe-32-bit-msvc-buildfix
+@rem Fix radv MinGW build
+@IF %intmesaver% GEQ 21200 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd radv-mingw
 
 :configmesabuild
 @rem Configure Mesa build.
@@ -172,6 +174,7 @@
 @IF %galliumcount% GTR 0 set buildconf=%buildconf:~0,-1%
 
 @set mesavkcount=0
+@set msysregex=0
 
 @set lavapipe=n
 @set canlavapipe=1
@@ -181,7 +184,7 @@
 @IF %intmesaver:~0,3% EQU 211 IF %intmesaver% LSS 21151 IF %toolchain%==msvc if %abi%==x86 IF %disableootpatch%==1 set canlavapipe=0
 @IF %canlavapipe% EQU 1 set /p lavapipe=Build Mesa3D Vulkan software renderer (y/n):
 @IF %canlavapipe% EQU 1 echo.
-@if NOT %toolchain%==msvc if /I "%lavapipe%"=="y" set LDFLAGS=%LDFLAGS% -ltre -lintl -liconv
+@if NOT %toolchain%==msvc if /I "%lavapipe%"=="y" set msysregex=1
 @if /I "%lavapipe%"=="y" set /a mesavkcount+=1
 
 @set radv=n
@@ -189,15 +192,20 @@
 @if /I "%llvmless%"=="y" set canradv=0
 @IF %intmesaver% LSS 21200 set canradv=0
 @IF %toolchain%==msvc IF NOT EXIST %devroot%\llvm\%abi%\lib\LLVMAMDGPU*.lib set canradv=0
+@IF %abi%==x86 set canradv=0
+@IF NOT %toolchain%==msvc IF %disableootpatch%==1 set canradv=0
 @IF %canradv% EQU 1 set /p radv=Build AMD Vulkan driver - radv (y/n):
 @IF %canradv% EQU 1 echo.
-@if /I "%radv%"=="y" set buildconf=%buildconf% -Dc_std=c17 -Dcpp_std=vc++latest
+@if /I "%radv%"=="y" set buildconf=%buildconf% -Dc_std=c17
+@IF %toolchain%==msvc if /I "%radv%"=="y" set buildconf=%buildconf% -Dcpp_std=vc++latest
+@IF NOT %toolchain%==msvc if /I "%radv%"=="y" set msysregex=1
 @if /I "%radv%"=="y" set /a mesavkcount+=1
 
 @set buildconf=%buildconf% -Dvulkan-drivers=
 @if /I "%lavapipe%"=="y" set buildconf=%buildconf%swrast,
 @if /I "%radv%"=="y" set buildconf=%buildconf%amd,
 @IF %mesavkcount% GTR 0 set buildconf=%buildconf:~0,-1%
+@IF %msysregex%==1 set LDFLAGS=%LDFLAGS% -ltre -lintl -liconv
 
 @set d3d10umd=n
 @IF %intmesaver% GEQ 21200 if /I "%glswrast%"=="y" set /p d3d10umd=Build Mesa3D D3D10 software renderer (y/n):
