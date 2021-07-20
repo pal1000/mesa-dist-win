@@ -1,5 +1,5 @@
 diff --git a/src/amd/common/ac_gpu_info.c b/src/amd/common/ac_gpu_info.c
-index f7a9a5b5a47aedc4e2952ce5a30425fcee55a420..dea103bb758b0b8624737c6232b960ccdcd7a515 100644
+index 63c2058862b6c7976af17c8ec3e676e2d2e7fba4..603dec595f7758487c9b4dcadb4aeb404e7c113c 100644
 --- a/src/amd/common/ac_gpu_info.c
 +++ b/src/amd/common/ac_gpu_info.c
 @@ -136,76 +136,76 @@ struct amdgpu_gpu_info {
@@ -95,10 +95,10 @@ index f7a9a5b5a47aedc4e2952ce5a30425fcee55a420..dea103bb758b0b8624737c6232b960cc
     return NULL;
  }
 diff --git a/src/amd/vulkan/meson.build b/src/amd/vulkan/meson.build
-index 629dd04c43146e0ca2c40b7fcececb0262ac0cea..898029866bef11370c7f531b1ad6972c5d1b36d4 100644
+index f3c4363d794c4feb8017a1a8f232a6afdd6e738b..c6a38cbb9fafe3a4086311ab71a284d2326c9822 100644
 --- a/src/amd/vulkan/meson.build
 +++ b/src/amd/vulkan/meson.build
-@@ -138,7 +138,6 @@ endif
+@@ -139,7 +139,6 @@ endif
  if with_platform_windows
    radv_flags += [
      '-DVK_USE_PLATFORM_WIN32_KHR',
@@ -106,11 +106,24 @@ index 629dd04c43146e0ca2c40b7fcececb0262ac0cea..898029866bef11370c7f531b1ad6972c
    ]
  endif
  
+@@ -153,9 +152,12 @@ if with_llvm and with_ld_version_script
+   libvulkan_radeon_link_depends += files('vulkan.sym')
+ endif
+ 
++vulkan_radv_def = 'vulkan_radv.def'
++
+ libvulkan_radeon = shared_library(
+   'vulkan_radeon',
+   [libradv_files, radv_entrypoints, sha1_h],
++  vs_module_defs : vulkan_radv_def,
+   include_directories : [
+     inc_include, inc_src, inc_mapi, inc_mesa, inc_gallium, inc_gallium_aux, inc_amd, inc_amd_common, inc_amd_common_llvm, inc_compiler, inc_util, inc_vulkan_wsi,
+   ],
 diff --git a/src/amd/vulkan/radv_device.c b/src/amd/vulkan/radv_device.c
-index 8f8a0194c01fe38faec2d7a74d1f5b36e68c4ec8..6dc532837eeb752989f9b7e72457d3dcd014e3b8 100644
+index ecddf35873830e6254bba2c35269855a75a87ca5..0f431475272b829249943911b59b32ae09492de8 100644
 --- a/src/amd/vulkan/radv_device.c
 +++ b/src/amd/vulkan/radv_device.c
-@@ -55,6 +55,7 @@ typedef void *drmDevicePtr;
+@@ -62,6 +62,7 @@ typedef void *drmDevicePtr;
  #include "git_sha1.h"
  #include "sid.h"
  #include "vk_format.h"
@@ -118,3 +131,37 @@ index 8f8a0194c01fe38faec2d7a74d1f5b36e68c4ec8..6dc532837eeb752989f9b7e72457d3dc
  
  /* The number of IBs per submit isn't infinite, it depends on the ring type
   * (ie. some initial setup needed for a submit) and the number of IBs (4 DW).
+@@ -5193,14 +5194,12 @@ radv_GetInstanceProcAddr(VkInstance _instance, const char *pName)
+ /* The loader wants us to expose a second GetInstanceProcAddr function
+  * to work around certain LD_PRELOAD issues seen in apps.
+  */
+-PUBLIC
+ VKAPI_ATTR PFN_vkVoidFunction VKAPI_CALL
+ vk_icdGetInstanceProcAddr(VkInstance instance, const char *pName)
+ {
+    return radv_GetInstanceProcAddr(instance, pName);
+ }
+ 
+-PUBLIC
+ VKAPI_ATTR PFN_vkVoidFunction VKAPI_CALL
+ vk_icdGetPhysicalDeviceProcAddr(VkInstance _instance, const char *pName)
+ {
+@@ -7367,7 +7366,7 @@ radv_DestroySampler(VkDevice _device, VkSampler _sampler, const VkAllocationCall
+    vk_free2(&device->vk.alloc, pAllocator, sampler);
+ }
+ 
+-PUBLIC VKAPI_ATTR VkResult VKAPI_CALL
++VKAPI_ATTR VkResult VKAPI_CALL
+ vk_icdNegotiateLoaderICDInterfaceVersion(uint32_t *pSupportedVersion)
+ {
+    /* For the full details on loader interface versioning, see
+diff --git a/src/amd/vulkan/vulkan_radv.def b/src/amd/vulkan/vulkan_radv.def
+new file mode 100644
+index 0000000000000000000000000000000000000000..64a9caae59398a4768f663f18f8598476991f85c
+--- /dev/null
++++ b/src/amd/vulkan/vulkan_radv.def
+@@ -0,0 +1,4 @@
++EXPORTS
++vk_icdNegotiateLoaderICDInterfaceVersion
++vk_icdGetInstanceProcAddr
++vk_icdGetPhysicalDeviceProcAddr

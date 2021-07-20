@@ -56,6 +56,7 @@
 @IF EXIST %devroot%\%projectname%\bin\%abi%\openglon12.dll IF /I NOT %PROCESSOR_ARCHITECTURE%==AMD64 copy "%ProgramFiles%\Windows Kits\10\Redist\D3D\%abi%\dxil.dll" %devroot%\%projectname%\bin\%abi%
 @forfiles /p %devroot%\mesa\build\%abi%\src /s /m *.exe /c "cmd /c copy @path %devroot%\%projectname%\bin\%abi%"
 @forfiles /p %devroot%\mesa\build\%abi%\src /s /m *.json /c "cmd /c copy @path %devroot%\%projectname%\bin\%abi%"
+@IF EXIST %devroot%\%projectname%\bin\%abi%\libvulkan_radeon.dll REN %devroot%\%projectname%\bin\%abi%\libvulkan_radeon.dll vulkan_radeon.dll
 
 @rem Patch Vulkan drivers JSONs
 @IF EXIST %devroot%\%projectname%\bin\%abi%\lvp_icd.*.json call %devroot%\%projectname%\buildscript\modules\fixvulkanjsons.cmd lvp
