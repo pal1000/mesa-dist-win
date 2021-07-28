@@ -3,7 +3,7 @@
 - zink MSVC build: Fix Vulkan runtime delay load [21.2+];
 - Mesa3D build: Keep going as far as possible on build failure;
 - Fix radv build with MinGW and disable it for 32-bit [21.2+];
-- Fix d3d10sw build and enforce its dependency on WDK.
+- Fix d3d10sw build and enforce its dependency on WDK [21.2+].
 ### Distribution
 - Fix JSON for radv [21.2+];
 - Add version info to RADV [21.2+];

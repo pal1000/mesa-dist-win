@@ -31,7 +31,7 @@ set rhver=%%a
 @IF %rhstate% GTR 0 IF %toolchain%==msvc echo Ressource Hacker %rhver:,=.%>>%devroot%\%projectname%\buildinfo\msvc.txt
 
 @rem Dump 7-Zip version and compression level
-@set sevenzipver=21.02
+@set sevenzipver=21.03
 @IF NOT %toolchain%==msvc echo 7-Zip %sevenzipver% ultra compression>>%devroot%\%projectname%\buildinfo\mingw.txt
 @IF %toolchain%==msvc echo 7-Zip %sevenzipver% ultra compression>>%devroot%\%projectname%\buildinfo\msvc.txt
 
