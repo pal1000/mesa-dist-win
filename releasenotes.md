@@ -6,7 +6,7 @@
 - Fix d3d10sw build and enforce its dependency on WDK [21.2+].
 ### Distribution
 - Fix JSON for radv [21.2+];
-- Add version info to RADV [21.2+];
+- Add version info to RADV and d3d10sw [21.2+];
 - DirectX IL for redistribution deployment: Windows 11 SDK compatibility.
 ### Debugging
 - Remove obsolete scons MSVC sample.

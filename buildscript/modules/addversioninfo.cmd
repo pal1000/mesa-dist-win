@@ -29,6 +29,8 @@
 @call %devroot%\%projectname%\buildscript\modules\rcgen.cmd "Mesa3D Vulkan software rendering driver" %devroot%\%projectname%\bin\%abi%\vulkan_lvp.dll %abi% %mesaver% "Mesa/X.org"
 @rem Add version info to Mesa3D Vulkan driver for AMD cards
 @call %devroot%\%projectname%\buildscript\modules\rcgen.cmd "Mesa3D Vulkan driver for AMD cards" %devroot%\%projectname%\bin\%abi%\vulkan_radeon.dll %abi% %mesaver% "Mesa/X.org"
+@rem Add version info to Mesa3D D3D10 software rendering driver
+@call %devroot%\%projectname%\buildscript\modules\rcgen.cmd "Mesa3D D3D10 software rendering driver" %devroot%\%projectname%\bin\%abi%\d3d10sw.dll %abi% %mesaver% "VMware Inc."
 @rem Add version info to Mesa3D test framework
 @call %devroot%\%projectname%\buildscript\modules\rcgen.cmd "Mesa3D test framework with GDI window support" %devroot%\%projectname%\bin\%abi%\graw.dll %abi% %mesaver% "Mesa/X.org"
 @call %devroot%\%projectname%\buildscript\modules\rcgen.cmd "Mesa3D test framework without window support" %devroot%\%projectname%\bin\%abi%\graw_null.dll %abi% %mesaver% "Mesa/X.org"
@@ -41,6 +43,7 @@
 @call %devroot%\%projectname%\buildscript\modules\rcgen.cmd "Mesa3D off-screen rendering classic driver" %devroot%\%projectname%\bin\%abi%\osmesa-swrast\osmesa.dll %abi% %mesaver% "Mesa/X.org"
 @call %devroot%\%projectname%\buildscript\modules\rcgen.cmd "Mesa3D off-screen rendering gallium driver" %devroot%\%projectname%\bin\%abi%\osmesa-gallium\osmesa.dll %abi% %mesaver% "Mesa/X.org"
 @call %devroot%\%projectname%\buildscript\modules\rcgen.cmd "Mesa3D off-screen rendering gallium driver" %devroot%\%projectname%\bin\%abi%\osmesa.dll %abi% %mesaver% "Mesa/X.org"
+@rem Add version info to Microsoft SPIR-V to DXIL library
 @call %devroot%\%projectname%\buildscript\modules\rcgen.cmd "Microsoft SPIR-V to DXIL library" %devroot%\%projectname%\bin\%abi%\spirv_to_dxil.dll %abi% %mesaver% "Microsoft Corporation"
 
 @echo Done
