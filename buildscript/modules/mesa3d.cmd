@@ -87,6 +87,8 @@
 @IF %intmesaver:~0,3% EQU 211 IF %intmesaver% LSS 21151 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd lavapipe-32-bit-msvc-buildfix
 @rem Fix radv MinGW build
 @IF %intmesaver% GEQ 21200 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd radv-mingw
+@rem Fix d3d10sw MSVC build
+@IF %intmesaver% GEQ 21200 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd d3d10sw
 
 :configmesabuild
 @rem Configure Mesa build.
@@ -208,8 +210,10 @@
 @IF %msysregex%==1 set LDFLAGS=%LDFLAGS% -ltre -lintl -liconv
 
 @set d3d10umd=n
-@IF %intmesaver% GEQ 21200 if /I "%glswrast%"=="y" set /p d3d10umd=Build Mesa3D D3D10 software renderer (y/n):
-@IF %intmesaver% GEQ 21200 if /I "%glswrast%"=="y" echo.
+@set cand3d10umd=0
+@IF %intmesaver% GEQ 21200 if /I "%glswrast%"=="y" IF %disableootpatch% EQU 0 IF %toolchain%==msvc for /f tokens^=^* %%a in ('@call %devroot%\%projectname%\buildscript\modules\winsdk.cmd wdk') do @IF "%%a"=="OK" set cand3d10umd=1
+@IF %cand3d10umd% EQU 1 set /p d3d10umd=Build Mesa3D D3D10 software renderer (y/n):
+@IF %cand3d10umd% EQU 1 echo.
 @if /I "%d3d10umd%"=="y" set buildconf=%buildconf% -Dgallium-d3d10umd=true
 @if /I NOT "%d3d10umd%"=="y" IF %intmesaver% GEQ 21200 set buildconf=%buildconf% -Dgallium-d3d10umd=false
 

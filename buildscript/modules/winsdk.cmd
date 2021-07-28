@@ -7,7 +7,10 @@
 @IF "!dxilloc:~-1!"=="\" set dxilloc=!dxilloc:~0,-1!
 @IF !dxilloc:~-3!==%abi% echo "!dxilloc!\dxil.dll"
 )
-@IF NOT "%winsdk%"=="null" IF "%1"=="wdk" IF EXIST %devroot%\mesa\include\winddk\.gitignore echo Acquiring WDK headers...
-@IF NOT "%winsdk%"=="null" IF "%1"=="wdk" IF EXIST %devroot%\mesa\include\winddk\.gitignore for /f tokens^=^* %%a in (%devroot%\mesa\include\winddk\.gitignore) do @for /f tokens^=^* %%b in ('dir /b /s "%winsdk%\%%a"') do @if /I "%%~nxa"=="%%~nxb" copy /Y "%%b" %devroot%\mesa\include\winddk
-@IF NOT "%winsdk%"=="null" IF "%1"=="wdk" IF EXIST %devroot%\mesa\include\winddk\.gitignore echo.
+@IF NOT "%winsdk%"=="null" IF "%1"=="wdk" IF EXIST %devroot%\mesa\include\winddk\.gitignore set winwdkcount=0
+@IF NOT "%winsdk%"=="null" IF "%1"=="wdk" IF EXIST %devroot%\mesa\include\winddk\.gitignore for /f tokens^=^* %%a in (%devroot%\mesa\include\winddk\.gitignore) do @(
+set /a winwdkcount-=1
+for /f tokens^=^* %%b in ('dir /b /s "%winsdk%\%%a" 2^>nul') do @if /I "%%~nxa"=="%%~nxb" set /a winwdkcount+=1
+)
+@IF "%winwdkcount%"=="0" echo OK
 @IF "%winsdk%"=="null" IF NOT "%1"=="" echo null
