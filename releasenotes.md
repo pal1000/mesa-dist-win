@@ -1,4 +1,5 @@
-# Next release
+# 21.1.6
+- Updated Mesa3D to [21.1.6](https://docs.mesa3d.org/relnotes/21.1.6.html).
 ### Build script
 - zink MSVC build: Fix Vulkan runtime delay load [21.2+];
 - Mesa3D build: Keep going as far as possible on build failure;
