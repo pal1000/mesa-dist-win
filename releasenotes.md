@@ -1,3 +1,6 @@
+# Next release
+### Build script
+- Always use C17 and VC++latest standards [21.2+].
 # 21.1.6
 - Updated Mesa3D to [21.1.6](https://docs.mesa3d.org/relnotes/21.1.6.html).
 ### Build script
@@ -20,7 +23,7 @@
 - Support AMD Vulkan driver - radv [21.2+];
 - Support Mesa3D D3D10 software renderer [21.2+];
 - Misc incremental build fixes.
-### Build environmment information
+### Build environment information
 - Add LunarG Vulkan SDK version to MSVC build environmment information.
 ### Dependencies
 - Fetch LLVM 12.0.1 if LLVM source code is missing.

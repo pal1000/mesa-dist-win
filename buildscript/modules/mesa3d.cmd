@@ -98,7 +98,9 @@
 @IF /I "%cleanmesabld%"=="y" RD /S /Q build\%abi%
 @IF /I NOT "%cleanmesabld%"=="y" if EXIST build\%abi% set buildconf=%mesonloc% configure
 @set buildconf=%buildconf% build/%abi% --buildtype=release -Db_ndebug=true --prefix=%devroot:\=/%/%projectname%/dist/%abi%
+@IF %intmesaver% GEQ 21200 set buildconf=%buildconf% -Dc_std=c17
 @IF %toolchain%==msvc set buildconf=%buildconf% -Db_vscrt=mt -Dzlib:default_library=static
+@IF %toolchain%==msvc IF %intmesaver% GEQ 21200 set buildconf=%buildconf% -Dcpp_std=vc++latest
 @IF NOT %toolchain%==msvc set buildconf=%buildconf% -Dc_args='-march=core2 -pipe' -Dcpp_args='-march=core2 -pipe'
 @IF NOT %toolchain%==msvc set LDFLAGS=-static -s
 @IF NOT %toolchain%==msvc IF %intmesaver% GTR 20000 set buildconf=%buildconf% -Dzstd=%mesonbooltrue%
@@ -198,8 +200,6 @@
 @IF NOT %toolchain%==msvc IF %disableootpatch%==1 set canradv=0
 @IF %canradv% EQU 1 set /p radv=Build AMD Vulkan driver - radv (y/n):
 @IF %canradv% EQU 1 echo.
-@if /I "%radv%"=="y" set buildconf=%buildconf% -Dc_std=c17
-@IF %toolchain%==msvc if /I "%radv%"=="y" set buildconf=%buildconf% -Dcpp_std=vc++latest
 @IF NOT %toolchain%==msvc if /I "%radv%"=="y" set msysregex=1
 @if /I "%radv%"=="y" set /a mesavkcount+=1
 
