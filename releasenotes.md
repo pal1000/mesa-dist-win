@@ -1,7 +1,8 @@
 # Next release
 ### Build script
 - Always use C17 and VC++latest standards [21.2+];
-- Make sure libelf is up to date [21.2+].
+- Make sure libelf is up to date [21.2+];
+- Removve dead code related to regex dependency.
 # 21.1.6
 - Updated Mesa3D to [21.1.6](https://docs.mesa3d.org/relnotes/21.1.6.html).
 ### Build script

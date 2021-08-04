@@ -124,15 +124,5 @@ echo.
 cd /D %devroot%\mesa
 )
 
-:libsystre
-@IF %toolchain%==msvc GOTO donewrap
-@CMD /C EXIT 0
-@FC /B %devroot%\%projectname%\buildscript\mesonsubprojects\regex-%abi%.pc %msysloc%\%MSYSTEM%\lib\pkgconfig\regex.pc>NUL 2>&1
-@if NOT "%ERRORLEVEL%"=="0" (
-@echo Fixing regex dependency...
-@copy /Y %devroot%\%projectname%\buildscript\mesonsubprojects\regex-%abi%.pc %msysloc%\%MSYSTEM%\lib\pkgconfig\regex.pc
-@echo.
-)
-
 :donewrap
 @endlocal&set RTTI=%RTTI%&set llvmconfigbusted=%llvmconfigbusted%
