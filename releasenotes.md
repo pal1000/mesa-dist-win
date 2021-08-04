@@ -4,7 +4,8 @@
 - Make sure libelf is up to date [21.2+];
 - Remove dead code related to regex dependency;
 - Enforce RADV dependency on libelf [21.2];
-- LLVM: Save time by not offering to build AMDGPU target on 32-bit as RADV is unsupported in this scenario [21.2].
+- LLVM: Save time by not offering to build AMDGPU target on 32-bit as RADV is unsupported in this scenario [21.2];
+- Improve code for patch reversal.
 # 21.1.6
 - Updated Mesa3D to [21.1.6](https://docs.mesa3d.org/relnotes/21.1.6.html).
 ### Build script

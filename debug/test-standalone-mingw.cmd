@@ -10,6 +10,7 @@
 @call %devroot%\mesa-dist-win\buildscript\modules\pythonpackages.cmd
 @cd mesa
 @git checkout .
+@git clean -fd
 @copy /Y %devroot%\mesa-dist-win\buildscript\mesonsubprojects\zlib.wrap %devroot%\mesa\subprojects\zlib.wrap
 @echo.
 @set buildconf=meson build/%abi% -Dbuildtype=debugoptimized -Dllvm=disabled -Dzlib:default_library=static -Dgallium-drivers=swrast,zink

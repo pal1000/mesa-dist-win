@@ -7,6 +7,7 @@
 @call %devroot%\mesa-dist-win\buildscript\modules\pythonpackages.cmd
 @cd mesa
 @git checkout .
+@git clean -fd
 @echo.
 @set buildconf=meson build/%abi% --buildtype=release --cross-file=%devroot:\=/%/mesa-dist-win/buildscript/mesonconffiles/%abi%-clang.txt -Dllvm=false
 @set buildcmd=ninja -C build/%abi% -j 2

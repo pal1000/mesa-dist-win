@@ -60,6 +60,7 @@
 @IF %disableootpatch%==1 IF %intmesaver% GEQ 20100 IF %intmesaver% LSS 20103 IF NOT %toolchain%==msvc GOTO skipmesa
 @IF %disableootpatch%==1 if NOT %gitstate%==0 echo Reverting out of tree patches...
 @IF %disableootpatch%==1 if NOT %gitstate%==0 git checkout .
+@IF %disableootpatch%==1 if NOT %gitstate%==0 git clean -fd
 @IF %disableootpatch%==1 if NOT %gitstate%==0 echo.
 @IF %disableootpatch%==1 GOTO configmesabuild
 
