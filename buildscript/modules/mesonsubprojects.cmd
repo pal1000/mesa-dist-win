@@ -58,7 +58,7 @@ echo irbuilder_h ^= files^(llvmloc + '/include/llvm/IR/IRBuilder.h'^)
 @copy /Y %devroot%\%projectname%\buildscript\mesonsubprojects\zlib.wrap %devroot%\mesa\subprojects\zlib.wrap
 @echo.
 )
-@IF %toolchain%==msvc GOTO dxheaderswrap
+@IF %toolchain%==msvc GOTO otherwraps
 
 @rem MinGW
 @rem Override zlib dependency
@@ -107,10 +107,18 @@ echo meson.override_dependency^('libzstd', zstd_override^)
 @echo.
 )
 
-:dxheaderswrap
+:otherwraps
 @for /d %%a in ("%devroot%\mesa\subprojects\DirectX-Headers-*") do @IF EXIST "%%~a" IF %gitstate% GTR 0 (
 cd /D "%%~a"
 echo Refreshing DirectX-Headers...
+git pull -v --progress --recurse-submodules origin
+echo.
+cd /D %devroot%\mesa
+)
+
+@for /d %%a in ("%devroot%\mesa\subprojects\libelf-lfg-win32-*") do @IF EXIST "%%~a" IF %gitstate% GTR 0 (
+cd /D "%%~a"
+echo Refreshing libelf for Windows...
 git pull -v --progress --recurse-submodules origin
 echo.
 cd /D %devroot%\mesa
