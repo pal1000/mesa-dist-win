@@ -1,4 +1,5 @@
-# Next release
+# 21.2.0
+- Updated Mesa3D to [21.2.0](https://docs.mesa3d.org/relnotes/21.2.0.html).
 ### Build script
 - Always use C17 and VC++latest standards;
 - Make sure libelf is up to date;
