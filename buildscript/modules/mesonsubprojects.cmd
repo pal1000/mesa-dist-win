@@ -123,8 +123,8 @@ cd /D %devroot%\mesa
 @copy /Y %devroot%\%projectname%\buildscript\mesonsubprojects\libelf.wrap %devroot%\mesa\subprojects\libelf.wrap
 @echo.
 )
-@for /d %%a in ("%devroot%\mesa\subprojects\libelf-lfg-win32") do @IF EXIST "%%~a" IF %gitstate% GTR 0 (
-cd /D "%%~a"
+@IF EXIST %devroot%\mesa\subprojects\libelf-lfg-win32 IF %gitstate% GTR 0 (
+@cd /D %devroot%\mesa\subprojects\libelf-lfg-win32
 echo Refreshing libelf for Windows...
 git pull -v --progress --recurse-submodules origin
 echo.
