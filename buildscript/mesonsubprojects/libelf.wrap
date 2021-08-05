@@ -1,0 +1,5 @@
+[wrap-git]
+directory = libelf-lfg-win32
+
+url = https://github.com/LagFreeGames/libelf-lfg-win32.git
+revision = head

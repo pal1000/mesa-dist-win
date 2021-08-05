@@ -116,7 +116,14 @@ echo.
 cd /D %devroot%\mesa
 )
 
-@for /d %%a in ("%devroot%\mesa\subprojects\libelf-lfg-win32-*") do @IF EXIST "%%~a" IF %gitstate% GTR 0 (
+@CMD /C EXIT 0
+@FC /B %devroot%\%projectname%\buildscript\mesonsubprojects\libelf.wrap %devroot%\mesa\subprojects\libelf.wrap>NUL 2>&1
+@if NOT "%ERRORLEVEL%"=="0" (
+@echo Switching libelf to full clone with master branch pre-fetched...
+@copy /Y %devroot%\%projectname%\buildscript\mesonsubprojects\libelf.wrap %devroot%\mesa\subprojects\libelf.wrap
+@echo.
+)
+@for /d %%a in ("%devroot%\mesa\subprojects\libelf-lfg-win32") do @IF EXIST "%%~a" IF %gitstate% GTR 0 (
 cd /D "%%~a"
 echo Refreshing libelf for Windows...
 git pull -v --progress --recurse-submodules origin

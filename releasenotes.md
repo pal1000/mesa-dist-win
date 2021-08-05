@@ -1,10 +1,10 @@
 # Next release
 ### Build script
-- Always use C17 and VC++latest standards [21.2+];
-- Make sure libelf is up to date [21.2+];
+- Always use C17 and VC++latest standards;
+- Make sure libelf is up to date;
 - Remove dead code related to regex dependency;
-- Enforce RADV dependency on libelf [21.2];
-- LLVM: Save time by not offering to build AMDGPU target on 32-bit as RADV is unsupported in this scenario [21.2];
+- Enforce RADV dependency on libelf;
+- LLVM: Save time by not offering to build AMDGPU target on 32-bit as RADV is unsupported in this scenario;
 - Improve code for patch reversal.
 # 21.1.6
 - Updated Mesa3D to [21.1.6](https://docs.mesa3d.org/relnotes/21.1.6.html).
