@@ -1,5 +1,14 @@
 @setlocal
 
+@rem Refreshing DirectX-Headers if found
+@for /d %%a in ("%devroot%\mesa\subprojects\DirectX-Headers-*") do @IF EXIST "%%~a" IF %gitstate% GTR 0 (
+cd /D "%%~a"
+echo Refreshing DirectX-Headers...
+git pull -v --progress --recurse-submodules origin
+echo.
+cd /D %devroot%\mesa
+)
+
 @rem Find LLVM dependency
 @set RTTI=false
 @set llvmconfigbusted=0
@@ -9,7 +18,7 @@ IF /I "%%a"=="YES" SET RTTI=true
 IF /I NOT "%%a"=="YES" IF /I NOT "%%a"=="NO" set llvmconfigbusted=1
 )
 @IF %llvmconfigbusted% EQU 0 IF EXIST "%devroot%\mesa\subprojects\llvm\" RD /S /Q %devroot%\mesa\subprojects\llvm
-@IF %llvmconfigbusted% EQU 0 GOTO compressionwrap
+@IF %llvmconfigbusted% EQU 0 GOTO msvcwraps
 
 @rem llvmlibs must match the output of 'llvm-config --link-static --libnames engine coroutines' stripped of ending newline.
 @rem Current llvmlibs is valid for LLVM 12.* series.
@@ -47,20 +56,42 @@ echo irbuilder_h ^= files^(llvmloc + '/include/llvm/IR/IRBuilder.h'^)
 @echo.
 )
 
-:compressionwrap
-@rem MSVC
-@IF %toolchain%==msvc IF EXIST "%devroot%\mesa\subprojects\zlib\" RD /S /Q %devroot%\mesa\subprojects\zlib
-@IF %toolchain%==msvc IF EXIST "%devroot%\mesa\subprojects\libzstd\" RD /S /Q %devroot%\mesa\subprojects\libzstd
+:msvcwraps
+@IF NOT %toolchain%==msvc GOTO mingwwraps
+@IF EXIST "%devroot%\mesa\subprojects\zlib\" RD /S /Q %devroot%\mesa\subprojects\zlib
+@IF EXIST "%devroot%\mesa\subprojects\libzstd\" RD /S /Q %devroot%\mesa\subprojects\libzstd
+
+@rem Use updated zlib wrap
 @CMD /C EXIT 0
-@IF %toolchain%==msvc FC /B %devroot%\%projectname%\buildscript\mesonsubprojects\zlib.wrap %devroot%\mesa\subprojects\zlib.wrap>NUL 2>&1
+@FC /B %devroot%\%projectname%\buildscript\mesonsubprojects\zlib.wrap %devroot%\mesa\subprojects\zlib.wrap>NUL 2>&1
 @if NOT "%ERRORLEVEL%"=="0" (
 @echo Using wrap file version 1.2.11-5 from Meson wrapdb to build zlib...
 @copy /Y %devroot%\%projectname%\buildscript\mesonsubprojects\zlib.wrap %devroot%\mesa\subprojects\zlib.wrap
 @echo.
 )
-@IF %toolchain%==msvc GOTO otherwraps
 
-@rem MinGW
+@rem Use up-to-date libelf-lfg-win32
+@CMD /C EXIT 0
+@FC /B %devroot%\%projectname%\buildscript\mesonsubprojects\libelf.wrap %devroot%\mesa\subprojects\libelf.wrap>NUL 2>&1
+@if NOT "%ERRORLEVEL%"=="0" (
+@echo Switching libelf to full clone with master branch pre-fetched...
+@copy /Y %devroot%\%projectname%\buildscript\mesonsubprojects\libelf.wrap %devroot%\mesa\subprojects\libelf.wrap
+@echo.
+)
+@IF EXIST %devroot%\mesa\subprojects\libelf-lfg-win32 IF %gitstate% GTR 0 (
+@cd /D %devroot%\mesa\subprojects\libelf-lfg-win32
+echo Refreshing libelf for Windows...
+git pull -v --progress --recurse-submodules origin
+echo.
+cd /D %devroot%\mesa
+)
+
+:mingwwraps
+@IF %toolchain%==msvc GOTO donewrap
+@rem Use runtime MinGW libelf dependency
+@for /d %%a in ("%devroot%\mesa\subprojects\libelf-*") do @RD /S /Q "%%~a"
+@IF EXIST %devroot%\mesa\subprojects\libelf.wrap del %devroot%\mesa\subprojects\libelf.wrap
+
 @rem Override zlib dependency
 @for /d %%a in ("%devroot%\mesa\subprojects\zlib-*") do @RD /S /Q "%%~a"
 @IF EXIST %devroot%\mesa\subprojects\zlib.wrap del %devroot%\mesa\subprojects\zlib.wrap
@@ -105,30 +136,6 @@ echo meson.override_dependency^('libzstd', zstd_override^)
 @echo Overriding ZSTD dependency...
 @copy /Y %devroot%\%projectname%\buildscript\mesonsubprojects\zstd-meson.build %devroot%\mesa\subprojects\libzstd\meson.build
 @echo.
-)
-
-:otherwraps
-@for /d %%a in ("%devroot%\mesa\subprojects\DirectX-Headers-*") do @IF EXIST "%%~a" IF %gitstate% GTR 0 (
-cd /D "%%~a"
-echo Refreshing DirectX-Headers...
-git pull -v --progress --recurse-submodules origin
-echo.
-cd /D %devroot%\mesa
-)
-
-@CMD /C EXIT 0
-@FC /B %devroot%\%projectname%\buildscript\mesonsubprojects\libelf.wrap %devroot%\mesa\subprojects\libelf.wrap>NUL 2>&1
-@if NOT "%ERRORLEVEL%"=="0" (
-@echo Switching libelf to full clone with master branch pre-fetched...
-@copy /Y %devroot%\%projectname%\buildscript\mesonsubprojects\libelf.wrap %devroot%\mesa\subprojects\libelf.wrap
-@echo.
-)
-@IF EXIST %devroot%\mesa\subprojects\libelf-lfg-win32 IF %gitstate% GTR 0 (
-@cd /D %devroot%\mesa\subprojects\libelf-lfg-win32
-echo Refreshing libelf for Windows...
-git pull -v --progress --recurse-submodules origin
-echo.
-cd /D %devroot%\mesa
 )
 
 :donewrap
