@@ -3,9 +3,9 @@ Build environment
 Windows 10.0.19043
 Ressource Hacker 5.1.8.360
 7-Zip 21.03 ultra compression
-Git 2.32.0.2
+Git 2.33.0.1
 LunarG Vulkan SDK 1.2.182.0
-Visual Studio Community 2019 v16.10.4
+Visual Studio Community 2019 v16.11.1
 Windows SDK 10.0.22000.0
 Python 3.9.6
 
@@ -13,8 +13,8 @@ Python packages
 ---------------
 Mako       1.1.4
 MarkupSafe 2.0.1
-meson      0.59.0
-pip        21.2.2
+meson      0.59.1
+pip        21.2.4
 setuptools 57.4.0
 
 CMake 3.21.1

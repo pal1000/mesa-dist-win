@@ -1,4 +1,5 @@
-# Next release
+# 21.2.1
+- Updated Mesa3D to [21.2.1](https://docs.mesa3d.org/relnotes/21.2.1.html).
 ### Build script
 - MinGW: Build RADV with mingw-w64-libelf instead of libelf-lfg-win32.
 ### End-user guide
