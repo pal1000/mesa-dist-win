@@ -1,5 +1,5 @@
 diff --git a/src/amd/common/ac_gpu_info.c b/src/amd/common/ac_gpu_info.c
-index 63c2058862b6c7976af17c8ec3e676e2d2e7fba4..603dec595f7758487c9b4dcadb4aeb404e7c113c 100644
+index 571995b437239b95cb9233dcccaf214d1f337f18..7bb4fbb08f0ace46cc0a546f2846d5f079dab56b 100644
 --- a/src/amd/common/ac_gpu_info.c
 +++ b/src/amd/common/ac_gpu_info.c
 @@ -136,76 +136,76 @@ struct amdgpu_gpu_info {
@@ -120,7 +120,7 @@ index 3bd5e0b812ead3424b6873ece1805913832d3068..f0e4a0a1ad0cb3ac2d0a221302722f72
      inc_include, inc_src, inc_mapi, inc_mesa, inc_gallium, inc_gallium_aux, inc_amd, inc_amd_common, inc_amd_common_llvm, inc_compiler, inc_util, inc_vulkan_wsi,
    ],
 diff --git a/src/amd/vulkan/radv_device.c b/src/amd/vulkan/radv_device.c
-index 29f1c30b6a458e8ae4804ee0d3d843ecdd5429e3..48a73a91ad8bd386fe743eb6b6ba181cb77d8c35 100644
+index 656c0ba5c13fab4a8c27e7056be5dabaabddee66..63baee59f0b3a3bae9aca57500c1123e6154ed6c 100644
 --- a/src/amd/vulkan/radv_device.c
 +++ b/src/amd/vulkan/radv_device.c
 @@ -62,6 +62,7 @@ typedef void *drmDevicePtr;
@@ -131,30 +131,19 @@ index 29f1c30b6a458e8ae4804ee0d3d843ecdd5429e3..48a73a91ad8bd386fe743eb6b6ba181c
  
  /* The number of IBs per submit isn't infinite, it depends on the ring type
   * (ie. some initial setup needed for a submit) and the number of IBs (4 DW).
-@@ -5213,14 +5214,12 @@ radv_GetInstanceProcAddr(VkInstance _instance, const char *pName)
+@@ -5201,6 +5202,12 @@ radv_GetInstanceProcAddr(VkInstance _instance, const char *pName)
+    return vk_instance_get_proc_addr(&instance->vk, &radv_instance_entrypoints, pName);
+ }
+ 
++/* Windows will use a dll definition file to avoid build errors. */
++#ifdef _WIN32
++#undef PUBLIC
++#define PUBLIC
++#endif
++
  /* The loader wants us to expose a second GetInstanceProcAddr function
   * to work around certain LD_PRELOAD issues seen in apps.
   */
--PUBLIC
- VKAPI_ATTR PFN_vkVoidFunction VKAPI_CALL
- vk_icdGetInstanceProcAddr(VkInstance instance, const char *pName)
- {
-    return radv_GetInstanceProcAddr(instance, pName);
- }
- 
--PUBLIC
- VKAPI_ATTR PFN_vkVoidFunction VKAPI_CALL
- vk_icdGetPhysicalDeviceProcAddr(VkInstance _instance, const char *pName)
- {
-@@ -7387,7 +7386,7 @@ radv_DestroySampler(VkDevice _device, VkSampler _sampler, const VkAllocationCall
-    vk_free2(&device->vk.alloc, pAllocator, sampler);
- }
- 
--PUBLIC VKAPI_ATTR VkResult VKAPI_CALL
-+VKAPI_ATTR VkResult VKAPI_CALL
- vk_icdNegotiateLoaderICDInterfaceVersion(uint32_t *pSupportedVersion)
- {
-    /* For the full details on loader interface versioning, see
 diff --git a/src/amd/vulkan/vulkan_radv.def b/src/amd/vulkan/vulkan_radv.def
 new file mode 100644
 index 0000000000000000000000000000000000000000..64a9caae59398a4768f663f18f8598476991f85c

@@ -3,6 +3,8 @@
 - MinGW: Build RADV with mingw-w64-libelf instead of libelf-lfg-win32.
 ### End-user guide
 - Document 21.2 Windows specific features.
+### Out of tree patches
+- Restrict RADV build fix for MinGW patch to 21.2 series before 21.2.1 as patch was backported.
 # 21.2.0
 - Updated Mesa3D to [21.2.0](https://docs.mesa3d.org/relnotes/21.2.0.html).
 ### Build script

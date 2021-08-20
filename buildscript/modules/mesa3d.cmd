@@ -87,7 +87,7 @@
 @rem Fix lavapipe build with MSVC 32-bit
 @IF %intmesaver:~0,3% EQU 211 IF %intmesaver% LSS 21151 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd lavapipe-32-bit-msvc-buildfix
 @rem Fix radv MinGW build
-@IF %intmesaver% GEQ 21200 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd radv-mingw
+@IF %intmesaver% GEQ 21200 IF %intmesaver% LSS 21251 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd radv-mingw
 @rem Fix d3d10sw MSVC build
 @IF %intmesaver% GEQ 21200 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd d3d10sw
 
@@ -199,7 +199,7 @@
 @IF %toolchain%==msvc IF NOT EXIST %devroot%\llvm\%abi%\lib\LLVMAMDGPU*.lib set canradv=0
 @IF %abi%==x86 set canradv=0
 @IF %toolchain%==msvc IF NOT EXIST %devroot%\mesa\subprojects\libelf-lfg-win32 IF %gitstate% EQU 0 set canradv=0
-@IF NOT %toolchain%==msvc IF %disableootpatch%==1 set canradv=0
+@IF NOT %toolchain%==msvc IF %disableootpatch%==1 IF %intmesaver% LSS 21251 set canradv=0
 @IF %canradv% EQU 1 set /p radv=Build AMD Vulkan driver - radv (y/n):
 @IF %canradv% EQU 1 echo.
 @IF NOT %toolchain%==msvc if /I "%radv%"=="y" set msysregex=1
