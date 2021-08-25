@@ -4,16 +4,18 @@
 @if NOT EXIST %devroot%\pkgconf IF %gitstate%==0 echo.
 @if NOT EXIST %devroot%\pkgconf IF %gitstate%==0 GOTO missingpkgconf
 @cd %devroot%
+@if EXIST %devroot%\pkgconf IF %gitstate% GTR 0 (
+@echo Updating pkgconf source code...
+@cd pkgconf
+@git pull -v --progress --recurse-submodules origin
+@echo.
+)
 @if NOT EXIST %devroot%\pkgconf IF %gitstate% GTR 0 echo Getting pkgconf...
-@if NOT EXIST %devroot%\pkgconf IF %gitstate% GTR 0 echo.
 @if NOT EXIST %devroot%\pkgconf IF %gitstate% GTR 0 (
 @git clone https://github.com/pkgconf/pkgconf.git --recurse-submodules pkgconf
 @echo.
-)
 @cd pkgconf
-@IF %gitstate% GTR 0 echo Updating pkgconf source code...
-@IF %gitstate% GTR 0 git pull -v --progress --recurse-submodules origin
-@IF %gitstate% GTR 0 echo.
+)
 @IF EXIST pkgconf\pkg-config.exe set buildpkgconf=n
 @IF EXIST pkgconf\pkg-config.exe set /p buildpkgconf=Do you want to rebuild pkgconf (y/n):
 @IF NOT EXIST pkgconf\pkg-config.exe set buildpkgconf=y
