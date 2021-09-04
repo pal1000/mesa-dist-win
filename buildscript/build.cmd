@@ -53,6 +53,9 @@
 @IF %toolchain%==msvc call %devroot%\%projectname%\buildscript\modules\winflexbison.cmd
 @IF %toolchain%==msvc call %devroot%\%projectname%\buildscript\modules\pkg-config.cmd
 
+@rem If using MSVC do SPIR-V Tools build
+@IF %toolchain%==msvc call %devroot%\%projectname%\buildscript\modules\spirv.cmd
+
 @rem If using MSVC do LLVM build.
 @IF %toolchain%==msvc call %devroot%\%projectname%\buildscript\modules\llvm.cmd
 @IF %toolchain%==msvc IF %abi%==x64 call %devroot%\%projectname%\buildscript\modules\libclc.cmd

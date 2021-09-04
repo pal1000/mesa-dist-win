@@ -5,19 +5,19 @@ Ressource Hacker 5.1.8.360
 7-Zip 21.03 ultra compression
 Git 2.33.0.1
 LunarG Vulkan SDK 1.2.182.0
-Visual Studio Community 2019 v16.11.1
+Visual Studio Community 2019 v16.11.2
 Windows SDK 10.0.22000.0
-Python 3.9.6
+Python 3.9.7
 
 Python packages
 ---------------
-Mako       1.1.4
+Mako       1.1.5
 MarkupSafe 2.0.1
 meson      0.59.1
 pip        21.2.4
 setuptools 57.4.0
 
-CMake 3.21.1
+CMake 3.21.2
 Ninja 1.10.2
 LLVM 12.0.1
 Winflexbison package 2.5.24
