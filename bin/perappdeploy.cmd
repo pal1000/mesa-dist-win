@@ -68,12 +68,14 @@
 @set /p desktopgl=Do you want Desktop OpenGL drivers (y/n, defaults to yes):
 @echo.
 @IF /I "%desktopgl%"=="n" GOTO opengles
-@IF EXIST "%dir%\opengl32.dll" echo Updated core desktop OpenGL deployment.
+@IF EXIST "%dir%\opengl32.dll" echo Updating core desktop OpenGL deployment...
 @IF EXIST "%dir%\opengl32.dll" del "%dir%\opengl32.dll"
+@IF EXIST "%dir%\libgallium_wgl.dll" del "%dir%\libgallium_wgl.dll"
 @IF EXIST "%dir%\libglapi.dll" del "%dir%\libglapi.dll"
 @IF EXIST "%dir%\dxil.dll" del "%dir%\dxil.dll"
 @mklink "%dir%\opengl32.dll" "%mesaloc%\%mesadll%\opengl32.dll"
 @mklink "%dir%\libglapi.dll" "%mesaloc%\%mesadll%\libglapi.dll"
+@IF EXIST "%mesaloc%\%mesadll%\libgallium_wgl.dll" mklink "%dir%\libgallium_wgl.dll" "%mesaloc%\%mesadll%\libgallium_wgl.dll"
 @IF EXIST "%mesaloc%\%mesadll%\dxil.dll" mklink "%dir%\dxil.dll" "%mesaloc%\%mesadll%\dxil.dll"
 @IF NOT "%dir%\%appexe%"=="%dir%\" echo dummy > "%dir%\%appexe%.local"
 @echo.
@@ -82,22 +84,8 @@
 @IF EXIST "%mesaloc%\%mesadll%\swr*.dll" set /p swr=Do you want swr driver - the new desktop OpenGL driver made by Intel (y/n):
 @IF EXIST "%mesaloc%\%mesadll%\swr*.dll" echo.
 @IF /I NOT "%swr%"=="y" GOTO opengles
-@if EXIST "%dir%\swrAVX.dll" (
-@echo Updated swr driver deployment.
-@GOTO deployswr
-)
-@if EXIST "%dir%\swrAVX2.dll" (
-@echo Updated swr driver deployment.
-@GOTO deployswr
-)
-@if EXIST "%dir%\swrSKX.dll" (
-@echo Updated swr driver deployment.
-@GOTO deployswr
-)
-@if EXIST "%dir%\swrKNL.dll" (
-@echo Updated swr driver deployment.
-@GOTO deployswr
-)
+@if NOT EXIST "%dir%\swrAVX.dll" if NOT EXIST "%dir%\swrAVX2.dll" if NOT EXIST "%dir%\swrSKX.dll" if NOT EXIST "%dir%\swrKNL.dll" GOTO deployswr
+@echo Updating swr driver deployment...
 
 :deployswr
 @if EXIST "%dir%\swrAVX.dll" del "%dir%\swrAVX.dll"
@@ -126,7 +114,7 @@
 @set /p osmesa=Do you need off-screen rendering (y/n):
 @echo.
 @if /I NOT "%osmesa%"=="y" GOTO graw
-@IF EXIST "%dir%\osmesa.dll" echo Updated Mesa3D off-screen rendering interface deployment.
+@IF EXIST "%dir%\osmesa.dll" echo Updating Mesa3D off-screen rendering interface deployment...
 @IF EXIST "%dir%\osmesa.dll" del "%dir%\osmesa.dll"
 @IF EXIST "%dir%\libglapi.dll" del "%dir%\libglapi.dll"
 @IF EXIST "%mesaloc%\%mesadll%\osmesa.dll" mklink "%dir%\osmesa.dll" "%mesaloc%\%mesadll%\osmesa.dll"
@@ -147,14 +135,8 @@
 @set /p graw=Do you need graw library (y/n):
 @echo.
 @if /I NOT "%graw%"=="y" GOTO restart
-@if EXIST "%dir%\graw.dll" (
-@echo Updated Mesa3D graw framework deployment.
-@GOTO deploygraw
-)
-@if EXIST "%dir%\graw_null.dll" (
-@echo Updated Mesa3D graw framework deployment.
-@GOTO deploygraw
-)
+@if NOT EXIST "%dir%\graw.dll" if NOT EXIST "%dir%\graw_null.dll" GOTO deploygraw
+@echo Updating Mesa3D graw framework deployment...
 
 :deploygraw
 @if EXIST "%dir%\graw.dll" del "%dir%\graw.dll"

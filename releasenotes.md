@@ -1,6 +1,8 @@
 # Next release
 ### Build script
 - Avoid pulling source update immediately after fresh source cloning.
+### Distribution and deployment
+- Add support for [standalone OpenGL gallium megadriver](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/12677) [21.3+].
 # 21.2.1
 - Updated Mesa3D to [21.2.1](https://docs.mesa3d.org/relnotes/21.2.1.html).
 ### Build script
