@@ -1,4 +1,5 @@
-# Next release
+# 21.2.2
+- Updated Mesa3D to [21.2.2](https://docs.mesa3d.org/relnotes/21.2.2.html).
 ### Build script
 - Avoid pulling source update immediately after fresh source cloning.
 ### Distribution and deployment
