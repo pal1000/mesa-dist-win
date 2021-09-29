@@ -136,6 +136,8 @@
 @if /I NOT "%useninja%"=="y" set buildconf=%buildconf% --backend=vs
 
 @set galliumcount=0
+@set msysregex=0
+@IF %intmesaver% GEQ 21300 set msysregex=1
 
 @set glswrast=n
 @if /I NOT "%llvmless%"=="y" set /p glswrast=Do you want to build Mesa3D softpipe and llvmpipe drivers (y/n):
@@ -179,7 +181,6 @@
 @IF %galliumcount% GTR 0 set buildconf=%buildconf:~0,-1%
 
 @set mesavkcount=0
-@set msysregex=0
 
 @set lavapipe=n
 @set canlavapipe=1
@@ -209,6 +210,7 @@
 @if /I "%lavapipe%"=="y" set buildconf=%buildconf%swrast,
 @if /I "%radv%"=="y" set buildconf=%buildconf%amd,
 @IF %mesavkcount% GTR 0 set buildconf=%buildconf:~0,-1%
+
 @IF %msysregex%==1 set LDFLAGS=%LDFLAGS% -ltre -lintl -liconv
 
 @set d3d10umd=n
