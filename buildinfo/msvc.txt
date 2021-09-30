@@ -13,11 +13,11 @@ Python packages
 ---------------
 Mako       1.1.5
 MarkupSafe 2.0.1
-meson      0.59.1
+meson      0.59.2
 pip        21.2.4
 setuptools 58.1.0
 
-CMake 3.21.2
+CMake 3.21.3
 Ninja 1.10.2
 LLVM 12.0.1
 Winflexbison package 2.5.24

@@ -17,11 +17,11 @@ bsdtar 3.5.2-1
 bzip2 1.0.8-2
 ca-certificates 20210119-2
 coreutils 8.32-1
-curl 7.79.0-1
+curl 7.79.1-1
 dash 0.5.11.4-1
 db 5.3.28-3
 file 5.40-2
-filesystem 2021.06-1
+filesystem 2021.06-2
 findutils 4.8.0-1
 flex 2.6.4-1
 gawk 5.1.0-1
@@ -44,7 +44,7 @@ libasprintf 0.19.8.1-1
 libassuan 2.5.5-1
 libbz2 1.0.8-2
 libcrypt 2.1-3
-libcurl 7.79.0-1
+libcurl 7.79.1-1
 libdb 5.3.28-3
 libedit 20210714_3.1-1
 libexpat 2.4.1-1
@@ -63,7 +63,7 @@ libksba 1.6.0-1
 liblz4 1.9.3-1
 liblzma 5.2.5-1
 libnettle 3.7.3-1
-libnghttp2 1.44.0-1
+libnghttp2 1.45.0-1
 libnpth 1.6-1
 libopenssl 1.1.1.l-1
 libp11-kit 0.24.0-1
@@ -110,7 +110,7 @@ mingw-w64-i686-ninja 1.10.2-3
 mingw-w64-i686-openssl 1.1.1.l-1
 mingw-w64-i686-p11-kit 0.24.0-1
 mingw-w64-i686-pkgconf 1.8.0-2
-mingw-w64-i686-python 3.9.6-4
+mingw-w64-i686-python 3.9.7-1
 mingw-w64-i686-python-beaker 1.11.0-2
 mingw-w64-i686-python-mako 1.1.4-3
 mingw-w64-i686-python-markupsafe 2.0.1-2
@@ -121,6 +121,7 @@ mingw-w64-i686-sqlite3 3.36.0-1
 mingw-w64-i686-tcl 8.6.11-5
 mingw-w64-i686-termcap 1.3.1-6
 mingw-w64-i686-tk 8.6.11.1-2
+mingw-w64-i686-tzdata 2021a-1
 mingw-w64-i686-vulkan-headers 1.2.179-2
 mingw-w64-i686-vulkan-loader 1.2.179-2
 mingw-w64-i686-vulkan-validation-layers 1.2.179-1
@@ -160,7 +161,7 @@ mingw-w64-x86_64-ninja 1.10.2-3
 mingw-w64-x86_64-openssl 1.1.1.l-1
 mingw-w64-x86_64-p11-kit 0.24.0-1
 mingw-w64-x86_64-pkgconf 1.8.0-2
-mingw-w64-x86_64-python 3.9.6-4
+mingw-w64-x86_64-python 3.9.7-1
 mingw-w64-x86_64-python-beaker 1.11.0-2
 mingw-w64-x86_64-python-mako 1.1.4-3
 mingw-w64-x86_64-python-markupsafe 2.0.1-2
@@ -171,6 +172,7 @@ mingw-w64-x86_64-sqlite3 3.36.0-1
 mingw-w64-x86_64-tcl 8.6.11-5
 mingw-w64-x86_64-termcap 1.3.1-6
 mingw-w64-x86_64-tk 8.6.11.1-2
+mingw-w64-x86_64-tzdata 2021a-1
 mingw-w64-x86_64-vulkan-headers 1.2.179-2
 mingw-w64-x86_64-vulkan-loader 1.2.179-2
 mingw-w64-x86_64-vulkan-validation-layers 1.2.179-1
@@ -190,7 +192,7 @@ ncurses 6.2-1
 nettle 3.7.3-1
 openssl 1.1.1.l-1
 p11-kit 0.24.0-1
-pacman 6.0.1-1
+pacman 6.0.1-3
 pacman-contrib 1.4.0-2
 pacman-mirrors 20210902-1
 patch 2.7.6-1
