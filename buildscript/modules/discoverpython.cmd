@@ -15,27 +15,27 @@
 @cls
 
 @rem Count supported python installations
-@FOR /F "USEBACKQ tokens=1 skip=1" %%a IN (`py -0 2^>nul`) do @(
-@set pythoninstance=%%a
-@set goodpython=0
-@IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF NOT EXIST %devroot%\mesa set goodpython=1
-@IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF EXIST %devroot%\mesa\subprojects\.gitignore set goodpython=1
+@FOR /F tokens^=1-3^ skip^=1^ delims^=.-^  %%a IN ('py -0 2^>nul') do @(
+@set goodpython=1
+@IF EXIST %devroot%\mesa IF NOT EXIST %devroot%\mesa\subprojects\.gitignore set goodpython=0
+@if %%a LSS 3 set goodpython=0
+@if %%a EQU 3 if %%b LSS 6 set goodpython=0
 @IF !goodpython!==1 set /a pythontotal+=1
 )
 @IF %pythontotal%==0 echo WARNING: No suitable Python installation found by Python launcher.
-@IF %pythontotal%==0 echo Python 3.5 and newer is required.
+@IF %pythontotal%==0 echo Python 3.6 and newer is required.
 @IF %pythontotal%==0 echo.
 @IF %pythontotal%==0 GOTO nopylauncher
 
 @echo Select Python installation
 @set pythoncount=0
-@FOR /F "USEBACKQ tokens=1 skip=1" %%a IN (`py -0 2^>nul`) do @(
-@set pythoninstance=%%a
-@set goodpython=0
-@IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF NOT EXIST %devroot%\mesa set goodpython=1
-@IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF EXIST %devroot%\mesa\subprojects\.gitignore set goodpython=1
+@FOR /F tokens^=1-3^ skip^=1^ delims^=.-^  %%a IN ('py -0 2^>nul') do @(
+@set goodpython=1
+@IF EXIST %devroot%\mesa IF NOT EXIST %devroot%\mesa\subprojects\.gitignore set goodpython=0
+@if %%a LSS 3 set goodpython=0
+@if %%a EQU 3 if %%b LSS 6 set goodpython=0
 @IF !goodpython!==1 set /a pythoncount+=1
-@IF !goodpython!==1 echo !pythoncount!. Python !pythoninstance:~1,-3! !pythoninstance:~-2! bit
+@IF !goodpython!==1 echo !pythoncount!. Python %%a.%%b %%c bit
 )
 @echo.
 @set /p pyselect=Select Python version by entering its index from the table above:
@@ -52,13 +52,13 @@
 
 @rem Locate selected Python installation
 @set pythoncount=0
-@FOR /F "USEBACKQ tokens=1 skip=1" %%a IN (`py -0 2^>nul`) do @(
-@set pythoninstance=%%a
-@set goodpython=0
-@IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF NOT EXIST %devroot%\mesa set goodpython=1
-@IF !pythoninstance^:^~1^,-3! GEQ 3.5 IF EXIST %devroot%\mesa\subprojects\.gitignore set goodpython=1
+@FOR /F tokens^=1-3^ skip^=1^ delims^=.-^  %%a IN ('py -0 2^>nul') do @(
+@set goodpython=1
+@IF EXIST %devroot%\mesa IF NOT EXIST %devroot%\mesa\subprojects\.gitignore set goodpython=0
+@if %%a LSS 3 set goodpython=0
+@if %%a EQU 3 if %%b LSS 6 set goodpython=0
 @IF !goodpython!==1 set /a pythoncount+=1
-@IF !pythoncount!==%pyselect% set selectedpython=%%a
+@IF !pythoncount!==%pyselect% set selectedpython=-%%a.%%b-%%c
 )
 @FOR /F "tokens=* USEBACKQ" %%a IN (`py %selectedpython%  -c "import sys; print(sys.executable)"`) DO @set pythonloc=%%~sa
 @GOTO loadpypath
@@ -99,9 +99,13 @@ SET pypath=%%~sa
 @FOR /F "USEBACKQ delims= " %%a IN (`%pythonloc% -c "import sys; print(sys.version)"`) DO @SET fpythonver=%%a
 
 @rem Check if Python version is not too old.
-@FOR /F "USEBACKQ delims= " %%a IN (`%pythonloc% -c "import sys; print(str(sys.version_info[0])+'.'+str(sys.version_info[1]))"`) DO @SET pythonver=%%a
-@IF %pythonver% LSS 3.5 (
-@echo Your Python version is too old. Only Python 3.5 and newer is supported.
+@set goodpython=1
+@FOR /F "USEBACKQ tokens=1-2 delims=." %%a IN (`%pythonloc% -c "import sys; print(str(sys.version_info[0])+'.'+str(sys.version_info[1]))"`) DO @(
+@if %%a LSS 3 set goodpython=0
+@if %%a EQU 3 if %%b LSS 6 set goodpython=0
+)
+@IF %goodpython% EQU 0 (
+@echo Your Python version is too old. Only Python 3.6 and newer is supported.
 @echo.
 @pause
 @exit
