@@ -11,33 +11,24 @@
 @if NOT "%ERRORLEVEL%"=="0" GOTO nopylauncher
 
 :pylist
+@rem Count and list supported python installations
 @set pythontotal=0
 @cls
-
-@rem Count supported python installations
 @FOR /F tokens^=1-3^ skip^=1^ delims^=.-^  %%a IN ('py -0 2^>nul') do @(
 @set goodpython=1
 @IF EXIST %devroot%\mesa IF NOT EXIST %devroot%\mesa\subprojects\.gitignore set goodpython=0
 @if %%a LSS 3 set goodpython=0
 @if %%a EQU 3 if %%b LSS 6 set goodpython=0
 @IF !goodpython!==1 set /a pythontotal+=1
+@IF !pythontotal!==1 echo Select Python installation
+@IF !goodpython!==1 echo !pythontotal!. Python %%a.%%b %%c bit
 )
 @IF %pythontotal%==0 echo WARNING: No suitable Python installation found by Python launcher.
 @IF %pythontotal%==0 echo Python 3.6 and newer is required.
 @IF %pythontotal%==0 echo.
 @IF %pythontotal%==0 GOTO nopylauncher
+@IF %pythontotal% GTR 0 echo.
 
-@echo Select Python installation
-@set pythoncount=0
-@FOR /F tokens^=1-3^ skip^=1^ delims^=.-^  %%a IN ('py -0 2^>nul') do @(
-@set goodpython=1
-@IF EXIST %devroot%\mesa IF NOT EXIST %devroot%\mesa\subprojects\.gitignore set goodpython=0
-@if %%a LSS 3 set goodpython=0
-@if %%a EQU 3 if %%b LSS 6 set goodpython=0
-@IF !goodpython!==1 set /a pythoncount+=1
-@IF !goodpython!==1 echo !pythoncount!. Python %%a.%%b %%c bit
-)
-@echo.
 @set /p pyselect=Select Python version by entering its index from the table above:
 @echo.
 @IF "%pyselect%"=="" echo Invalid entry.
