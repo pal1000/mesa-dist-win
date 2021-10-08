@@ -83,7 +83,7 @@ SET pythonloc=%%~sa
 set "exitloop="
 SET pypath=%%~sa
 )
-@IF NOT %pypath%==%pythonloc% set PATH=%pythonloc:~0,-10%;%pythonloc:~0,-10%Scripts\;%PATH%
+@IF NOT %pypath%==%pythonloc% set PATH=%pythonloc:~0,-10%Scripts\;%pythonloc:~0,-10%;%PATH%
 
 :pyver
 @rem Identify Python version.
