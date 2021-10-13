@@ -67,9 +67,35 @@
 @rem SPIRV-LLVM-Translator
 @set canllvmspirv=1
 @if NOT EXIST %devroot%\llvm-project set canllvmspirv=0
-@if EXIST %devroot%\llvm-project IF NOT EXIST %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator IF %gitstate% EQU 0 set canllvmspirv=0
+@IF NOT EXIST %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator IF %gitstate% EQU 0 set canllvmspirv=0
+@IF EXIST %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator\spirv-headers-tag.conf IF NOT EXIST %devroot%\llvm-project\llvm\projects\SPIRV-Headers IF %gitstate% EQU 0 set canllvmspirv=0
 @IF %canllvmspirv% EQU 1 set /p buildllvmspirv=Build SPIRV LLVM Translator - required for OpenCL (y/n):
 @IF %canllvmspirv% EQU 1 echo.
+@if /I "%buildllvmspirv%"=="y" IF EXIST %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator IF %gitstate% GTR 0 (
+@cd %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator
+@git pull -v --progress --recurse-submodules origin
+@echo.
+)
+@if /I "%buildllvmspirv%"=="y" IF EXIST %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator\spirv-headers-tag.conf IF EXIST %devroot%\llvm-project\llvm\projects\SPIRV-Headers IF %gitstate% GTR 0 (
+@cd %devroot%\llvm-project\llvm\projects\SPIRV-Headers
+@git checkout master
+@git pull -v --progress --recurse-submodules origin
+@for /f tokens^=* %%a IN (%devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator\spirv-headers-tag.conf) do @git checkout %%a
+@echo.
+)
+@if /I "%buildllvmspirv%"=="y" IF NOT EXIST %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator (
+@git clone -b llvm_release_130 https://github.com/KhronosGroup/SPIRV-LLVM-Translator %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator
+@echo.
+)
+@if /I "%buildllvmspirv%"=="y" IF EXIST %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator\spirv-headers-tag.conf IF NOT EXIST %devroot%\llvm-project\llvm\projects\SPIRV-Headers (
+@git clone https://github.com/KhronosGroup/SPIRV-Headers %devroot%\llvm-project\llvm\projects\SPIRV-Headers
+@cd %devroot%\llvm-project\llvm\projects\SPIRV-Headers
+@for /f tokens^=* %%a IN (%devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator\spirv-headers-tag.conf) do @git checkout %%a
+@echo.
+)
+@if /I "%buildllvmspirv%"=="y" IF NOT EXIST %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator\spirv-headers-tag.conf IF EXIST %devroot%\llvm-project\llvm\projects\SPIRV-Headers RD /S /Q %devroot%\llvm-project\llvm\projects\SPIRV-Headers
+@if /I NOT "%buildllvmspirv%"=="y" IF EXIST %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator RD /S /Q %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator
+@if /I NOT "%buildllvmspirv%"=="y" IF EXIST %devroot%\llvm-project\llvm\projects\SPIRV-Headers RD /S /Q %devroot%\llvm-project\llvm\projects\SPIRV-Headers
 
 @rem Load cmake into build environment.
 @if %cmakestate%==1 set PATH=%devroot%\cmake\bin\;%PATH%
@@ -92,19 +118,7 @@
 @if EXIST %devroot%\llvm-project IF /I NOT "%buildclang%"=="y" set buildconf=%buildconf% -DLLVM_BUILD_TOOLS=OFF
 @if EXIST %devroot%\llvm-project IF /I NOT "%buildclang%"=="y" IF NOT %abi%==x64 set buildconf=%buildconf% -DLLVM_INCLUDE_TOOLS=OFF
 @IF /I "%buildclang%"=="y" set buildconf=%buildconf% -DCLANG_BUILD_TOOLS=ON
-
 @if /I "%buildllvmspirv%"=="y" set buildconf=%buildconf% -DLLVM_SPIRV_INCLUDE_TESTS=OFF
-@if /I "%buildllvmspirv%"=="y" IF EXIST %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator IF %gitstate% GTR 0 (
-@cd %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator
-@git pull -v --progress --recurse-submodules origin
-@echo.
-)
-@if /I "%buildllvmspirv%"=="y" IF NOT EXIST %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator (
-@git clone -b llvm_release_130 https://github.com/KhronosGroup/SPIRV-LLVM-Translator %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator
-@echo.
-)
-@if /I NOT "%buildllvmspirv%"=="y" IF EXIST %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator RD /S /Q %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator
-
 @set buildconf=%buildconf% -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF
 
 @echo LLVM build configuration command^: %buildconf%
