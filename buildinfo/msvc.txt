@@ -3,7 +3,7 @@ Build environment
 Windows 10.0.22000
 Ressource Hacker 5.1.8.360
 7-Zip 21.03 ultra compression
-Git 2.33.0.2
+Git 2.33.1.1
 LunarG Vulkan SDK 1.2.189.2
 Visual Studio Community 2019 v16.11.5
 Windows SDK 10.0.22000.0

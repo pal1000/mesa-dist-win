@@ -1,4 +1,5 @@
-# Next release
+# 21.2.4
+- Updated Mesa3D to [21.2.4](https://docs.mesa3d.org/relnotes/21.2.4.html).
 ### Build script
 - MSVC build: Python 3.10 and newer support;
 - MSVC build: Make Python PATH loading consistent with official installer;
