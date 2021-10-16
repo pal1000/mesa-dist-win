@@ -137,7 +137,7 @@
 
 @set galliumcount=0
 @set msysregex=0
-@IF %intmesaver% GEQ 21300 set msysregex=1
+@if NOT %toolchain%==msvc IF %intmesaver% GEQ 21300 set msysregex=1
 
 @set glswrast=n
 @if /I NOT "%llvmless%"=="y" set /p glswrast=Do you want to build Mesa3D softpipe and llvmpipe drivers (y/n):
