@@ -21,8 +21,15 @@
 @IF EXIST %devroot%\%projectname%\bin\%abi%\libgallium_wgl.dll call %devroot%\%projectname%\buildscript\modules\rcgen.cmd "Mesa3D desktop OpenGL drivers stack" %devroot%\%projectname%\bin\%abi%\libgallium_wgl.dll %abi% %mesaver% "Mesa/X.org"
 @rem Add version info to Microsoft desktop OpenGL over D3D12 driver
 @call %devroot%\%projectname%\buildscript\modules\rcgen.cmd "Mesa3D desktop OpenGL over D3D12 driver" %devroot%\%projectname%\bin\%abi%\openglon12.dll %abi% %mesaver% "Microsoft Corporation"
+@rem Add version info to Intel swr desktop OpenGL driver
+@call %devroot%\%projectname%\buildscript\modules\rcgen.cmd "Mesa3D swr desktop OpenGL software rendering driver running on AVX instruction set" %devroot%\%projectname%\bin\%abi%\swrAVX.dll null %mesaver% "Intel"
+@call %devroot%\%projectname%\buildscript\modules\rcgen.cmd "Mesa3D swr desktop OpenGL software rendering driver running on AVX2 instruction set" %devroot%\%projectname%\bin\%abi%\swrAVX2.dll null %mesaver% "Intel"
+@call %devroot%\%projectname%\buildscript\modules\rcgen.cmd "Mesa3D swr desktop OpenGL software rendering driver running on Skylake-X variant of AVX512 instruction set" %devroot%\%projectname%\bin\%abi%\swrSKX.dll null %mesaver% "Intel"
+@call %devroot%\%projectname%\buildscript\modules\rcgen.cmd "Mesa3D swr desktop OpenGL software rendering driver running on Knights Landing variant of AVX512 instruction set" %devroot%\%projectname%\bin\%abi%\swrKNL.dll null %mesaver% "Intel"
 @rem Add version info to shared glapi library
 @call %devroot%\%projectname%\buildscript\modules\rcgen.cmd "Mesa3D shared glapi library" %devroot%\%projectname%\bin\%abi%\libglapi.dll %abi% %mesaver% "Mesa/X.org"
+@rem Add version info to Mesa3D EGL library
+@call %devroot%\%projectname%\buildscript\modules\rcgen.cmd "Mesa3D EGL library" %devroot%\%projectname%\bin\%abi%\libEGL.dll %abi% %mesaver% "Mesa/X.org"
 @rem Add version info to standalone OpenGL ES 1.x driver
 @call %devroot%\%projectname%\buildscript\modules\rcgen.cmd "Mesa3D standalone OpenGL ES 1.x driver" %devroot%\%projectname%\bin\%abi%\libGLESv1_CM.dll %abi% %mesaver% "Mesa/X.org"
 @rem Add version info to standalone OpenGL ES 2.x and 3.x driver
@@ -36,11 +43,6 @@
 @rem Add version info to Mesa3D test framework
 @call %devroot%\%projectname%\buildscript\modules\rcgen.cmd "Mesa3D test framework with GDI window support" %devroot%\%projectname%\bin\%abi%\graw.dll %abi% %mesaver% "Mesa/X.org"
 @call %devroot%\%projectname%\buildscript\modules\rcgen.cmd "Mesa3D test framework without window support" %devroot%\%projectname%\bin\%abi%\graw_null.dll %abi% %mesaver% "Mesa/X.org"
-@rem Add version info to Intel swr desktop OpenGL driver
-@call %devroot%\%projectname%\buildscript\modules\rcgen.cmd "Mesa3D swr desktop OpenGL software rendering driver running on AVX instruction set" %devroot%\%projectname%\bin\%abi%\swrAVX.dll null %mesaver% "Intel"
-@call %devroot%\%projectname%\buildscript\modules\rcgen.cmd "Mesa3D swr desktop OpenGL software rendering driver running on AVX2 instruction set" %devroot%\%projectname%\bin\%abi%\swrAVX2.dll null %mesaver% "Intel"
-@call %devroot%\%projectname%\buildscript\modules\rcgen.cmd "Mesa3D swr desktop OpenGL software rendering driver running on Skylake-X variant of AVX512 instruction set" %devroot%\%projectname%\bin\%abi%\swrSKX.dll null %mesaver% "Intel"
-@call %devroot%\%projectname%\buildscript\modules\rcgen.cmd "Mesa3D swr desktop OpenGL software rendering driver running on Knights Landing variant of AVX512 instruction set" %devroot%\%projectname%\bin\%abi%\swrKNL.dll null %mesaver% "Intel"
 @rem Add version info to Mesa3D off-screen rendering drivers
 @call %devroot%\%projectname%\buildscript\modules\rcgen.cmd "Mesa3D off-screen rendering classic driver" %devroot%\%projectname%\bin\%abi%\osmesa-swrast\osmesa.dll %abi% %mesaver% "Mesa/X.org"
 @call %devroot%\%projectname%\buildscript\modules\rcgen.cmd "Mesa3D off-screen rendering gallium driver" %devroot%\%projectname%\bin\%abi%\osmesa-gallium\osmesa.dll %abi% %mesaver% "Mesa/X.org"
