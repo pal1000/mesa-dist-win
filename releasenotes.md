@@ -3,6 +3,8 @@
 - Do not link regex when building with MSVC, regression from 50115ec7 [21.3+].
 ### Distribution
 - Add version info to Mesa3D EGL library [21.3+].
+### Deployment
+- Add support for Mesa3D EGL library to per application deployment tool [21.3+].
 # 21.2.4
 - Updated Mesa3D to [21.2.4](https://docs.mesa3d.org/relnotes/21.2.4.html).
 ### Build script

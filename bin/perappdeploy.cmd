@@ -46,7 +46,7 @@
 @echo.
 
 :askforappexe
-@set /p appexe=Application executable name with or without extension (optional, forces some programs to use Mesa3D which would otherwise bypass it):
+@set /p appexe=Application executable name with or without extension (optional, try leaving it blank first and only specify it if things don't work otherwise; it forces some programs to use Mesa3D which would otherwise bypass it):
 @echo.
 @IF "%appexe%"=="" IF EXIST "%dir%\*.exe.local" del "%dir%\*.exe.local"
 @IF "%appexe%"=="" GOTO ask_for_app_abi
@@ -102,9 +102,13 @@
 @IF EXIST "%mesaloc%\%mesadll%\libglapi.dll" set /p opengles=Do you need OpenGL ES support (y/n):
 @IF /I NOT "%opengles%"=="y" GOTO osmesa
 @IF EXIST "%dir%\libglapi.dll" del "%dir%\libglapi.dll"
+@IF EXIST "%dir%\libEGL.dll" del "%dir%\libEGL.dll"
+@IF EXIST "%dir%\libgallium_wgl.dll" del "%dir%\libgallium_wgl.dll"
 @if EXIST "%dir%\libGLESv1_CM.dll" del "%dir%\libGLESv1_CM.dll"
 @if EXIST "%dir%\libGLESv2.dll" del "%dir%\libGLESv2.dll"
 @mklink "%dir%\libglapi.dll" "%mesaloc%\%mesadll%\libglapi.dll"
+@IF EXIST "%mesaloc%\%mesadll%\libEGL.dll" mklink "%dir%\libEGL.dll" "%mesaloc%\%mesadll%\libEGL.dll"
+@IF EXIST "%mesaloc%\%mesadll%\libgallium_wgl.dll" mklink "%dir%\libgallium_wgl.dll" "%mesaloc%\%mesadll%\libgallium_wgl.dll"
 @IF EXIST "%mesaloc%\%mesadll%\libGLESv1_CM.dll" mklink "%dir%\libGLESv1_CM.dll" "%mesaloc%\%mesadll%\libGLESv1_CM.dll"
 @IF EXIST "%mesaloc%\%mesadll%\libGLESv2.dll" mklink "%dir%\libGLESv2.dll" "%mesaloc%\%mesadll%\libGLESv2.dll"
 @echo.
