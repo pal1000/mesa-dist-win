@@ -6,6 +6,8 @@
 - Add version info to Mesa3D EGL library [21.3+].
 ### Deployment
 - Add support for Mesa3D EGL library to per application deployment tool [21.3+].
+### Out of tree patches
+- Add patch fixing swr driver build with LLVM 13.
 # 21.2.4
 - Updated Mesa3D to [21.2.4](https://docs.mesa3d.org/relnotes/21.2.4.html).
 ### Build script

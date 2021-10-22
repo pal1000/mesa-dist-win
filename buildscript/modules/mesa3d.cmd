@@ -66,28 +66,41 @@
 
 @REM Collect information about Mesa3D code. Apply out of tree patches.
 @set msyspatchdir=%devroot%\mesa
+
 @rem Enable S3TC texture cache
 @call %devroot%\%projectname%\buildscript\modules\applypatch.cmd s3tc
+
 @rem Fix swrAVX512 build with MSVC
 @IF %intmesaver% LSS 20000 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swravx512
 @IF %intmesaver% GEQ 20000 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swravx512-post-static-link
+
 @rem Make it possible to build both osmesa gallium and swrast at the same time with Meson. Applies to Mesa 20.3 and older.
 @IF %intmesaver% LSS 21000 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd dual-osmesa
 @IF %intmesaver% LSS 20200 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd dual-osmesa-part2a
 @IF %intmesaver% GEQ 20200 IF %intmesaver% LSS 21000 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd dual-osmesa-part2b
+
 @rem Fix regression when building with native mingw toolchains affecting Mesa 20.1 branch
 @IF %intmesaver% GEQ 20100 IF %intmesaver% LSS 20103 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd winepath
-@rem Fix swr build
-@IF %intmesaver% LSS 20152 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swrbuildfix
+
+@rem Fix swr build with MSVC
+@IF %intmesaver% LSS 20152 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swr-msvc
+
 @rem Get swr building with Mingw
 @IF %intmesaver% LSS 20158 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swr-mingw
 @IF %intmesaver% GEQ 20200 IF %intmesaver% LSS 20250 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swr-mingw
+
+@rem Fix swr build with LLVM 13
+@call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swr-llvm13
+
 @rem Fix lavapipe crash when built with MinGW
 @IF %intmesaver:~0,3% EQU 211 IF %intmesaver% LSS 21151 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd lavapipe-mingw-crashfix
+
 @rem Fix lavapipe build with MSVC 32-bit
 @IF %intmesaver:~0,3% EQU 211 IF %intmesaver% LSS 21151 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd lavapipe-32-bit-msvc-buildfix
+
 @rem Fix radv MinGW build
 @IF %intmesaver% GEQ 21200 IF %intmesaver% LSS 21251 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd radv-mingw
+
 @rem Fix d3d10sw MSVC build
 @IF %intmesaver% GEQ 21200 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd d3d10sw
 
@@ -162,11 +175,7 @@
 
 @set swrdrv=n
 @set canswr=0
-@if /I NOT "%llvmless%"=="y" if %abi%==x64 IF %toolchain%==msvc IF %intmesaver% LSS 20152 IF %disableootpatch%==0 set canswr=1
-@if /I NOT "%llvmless%"=="y" if %abi%==x64 IF %toolchain%==msvc IF %intmesaver% GEQ 20152 set canswr=1
-@if /I NOT "%llvmless%"=="y" if %abi%==x64 IF NOT %toolchain%==msvc IF %disableootpatch%==0 set canswr=1
-@if /I NOT "%llvmless%"=="y" if %abi%==x64 IF NOT %toolchain%==msvc IF %disableootpatch%==1 IF %intmesaver% GEQ 20158 IF %intmesaver% LSS 20200 set canswr=1
-@if /I NOT "%llvmless%"=="y" if %abi%==x64 IF NOT %toolchain%==msvc IF %disableootpatch%==1 IF %intmesaver% GEQ 20250 set canswr=1
+@if /I NOT "%llvmless%"=="y" if %abi%==x64 IF %disableootpatch%==0 set canswr=1
 @if %canswr% EQU 1 set /p swrdrv=Do you want to build swr drivers? (y=yes):
 @if %canswr% EQU 1 echo.
 @if /I "%swrdrv%"=="y" IF %disableootpatch%==0 set buildconf=%buildconf% -Dswr-arches=avx,avx2,skx,knl
