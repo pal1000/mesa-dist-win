@@ -1,0 +1,32 @@
+diff --git a/src/gallium/frontends/d3d10umd/Device.cpp b/src/gallium/frontends/d3d10umd/Device.cpp
+index afca18819ce..e347ce0132e 100644
+--- a/src/gallium/frontends/d3d10umd/Device.cpp
++++ b/src/gallium/frontends/d3d10umd/Device.cpp
+@@ -354,11 +354,11 @@ DestroyDevice(D3D10DDI_HDEVICE hDevice)   // IN
+    static struct pipe_sampler_view * sampler_views[PIPE_MAX_SHADER_SAMPLER_VIEWS];
+    memset(sampler_views, 0, sizeof sampler_views);
+    pipe->set_sampler_views(pipe, PIPE_SHADER_FRAGMENT, 0,
+-                           PIPE_MAX_SHADER_SAMPLER_VIEWS, 0, sampler_views);
++                           PIPE_MAX_SHADER_SAMPLER_VIEWS, 0, false, sampler_views);
+    pipe->set_sampler_views(pipe, PIPE_SHADER_VERTEX, 0,
+-                           PIPE_MAX_SHADER_SAMPLER_VIEWS, 0, sampler_views);
++                           PIPE_MAX_SHADER_SAMPLER_VIEWS, 0, false, sampler_views);
+    pipe->set_sampler_views(pipe, PIPE_SHADER_GEOMETRY, 0,
+-                           PIPE_MAX_SHADER_SAMPLER_VIEWS, 0, sampler_views);
++                           PIPE_MAX_SHADER_SAMPLER_VIEWS, 0, false, sampler_views);
+ 
+    pipe->destroy(pipe);
+ }
+diff --git a/src/gallium/frontends/d3d10umd/Shader.cpp b/src/gallium/frontends/d3d10umd/Shader.cpp
+index ce5d0edd335..e70d58a9f15 100644
+--- a/src/gallium/frontends/d3d10umd/Shader.cpp
++++ b/src/gallium/frontends/d3d10umd/Shader.cpp
+@@ -251,7 +251,7 @@ SetShaderResources(enum pipe_shader_type shader_type,                  // IN
+     * probably think about not updating all always... It should just work.
+     */
+    pipe->set_sampler_views(pipe, shader_type, 0, PIPE_MAX_SHADER_SAMPLER_VIEWS,
+-                           0, sampler_views);
++                           0, false, sampler_views);
+ }
+ 
+ 

@@ -107,6 +107,7 @@
 
 @rem Fix d3d10sw MSVC build
 @IF %intmesaver% GEQ 21200 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd d3d10sw
+@IF %intmesaver% GEQ 21300 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd d3d10sw-2
 
 :configmesabuild
 @rem Configure Mesa build.
