@@ -1,22 +1,35 @@
 diff --git a/src/vulkan/util/vk_dispatch_table_gen.py b/src/vulkan/util/vk_dispatch_table_gen.py
-index d07d5120d1e..4936666e56c 100644
+index d07d5120d1e5bfbddc5723d23a7cc233a692860a..eb6b0cd28e2577de5d46bc1063ff6a5fb9baa5e6 100644
 --- a/src/vulkan/util/vk_dispatch_table_gen.py
 +++ b/src/vulkan/util/vk_dispatch_table_gen.py
 @@ -69,7 +69,7 @@ extern "C" {
  #endif
-
+ 
  #ifdef _MSC_VER
 -void vk_entrypoint_stub(void);
-+void VKAPI_CALL vk_entrypoint_stub(void);
++VKAPI_ATTR void VKAPI_CALL vk_entrypoint_stub(void);
  #endif
-
+ 
  <%def name="dispatch_table(entrypoints)">
 @@ -469,7 +469,7 @@ vk_device_entrypoint_is_enabled(int index, uint32_t core_version,
  }
-
+ 
  #ifdef _MSC_VER
 -void vk_entrypoint_stub(void)
-+void VKAPI_CALL vk_entrypoint_stub(void)
++VKAPI_ATTR void VKAPI_CALL vk_entrypoint_stub(void)
  {
     unreachable(!"Entrypoint not implemented");
  }
+diff --git a/src/vulkan/util/vk_entrypoints_gen.py b/src/vulkan/util/vk_entrypoints_gen.py
+index 2c234911b24f1d6f805f2ee5665142a36ee820f3..078b6daec0bbdedcc88cfdd46d385d40a82647c6 100644
+--- a/src/vulkan/util/vk_entrypoints_gen.py
++++ b/src/vulkan/util/vk_entrypoints_gen.py
+@@ -125,7 +125,7 @@ TEMPLATE_C = Template(COPYRIGHT + """
+ #ifdef _MSC_VER
+ #ifdef _M_IX86
+       % for args_size in [4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48, 60, 104]:
+-    #pragma comment(linker, "/alternatename:_${p}_${e.name}@${args_size}=_vk_entrypoint_stub")
++    #pragma comment(linker, "/alternatename:_${p}_${e.name}@${args_size}=_vk_entrypoint_stub@0")
+       % endfor
+ #else
+     #pragma comment(linker, "/alternatename:${p}_${e.name}=vk_entrypoint_stub")

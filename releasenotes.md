@@ -12,7 +12,7 @@
 - Add patch fixing swr driver build with MSVC [21.3+];
 - Add patch fixing RADV driver build with MSVC and LLVM 13;
 - Add patch fixing d3d10sw build [21.3+];
-- Add patch fixing vulkan core with MSVC 32-bit [21.3+].
+- Add patch fixing vulkan core build with MSVC 32-bit [21.3+].
 # 21.2.4
 - Updated Mesa3D to [21.2.4](https://docs.mesa3d.org/relnotes/21.2.4.html).
 ### Build script
