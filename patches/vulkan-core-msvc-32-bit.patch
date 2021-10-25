@@ -1,0 +1,22 @@
+diff --git a/src/vulkan/util/vk_dispatch_table_gen.py b/src/vulkan/util/vk_dispatch_table_gen.py
+index d07d5120d1e..4936666e56c 100644
+--- a/src/vulkan/util/vk_dispatch_table_gen.py
++++ b/src/vulkan/util/vk_dispatch_table_gen.py
+@@ -69,7 +69,7 @@ extern "C" {
+ #endif
+
+ #ifdef _MSC_VER
+-void vk_entrypoint_stub(void);
++void VKAPI_CALL vk_entrypoint_stub(void);
+ #endif
+
+ <%def name="dispatch_table(entrypoints)">
+@@ -469,7 +469,7 @@ vk_device_entrypoint_is_enabled(int index, uint32_t core_version,
+ }
+
+ #ifdef _MSC_VER
+-void vk_entrypoint_stub(void)
++void VKAPI_CALL vk_entrypoint_stub(void)
+ {
+    unreachable(!"Entrypoint not implemented");
+ }
