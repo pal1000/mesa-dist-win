@@ -1,0 +1,14 @@
+diff --git a/src/amd/compiler/aco_print_asm.cpp b/src/amd/compiler/aco_print_asm.cpp
+index 9f15de5aacd41a61abbfe9ae6a0283ea18b4a6e0..386db2ce902d5a9608c707c46d9097341dc2a64e 100644
+--- a/src/amd/compiler/aco_print_asm.cpp
++++ b/src/amd/compiler/aco_print_asm.cpp
+@@ -25,6 +25,9 @@
+ #include "aco_ir.h"
+ 
+ #ifdef LLVM_AVAILABLE
++#if defined(_MSC_VER) and defined(restrict)
++#undef restrict
++#endif
+ #include "llvm/ac_llvm_util.h"
+ 
+ #include "llvm-c/Disassembler.h"

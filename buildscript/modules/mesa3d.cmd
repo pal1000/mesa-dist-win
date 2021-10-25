@@ -70,20 +70,21 @@
 @rem Enable S3TC texture cache
 @call %devroot%\%projectname%\buildscript\modules\applypatch.cmd s3tc
 
-@rem Fix swrAVX512 build with MSVC
-@IF %intmesaver% LSS 20000 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swravx512
-@IF %intmesaver% GEQ 20000 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swravx512-post-static-link
+@rem Fix regression when building with native mingw toolchains affecting Mesa 20.1 branch
+@IF %intmesaver% GEQ 20100 IF %intmesaver% LSS 20103 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd winepath
 
 @rem Make it possible to build both osmesa gallium and swrast at the same time with Meson. Applies to Mesa 20.3 and older.
 @IF %intmesaver% LSS 21000 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd dual-osmesa
 @IF %intmesaver% LSS 20200 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd dual-osmesa-part2a
 @IF %intmesaver% GEQ 20200 IF %intmesaver% LSS 21000 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd dual-osmesa-part2b
 
-@rem Fix regression when building with native mingw toolchains affecting Mesa 20.1 branch
-@IF %intmesaver% GEQ 20100 IF %intmesaver% LSS 20103 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd winepath
+@rem Fix swrAVX512 build with MSVC
+@IF %intmesaver% LSS 20000 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swravx512
+@IF %intmesaver% GEQ 20000 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swravx512-post-static-link
 
 @rem Fix swr build with MSVC
 @IF %intmesaver% LSS 20152 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swr-msvc
+@IF %intmesaver% GEQ 21300 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swr-msvc-2
 
 @rem Get swr building with Mingw
 @IF %intmesaver% LSS 20158 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swr-mingw
@@ -100,6 +101,9 @@
 
 @rem Fix radv MinGW build
 @IF %intmesaver% GEQ 21200 IF %intmesaver% LSS 21251 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd radv-mingw
+
+@rem Fix radv MSVC build with LLVM 13
+@IF %intmesaver% GEQ 21200 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd radv-msvc-llvm13
 
 @rem Fix d3d10sw MSVC build
 @IF %intmesaver% GEQ 21200 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd d3d10sw
@@ -210,6 +214,7 @@
 @IF %abi%==x86 set canradv=0
 @IF %toolchain%==msvc IF NOT EXIST %devroot%\mesa\subprojects\libelf-lfg-win32 IF %gitstate% EQU 0 set canradv=0
 @IF NOT %toolchain%==msvc IF %disableootpatch%==1 IF %intmesaver% LSS 21251 set canradv=0
+@IF %toolchain%==msvc IF %disableootpatch%==1 set canradv=0
 @IF %canradv% EQU 1 set /p radv=Build AMD Vulkan driver - radv (y/n):
 @IF %canradv% EQU 1 echo.
 @IF NOT %toolchain%==msvc if /I "%radv%"=="y" set msysregex=1

@@ -13,9 +13,9 @@ Python packages
 ---------------
 Mako       1.1.5
 MarkupSafe 2.0.1
-meson      0.59.2
-pip        21.3
-setuptools 58.2.0
+meson      0.60.0
+pip        21.3.1
+setuptools 58.3.0
 
 CMake 3.21.3
 Ninja 1.10.2
