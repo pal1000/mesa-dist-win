@@ -93,6 +93,9 @@
 @rem Fix swr build with LLVM 13
 @call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swr-llvm13
 
+@rem Fix EGL build with MinGW32
+@IF %intmesaver% GEQ 21300 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd egl-mingw-32-bit
+
 @rem Fix lavapipe crash when built with MinGW
 @IF %intmesaver:~0,3% EQU 211 IF %intmesaver% LSS 21151 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd lavapipe-mingw-crashfix
 
@@ -251,6 +254,7 @@
 @echo.
 @if /I "%gles%"=="y" set buildconf=%buildconf% -Dshared-glapi=%mesonbooltrue% -Dgles1=%mesonbooltrue% -Dgles2=%mesonbooltrue%
 @if /I "%gles%"=="y" IF %intmesaver% GEQ 21300 set buildconf=%buildconf% -Degl=%mesonbooltrue%
+@if /I "%gles%"=="y" IF %intmesaver% GEQ 21300 IF NOT %toolchain%==msvc IF %abi%==x86 IF %disableootpatch%==1 set buildconf=%buildconf:~0,-7%%mesonboolfalse%
 @if /I NOT "%gles%"=="y" set buildconf=%buildconf% -Dshared-glapi=auto -Dgles1=auto -Dgles2=auto
 @if /I NOT "%gles%"=="y" IF %intmesaver% GEQ 21300 set buildconf=%buildconf% -Degl=auto
 
