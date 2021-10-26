@@ -109,7 +109,7 @@
 @IF %intmesaver% GEQ 21200 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd radv-msvc-llvm13
 
 @rem Fix vulkan util build with MSVC 32-bit
-@IF %intmesaver% GEQ 21300 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd vulkan-core-msvc-32-bit
+@IF %intmesaver% GEQ 21300 IF %intmesaver% LSS 22000 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd vulkan-core-msvc-32-bit
 
 @rem Fix d3d10sw MSVC build
 @IF %intmesaver% GEQ 21200 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd d3d10sw
@@ -173,7 +173,7 @@
 @set canzink=0
 @IF NOT %toolchain%==msvc IF %intmesaver% GEQ 21000 set canzink=1
 @IF %toolchain%==msvc IF %intmesaver% GEQ 21200 set canzink=1
-@IF %toolchain%==msvc IF %intmesaver% GEQ 21300 IF %abi%==x86 IF %disableootpatch%==1 set canzink=0
+@IF %toolchain%==msvc IF %intmesaver% GEQ 21300 IF %intmesaver% LSS 22000 IF %abi%==x86 IF %disableootpatch%==1 set canzink=0
 @IF %toolchain%==msvc IF NOT EXIST "%VK_SDK_PATH%" IF NOT EXIST "%VULKAN_SDK%" set canzink=0
 @IF %canzink% EQU 1 set /p zink=Do you want to build Mesa3D OpenGL driver over Vulkan - zink (y/n):
 @IF %canzink% EQU 1 echo.
@@ -209,7 +209,7 @@
 @IF %intmesaver% LSS 21100 set canlavapipe=0
 @if /I NOT "%glswrast%"=="y" set canlavapipe=0
 @IF %intmesaver:~0,3% EQU 211 IF %intmesaver% LSS 21151 IF %toolchain%==msvc if %abi%==x86 IF %disableootpatch%==1 set canlavapipe=0
-@IF %toolchain%==msvc IF %intmesaver% GEQ 21300 IF %abi%==x86 IF %disableootpatch%==1 set canlavapipe=0
+@IF %toolchain%==msvc IF %intmesaver% GEQ 21300 IF %intmesaver% LSS 22000 IF %abi%==x86 IF %disableootpatch%==1 set canlavapipe=0
 @IF %canlavapipe% EQU 1 set /p lavapipe=Build Mesa3D Vulkan software renderer (y/n):
 @IF %canlavapipe% EQU 1 echo.
 @if NOT %toolchain%==msvc if /I "%lavapipe%"=="y" set msysregex=1
