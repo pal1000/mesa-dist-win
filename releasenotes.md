@@ -2,7 +2,8 @@
 ### Build script
 - Do not link regex when building with MSVC, regression from 50115ec7 [21.3+];
 - Explicitly handle EGL build configuration option value to ensure incremental build consistency [21.3+];
-- MinGW: Update hardcoded libraries fallback for LLVM 13.
+- MinGW: Update hardcoded libraries fallback for LLVM 13;
+- Make incremental build resilient against toolchain switch operations.
 ### Distribution
 - Add version info to Mesa3D EGL library [21.3+].
 ### Deployment

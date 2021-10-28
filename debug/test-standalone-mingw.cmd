@@ -13,17 +13,17 @@
 @git clean -fd
 @copy /Y %devroot%\mesa-dist-win\buildscript\mesonsubprojects\zlib.wrap %devroot%\mesa\subprojects\zlib.wrap
 @echo.
-@set buildconf=meson build/%abi% -Dbuildtype=debugoptimized -Dllvm=disabled -Dzlib:default_library=static -Dgallium-drivers=swrast,zink
+@set buildconf=meson build/gcc-%abi% -Dbuildtype=debugoptimized -Dllvm=disabled -Dzlib:default_library=static -Dgallium-drivers=swrast,zink
 @IF NOT EXIST "%VK_SDK_PATH%" IF NOT EXIST "%VULKAN_SDK%" set buildconf=%buildconf:~0,-5%
 @set LDFLAGS=-static
 @IF "%multilib%"=="1" set CFLAGS=-m32
 @IF "%multilib%"=="1" set CXXFLAGS=-m32
 @IF "%multilib%"=="1" set LDFLAGS=%LDFLAGS% -m32
-@set buildcmd=ninja -C build/%abi% -j 2
+@set buildcmd=ninja -C build/gcc-%abi% -j 2
 @for /d %%a in ("%devroot%\mesa\subprojects\zlib-*") do @RD /S /Q "%%~a"
 @IF EXIST "%devroot%\mesa\subprojects\zlib\" RD /S /Q %devroot%\mesa\subprojects\zlib
-@IF EXIST build\%abi% RD /S /Q build\%abi%
+@IF EXIST build\gcc-%abi% RD /S /Q build\gcc-%abi%
 @IF EXIST %devroot%\mesa-dist-win\bin\%abi% RD /S /Q %devroot%\mesa-dist-win\bin\%abi%
 @md %devroot%\mesa-dist-win\bin\%abi%
-@set inst=copy /Y %devroot%\mesa\build\%abi%\src\gallium\targets\libgl-gdi\opengl32.dll %devroot%\mesa-dist-win\bin\%abi%
+@set inst=copy /Y %devroot%\mesa\build\gcc-%abi%\src\gallium\targets\libgl-gdi\opengl32.dll %devroot%\mesa-dist-win\bin\%abi%
 @cmd

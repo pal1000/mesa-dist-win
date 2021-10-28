@@ -115,11 +115,11 @@
 :configmesabuild
 @rem Configure Mesa build.
 @set buildconf=%mesonloc%
-@if EXIST build\%abi% set /p cleanmesabld=Perform clean build (y/n):
-@if EXIST build\%abi% echo.
-@IF /I "%cleanmesabld%"=="y" RD /S /Q build\%abi%
-@IF /I NOT "%cleanmesabld%"=="y" if EXIST build\%abi% set buildconf=%mesonloc% configure
-@set buildconf=%buildconf% build/%abi% --buildtype=release -Db_ndebug=true --prefix=%devroot:\=/%/%projectname%/dist/%abi%
+@if EXIST build\%toolchain%-%abi% set /p cleanmesabld=Perform clean build (y/n):
+@if EXIST build\%toolchain%-%abi% echo.
+@IF /I "%cleanmesabld%"=="y" RD /S /Q build\%toolchain%-%abi%
+@IF /I NOT "%cleanmesabld%"=="y" if EXIST build\%toolchain%-%abi% set buildconf=%mesonloc% configure
+@set buildconf=%buildconf% build/%toolchain%-%abi% --buildtype=release -Db_ndebug=true --prefix=%devroot:\=/%/%projectname%/dist/%abi%
 @IF %intmesaver% GEQ 21200 set buildconf=%buildconf% -Dc_std=c17
 @IF %toolchain%==msvc set buildconf=%buildconf% -Db_vscrt=mt -Dzlib:default_library=static
 @IF %toolchain%==msvc IF %intmesaver% GEQ 21200 set buildconf=%buildconf% -Dcpp_std=vc++latest
@@ -150,10 +150,10 @@
 @if NOT %ninjastate%==0 IF %toolchain%==msvc echo.
 @if /I "%useninja%"=="y" if %ninjastate%==1 IF %toolchain%==msvc set PATH=%devroot%\ninja\;%PATH%
 @if /I "%useninja%"=="y" set buildconf=%buildconf% --backend=ninja
-@if /I "%useninja%"=="y" IF %toolchain%==msvc set buildcmd=ninja -C %devroot:\=/%/mesa/build/%abi% -j %throttle% -k 0
+@if /I "%useninja%"=="y" IF %toolchain%==msvc set buildcmd=ninja -C %devroot:\=/%/mesa/build/%toolchain%-%abi% -j %throttle% -k 0
 @IF NOT %toolchain%==msvc set buildcmd=%msysloc%\usr\bin\bash --login -c "
 @IF NOT %toolchain%==msvc IF %gitstate% GTR 0 set buildcmd=%buildcmd%PATH=${PATH}:${gitloc};
-@IF NOT %toolchain%==msvc set buildcmd=%buildcmd%${MINGW_PREFIX}/bin/ninja -C $(/usr/bin/cygpath -m ${devroot})/mesa/build/${abi} -j ${throttle} -k 0"
+@IF NOT %toolchain%==msvc set buildcmd=%buildcmd%${MINGW_PREFIX}/bin/ninja -C $(/usr/bin/cygpath -m ${devroot})/mesa/build/%toolchain%-${abi} -j ${throttle} -k 0"
 @if /I NOT "%useninja%"=="y" set buildconf=%buildconf% --backend=vs
 
 @set galliumcount=0
@@ -304,9 +304,9 @@
 :build_mesa
 @rem Generate dummy header for MSVC build when git is missing.
 @IF %toolchain%==msvc if NOT EXIST build md build
-@IF %toolchain%==msvc if NOT EXIST build\%abi% md build\%abi%
-@IF %toolchain%==msvc if NOT EXIST build\%abi%\src md build\%abi%\src
-@IF %toolchain%==msvc if NOT EXIST build\%abi%\src\git_sha1.h echo 0 > build\%abi%\src\git_sha1.h
+@IF %toolchain%==msvc if NOT EXIST build\%toolchain%-%abi% md build\%toolchain%-%abi%
+@IF %toolchain%==msvc if NOT EXIST build\%toolchain%-%abi%\src md build\%toolchain%-%abi%\src
+@IF %toolchain%==msvc if NOT EXIST build\%toolchain%-%abi%\src\git_sha1.h echo 0 > build\%toolchain%-%abi%\src\git_sha1.h
 
 @rem Load MSVC environment if used.
 @IF %toolchain%==msvc echo.
@@ -319,7 +319,7 @@
 @set LDFLAGS=
 @%buildconf%
 @echo.
-@if /I NOT "%useninja%"=="y" cd build\%abi%
+@if /I NOT "%useninja%"=="y" cd build\%toolchain%-%abi%
 @echo Build command: %buildcmd%
 @echo.
 @pause
