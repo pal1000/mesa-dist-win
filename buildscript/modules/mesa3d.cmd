@@ -106,11 +106,11 @@
 @IF %intmesaver% GEQ 21200 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd radv-msvc-llvm13
 
 @rem Fix vulkan util build with MSVC 32-bit
-@IF %intmesaver% GEQ 21300 IF %intmesaver% LSS 22000 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd vulkan-core-msvc-32-bit
+@IF %intmesaver% GEQ 21301 IF %intmesaver% LSS 21303 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd vulkan-core-msvc-32-bit
 
 @rem Fix d3d10sw MSVC build
-@IF %intmesaver% GEQ 21200 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd d3d10sw
-@IF %intmesaver% GEQ 21300 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd d3d10sw-2
+@IF %intmesaver% GEQ 21200 IF %intmesaver% LSS 22000 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd d3d10sw
+@IF %intmesaver% GEQ 21300 IF %intmesaver% LSS 22000 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd d3d10sw-2
 
 :configmesabuild
 @rem Configure Mesa build.
@@ -170,7 +170,7 @@
 @set canzink=0
 @IF NOT %toolchain%==msvc IF %intmesaver% GEQ 21000 set canzink=1
 @IF %toolchain%==msvc IF %intmesaver% GEQ 21200 set canzink=1
-@IF %toolchain%==msvc IF %intmesaver% GEQ 21300 IF %intmesaver% LSS 22000 IF %abi%==x86 IF %disableootpatch%==1 set canzink=0
+@IF %toolchain%==msvc IF %intmesaver% GEQ 21301 IF %intmesaver% LSS 21303 IF %abi%==x86 IF %disableootpatch%==1 set canzink=0
 @IF %toolchain%==msvc IF NOT EXIST "%VK_SDK_PATH%" IF NOT EXIST "%VULKAN_SDK%" set canzink=0
 @IF %canzink% EQU 1 set /p zink=Do you want to build Mesa3D OpenGL driver over Vulkan - zink (y/n):
 @IF %canzink% EQU 1 echo.
@@ -206,7 +206,7 @@
 @IF %intmesaver% LSS 21100 set canlavapipe=0
 @if /I NOT "%glswrast%"=="y" set canlavapipe=0
 @IF %intmesaver:~0,3% EQU 211 IF %intmesaver% LSS 21151 IF %toolchain%==msvc if %abi%==x86 IF %disableootpatch%==1 set canlavapipe=0
-@IF %toolchain%==msvc IF %intmesaver% GEQ 21300 IF %intmesaver% LSS 22000 IF %abi%==x86 IF %disableootpatch%==1 set canlavapipe=0
+@IF %toolchain%==msvc IF %intmesaver% GEQ 21301 IF %intmesaver% LSS 21303 IF %abi%==x86 IF %disableootpatch%==1 set canlavapipe=0
 @IF %canlavapipe% EQU 1 set /p lavapipe=Build Mesa3D Vulkan software renderer (y/n):
 @IF %canlavapipe% EQU 1 echo.
 @if NOT %toolchain%==msvc if /I "%lavapipe%"=="y" set msysregex=1
@@ -234,8 +234,12 @@
 @IF %msysregex%==1 set LDFLAGS=%LDFLAGS% -ltre -lintl -liconv
 
 @set d3d10umd=n
-@set cand3d10umd=0
-@IF %intmesaver% GEQ 21200 if /I "%glswrast%"=="y" IF %disableootpatch% EQU 0 IF %toolchain%==msvc for /f tokens^=^* %%a in ('@call %devroot%\%projectname%\buildscript\modules\winsdk.cmd wdk') do @IF "%%a"=="OK" set cand3d10umd=1
+@set cand3d10umd=1
+@IF %intmesaver% LSS 21200 set cand3d10umd=0
+@if /I NOT "%glswrast%"=="y" set cand3d10umd=0
+@IF NOT %toolchain%==msvc set cand3d10umd=0
+@IF %intmesaver% LSS 22000 IF %disableootpatch% EQU 1 set cand3d10umd=0
+@for /f tokens^=^* %%a in ('@call %devroot%\%projectname%\buildscript\modules\winsdk.cmd wdk') do @IF NOT "%%a"=="OK" set cand3d10umd=0
 @IF %cand3d10umd% EQU 1 set /p d3d10umd=Build Mesa3D D3D10 software renderer (y/n):
 @IF %cand3d10umd% EQU 1 echo.
 @if /I "%d3d10umd%"=="y" set buildconf=%buildconf% -Dgallium-d3d10umd=true
