@@ -17,7 +17,7 @@ meson      0.60.0
 pip        21.3.1
 setuptools 58.3.0
 
-CMake 3.21.3
+CMake 3.21.4
 Ninja 1.10.2
 LLVM 13.0.0
 Winflexbison package 2.5.24
