@@ -11,7 +11,7 @@
 ### Out of tree patches
 - Add patch fixing swr driver build with LLVM 13;
 - Add patch fixing swr driver build with MSVC [21.3+];
-- Add patch fixing RADV driver build with MSVC and LLVM 13;
+- Add patches fixing RADV driver build with MSVC and LLVM 13;
 - Add patch fixing d3d10sw build [21.3+];
 - Add patch fixing vulkan core build with MSVC 32-bit [21.3+].
 # 21.2.4

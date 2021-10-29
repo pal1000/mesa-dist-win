@@ -103,7 +103,8 @@
 @IF %intmesaver% GEQ 21200 IF %intmesaver% LSS 21251 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd radv-mingw
 
 @rem Fix radv MSVC build with LLVM 13
-@IF %intmesaver% GEQ 21200 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd radv-msvc-llvm13
+@IF %intmesaver% GEQ 21300 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd radv-msvc-llvm13
+@IF %intmesaver:~0,3% EQU 212 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd radv-msvc-llvm13-2
 
 @rem Fix vulkan util build with MSVC 32-bit
 @IF %intmesaver% GEQ 21301 IF %intmesaver% LSS 21303 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd vulkan-core-msvc-32-bit
