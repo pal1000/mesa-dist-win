@@ -1,4 +1,5 @@
-# Next release
+# 21.2.5
+- Updated Mesa3D to [21.2.5](https://docs.mesa3d.org/relnotes/21.2.5.html).
 ### Build script
 - Do not link regex when building with MSVC, regression from 50115ec7 [21.3+];
 - Explicitly handle EGL build configuration option value to ensure incremental build consistency [21.3+];
