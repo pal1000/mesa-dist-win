@@ -54,7 +54,8 @@
 @IF %dualosmesa% EQU 0 forfiles /p %devroot%\mesa\build\%toolchain%-%abi%\src /s /m *.dll /c "cmd /c copy @path %devroot%\%projectname%\bin\%abi%"
 @IF EXIST %devroot%\%projectname%\bin\%abi%\openglon12.dll for /f tokens^=^* %%a in ('@call %devroot%\%projectname%\buildscript\modules\winsdk.cmd dxil') do @IF EXIST %%a copy %%a %devroot%\%projectname%\bin\%abi%
 @forfiles /p %devroot%\mesa\build\%toolchain%-%abi%\src /s /m *.exe /c "cmd /c copy @path %devroot%\%projectname%\bin\%abi%"
-@forfiles /p %devroot%\mesa\build\%toolchain%-%abi%\src /s /m *.json /c "cmd /c copy @path %devroot%\%projectname%\bin\%abi%"
+@forfiles /p %devroot%\mesa\build\%toolchain%-%abi%\src /s /m lvp_icd.*.json /c "cmd /c copy @path %devroot%\%projectname%\bin\%abi%"
+@forfiles /p %devroot%\mesa\build\%toolchain%-%abi%\src /s /m radeon_icd.*.json /c "cmd /c copy @path %devroot%\%projectname%\bin\%abi%"
 @IF EXIST %devroot%\%projectname%\bin\%abi%\libvulkan_radeon.dll REN %devroot%\%projectname%\bin\%abi%\libvulkan_radeon.dll vulkan_radeon.dll
 
 @rem Patch Vulkan drivers JSONs

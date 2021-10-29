@@ -5,7 +5,8 @@
 - MinGW: Update hardcoded libraries fallback for LLVM 13;
 - Make incremental build resilient against toolchain switch operations.
 ### Distribution
-- Add version info to Mesa3D EGL library [21.3+].
+- Add version info to Mesa3D EGL library [21.3+];
+- Avoid copying Meson 0.60 and newer JSON build artifacts.
 ### Deployment
 - Add support for Mesa3D EGL library to per application deployment tool [21.3+].
 ### Out of tree patches
