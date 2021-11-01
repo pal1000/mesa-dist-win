@@ -10,6 +10,7 @@
 @git checkout master
 @git pull -v --progress --recurse-submodules origin
 @git checkout canary
+@git pull -v --progress --recurse-submodules origin
 @echo.
 )
 @IF EXIST %devroot%\spirv-tools\external\spirv-headers IF %gitstate% GTR 0 (

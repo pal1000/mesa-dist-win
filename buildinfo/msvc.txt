@@ -15,7 +15,7 @@ Mako       1.1.5
 MarkupSafe 2.0.1
 meson      0.60.0
 pip        21.3.1
-setuptools 58.3.0
+setuptools 58.4.0
 
 CMake 3.21.4
 Ninja 1.10.2
