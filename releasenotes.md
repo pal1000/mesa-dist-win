@@ -1,6 +1,7 @@
 # Next release
 ### Build script
-- Fix SPIRV Tools update.
+- Fix SPIRV Tools update;
+- Improve and re-enable MinGW clang build.
 # 21.2.5
 - Updated Mesa3D to [21.2.5](https://docs.mesa3d.org/relnotes/21.2.5.html).
 ### Build script
