@@ -288,10 +288,10 @@
 @if /I "%llvmless%"=="y" set canopencl=0
 @IF NOT EXIST %devroot%\llvm\%abi%\lib\pkgconfig set canopencl=0
 @IF NOT EXIST %devroot%\llvm\clc\share\pkgconfig set canopencl=0
-@IF NOT EXIST %devroot%\spirv-tools\%abi%\lib\pkgconfig set canopencl=0
+@IF NOT EXIST %devroot%\spirv-tools\build\%abi%\lib\pkgconfig set canopencl=0
 @IF %canopencl% EQU 1 set /p opencl=Build Mesa3D Microsoft OpenCL on D3D12 driver (y/n):
 @IF %canopencl% EQU 1 echo.
-@IF /I "%opencl%"=="y" set buildconf=%buildconf% --pkg-config-path=%devroot:\=/%/llvm/%abi%/lib/pkgconfig;%devroot:\=/%/llvm/clc/share/pkgconfig;%devroot:\=/%/spirv-tools/%abi%/lib/pkgconfig -Dmicrosoft-clc=enabled -Dstatic-libclc=all
+@IF /I "%opencl%"=="y" set buildconf=%buildconf% --pkg-config-path=%devroot:\=/%/llvm/%abi%/lib/pkgconfig;%devroot:\=/%/llvm/clc/share/pkgconfig;%devroot:\=/%/spirv-tools/build/%abi%/lib/pkgconfig -Dmicrosoft-clc=enabled -Dstatic-libclc=all
 @IF /I NOT "%opencl%"=="y" IF %intmesaver% GEQ 21000 set buildconf=%buildconf% -Dmicrosoft-clc=disabled
 
 @rem Pass additional linker flags
