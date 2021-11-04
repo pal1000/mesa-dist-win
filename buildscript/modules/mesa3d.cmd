@@ -281,18 +281,20 @@
 @if /I NOT "%graw%"=="y" set buildconf=%buildconf% -Dbuild-tests=false
 
 @rem According to Mesa source code CLonD3D12 requires SPIRV tools and LLVM built with clang, LLD, SPIRV translator and libclc and it doesn't support MinGW.
-@set canopencl=1
-@IF NOT EXIST %devroot%\mesa\subprojects\DirectX-Headers.wrap set canopencl=0
-@IF %intmesaver% LSS 21000 set canopencl=0
-@IF NOT %toolchain%==msvc set canopencl=0
-@if /I "%llvmless%"=="y" set canopencl=0
-@IF NOT EXIST %devroot%\llvm\%abi%\lib\pkgconfig set canopencl=0
-@IF NOT EXIST %devroot%\llvm\clc\share\pkgconfig set canopencl=0
-@IF NOT EXIST %devroot%\spirv-tools\build\%abi%\lib\pkgconfig set canopencl=0
-@IF %canopencl% EQU 1 set /p opencl=Build Mesa3D Microsoft OpenCL on D3D12 driver (y/n):
-@IF %canopencl% EQU 1 echo.
-@IF /I "%opencl%"=="y" set buildconf=%buildconf% --pkg-config-path=%devroot:\=/%/llvm/%abi%/lib/pkgconfig;%devroot:\=/%/llvm/clc/share/pkgconfig;%devroot:\=/%/spirv-tools/build/%abi%/lib/pkgconfig -Dmicrosoft-clc=enabled -Dstatic-libclc=all
-@IF /I NOT "%opencl%"=="y" IF %intmesaver% GEQ 21000 set buildconf=%buildconf% -Dmicrosoft-clc=disabled
+@set canclon12=1
+@IF NOT EXIST %devroot%\mesa\subprojects\DirectX-Headers.wrap set canclon12=0
+@IF %intmesaver% LSS 21000 set canclon12=0
+@IF NOT %toolchain%==msvc set canclon12=0
+@if /I "%llvmless%"=="y" set canclon12=0
+@IF NOT EXIST %devroot%\llvm\%abi%\lib\clang*.lib set canclon12=0
+@IF NOT EXIST %devroot%\llvm\%abi%\lib\lld*.lib set canclon12=0
+@IF NOT EXIST %devroot%\llvm\%abi%\lib\pkgconfig set canclon12=0
+@IF NOT EXIST %devroot%\llvm\clc\share\pkgconfig set canclon12=0
+@IF NOT EXIST %devroot%\spirv-tools\build\%abi%\lib\pkgconfig set canclon12=0
+@IF %canclon12% EQU 1 set /p clon12=Build Mesa3D Microsoft OpenCL on D3D12 driver (y/n):
+@IF %canclon12% EQU 1 echo.
+@IF /I "%clon12%"=="y" set buildconf=%buildconf% --pkg-config-path=%devroot:\=/%/llvm/%abi%/lib/pkgconfig;%devroot:\=/%/llvm/clc/share/pkgconfig;%devroot:\=/%/spirv-tools/build/%abi%/lib/pkgconfig -Dmicrosoft-clc=enabled -Dstatic-libclc=all
+@IF /I NOT "%clon12%"=="y" IF %intmesaver% GEQ 21000 set buildconf=%buildconf% -Dmicrosoft-clc=disabled
 
 @rem Pass additional linker flags
 @if %toolchain%==msvc if defined LDFLAGS set buildconf=%buildconf% -Dc_link_args="%LDFLAGS%" -Dcpp_link_args="%LDFLAGS%"
