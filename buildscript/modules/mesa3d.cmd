@@ -118,8 +118,9 @@
 @set buildconf=%mesonloc%
 @if EXIST build\%toolchain%-%abi% set /p cleanmesabld=Perform clean build (y/n):
 @if EXIST build\%toolchain%-%abi% echo.
-@IF /I "%cleanmesabld%"=="y" RD /S /Q build\%toolchain%-%abi%
-@IF /I NOT "%cleanmesabld%"=="y" if EXIST build\%toolchain%-%abi% set buildconf=%mesonloc% configure
+@if NOT EXIST build\%toolchain%-%abi% set cleanmesabld=y
+@if EXIST build\%toolchain%-%abi% IF /I "%cleanmesabld%"=="y" RD /S /Q build\%toolchain%-%abi%
+@IF /I NOT "%cleanmesabld%"=="y" set buildconf=%mesonloc% configure
 @set buildconf=%buildconf% build/%toolchain%-%abi% --buildtype=release -Db_ndebug=true --prefix=%devroot:\=/%/%projectname%/dist/%abi%
 @IF %intmesaver% GEQ 21200 set buildconf=%buildconf% -Dc_std=c17
 @IF %toolchain%==msvc set buildconf=%buildconf% -Db_vscrt=mt -Dzlib:default_library=static
@@ -319,6 +320,8 @@
 @rem Execute build configuration.
 @echo Build configuration command: %buildconf%
 @echo.
+@IF /I "%cleanmesabld%"=="y" pause
+@IF /I "%cleanmesabld%"=="y" echo.
 @set LDFLAGS=
 @%buildconf%
 @echo.
