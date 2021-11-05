@@ -25,7 +25,7 @@ IF /I NOT "%%a"=="YES" IF /I NOT "%%a"=="NO" set llvmconfigbusted=1
 @set llvmlibs=libLLVMCoroutines.a libLLVMipo.a libLLVMInstrumentation.a libLLVMVectorize.a libLLVMLinker.a libLLVMIRReader.a libLLVMAsmParser.a libLLVMFrontendOpenMP.a libLLVMInterpreter.a libLLVMExecutionEngine.a libLLVMRuntimeDyld.a libLLVMOrcTargetProcess.a libLLVMOrcShared.a libLLVMCodeGen.a libLLVMTarget.a libLLVMScalarOpts.a libLLVMInstCombine.a libLLVMAggressiveInstCombine.a libLLVMTransformUtils.a libLLVMBitWriter.a libLLVMAnalysis.a libLLVMProfileData.a libLLVMObject.a libLLVMTextAPI.a libLLVMMCParser.a libLLVMMC.a libLLVMDebugInfoCodeView.a libLLVMBitReader.a libLLVMCore.a libLLVMRemarks.a libLLVMBitstreamReader.a libLLVMBinaryFormat.a libLLVMSupport.a libLLVMDemangle.a
 @set llvmlibs=%llvmlibs:.a=%
 @set llvmlibs='%llvmlibs: =', '%'
-@FOR /F USEBACKQ^ tokens^=5^ delims^=-^  %%a IN (`%msysloc%\usr\bin\bash --login -c "/usr/bin/pacman -Q ${MINGW_PACKAGE_PREFIX}-llvm"`) DO @SET llvmver=%%~a
+@FOR /F USEBACKQ^ tokens^=2^ delims^=^  %%a IN (`%msysloc%\usr\bin\bash --login -c "/usr/bin/pacman -Q ${MINGW_PACKAGE_PREFIX}-llvm"`) DO @FOR /F tokens^=1^ delims^=- %%b IN ("%%~a") DO @SET llvmver=%%b
 @IF NOT EXIST "%devroot%\mesa\subprojects\llvm\" md %devroot%\mesa\subprojects\llvm
 @(
 echo project^('llvm', ['cpp']^)
@@ -95,7 +95,7 @@ cd /D %devroot%\mesa
 @rem Override zlib dependency
 @for /d %%a in ("%devroot%\mesa\subprojects\zlib-*") do @RD /S /Q "%%~a"
 @IF EXIST %devroot%\mesa\subprojects\zlib.wrap del %devroot%\mesa\subprojects\zlib.wrap
-@FOR /F USEBACKQ^ tokens^=5^ delims^=-^  %%a IN (`%msysloc%\usr\bin\bash --login -c "/usr/bin/pacman -Q ${MINGW_PACKAGE_PREFIX}-zlib"`) DO @SET zlibver=%%~a
+@FOR /F USEBACKQ^ tokens^=2^ delims^=^  %%a IN (`%msysloc%\usr\bin\bash --login -c "/usr/bin/pacman -Q ${MINGW_PACKAGE_PREFIX}-zlib"`) DO @FOR /F tokens^=1^ delims^=- %%b IN ("%%~a") DO @SET zlibver=%%b
 @IF NOT EXIST "%devroot%\mesa\subprojects\zlib\" MD %devroot%\mesa\subprojects\zlib
 @(
 echo project^('zlib', ['cpp'], version ^: '%zlibver%'^)
@@ -116,7 +116,7 @@ echo ^)
 )
 
 @rem Override ZSTD dependency
-@FOR /F USEBACKQ^ tokens^=5^ delims^=-^  %%a IN (`%msysloc%\usr\bin\bash --login -c "/usr/bin/pacman -Q ${MINGW_PACKAGE_PREFIX}-zstd"`) DO @SET zstdver=%%~a
+@FOR /F USEBACKQ^ tokens^=2^ delims^=^  %%a IN (`%msysloc%\usr\bin\bash --login -c "/usr/bin/pacman -Q ${MINGW_PACKAGE_PREFIX}-zstd"`) DO @FOR /F tokens^=1^ delims^=- %%b IN ("%%~a") DO @SET zstdver=%%b
 @IF NOT EXIST "%devroot%\mesa\subprojects\libzstd\" MD %devroot%\mesa\subprojects\libzstd
 @(
 echo project^('libzstd', ['cpp'], version ^: '%zstdver%'^)
