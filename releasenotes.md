@@ -5,6 +5,8 @@
 - Enforce Microsoft OpenCL compiler dependency on clang and lld;
 - Mesa3D clean build: Pause after displaying build configuration command;
 - LLVM MSVC build: Fix RTTI enablement.
+### Distribution
+- Add version info to Microsoft OpenCL compiler.
 # 21.2.5
 - Updated Mesa3D to [21.2.5](https://docs.mesa3d.org/relnotes/21.2.5.html).
 ### Build script
