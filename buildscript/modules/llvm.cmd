@@ -119,7 +119,7 @@
 @if EXIST %devroot%\llvm-project IF /I NOT "%buildclang%"=="y" IF NOT %abi%==x64 set buildconf=%buildconf% -DLLVM_INCLUDE_TOOLS=OFF
 @IF /I "%buildclang%"=="y" set buildconf=%buildconf% -DCLANG_BUILD_TOOLS=ON
 @if /I "%buildllvmspirv%"=="y" set buildconf=%buildconf% -DLLVM_SPIRV_INCLUDE_TESTS=OFF
-@set buildconf=%buildconf% -DLLVM_ENABLE_RTTI=1 -DLLVM_ENABLE_TERMINFO=OFF
+@set buildconf=%buildconf% -DLLVM_ENABLE_RTTI=ON -DLLVM_ENABLE_TERMINFO=OFF
 
 @echo LLVM build configuration command^: %buildconf%
 @echo.

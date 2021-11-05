@@ -3,7 +3,8 @@
 - Finish SPIRV Tools build;
 - Improve and re-enable MinGW clang build;
 - Enforce CLonD3D12 dependency on clang and lld;
-- Mesa3D clean build: Pause after displaying build configuration command.
+- Mesa3D clean build: Pause after displaying build configuration command;
+- LLVM MSVC build: Fix RTTI enablement.
 # 21.2.5
 - Updated Mesa3D to [21.2.5](https://docs.mesa3d.org/relnotes/21.2.5.html).
 ### Build script
