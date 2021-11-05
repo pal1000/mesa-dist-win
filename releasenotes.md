@@ -2,7 +2,7 @@
 ### Build script
 - Finish SPIRV Tools build;
 - Improve and re-enable MinGW clang build;
-- Enforce CLonD3D12 dependency on clang and lld;
+- Enforce Microsoft OpenCL compiler dependency on clang and lld;
 - Mesa3D clean build: Pause after displaying build configuration command;
 - LLVM MSVC build: Fix RTTI enablement.
 # 21.2.5
@@ -77,7 +77,7 @@
 ### Build script
 - Support building Mesa3D without softpipe and llvmpipe;
 - Support building zink with MSVC and delay load Vulkan runtime for it [21.2+];
-- CLonD3D12 also depends on LLVM core;
+- Microsoft OpenCL compiler also depends on LLVM core;
 - Support AMD Vulkan driver - radv [21.2+];
 - Support Mesa3D D3D10 software renderer [21.2+];
 - Misc incremental build fixes.
@@ -111,7 +111,7 @@
 ### Build script
 - MSYS2: Disable option to use clang compiler instead of GCC as Mesa3D fails to build with it most of the time;
 - LLVM: Initial libclc build support;
-- Prepare Mesa3D build for CLonD3D12 driver.
+- Prepare Mesa3D build for Microsoft OpenCL compiler.
 ### Utilities
 - Implement unattended mode in MinGW vulkan loader compatibility tool.
 # 21.1.1
@@ -119,7 +119,7 @@
 ### Build script
 - Fix lavapipe build with MinGW static CRT without using out of tree patch;
 - MSYS2: Use Meson find_library to switch zlib and ZSTD dependencies to static linking;
-- LLVM: Add SPIRV LLVM Translator build required by CLonD3D12;
+- LLVM: Add SPIRV LLVM Translator build required by Microsoft OpenCL compiler;
 - LLVM: Add AMDGPU target required by RADV;
 - LLVM: Refactor build configuration command to match Mesa3D CI as much as possible;
 - Mesa3D source fetch: Adjust default branch to main.
