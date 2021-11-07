@@ -7,6 +7,8 @@
 - LLVM MSVC build: Fix RTTI enablement.
 ### Distribution
 - Add version info to Microsoft OpenCL compiler.
+### Build environment information
+- Fix version information retrieval for Resource hacker by creating build script assets folder in advance.
 # 21.2.5
 - Updated Mesa3D to [21.2.5](https://docs.mesa3d.org/relnotes/21.2.5.html).
 ### Build script

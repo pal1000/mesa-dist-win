@@ -9,6 +9,9 @@
 @set projectname=mesa-dist-win
 @set "ERRORLEVEL="
 
+@rem Create folder to store generated resource files
+@IF NOT EXIST %devroot%\%projectname%\buildscript\assets md %devroot%\%projectname%\buildscript\assets
+
 @rem Command line option to disable out of tree patches for Mesa3D
 @IF "%1"=="disableootpatch" set disableootpatch=1
 @IF "%disableootpatch%"=="1" set TITLE=%TITLE% ^(out of tree patches disabled^)

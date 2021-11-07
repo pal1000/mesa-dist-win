@@ -7,9 +7,6 @@
 @IF %rhstate%==0 GOTO noresourcehacker
 @IF %rhstate%==1 SET PATH=%devroot%\resource-hacker\;%PATH%
 
-@rem Create folder to store generated resource files
-@IF NOT EXIST %devroot%\%projectname%\buildscript\assets md %devroot%\%projectname%\buildscript\assets
-
 @pause
 @echo.
 @echo Adding version information to binaries. Please wait...
