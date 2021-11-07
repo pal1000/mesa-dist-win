@@ -22,16 +22,12 @@
 @IF %rhstate%==1 SET PATH=%devroot%\resource-hacker\;%PATH%
 @IF %rhstate% GTR 0 FOR /F "USEBACKQ tokens=*" %%a IN (`where ResourceHacker.exe`) do @set rhloc="%%a"
 @IF %rhstate% GTR 0 ResourceHacker.exe -open %rhloc% -action extract -mask VERSIONINFO,, -save %devroot%\%projectname%\buildscript\assets\temp.rc -log NUL
-@IF %rhstate% GTR 0 set exitloop=1
-@IF %rhstate% GTR 0 FOR /F "tokens=2 skip=2 USEBACKQ" %%a IN (`type %devroot%\%projectname%\buildscript\assets\temp.rc`) do @IF defined exitloop (
-set "exitloop="
-set rhver=%%a
-)
+@IF %rhstate% GTR 0 FOR /F tokens^=1-2^ delims^=^  %%a IN ('type %devroot%\%projectname%\buildscript\assets\temp.rc') do @IF /I "%%a"=="FILEVERSION" set rhver=%%b
 @IF %rhstate% GTR 0 IF NOT %toolchain%==msvc echo Ressource Hacker %rhver:,=.%>>%devroot%\%projectname%\buildinfo\mingw.txt
 @IF %rhstate% GTR 0 IF %toolchain%==msvc echo Ressource Hacker %rhver:,=.%>>%devroot%\%projectname%\buildinfo\msvc.txt
 
 @rem Dump 7-Zip version and compression level
-@set sevenzipver=21.03
+@set sevenzipver=21.04
 @IF NOT %toolchain%==msvc echo 7-Zip %sevenzipver% ultra compression>>%devroot%\%projectname%\buildinfo\mingw.txt
 @IF %toolchain%==msvc echo 7-Zip %sevenzipver% ultra compression>>%devroot%\%projectname%\buildinfo\msvc.txt
 
@@ -79,8 +75,10 @@ echo CMake %%a>>%devroot%\%projectname%\buildinfo\msvc.txt
 @IF %toolchain%==msvc IF NOT "%ninjastate%"=="0" IF NOT "%ninjastate%"=="" for /f "USEBACKQ" %%a IN (`ninja --version`) do @echo Ninja %%a>>%devroot%\%projectname%\buildinfo\msvc.txt
 
 @rem Get LLVM version
-@IF %toolchain%==msvc IF EXIST %devroot%\llvm\x64\bin\llvm-config.exe FOR /F "USEBACKQ" %%a IN (`%devroot%\llvm\x64\bin\llvm-config.exe --version`) do @set llvmver=%%a
-@IF %toolchain%==msvc IF EXIST %devroot%\llvm\x64\bin\llvm-config.exe echo LLVM %llvmver%>>%devroot%\%projectname%\buildinfo\msvc.txt
+@IF %toolchain%==msvc IF EXIST %devroot%\llvm\x64\bin\llvm-config.exe FOR /F "USEBACKQ" %%a IN (`%devroot%\llvm\x64\bin\llvm-config.exe --version`) do @echo LLVM %%a>>%devroot%\%projectname%\buildinfo\msvc.txt
+
+@rem Get SPIRV Tools version
+@IF %toolchain%==msvc IF EXIST %devroot%\spirv-tools\build\%abi%\bin for /f tokens^=1-2^ delims^=^  %%a IN ('type %devroot%\spirv-tools\build\%abi%\lib\pkgconfig\SPIRV-Tools.pc') do @IF /I "%%a"=="Version:" echo SPIRV Tools %%b>>%devroot%\%projectname%\buildinfo\msvc.txt
 
 @rem Get flex and bison version
 @IF %toolchain%==msvc IF "%flexstate%"=="1" set PATH=%devroot%\flexbison\;%PATH%
