@@ -1,6 +1,6 @@
 @setlocal ENABLEDELAYEDEXPANSION
 @set jsonlines=0
-@for /R %devroot%\%projectname%\bin\%abi%\ %%a IN (%1_icd.*.json) do @for /f tokens^=^*^ delims^= %%b IN (%%a) do @(
+@for /R %devroot%\%projectname%\bin\%abi%\ %%a IN (%1_icd.*.json) do @for /f tokens^=^*^ delims^= %%b IN ('type %%a') do @(
 @set /a jsonlines+=1
 @IF !jsonlines! NEQ 4 set jsonline[!jsonlines!]=%%b
 @IF !jsonlines! EQU 4 set jsonline[!jsonlines!]=        "library_path": ".^\^\vulkan_%1.dll"

@@ -4,7 +4,8 @@
 - Improve and re-enable MinGW clang build;
 - Enforce Microsoft OpenCL compiler dependency on clang and lld;
 - Mesa3D clean build: Pause after displaying build configuration command;
-- LLVM MSVC build: Fix RTTI enablement.
+- LLVM MSVC build: Fix RTTI enablement;
+- Force convert unicode to ASCII when parsing plaintext files in for loops.
 ### Distribution
 - Add version info to Microsoft OpenCL compiler.
 ### Build environment information

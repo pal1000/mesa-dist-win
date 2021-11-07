@@ -17,7 +17,7 @@
 @cd %devroot%\spirv-tools\external\spirv-headers
 @git checkout master
 @git pull -v --progress --recurse-submodules origin
-@for /f tokens^=^2^,4^ delims^=^' %%a IN (%devroot%\spirv-tools\DEPS) do @IF /I "%%a"=="spirv_headers_revision" IF NOT "%%b"=="" git checkout %%b
+@for /f tokens^=^2^,4^ delims^=^' %%a IN ('type %devroot%\spirv-tools\DEPS') do @IF /I "%%a"=="spirv_headers_revision" IF NOT "%%b"=="" git checkout %%b
 @echo.
 )
 @IF NOT EXIST %devroot%\spirv-tools\external IF %gitstate% GTR 0 (
@@ -29,7 +29,7 @@
 @IF NOT EXIST %devroot%\spirv-tools\external\spirv-headers IF %gitstate% GTR 0 (
 @git clone https://github.com/KhronosGroup/SPIRV-Headers %devroot%\spirv-tools\external\spirv-headers
 @cd %devroot%\spirv-tools\external\spirv-headers
-@for /f tokens^=^2^,4^ delims^=^' %%a IN (%devroot%\spirv-tools\DEPS) do @IF /I "%%a"=="spirv_headers_revision" IF NOT "%%b"=="" git checkout %%b
+@for /f tokens^=^2^,4^ delims^=^' %%a IN ('type %devroot%\spirv-tools\DEPS') do @IF /I "%%a"=="spirv_headers_revision" IF NOT "%%b"=="" git checkout %%b
 @echo.
 )
 

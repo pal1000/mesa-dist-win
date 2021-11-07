@@ -80,7 +80,7 @@
 @cd %devroot%\llvm-project\llvm\projects\SPIRV-Headers
 @git checkout master
 @git pull -v --progress --recurse-submodules origin
-@for /f tokens^=* %%a IN (%devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator\spirv-headers-tag.conf) do @git checkout %%a
+@for /f tokens^=* %%a IN ('type %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator\spirv-headers-tag.conf') do @git checkout %%a
 @echo.
 )
 @if /I "%buildllvmspirv%"=="y" IF NOT EXIST %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator (
@@ -90,7 +90,7 @@
 @if /I "%buildllvmspirv%"=="y" IF EXIST %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator\spirv-headers-tag.conf IF NOT EXIST %devroot%\llvm-project\llvm\projects\SPIRV-Headers (
 @git clone https://github.com/KhronosGroup/SPIRV-Headers %devroot%\llvm-project\llvm\projects\SPIRV-Headers
 @cd %devroot%\llvm-project\llvm\projects\SPIRV-Headers
-@for /f tokens^=* %%a IN (%devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator\spirv-headers-tag.conf) do @git checkout %%a
+@for /f tokens^=* %%a IN ('type %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator\spirv-headers-tag.conf') do @git checkout %%a
 @echo.
 )
 @if /I "%buildllvmspirv%"=="y" IF NOT EXIST %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator\spirv-headers-tag.conf IF EXIST %devroot%\llvm-project\llvm\projects\SPIRV-Headers RD /S /Q %devroot%\llvm-project\llvm\projects\SPIRV-Headers
