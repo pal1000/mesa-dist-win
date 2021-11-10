@@ -3,20 +3,23 @@
 @IF %flexstate%==0 echo Flex and bison are required to build Mesa3D.
 @IF %flexstate%==0 echo.
 @IF %flexstate%==0 GOTO skipmesa
+
+@cd %devroot%
 @if NOT EXIST mesa if %gitstate%==0 echo Fatal: Both Mesa3D code and Git are missing. At least one is required. Execution halted.
 @if NOT EXIST mesa if %gitstate%==0 echo.
 @if NOT EXIST mesa if %gitstate%==0 GOTO skipmesa
+
 @IF %pkgconfigstate%==0 echo No suitable pkg-config implementation found. pkgconf or pkg-config-lite is required to build Mesa3D with Meson and MSVC.
 @IF %pkgconfigstate%==0 echo.
 @IF %pkgconfigstate%==0 GOTO skipmesa
 
-@REM Aquire Mesa3D source code if missing.
-@cd %devroot%
+@rem Ask for starting Mesa3D build and aquire source code if missing
+@if EXIST mesa set /p buildmesa=Begin mesa build. Proceed - y/n :
 @if NOT EXIST mesa echo Warning: Mesa3D source code not found.
 @if NOT EXIST mesa echo.
 @if NOT EXIST mesa set /p buildmesa=Download mesa code and build (y/n):
-@if NOT EXIST mesa echo.
-@if NOT EXIST mesa if /i NOT "%buildmesa%"=="y" GOTO skipmesa
+@echo.
+@if /i NOT "%buildmesa%"=="y" GOTO skipmesa
 @if NOT EXIST mesa set branch=main
 @if NOT EXIST mesa set /p branch=Enter Mesa source code branch name - defaults to main:
 @if NOT EXIST mesa echo.
@@ -29,11 +32,6 @@
 @cd ..
 )
 
-@if EXIST mesa if /i NOT "%buildmesa%"=="y" (
-@set /p buildmesa=Begin mesa build. Proceed - y/n :
-@echo.
-)
-@if /i NOT "%buildmesa%"=="y" GOTO skipmesa
 @cd mesa
 
 @rem Get Mesa3D version as an integer
@@ -112,6 +110,9 @@
 @rem Fix d3d10sw MSVC build
 @IF %intmesaver% GEQ 21200 IF %intmesaver% LSS 22000 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd d3d10sw
 @IF %intmesaver% GEQ 21300 IF %intmesaver% LSS 22000 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd d3d10sw-2
+
+@rem Clover build on Windows
+@IF %intmesaver% GEQ 21300 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd clover
 
 :configmesabuild
 @rem Configure Mesa build.
@@ -281,19 +282,24 @@
 @if /I "%graw%"=="y" set buildconf=%buildconf% -Dbuild-tests=true
 @if /I NOT "%graw%"=="y" set buildconf=%buildconf% -Dbuild-tests=false
 
-@rem According to Mesa source code Microsoft OpenCL compiler requires SPIRV tools and LLVM built with clang, LLD, SPIRV translator and libclc and it doesn't support MinGW.
-@set canmclc=1
-@IF NOT EXIST %devroot%\mesa\subprojects\DirectX-Headers.wrap set canmclc=0
-@IF %intmesaver% LSS 21000 set canmclc=0
-@IF NOT %toolchain%==msvc set canmclc=0
-@if /I "%llvmless%"=="y" set canmclc=0
-@IF NOT EXIST %devroot%\llvm\%abi%\lib\clang*.lib set canmclc=0
-@IF NOT EXIST %devroot%\llvm\%abi%\lib\lld*.lib set canmclc=0
-@IF NOT EXIST %devroot%\llvm\%abi%\lib\pkgconfig set canmclc=0
-@IF NOT EXIST %devroot%\llvm\clc\share\pkgconfig set canmclc=0
-@IF NOT EXIST %devroot%\spirv-tools\build\%abi%\lib\pkgconfig set canmclc=0
-@IF %canmclc% EQU 1 set /p mclc=Build Mesa3D Microsoft OpenCL compiler (y/n):
-@IF %canmclc% EQU 1 echo.
+@rem Basic OpenCL requirements: Mesa 21.0+, LLVM and libclc
+@set canopencl=1
+@IF %intmesaver% LSS 21000 set canopencl=0
+@IF NOT %toolchain%==msvc set canopencl=0
+@if /I "%llvmless%"=="y" set canopencl=0
+@IF NOT EXIST %devroot%\llvm\clc\share\pkgconfig set canopencl=0
+
+@rem OpenCL SPIR-V requirements: basic support + Clang, LLD, LLVM SPIRV translator and SPIRV tools
+@set canclspv=1
+@IF %canopencl% EQU 0 set canclspv=0
+@IF NOT EXIST %devroot%\llvm\%abi%\lib\clang*.lib set canclspv=0
+@IF NOT EXIST %devroot%\llvm\%abi%\lib\lld*.lib set canclspv=0
+@IF NOT EXIST %devroot%\llvm\%abi%\lib\pkgconfig set canclspv=0
+@IF NOT EXIST %devroot%\spirv-tools\build\%abi%\lib\pkgconfig set canclspv=0
+
+@rem Microsoft OpenCL compiler requires OpenCL SPIR-V and DirectX Headers
+@IF %canclspv% EQU 1 IF EXIST %devroot%\mesa\subprojects\DirectX-Headers.wrap set /p mclc=Build Mesa3D Microsoft OpenCL compiler (y/n):
+@IF %canclspv% EQU 1 IF EXIST %devroot%\mesa\subprojects\DirectX-Headers.wrap echo.
 @IF /I "%mclc%"=="y" set buildconf=%buildconf% --pkg-config-path=%devroot:\=/%/llvm/%abi%/lib/pkgconfig;%devroot:\=/%/llvm/clc/share/pkgconfig;%devroot:\=/%/spirv-tools/build/%abi%/lib/pkgconfig -Dmicrosoft-clc=enabled -Dstatic-libclc=all
 @IF /I NOT "%mclc%"=="y" IF %intmesaver% GEQ 21000 set buildconf=%buildconf% --pkg-config-path= -Dmicrosoft-clc=disabled
 

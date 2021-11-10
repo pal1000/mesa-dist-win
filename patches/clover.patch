@@ -1,0 +1,47 @@
+diff --git a/src/gallium/targets/opencl/meson.build b/src/gallium/targets/opencl/meson.build
+index b77826b6e1e96d9b2ab9662d560a301161b436df..38a16ade1d158450f3abc74a54b767e49ff1f3fb 100644
+--- a/src/gallium/targets/opencl/meson.build
++++ b/src/gallium/targets/opencl/meson.build
+@@ -89,23 +89,31 @@ endif
+ # up random libs with the generic name 'libversion'
+ if host_machine.system() == 'windows'
+   dep_version = cpp.find_library('version')
++  libpipe_loader = libpipe_loader_static
++  target_files = ['target.c']
+ else
+   dep_version = null_dep
++  libpipe_loader = libpipe_loader_dynamic
++  target_files = []
+ endif
+ 
+ ocldef = files(opencl_libname + '.def')[0]
+ 
+ libopencl = shared_library(
+   opencl_libname,
+-  [],
++  target_files,
++  include_directories : [
++    inc_include, inc_util, inc_src, inc_gallium, inc_gallium_winsys, inc_gallium_drivers, inc_gallium_aux
++  ],
+   vs_module_defs : ocldef,
+   link_args : [ld_args_gc_sections, opencl_link_args],
+   link_depends : opencl_link_deps,
+   link_whole : libclover,
+-  link_with : [libpipe_loader_dynamic, libgallium],
++  link_with : [libpipe_loader, libgallium, libws_null, libwsw],
+   dependencies : [
+     idep_mesautil,
+-    dep_clock, dep_dl, dep_unwind, dep_elf, dep_clang, dep_version
++    dep_clock, dep_dl, dep_unwind, dep_elf, dep_clang, dep_version,
++    driver_swrast
+   ],
+   version : '@0@.0.0'.format(opencl_version),
+   install : true,
+diff --git a/src/gallium/targets/opencl/target.c b/src/gallium/targets/opencl/target.c
+new file mode 100644
+index 0000000000000000000000000000000000000000..308e23bb4a03be70cd7294b82cef5856c7f42240
+--- /dev/null
++++ b/src/gallium/targets/opencl/target.c
+@@ -0,0 +1,2 @@
++#include "target-helpers/drm_helper.h"
++#include "target-helpers/sw_helper.h"
