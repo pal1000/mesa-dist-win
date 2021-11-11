@@ -5,7 +5,7 @@ Ressource Hacker 5.1.8.360
 7-Zip 21.04 ultra compression
 Git 2.33.1.1
 LunarG Vulkan SDK 1.2.189.2
-Visual Studio Community 2019 v16.11.5
+Visual Studio Community 2022 v17.0.0
 Windows SDK 10.0.22000.0
 Python 3.10.0
 
@@ -15,12 +15,12 @@ Mako       1.1.5
 MarkupSafe 2.0.1
 meson      0.60.1
 pip        21.3.1
-setuptools 58.5.2
+setuptools 58.5.3
 
 CMake 3.21.4
 Ninja 1.10.2
 LLVM 13.0.0
-SPIRV Tools 2021.3.0
+SPIRV Tools 2021.4.0
 Winflexbison package 2.5.24
 flex 2.6.4
 Bison 3.7.4
