@@ -53,9 +53,6 @@
 @set PYTHONUTF8=1
 
 @REM Handle lack of out of tree patches support.
-@IF %disableootpatch%==1 IF %intmesaver% GEQ 20100 IF %intmesaver% LSS 20103 IF NOT %toolchain%==msvc echo FATAL: Mesa 20.1-devel through 20.1.0-rc2 cannot be built with MinGW without out of tree patches.
-@IF %disableootpatch%==1 IF %intmesaver% GEQ 20100 IF %intmesaver% LSS 20103 IF NOT %toolchain%==msvc echo.
-@IF %disableootpatch%==1 IF %intmesaver% GEQ 20100 IF %intmesaver% LSS 20103 IF NOT %toolchain%==msvc GOTO skipmesa
 @IF %disableootpatch%==1 if NOT %gitstate%==0 echo Reverting out of tree patches...
 @IF %disableootpatch%==1 if NOT %gitstate%==0 git checkout .
 @IF %disableootpatch%==1 if NOT %gitstate%==0 git clean -fd
@@ -277,8 +274,10 @@
 @IF /I NOT "%osmesa%"=="y" IF %intmesaver% GEQ 21000 set buildconf=%buildconf% -Dosmesa=false
 
 @set graw=n
-@set /p graw=Do you want to build graw library (y/n):
-@echo.
+@set cangraw=1
+@IF %disableootpatch%==1 IF %intmesaver% GEQ 20100 IF %intmesaver% LSS 20103 IF NOT %toolchain%==msvc set cangraw=0
+@IF %cangraw% EQU 1 set /p graw=Do you want to build graw library (y/n):
+@IF %cangraw% EQU 1 echo.
 @if /I "%graw%"=="y" set buildconf=%buildconf% -Dbuild-tests=true
 @if /I NOT "%graw%"=="y" set buildconf=%buildconf% -Dbuild-tests=false
 

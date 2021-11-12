@@ -7,8 +7,9 @@
 - LLVM MSVC build: Fix RTTI enablement;
 - Force convert unicode to ASCII when parsing plaintext files in for loops;
 - Split OpenCL requirements in basic and with SPIRV;
-- LLVM: Offer to build AMDGPU target on 32-bit in preparation for Mesa3D support;
-- Build SPIRV Tools from stable branch.
+- LLVM: Offer to build AMDGPU target on 32-bit;
+- Build SPIRV Tools from stable branch;
+- Fix an excessive build blocking condition when patches are disabled as individual components are disabled as necessary.
 ### Distribution
 - Add version info to Microsoft OpenCL compiler.
 ### Build environment information
