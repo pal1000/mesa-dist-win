@@ -9,12 +9,15 @@
 - Split OpenCL requirements in basic and with SPIRV;
 - LLVM: Offer to build AMDGPU target on 32-bit;
 - Build SPIRV Tools from stable branch;
-- Fix an excessive build blocking condition when patches are disabled as individual components are disabled as necessary.
+- Fix an excessive build blocking condition when patches are disabled as individual components are disabled as necessary;
+- Support building RADV for 32-bit [22.0+].
 ### Distribution
 - Add version info to Microsoft OpenCL compiler.
 ### Build environment information
 - Fix version information retrieval for Resource hacker by creating build script assets folder in advance;
 - Add SPIRV Tools version.
+### Out of tree patches
+- Restrict RADV build fix with LLVM 13 and MSVC patch applicability.
 # 21.2.5
 - Updated Mesa3D to [21.2.5](https://docs.mesa3d.org/relnotes/21.2.5.html).
 ### Build script
