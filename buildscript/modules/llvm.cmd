@@ -57,8 +57,8 @@
 @if /I "%ninja%"=="y" if %ninjastate%==1 set PATH=%devroot%\ninja\;%PATH%
 
 @rem AMDGPU target
-@IF %abi%==x64 set /p amdgpu=Build AMDGPU target - required by RADV (y/n):
-@IF %abi%==x64 echo.
+@set /p amdgpu=Build AMDGPU target - required by RADV (y/n):
+@echo.
 
 @rem Clang and LLD
 @if EXIST %devroot%\llvm-project set /p buildclang=Build clang and LLD - required for OpenCL (y/n):
