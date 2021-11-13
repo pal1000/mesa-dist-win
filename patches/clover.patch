@@ -1,19 +1,32 @@
+From b7c465dc43693cb1ad7e073cc7d8f89f5cfbd0ac Mon Sep 17 00:00:00 2001
+From: pal1000 <liviuprodea@yahoo.com>
+Date: Sat, 13 Nov 2021 11:39:58 +0200
+Subject: [PATCH] clover: Use static pipe loader on Windows
+
+Currently this only supports linking in swrast, but more Windows-supporting
+drivers can be added pretty easily.
+---
+ src/gallium/targets/opencl/meson.build | 18 +++++++++++++++---
+ src/gallium/targets/opencl/target.c    |  2 ++
+ 2 files changed, 17 insertions(+), 3 deletions(-)
+ create mode 100644 src/gallium/targets/opencl/target.c
+
 diff --git a/src/gallium/targets/opencl/meson.build b/src/gallium/targets/opencl/meson.build
-index b77826b6e1e96d9b2ab9662d560a301161b436df..38a16ade1d158450f3abc74a54b767e49ff1f3fb 100644
+index ec65fcbe18e..f6ca4a28f20 100644
 --- a/src/gallium/targets/opencl/meson.build
 +++ b/src/gallium/targets/opencl/meson.build
-@@ -89,23 +89,31 @@ endif
- # up random libs with the generic name 'libversion'
- if host_machine.system() == 'windows'
-   dep_version = cpp.find_library('version')
-+  libpipe_loader = libpipe_loader_static
-+  target_files = ['target.c']
- else
-   dep_version = null_dep
-+  libpipe_loader = libpipe_loader_dynamic
-+  target_files = []
+@@ -85,19 +85,31 @@ if not (dep_clang.found() and dep_clang_usable)
+   endif
  endif
  
++if host_machine.system() == 'windows'
++  libpipe_loader = libpipe_loader_static
++  target_files = ['target.c']
++else
++  libpipe_loader = libpipe_loader_dynamic
++  target_files = []
++endif
++
  ocldef = files(opencl_libname + '.def')[0]
  
  libopencl = shared_library(
@@ -39,9 +52,12 @@ index b77826b6e1e96d9b2ab9662d560a301161b436df..38a16ade1d158450f3abc74a54b767e4
    install : true,
 diff --git a/src/gallium/targets/opencl/target.c b/src/gallium/targets/opencl/target.c
 new file mode 100644
-index 0000000000000000000000000000000000000000..308e23bb4a03be70cd7294b82cef5856c7f42240
+index 00000000000..308e23bb4a0
 --- /dev/null
 +++ b/src/gallium/targets/opencl/target.c
 @@ -0,0 +1,2 @@
 +#include "target-helpers/drm_helper.h"
 +#include "target-helpers/sw_helper.h"
+-- 
+2.33.1.windows.1
+
