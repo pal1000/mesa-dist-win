@@ -6,14 +6,14 @@
 - Mesa3D clean build: Pause after displaying build configuration command;
 - LLVM MSVC build: Fix RTTI enablement;
 - Force convert unicode to ASCII when parsing plaintext files in for loops;
-- Split OpenCL requirements in basic and with SPIRV;
 - LLVM: Offer to build AMDGPU target on 32-bit;
 - Build SPIRV Tools from stable branch;
 - Fix an excessive build blocking condition when patches are disabled as individual components are disabled as necessary;
 - Support building RADV for 32-bit [22.0+];
 - Support building libclc when performing 32-bit Mesa build by handling it like pkgconf;
 - Query LLVM RTTI support without relying on llvm-config;
-- Misc fixes for 32-bit build host.
+- Misc fixes for 32-bit build host;
+- clover build support - #28 and #81.
 ### Distribution
 - Add version info to Microsoft OpenCL compiler.
 ### Build environment information

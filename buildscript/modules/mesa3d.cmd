@@ -316,6 +316,21 @@
 @IF /I "%mclc%"=="y" set buildconf=%buildconf% -Dmicrosoft-clc=enabled
 @IF /I NOT "%mclc%"=="y" IF %intmesaver% GEQ 21000 set buildconf=%buildconf% -Dmicrosoft-clc=disabled
 
+@rem Build clover
+@if %canclover% EQU 1 set /p buildclover=Build OpenCL clover driver (y/n):
+@if %canclover% EQU 1 echo.
+@IF /I NOT "%buildclover%"=="y" set buildconf=%buildconf% -Dgallium-opencl=disabled
+@IF /I "%buildclover%"=="y" set PKG_CONFIG_LIBCLC=1
+@IF /I "%buildclover%"=="y" set /p icdclover=Build clover in ICD format (y/n):
+@IF /I "%buildclover%"=="y" echo.
+@IF /I "%icdclover%"=="y" set buildconf=%buildconf% -Dgallium-opencl=icd
+@IF /I "%buildclover%"=="y" IF /I NOT "%icdclover%"=="y" set buildconf=%buildconf% -Dgallium-opencl=standalone
+@IF /I "%buildclover%"=="y" IF %canclspv% EQU 1 set /p cloverspv=Build clover with SPIR-V binary support (y/n):
+@IF /I "%buildclover%"=="y" IF %canclspv% EQU 1 echo.
+@IF /I "%cloverspv%"=="y" set PKG_CONFIG_SPV=1
+@IF /I "%cloverspv%"=="y" set buildconf=%buildconf% -Dopencl-spirv=true
+@IF /I "%buildclover%"=="y" set buildconf=%buildconf% -Dpencl-native=true
+
 @rem Apply PKG_CONFIG search PATH adjustments
 @IF %PKG_CONFIG_LIBCLC% EQU 1 set buildconf=%buildconf% -Dstatic-libclc=all --pkg-config-path=%devroot:\=/%/llvm/clc/share/pkgconfig
 @IF %PKG_CONFIG_SPV% EQU 1 set buildconf=%buildconf%;%devroot:\=/%/llvm/%abi%/lib/pkgconfig;%devroot:\=/%/spirv-tools/build/%abi%/lib/pkgconfig
