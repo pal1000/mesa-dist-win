@@ -296,6 +296,14 @@
 @IF NOT EXIST %devroot%\llvm\%abi%\lib\pkgconfig set canclspv=0
 @IF NOT EXIST %devroot%\spirv-tools\build\%abi%\lib\pkgconfig set canclspv=0
 
+@rem Clover requirements: basic support + Mesa 21.3, LLVM build with RTTI, gallium swrast and out of tree patches
+@set canclover=1
+@IF %canopencl% EQU 0 set canclover=0
+@IF %intmesaver% LSS 21300 set canclover=0
+@IF %RTTI%==false set canclover=0
+@if /I NOT "%glswrast%"=="y" set canclover=0
+@IF %disableootpatch%==1 set canclover=0
+
 @rem Microsoft OpenCL compiler requires OpenCL SPIR-V and DirectX Headers
 @IF %canclspv% EQU 1 IF EXIST %devroot%\mesa\subprojects\DirectX-Headers.wrap set /p mclc=Build Mesa3D Microsoft OpenCL compiler (y/n):
 @IF %canclspv% EQU 1 IF EXIST %devroot%\mesa\subprojects\DirectX-Headers.wrap echo.
