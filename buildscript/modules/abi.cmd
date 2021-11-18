@@ -6,7 +6,9 @@
 
 @rem Select MinGW shell based on ABI
 @set MSYSTEM=MINGW64
+@set LMSYSTEM=mingw64
 @IF %abi%==x86 set MSYSTEM=MINGW32
+@IF %abi%==x86 set LMSYSTEM=mingw32
 
 @rem Select MSVC shell based on ABI
 @set vsabi=%abi%
@@ -15,4 +17,4 @@
 
 @set TITLE=%TITLE% targeting %abi%
 @TITLE %TITLE%
-@endlocal&set abi=%abi%&set vsabi=%vsabi%&set MSYSTEM=%MSYSTEM%&set TITLE=%TITLE%
+@endlocal&set abi=%abi%&set vsabi=%vsabi%&set MSYSTEM=%MSYSTEM%&set LMSYSTEM=%LMSYSTEM%&set TITLE=%TITLE%

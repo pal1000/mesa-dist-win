@@ -17,6 +17,7 @@
 @if /I "%useclang%"=="y" IF %toolchain%==msvc IF %abi%==x86 IF /I %PROCESSOR_ARCHITECTURE%==x86 set PATH=%ProgramFiles%\LLVM\bin\;%PATH%
 @if /I "%useclang%"=="y" IF %toolchain%==msvc set CC=clang-cl.exe
 @if /I "%useclang%"=="y" IF %toolchain%==msvc set CXX=clang-cl.exe
-@if /I "%useclang%"=="y" IF NOT %toolchain%==msvc set MSYSTEM=clang%MSYSTEM:~-2%
+@if /I "%useclang%"=="y" IF NOT %toolchain%==msvc set MSYSTEM=CLANG%MSYSTEM:~-2%
+@if /I "%useclang%"=="y" IF NOT %toolchain%==msvc set LMSYSTEM=clang%MSYSTEM:~-2%
 @if /I "%useclang%"=="y" set TITLE=%TITLE% with clang compiler
 @if /I "%useclang%"=="y" TITLE %TITLE%

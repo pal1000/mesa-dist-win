@@ -1,1 +1,1 @@
-@cygpath -m /mingw%MSYSTEM:~-2%
+@cygpath -m /%LMSYSTEM%

@@ -4,7 +4,7 @@
 @set PATH=%devroot%\flexbison\;%devroot%\ninja\;%devroot%\pkgconf\pkgconf\;%PATH%
 @call %devroot%\mesa-dist-win\buildscript\modules\abi.cmd
 @set multilib=0
-@IF NOT "%multilib%"=="1" set PATH=%devroot%\%MSYSTEM%\bin\;%PATH%
+@IF NOT "%multilib%"=="1" set PATH=%devroot%\%LMSYSTEM%\bin\;%PATH%
 @IF "%multilib%"=="1" set PATH=%devroot%\mingw64\bin\;%PATH%
 @call %devroot%\mesa-dist-win\buildscript\modules\discoverpython.cmd
 @call %devroot%\mesa-dist-win\buildscript\modules\pythonpackages.cmd

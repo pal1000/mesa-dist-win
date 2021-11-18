@@ -16,9 +16,9 @@
 )
 @IF %vksdkstd% EQU 0 set vksdkselect=2
 @IF "%vksdkselect%"=="1" (
-@IF EXIST %msysloc%\%MSYSTEM%\lib\libvulkan.dll.a del %msysloc%\%MSYSTEM%\lib\libvulkan.dll.a
-@IF EXIST %msysloc%\%MSYSTEM%\lib\pkgconfig\vulkan.pc del %msysloc%\%MSYSTEM%\lib\pkgconfig\vulkan.pc
-@IF EXIST %msysloc%\%MSYSTEM%\bin\libvulkan-1.dll del %msysloc%\%MSYSTEM%\bin\libvulkan-1.dll
+@IF EXIST %msysloc%\%LMSYSTEM%\lib\libvulkan.dll.a del %msysloc%\%LMSYSTEM%\lib\libvulkan.dll.a
+@IF EXIST %msysloc%\%LMSYSTEM%\lib\pkgconfig\vulkan.pc del %msysloc%\%LMSYSTEM%\lib\pkgconfig\vulkan.pc
+@IF EXIST %msysloc%\%LMSYSTEM%\bin\libvulkan-1.dll del %msysloc%\%LMSYSTEM%\bin\libvulkan-1.dll
 )
 @IF "%vksdkselect%"=="2" (
 @set "VULKAN_SDK="

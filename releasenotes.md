@@ -11,7 +11,8 @@
 - Build SPIRV Tools from stable branch;
 - Fix an excessive build blocking condition when patches are disabled as individual components are disabled as necessary;
 - Support building RADV for 32-bit [22.0+];
-- Support building libclc when performing 32-bit Mesa build by handling it like pkgconf.
+- Support building libclc when performing 32-bit Mesa build by handling it like pkgconf;
+- Query LLVM RTTI support without relying on llvm-config.
 ### Distribution
 - Add version info to Microsoft OpenCL compiler.
 ### Build environment information
