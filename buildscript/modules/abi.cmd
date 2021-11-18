@@ -12,9 +12,10 @@
 
 @rem Select MSVC shell based on ABI
 @set vsabi=%abi%
-@IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF %abi%==x86 set vsabi=x64_x86
-@IF /I %PROCESSOR_ARCHITECTURE%==x86 IF %abi%==x64 set vsabi=x86_x64
+@IF /I %PROCESSOR_ARCHITECTURE%==x86 set hostabi=x86
+@IF /I %PROCESSOR_ARCHITECTURE%==AMD64 set hostabi=x64
+@IF NOT %abi%==%hostabi% set vsabi=%hostabi%_%abi%
 
 @set TITLE=%TITLE% targeting %abi%
 @TITLE %TITLE%
-@endlocal&set abi=%abi%&set vsabi=%vsabi%&set MSYSTEM=%MSYSTEM%&set LMSYSTEM=%LMSYSTEM%&set TITLE=%TITLE%
+@endlocal&set abi=%abi%&set vsabi=%vsabi%&set hostabi=%hostabi%&set MSYSTEM=%MSYSTEM%&set LMSYSTEM=%LMSYSTEM%&set TITLE=%TITLE%

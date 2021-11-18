@@ -75,7 +75,7 @@ echo CMake %%a>>%devroot%\%projectname%\buildinfo\msvc.txt
 @IF %toolchain%==msvc IF NOT "%ninjastate%"=="0" IF NOT "%ninjastate%"=="" for /f "USEBACKQ" %%a IN (`ninja --version`) do @echo Ninja %%a>>%devroot%\%projectname%\buildinfo\msvc.txt
 
 @rem Get LLVM version
-@IF %toolchain%==msvc IF EXIST %devroot%\llvm\x64\bin\llvm-config.exe FOR /F "USEBACKQ" %%a IN (`%devroot%\llvm\x64\bin\llvm-config.exe --version`) do @echo LLVM %%a>>%devroot%\%projectname%\buildinfo\msvc.txt
+@IF %toolchain%==msvc IF EXIST %devroot%\llvm\%hostabi%\bin\llvm-config.exe FOR /F "USEBACKQ" %%a IN (`%devroot%\llvm\%hostabi%\bin\llvm-config.exe --version`) do @echo LLVM %%a>>%devroot%\%projectname%\buildinfo\msvc.txt
 
 @rem Get SPIRV Tools version
 @IF %toolchain%==msvc IF EXIST %devroot%\spirv-tools\build\%abi%\bin for /f tokens^=1-2^ delims^=^  %%a IN ('type %devroot%\spirv-tools\build\%abi%\lib\pkgconfig\SPIRV-Tools.pc') do @IF /I "%%a"=="Version:" echo SPIRV Tools %%b>>%devroot%\%projectname%\buildinfo\msvc.txt
