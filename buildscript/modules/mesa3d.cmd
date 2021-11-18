@@ -304,11 +304,23 @@
 @if /I NOT "%glswrast%"=="y" set canclover=0
 @IF %disableootpatch%==1 set canclover=0
 
+@rem Add flags tracking PKG_CONFIG search PATH adjustment needs
+@set PKG_CONFIG_LIBCLC=0
+@set PKG_CONFIG_SPV=0
+
 @rem Microsoft OpenCL compiler requires OpenCL SPIR-V and DirectX Headers
 @IF %canclspv% EQU 1 IF EXIST %devroot%\mesa\subprojects\DirectX-Headers.wrap set /p mclc=Build Mesa3D Microsoft OpenCL compiler (y/n):
 @IF %canclspv% EQU 1 IF EXIST %devroot%\mesa\subprojects\DirectX-Headers.wrap echo.
-@IF /I "%mclc%"=="y" set buildconf=%buildconf% --pkg-config-path=%devroot:\=/%/llvm/%abi%/lib/pkgconfig;%devroot:\=/%/llvm/clc/share/pkgconfig;%devroot:\=/%/spirv-tools/build/%abi%/lib/pkgconfig -Dmicrosoft-clc=enabled -Dstatic-libclc=all
-@IF /I NOT "%mclc%"=="y" IF %intmesaver% GEQ 21000 set buildconf=%buildconf% --pkg-config-path= -Dmicrosoft-clc=disabled
+@IF /I "%mclc%"=="y" set PKG_CONFIG_LIBCLC=1
+@IF /I "%mclc%"=="y" set PKG_CONFIG_SPV=1
+@IF /I "%mclc%"=="y" set buildconf=%buildconf% -Dmicrosoft-clc=enabled
+@IF /I NOT "%mclc%"=="y" IF %intmesaver% GEQ 21000 set buildconf=%buildconf% -Dmicrosoft-clc=disabled
+
+@rem Apply PKG_CONFIG search PATH adjustments
+@IF %PKG_CONFIG_LIBCLC% EQU 1 set buildconf=%buildconf% -Dstatic-libclc=all --pkg-config-path=%devroot:\=/%/llvm/clc/share/pkgconfig
+@IF %PKG_CONFIG_SPV% EQU 1 set buildconf=%buildconf%;%devroot:\=/%/llvm/%abi%/lib/pkgconfig;%devroot:\=/%/spirv-tools/build/%abi%/lib/pkgconfig
+@set "PKG_CONFIG_LIBCLC="
+@set "PKG_CONFIG_SPV="
 
 @rem Pass additional linker flags
 @if %toolchain%==msvc if defined LDFLAGS set buildconf=%buildconf% -Dc_link_args="%LDFLAGS%" -Dcpp_link_args="%LDFLAGS%"
