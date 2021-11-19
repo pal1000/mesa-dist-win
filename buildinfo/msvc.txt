@@ -11,11 +11,11 @@ Python 3.10.0
 
 Python packages
 ---------------
-Mako       1.1.5
+Mako       1.1.6
 MarkupSafe 2.0.1
 meson      0.60.1
 pip        21.3.1
-setuptools 59.1.1
+setuptools 59.2.0
 
 CMake 3.21.4
 Ninja 1.10.2

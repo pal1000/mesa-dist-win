@@ -329,7 +329,7 @@
 @IF /I "%buildclover%"=="y" IF %canclspv% EQU 1 echo.
 @IF /I "%cloverspv%"=="y" set PKG_CONFIG_SPV=1
 @IF /I "%cloverspv%"=="y" set buildconf=%buildconf% -Dopencl-spirv=true
-@IF /I "%buildclover%"=="y" set buildconf=%buildconf% -Dpencl-native=true
+@IF /I "%buildclover%"=="y" set buildconf=%buildconf% -Dopencl-native=true
 
 @rem Apply PKG_CONFIG search PATH adjustments
 @IF %PKG_CONFIG_LIBCLC% EQU 1 set buildconf=%buildconf% -Dstatic-libclc=all --pkg-config-path=%devroot:\=/%/llvm/clc/share/pkgconfig
