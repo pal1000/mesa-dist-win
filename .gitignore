@@ -1,20 +1,23 @@
 # Binaries
 *.exe
 *.dll
+# Build time configuration files
 *.json
+# Build logs
+*.log
 # 7-zip artifacts
 *.tmp
 *.7z
 # Libraries and headers
-/lib/
-/include/
+/lib
+/include
 # Build script assets
-/buildscript/assets/
+/buildscript/assets
 # Debug scripts output backup
 /debug/llvm-config-old.txt
 # Dynamically generated Meson subprojects wraps
 /buildscript/mesonsubprojects/*.build
 # Dynamically generated Meson native/cross files
-# /buildscript/mesonconffiles/...
+# /buildscript/mesonconffiles...
 # Debug symbols
-/debugsymbols/
+/debugsymbols
