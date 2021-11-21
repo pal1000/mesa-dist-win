@@ -1,6 +1,8 @@
 # Next release
 ### Documentation
 - Update for 21.3 features.
+### Build script
+- MSYS2: Use distinct build folders for GCC and clang.
 # 21.3.0
 - Updated Mesa3D to [21.3.0](https://docs.mesa3d.org/relnotes/21.3.0.html).
 ### Build script

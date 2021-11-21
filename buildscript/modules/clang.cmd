@@ -19,5 +19,6 @@
 @if /I "%useclang%"=="y" IF %toolchain%==msvc set CXX=clang-cl.exe
 @if /I "%useclang%"=="y" IF NOT %toolchain%==msvc set MSYSTEM=CLANG%MSYSTEM:~-2%
 @if /I "%useclang%"=="y" IF NOT %toolchain%==msvc set LMSYSTEM=clang%MSYSTEM:~-2%
+@if /I "%useclang%"=="y" IF NOT %toolchain%==msvc set toolchain=clang
 @if /I "%useclang%"=="y" set TITLE=%TITLE% with clang compiler
 @if /I "%useclang%"=="y" TITLE %TITLE%
