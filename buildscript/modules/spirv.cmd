@@ -2,9 +2,6 @@
 @set canspvtools=1
 @IF NOT EXIST %devroot%\spirv-tools\external\spirv-headers IF %gitstate% EQU 0 set canspvtools=0
 @if %cmakestate% EQU 0 set canspvtools=0
-@IF %canspvtools% EQU 1 set /p buildspvtools=Build SPIRV Tools (y/n):
-@IF %canspvtools% EQU 1 echo.
-@IF /I NOT "%buildspvtools%"=="y" GOTO skipspvtools
 @IF EXIST %devroot%\spirv-tools\external IF %gitstate% GTR 0 (
 @cd %devroot%\spirv-tools
 @git checkout master
@@ -20,6 +17,10 @@
 @for /f tokens^=^2^,4^ delims^=^' %%a IN ('type %devroot%\spirv-tools\DEPS') do @IF /I "%%a"=="spirv_headers_revision" IF NOT "%%b"=="" git checkout %%b
 @echo.
 )
+@cd %devroot%
+@IF %canspvtools% EQU 1 set /p buildspvtools=Build SPIRV Tools (y/n):
+@IF %canspvtools% EQU 1 echo.
+@IF /I NOT "%buildspvtools%"=="y" GOTO skipspvtools
 @IF NOT EXIST %devroot%\spirv-tools\external IF %gitstate% GTR 0 (
 @git clone https://github.com/KhronosGroup/SPIRV-Tools %devroot%\spirv-tools
 @cd %devroot%\spirv-tools
