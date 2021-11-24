@@ -21,8 +21,7 @@
 @IF NOT EXIST pkgconf\pkg-config.exe set buildpkgconf=y
 @IF NOT EXIST pkgconf\pkg-config.exe echo Begin pkgconf build...
 @echo.
-@IF /I "%buildpkgconf%"=="y" IF /I %PROCESSOR_ARCHITECTURE%==AMD64 call %vsenv% x64
-@IF /I "%buildpkgconf%"=="y" IF /I %PROCESSOR_ARCHITECTURE%==x86 call %vsenv% x86
+@IF /I "%buildpkgconf%"=="y" call %vsenv% %hostabi%
 @IF /I "%buildpkgconf%"=="y" echo.
 @IF /I "%buildpkgconf%"=="y" IF EXIST pkgconf RD /S /Q pkgconf
 @set useninja=n

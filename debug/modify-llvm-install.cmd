@@ -14,10 +14,10 @@
 @IF %cmakestate% EQU 1 SET PATH=%devroot%\cmake\bin\;%PATH%
 @call %vsenv% %vsabi%
 @set llvmloc=%devroot%\llvm-project
-@IF NOT EXIST %llvmloc%\buildsys-%abi% set llvmloc=%devroot%\llvm
-@IF NOT EXIST %llvmloc%\buildsys-%abi% echo FATAL^: LLVM build is not configured.
-@IF NOT EXIST %llvmloc%\buildsys-%abi% echo.
-@IF NOT EXIST %llvmloc%\buildsys-%abi% pause
-@IF NOT EXIST %llvmloc%\buildsys-%abi% exit
-@cd %llvmloc%\buildsys-%abi%
+@IF NOT EXIST %llvmloc%\build\buildsys-%abi% set llvmloc=%devroot%\llvm
+@IF NOT EXIST %llvmloc%\build\buildsys-%abi% echo FATAL^: LLVM build is not configured.
+@IF NOT EXIST %llvmloc%\build\buildsys-%abi% echo.
+@IF NOT EXIST %llvmloc%\build\buildsys-%abi% pause
+@IF NOT EXIST %llvmloc%\build\buildsys-%abi% exit
+@cd %llvmloc%\build\buildsys-%abi%
 @cmd

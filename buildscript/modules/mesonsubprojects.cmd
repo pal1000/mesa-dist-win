@@ -12,7 +12,7 @@ cd /D %devroot%\mesa
 @rem Find LLVM dependency
 @set RTTI=false
 @set llvmconfigbusted=0
-@IF %toolchain%==msvc IF EXIST %devroot%\llvm\%abi%\lib\cmake\llvm\LLVMConfig.cmake FOR /F "tokens=* delims=" %%a IN ('type %devroot%\llvm\%abi%\lib\cmake\llvm\LLVMConfig.cmake') DO @IF "%%a"=="set(LLVM_ENABLE_RTTI ON)" SET RTTI=true
+@IF %toolchain%==msvc IF EXIST %devroot%\llvm\build\%abi%\lib\cmake\llvm\LLVMConfig.cmake FOR /F "tokens=* delims=" %%a IN ('type %devroot%\llvm\build\%abi%\lib\cmake\llvm\LLVMConfig.cmake') DO @IF "%%a"=="set(LLVM_ENABLE_RTTI ON)" SET RTTI=true
 @IF NOT %toolchain%==msvc IF EXIST %msysloc%\%LMSYSTEM%\lib\cmake\llvm\LLVMConfig.cmake FOR /F "tokens=* delims=" %%a IN ('type %msysloc%\%LMSYSTEM%\lib\cmake\llvm\LLVMConfig.cmake') DO @IF "%%a"=="set(LLVM_ENABLE_RTTI ON)" SET RTTI=true
 @IF NOT %toolchain%==msvc if /I NOT "%llvmless%"=="y" FOR /F "tokens=* USEBACKQ" %%a IN (`%msysloc%\usr\bin\bash --login -c "${MINGW_PREFIX}/bin/llvm-config --has-rtti" 2^>^&1`) DO @IF /I NOT "%%a"=="YES" IF /I NOT "%%a"=="NO" set llvmconfigbusted=1
 @IF %llvmconfigbusted% EQU 0 IF EXIST "%devroot%\mesa\subprojects\llvm\" RD /S /Q %devroot%\mesa\subprojects\llvm

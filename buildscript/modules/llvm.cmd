@@ -1,8 +1,23 @@
 @setlocal
 
+@rem Updating LLVM SPIRV translator
+@IF EXIST %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator IF %gitstate% GTR 0 (
+@cd %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator
+@git pull -v --progress --recurse-submodules origin
+@echo.
+)
+@IF EXIST %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator\spirv-headers-tag.conf IF EXIST %devroot%\llvm-project\llvm\projects\SPIRV-Headers IF %gitstate% GTR 0 (
+@cd %devroot%\llvm-project\llvm\projects\SPIRV-Headers
+@git checkout master
+@git pull -v --progress --recurse-submodules origin
+@for /f tokens^=* %%a IN ('type %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator\spirv-headers-tag.conf') do @git checkout %%a
+@echo.
+)
+@cd %devroot%
+
 @rem Check lf LLVM binaries are available
 @set llvmbinaries=0
-@IF EXIST %devroot%\llvm\%abi%\include IF EXIST %devroot%\llvm\%abi%\lib set llvmbinaries=1
+@IF EXIST %devroot%\llvm\build\%abi%\include IF EXIST %devroot%\llvm\build\%abi%\lib set llvmbinaries=1
 
 @rem Check lf LLVM sources are available or obtainable
 @set llvmsources=1
@@ -15,19 +30,19 @@
 @IF %cmakestate%==0 IF %llvmbinaries% EQU 1 echo CMake not found but LLVM is already built. Skipping LLVM build.
 @IF %cmakestate%==0 IF %llvmbinaries% EQU 1 echo.
 @IF %cmakestate%==0 IF %llvmbinaries% EQU 1 GOTO skipllvm
-@IF %cmakestate%==0 echo CMake is required for LLVM build. If you want to build Mesa3D anyway it will be without llvmpipe and swr drivers and high performance JIT won't be available for other drivers and libraries.
+@IF %cmakestate%==0 echo CMake is required for LLVM build. If you want to build Mesa3D anyway it will be without llvmpipe, swr, RADV and all OpenCL drivers and high performance JIT won't be available for softpipe, osmesa and graw.
 @IF %cmakestate%==0 echo.
 @IF %cmakestate%==0 GOTO skipllvm
-@IF %llvmbinaries% EQU 0 IF %llvmsources% EQU 0 echo WARNING: Both LLVM source code and binaries not found. If you want to build Mesa3D anyway it will be without llvmpipe and swr drivers and high performance JIT won't be available for other drivers and libraries.
+@IF %llvmbinaries% EQU 0 IF %llvmsources% EQU 0 echo WARNING: Both LLVM source code and binaries not found. If you want to build Mesa3D anyway it will be without llvmpipe, swr, RADV and all OpenCL drivers and high performance JIT won't be available for softpipe, osmesa and graw.
 @IF %llvmbinaries% EQU 0 IF %llvmsources% EQU 0 echo.
 @IF %llvmbinaries% EQU 0 IF %llvmsources% EQU 0 GOTO skipllvm
 
 @rem Ask to do LLVM build
-@set /p buildllvm=Begin LLVM build. Only needs to run once for each ABI and version. Proceed (y/n):
+@set /p buildllvm=Begin LLVM build (y/n):
 @echo.
 
 @rem LLVM source is found or is obtainable, binaries not found and LLVM build is refused.
-@IF %llvmsources% EQU 1 IF %llvmbinaries% EQU 0 if /I NOT "%buildllvm%"=="y" echo WARNING: Not building LLVM. If you want to build Mesa3D anyway it will be without swr and llvmpipe drivers and high performance JIT won't be available for other drivers and libraries.
+@IF %llvmsources% EQU 1 IF %llvmbinaries% EQU 0 if /I NOT "%buildllvm%"=="y" echo WARNING: Not building LLVM. If you want to build Mesa3D anyway it will be without llvmpipe, swr, RADV and all OpenCL drivers and high performance JIT won't be available for softpipe, osmesa and graw.
 @IF %llvmsources% EQU 1 IF %llvmbinaries% EQU 0 if /I NOT "%buildllvm%"=="y" echo.
 @if /I NOT "%buildllvm%"=="y" GOTO skipllvm
 
@@ -71,18 +86,6 @@
 @IF EXIST %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator\spirv-headers-tag.conf IF NOT EXIST %devroot%\llvm-project\llvm\projects\SPIRV-Headers IF %gitstate% EQU 0 set canllvmspirv=0
 @IF %canllvmspirv% EQU 1 set /p buildllvmspirv=Build SPIRV LLVM Translator - required for OpenCL (y/n):
 @IF %canllvmspirv% EQU 1 echo.
-@if /I "%buildllvmspirv%"=="y" IF EXIST %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator IF %gitstate% GTR 0 (
-@cd %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator
-@git pull -v --progress --recurse-submodules origin
-@echo.
-)
-@if /I "%buildllvmspirv%"=="y" IF EXIST %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator\spirv-headers-tag.conf IF EXIST %devroot%\llvm-project\llvm\projects\SPIRV-Headers IF %gitstate% GTR 0 (
-@cd %devroot%\llvm-project\llvm\projects\SPIRV-Headers
-@git checkout master
-@git pull -v --progress --recurse-submodules origin
-@for /f tokens^=* %%a IN ('type %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator\spirv-headers-tag.conf') do @git checkout %%a
-@echo.
-)
 @if /I "%buildllvmspirv%"=="y" IF NOT EXIST %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator (
 @git clone -b llvm_release_130 https://github.com/KhronosGroup/SPIRV-LLVM-Translator %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator
 @echo.
@@ -101,7 +104,7 @@
 @if %cmakestate%==1 set PATH=%devroot%\cmake\bin\;%PATH%
 
 @rem Construct build configuration command.
-@set buildconf=cmake ..
+@set buildconf=cmake ../..
 @if EXIST %devroot%\llvm-project set buildconf=%buildconf%/llvm
 @set buildconf=%buildconf% -G
 @if /I NOT "%ninja%"=="y" set buildconf=%buildconf% "Visual Studio %toolset%"
@@ -109,14 +112,14 @@
 @if %abi%==x64 if /I NOT "%ninja%"=="y" set buildconf=%buildconf% -A x64
 @if /I NOT "%ninja%"=="y" IF /I %PROCESSOR_ARCHITECTURE%==AMD64 set buildconf=%buildconf% -Thost=x64
 @if /I "%ninja%"=="y" set buildconf=%buildconf%Ninja
-@set buildconf=%buildconf% -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DCMAKE_INSTALL_PREFIX="../../llvm/%abi%"
+@set buildconf=%buildconf% -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DCMAKE_INSTALL_PREFIX="../../../llvm/build/%abi%"
 @if EXIST %devroot%\llvm-project IF /I NOT "%buildclang%"=="y" set buildconf=%buildconf% -DLLVM_ENABLE_PROJECTS=""
 @IF /I "%buildclang%"=="y" set buildconf=%buildconf% -DLLVM_ENABLE_PROJECTS="clang;lld"
 @set buildconf=%buildconf% -DLLVM_TARGETS_TO_BUILD=
 @IF /I "%amdgpu%"=="y" set buildconf=%buildconf%AMDGPU;
 @set buildconf=%buildconf%X86 -DLLVM_OPTIMIZED_TABLEGEN=TRUE -DLLVM_INCLUDE_UTILS=OFF -DLLVM_INCLUDE_RUNTIMES=OFF -DLLVM_INCLUDE_TESTS=OFF -DLLVM_INCLUDE_EXAMPLES=OFF -DLLVM_INCLUDE_GO_TESTS=OFF -DLLVM_INCLUDE_BENCHMARKS=OFF -DLLVM_BUILD_LLVM_C_DYLIB=OFF -DLLVM_ENABLE_DIA_SDK=OFF
 @if EXIST %devroot%\llvm-project IF /I NOT "%buildclang%"=="y" set buildconf=%buildconf% -DLLVM_BUILD_TOOLS=OFF
-@if EXIST %devroot%\llvm-project IF /I NOT "%buildclang%"=="y" IF NOT %abi%==x64 set buildconf=%buildconf% -DLLVM_INCLUDE_TOOLS=OFF
+@if EXIST %devroot%\llvm-project IF /I NOT "%buildclang%"=="y" IF NOT %abi%==%hostabi% set buildconf=%buildconf% -DLLVM_INCLUDE_TOOLS=OFF
 @IF /I "%buildclang%"=="y" set buildconf=%buildconf% -DCLANG_BUILD_TOOLS=ON
 @if /I "%buildllvmspirv%"=="y" set buildconf=%buildconf% -DLLVM_SPIRV_INCLUDE_TESTS=OFF
 @set buildconf=%buildconf% -DLLVM_ENABLE_RTTI=ON -DLLVM_ENABLE_TERMINFO=OFF
@@ -131,8 +134,10 @@
 @echo.
 @echo Cleanning LLVM build. Please wait...
 @echo.
-@if EXIST %devroot%\llvm\%abi% RD /S /Q %devroot%\llvm\%abi%
-@if EXIST buildsys-%abi% RD /S /Q buildsys-%abi%
+@if EXIST %devroot%\llvm\build\%abi% RD /S /Q %devroot%\llvm\build\%abi%
+@if EXIST build\buildsys-%abi% RD /S /Q build\buildsys-%abi%
+@if NOT EXIST "build\" MD build
+@cd build
 @md buildsys-%abi%
 @cd buildsys-%abi%
 @pause
@@ -140,8 +145,8 @@
 
 @rem Load Visual Studio environment. Can only be loaded in the background when using MsBuild.
 @if /I "%ninja%"=="y" call %vsenv% %vsabi%
-@if /I "%ninja%"=="y" if NOT EXIST %devroot%\llvm-project cd %devroot%\llvm\buildsys-%abi%
-@if /I "%ninja%"=="y" if EXIST %devroot%\llvm-project cd %devroot%\llvm-project\buildsys-%abi%
+@if /I "%ninja%"=="y" if NOT EXIST %devroot%\llvm-project cd %devroot%\llvm\build\buildsys-%abi%
+@if /I "%ninja%"=="y" if EXIST %devroot%\llvm-project cd %devroot%\llvm-project\build\buildsys-%abi%
 @if /I "%ninja%"=="y" echo.
 
 @rem Configure and execute the build with the configuration made above.
@@ -150,11 +155,11 @@
 @pause
 @echo.
 @if /I NOT "%ninja%"=="y" cmake --build . -j %throttle% --config Release --target install
-@if /I NOT "%ninja%"=="y" IF /I NOT "%buildclang%"=="y" IF %abi%==x64 cmake --build . -j %throttle% --config Release --target llvm-config
-@if /I NOT "%ninja%"=="y" IF /I NOT "%buildclang%"=="y" IF %abi%==x64 copy .\Release\bin\llvm-config.exe ..\..\llvm\%abi%\bin\
+@if /I NOT "%ninja%"=="y" IF /I NOT "%buildclang%"=="y" IF %abi%==%hostabi% cmake --build . -j %throttle% --config Release --target llvm-config
+@if /I NOT "%ninja%"=="y" IF /I NOT "%buildclang%"=="y" IF %abi%==%hostabi% copy .\Release\bin\llvm-config.exe ..\..\..\llvm\build\%abi%\bin\
 @if /I "%ninja%"=="y" ninja -j %throttle% install
-@if /I "%ninja%"=="y" IF /I NOT "%buildclang%"=="y" IF %abi%==x64 ninja -j %throttle% llvm-config
-@if /I "%ninja%"=="y" IF /I NOT "%buildclang%"=="y" IF %abi%==x64 copy .\bin\llvm-config.exe ..\..\llvm\%abi%\bin\
+@if /I "%ninja%"=="y" IF /I NOT "%buildclang%"=="y" IF %abi%==%hostabi% ninja -j %throttle% llvm-config
+@if /I "%ninja%"=="y" IF /I NOT "%buildclang%"=="y" IF %abi%==%hostabi% copy .\bin\llvm-config.exe ..\..\..\llvm\build\%abi%\bin\
 @echo.
 
 :skipllvm

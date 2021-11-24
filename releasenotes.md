@@ -3,9 +3,14 @@
 - Update for 21.3 features.
 ### Build script
 - MSYS2: Use distinct build folders for GCC and clang;
-- Update SPIRV Tools even when not building it.
+- Update SPIRV Tools even when not building it;
+- Change LLVM build and install folders so Git ignores them;
+- Update SPIRV translator if possible even when not building LLVM;
+- Some more 32-bit build host improvements, 435beaca follow up.
 ### Debug
 - MSYS2: Support clang and UCRT GCC prefixes.
+### Build environment information
+- Get 7-zip version from command line tool.
 # 21.3.0
 - Updated Mesa3D to [21.3.0](https://docs.mesa3d.org/relnotes/21.3.0.html).
 ### Build script

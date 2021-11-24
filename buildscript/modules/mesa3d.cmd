@@ -130,17 +130,17 @@
 @IF %abi%==x64 set buildcmd=msbuild /p^:Configuration=release,Platform=x64 mesa.sln /m^:%throttle%
 
 @set havellvm=0
-@IF %toolchain%==msvc IF EXIST %devroot%\llvm\%abi% IF %cmakestate% GTR 0 set havellvm=1
+@IF %toolchain%==msvc IF EXIST %devroot%\llvm\build\%abi% IF %cmakestate% GTR 0 set havellvm=1
 @IF NOT %toolchain%==msvc set havellvm=1
 @set llvmless=n
 @if %havellvm%==0 set llvmless=y
-@if %havellvm%==1 set /p llvmless=Build Mesa without LLVM (y/n). llvmpipe and swr drivers and high performance JIT won't be available for other drivers and libraries:
+@if %havellvm%==1 set /p llvmless=Build Mesa without LLVM (y/n). llvmpipe, swr, RADV and all OpenCL drivers won't be available and high performance JIT won't be available for softpipe, osmesa and graw:
 @if %havellvm%==1 echo.
 @call %devroot%\%projectname%\buildscript\modules\mesonsubprojects.cmd
 @IF NOT %toolchain%==msvc set buildconf=%buildconf% --force-fallback-for=zlib,libzstd
 @if /I NOT "%llvmless%"=="y" IF %llvmconfigbusted% EQU 1 set buildconf=%buildconf%,llvm
 @if /I NOT "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm=%mesonbooltrue% -Dshared-llvm=%mesonboolfalse%
-@if /I NOT "%llvmless%"=="y" IF %toolchain%==msvc set buildconf=%buildconf% --cmake-prefix-path=%devroot:\=/%/llvm/%abi%
+@if /I NOT "%llvmless%"=="y" IF %toolchain%==msvc set buildconf=%buildconf% --cmake-prefix-path=%devroot:\=/%/llvm/build/%abi%
 @if /I NOT "%llvmless%"=="y" IF %toolchain%==msvc IF %cmakestate% EQU 1 SET PATH=%devroot%\cmake\bin\;%PATH%
 @if /I "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm=%mesonboolfalse%
 
@@ -216,7 +216,7 @@
 @set canradv=1
 @if /I "%llvmless%"=="y" set canradv=0
 @IF %intmesaver% LSS 21200 set canradv=0
-@IF %toolchain%==msvc IF NOT EXIST %devroot%\llvm\%abi%\lib\LLVMAMDGPU*.lib set canradv=0
+@IF %toolchain%==msvc IF NOT EXIST %devroot%\llvm\build\%abi%\lib\LLVMAMDGPU*.lib set canradv=0
 @IF %abi%==x86 IF %intmesaver% LSS 22000 set canradv=0
 @IF %toolchain%==msvc IF NOT EXIST %devroot%\mesa\subprojects\libelf-lfg-win32 IF %gitstate% EQU 0 set canradv=0
 @IF NOT %toolchain%==msvc IF %disableootpatch%==1 IF %intmesaver% LSS 21251 set canradv=0
@@ -286,14 +286,14 @@
 @IF %intmesaver% LSS 21000 set canopencl=0
 @IF NOT %toolchain%==msvc set canopencl=0
 @if /I "%llvmless%"=="y" set canopencl=0
-@IF NOT EXIST %devroot%\llvm\clc\share\pkgconfig set canopencl=0
+@IF NOT EXIST %devroot%\llvm\build\clc\share\pkgconfig set canopencl=0
 
 @rem OpenCL SPIR-V requirements: basic support + Clang, LLD, LLVM SPIRV translator and SPIRV tools
 @set canclspv=1
 @IF %canopencl% EQU 0 set canclspv=0
-@IF NOT EXIST %devroot%\llvm\%abi%\lib\clang*.lib set canclspv=0
-@IF NOT EXIST %devroot%\llvm\%abi%\lib\lld*.lib set canclspv=0
-@IF NOT EXIST %devroot%\llvm\%abi%\lib\pkgconfig set canclspv=0
+@IF NOT EXIST %devroot%\llvm\build\%abi%\lib\clang*.lib set canclspv=0
+@IF NOT EXIST %devroot%\llvm\build\%abi%\lib\lld*.lib set canclspv=0
+@IF NOT EXIST %devroot%\llvm\build\%abi%\lib\pkgconfig set canclspv=0
 @IF NOT EXIST %devroot%\spirv-tools\build\%abi%\lib\pkgconfig set canclspv=0
 
 @rem Clover requirements: basic support + Mesa 21.3, LLVM build with RTTI, gallium swrast and out of tree patches
@@ -332,8 +332,8 @@
 @IF /I "%buildclover%"=="y" set buildconf=%buildconf% -Dopencl-native=true
 
 @rem Apply PKG_CONFIG search PATH adjustments
-@IF %PKG_CONFIG_LIBCLC% EQU 1 set buildconf=%buildconf% -Dstatic-libclc=all --pkg-config-path=%devroot:\=/%/llvm/clc/share/pkgconfig
-@IF %PKG_CONFIG_SPV% EQU 1 set buildconf=%buildconf%;%devroot:\=/%/llvm/%abi%/lib/pkgconfig;%devroot:\=/%/spirv-tools/build/%abi%/lib/pkgconfig
+@IF %PKG_CONFIG_LIBCLC% EQU 1 set buildconf=%buildconf% -Dstatic-libclc=all --pkg-config-path=%devroot:\=/%/llvm/build/clc/share/pkgconfig
+@IF %PKG_CONFIG_SPV% EQU 1 set buildconf=%buildconf%;%devroot:\=/%/llvm/build/%abi%/lib/pkgconfig;%devroot:\=/%/spirv-tools/build/%abi%/lib/pkgconfig
 @set "PKG_CONFIG_LIBCLC="
 @set "PKG_CONFIG_SPV="
 

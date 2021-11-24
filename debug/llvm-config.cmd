@@ -2,8 +2,8 @@
 @set format=pythonlist
 @set llvmmodules=engine coroutines
 @for %%a in ("%cd%") do @set devroot=%%~sa
-@IF NOT EXIST llvm GOTO error
-@cd llvm
+@IF NOT EXIST llvm\build GOTO error
+@cd llvm\build
 @if NOT EXIST x64 if NOT EXIST x86 GOTO error
 @if EXIST x64 cd x64
 @if EXIST x86 cd x86
