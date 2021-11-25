@@ -7,6 +7,7 @@
 - Change LLVM build and install folders so Git ignores them;
 - Update SPIRV translator if possible even when not building LLVM;
 - Some more 32-bit build host improvements, 435beaca follow up;
+- Be more comprehensive on what Mesa3D components require LLVM;
 - Announce Git version control operations.
 ### Debug
 - MSYS2: Support clang and UCRT GCC prefixes.
