@@ -9,6 +9,7 @@
 @call %devroot%\mesa-dist-win\buildscript\modules\discoverpython.cmd
 @call %devroot%\mesa-dist-win\buildscript\modules\pythonpackages.cmd
 @cd mesa
+@echo Undoing out of tree patches...
 @git checkout .
 @git clean -fd
 @copy /Y %devroot%\mesa-dist-win\buildscript\mesonsubprojects\zlib.wrap %devroot%\mesa\subprojects\zlib.wrap

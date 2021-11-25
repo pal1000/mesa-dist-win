@@ -28,7 +28,7 @@
 @echo.
 @cd mesa
 @IF NOT "%branch%"=="main" git checkout %branch%
-@echo.
+@IF NOT "%branch%"=="main" echo.
 @cd ..
 )
 

@@ -3,11 +3,13 @@
 @rem Updating LLVM SPIRV translator
 @IF EXIST %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator IF %gitstate% GTR 0 (
 @cd %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator
+@echo Updating LLVM SPIRV translator...
 @git pull -v --progress --recurse-submodules origin
 @echo.
 )
 @IF EXIST %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator\spirv-headers-tag.conf IF EXIST %devroot%\llvm-project\llvm\projects\SPIRV-Headers IF %gitstate% GTR 0 (
 @cd %devroot%\llvm-project\llvm\projects\SPIRV-Headers
+@echo Updating SPIRV headers used by LLVM SPIRV translator...
 @git checkout master
 @git pull -v --progress --recurse-submodules origin
 @for /f tokens^=* %%a IN ('type %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator\spirv-headers-tag.conf') do @git checkout %%a
@@ -87,10 +89,12 @@
 @IF %canllvmspirv% EQU 1 set /p buildllvmspirv=Build SPIRV LLVM Translator - required for OpenCL (y/n):
 @IF %canllvmspirv% EQU 1 echo.
 @if /I "%buildllvmspirv%"=="y" IF NOT EXIST %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator (
+@echo Getting LLVM SPIRV translator source code...
 @git clone -b llvm_release_130 https://github.com/KhronosGroup/SPIRV-LLVM-Translator %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator
 @echo.
 )
 @if /I "%buildllvmspirv%"=="y" IF EXIST %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator\spirv-headers-tag.conf IF NOT EXIST %devroot%\llvm-project\llvm\projects\SPIRV-Headers (
+@echo Getting source code of SPIRV headers used by LLVM SPIRV translator...
 @git clone https://github.com/KhronosGroup/SPIRV-Headers %devroot%\llvm-project\llvm\projects\SPIRV-Headers
 @cd %devroot%\llvm-project\llvm\projects\SPIRV-Headers
 @for /f tokens^=* %%a IN ('type %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator\spirv-headers-tag.conf') do @git checkout %%a

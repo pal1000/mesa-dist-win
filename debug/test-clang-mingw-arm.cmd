@@ -6,6 +6,7 @@
 @call %devroot%\mesa-dist-win\buildscript\modules\discoverpython.cmd
 @call %devroot%\mesa-dist-win\buildscript\modules\pythonpackages.cmd
 @cd mesa
+@echo Undoing out of tree patches...
 @git checkout .
 @git clean -fd
 @echo.

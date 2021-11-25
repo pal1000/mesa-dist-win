@@ -10,8 +10,8 @@
 @git pull -v --progress --recurse-submodules origin
 @echo.
 )
-@if NOT EXIST %devroot%\pkgconf IF %gitstate% GTR 0 echo Getting pkgconf...
 @if NOT EXIST %devroot%\pkgconf IF %gitstate% GTR 0 (
+@echo Getting pkgconf source code...
 @git clone https://github.com/pkgconf/pkgconf.git --recurse-submodules pkgconf
 @echo.
 @cd pkgconf
