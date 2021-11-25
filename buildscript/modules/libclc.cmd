@@ -20,7 +20,7 @@
 @echo Cleanning libclc build...
 @echo.
 @if EXIST "buildsys-clc\" RD /S /Q buildsys-clc
-@if EXIST "clc\" RD /S /Q clc
+@if EXIST "%devroot%\llvm\build\clc\" RD /S /Q %devroot%\llvm\build\clc
 @md buildsys-clc
 @cd buildsys-clc
 @set buildconf=cmake ../../libclc -GNinja -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS="-m64" -DCMAKE_POLICY_DEFAULT_CMP0091=NEW -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded -DCMAKE_INSTALL_PREFIX="../../../llvm/build/clc" -DLIBCLC_TARGETS_TO_BUILD="spirv-mesa3d-;spirv64-mesa3d-" -DCMAKE_PREFIX_PATH="../../../llvm/build/%hostabi%"
