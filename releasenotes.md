@@ -13,6 +13,8 @@
 - MSYS2: Support clang and UCRT GCC prefixes.
 ### Build environment information
 - Get 7-zip version from command line tool.
+### Out of tree patches
+- Restrict RADV build fix with LLVM 13 and MSVC patch applicability to reflect 21.2 backport.
 # 21.3.0
 - Updated Mesa3D to [21.3.0](https://docs.mesa3d.org/relnotes/21.3.0.html).
 ### Build script

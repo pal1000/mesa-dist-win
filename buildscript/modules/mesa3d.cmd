@@ -99,7 +99,7 @@
 
 @rem Fix radv MSVC build with LLVM 13
 @IF %intmesaver:~0,3% EQU 213 IF %intmesaver% LSS 21306 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd radv-msvc-llvm13
-@IF %intmesaver:~0,3% EQU 212 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd radv-msvc-llvm13-2
+@IF %intmesaver:~0,3% EQU 212 IF %intmesaver% LSS 21256 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd radv-msvc-llvm13-2
 
 @rem Fix vulkan util build with MSVC 32-bit
 @IF %intmesaver% GEQ 21301 IF %intmesaver% LSS 21303 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd vulkan-core-msvc-32-bit
@@ -220,7 +220,8 @@
 @IF %abi%==x86 IF %intmesaver% LSS 22000 set canradv=0
 @IF %toolchain%==msvc IF NOT EXIST %devroot%\mesa\subprojects\libelf-lfg-win32 IF %gitstate% EQU 0 set canradv=0
 @IF NOT %toolchain%==msvc IF %disableootpatch%==1 IF %intmesaver% LSS 21251 set canradv=0
-@IF %toolchain%==msvc IF %disableootpatch%==1 IF %intmesaver% LSS 21306 set canradv=0
+@IF %toolchain%==msvc IF %disableootpatch%==1 IF %intmesaver% LSS 21256 set canradv=0
+@IF %toolchain%==msvc IF %disableootpatch%==1 IF %intmesaver% GEQ 21300 IF %intmesaver% LSS 21306 set canradv=0
 @IF %canradv% EQU 1 set /p radv=Build AMD Vulkan driver - radv (y/n):
 @IF %canradv% EQU 1 echo.
 @IF NOT %toolchain%==msvc if /I "%radv%"=="y" set msysregex=1
