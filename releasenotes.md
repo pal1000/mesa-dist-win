@@ -9,7 +9,8 @@
 - Some more 32-bit build host improvements, 435beaca follow up;
 - Be more comprehensive on what Mesa3D components require LLVM;
 - Announce Git version control operations;
-- Make SPIRV tools build configuration command match Mesa3D CI.
+- Make SPIRV tools build configuration command match Mesa3D CI;
+- Use absolute paths with cmake anywhere we can.
 ### Debug
 - MSYS2: Support clang and UCRT GCC prefixes.
 ### Build environment information

@@ -1,4 +1,4 @@
-@cd ../../
+@cd ..\..\
 @set format=pythonlist
 @set llvmmodules=engine coroutines
 @for %%a in ("%cd%") do @set devroot=%%~sa

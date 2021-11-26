@@ -116,7 +116,7 @@
 @if %abi%==x64 if /I NOT "%ninja%"=="y" set buildconf=%buildconf% -A x64
 @if /I NOT "%ninja%"=="y" IF /I %PROCESSOR_ARCHITECTURE%==AMD64 set buildconf=%buildconf% -Thost=x64
 @if /I "%ninja%"=="y" set buildconf=%buildconf%Ninja
-@set buildconf=%buildconf% -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DCMAKE_INSTALL_PREFIX="../../../llvm/build/%abi%"
+@set buildconf=%buildconf% -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DCMAKE_INSTALL_PREFIX="%devroot:\=/%/llvm/build/%abi%"
 @if EXIST %devroot%\llvm-project IF /I NOT "%buildclang%"=="y" set buildconf=%buildconf% -DLLVM_ENABLE_PROJECTS=""
 @IF /I "%buildclang%"=="y" set buildconf=%buildconf% -DLLVM_ENABLE_PROJECTS="clang;lld"
 @set buildconf=%buildconf% -DLLVM_TARGETS_TO_BUILD=
@@ -160,10 +160,10 @@
 @echo.
 @if /I NOT "%ninja%"=="y" cmake --build . -j %throttle% --config Release --target install
 @if /I NOT "%ninja%"=="y" IF /I NOT "%buildclang%"=="y" IF %abi%==%hostabi% cmake --build . -j %throttle% --config Release --target llvm-config
-@if /I NOT "%ninja%"=="y" IF /I NOT "%buildclang%"=="y" IF %abi%==%hostabi% copy .\Release\bin\llvm-config.exe ..\..\..\llvm\build\%abi%\bin\
+@if /I NOT "%ninja%"=="y" IF /I NOT "%buildclang%"=="y" IF %abi%==%hostabi% copy .\Release\bin\llvm-config.exe %devroot%\llvm\build\%abi%\bin\
 @if /I "%ninja%"=="y" ninja -j %throttle% install
 @if /I "%ninja%"=="y" IF /I NOT "%buildclang%"=="y" IF %abi%==%hostabi% ninja -j %throttle% llvm-config
-@if /I "%ninja%"=="y" IF /I NOT "%buildclang%"=="y" IF %abi%==%hostabi% copy .\bin\llvm-config.exe ..\..\..\llvm\build\%abi%\bin\
+@if /I "%ninja%"=="y" IF /I NOT "%buildclang%"=="y" IF %abi%==%hostabi% copy .\bin\llvm-config.exe %devroot%\llvm\build\%abi%\bin\
 @echo.
 
 :skipllvm
