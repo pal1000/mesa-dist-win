@@ -29,7 +29,7 @@
 @rem Dump 7-Zip version and compression level
 @set sevenzipver=null
 @set exitloop=1
-@if EXIST "%ProgramFiles%\7-Zip\7z.exe" for /f "tokens=1-2 delims= " %%a IN ('"%ProgramFiles%\7-Zip\7z.exe"') DO @IF defined exitloop IF /I "%%"=="7-Zip" (
+@if EXIST "%ProgramFiles%\7-Zip\7z.exe" for /f "tokens=1-2 delims= " %%a IN ('"%ProgramFiles%\7-Zip\7z.exe"') DO @IF defined exitloop IF /I "%%a"=="7-Zip" (
 @set "exitloop="
 @set sevenzipver=%%b
 )
