@@ -43,9 +43,6 @@
 @IF /I "%msyscmd%"=="setup" IF %shell% EQU 1 echo Setup failed. MSYS2 prefix unsupported...
 @IF /I "%msyscmd%"=="setup" IF %shell% EQU 1 echo.
 @IF /I "%msyscmd%"=="setup" IF %shell% EQU 1 GOTO selectshell
-@IF /I "%msyscmd%"=="setup" IF %shell% EQU 4 echo Setup failed. CLANG32 prefix unsupported...
-@IF /I "%msyscmd%"=="setup" IF %shell% EQU 4 echo.
-@IF /I "%msyscmd%"=="setup" IF %shell% EQU 4 GOTO selectshell
 @IF /I "%msyscmd%"=="setup" IF %shell% GTR 1 set msyscmd=pacman -S flex bison patch tar ${MINGW_PACKAGE_PREFIX}-{python-mako,meson,pkgconf,vulkan-devel,libelf,gdb
 @IF /I "%msyscmd:~0,6%"=="pacman" IF NOT %shell% EQU 4 IF NOT %shell% EQU 5 set msyscmd=%msyscmd%,llvm,gcc
 @IF /I "%msyscmd:~0,6%"=="pacman" IF %shell% GTR 3 IF %shell% LSS 6 set msyscmd=%msyscmd%,clang
