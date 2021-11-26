@@ -1,6 +1,6 @@
 @setlocal
 @rem Get dependencies
-@%msysloc%\usr\bin\bash --login -c "/usr/bin/pacman -S ${MINGW_PACKAGE_PREFIX}-{python-mako,meson,pkgconf,vulkan-devel,libelf,gdb} flex bison patch tar --needed --noconfirm --disable-download-timeout"
+@%msysloc%\usr\bin\bash --login -c "/usr/bin/pacman -S ${MINGW_PACKAGE_PREFIX}-{python-mako,meson,pkgconf,vulkan-devel,libelf,zstd,gdb} flex bison patch tar --needed --noconfirm --disable-download-timeout"
 @echo.
 @IF /I NOT "%useclang%"=="y" %msysloc%\usr\bin\bash --login -c "/usr/bin/pacman -S ${MINGW_PACKAGE_PREFIX}-{llvm,gcc} --needed --noconfirm --disable-download-timeout"
 @IF /I "%useclang%"=="y" %msysloc%\usr\bin\bash --login -c "/usr/bin/pacman -S ${MINGW_PACKAGE_PREFIX}-clang --needed --noconfirm --disable-download-timeout"

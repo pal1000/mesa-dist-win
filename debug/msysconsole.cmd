@@ -1,6 +1,7 @@
 @cd "%~dp0"
 @cd ..\..\
 @for %%a in ("%cd%") do @set devroot=%%~sa
+@set projectname=mesa-dist-win
 @call %devroot%\mesa-dist-win\buildscript\modules\msys.cmd
 @call %devroot%\mesa-dist-win\buildscript\modules\msysupdate.cmd
 @call %devroot%\mesa-dist-win\buildscript\modules\git.cmd
@@ -43,7 +44,7 @@
 @IF /I "%msyscmd%"=="setup" IF %shell% EQU 1 echo Setup failed. MSYS2 prefix unsupported...
 @IF /I "%msyscmd%"=="setup" IF %shell% EQU 1 echo.
 @IF /I "%msyscmd%"=="setup" IF %shell% EQU 1 GOTO selectshell
-@IF /I "%msyscmd%"=="setup" IF %shell% GTR 1 set msyscmd=pacman -S flex bison patch tar ${MINGW_PACKAGE_PREFIX}-{python-mako,meson,pkgconf,vulkan-devel,libelf,gdb
+@IF /I "%msyscmd%"=="setup" IF %shell% GTR 1 set msyscmd=pacman -S flex bison patch tar ${MINGW_PACKAGE_PREFIX}-{python-mako,meson,pkgconf,vulkan-devel,libelf,zstd,gdb
 @IF /I "%msyscmd:~0,6%"=="pacman" IF NOT %shell% EQU 4 IF NOT %shell% EQU 5 set msyscmd=%msyscmd%,llvm,gcc
 @IF /I "%msyscmd:~0,6%"=="pacman" IF %shell% GTR 3 IF %shell% LSS 6 set msyscmd=%msyscmd%,clang
 @IF /I "%msyscmd:~0,6%"=="pacman" set msyscmd=%msyscmd%} --needed;echo;read -n 1 -s -r -p 'Press any key to continue';echo;echo;pacman -Sc --noconfirm

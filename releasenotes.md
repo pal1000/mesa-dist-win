@@ -12,7 +12,8 @@
 - Make SPIRV tools build configuration command match Mesa3D CI;
 - Use absolute paths with cmake anywhere we can as libclc can hit too long paths;
 - Specify LLVM RTTI support to Mesa3D [22.0+];
-- MSYS2: Implement CLANG32 build support.
+- MSYS2: Implement CLANG32 build support;
+- MSYS2: Explicitly install ZSTD as it's necessary when building with clang.
 ### Debug
 - MSYS2: Support clang and UCRT GCC prefixes.
 ### Build environment information
