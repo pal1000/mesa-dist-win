@@ -1,0 +1,22 @@
+diff --git a/meson.build b/meson.build
+index 9b4e5e28864b7c6d5d3463e69e7b7713006d363a..93b82a9a77f6d0c87ddcd0bf095729c82cf097ec 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1229,7 +1229,7 @@ if host_machine.system() == 'windows'
+     endif
+   else
+     add_project_link_arguments(
+-      cc.get_supported_arguments(
++      cc.get_supported_link_arguments(
+         '-Wl,--nxcompat',
+         '-Wl,--dynamicbase',
+         '-static-libgcc',
+@@ -1238,7 +1238,7 @@ if host_machine.system() == 'windows'
+       language : ['c'],
+     )
+     add_project_link_arguments(
+-      cpp.get_supported_arguments(
++      cpp.get_supported_link_arguments(
+         '-Wl,--nxcompat',
+         '-Wl,--dynamicbase',
+         '-static-libgcc',

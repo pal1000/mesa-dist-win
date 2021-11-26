@@ -10,7 +10,8 @@
 - Be more comprehensive on what Mesa3D components require LLVM;
 - Announce Git version control operations;
 - Make SPIRV tools build configuration command match Mesa3D CI;
-- Use absolute paths with cmake anywhere we can.
+- Use absolute paths with cmake anywhere we can as liblc can hit too long paths;
+- Specify LLVM RTTI support to Mesa3D [22.0+].
 ### Debug
 - MSYS2: Support clang and UCRT GCC prefixes.
 ### Build environment information
