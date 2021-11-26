@@ -138,7 +138,7 @@
 @IF NOT %toolchain%==msvc set havellvm=1
 @set llvmless=n
 @if %havellvm%==0 set llvmless=y
-@if %havellvm%==1 set /p llvmless=Build Mesa without LLVM (y/n). llvmpipe, swr, RADV and all OpenCL drivers won't be available and high performance JIT won't be available for softpipe, osmesa and graw:
+@if %havellvm%==1 set /p llvmless=Build Mesa without LLVM (y/n). llvmpipe, swr, RADV, lavapipe and all OpenCL drivers won't be available and high performance JIT won't be available for softpipe, osmesa and graw:
 @if %havellvm%==1 echo.
 @call %devroot%\%projectname%\buildscript\modules\mesonsubprojects.cmd
 @if /I NOT "%llvmless%"=="y" IF %llvmconfigbusted% EQU 1 set buildconf=%buildconf%,llvm

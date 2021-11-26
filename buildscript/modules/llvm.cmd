@@ -32,10 +32,10 @@
 @IF %cmakestate%==0 IF %llvmbinaries% EQU 1 echo CMake not found but LLVM is already built. Skipping LLVM build.
 @IF %cmakestate%==0 IF %llvmbinaries% EQU 1 echo.
 @IF %cmakestate%==0 IF %llvmbinaries% EQU 1 GOTO skipllvm
-@IF %cmakestate%==0 echo CMake is required for LLVM build. If you want to build Mesa3D anyway it will be without llvmpipe, swr, RADV and all OpenCL drivers and high performance JIT won't be available for softpipe, osmesa and graw.
+@IF %cmakestate%==0 echo CMake is required for LLVM build. If you want to build Mesa3D anyway it will be without llvmpipe, swr, RADV, lavapipe and all OpenCL drivers and high performance JIT won't be available for softpipe, osmesa and graw.
 @IF %cmakestate%==0 echo.
 @IF %cmakestate%==0 GOTO skipllvm
-@IF %llvmbinaries% EQU 0 IF %llvmsources% EQU 0 echo WARNING: Both LLVM source code and binaries not found. If you want to build Mesa3D anyway it will be without llvmpipe, swr, RADV and all OpenCL drivers and high performance JIT won't be available for softpipe, osmesa and graw.
+@IF %llvmbinaries% EQU 0 IF %llvmsources% EQU 0 echo WARNING: Both LLVM source code and binaries not found. If you want to build Mesa3D anyway it will be without llvmpipe, swr, RADV, lavapipe and all OpenCL drivers and high performance JIT won't be available for softpipe, osmesa and graw.
 @IF %llvmbinaries% EQU 0 IF %llvmsources% EQU 0 echo.
 @IF %llvmbinaries% EQU 0 IF %llvmsources% EQU 0 GOTO skipllvm
 
@@ -44,7 +44,7 @@
 @echo.
 
 @rem LLVM source is found or is obtainable, binaries not found and LLVM build is refused.
-@IF %llvmsources% EQU 1 IF %llvmbinaries% EQU 0 if /I NOT "%buildllvm%"=="y" echo WARNING: Not building LLVM. If you want to build Mesa3D anyway it will be without llvmpipe, swr, RADV and all OpenCL drivers and high performance JIT won't be available for softpipe, osmesa and graw.
+@IF %llvmsources% EQU 1 IF %llvmbinaries% EQU 0 if /I NOT "%buildllvm%"=="y" echo WARNING: Not building LLVM. If you want to build Mesa3D anyway it will be without llvmpipe, swr, RADV, lavapipe and all OpenCL drivers and high performance JIT won't be available for softpipe, osmesa and graw.
 @IF %llvmsources% EQU 1 IF %llvmbinaries% EQU 0 if /I NOT "%buildllvm%"=="y" echo.
 @if /I NOT "%buildllvm%"=="y" GOTO skipllvm
 
