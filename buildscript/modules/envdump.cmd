@@ -43,7 +43,10 @@
 @IF defined gitver IF %toolchain%==msvc echo Git %gitver%>>%devroot%\%projectname%\buildinfo\msvc.txt
 
 @rem Get Vulkan SDK version
-@set vksdkver=1.2.189.2
+@set vksdkver=0
+@for /f tokens^=^* %%a in ('dir /b "%SystemDrive%\VulkanSDK\"') do @IF EXIST "%SystemDrive%\VulkanSDK\%%a\" set /a vksdkver+=1
+@IF %vksdkver% GTR 1 set vksdkver=0
+@IF %vksdkver% EQU 1 for /f tokens^=^* %%a in ('dir /b "%SystemDrive%\VulkanSDK\"') do @IF EXIST "%SystemDrive%\VulkanSDK\%%a\" set vksdkver=%%a
 @IF NOT EXIST "%VK_SDK_PATH%" IF NOT EXIST "%VULKAN_SDK%" set vksdkver=0
 @IF NOT %vksdkver%==0 IF NOT %toolchain%==msvc echo LunarG Vulkan SDK %vksdkver%>>%devroot%\%projectname%\buildinfo\mingw.txt
 @IF NOT %vksdkver%==0 IF %toolchain%==msvc echo LunarG Vulkan SDK %vksdkver%>>%devroot%\%projectname%\buildinfo\msvc.txt

@@ -18,7 +18,8 @@
 - MSYS2: Support clang and UCRT GCC prefixes;
 - MSYS2: Use dedicated command to clear pacman cache.
 ### Build environment information
-- Get 7-zip version from command line tool.
+- Get 7-zip version from command line tool;
+- Automatically get LunarG Vulkan SDK version.
 ### Out of tree patches
 - Restrict RADV build fix with LLVM 13 and MSVC patch applicability to reflect 21.2 backport.
 # 21.3.0
