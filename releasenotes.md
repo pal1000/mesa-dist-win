@@ -15,7 +15,8 @@
 - MSYS2: Implement CLANG32 build support;
 - MSYS2: Explicitly install ZSTD as it's necessary when building with clang.
 ### Debug
-- MSYS2: Support clang and UCRT GCC prefixes.
+- MSYS2: Support clang and UCRT GCC prefixes;
+- MSYS2: Use dedicated command to clear pacman cache.
 ### Build environment information
 - Get 7-zip version from command line tool.
 ### Out of tree patches

@@ -2,9 +2,9 @@
 @cd ..\..\
 @for %%a in ("%cd%") do @set devroot=%%~sa
 @set projectname=mesa-dist-win
-@call %devroot%\mesa-dist-win\buildscript\modules\msys.cmd
-@call %devroot%\mesa-dist-win\buildscript\modules\msysupdate.cmd
-@call %devroot%\mesa-dist-win\buildscript\modules\git.cmd
+@call %devroot%\%projectname%\buildscript\modules\msys.cmd
+@call %devroot%\%projectname%\buildscript\modules\msysupdate.cmd
+@call %devroot%\%projectname%\buildscript\modules\git.cmd
 @IF %msysstate% EQU 0 (
 @echo Fatal error: MSYS2 is missing.
 @pause
@@ -47,7 +47,9 @@
 @IF /I "%msyscmd%"=="setup" IF %shell% GTR 1 set msyscmd=pacman -S flex bison patch tar ${MINGW_PACKAGE_PREFIX}-{python-mako,meson,pkgconf,vulkan-devel,libelf,zstd,gdb
 @IF /I "%msyscmd:~0,6%"=="pacman" IF NOT %shell% EQU 4 IF NOT %shell% EQU 5 set msyscmd=%msyscmd%,llvm,gcc
 @IF /I "%msyscmd:~0,6%"=="pacman" IF %shell% GTR 3 IF %shell% LSS 6 set msyscmd=%msyscmd%,clang
-@IF /I "%msyscmd:~0,6%"=="pacman" set msyscmd=%msyscmd%} --needed;echo;read -n 1 -s -r -p 'Press any key to continue';echo;echo;pacman -Sc --noconfirm
+@IF /I "%msyscmd:~0,6%"=="pacman" set msyscmd=%msyscmd%} --needed
+@IF /I "%msyscmd%"=="clearcache" pacman -Sc --noconfirm
+@IF /I "%msyscmd%"=="cleancache" pacman -Sc --noconfirm
 @IF /I "%msyscmd%"=="shell" GOTO selectshell
 @IF %gitstate% GTR 0 %msysloc%\usr\bin\bash --login -c "PATH=${PATH}:${gitloc};%msyscmd%"
 @IF %gitstate% EQU 0 %msysloc%\usr\bin\bash --login -c "%msyscmd%"
