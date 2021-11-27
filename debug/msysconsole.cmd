@@ -11,11 +11,6 @@
 @exit
 )
 
-@set /p clean=Clear MSYS2 cache (y/n):
-@echo.
-@IF /I "%clean%"=="y" %msysloc%\usr\bin\bash --login -c "/usr/bin/pacman -Sc --noconfirm"
-@IF /I "%clean%"=="y" echo.
-
 :selectshell
 @echo Select shell:
 @echo 1. MSYS2 (default)
