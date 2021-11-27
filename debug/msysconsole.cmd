@@ -36,21 +36,23 @@
 
 :command
 @set msyscmd=
+@set oldmsyscmd=
 @set /p msyscmd=Enter MSYS2 command:
 @echo.
 @set msyscmd=%msyscmd:"=%
 @set msyscmd=%msyscmd:\=/%
 @IF /I "%msyscmd%"=="exit" exit
+@IF /I "%msyscmd%"=="clearcache" set msyscmd=pacman -Sc --noconfirm
+@IF /I "%msyscmd%"=="cleancache" set msyscmd=pacman -Sc --noconfirm
+@IF /I "%msyscmd%"=="shell" GOTO selectshell
 @IF /I "%msyscmd%"=="setup" IF %shell% EQU 1 echo Setup failed. MSYS2 prefix unsupported...
 @IF /I "%msyscmd%"=="setup" IF %shell% EQU 1 echo.
 @IF /I "%msyscmd%"=="setup" IF %shell% EQU 1 GOTO selectshell
+@IF /I "%msyscmd%"=="setup" IF %shell% GTR 1 set oldmsyscmd=%msyscmd%
 @IF /I "%msyscmd%"=="setup" IF %shell% GTR 1 set msyscmd=pacman -S flex bison patch tar ${MINGW_PACKAGE_PREFIX}-{python-mako,meson,pkgconf,vulkan-devel,libelf,zstd,gdb
-@IF /I "%msyscmd:~0,6%"=="pacman" IF NOT %shell% EQU 4 IF NOT %shell% EQU 5 set msyscmd=%msyscmd%,llvm,gcc
-@IF /I "%msyscmd:~0,6%"=="pacman" IF %shell% GTR 3 IF %shell% LSS 6 set msyscmd=%msyscmd%,clang
-@IF /I "%msyscmd:~0,6%"=="pacman" set msyscmd=%msyscmd%} --needed
-@IF /I "%msyscmd%"=="clearcache" pacman -Sc --noconfirm
-@IF /I "%msyscmd%"=="cleancache" pacman -Sc --noconfirm
-@IF /I "%msyscmd%"=="shell" GOTO selectshell
+@IF /I "%oldmsyscmd%"=="setup" IF NOT %shell% EQU 4 IF NOT %shell% EQU 5 set msyscmd=%msyscmd%,llvm,gcc
+@IF /I "%oldmsyscmd%"=="setup" IF %shell% GTR 3 IF %shell% LSS 6 set msyscmd=%msyscmd%,clang
+@IF /I "%oldmsyscmd%"=="setup" set msyscmd=%msyscmd%} --needed
 @IF %gitstate% GTR 0 %msysloc%\usr\bin\bash --login -c "PATH=${PATH}:${gitloc};%msyscmd%"
 @IF %gitstate% EQU 0 %msysloc%\usr\bin\bash --login -c "%msyscmd%"
 @echo.

@@ -1,7 +1,7 @@
 @setlocal
 @rem Check for updates
 @rem Initial upgrade
-@IF NOT EXIST %msysloc%\usr\bin\bison.exe (
+@IF %msysstate% GTR 0 IF NOT EXIST %msysloc%\usr\bin\bison.exe (
 @%msysloc%\usr\bin\bash --login -c "/usr/bin/pacman -Syu --noconfirm --disable-download-timeout"
 @echo.
 @%msysloc%\usr\bin\bash --login -c "/usr/bin/pacman -Syu --noconfirm --disable-download-timeout"
