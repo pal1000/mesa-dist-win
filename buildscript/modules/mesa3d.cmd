@@ -57,6 +57,12 @@
 @IF %disableootpatch%==1 if NOT %gitstate%==0 git checkout .
 @IF %disableootpatch%==1 if NOT %gitstate%==0 git clean -fd
 @IF %disableootpatch%==1 if NOT %gitstate%==0 echo.
+@IF %disableootpatch%==1 IF %toolchain%==clang echo Building with clang requires out of tree patches.
+@IF %disableootpatch%==1 IF %toolchain%==clang echo.
+@IF %disableootpatch%==1 IF %toolchain%==clang GOTO skipmesa
+@IF %intmesaver% LSS 21254 IF %disableootpatch%==0 IF %toolchain%==clang echo Only Mesa3D 21.2.4 and newer is known to work with MinGW-W64 clang toolchain.
+@IF %intmesaver% LSS 21254 IF %disableootpatch%==0 IF %toolchain%==clang echo.
+@IF %intmesaver% LSS 21254 IF %disableootpatch%==0 IF %toolchain%==clang GOTO skipmesa
 @IF %disableootpatch%==1 GOTO configmesabuild
 
 @REM Collect information about Mesa3D code. Apply out of tree patches.
@@ -70,6 +76,9 @@
 
 @rem Fix link flags passing for MinGW
 @IF %intmesaver% GEQ 21300 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd mingw-CRT-link-fix
+
+@rem Fix MinGW clang build
+@IF %intmesaver% GEQ 21254 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd clang
 
 @rem Make it possible to build both osmesa gallium and swrast at the same time with Meson. Applies to Mesa 20.3 and older.
 @IF %intmesaver% LSS 21000 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd dual-osmesa
@@ -173,6 +182,7 @@
 @set zink=n
 @set canzink=0
 @IF NOT %toolchain%==msvc IF %intmesaver% GEQ 21000 set canzink=1
+@IF %toolchain%==clang IF NOT EXIST %msysloc%\%LMSYSTEM%\bin\libvulkan-1.dll set canzink=0
 @IF %toolchain%==msvc IF %intmesaver% GEQ 21200 set canzink=1
 @IF %toolchain%==msvc IF %intmesaver% GEQ 21301 IF %intmesaver% LSS 21303 IF %abi%==x86 IF %disableootpatch%==1 set canzink=0
 @IF %toolchain%==msvc IF NOT EXIST "%VK_SDK_PATH%" IF NOT EXIST "%VULKAN_SDK%" set canzink=0

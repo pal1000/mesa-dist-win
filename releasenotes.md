@@ -14,7 +14,8 @@
 - Specify LLVM RTTI support to Mesa3D [22.0+];
 - MSYS2: Implement CLANG32 build support;
 - MSYS2: Explicitly install ZSTD as it's necessary when building with clang;
-- d3d10sw: Perform WDK check only when all other checks pass due to it being expensive as it runs for 5-10s everytime.
+- d3d10sw: Perform WDK check only when all other checks pass due to it being expensive as it runs for 5-10s everytime;
+- Disable zink driver build with MSYS2 MinGW-W64 clang as it fails to find Vulkan runtime.
 ### Debug
 - MSYS2: Support clang and UCRT GCC prefixes;
 - MSYS2: Use dedicated command to clear pacman cache.
@@ -22,7 +23,9 @@
 - Get 7-zip version from command line tool;
 - Automatically get LunarG Vulkan SDK version.
 ### Out of tree patches
-- Restrict RADV build fix with LLVM 13 and MSVC patch applicability to reflect 21.2 backport.
+- Add patch fixing link flags passing for MinGW;
+- Restrict RADV build fix with LLVM 13 and MSVC patch applicability to reflect 21.2 backport;
+- Add patch to fix Mesa3D build with MSYS2 MinGW-W64 clang.
 # 21.3.0
 - Updated Mesa3D to [21.3.0](https://docs.mesa3d.org/relnotes/21.3.0.html).
 ### Build script
