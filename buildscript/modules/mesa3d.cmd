@@ -150,6 +150,7 @@
 @if %havellvm%==1 set /p llvmless=Build Mesa without LLVM (y/n). llvmpipe, swr, RADV, lavapipe and all OpenCL drivers won't be available and high performance JIT won't be available for softpipe, osmesa and graw:
 @if %havellvm%==1 echo.
 @call %devroot%\%projectname%\buildscript\modules\mesonsubprojects.cmd
+@IF "%vksdkselect%"=="1" IF NOT %toolchain%==msvc set buildconf=%buildconf%,vulkan
 @if /I NOT "%llvmless%"=="y" IF %llvmconfigbusted% EQU 1 set buildconf=%buildconf%,llvm
 @IF %intmesaver% GEQ 22000 set buildconf=%buildconf% -Dcpp_rtti=%RTTI%
 @if /I NOT "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm=%mesonbooltrue% -Dshared-llvm=%mesonboolfalse%
@@ -182,7 +183,6 @@
 @set zink=n
 @set canzink=0
 @IF NOT %toolchain%==msvc IF %intmesaver% GEQ 21000 set canzink=1
-@IF %toolchain%==clang IF NOT EXIST %msysloc%\%LMSYSTEM%\bin\libvulkan-1.dll set canzink=0
 @IF %toolchain%==msvc IF %intmesaver% GEQ 21200 set canzink=1
 @IF %toolchain%==msvc IF %intmesaver% GEQ 21301 IF %intmesaver% LSS 21303 IF %abi%==x86 IF %disableootpatch%==1 set canzink=0
 @IF %toolchain%==msvc IF NOT EXIST "%VK_SDK_PATH%" IF NOT EXIST "%VULKAN_SDK%" set canzink=0

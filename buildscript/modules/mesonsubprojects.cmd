@@ -58,6 +58,7 @@ echo irbuilder_h ^= files^(llvmloc + '/include/llvm/IR/IRBuilder.h'^)
 @IF NOT %toolchain%==msvc GOTO mingwwraps
 @IF EXIST "%devroot%\mesa\subprojects\zlib\" RD /S /Q %devroot%\mesa\subprojects\zlib
 @IF EXIST "%devroot%\mesa\subprojects\libzstd\" RD /S /Q %devroot%\mesa\subprojects\libzstd
+@IF EXIST "%devroot%\mesa\subprojects\vulkan\" RD /S /Q %devroot%\mesa\subprojects\vulkan
 
 @rem Use updated zlib wrap
 @CMD /C EXIT 0
@@ -133,6 +134,47 @@ echo meson.override_dependency^('libzstd', zstd_override^)
 @if NOT "%ERRORLEVEL%"=="0" (
 @echo Overriding ZSTD dependency...
 @copy /Y %devroot%\%projectname%\buildscript\mesonsubprojects\zstd-meson.build %devroot%\mesa\subprojects\libzstd\meson.build
+@echo.
+)
+
+@rem Vulkan dependency
+@IF "%vksdkselect%"=="2" (
+@set "VULKAN_SDK="
+@set "VK_SDK_PATH="
+@%msysloc%\usr\bin\bash --login -c "/usr/bin/pacman -S ${MINGW_PACKAGE_PREFIX}-vulkan-loader --noconfirm"
+@echo.
+@IF EXIST "%devroot%\mesa\subprojects\vulkan\" RD /S /Q %devroot%\mesa\subprojects\vulkan
+@GOTO donewrap
+)
+@IF NOT EXIST "%devroot%\mesa\subprojects\vulkan\" md %devroot%\mesa\subprojects\vulkan
+@(
+echo project^('vulkan', ['cpp']^)
+echo.
+echo cpp ^= meson.get_compiler^('cpp'^)
+echo.
+echo _deps ^= []
+echo _search ^= '%windir:\=/%/'
+if /I %PROCESSOR_ARCHITECTURE%==AMD64 IF %abi%==x86 echo _search ^+^= 'SysWOW64'
+if /I %PROCESSOR_ARCHITECTURE%==AMD64 IF %abi%==x64 echo _search ^+^= 'system32'
+if /I %PROCESSOR_ARCHITECTURE%==%abi% echo _search ^+^= 'system32'
+echo foreach d ^: ['vulkan-1']
+echo   _deps ^+^= cpp.find_library^(d, dirs ^: _search^)
+echo endforeach
+echo.
+echo dep_vk_override ^= declare_dependency^(
+IF EXIST "%VULKAN_SDK%" IF "%VULKAN_SDK%"=="%VK_SDK_PATH%" echo   include_directories ^: include_directories^('%VULKAN_SDK:\=/%/Include/vulkan'^),
+IF EXIST "%VULKAN_SDK%" IF NOT EXIST "%VK_SDK_PATH%" echo   include_directories ^: include_directories^('%VULKAN_SDK:\=/%/Include/vulkan'^),
+IF NOT EXIST "%VULKAN_SDK%" IF EXIST "%VK_SDK_PATH%" echo   include_directories ^: include_directories^('%VK_SDK_PATH:\=/%/Include/vulkan'^),
+echo   dependencies ^: _deps
+echo ^)
+echo.
+echo meson.override_dependency^('vulkan', dep_vk_override^)
+)>%devroot%\%projectname%\buildscript\mesonsubprojects\vulkan-meson.build
+@CMD /C EXIT 0
+@FC /B %devroot%\%projectname%\buildscript\mesonsubprojects\vulkan-meson.build %devroot%\mesa\subprojects\vulkan\meson.build>NUL 2>&1
+@if NOT "%ERRORLEVEL%"=="0" (
+@echo Using binary wrap to find Vulkan...
+@copy /Y %devroot%\%projectname%\buildscript\mesonsubprojects\vulkan-meson.build %devroot%\mesa\subprojects\vulkan\meson.build
 @echo.
 )
 

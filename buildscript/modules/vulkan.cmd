@@ -15,15 +15,4 @@
 @GOTO selectvksdk
 )
 @IF %vksdkstd% EQU 0 set vksdkselect=2
-@IF "%vksdkselect%"=="1" (
-@IF EXIST %msysloc%\%LMSYSTEM%\lib\libvulkan.dll.a del %msysloc%\%LMSYSTEM%\lib\libvulkan.dll.a
-@IF EXIST %msysloc%\%LMSYSTEM%\lib\pkgconfig\vulkan.pc del %msysloc%\%LMSYSTEM%\lib\pkgconfig\vulkan.pc
-@IF EXIST %msysloc%\%LMSYSTEM%\bin\libvulkan-1.dll del %msysloc%\%LMSYSTEM%\bin\libvulkan-1.dll
-)
-@IF "%vksdkselect%"=="2" (
-@set "VULKAN_SDK="
-@set "VK_SDK_PATH="
-@%msysloc%\usr\bin\bash --login -c "/usr/bin/pacman -S ${MINGW_PACKAGE_PREFIX}-vulkan-loader --noconfirm"
-@echo.
-)
-@endlocal&set "VK_SDK_PATH=%VK_SDK_PATH%"&set "VULKAN_SDK=%VULKAN_SDK%"
+@endlocal&set vksdkselect=%vksdkselect%
