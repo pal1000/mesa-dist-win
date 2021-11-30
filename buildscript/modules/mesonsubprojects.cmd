@@ -32,13 +32,11 @@ echo cpp ^= meson.get_compiler^('cpp'^)
 echo.
 echo _deps ^= []
 echo llvmloc ^= run_command^('%devroot:\=/%/%projectname%/buildscript/modules/msysmingwruntimeloc.cmd'^).stdout^(^).strip^(^)
-echo _search ^= llvmloc + '/lib'
 echo foreach d ^: [%llvmlibs%]
-echo   _deps ^+^= cpp.find_library^(d, dirs ^: _search, static ^: true^)
+echo   _deps ^+^= cpp.find_library^(d, static ^: true^)
 echo endforeach
 echo.
 echo dep_llvm ^= declare_dependency^(
-echo   include_directories ^: include_directories^(llvmloc + '/include'^),
 echo   dependencies ^: _deps,
 echo   version ^: '%llvmver%',
 echo ^)
@@ -162,9 +160,9 @@ echo   _deps ^+^= cpp.find_library^(d, dirs ^: _search^)
 echo endforeach
 echo.
 echo dep_vk_override ^= declare_dependency^(
-IF EXIST "%VULKAN_SDK%" IF "%VULKAN_SDK%"=="%VK_SDK_PATH%" echo   include_directories ^: include_directories^('%VULKAN_SDK:\=/%/Include/vulkan'^),
-IF EXIST "%VULKAN_SDK%" IF NOT EXIST "%VK_SDK_PATH%" echo   include_directories ^: include_directories^('%VULKAN_SDK:\=/%/Include/vulkan'^),
-IF NOT EXIST "%VULKAN_SDK%" IF EXIST "%VK_SDK_PATH%" echo   include_directories ^: include_directories^('%VK_SDK_PATH:\=/%/Include/vulkan'^),
+IF EXIST "%VULKAN_SDK%" IF "%VULKAN_SDK%"=="%VK_SDK_PATH%" echo   include_directories ^: include_directories^('%VULKAN_SDK:\=/%/Include'^),
+IF EXIST "%VULKAN_SDK%" IF NOT EXIST "%VK_SDK_PATH%" echo   include_directories ^: include_directories^('%VULKAN_SDK:\=/%/Include'^),
+IF NOT EXIST "%VULKAN_SDK%" IF EXIST "%VK_SDK_PATH%" echo   include_directories ^: include_directories^('%VK_SDK_PATH:\=/%/Include'^),
 echo   dependencies ^: _deps
 echo ^)
 echo.
