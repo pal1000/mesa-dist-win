@@ -151,10 +151,7 @@ echo.
 echo cpp ^= meson.get_compiler^('cpp'^)
 echo.
 echo _deps ^= []
-echo _search ^= '%windir:\=/%/'
-if /I %PROCESSOR_ARCHITECTURE%==AMD64 IF %abi%==x86 echo _search ^+^= 'SysWOW64'
-if /I %PROCESSOR_ARCHITECTURE%==AMD64 IF %abi%==x64 echo _search ^+^= 'system32'
-if /I %PROCESSOR_ARCHITECTURE%==%abi% echo _search ^+^= 'system32'
+echo _search ^= run_command^('%devroot:\=/%/%projectname%/buildscript/modules/vulkanruntimeloc.cmd'^).stdout^(^).strip^(^)
 echo foreach d ^: ['vulkan-1']
 echo   _deps ^+^= cpp.find_library^(d, dirs ^: _search^)
 echo endforeach
