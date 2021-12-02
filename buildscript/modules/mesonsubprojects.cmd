@@ -178,4 +178,4 @@ echo meson.override_dependency^('vulkan', dep_vk_override^)
 @IF %toolchain%==gcc IF EXIST %msysloc%\%LMSYSTEM%\bin\libvulkan-1.dll del %msysloc%\%LMSYSTEM%\bin\libvulkan-1.dll
 
 :donewrap
-@endlocal&set RTTI=%RTTI%&set llvmconfigbusted=%llvmconfigbusted%
+@endlocal&set RTTI=%RTTI%&set llvmconfigbusted=%llvmconfigbusted%&set "VK_SDK_PATH=%VK_SDK_PATH%"&set "VULKAN_SDK=%VULKAN_SDK%"
