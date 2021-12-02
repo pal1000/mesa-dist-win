@@ -22,9 +22,11 @@
 @set /p shell=Enter choice:
 @echo.
 @if "%shell%"=="" set shell=1
+@IF "%shell%"=="1" set "MSYSTEM="
 @IF "%shell%"=="2" set MSYSTEM=MINGW32
 @IF "%shell%"=="3" set MSYSTEM=MINGW64
 @IF "%shell%"=="4" set MSYSTEM=CLANG32
+@IF "%shell%"=="4" %msysloc%\usr\bin\bash --login -c "$(/usr/bin/cygpath -m ${devroot})/${projectname}/buildscript/modules/clang32.sh"
 @IF "%shell%"=="5" set MSYSTEM=CLANG64
 @IF "%shell%"=="6" set MSYSTEM=UCRT64
 @IF NOT "%shell%"=="1" IF NOT "%shell%"=="2" IF NOT "%shell%"=="3" IF NOT "%shell%"=="4" IF NOT "%shell%"=="5" IF NOT "%shell%"=="6" GOTO selectshell

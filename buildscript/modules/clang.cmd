@@ -20,5 +20,6 @@
 @if /I "%useclang%"=="y" IF NOT %toolchain%==msvc set MSYSTEM=CLANG%MSYSTEM:~-2%
 @if /I "%useclang%"=="y" IF NOT %toolchain%==msvc set LMSYSTEM=clang%MSYSTEM:~-2%
 @if /I "%useclang%"=="y" IF NOT %toolchain%==msvc set toolchain=clang
+@if /I "%useclang%"=="y" IF NOT %toolchain%==msvc IF %abi%==x86 %msysloc%\usr\bin\bash --login -c "$(/usr/bin/cygpath -m ${devroot})/${projectname}/buildscript/modules/clang32.sh"
 @if /I "%useclang%"=="y" set TITLE=%TITLE% with clang compiler
 @if /I "%useclang%"=="y" TITLE %TITLE%
