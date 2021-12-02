@@ -1,4 +1,5 @@
-# Next release
+# 21.3.1
+- Updated Mesa3D to [21.3.1](https://docs.mesa3d.org/relnotes/21.3.1.html).
 ### Documentation
 - Update for 21.3 features.
 ### Build script
