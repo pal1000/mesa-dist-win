@@ -15,7 +15,7 @@
 - MSYS2: Implement CLANG32 build support;
 - MSYS2: Explicitly install ZSTD as it's necessary when building with clang;
 - d3d10sw: Perform WDK check only when all other checks pass due to it being expensive as it runs for 5-10s everytime;
-- MSYS2: Use binary wrap to link LunarG Vulkan SDK;
+- MSYS2: Use binary wrap to link LunarG Vulkan SDK when building with clang;
 - MSYS2: Simplify LLVM binary wrap fallback.
 ### Debug
 - MSYS2: Support clang and UCRT GCC prefixes;

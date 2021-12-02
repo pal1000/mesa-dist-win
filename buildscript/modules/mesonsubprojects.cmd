@@ -172,6 +172,10 @@ echo meson.override_dependency^('vulkan', dep_vk_override^)
 @copy /Y %devroot%\%projectname%\buildscript\mesonsubprojects\vulkan-meson.build %devroot%\mesa\subprojects\vulkan\meson.build
 @echo.
 )
+@IF %toolchain%==gcc IF EXIST "%devroot%\mesa\subprojects\vulkan\" RD /S /Q %devroot%\mesa\subprojects\vulkan
+@IF %toolchain%==gcc IF EXIST %msysloc%\%LMSYSTEM%\lib\libvulkan.dll.a del %msysloc%\%LMSYSTEM%\lib\libvulkan.dll.a
+@IF %toolchain%==gcc IF EXIST %msysloc%\%LMSYSTEM%\lib\pkgconfig\vulkan.pc del %msysloc%\%LMSYSTEM%\lib\pkgconfig\vulkan.pc
+@IF %toolchain%==gcc IF EXIST %msysloc%\%LMSYSTEM%\bin\libvulkan-1.dll del %msysloc%\%LMSYSTEM%\bin\libvulkan-1.dll
 
 :donewrap
 @endlocal&set RTTI=%RTTI%&set llvmconfigbusted=%llvmconfigbusted%
