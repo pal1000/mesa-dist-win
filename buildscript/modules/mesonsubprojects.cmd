@@ -168,9 +168,9 @@ echo meson.override_dependency^('vulkan', dep_vk_override^)
 @CMD /C EXIT 0
 @FC /B %devroot%\%projectname%\buildscript\mesonsubprojects\vulkan-meson.build %devroot%\mesa\subprojects\vulkan\meson.build>NUL 2>&1
 @if NOT "%ERRORLEVEL%"=="0" (
-@echo Using binary wrap to find Vulkan...
-@copy /Y %devroot%\%projectname%\buildscript\mesonsubprojects\vulkan-meson.build %devroot%\mesa\subprojects\vulkan\meson.build
-@echo.
+@IF %toolchain%==clang echo Using binary wrap to find Vulkan...
+@IF %toolchain%==clang copy /Y %devroot%\%projectname%\buildscript\mesonsubprojects\vulkan-meson.build %devroot%\mesa\subprojects\vulkan\meson.build
+@IF %toolchain%==clang echo.
 )
 @IF %toolchain%==gcc IF EXIST "%devroot%\mesa\subprojects\vulkan\" RD /S /Q %devroot%\mesa\subprojects\vulkan
 @IF %toolchain%==gcc IF EXIST %msysloc%\%LMSYSTEM%\lib\libvulkan.dll.a del %msysloc%\%LMSYSTEM%\lib\libvulkan.dll.a
