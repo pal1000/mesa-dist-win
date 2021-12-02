@@ -26,7 +26,7 @@
 ### Out of tree patches
 - Add patch fixing link flags passing for MinGW;
 - Restrict RADV build fix with LLVM 13 and MSVC patch applicability to reflect 21.2 backport;
-- Add patch to fix Mesa3D build with MSYS2 MinGW-W64 clang.
+- Add patch to fix Mesa3D build with MSYS2 MinGW-W64 clang and only apply it when building with clang.
 # 21.3.0
 - Updated Mesa3D to [21.3.0](https://docs.mesa3d.org/relnotes/21.3.0.html).
 ### Build script
