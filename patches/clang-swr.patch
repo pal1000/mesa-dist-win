@@ -1,0 +1,12 @@
+diff --git a/src/gallium/drivers/swr/swr_fence.cpp b/src/gallium/drivers/swr/swr_fence.cpp
+index 4e2b2af874c..7803c77e425 100644
+--- a/src/gallium/drivers/swr/swr_fence.cpp
++++ b/src/gallium/drivers/swr/swr_fence.cpp
+@@ -29,7 +29,7 @@
+ #include "swr_screen.h"
+ #include "swr_fence.h"
+ 
+-#ifdef __APPLE__
++#if defined(__APPLE__) || defined(__MINGW32__)
+ #include <sched.h>
+ #endif

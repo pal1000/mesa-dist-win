@@ -78,7 +78,8 @@
 @IF %intmesaver% GEQ 21300 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd mingw-CRT-link-fix
 
 @rem Fix MinGW clang build
-@IF %toolchain%==clang IF %intmesaver% GEQ 21254 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd clang
+@IF %intmesaver% GEQ 21254 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd clang
+@IF %intmesaver% GEQ 21254 IF EXIST "%devroot%\mesa\src\gallium\drivers\swr\" call %devroot%\%projectname%\buildscript\modules\applypatch.cmd clang-swr
 
 @rem Make it possible to build both osmesa gallium and swrast at the same time with Meson. Applies to Mesa 20.3 and older.
 @IF %intmesaver% LSS 21000 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd dual-osmesa
