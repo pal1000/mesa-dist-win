@@ -1,4 +1,6 @@
 # Next release
+### Build script
+- clover build: Don't enable native OpenCL backend as [it's not supported on Windows](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/12276#note_1175794).
 ### Out of tree patches
 - Revise patches fixing Mesa3D build with MSYS2 MinGW-W64 clang.
 # 21.3.1-2
