@@ -63,6 +63,9 @@
 @IF %intmesaver% LSS 21254 IF %disableootpatch%==0 IF %toolchain%==clang echo Only Mesa3D 21.2.4 and newer is known to work with MinGW-W64 clang toolchain.
 @IF %intmesaver% LSS 21254 IF %disableootpatch%==0 IF %toolchain%==clang echo.
 @IF %intmesaver% LSS 21254 IF %disableootpatch%==0 IF %toolchain%==clang GOTO skipmesa
+@IF %intmesaver% GEQ 21300 IF %disableootpatch%==1 IF %abi%==x86 IF %toolchain%==gcc echo Building 32-bit Mesa3D using MSYS2 MinGW-W64 GCC requires out of tree patches.
+@IF %intmesaver% GEQ 21300 IF %disableootpatch%==1 IF %abi%==x86 IF %toolchain%==gcc echo.
+@IF %intmesaver% GEQ 21300 IF %disableootpatch%==1 IF %abi%==x86 IF %toolchain%==gcc GOTO skipmesa
 @IF %disableootpatch%==1 GOTO configmesabuild
 
 @REM Collect information about Mesa3D code. Apply out of tree patches.
@@ -76,6 +79,9 @@
 
 @rem Fix link flags passing for MinGW
 @IF %intmesaver% GEQ 21300 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd mingw-CRT-link-fix
+
+@rem Fix symbols exporting for MinGW GCC x86
+@IF %intmesaver% GEQ 21300 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd def-fixes
 
 @rem Fix MinGW clang build
 @IF %intmesaver% GEQ 21254 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd clang

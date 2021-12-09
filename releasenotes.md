@@ -2,7 +2,8 @@
 ### Build script
 - Adjustments to reflect swr driver removal [22.0+].
 ### Out of tree patches
-- Revise and split patch fixing Mesa3D build with MSYS2 MinGW-W64 clang and apply its components all the time.
+- Revise and split patch fixing Mesa3D build with MSYS2 MinGW-W64 clang and apply its components all the time;
+- Add patch fixing symbols exporting for MinGW-W64 GCC x86.
 # 21.3.1
 - Updated Mesa3D to [21.3.1](https://docs.mesa3d.org/relnotes/21.3.1.html).
 ### Documentation
