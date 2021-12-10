@@ -14,11 +14,11 @@
 :selectshell
 @echo Select shell:
 @echo 1. MSYS2 (default)
-@echo 2 MINGW32
-@echo 3 MINGW64
-@echo 4 CLANG32
-@echo 5 CLANG64
-@echo 6 UCRT64
+@echo 2. MINGW32
+@echo 3. MINGW64
+@echo 4. CLANG32
+@echo 5. CLANG64
+@echo 6. UCRT64
 @set /p shell=Enter choice:
 @echo.
 @if "%shell%"=="" set shell=1
