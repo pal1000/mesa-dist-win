@@ -5,9 +5,6 @@
 @IF EXIST %devroot%\spirv-tools\external IF %gitstate% GTR 0 (
 @echo Updating SPIRV tools source code...
 @cd %devroot%\spirv-tools
-@git checkout master
-@git pull -v --progress --recurse-submodules origin
-@git checkout stable
 @git pull -v --progress --recurse-submodules origin
 @echo.
 )
@@ -25,9 +22,7 @@
 @IF /I NOT "%buildspvtools%"=="y" GOTO skipspvtools
 @IF NOT EXIST %devroot%\spirv-tools\external IF %gitstate% GTR 0 (
 @echo Getting SPIRV tools source code...
-@git clone https://github.com/KhronosGroup/SPIRV-Tools %devroot%\spirv-tools
-@cd %devroot%\spirv-tools
-@git checkout stable
+@git clone -b stable https://github.com/KhronosGroup/SPIRV-Tools %devroot%\spirv-tools
 @echo.
 )
 @IF NOT EXIST %devroot%\spirv-tools\external\spirv-headers IF %gitstate% GTR 0 (
