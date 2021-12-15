@@ -82,6 +82,10 @@
 @if /I "%ninja%"=="y" ninja -j %throttle% install
 @echo.
 
+@rem Avoid race condition in LLVM sources checkout.
+@pause
+@echo.
+
 :skipspvtools
 @rem Reset environment after SPIRV Tools build.
 @endlocal

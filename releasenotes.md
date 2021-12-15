@@ -1,7 +1,8 @@
 # Next release
 ### Build script
 - clover build: Don't enable native OpenCL backend as [it's not supported on Windows](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/12276#note_1175794);
-- SPIRV tools: checkout and update stable branch only.
+- SPIRV tools: checkout and update stable branch only;
+- Avoid potential dangerous race condition in LLVM sources checkout after SPIRV tools build which can occur because both x86 and x64 builds can run simultaneously for both SPIRV tools and LLVM.
 ### Out of tree patches
 - Revise patches fixing Mesa3D build with MSYS2 MinGW-W64 clang.
 # 21.3.1-2
