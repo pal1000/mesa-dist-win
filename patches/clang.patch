@@ -90,24 +90,3 @@ index 978aa455ecbb4801b269f50bf30e1f7dd574c1d0..86c35fffaf69a7176d52da9331b5729b
  #else
  #define PIPE_ARCH_SSSE3
  #endif
-diff --git a/src/intel/isl/isl_tiled_memcpy.c b/src/intel/isl/isl_tiled_memcpy.c
-index fed08511030a92c11b9c54f2e6d4424237948641..4e7b5cd0212a43ad969e7ea6950a0c088e0c8e4b 100644
---- a/src/intel/isl/isl_tiled_memcpy.c
-+++ b/src/intel/isl/isl_tiled_memcpy.c
-@@ -33,15 +33,10 @@
- 
- #include "util/macros.h"
- #include "util/u_math.h"
-+#include "util/u_sse.h"
- #include "util/rounding.h"
- #include "isl_priv.h"
- 
--#if defined(__SSSE3__)
--#include <tmmintrin.h>
--#elif defined(__SSE2__)
--#include <emmintrin.h>
--#endif
--
- #define FILE_DEBUG_FLAG DEBUG_TEXTURE
- 
- #define ALIGN_DOWN(a, b) ROUND_DOWN_TO(a, b)

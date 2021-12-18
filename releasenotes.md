@@ -1,4 +1,5 @@
-# Next release
+# 21.3.2
+- Updated Mesa3D to [21.3.2](https://docs.mesa3d.org/relnotes/21.3.2.html).
 ### Build script
 - clover build: Don't enable native OpenCL backend as [it's not supported on Windows](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/12276#note_1175794);
 - SPIRV tools: checkout and update stable branch only;
