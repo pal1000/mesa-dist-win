@@ -78,7 +78,7 @@
 @IF %intmesaver% GEQ 20100 IF %intmesaver% LSS 20103 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd winepath
 
 @rem Fix link flags passing for MinGW
-@IF %intmesaver% GEQ 21300 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd mingw-CRT-link-fix
+@IF %intmesaver% GEQ 21300 IF %intmesaver% LSS 21352 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd mingw-CRT-link-fix
 
 @rem Fix symbols exporting for MinGW GCC x86
 @IF %intmesaver% GEQ 21300 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd def-fixes

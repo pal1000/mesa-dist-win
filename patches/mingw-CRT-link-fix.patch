@@ -1,8 +1,8 @@
 diff --git a/meson.build b/meson.build
-index 9b4e5e28864b7c6d5d3463e69e7b7713006d363a..93b82a9a77f6d0c87ddcd0bf095729c82cf097ec 100644
+index 07ef92dbff8430b217b33776623c2e50e3464407..03dda9ee3e790f496472e35456d80e7dad2ea3c2 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -1229,7 +1229,7 @@ if host_machine.system() == 'windows'
+@@ -1210,7 +1210,7 @@ if host_machine.system() == 'windows'
      endif
    else
      add_project_link_arguments(
@@ -11,7 +11,7 @@ index 9b4e5e28864b7c6d5d3463e69e7b7713006d363a..93b82a9a77f6d0c87ddcd0bf095729c8
          '-Wl,--nxcompat',
          '-Wl,--dynamicbase',
          '-static-libgcc',
-@@ -1238,7 +1238,7 @@ if host_machine.system() == 'windows'
+@@ -1219,7 +1219,7 @@ if host_machine.system() == 'windows'
        language : ['c'],
      )
      add_project_link_arguments(

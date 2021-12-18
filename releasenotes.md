@@ -4,7 +4,8 @@
 - SPIRV tools: checkout and update stable branch only;
 - Avoid potential dangerous race condition in LLVM sources checkout after SPIRV tools build which can occur because both x86 and x64 builds can run simultaneously for both SPIRV tools and LLVM.
 ### Out of tree patches
-- Revise patches fixing Mesa3D build with MSYS2 MinGW-W64 clang.
+- Revise patches fixing Mesa3D build with MSYS2 MinGW-W64 clang;
+- Restrict link flags passing fix for MinGW to Mesa 21.3.1 and older.
 # 21.3.1-2
 ### Build script
 - Adjustments to reflect swr driver removal [22.0+].
