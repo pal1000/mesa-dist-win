@@ -5,7 +5,7 @@ Ressource Hacker 5.1.8.360
 7-Zip 21.06 ultra compression
 Git 2.34.1.1
 LunarG Vulkan SDK 1.2.198.1
-Visual Studio Community 2022 v17.0.2
+Visual Studio Community 2022 v17.0.4
 Windows SDK 10.0.22000.0
 Python 3.10.1
 

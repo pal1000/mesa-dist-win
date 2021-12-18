@@ -1,8 +1,8 @@
 diff --git a/meson.build b/meson.build
-index 8b8ffc95aab..ed7f93eac16 100644
+index 53ec2c2ef95e65447dd0f0eb65c0f92a5906590d..c124b5fb0d2b28424f33aac54cd4f87c4249dc40 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -1089,7 +1089,18 @@ elif host_machine.system() == 'windows'
+@@ -1087,7 +1087,18 @@ elif host_machine.system() == 'windows'
        '-DNOMINMAX',
      ]
    else
@@ -23,7 +23,7 @@ index 8b8ffc95aab..ed7f93eac16 100644
  elif host_machine.system() == 'openbsd'
    pre_args += '-D_ISOC11_SOURCE'
 diff --git a/src/compiler/nir/nir.h b/src/compiler/nir/nir.h
-index 019e60f9238..3a0f0e705c2 100644
+index a36c09589ce36ba6e67ed7159313553c7a483e11..0102ece28814762f706cc146c104015121a9c889 100644
 --- a/src/compiler/nir/nir.h
 +++ b/src/compiler/nir/nir.h
 @@ -55,8 +55,10 @@
@@ -38,7 +38,7 @@ index 019e60f9238..3a0f0e705c2 100644
  #ifdef __cplusplus
  extern "C" {
 diff --git a/src/compiler/nir/nir_lower_atomics_to_ssbo.c b/src/compiler/nir/nir_lower_atomics_to_ssbo.c
-index c1799d0b9d0..448f63bdc7c 100644
+index c1799d0b9d0af70148928a4b224172c188c64194..448f63bdc7cc3b9cae123e3c0abe79b4b5af380b 100644
 --- a/src/compiler/nir/nir_lower_atomics_to_ssbo.c
 +++ b/src/compiler/nir/nir_lower_atomics_to_ssbo.c
 @@ -27,10 +27,6 @@
@@ -53,7 +53,7 @@ index c1799d0b9d0..448f63bdc7c 100644
   * Remap atomic counters to SSBOs, starting from the shader's next SSBO slot
   * (info.num_ssbos).
 diff --git a/src/compiler/spirv/vtn_private.h b/src/compiler/spirv/vtn_private.h
-index 93985f54f86..24958cc13d7 100644
+index b1b40c8ee992eaeea985c58f4e8923724c1d385b..6053c2544a2628300cc8dc3311c8e4f0f69d36d5 100644
 --- a/src/compiler/spirv/vtn_private.h
 +++ b/src/compiler/spirv/vtn_private.h
 @@ -41,7 +41,7 @@ struct vtn_builder;
@@ -91,16 +91,15 @@ index 978aa455ecbb4801b269f50bf30e1f7dd574c1d0..86c35fffaf69a7176d52da9331b5729b
  #define PIPE_ARCH_SSSE3
  #endif
 diff --git a/src/intel/isl/isl_tiled_memcpy.c b/src/intel/isl/isl_tiled_memcpy.c
-index b3ec54af64b9b5d90f5f62cc958fa29f2795a0a6..491889b929d1b83788cb63b753f176d32c308e0b 100644
+index fed08511030a92c11b9c54f2e6d4424237948641..4e7b5cd0212a43ad969e7ea6950a0c088e0c8e4b 100644
 --- a/src/intel/isl/isl_tiled_memcpy.c
 +++ b/src/intel/isl/isl_tiled_memcpy.c
-@@ -32,16 +32,11 @@
- #include <string.h>
+@@ -33,15 +33,10 @@
  
  #include "util/macros.h"
+ #include "util/u_math.h"
 +#include "util/u_sse.h"
- #include "main/macros.h"
- 
+ #include "util/rounding.h"
  #include "isl_priv.h"
  
 -#if defined(__SSSE3__)
