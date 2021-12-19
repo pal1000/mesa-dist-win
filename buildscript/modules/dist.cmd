@@ -57,6 +57,8 @@
 @forfiles /p %devroot%\mesa\build\%toolchain%-%abi%\src /s /m lvp_icd.*.json /c "cmd /c copy @path %devroot%\%projectname%\bin\%abi%"
 @forfiles /p %devroot%\mesa\build\%toolchain%-%abi%\src /s /m radeon_icd.*.json /c "cmd /c copy @path %devroot%\%projectname%\bin\%abi%"
 @IF EXIST %devroot%\%projectname%\bin\%abi%\libvulkan_radeon.dll REN %devroot%\%projectname%\bin\%abi%\libvulkan_radeon.dll vulkan_radeon.dll
+@IF EXIST %devroot%\%projectname%\bin\%abi%\MesaOpenCL-1.dll REN %devroot%\%projectname%\bin\%abi%\MesaOpenCL-1.dll MesaOpenCL.dll
+@IF EXIST %devroot%\%projectname%\bin\%abi%\OpenCL-1.dll REN %devroot%\%projectname%\bin\%abi%\OpenCL-1.dll OpenCL.dll
 
 @rem Patch Vulkan drivers JSONs
 @IF EXIST %devroot%\%projectname%\bin\%abi%\lvp_icd.*.json call %devroot%\%projectname%\buildscript\modules\fixvulkanjsons.cmd lvp

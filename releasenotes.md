@@ -7,6 +7,9 @@
 ### Out of tree patches
 - Revise patches fixing Mesa3D build with MSYS2 MinGW-W64 clang;
 - Restrict link flags passing fix for MinGW to Mesa 21.3.1 and older.
+### Distribution
+- Add support for clover OpenCL stack;
+- Take into account that RADV can be built for 32-bit [22.0+].
 # 21.3.1-2
 ### Build script
 - Adjustments to reflect swr driver removal [22.0+].
