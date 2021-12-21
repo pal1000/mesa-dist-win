@@ -144,7 +144,6 @@ echo meson.override_dependency^('libzstd', zstd_override^)
 @IF EXIST "%devroot%\mesa\subprojects\vulkan\" RD /S /Q %devroot%\mesa\subprojects\vulkan
 @GOTO donewrap
 )
-@IF NOT EXIST "%devroot%\mesa\subprojects\vulkan\" md %devroot%\mesa\subprojects\vulkan
 @(
 echo project^('vulkan', ['cpp']^)
 echo.
@@ -169,6 +168,7 @@ echo meson.override_dependency^('vulkan', dep_vk_override^)
 @FC /B %devroot%\%projectname%\buildscript\mesonsubprojects\vulkan-meson.build %devroot%\mesa\subprojects\vulkan\meson.build>NUL 2>&1
 @if NOT "%ERRORLEVEL%"=="0" (
 @IF %toolchain%==clang echo Using binary wrap to find Vulkan...
+@IF %toolchain%==clang IF NOT EXIST "%devroot%\mesa\subprojects\vulkan\" md %devroot%\mesa\subprojects\vulkan
 @IF %toolchain%==clang copy /Y %devroot%\%projectname%\buildscript\mesonsubprojects\vulkan-meson.build %devroot%\mesa\subprojects\vulkan\meson.build
 @IF %toolchain%==clang echo.
 )
