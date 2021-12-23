@@ -85,7 +85,7 @@
 
 @rem Fix MinGW clang build
 @IF %intmesaver% GEQ 21254 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd clang
-@IF %intmesaver% GEQ 21254 IF EXIST "%devroot%\mesa\src\gallium\drivers\swr\" call %devroot%\%projectname%\buildscript\modules\applypatch.cmd clang-swr
+@IF %intmesaver% GEQ 21254 IF EXIST %devroot%\mesa\src\gallium\drivers\swr\meson.build call %devroot%\%projectname%\buildscript\modules\applypatch.cmd clang-swr
 
 @rem Make it possible to build both osmesa gallium and swrast at the same time with Meson. Applies to Mesa 20.3 and older.
 @IF %intmesaver% LSS 21000 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd dual-osmesa
@@ -94,18 +94,18 @@
 
 @rem Fix swrAVX512 build with MSVC
 @IF %intmesaver% LSS 20000 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swravx512
-@IF %intmesaver% GEQ 20000 IF EXIST "%devroot%\mesa\src\gallium\drivers\swr\" call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swravx512-post-static-link
+@IF %intmesaver% GEQ 20000 IF EXIST %devroot%\mesa\src\gallium\drivers\swr\meson.build call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swravx512-post-static-link
 
 @rem Fix swr build with MSVC
 @IF %intmesaver% LSS 20152 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swr-msvc
-@IF %intmesaver% GEQ 21300 IF EXIST "%devroot%\mesa\src\gallium\drivers\swr\" call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swr-msvc-2
+@IF %intmesaver% GEQ 21300 IF EXIST %devroot%\mesa\src\gallium\drivers\swr\meson.build call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swr-msvc-2
 
 @rem Get swr building with Mingw
 @IF %intmesaver% LSS 20158 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swr-mingw
 @IF %intmesaver% GEQ 20200 IF %intmesaver% LSS 20250 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swr-mingw
 
 @rem Fix swr build with LLVM 13
-@IF EXIST "%devroot%\mesa\src\gallium\drivers\swr\" call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swr-llvm13
+@IF EXIST %devroot%\mesa\src\gallium\drivers\swr\meson.build call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swr-llvm13
 
 @rem Fix lavapipe crash when built with MinGW
 @IF %intmesaver:~0,3% EQU 211 IF %intmesaver% LSS 21151 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd lavapipe-mingw-crashfix
@@ -205,7 +205,7 @@
 
 @set swrdrv=n
 @set canswr=0
-@if /I NOT "%llvmless%"=="y" if %abi%==x64 IF %disableootpatch%==0 IF EXIST "%devroot%\mesa\src\gallium\drivers\swr\" set canswr=1
+@if /I NOT "%llvmless%"=="y" if %abi%==x64 IF %disableootpatch%==0 IF EXIST %devroot%\mesa\src\gallium\drivers\swr\meson.build set canswr=1
 @if %canswr% EQU 1 set /p swrdrv=Do you want to build swr drivers? (y=yes):
 @if %canswr% EQU 1 echo.
 @if /I "%swrdrv%"=="y" IF %disableootpatch%==0 set buildconf=%buildconf% -Dswr-arches=avx,avx2,skx,knl
