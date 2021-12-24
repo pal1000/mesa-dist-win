@@ -2,6 +2,8 @@
 ### Build script
 - Correct check for swr driver availability, fixes bba6cc7a and b902610d;
 - clover: When disabling SPIR-V binary support, do it explicitly.
+### Out of tree patches
+- Limit SWR MSVC build fix for 21.3 to all releases prior to 21.3.3.
 # 21.3.2
 - Updated Mesa3D to [21.3.2](https://docs.mesa3d.org/relnotes/21.3.2.html).
 ### Build script

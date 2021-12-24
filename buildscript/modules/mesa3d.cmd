@@ -98,7 +98,7 @@
 
 @rem Fix swr build with MSVC
 @IF %intmesaver% LSS 20152 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swr-msvc
-@IF %intmesaver% GEQ 21300 IF EXIST %devroot%\mesa\src\gallium\drivers\swr\meson.build call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swr-msvc-2
+@IF %intmesaver% GEQ 21300 IF %intmesaver% LSS 21353 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swr-msvc-2
 
 @rem Get swr building with Mingw
 @IF %intmesaver% LSS 20158 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swr-mingw
