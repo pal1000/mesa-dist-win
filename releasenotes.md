@@ -3,7 +3,8 @@
 - Correct check for swr driver availability, fixes bba6cc7a and b902610d;
 - clover: When disabling SPIR-V binary support, do it explicitly;
 - MSYS2: Use a more recommended way to update packages;
-- clover: Try keeping ICD build intact while building standalone version and vice versa.
+- clover: Try keeping ICD build intact while building standalone version and vice versa;
+- LLVM: Incremental build support.
 ### Out of tree patches
 - Limit SWR MSVC build fix for 21.3 to all releases prior to 21.3.3.
 # 21.3.2
