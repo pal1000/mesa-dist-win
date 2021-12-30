@@ -47,7 +47,7 @@ libcrypt 2.1-3
 libcurl 7.80.0-3
 libdb 5.3.28-3
 libedit 20210910_3.1-1
-libexpat 2.4.1-1
+libexpat 2.4.2-1
 libffi 3.3-1
 libgcrypt 1.9.4-1
 libgdbm 1.22-1
@@ -101,7 +101,7 @@ mingw-w64-i686-libtre-git r128.6fb7206-2
 mingw-w64-i686-libwinpthread-git 9.0.0.6357.eac8c38c1-1
 mingw-w64-i686-libxml2 2.9.12-3
 mingw-w64-i686-llvm 13.0.0-4
-mingw-w64-i686-meson 0.60.2-1
+mingw-w64-i686-meson 0.60.3-1
 mingw-w64-i686-mpc 1.2.1-1
 mingw-w64-i686-mpdecimal 2.5.1-1
 mingw-w64-i686-mpfr 4.1.0.p13-1
@@ -152,7 +152,7 @@ mingw-w64-x86_64-libtre-git r128.6fb7206-2
 mingw-w64-x86_64-libwinpthread-git 9.0.0.6357.eac8c38c1-1
 mingw-w64-x86_64-libxml2 2.9.12-3
 mingw-w64-x86_64-llvm 13.0.0-4
-mingw-w64-x86_64-meson 0.60.2-1
+mingw-w64-x86_64-meson 0.60.3-1
 mingw-w64-x86_64-mpc 1.2.1-1
 mingw-w64-x86_64-mpdecimal 2.5.1-1
 mingw-w64-x86_64-mpfr 4.1.0.p13-1
@@ -184,7 +184,7 @@ mingw-w64-x86_64-zlib 1.2.11-9
 mingw-w64-x86_64-zstd 1.5.1-1
 mintty 1~3.5.2-1
 mpfr 4.1.0-1
-msys2-keyring 1~20210904-1
+msys2-keyring 1~20211228-1
 msys2-launcher 1.4-1
 msys2-runtime 3.3.3-3
 nano 5.9-1
@@ -194,7 +194,7 @@ openssl 1.1.1.m-1
 p11-kit 0.24.0-1
 pacman 6.0.1-8
 pacman-contrib 1.4.0-2
-pacman-mirrors 20211213-1
+pacman-mirrors 20211222-1
 patch 2.7.6-1
 perl 5.32.1-1
 pinentry 1.2.0-1
