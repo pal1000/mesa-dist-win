@@ -67,6 +67,8 @@ The following Mesa3D drivers and build artifacts are shipped in each release:
 ### OpenCL drivers, compilers and backends
 Due to their commmon build dependency on libclc they are not available in MinGW package.
 - Microsoft OpenCL compiler. File name: `clon12compiler.dll`. This component introduced in 21.0.0 is finally provided by mesa-dist-win since 21.3.0 release. ClonD3D12 driver depends on it.
+- Gallium pipe loader(s). File name: `pipe_swrast.dll`. There is one for every gallium driver supported by clover driver. For now clover can only work with llvmpipe (swrast) on Windows. clover depends on every pipe loader available.
+- clover OpenCL ICD driver and standalone runtime. File names: `MesaOpenCL.dll` and `OpenCL.dll`. While deployed, the runtime hides all other OpenCL ICDs present on the system and only let programs use Mesa3D clover as the only OpenCL driver. The runtime can be deployed via copy-paste so a per app deployment update to cover it is planned. The ICD deployment is done through [registration](https://github.com/KhronosGroup/OpenCL-ICD-Loader/blob/master/README.md#test-setup) with [system OpenCL runtime](https://github.com/KhronosGroup/OpenCL-ICD-Loader/blob/master/README.md#table-of-debug-environment-variables) (e.g. `opencl.dll` from `Windows\system32`).
 ### Direct3D drivers, libraries and tools
 - D3D10 software renderer is available in MSVC package since 21.2.0. File name: `d3d10sw.dll`. This is a drop in replacement for Microsoft WARP and unfortunately there is no clean way of [deploying](https://gitlab.freedesktop.org/mesa/mesa/-/blob/main/src/gallium/targets/d3d10sw/README.md) it.
 - SPIR-V to DXIL tool and library are only available in MSVC package since 21.0.0. File names: `spirv_to_dxil.dll` and `spirv2dxil.exe`.
