@@ -4,7 +4,7 @@
 - clover: When disabling SPIR-V binary support, do it explicitly;
 - MSYS2: Use a more recommended way to update packages;
 - clover: Try keeping ICD build intact while building standalone version and vice versa;
-- LLVM: Incremental build support.
+- LLVM: Implement incremental build support for when only SPIRV translator and libclc need rebuild.
 ### Out of tree patches
 - Limit SWR MSVC build fix for 21.3 to all releases prior to 21.3.3.
 # 21.3.2
