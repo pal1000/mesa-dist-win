@@ -1,5 +1,6 @@
 ### Build script
-- MSYS2: Revert 5aac0ca4 as this doesn't actually work as expected.
+- MSYS2: Revert 5aac0ca4 as this doesn't actually work as expected;
+- Perform clover standalone+ICD preservation maneuver right after build.
 # 21.3.3
 - Updated Mesa3D to [21.3.3](https://docs.mesa3d.org/relnotes/21.3.3.html).
 ### Build script

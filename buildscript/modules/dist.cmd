@@ -1,6 +1,11 @@
 @setlocal
 @rem Create distribution.
 @if NOT EXIST %devroot%\mesa\build\%toolchain%-%abi% GOTO exit
+
+@rem Keep both clover standalone and ICD intact
+@IF EXIST %devroot%\mesa\build\%toolchain%-%abi%\src\gallium\targets\opencl\MesaOpenCL-1.dll REN %devroot%\mesa\build\%toolchain%-%abi%\src\gallium\targets\opencl\MesaOpenCL-1.dll MesaOpenCL.dll
+@IF EXIST %devroot%\mesa\build\%toolchain%-%abi%\src\gallium\targets\opencl\OpenCL-1.dll REN %devroot%\mesa\build\%toolchain%-%abi%\src\gallium\targets\opencl\OpenCL-1.dll OpenCL.dll
+
 @set /p dist=Create or update Mesa3D distribution package (y/n):
 @echo.
 @if /I NOT "%dist%"=="y" GOTO exit
@@ -48,9 +53,6 @@
 @MD %abi%
 
 :mesondist
-@IF EXIST %devroot%\mesa\build\%toolchain%-%abi%\src\gallium\targets\opencl\MesaOpenCL-1.dll REN %devroot%\mesa\build\%toolchain%-%abi%\src\gallium\targets\opencl\MesaOpenCL-1.dll MesaOpenCL.dll
-@IF EXIST %devroot%\mesa\build\%toolchain%-%abi%\src\gallium\targets\opencl\OpenCL-1.dll REN %devroot%\mesa\build\%toolchain%-%abi%\src\gallium\targets\opencl\OpenCL-1.dll OpenCL.dll
-
 @IF %dualosmesa% EQU 1 forfiles /p %devroot%\mesa\build\%toolchain%-%abi%\src /s /m *.dll /c "cmd /c IF NOT @file==0x22osmesa.dll0x22 copy @path %devroot%\%projectname%\bin\%abi%"
 @IF %dualosmesa% EQU 1 copy %devroot%\mesa\build\%toolchain%-%abi%\src\mesa\drivers\osmesa\osmesa.dll %devroot%\%projectname%\bin\%abi%\osmesa-swrast\osmesa.dll
 @IF %dualosmesa% EQU 1 copy %devroot%\mesa\build\%toolchain%-%abi%\src\gallium\targets\osmesa\osmesa.dll %devroot%\%projectname%\bin\%abi%\osmesa-gallium\osmesa.dll
