@@ -19,6 +19,7 @@
 @echo 4. CLANG32
 @echo 5. CLANG64
 @echo 6. UCRT64
+@set "shell="
 @set /p shell=Enter choice:
 @echo.
 @if "%shell%"=="" set shell=1
@@ -41,9 +42,8 @@
 @IF /I "%msyscmd%"=="clearcache" set msyscmd=pacman -Sc --noconfirm
 @IF /I "%msyscmd%"=="cleancache" set msyscmd=pacman -Sc --noconfirm
 @IF /I "%msyscmd%"=="shell" GOTO selectshell
-@IF /I "%msyscmd%"=="setup" IF %shell% EQU 1 set msyscmd=pacman -S flex bison patch tar mingw-w64-i686-{python-mako,meson,pkgconf,vulkan-devel,libelf,zstd,gdb,llvm,gcc} mingw-w64-x86_64-{python-mako,meson,pkgconf,vulkan-devel,libelf,zstd,gdb,llvm,gcc} --needed
-@IF /I "%msyscmd%"=="setup" IF %shell% GTR 3 IF %shell% LSS 6 set msyscmd=pacman -S flex bison patch tar ${MINGW_PACKAGE_PREFIX}-{python-mako,meson,pkgconf,vulkan-devel,libelf,zstd,gdb,clang} --needed
-@IF /I "%msyscmd%"=="setup" set msyscmd=pacman -S flex bison patch tar ${MINGW_PACKAGE_PREFIX}-{python-mako,meson,pkgconf,vulkan-devel,libelf,zstd,gdb,llvm,gcc} --needed
+@IF /I "%msyscmd%"=="setup" IF %shell% EQU 1 set msyscmd=pacman -S flex bison patch tar mingw-w64-i686-{python-mako,meson,pkgconf,vulkan-devel,libelf,zstd,gdb,llvm,cc} mingw-w64-x86_64-{python-mako,meson,pkgconf,vulkan-devel,libelf,zstd,gdb,llvm,cc} --needed
+@IF /I "%msyscmd%"=="setup" IF %shell% GTR 1 set msyscmd=pacman -S flex bison patch tar ${MINGW_PACKAGE_PREFIX}-{python-mako,meson,pkgconf,vulkan-devel,libelf,zstd,gdb,llvm,cc} --needed
 @IF %gitstate% GTR 0 %msysloc%\usr\bin\bash --login -c "PATH=${PATH}:${gitloc};%msyscmd%"
 @IF %gitstate% EQU 0 %msysloc%\usr\bin\bash --login -c "%msyscmd%"
 @echo.

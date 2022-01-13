@@ -1,7 +1,8 @@
 ### Build script
 - MSYS2: Revert 5aac0ca4 as this doesn't actually work as expected;
 - Perform clover standalone+ICD preservation maneuver right after build;
-- MSYS2/CLANG32: Fetch packages database when enabling it, fixes 4c3e785e.
+- MSYS2/CLANG32: Fetch packages database when enabling it, fixes 4c3e785e;
+- MSYS2: Take advantage of the new `cc` virtual package.
 ### Debug
 - MSYS2: Simplify setup command and make it work in MSYS shell.
 # 21.3.3
