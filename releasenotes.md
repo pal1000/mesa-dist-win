@@ -1,3 +1,5 @@
+# 21.3.4
+- Updated Mesa3D to [21.3.4](https://docs.mesa3d.org/relnotes/21.3.4.html).
 ### Build script
 - MSYS2: Revert 5aac0ca4 as this doesn't actually work as expected;
 - Perform clover standalone+ICD preservation maneuver right after build;

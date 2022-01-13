@@ -2,7 +2,7 @@ Build environment
 -----------------
 Windows 10.0.22000
 Ressource Hacker 5.1.8.360
-7-Zip 21.06 ultra compression
+7-Zip 21.07 ultra compression
 Git 2.34.1.1
 LunarG Vulkan SDK 1.2.198.1
 
@@ -84,11 +84,11 @@ mingw-w64-i686-binutils 2.37-4
 mingw-w64-i686-bzip2 1.0.8-2
 mingw-w64-i686-ca-certificates 20210119-1
 mingw-w64-i686-crt-git 9.0.0.6373.5be8fcd83-1
-mingw-w64-i686-expat 2.4.1-1
+mingw-w64-i686-expat 2.4.2-1
 mingw-w64-i686-gcc 11.2.0-6
 mingw-w64-i686-gcc-libs 11.2.0-6
 mingw-w64-i686-gdb 11.1-2
-mingw-w64-i686-gettext 0.21-1
+mingw-w64-i686-gettext 0.21-3
 mingw-w64-i686-gmp 6.2.1-3
 mingw-w64-i686-headers-git 9.0.0.6373.5be8fcd83-1
 mingw-w64-i686-isl 0.24-1
@@ -115,9 +115,9 @@ mingw-w64-i686-python-beaker 1.11.0-2
 mingw-w64-i686-python-mako 1.1.4-3
 mingw-w64-i686-python-markupsafe 2.0.1-2
 mingw-w64-i686-readline 8.1.001-1
-mingw-w64-i686-spirv-headers 1.5.4.2.r380.e71fedd-1
-mingw-w64-i686-spirv-tools 2021.3-1
-mingw-w64-i686-sqlite3 3.37.0-1
+mingw-w64-i686-spirv-headers 1.5.4.2.r407.814e728-1
+mingw-w64-i686-spirv-tools 2021.4-1
+mingw-w64-i686-sqlite3 3.37.2-1
 mingw-w64-i686-tcl 8.6.11-5
 mingw-w64-i686-termcap 1.3.1-6
 mingw-w64-i686-tk 8.6.11.1-2
@@ -135,11 +135,11 @@ mingw-w64-x86_64-binutils 2.37-4
 mingw-w64-x86_64-bzip2 1.0.8-2
 mingw-w64-x86_64-ca-certificates 20210119-1
 mingw-w64-x86_64-crt-git 9.0.0.6373.5be8fcd83-1
-mingw-w64-x86_64-expat 2.4.1-1
+mingw-w64-x86_64-expat 2.4.2-1
 mingw-w64-x86_64-gcc 11.2.0-6
 mingw-w64-x86_64-gcc-libs 11.2.0-6
 mingw-w64-x86_64-gdb 11.1-2
-mingw-w64-x86_64-gettext 0.21-1
+mingw-w64-x86_64-gettext 0.21-3
 mingw-w64-x86_64-gmp 6.2.1-3
 mingw-w64-x86_64-headers-git 9.0.0.6373.5be8fcd83-1
 mingw-w64-x86_64-isl 0.24-1
@@ -166,9 +166,9 @@ mingw-w64-x86_64-python-beaker 1.11.0-2
 mingw-w64-x86_64-python-mako 1.1.4-3
 mingw-w64-x86_64-python-markupsafe 2.0.1-2
 mingw-w64-x86_64-readline 8.1.001-1
-mingw-w64-x86_64-spirv-headers 1.5.4.2.r380.e71fedd-1
-mingw-w64-x86_64-spirv-tools 2021.3-1
-mingw-w64-x86_64-sqlite3 3.37.0-1
+mingw-w64-x86_64-spirv-headers 1.5.4.2.r407.814e728-1
+mingw-w64-x86_64-spirv-tools 2021.4-1
+mingw-w64-x86_64-sqlite3 3.37.2-1
 mingw-w64-x86_64-tcl 8.6.11-5
 mingw-w64-x86_64-termcap 1.3.1-6
 mingw-w64-x86_64-tk 8.6.11.1-2
@@ -192,7 +192,7 @@ ncurses 6.2-2
 nettle 3.7.3-1
 openssl 1.1.1.m-1
 p11-kit 0.24.0-1
-pacman 6.0.1-8
+pacman 6.0.1-9
 pacman-contrib 1.4.0-2
 pacman-mirrors 20211230-1
 patch 2.7.6-1
