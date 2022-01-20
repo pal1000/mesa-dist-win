@@ -1,3 +1,5 @@
+### Build script
+- Support building LLVM SPIRV translator with SPIRV Tools integration.
 # 21.3.4
 - Updated Mesa3D to [21.3.4](https://docs.mesa3d.org/relnotes/21.3.4.html).
 ### Build script

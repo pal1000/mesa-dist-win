@@ -111,6 +111,10 @@
 @if /I NOT "%buildllvmspirv%"=="y" IF /I NOT "%cleanbuild%"=="n" IF EXIST %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator RD /S /Q %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator
 @if /I NOT "%buildllvmspirv%"=="y" IF /I NOT "%cleanbuild%"=="n" IF EXIST %devroot%\llvm-project\llvm\projects\SPIRV-Headers RD /S /Q %devroot%\llvm-project\llvm\projects\SPIRV-Headers
 
+@rem SPIRV Tools integration for LLVM SPIRV translator
+@IF %canllvmspirv% EQU 1 IF EXIST %devroot%\spirv-tools\build\%abi% IF EXIST %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator IF %pkgconfigstate% GTR 0 set PKG_CONFIG_PATH=%devroot:\=/%/spirv-tools/build/%abi%/lib/pkgconfig
+@IF %canllvmspirv% EQU 1 IF EXIST %devroot%\spirv-tools\build\%abi% IF EXIST %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator IF %pkgconfigstate% GTR 0 set PATH=%pkgconfigloc%\;%PATH%
+
 @rem Load cmake into build environment.
 @if %cmakestate%==1 set PATH=%devroot%\cmake\bin\;%PATH%
 
