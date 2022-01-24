@@ -7,13 +7,13 @@ Git 2.34.1.1
 LunarG Vulkan SDK 1.2.198.1
 Visual Studio Community 2022 v17.0.5
 Windows SDK 10.0.22000.0
-Python 3.10.1
+Python 3.10.2
 
 Python packages
 ---------------
 Mako       1.1.6
 MarkupSafe 2.0.1
-meson      0.61.0
+meson      0.61.1
 pip        21.3.1
 setuptools 60.5.0
 

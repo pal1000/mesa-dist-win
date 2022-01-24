@@ -1,5 +1,7 @@
 ### Build script
 - Support building LLVM SPIRV translator with SPIRV Tools integration.
+### Distribution
+- RADV: Do not distribute JSON manifest if ICD is missing as JSON manifest is generated even if RADV build fails.
 # 21.3.4
 - Updated Mesa3D to [21.3.4](https://docs.mesa3d.org/relnotes/21.3.4.html).
 ### Build script

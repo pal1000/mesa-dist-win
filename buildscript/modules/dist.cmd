@@ -53,15 +53,15 @@
 @MD %abi%
 
 :mesondist
-@IF %dualosmesa% EQU 1 forfiles /p %devroot%\mesa\build\%toolchain%-%abi%\src /s /m *.dll /c "cmd /c IF NOT @file==0x22osmesa.dll0x22 copy @path %devroot%\%projectname%\bin\%abi%"
+@IF %dualosmesa% EQU 1 forfiles /p %devroot%\mesa\build\%toolchain%-%abi%\src /s /m *.dll /c "cmd /c IF NOT @file==0x22osmesa.dll0x22 IF EXIST @path copy @path %devroot%\%projectname%\bin\%abi%"
 @IF %dualosmesa% EQU 1 copy %devroot%\mesa\build\%toolchain%-%abi%\src\mesa\drivers\osmesa\osmesa.dll %devroot%\%projectname%\bin\%abi%\osmesa-swrast\osmesa.dll
 @IF %dualosmesa% EQU 1 copy %devroot%\mesa\build\%toolchain%-%abi%\src\gallium\targets\osmesa\osmesa.dll %devroot%\%projectname%\bin\%abi%\osmesa-gallium\osmesa.dll
-@IF %dualosmesa% EQU 0 forfiles /p %devroot%\mesa\build\%toolchain%-%abi%\src /s /m *.dll /c "cmd /c copy @path %devroot%\%projectname%\bin\%abi%"
+@IF %dualosmesa% EQU 0 forfiles /p %devroot%\mesa\build\%toolchain%-%abi%\src /s /m *.dll /c "cmd /c IF EXIST @path copy @path %devroot%\%projectname%\bin\%abi%"
 @IF EXIST %devroot%\%projectname%\bin\%abi%\openglon12.dll for /f tokens^=^* %%a in ('@call %devroot%\%projectname%\buildscript\modules\winsdk.cmd dxil') do @IF EXIST %%a copy %%a %devroot%\%projectname%\bin\%abi%
-@forfiles /p %devroot%\mesa\build\%toolchain%-%abi%\src /s /m *.exe /c "cmd /c copy @path %devroot%\%projectname%\bin\%abi%"
-@forfiles /p %devroot%\mesa\build\%toolchain%-%abi%\src /s /m lvp_icd.*.json /c "cmd /c copy @path %devroot%\%projectname%\bin\%abi%"
-@forfiles /p %devroot%\mesa\build\%toolchain%-%abi%\src /s /m radeon_icd.*.json /c "cmd /c copy @path %devroot%\%projectname%\bin\%abi%"
 @IF EXIST %devroot%\%projectname%\bin\%abi%\libvulkan_radeon.dll REN %devroot%\%projectname%\bin\%abi%\libvulkan_radeon.dll vulkan_radeon.dll
+@forfiles /p %devroot%\mesa\build\%toolchain%-%abi%\src /s /m *.exe /c "cmd /c IF EXIST @path copy @path %devroot%\%projectname%\bin\%abi%"
+@forfiles /p %devroot%\mesa\build\%toolchain%-%abi%\src /s /m lvp_icd.*.json /c "cmd /c IF EXIST @path copy @path %devroot%\%projectname%\bin\%abi%"
+@IF EXIST %devroot%\%projectname%\bin\%abi%\vulkan_radeon.dll forfiles /p %devroot%\mesa\build\%toolchain%-%abi%\src /s /m radeon_icd.*.json /c "cmd /c copy @path %devroot%\%projectname%\bin\%abi%"
 
 @rem Patch Vulkan drivers JSONs
 @IF EXIST %devroot%\%projectname%\bin\%abi%\lvp_icd.*.json call %devroot%\%projectname%\buildscript\modules\fixvulkanjsons.cmd lvp
