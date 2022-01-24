@@ -233,16 +233,17 @@
 @if NOT %toolchain%==msvc if /I "%lavapipe%"=="y" set msysregex=1
 @if /I "%lavapipe%"=="y" set /a mesavkcount+=1
 
+@rem HACK: OpenCL stack on Mesa 21.3+ requires RADV if LLVM AMDGPU target is available so allow building RADV with MSVC for 32-bit even when we know is going to fail
 @set radv=n
 @set canradv=1
 @if /I "%llvmless%"=="y" set canradv=0
 @IF %intmesaver% LSS 21200 set canradv=0
 @IF %toolchain%==msvc IF NOT EXIST %devroot%\llvm\build\%abi%\lib\LLVMAMDGPU*.lib set canradv=0
-@IF %abi%==x86 IF %intmesaver% LSS 22000 set canradv=0
 @IF %toolchain%==msvc IF NOT EXIST %devroot%\mesa\subprojects\libelf-lfg-win32 IF %gitstate% EQU 0 set canradv=0
-@IF NOT %toolchain%==msvc IF %disableootpatch%==1 IF %intmesaver% LSS 21251 set canradv=0
 @IF %toolchain%==msvc IF %disableootpatch%==1 IF %intmesaver% LSS 21256 set canradv=0
 @IF %toolchain%==msvc IF %disableootpatch%==1 IF %intmesaver% GEQ 21300 IF %intmesaver% LSS 21306 set canradv=0
+@IF NOT %toolchain%==msvc IF %abi%==x86 IF %intmesaver% LSS 22000 set canradv=0
+@IF NOT %toolchain%==msvc IF %disableootpatch%==1 IF %intmesaver% LSS 21251 set canradv=0
 @IF %canradv% EQU 1 set /p radv=Build AMD Vulkan driver - radv (y/n):
 @IF %canradv% EQU 1 echo.
 @IF NOT %toolchain%==msvc if /I "%radv%"=="y" set msysregex=1
@@ -304,11 +305,13 @@
 @if /I NOT "%graw%"=="y" set buildconf=%buildconf% -Dbuild-tests=false
 
 @rem Basic OpenCL requirements: Mesa 21.0+, LLVM and libclc
+@rem HACK: OpenCL stack on Mesa 21.3+ requires RADV if LLVM AMDGPU target is available
 @set canopencl=1
 @IF %intmesaver% LSS 21000 set canopencl=0
 @IF NOT %toolchain%==msvc set canopencl=0
 @if /I "%llvmless%"=="y" set canopencl=0
 @IF NOT EXIST %devroot%\llvm\build\clc\share\pkgconfig set canopencl=0
+@IF %intmesaver% GEQ 21300 IF EXIST %devroot%\llvm\build\%abi%\lib\LLVMAMDGPU*.lib if /I NOT "%radv%"=="y" set canopencl=0
 
 @rem OpenCL SPIR-V requirements: basic support + Clang, LLD, LLVM SPIRV translator and SPIRV tools
 @set canclspv=1

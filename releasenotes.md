@@ -1,5 +1,6 @@
 ### Build script
-- Support building LLVM SPIRV translator with SPIRV Tools integration.
+- Support building LLVM SPIRV translator with SPIRV Tools integration;
+- HACK: OpenCL stack on Mesa 21.3+ requires RADV if LLVM AMDGPU target is available, see [[1](https://gitlab.freedesktop.org/mesa/mesa/-/issues/5666)] and [[2](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/12276#note_1200369)].
 ### Distribution
 - RADV: Do not distribute JSON manifest if ICD is missing as JSON manifest is generated even if RADV build fails.
 # 21.3.4
