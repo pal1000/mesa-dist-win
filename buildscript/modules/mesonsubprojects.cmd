@@ -31,7 +31,7 @@ echo.
 echo cpp ^= meson.get_compiler^('cpp'^)
 echo.
 echo _deps ^= []
-echo llvmloc ^= run_command^('%devroot:\=/%/%projectname%/buildscript/modules/msysmingwruntimeloc.cmd', check: true^).stdout^(^).strip^(^)
+echo llvmloc ^= run_command^('%devroot:\=/%/%projectname%/buildscript/modules/msysmingwruntimeloc.cmd', check^: true^).stdout^(^).strip^(^)
 echo foreach d ^: [%llvmlibs%]
 echo   _deps ^+^= cpp.find_library^(d, static ^: true^)
 echo endforeach
@@ -150,7 +150,7 @@ echo.
 echo cpp ^= meson.get_compiler^('cpp'^)
 echo.
 echo _deps ^= []
-echo _search ^= run_command^('%devroot:\=/%/%projectname%/buildscript/modules/vulkanruntimeloc.cmd', check: true^).stdout^(^).strip^(^)
+echo _search ^= run_command^('%devroot:\=/%/%projectname%/buildscript/modules/vulkanruntimeloc.cmd', check^: true^).stdout^(^).strip^(^)
 echo foreach d ^: ['vulkan-1']
 echo   _deps ^+^= cpp.find_library^(d, dirs ^: _search^)
 echo endforeach
