@@ -1,3 +1,5 @@
+# 21.3.5
+- Updated Mesa3D to [21.3.5](https://docs.mesa3d.org/relnotes/21.3.5.html).
 ### Build script
 - Support building LLVM SPIRV translator with SPIRV Tools integration;
 - HACK: OpenCL stack on Mesa 21.3+ requires RADV if LLVM AMDGPU target is available, see [[1](https://gitlab.freedesktop.org/mesa/mesa/-/issues/5666)] and [[2](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/12276#note_1200369)].

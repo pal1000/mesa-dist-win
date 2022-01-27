@@ -8,7 +8,7 @@
 - [OpenGL context configuration override](#opengl-context-configuration-override)
 - [How to set environment variables](#how-to-set-environment-variables)
 # Downloads
-Mesa 21.3.4 builds with Visual Studio and MSYS2 Mingw-w64 are now available in [releases section](https://github.com/pal1000/mesa-dist-win/releases).
+Mesa 21.3.5 builds with Visual Studio and MSYS2 Mingw-w64 are now available in [releases section](https://github.com/pal1000/mesa-dist-win/releases).
 # Known issues
 - `libgallium_wgl.dll` missing error with Mesa3D OpenGL ES and desktop OpenGL drivers
 
