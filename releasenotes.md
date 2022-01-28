@@ -1,6 +1,7 @@
 ### Build script
 - Meson build: Add checks to run_command() calls;
-- Enforce CRLF line endings to batch scripts using Git attributes.
+- Enforce CRLF line endings to batch scripts using Git attributes;
+- Update SPIRV headers only when necessary to avoid becoming dirty.
 # 21.3.5
 - Updated Mesa3D to [21.3.5](https://docs.mesa3d.org/relnotes/21.3.5.html).
 ### Build script
