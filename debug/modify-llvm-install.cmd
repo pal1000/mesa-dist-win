@@ -3,6 +3,7 @@
 @for %%a in ("%cd%") do @set devroot=%%~sa
 @set msysstate=0
 @set projectname=mesa-dist-win
+@set TITLE=Modify LLVM build
 @call %devroot%\%projectname%\buildscript\modules\toolchain.cmd
 @call %devroot%\%projectname%\buildscript\modules\abi.cmd
 @call %devroot%\%projectname%\buildscript\modules\discoverpython.cmd

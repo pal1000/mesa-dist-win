@@ -3,7 +3,7 @@ Build environment
 Windows 10.0.22000
 Ressource Hacker 5.1.8.360
 7-Zip 21.07 ultra compression
-Git 2.35.0.1
+Git 2.35.1.1
 LunarG Vulkan SDK 1.2.198.1
 Visual Studio Community 2022 v17.0.5
 Windows SDK 10.0.22000.0
@@ -17,7 +17,7 @@ meson      0.61.1
 pip        21.3.1
 setuptools 60.5.0
 
-CMake 3.22.1
+CMake 3.22.2
 Ninja 1.10.2
 LLVM 13.0.0
 SPIRV Tools 2022.1.0
