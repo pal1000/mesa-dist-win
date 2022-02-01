@@ -31,8 +31,8 @@
 @if %abi%==x86 if /I NOT "%ninja%"=="y" set buildconf=%buildconf% -A Win32
 @if %abi%==x64 if /I NOT "%ninja%"=="y" set buildconf=%buildconf% -A x64
 @if /I NOT "%ninja%"=="y" IF /I %PROCESSOR_ARCHITECTURE%==AMD64 set buildconf=%buildconf% -Thost=x64
-@if /I "%ninja%"=="y" set buildconf=%buildconf%Ninja
-@set buildconf=%buildconf% -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=OFF -DCMAKE_INSTALL_PREFIX="%devroot:\=/%/clon12/build/%abi%"
+@if /I "%ninja%"=="y" set buildconf=%buildconf%Ninja -DCMAKE_BUILD_TYPE=Release
+@set buildconf=%buildconf% -DBUILD_TESTS=OFF -DCMAKE_INSTALL_PREFIX="%devroot:\=/%/clon12/build/%abi%"
 
 @echo CLonD3D12 build configuration command^: %buildconf%
 @echo.
@@ -61,11 +61,15 @@
 @echo.
 @pause
 @echo.
-@if /I NOT "%ninja%"=="y" cmake --build . -j %throttle% --config Release --target install
-@if /I "%ninja%"=="y" ninja -j %throttle% install
+@if /I NOT "%ninja%"=="y" cmake --build . -j %throttle% --config Release
+@if /I "%ninja%"=="y" ninja -j %throttle%
 @echo.
 
-:skipspvtools
+@rem Avoid race condition in SPIRV Tools sources checkout.
+@pause
+@echo.
+
+:skipclon12
 @rem Reset environment after CLonD3D12 build.
 @endlocal
 @cd %devroot%
