@@ -59,8 +59,12 @@
 
 @rem Dump Visual Studio environment
 @IF %toolchain%==msvc echo %msvcname% v%msvcver%>>%devroot%\%projectname%\buildinfo\msvc.txt
-@IF %toolchain%==msvc call %vsenv% %vsabi%>nul 2>&1
-@IF %toolchain%==msvc echo Windows SDK %WindowsSDKVersion:~0,-1%>>%devroot%\%projectname%\buildinfo\msvc.txt
+@set wsdkcount=0
+@IF %toolchain%==msvc for /f tokens^=* %%a IN ('REG QUERY HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Installer /s /d /f "Windows SDK" /e 2^>^&1 ^| find "HKEY_"') DO @for /f tokens^=* %%b IN ('REG QUERY %%a /s /v DisplayVersion 2^>^&1 ^| find "DisplayVersion"') DO @for /f tokens^=3 %%c IN ("%%b") DO @(
+@set /a wsdkcount+=1
+@set vwsdk=%%c
+)
+@if %wsdkcount% EQU 1 echo Windows SDK %vwsdk%>>%devroot%\%projectname%\buildinfo\msvc.txt
 
 @rem Dump Python environment
 @IF %toolchain%==msvc echo Python %pythonver%>>%devroot%\%projectname%\buildinfo\msvc.txt
