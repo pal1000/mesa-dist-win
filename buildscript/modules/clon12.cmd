@@ -2,24 +2,30 @@
 @set canclon12=1
 @IF %gitstate% EQU 0 set canclon12=0
 @if %cmakestate% EQU 0 set canclon12=0
-@IF %canclon12% EQU 1 set /p buildclon12=Build Microsoft OpenCL over D3D12 driver (y/n):
-@IF %canclon12% EQU 1 echo.
-@IF /I NOT "%buildclon12%"=="y" GOTO skipclon12
-@IF EXIST "%devroot%\clon12\" (
+@set wdkcount=0
+@for /f tokens^=* %%a IN ('REG QUERY HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Installer /s /d /f "Windows Driver Kit" /e 2^>^&1 ^| find "HKEY_"') DO @set /a wdkcount+=1
+@if %wdkcount% NEQ 1 set canclon12=0
+
+@IF EXIST "%devroot%\clon12\" IF %gitstate% GTR 0 (
 @echo Updating CLonD3D12 ICD source code...
 @cd %devroot%\clon12
 @git pull -v --progress --recurse-submodules origin
+@echo.
 )
+
+@IF %canclon12% EQU 1 set /p buildclon12=Build Microsoft OpenCL over D3D12 driver (y/n):
+@IF %canclon12% EQU 1 echo.
+@IF /I NOT "%buildclon12%"=="y" GOTO skipclon12
 @IF NOT EXIST "%devroot%\clon12\" (
 @echo Getting CLonD3D12 ICD source code...
 @git clone https://github.com/microsoft/OpenCLOn12 %devroot%\clon12
-)
 @echo.
+)
 
 @rem Ask for Ninja use if exists. Load it if opted for it.
 @set ninja=n
-@if NOT %ninjastate%==0 set /p ninja=Use Ninja build system instead of MsBuild (y/n); less storage device strain, faster and more efficient build:
-@if NOT %ninjastate%==0 echo.
+@rem if NOT %ninjastate%==0 set /p ninja=Use Ninja build system instead of MsBuild (y/n); less storage device strain, faster and more efficient build:
+@rem if NOT %ninjastate%==0 echo.
 @if /I "%ninja%"=="y" if %ninjastate%==1 set PATH=%devroot%\ninja\;%PATH%
 
 @rem Load cmake into build environment.
