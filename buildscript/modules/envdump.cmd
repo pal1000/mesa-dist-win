@@ -65,6 +65,12 @@
 @set vwsdk=%%c
 )
 @if %wsdkcount% EQU 1 echo Windows SDK %vwsdk%>>%devroot%\%projectname%\buildinfo\msvc.txt
+@set wdkcount=0
+@IF %toolchain%==msvc for /f tokens^=* %%a IN ('REG QUERY HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Installer /s /d /f "Windows Driver Kit" /e 2^>^&1 ^| find "HKEY_"') DO @for /f tokens^=* %%b IN ('REG QUERY %%a /s /v DisplayVersion 2^>^&1 ^| find "DisplayVersion"') DO @for /f tokens^=3 %%c IN ("%%b") DO @(
+@set /a wdkcount+=1
+@set vwdk=%%c
+)
+@if %wdkcount% EQU 1 echo Windows Driver Kit %vwdk%>>%devroot%\%projectname%\buildinfo\msvc.txt
 
 @rem Dump Python environment
 @IF %toolchain%==msvc echo Python %pythonver%>>%devroot%\%projectname%\buildinfo\msvc.txt
