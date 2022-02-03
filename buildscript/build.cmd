@@ -50,10 +50,11 @@
 @rem Get Meson build location
 @call %devroot%\%projectname%\buildscript\modules\locatemeson.cmd
 
-@rem If using MSVC check for remaining dependencies: cmake, ninja, winflexbison and pkg-config if applies.
+@rem If using MSVC check for remaining dependencies: cmake, ninja, winflexbison, nuget and pkg-config if applies.
 @IF %toolchain%==msvc call %devroot%\%projectname%\buildscript\modules\cmake.cmd
 @IF %toolchain%==msvc call %devroot%\%projectname%\buildscript\modules\ninja.cmd
 @IF %toolchain%==msvc call %devroot%\%projectname%\buildscript\modules\winflexbison.cmd
+@IF %toolchain%==msvc call %devroot%\%projectname%\buildscript\modules\nuget.cmd
 @IF %toolchain%==msvc call %devroot%\%projectname%\buildscript\modules\pkg-config.cmd
 
 @rem If using MSVC do CLonD3D12 build

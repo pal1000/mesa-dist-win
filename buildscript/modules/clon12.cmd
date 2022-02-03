@@ -5,6 +5,7 @@
 @set wdkcount=0
 @for /f tokens^=* %%a IN ('REG QUERY HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Installer /s /d /f "Windows Driver Kit" /e 2^>^&1 ^| find "HKEY_"') DO @set /a wdkcount+=1
 @if %wdkcount% NEQ 1 set canclon12=0
+@if %nugetstate%==0 set canclon12=0
 
 @IF EXIST "%devroot%\clon12\" IF %gitstate% GTR 0 (
 @echo Updating CLonD3D12 ICD source code...
@@ -30,6 +31,9 @@
 
 @rem Load cmake into build environment.
 @if %cmakestate%==1 set PATH=%devroot%\cmake\bin\;%PATH%
+
+@rem Load Nuget into build environment.
+@if %nugetstate%==1 set PATH=%devroot%\nuget\;%PATH%
 
 @rem Construct build configuration command.
 @set buildconf=cmake %devroot:\=/%/clon12 -G
@@ -64,6 +68,8 @@
 
 @rem Configure and execute the build with the configuration made above.
 @%buildconf%
+@nuget sources Add -Name Official -Source https://api.nuget.org/v3/index.json
+@nuget restore openclon12.sln
 @echo.
 @pause
 @echo.

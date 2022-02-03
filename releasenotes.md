@@ -5,7 +5,8 @@
 - Implement basic CLonD3D12 ICD build, see [issues tagged with OpenCL](https://github.com/pal1000/mesa-dist-win/issues?q=is%3Aopen+is%3Aissue+label%3AOpenCL);
 - CLonD3D12: Enforce dependency on WDK;
 - CLonD3D12: Update source code whenever possible;
-- CLonD3D12: Disable Ninja build as it doesn't appear to be supported.
+- CLonD3D12: Disable Ninja build as it doesn't appear to be supported;
+- CLonD3D12: Enforce dependency on nuget CLI and use it as necessary.
 ### Build environment
 - Fix Windows SDK version detection;
 - Add Windows Driver Kit version information.
