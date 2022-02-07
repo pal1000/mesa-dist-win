@@ -15,13 +15,13 @@ Python packages
 Mako       1.1.6
 MarkupSafe 2.0.1
 meson      0.61.1
-pip        22.0.2
-setuptools 60.6.0
+pip        22.0.3
+setuptools 60.7.1
 
 CMake 3.22.2
 Ninja 1.10.2
-LLVM 13.0.0
-SPIRV Tools 2022.1.0
+LLVM 13.0.1
+SPIRV Tools 2022.2.0
 Winflexbison package 2.5.25
 flex 2.6.4
 Bison 3.8.2

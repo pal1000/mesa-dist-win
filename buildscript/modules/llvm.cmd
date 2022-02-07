@@ -51,7 +51,7 @@
 @rem Getting LLVM monorepo if LLVM source is missing
 @if NOT EXIST %devroot%\llvm\cmake if NOT EXIST %devroot%\llvm-project (
 @echo Getting LLVM source code...
-@git clone https://github.com/llvm/llvm-project.git --branch=llvmorg-13.0.0 --depth=1 %devroot%\llvm-project
+@git clone https://github.com/llvm/llvm-project.git --branch=llvmorg-13.0.1 --depth=1 %devroot%\llvm-project
 @echo.
 )
 
