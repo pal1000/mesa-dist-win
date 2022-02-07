@@ -7,7 +7,8 @@
 - CLonD3D12: Update source code whenever possible;
 - CLonD3D12: Disable Ninja build as it doesn't appear to be supported;
 - CLonD3D12: Enforce dependency on nuget CLI and use it as necessary;
-- LLVM build: Pull v13.0.1 source by default.
+- LLVM build: Pull v13.0.1 source by default;
+- Add a disabled standalone SPIRV LLVM translator build.
 ### Build environment
 - Fix Windows SDK version detection;
 - Add Windows Driver Kit version information.
