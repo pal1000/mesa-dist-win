@@ -100,7 +100,7 @@ mingw-w64-i686-libtasn1 4.18.0-1
 mingw-w64-i686-libtre-git r128.6fb7206-2
 mingw-w64-i686-libwinpthread-git 9.0.0.6373.5be8fcd83-1
 mingw-w64-i686-libxml2 2.9.12-5
-mingw-w64-i686-llvm 13.0.0-5
+mingw-w64-i686-llvm 13.0.1-1
 mingw-w64-i686-meson 0.61.1-1
 mingw-w64-i686-mpc 1.2.1-1
 mingw-w64-i686-mpdecimal 2.5.1-1
@@ -151,7 +151,7 @@ mingw-w64-x86_64-libtasn1 4.18.0-1
 mingw-w64-x86_64-libtre-git r128.6fb7206-2
 mingw-w64-x86_64-libwinpthread-git 9.0.0.6373.5be8fcd83-1
 mingw-w64-x86_64-libxml2 2.9.12-5
-mingw-w64-x86_64-llvm 13.0.0-5
+mingw-w64-x86_64-llvm 13.0.1-1
 mingw-w64-x86_64-meson 0.61.1-1
 mingw-w64-x86_64-mpc 1.2.1-1
 mingw-w64-x86_64-mpdecimal 2.5.1-1

@@ -8,7 +8,8 @@
 - CLonD3D12: Disable Ninja build as it doesn't appear to be supported;
 - CLonD3D12: Enforce dependency on nuget CLI and use it as necessary;
 - LLVM build: Pull v13.0.1 source by default;
-- Add a disabled standalone SPIRV LLVM translator build.
+- Add a disabled standalone SPIRV LLVM translator build;
+- clover build: Enforce [x64 target arch](https://github.com/pal1000/mesa-dist-win/releases/download/21.3.2/mesa3d-21.3.2-clover-x86.txt) only.
 ### Build environment
 - Fix Windows SDK version detection;
 - Add Windows Driver Kit version information.
