@@ -1,6 +1,7 @@
 @setlocal
 @set canspvtools=1
-@IF NOT EXIST %devroot%\spirv-tools\external\spirv-headers IF %gitstate% EQU 0 set canspvtools=0
+@IF NOT EXIST "%devroot%\spirv-tools\" IF %gitstate% EQU 0 set canspvtools=0
+@IF EXIST %devroot%\spirv-tools\DEPS IF NOT EXIST %devroot%\spirv-tools\external\spirv-headers IF %gitstate% EQU 0 set canspvtools=0
 @if %cmakestate% EQU 0 set canspvtools=0
 @IF EXIST %devroot%\spirv-tools\external IF %gitstate% GTR 0 (
 @echo Updating SPIRV tools source code...

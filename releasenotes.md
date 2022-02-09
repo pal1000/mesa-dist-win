@@ -9,7 +9,8 @@
 - CLonD3D12: Enforce dependency on nuget CLI and use it as necessary;
 - LLVM build: Pull v13.0.1 source by default;
 - Add a disabled standalone SPIRV LLVM translator build;
-- clover build: Enforce [x64 target arch](https://github.com/pal1000/mesa-dist-win/releases/download/21.3.2/mesa3d-21.3.2-clover-x86.txt) only.
+- clover build: Enforce [x64 target arch](https://github.com/pal1000/mesa-dist-win/releases/download/21.3.2/mesa3d-21.3.2-clover-x86.txt) only;
+- SPIRV Tools build: Improve source code availability validation.
 ### Build environment
 - Fix Windows SDK version detection;
 - Add Windows Driver Kit version information.
