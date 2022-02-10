@@ -2,17 +2,17 @@
 - Meson build: Add checks to run_command() calls;
 - Enforce CRLF line endings to batch scripts using Git attributes;
 - Update SPIRV headers only when necessary to avoid becoming dirty;
-- Implement basic CLonD3D12 ICD build, see [issues tagged with OpenCL](https://github.com/pal1000/mesa-dist-win/issues?q=is%3Aopen+is%3Aissue+label%3AOpenCL);
+- Implement CLonD3D12 ICD build, see [issues tagged with OpenCL](https://github.com/pal1000/mesa-dist-win/issues?q=is%3Aopen+is%3Aissue+label%3AOpenCL);
 - CLonD3D12: Enforce dependency on WDK;
 - CLonD3D12: Update source code whenever possible;
 - CLonD3D12: Disable Ninja build as it doesn't appear to be supported;
 - CLonD3D12: Enforce dependency on nuget CLI and use it as necessary;
 - LLVM build: Pull v13.0.1 source by default;
-- Add a disabled standalone SPIRV LLVM translator build;
 - clover build: Enforce [x64 target arch](https://github.com/pal1000/mesa-dist-win/releases/download/21.3.2/mesa3d-21.3.2-clover-x86.txt) only;
 - SPIRV Tools build: Improve source code availability validation;
 - CLonD3D12 ICD build: Fix build type setup;
-- Obtain and update Nuget CLI with Powershell.
+- Obtain and update Nuget CLI with Powershell;
+- Perform SPIRV LLVM translator build out of tree.
 ### Build environment
 - Fix Windows SDK version detection;
 - Add Windows Driver Kit version information.

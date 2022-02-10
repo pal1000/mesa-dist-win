@@ -65,7 +65,7 @@
 
 @rem If using MSVC do LLVM build.
 @IF %toolchain%==msvc call %devroot%\%projectname%\buildscript\modules\llvm.cmd
-@rem IF %toolchain%==msvc call %devroot%\%projectname%\buildscript\modules\llvmspv.cmd
+@IF %toolchain%==msvc call %devroot%\%projectname%\buildscript\modules\llvmspv.cmd
 @IF %toolchain%==msvc call %devroot%\%projectname%\buildscript\modules\libclc.cmd
 
 @rem If using MSYS2 Mingw-w64 update MSYS2 packages

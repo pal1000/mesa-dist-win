@@ -93,8 +93,6 @@
 @if NOT EXIST %devroot%\llvm-project set canllvmspirv=0
 @IF NOT EXIST %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator IF %gitstate% EQU 0 set canllvmspirv=0
 @IF EXIST %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator\spirv-headers-tag.conf IF NOT EXIST %devroot%\llvm-project\llvm\projects\SPIRV-Headers IF %gitstate% EQU 0 set canllvmspirv=0
-@IF %canllvmspirv% EQU 1 IF /I NOT "%cleanbuild%"=="n" set /p buildllvmspirv=Build SPIRV LLVM Translator - required for OpenCL (y/n):
-@IF %canllvmspirv% EQU 1 IF /I NOT "%cleanbuild%"=="n" echo.
 @if /I "%buildllvmspirv%"=="y" IF NOT EXIST %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator (
 @echo Getting LLVM SPIRV translator source code...
 @git clone -b llvm_release_130 https://github.com/KhronosGroup/SPIRV-LLVM-Translator %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator
@@ -175,6 +173,10 @@
 @if /I "%ninja%"=="y" ninja -j %throttle% install
 @if /I "%ninja%"=="y" IF /I NOT "%buildclang%"=="y" IF %abi%==%hostabi% ninja -j %throttle% llvm-config
 @if /I "%ninja%"=="y" IF /I NOT "%buildclang%"=="y" IF %abi%==%hostabi% copy .\bin\llvm-config.exe %devroot%\llvm\build\%abi%\bin\
+@echo.
+
+@rem Avoid race condition in LLVM SPIRV translator sources checkout.
+@pause
 @echo.
 
 :skipllvm

@@ -318,7 +318,7 @@
 @IF %canopencl% EQU 0 set canclspv=0
 @IF NOT EXIST %devroot%\llvm\build\%abi%\lib\clang*.lib set canclspv=0
 @IF NOT EXIST %devroot%\llvm\build\%abi%\lib\lld*.lib set canclspv=0
-@IF NOT EXIST %devroot%\llvm\build\%abi%\lib\pkgconfig set canclspv=0
+@IF NOT EXIST %devroot%\llvm\build\spv-%abi%\lib\pkgconfig set canclspv=0
 @IF NOT EXIST %devroot%\spirv-tools\build\%abi%\lib\pkgconfig set canclspv=0
 
 @rem Clover requirements: basic support + Mesa 21.3, LLVM build with RTTI, gallium swrast, out of tree patches and x64 target only.
@@ -360,7 +360,7 @@
 
 @rem Apply PKG_CONFIG search PATH adjustments
 @IF %PKG_CONFIG_LIBCLC% EQU 1 set buildconf=%buildconf% -Dstatic-libclc=all --pkg-config-path=%devroot:\=/%/llvm/build/clc/share/pkgconfig
-@IF %PKG_CONFIG_SPV% EQU 1 set buildconf=%buildconf%;%devroot:\=/%/llvm/build/%abi%/lib/pkgconfig;%devroot:\=/%/spirv-tools/build/%abi%/lib/pkgconfig
+@IF %PKG_CONFIG_SPV% EQU 1 set buildconf=%buildconf%;%devroot:\=/%/llvm/build/spv-%abi%/lib/pkgconfig;%devroot:\=/%/spirv-tools/build/%abi%/lib/pkgconfig
 @set "PKG_CONFIG_LIBCLC="
 @set "PKG_CONFIG_SPV="
 
