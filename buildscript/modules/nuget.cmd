@@ -10,5 +10,5 @@
 @set updnuget=n
 @IF %nugetstate%==1 set /p updnuget=Update Nuget CLI tool (y/n):
 @IF %nugetstate%==1 echo.
-@if /I "%updnuget%"==y" powershell -NoLogo "Invoke-WebRequest -Uri 'https://dist.nuget.org/win-x86-commandline/latest/nuget.exe' -OutFile '%devroot%\nuget\nuget.exe'" 2>nul
+@if /I "%updnuget%"=="y" powershell -NoLogo "Invoke-WebRequest -Uri 'https://dist.nuget.org/win-x86-commandline/latest/nuget.exe' -OutFile '%devroot%\nuget\nuget.exe'" 2>nul
 @endlocal&set nugetstate=%nugetstate%
