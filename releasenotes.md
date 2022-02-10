@@ -10,7 +10,6 @@
 - LLVM build: Pull v13.0.1 source by default;
 - clover build: Enforce [x64 target arch](https://github.com/pal1000/mesa-dist-win/releases/download/21.3.2/mesa3d-21.3.2-clover-x86.txt) only;
 - SPIRV Tools build: Improve source code availability validation;
-- CLonD3D12 ICD build: Fix build type setup;
 - Obtain and update Nuget CLI with Powershell;
 - Perform SPIRV LLVM translator build out of tree.
 ### Build environment

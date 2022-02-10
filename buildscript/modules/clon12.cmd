@@ -42,7 +42,7 @@
 @if %abi%==x64 if /I NOT "%ninja%"=="y" set buildconf=%buildconf% -A x64
 @if /I NOT "%ninja%"=="y" IF /I %PROCESSOR_ARCHITECTURE%==AMD64 set buildconf=%buildconf% -Thost=x64
 @if /I "%ninja%"=="y" set buildconf=%buildconf%Ninja
-@set buildconf=%buildconf% -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=OFF -DCMAKE_INSTALL_PREFIX="%devroot:\=/%/clon12/build/%abi%"
+@set buildconf=%buildconf% -DBUILD_TESTS=OFF -DCMAKE_INSTALL_PREFIX="%devroot:\=/%/clon12/build/%abi%"
 
 @echo CLonD3D12 build configuration command^: %buildconf%
 @echo.
