@@ -1,3 +1,5 @@
+# 21.3.6
+- Updated Mesa3D to [21.3.6](https://docs.mesa3d.org/relnotes/21.3.6.html).
 ### Build script
 - Meson build: Add checks to run_command() calls;
 - Enforce CRLF line endings to batch scripts using Git attributes;

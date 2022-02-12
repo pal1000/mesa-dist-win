@@ -13,7 +13,7 @@ bash 5.1.008-1
 bash-completion 2.11-1
 bison 3.8.2-2
 brotli 1.0.9-2
-bsdtar 3.5.2-1
+bsdtar 3.5.3-1
 bzip2 1.0.8-3
 ca-certificates 20210119-3
 coreutils 8.32-2
@@ -54,7 +54,7 @@ libgdbm 1.22-1
 libgettextpo 0.21-1
 libgnutls 3.7.3-1
 libgpg-error 1.44-1
-libgpgme 1.16.0-1
+libgpgme 1.17.0-1
 libhogweed 3.7.3-1
 libiconv 1.16-2
 libidn2 2.3.2-1
