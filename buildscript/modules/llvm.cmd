@@ -1,22 +1,5 @@
 @setlocal
 
-@rem Updating LLVM SPIRV translator
-@IF EXIST %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator IF %gitstate% GTR 0 (
-@cd %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator
-@echo Updating LLVM SPIRV translator...
-@git pull -v --progress --recurse-submodules origin
-@echo.
-)
-@IF EXIST %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator\spirv-headers-tag.conf IF EXIST %devroot%\llvm-project\llvm\projects\SPIRV-Headers IF %gitstate% GTR 0 for /f tokens^=* %%a IN ('type %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator\spirv-headers-tag.conf') do @for /f tokens^=* %%b IN ('type %devroot%\llvm-project\llvm\projects\SPIRV-Headers\.git\HEAD') do @IF NOT %%a==%%b (
-@echo Updating SPIRV headers used by LLVM SPIRV translator...
-@cd %devroot%\llvm-project\llvm\projects\SPIRV-Headers
-@git checkout master
-@git pull -v --progress --recurse-submodules origin
-@git checkout %%a
-@echo.
-)
-@cd %devroot%
-
 @rem Check lf LLVM binaries are available
 @set llvmbinaries=0
 @IF EXIST %devroot%\llvm\build\%abi%\include IF EXIST %devroot%\llvm\build\%abi%\lib set llvmbinaries=1
@@ -67,51 +50,19 @@
 @IF %disableootpatch%==1 IF EXIST %msysloc%\usr\bin\patch.exe %msysloc%\usr\bin\bash --login -c "cd $(/usr/bin/cygpath -m ${msyspatchdir});patch -Np1 --no-backup-if-mismatch -R -r - -i $(/usr/bin/cygpath -m ${devroot})/${projectname}/patches/llvm-vs-16_7.patch"
 @IF %disableootpatch%==1 if EXIST %msysloc%\usr\bin\patch.exe echo.
 
-@rem Clean or incremental build
-@set cleanbuild=y
-@set /p cleanbuild=Perform clean build (y/n, y-default):
-@echo.
-
 @rem Ask for Ninja use if exists. Load it if opted for it.
 @set ninja=n
-@if NOT %ninjastate%==0 IF /I NOT "%cleanbuild%"=="n" set /p ninja=Use Ninja build system instead of MsBuild (y/n); less storage device strain, faster and more efficient build:
-@if NOT %ninjastate%==0 IF /I NOT "%cleanbuild%"=="n" echo.
-@if NOT %ninjastate%==0 IF /I "%cleanbuild%"=="n" IF EXIST %devroot%\llvm-project\build\buildsys-%abi%\build.ninja set ninja=y
-@if NOT %ninjastate%==0 IF /I "%cleanbuild%"=="n" IF EXIST %devroot%\llvm\build\buildsys-%abi%\build.ninja set ninja=y
+@if NOT %ninjastate%==0 set /p ninja=Use Ninja build system instead of MsBuild (y/n); less storage device strain, faster and more efficient build:
+@if NOT %ninjastate%==0 echo.
 @if /I "%ninja%"=="y" if %ninjastate%==1 set PATH=%devroot%\ninja\;%PATH%
 
 @rem AMDGPU target
-@IF /I NOT "%cleanbuild%"=="n" set /p amdgpu=Build AMDGPU target - required by RADV (y/n):
-@IF /I NOT "%cleanbuild%"=="n" echo.
+@set /p amdgpu=Build AMDGPU target - required by RADV (y/n):
+@echo.
 
 @rem Clang and LLD
-@if EXIST %devroot%\llvm-project IF /I NOT "%cleanbuild%"=="n" set /p buildclang=Build clang and LLD - required for OpenCL (y/n):
-@if EXIST %devroot%\llvm-project IF /I NOT "%cleanbuild%"=="n" echo.
-
-@rem SPIRV-LLVM-Translator
-@set canllvmspirv=1
-@if NOT EXIST %devroot%\llvm-project set canllvmspirv=0
-@IF NOT EXIST %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator IF %gitstate% EQU 0 set canllvmspirv=0
-@IF EXIST %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator\spirv-headers-tag.conf IF NOT EXIST %devroot%\llvm-project\llvm\projects\SPIRV-Headers IF %gitstate% EQU 0 set canllvmspirv=0
-@if /I "%buildllvmspirv%"=="y" IF NOT EXIST %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator (
-@echo Getting LLVM SPIRV translator source code...
-@git clone -b llvm_release_130 https://github.com/KhronosGroup/SPIRV-LLVM-Translator %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator
-@echo.
-)
-@if /I "%buildllvmspirv%"=="y" IF EXIST %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator\spirv-headers-tag.conf IF NOT EXIST %devroot%\llvm-project\llvm\projects\SPIRV-Headers (
-@echo Getting source code of SPIRV headers used by LLVM SPIRV translator...
-@git clone https://github.com/KhronosGroup/SPIRV-Headers %devroot%\llvm-project\llvm\projects\SPIRV-Headers
-@cd %devroot%\llvm-project\llvm\projects\SPIRV-Headers
-@for /f tokens^=* %%a IN ('type %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator\spirv-headers-tag.conf') do @git checkout %%a
-@echo.
-)
-@if /I "%buildllvmspirv%"=="y" IF NOT EXIST %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator\spirv-headers-tag.conf IF EXIST %devroot%\llvm-project\llvm\projects\SPIRV-Headers RD /S /Q %devroot%\llvm-project\llvm\projects\SPIRV-Headers
-@if /I NOT "%buildllvmspirv%"=="y" IF /I NOT "%cleanbuild%"=="n" IF EXIST %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator RD /S /Q %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator
-@if /I NOT "%buildllvmspirv%"=="y" IF /I NOT "%cleanbuild%"=="n" IF EXIST %devroot%\llvm-project\llvm\projects\SPIRV-Headers RD /S /Q %devroot%\llvm-project\llvm\projects\SPIRV-Headers
-
-@rem SPIRV Tools integration for LLVM SPIRV translator
-@IF %canllvmspirv% EQU 1 IF EXIST %devroot%\spirv-tools\build\%abi% IF EXIST %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator IF %pkgconfigstate% GTR 0 set PKG_CONFIG_PATH=%devroot:\=/%/spirv-tools/build/%abi%/lib/pkgconfig
-@IF %canllvmspirv% EQU 1 IF EXIST %devroot%\spirv-tools\build\%abi% IF EXIST %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator IF %pkgconfigstate% GTR 0 set PATH=%pkgconfigloc%\;%PATH%
+@if EXIST %devroot%\llvm-project set /p buildclang=Build clang and LLD - required for OpenCL (y/n):
+@if EXIST %devroot%\llvm-project echo.
 
 @rem Load cmake into build environment.
 @if %cmakestate%==1 set PATH=%devroot%\cmake\bin\;%PATH%
@@ -134,27 +85,26 @@
 @if EXIST %devroot%\llvm-project IF /I NOT "%buildclang%"=="y" set buildconf=%buildconf% -DLLVM_BUILD_TOOLS=OFF
 @if EXIST %devroot%\llvm-project IF /I NOT "%buildclang%"=="y" IF NOT %abi%==%hostabi% set buildconf=%buildconf% -DLLVM_INCLUDE_TOOLS=OFF
 @IF /I "%buildclang%"=="y" set buildconf=%buildconf% -DCLANG_BUILD_TOOLS=ON
-@if /I "%buildllvmspirv%"=="y" set buildconf=%buildconf% -DLLVM_SPIRV_INCLUDE_TESTS=OFF
 @set buildconf=%buildconf% -DLLVM_ENABLE_RTTI=ON -DLLVM_ENABLE_TERMINFO=OFF
 
-@IF /I NOT "%cleanbuild%"=="n" echo LLVM build configuration command^: %buildconf%
-@IF /I NOT "%cleanbuild%"=="n" echo.
+@echo LLVM build configuration command^: %buildconf%
+@echo.
 
-@rem Clean build
+@rem Always clean build
 @if NOT EXIST %devroot%\llvm-project cd %devroot%\llvm
 @if EXIST %devroot%\llvm-project cd %devroot%\llvm-project
 @pause
 @echo.
-@IF /I NOT "%cleanbuild%"=="n" echo Cleanning LLVM build. Please wait...
-@IF /I NOT "%cleanbuild%"=="n" echo.
-@IF /I NOT "%cleanbuild%"=="n" if EXIST %devroot%\llvm\build\%abi% RD /S /Q %devroot%\llvm\build\%abi%
-@IF /I NOT "%cleanbuild%"=="n" if EXIST build\buildsys-%abi% RD /S /Q build\buildsys-%abi%
+@echo Cleanning LLVM build. Please wait...
+@echo.
+@if EXIST %devroot%\llvm\build\%abi% RD /S /Q %devroot%\llvm\build\%abi%
+@if EXIST build\buildsys-%abi% RD /S /Q build\buildsys-%abi%
 @if NOT EXIST "build\" MD build
 @cd build
 @if NOT EXIST "buildsys-%abi%\" md buildsys-%abi%
 @cd buildsys-%abi%
-@IF /I NOT "%cleanbuild%"=="n" pause
-@IF /I NOT "%cleanbuild%"=="n" echo.
+@pause
+@echo.
 
 @rem Load Visual Studio environment. Can only be loaded in the background when using MsBuild.
 @if /I "%ninja%"=="y" call %vsenv% %vsabi%
@@ -163,10 +113,10 @@
 @if /I "%ninja%"=="y" echo.
 
 @rem Configure and execute the build with the configuration made above.
-@IF /I NOT "%cleanbuild%"=="n" %buildconf%
-@IF /I NOT "%cleanbuild%"=="n" echo.
-@IF /I NOT "%cleanbuild%"=="n" pause
-@IF /I NOT "%cleanbuild%"=="n" echo.
+@%buildconf%
+@echo.
+@pause
+@echo.
 @if /I NOT "%ninja%"=="y" cmake --build . -j %throttle% --config Release --target install
 @if /I NOT "%ninja%"=="y" IF /I NOT "%buildclang%"=="y" IF %abi%==%hostabi% cmake --build . -j %throttle% --config Release --target llvm-config
 @if /I NOT "%ninja%"=="y" IF /I NOT "%buildclang%"=="y" IF %abi%==%hostabi% copy .\Release\bin\llvm-config.exe %devroot%\llvm\build\%abi%\bin\
