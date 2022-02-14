@@ -3,6 +3,8 @@
 ### Build script
 - LLVM: Remove in-tree SPIRV translator build in favor of the out of tree one;
 - LLVM: Remove incremental build support as it's no longer relevant and it was terribly buggy in edge case scenarios anyway.
+### Distribution
+- Add CLonD3D12 driver.
 # 21.3.6
 - Updated Mesa3D to [21.3.6](https://docs.mesa3d.org/relnotes/21.3.6.html).
 ### Build script
