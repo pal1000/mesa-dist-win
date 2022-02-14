@@ -63,7 +63,7 @@
 @IF EXIST %devroot%\%projectname%\bin\%abi%\openclon12.dll IF NOT EXIST %devroot%\%projectname%\bin\%abi%\dxil.dll for /f tokens^=^* %%a in ('@call %devroot%\%projectname%\buildscript\modules\winsdk.cmd dxil') do @IF EXIST %%a copy %%a %devroot%\%projectname%\bin\%abi%
 @IF EXIST %devroot%\%projectname%\bin\%abi%\libvulkan_radeon.dll REN %devroot%\%projectname%\bin\%abi%\libvulkan_radeon.dll vulkan_radeon.dll
 @forfiles /p %devroot%\mesa\build\%toolchain%-%abi%\src /s /m *.exe /c "cmd /c IF EXIST @path copy @path %devroot%\%projectname%\bin\%abi%"
-@forfiles /p %devroot%\mesa\build\%toolchain%-%abi%\src /s /m lvp_icd.*.json /c "cmd /c IF EXIST @path copy @path %devroot%\%projectname%\bin\%abi%"
+@IF EXIST %devroot%\%projectname%\bin\%abi%\vulkan_lvp.dll forfiles /p %devroot%\mesa\build\%toolchain%-%abi%\src /s /m lvp_icd.*.json /c "cmd /c IF EXIST @path copy @path %devroot%\%projectname%\bin\%abi%"
 @IF EXIST %devroot%\%projectname%\bin\%abi%\vulkan_radeon.dll forfiles /p %devroot%\mesa\build\%toolchain%-%abi%\src /s /m radeon_icd.*.json /c "cmd /c copy @path %devroot%\%projectname%\bin\%abi%"
 
 @rem Patch Vulkan drivers JSONs
