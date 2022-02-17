@@ -1,3 +1,5 @@
+### Out of tree patches
+- Update patch fixing build with MinGW clang.
 # 21.3.6-2
 ### Build environment
 - Add Nuget Commandline tool version information.
