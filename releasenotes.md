@@ -2,6 +2,8 @@
 - Update patch fixing build with MinGW clang.
 ### Build script
 - Always build Mesa3D 21.3+ with shared glapi as static glapi is no longer supported.
+### Debug
+- MSYS2: Improve package cache cleanup.
 # 21.3.6-2
 ### Build environment
 - Add Nuget Commandline tool version information.
