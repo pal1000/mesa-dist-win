@@ -1,7 +1,8 @@
 ### Out of tree patches
 - Update patch fixing build with MinGW clang.
 ### Build script
-- Always build Mesa3D 21.3+ with shared glapi as static glapi is no longer supported.
+- Always build Mesa3D 21.3+ with shared glapi as static glapi is no longer supported;
+- Support Visual Studio Build Tools.
 ### Debug
 - MSYS2: Improve package cache cleanup.
 # 21.3.6-2
