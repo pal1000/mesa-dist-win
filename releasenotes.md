@@ -3,6 +3,10 @@
 - Support Visual Studio Build Tools.
 ### Debug
 - MSYS2: Improve package cache cleanup.
+### Deployment
+- Per application deployment: clover standalone support.
+### Documentation
+- Expand CLonD3D12 documentation.
 # 21.3.6-2
 ### Build environment
 - Add Nuget Commandline tool version information.

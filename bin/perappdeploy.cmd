@@ -100,7 +100,8 @@
 
 :opengles
 @IF EXIST "%mesaloc%\%mesadll%\libglapi.dll" set /p opengles=Do you need OpenGL ES support (y/n):
-@IF /I NOT "%opengles%"=="y" GOTO osmesa
+@IF EXIST "%mesaloc%\%mesadll%\libglapi.dll" echo.
+@IF /I NOT "%opengles%"=="y" GOTO clover
 @IF EXIST "%dir%\libglapi.dll" del "%dir%\libglapi.dll"
 @IF EXIST "%dir%\libEGL.dll" del "%dir%\libEGL.dll"
 @IF EXIST "%dir%\libgallium_wgl.dll" del "%dir%\libgallium_wgl.dll"
@@ -113,7 +114,22 @@
 @IF EXIST "%mesaloc%\%mesadll%\libGLESv2.dll" mklink "%dir%\libGLESv2.dll" "%mesaloc%\%mesadll%\libGLESv2.dll"
 @echo.
 
+:clover
+@IF EXIST "%mesaloc%\%mesadll%\OpenCL.dll" IF EXIST "%mesaloc%\%mesadll%\pipe_*.dll" set /p deploy_clover=Deploy Mesa3D OpenCL clover driver as the only OpenCL driver for this program hiding all other drivers registered system-wide (y/n):
+@IF EXIST "%mesaloc%\%mesadll%\OpenCL.dll" IF EXIST "%mesaloc%\%mesadll%\pipe_*.dll" echo.
+@if /I NOT "%deploy_clover%"=="y" GOTO osmesa
+@if NOT EXIST "%dir%\OpenCL.dll" if NOT EXIST "%dir%\pipe_swrast.dll" GOTO deployclover
+@echo Updating Mesa3D clover deployment...
+
+:deployclover
+@if EXIST "%dir%\OpenCL.dll" del "%dir%\OpenCL.dll"
+@if EXIST "%dir%\pipe_swrast.dll" del "%dir%\pipe_swrast.dll"
+@IF EXIST "%mesaloc%\%mesadll%\OpenCL.dll" mklink "%dir%\OpenCL.dll" "%mesaloc%\%mesadll%\OpenCL.dll"
+@IF EXIST "%mesaloc%\%mesadll%\pipe_swrast.dll" mklink "%dir%\pipe_swrast.dll" "%mesaloc%\%mesadll%\pipe_swrast.dll"
+@echo.
+
 :osmesa
+@IF NOT EXIST "%mesaloc%\%mesadll%\osmesa.dll" IF NOT EXIST "%mesaloc%\%mesadll%\osmesa-swrast\osmesa.dll" IF NOT EXIST "%mesaloc%\%mesadll%\osmesa-gallium\osmesa.dll" GOTO graw
 @set osmesatype=n
 @set /p osmesa=Do you need off-screen rendering (y/n):
 @echo.
@@ -136,6 +152,7 @@
 @if "%osmesatype%"=="2" echo.
 
 :graw
+@if NOT EXIST "%mesaloc%\%mesadll%\graw.dll" if NOT EXIST "%mesaloc%\%mesadll%\graw_null.dll" GOTO restart
 @set /p graw=Do you need graw library (y/n):
 @echo.
 @if /I NOT "%graw%"=="y" GOTO restart
