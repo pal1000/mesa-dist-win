@@ -1,3 +1,5 @@
+# 21.3.7
+- Updated Mesa3D to [21.3.7](https://docs.mesa3d.org/relnotes/21.3.7.html).
 ### Build script
 - Always build Mesa3D 21.3+ with shared glapi as static glapi is no longer supported;
 - Support Visual Studio Build Tools.
