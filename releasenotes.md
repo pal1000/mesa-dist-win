@@ -1,3 +1,5 @@
+### Deployment
+- System-wide deployment: Detect and warn about conflict with Microsoft OpenCL and OpenGL Compatibility Pack.
 # 21.3.7
 - Updated Mesa3D to [21.3.7](https://docs.mesa3d.org/relnotes/21.3.7.html).
 ### Build script

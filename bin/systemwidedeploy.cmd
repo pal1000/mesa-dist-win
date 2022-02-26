@@ -43,6 +43,11 @@
 @IF %mesainstalled%==1 echo 9. Remove system-wide deployments (uninstall)
 @IF "%1"=="" IF %mesainstalled%==1 echo 10. Exit
 @IF "%1"=="" IF %mesainstalled%==0 echo 8. Exit
+@echo.
+@set SystemDrive=
+@IF EXIST "%SystemDrive%\Program Files\WindowsApps\Microsoft.D3DMappingLayers*" echo WARNING: System-wide Mesa3D desktop OpenGL drivers deployment won't work on your computer until you uninstall Microsoft OpenCL and OpenGL Compatibility Pack Windows store application. You are free to perform the deployment right now, but it won't take effect until conflicting software is removed.
+@IF EXIST "%SystemDrive%\Program Files\WindowsApps\Microsoft.D3DMappingLayers*" echo.
+
 @IF "%1"=="" set /p deploychoice=Enter choice:
 @IF NOT "%1"=="" echo Enter choice:%1
 @IF NOT "%1"=="" set deploychoice=%1
