@@ -39,6 +39,7 @@
 @echo symbols, it is enclosed in quotes automatically so you don't need to add them
 @echo manually.
 @echo.
+@set dir=
 @set /p dir=Path to folder holding application executable:
 @echo.
 @IF %dir:~0,1%%dir:~-1%=="" set dir=%dir:~1,-1%
@@ -101,6 +102,7 @@
 :ask_for_app_abi
 @set mesadll=x86
 @if /I NOT %PROCESSOR_ARCHITECTURE%==AMD64 GOTO desktopgl
+@set ABI=
 @set /p ABI=This is a 64-bit application (y=yes):
 @if /I "%ABI%"=="y" set mesadll=x64
 @echo.
@@ -121,9 +123,8 @@
 @IF NOT "%dir%\%appexe%"=="%dir%\" echo dummy > "%dir%\%appexe%.local"
 @echo.
 @set swr=n
-@if NOT %mesadll%==x64 GOTO opengles
-@IF EXIST "%mesaloc%\%mesadll%\swr*.dll" set /p swr=Do you want swr driver - the new desktop OpenGL driver made by Intel (y/n):
-@IF EXIST "%mesaloc%\%mesadll%\swr*.dll" echo.
+@IF EXIST "%mesaloc%\%mesadll%\swr*.dll" if %mesadll%==x64 set /p swr=Do you want swr driver - the new desktop OpenGL driver made by Intel (y/n):
+@IF EXIST "%mesaloc%\%mesadll%\swr*.dll" if %mesadll%==x64 echo.
 @IF /I NOT "%swr%"=="y" GOTO opengles
 @IF %foundswr% EQU 1 echo Updating swr driver deployment...
 @IF EXIST "%mesaloc%\x64\swrAVX.dll" IF NOT EXIST "%dir%\swrAVX.dll" mklink "%dir%\swrAVX.dll" "%mesaloc%\x64\swrAVX.dll"
@@ -133,6 +134,7 @@
 @echo.
 
 :opengles
+@set opengles=
 @IF EXIST "%mesaloc%\%mesadll%\libGLESv2.dll" IF EXIST "%mesaloc%\%mesadll%\libglapi.dll" set /p opengles=Do you need OpenGL ES support (y/n):
 @IF EXIST "%mesaloc%\%mesadll%\libGLESv2.dll" IF EXIST "%mesaloc%\%mesadll%\libglapi.dll" echo.
 @IF /I NOT "%opengles%"=="y" GOTO clover
@@ -149,6 +151,7 @@
 @echo.
 
 :clover
+@set deploy_clover=
 @IF EXIST "%mesaloc%\%mesadll%\OpenCL.dll" IF EXIST "%mesaloc%\%mesadll%\pipe_*.dll" set /p deploy_clover=Deploy Mesa3D OpenCL clover driver as the only OpenCL driver for this program hiding all other drivers registered system-wide (y/n):
 @IF EXIST "%mesaloc%\%mesadll%\OpenCL.dll" IF EXIST "%mesaloc%\%mesadll%\pipe_*.dll" echo.
 @if /I NOT "%deploy_clover%"=="y" GOTO osmesa
@@ -159,8 +162,8 @@
 @echo.
 
 :osmesa
+@set osmesa=
 @IF NOT EXIST "%mesaloc%\%mesadll%\osmesa.dll" IF NOT EXIST "%mesaloc%\%mesadll%\osmesa-swrast\osmesa.dll" IF NOT EXIST "%mesaloc%\%mesadll%\osmesa-gallium\osmesa.dll" GOTO graw
-@set osmesatype=n
 @set /p osmesa=Do you need off-screen rendering (y/n):
 @echo.
 @if /I NOT "%osmesa%"=="y" GOTO graw
@@ -169,9 +172,12 @@
 @IF EXIST "%mesaloc%\%mesadll%\libglapi.dll" IF NOT EXIST "%dir%\libglapi.dll" mklink "%dir%\libglapi.dll" "%mesaloc%\%mesadll%\libglapi.dll"
 @echo.
 @IF EXIST "%mesaloc%\%mesadll%\osmesa.dll" GOTO graw
+@IF EXIST "%mesaloc%\%mesadll%\osmesa-gallium\osmesa.dll" IF NOT EXIST "%mesaloc%\%mesadll%\osmesa-swrast\osmesa.dll" set osmesatype=1
+@IF NOT EXIST "%mesaloc%\%mesadll%\osmesa-gallium\osmesa.dll" IF EXIST "%mesaloc%\%mesadll%\osmesa-swrast\osmesa.dll" set osmesatype=2
 @IF EXIST "%mesaloc%\%mesadll%\osmesa-gallium\osmesa.dll" IF EXIST "%mesaloc%\%mesadll%\osmesa-swrast\osmesa.dll" echo What version of osmesa off-screen rendering you want:
 @IF EXIST "%mesaloc%\%mesadll%\osmesa-gallium\osmesa.dll" IF EXIST "%mesaloc%\%mesadll%\osmesa-swrast\osmesa.dll" echo 1. Gallium based (faster, but lacks certain features)
 @IF EXIST "%mesaloc%\%mesadll%\osmesa-gallium\osmesa.dll" IF EXIST "%mesaloc%\%mesadll%\osmesa-swrast\osmesa.dll" echo 2. Swrast based (slower, but has unique OpenGL 2.1 features)
+@IF EXIST "%mesaloc%\%mesadll%\osmesa-gallium\osmesa.dll" IF EXIST "%mesaloc%\%mesadll%\osmesa-swrast\osmesa.dll" set osmesatype=
 @IF EXIST "%mesaloc%\%mesadll%\osmesa-gallium\osmesa.dll" IF EXIST "%mesaloc%\%mesadll%\osmesa-swrast\osmesa.dll" set /p osmesatype=Enter choice:
 @IF EXIST "%mesaloc%\%mesadll%\osmesa-gallium\osmesa.dll" IF EXIST "%mesaloc%\%mesadll%\osmesa-swrast\osmesa.dll" echo.
 @if "%osmesatype%"=="1" mklink "%dir%\osmesa.dll" "%mesaloc%\%mesadll%\osmesa-gallium\osmesa.dll"
@@ -180,6 +186,7 @@
 @if "%osmesatype%"=="2" echo.
 
 :graw
+@set graw=
 @if NOT EXIST "%mesaloc%\%mesadll%\graw.dll" if NOT EXIST "%mesaloc%\%mesadll%\graw_null.dll" GOTO restart
 @set /p graw=Do you need graw library (y/n):
 @echo.
@@ -191,5 +198,6 @@
 @echo.
 
 :restart
+@set rerun=
 @set /p rerun=More Mesa deployment? (y=yes):
 @if /I "%rerun%"=="y" GOTO deploy
