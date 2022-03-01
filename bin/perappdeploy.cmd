@@ -25,6 +25,7 @@
 @echo.
 @pause
 @set mesaloc=%~dp0
+@IF %mesaloc:~0,1%%mesaloc:~-1%=="" set mesaloc=%mesaloc:~1,-1%
 @IF "%mesaloc:~-1%"=="\" set mesaloc=%mesaloc:~0,-1%
 
 :deploy
@@ -39,22 +40,63 @@
 @echo manually.
 @echo.
 @set /p dir=Path to folder holding application executable:
-@IF NOT EXIST "%dir%" echo.
+@echo.
+@IF %dir:~0,1%%dir:~-1%=="" set dir=%dir:~1,-1%
+@IF "%dir:~-1%"=="\" set dir=%dir:~0,-1%
 @IF NOT EXIST "%dir%" echo Error: That location doesn't exist.
 @IF NOT EXIST "%dir%" pause
 @IF NOT EXIST "%dir%" GOTO deploy
+
+@echo Removing existing Mesa3D deployments for this folder...
+@echo Note 1: .local files are removed only if application executable name is specified later and desktop OpenGL deployment is rejected.
+@echo Note 2: DirectX IL, OpenGL ES stack, WGL loader and clover standalone are removed only if they are symbolic links.
+@echo.
+@set founddesktopgl=0
+@set foundclover=0
+@set foundswr=0
+@set foundosmesa=0
+@set foundgraw=0
+@for /f "tokens=*" %%a IN ('dir /A:L /B "%dir%" 2^>^&1') DO @(
+@IF /I "%%a"=="opengl32.dll" set founddesktopgl=1
+@IF /I "%%a"=="opengl32.dll" del "%dir%\%%a"
+@IF /I "%%a"=="dxil.dll" del "%dir%\%%a"
+@IF /I "%%a"=="libEGL.dll" del "%dir%\%%a"
+@IF /I "%%a"=="libGLESv1_CM.dll" del "%dir%\%%a"
+@IF /I "%%a"=="libGLESv2.dll" del "%dir%\%%a"
+@IF /I "%%a"=="OpenCL.dll" del "%dir%\%%a"
+)
+@IF EXIST "%dir%\libgallium_wgl.dll" del "%dir%\libgallium_wgl.dll"
+@IF EXIST "%dir%\libglapi.dll" del "%dir%\libglapi.dll"
+@if EXIST "%dir%\swrAVX.dll" set foundswr=1
+@if EXIST "%dir%\swrAVX.dll" del "%dir%\swrAVX.dll"
+@if EXIST "%dir%\swrAVX2.dll" set foundswr=1
+@if EXIST "%dir%\swrAVX2.dll" del "%dir%\swrAVX2.dll"
+@if EXIST "%dir%\swrSKX.dll" set foundswr=1
+@if EXIST "%dir%\swrSKX.dll" del "%dir%\swrSKX.dll"
+@if EXIST "%dir%\swrKNL.dll" set foundswr=1
+@if EXIST "%dir%\swrKNL.dll" del "%dir%\swrKNL.dll"
+@if EXIST "%dir%\pipe_swrast.dll" set foundclover=1
+@if EXIST "%dir%\pipe_swrast.dll" del "%dir%\pipe_swrast.dll"
+@IF EXIST "%dir%\osmesa.dll" set foundosmesa=1
+@IF EXIST "%dir%\osmesa.dll" del "%dir%\osmesa.dll"
+@if EXIST "%dir%\graw.dll" set foundgraw=1
+@if EXIST "%dir%\graw.dll" del "%dir%\graw.dll"
+@if EXIST "%dir%\graw_null.dll" set foundgraw=1
+@if EXIST "%dir%\graw_null.dll" del "%dir%\graw_null.dll"
+@echo Done.
 @echo.
 
 :askforappexe
+@set appexe=
 @set /p appexe=Application executable name with or without extension (optional, try leaving it blank first and only specify it if things don't work otherwise; it forces some programs to use Mesa3D which would otherwise bypass it):
 @echo.
-@IF "%appexe%"=="" IF EXIST "%dir%\*.exe.local" del "%dir%\*.exe.local"
 @IF "%appexe%"=="" GOTO ask_for_app_abi
 @IF /I NOT "%appexe:~-4%"==".exe" set appexe=%appexe%.exe
 @IF NOT EXIST "%dir%\%appexe%" echo Error: File not found.
 @IF NOT EXIST "%dir%\%appexe%" pause
 @IF NOT EXIST "%dir%\%appexe%" cls
 @IF NOT EXIST "%dir%\%appexe%" GOTO askforappexe
+@IF EXIST "%dir%\%appexe%.local" del "%dir%\%appexe%.local"
 
 :ask_for_app_abi
 @set mesadll=x86
@@ -64,19 +106,18 @@
 @echo.
 
 :desktopgl
-@set desktopgl=y
-@set /p desktopgl=Do you want Desktop OpenGL drivers (y/n, defaults to yes):
-@echo.
+@set desktopgl=n
+@IF EXIST "%mesaloc%\%mesadll%\opengl32.dll" set desktopgl=y
+@IF EXIST "%mesaloc%\%mesadll%\opengl32.dll" set /p desktopgl=Do you want Desktop OpenGL drivers (y/n, defaults to yes):
+@IF EXIST "%mesaloc%\%mesadll%\opengl32.dll" echo.
 @IF /I "%desktopgl%"=="n" GOTO opengles
-@IF EXIST "%dir%\opengl32.dll" echo Updating core desktop OpenGL deployment...
+@IF %founddesktopgl% EQU 1 echo Updating core desktop OpenGL deployment...
+@IF EXIST "%mesaloc%\%mesadll%\dxil.dll" IF EXIST "%dir%\dxil.dll" del "%dir%\dxil.dll"
 @IF EXIST "%dir%\opengl32.dll" del "%dir%\opengl32.dll"
-@IF EXIST "%dir%\libgallium_wgl.dll" del "%dir%\libgallium_wgl.dll"
-@IF EXIST "%dir%\libglapi.dll" del "%dir%\libglapi.dll"
-@IF EXIST "%dir%\dxil.dll" del "%dir%\dxil.dll"
 @mklink "%dir%\opengl32.dll" "%mesaloc%\%mesadll%\opengl32.dll"
-@mklink "%dir%\libglapi.dll" "%mesaloc%\%mesadll%\libglapi.dll"
-@IF EXIST "%mesaloc%\%mesadll%\libgallium_wgl.dll" mklink "%dir%\libgallium_wgl.dll" "%mesaloc%\%mesadll%\libgallium_wgl.dll"
-@IF EXIST "%mesaloc%\%mesadll%\dxil.dll" mklink "%dir%\dxil.dll" "%mesaloc%\%mesadll%\dxil.dll"
+@IF EXIST "%mesaloc%\%mesadll%\libglapi.dll" IF NOT EXIST "%dir%\libglapi.dll" mklink "%dir%\libglapi.dll" "%mesaloc%\%mesadll%\libglapi.dll"
+@IF EXIST "%mesaloc%\%mesadll%\libgallium_wgl.dll" IF NOT EXIST "%dir%\libgallium_wgl.dll" mklink "%dir%\libgallium_wgl.dll" "%mesaloc%\%mesadll%\libgallium_wgl.dll"
+@IF EXIST "%mesaloc%\%mesadll%\dxil.dll" IF NOT EXIST "%dir%\dxil.dll" mklink "%dir%\dxil.dll" "%mesaloc%\%mesadll%\dxil.dll"
 @IF NOT "%dir%\%appexe%"=="%dir%\" echo dummy > "%dir%\%appexe%.local"
 @echo.
 @set swr=n
@@ -84,48 +125,37 @@
 @IF EXIST "%mesaloc%\%mesadll%\swr*.dll" set /p swr=Do you want swr driver - the new desktop OpenGL driver made by Intel (y/n):
 @IF EXIST "%mesaloc%\%mesadll%\swr*.dll" echo.
 @IF /I NOT "%swr%"=="y" GOTO opengles
-@if NOT EXIST "%dir%\swrAVX.dll" if NOT EXIST "%dir%\swrAVX2.dll" if NOT EXIST "%dir%\swrSKX.dll" if NOT EXIST "%dir%\swrKNL.dll" GOTO deployswr
-@echo Updating swr driver deployment...
-
-:deployswr
-@if EXIST "%dir%\swrAVX.dll" del "%dir%\swrAVX.dll"
-@if EXIST "%dir%\swrAVX2.dll" del "%dir%\swrAVX2.dll"
-@if EXIST "%dir%\swrSKX.dll" del "%dir%\swrSKX.dll"
-@if EXIST "%dir%\swrKNL.dll" del "%dir%\swrKNL.dll"
-@mklink "%dir%\swrAVX.dll" "%mesaloc%\x64\swrAVX.dll"
-@mklink "%dir%\swrAVX2.dll" "%mesaloc%\x64\swrAVX2.dll"
-@IF EXIST "%mesaloc%\x64\swrSKX.dll" mklink "%dir%\swrSKX.dll" "%mesaloc%\x64\swrSKX.dll"
-@IF EXIST "%mesaloc%\x64\swrKNL.dll" mklink "%dir%\swrKNL.dll" "%mesaloc%\x64\swrKNL.dll"
+@IF %foundswr% EQU 1 echo Updating swr driver deployment...
+@IF EXIST "%mesaloc%\x64\swrAVX.dll" IF NOT EXIST "%dir%\swrAVX.dll" mklink "%dir%\swrAVX.dll" "%mesaloc%\x64\swrAVX.dll"
+@IF EXIST "%mesaloc%\x64\swrAVX2.dll" IF NOT EXIST "%dir%\swrAVX2.dll" mklink "%dir%\swrAVX2.dll" "%mesaloc%\x64\swrAVX2.dll"
+@IF EXIST "%mesaloc%\x64\swrSKX.dll" IF NOT EXIST "%dir%\swrSKX.dll" mklink "%dir%\swrSKX.dll" "%mesaloc%\x64\swrSKX.dll"
+@IF EXIST "%mesaloc%\x64\swrKNL.dll" IF NOT EXIST "%dir%\swrKNL.dll" mklink "%dir%\swrKNL.dll" "%mesaloc%\x64\swrKNL.dll"
 @echo.
 
 :opengles
-@IF EXIST "%mesaloc%\%mesadll%\libglapi.dll" set /p opengles=Do you need OpenGL ES support (y/n):
-@IF EXIST "%mesaloc%\%mesadll%\libglapi.dll" echo.
+@IF EXIST "%mesaloc%\%mesadll%\libGLESv2.dll" IF EXIST "%mesaloc%\%mesadll%\libglapi.dll" set /p opengles=Do you need OpenGL ES support (y/n):
+@IF EXIST "%mesaloc%\%mesadll%\libGLESv2.dll" IF EXIST "%mesaloc%\%mesadll%\libglapi.dll" echo.
 @IF /I NOT "%opengles%"=="y" GOTO clover
-@IF EXIST "%dir%\libglapi.dll" del "%dir%\libglapi.dll"
 @IF EXIST "%dir%\libEGL.dll" del "%dir%\libEGL.dll"
-@IF EXIST "%dir%\libgallium_wgl.dll" del "%dir%\libgallium_wgl.dll"
 @if EXIST "%dir%\libGLESv1_CM.dll" del "%dir%\libGLESv1_CM.dll"
 @if EXIST "%dir%\libGLESv2.dll" del "%dir%\libGLESv2.dll"
-@mklink "%dir%\libglapi.dll" "%mesaloc%\%mesadll%\libglapi.dll"
-@IF EXIST "%mesaloc%\%mesadll%\libEGL.dll" mklink "%dir%\libEGL.dll" "%mesaloc%\%mesadll%\libEGL.dll"
-@IF EXIST "%mesaloc%\%mesadll%\libgallium_wgl.dll" mklink "%dir%\libgallium_wgl.dll" "%mesaloc%\%mesadll%\libgallium_wgl.dll"
-@IF EXIST "%mesaloc%\%mesadll%\libGLESv1_CM.dll" mklink "%dir%\libGLESv1_CM.dll" "%mesaloc%\%mesadll%\libGLESv1_CM.dll"
-@IF EXIST "%mesaloc%\%mesadll%\libGLESv2.dll" mklink "%dir%\libGLESv2.dll" "%mesaloc%\%mesadll%\libGLESv2.dll"
+@IF NOT EXIST "%mesaloc%\%mesadll%\libgallium_wgl.dll" IF EXIST "%mesaloc%\%mesadll%\opengl32.dll" IF EXIST "%dir%\opengl32.dll" del "%dir%\opengl32.dll"
+@IF EXIST "%mesaloc%\%mesadll%\libglapi.dll" IF NOT EXIST "%dir%\libglapi.dll" mklink "%dir%\libglapi.dll" "%mesaloc%\%mesadll%\libglapi.dll"
+@IF EXIST "%mesaloc%\%mesadll%\libEGL.dll" IF NOT EXIST "%dir%\libEGL.dll" mklink "%dir%\libEGL.dll" "%mesaloc%\%mesadll%\libEGL.dll"
+@IF EXIST "%mesaloc%\%mesadll%\libgallium_wgl.dll" IF NOT EXIST "%dir%\libgallium_wgl.dll" mklink "%dir%\libgallium_wgl.dll" "%mesaloc%\%mesadll%\libgallium_wgl.dll"
+@IF NOT EXIST "%mesaloc%\%mesadll%\libgallium_wgl.dll" IF EXIST "%mesaloc%\%mesadll%\opengl32.dll" IF NOT EXIST "%dir%\opengl32.dll" mklink "%dir%\opengl32.dll" "%mesaloc%\%mesadll%\opengl32.dll"
+@IF EXIST "%mesaloc%\%mesadll%\libGLESv1_CM.dll" IF NOT EXIST "%dir%\libGLESv1_CM.dll" mklink "%dir%\libGLESv1_CM.dll" "%mesaloc%\%mesadll%\libGLESv1_CM.dll"
+@IF EXIST "%mesaloc%\%mesadll%\libGLESv2.dll" IF NOT EXIST "%dir%\libGLESv2.dll" mklink "%dir%\libGLESv2.dll" "%mesaloc%\%mesadll%\libGLESv2.dll"
 @echo.
 
 :clover
 @IF EXIST "%mesaloc%\%mesadll%\OpenCL.dll" IF EXIST "%mesaloc%\%mesadll%\pipe_*.dll" set /p deploy_clover=Deploy Mesa3D OpenCL clover driver as the only OpenCL driver for this program hiding all other drivers registered system-wide (y/n):
 @IF EXIST "%mesaloc%\%mesadll%\OpenCL.dll" IF EXIST "%mesaloc%\%mesadll%\pipe_*.dll" echo.
 @if /I NOT "%deploy_clover%"=="y" GOTO osmesa
-@if NOT EXIST "%dir%\OpenCL.dll" if NOT EXIST "%dir%\pipe_swrast.dll" GOTO deployclover
-@echo Updating Mesa3D clover deployment...
-
-:deployclover
-@if EXIST "%dir%\OpenCL.dll" del "%dir%\OpenCL.dll"
-@if EXIST "%dir%\pipe_swrast.dll" del "%dir%\pipe_swrast.dll"
-@IF EXIST "%mesaloc%\%mesadll%\OpenCL.dll" mklink "%dir%\OpenCL.dll" "%mesaloc%\%mesadll%\OpenCL.dll"
-@IF EXIST "%mesaloc%\%mesadll%\pipe_swrast.dll" mklink "%dir%\pipe_swrast.dll" "%mesaloc%\%mesadll%\pipe_swrast.dll"
+@IF %foundclover% EQU 1 echo Updating Mesa3D clover deployment...
+@IF EXIST "%dir%\OpenCL.dll" del "%dir%\OpenCL.dll"
+@IF EXIST "%mesaloc%\%mesadll%\OpenCL.dll" IF NOT EXIST "%dir%\OpenCL.dll" mklink "%dir%\OpenCL.dll" "%mesaloc%\%mesadll%\OpenCL.dll"
+@IF EXIST "%mesaloc%\%mesadll%\pipe_swrast.dll" IF NOT EXIST "%dir%\pipe_swrast.dll" mklink "%dir%\pipe_swrast.dll" "%mesaloc%\%mesadll%\pipe_swrast.dll"
 @echo.
 
 :osmesa
@@ -134,11 +164,9 @@
 @set /p osmesa=Do you need off-screen rendering (y/n):
 @echo.
 @if /I NOT "%osmesa%"=="y" GOTO graw
-@IF EXIST "%dir%\osmesa.dll" echo Updating Mesa3D off-screen rendering interface deployment...
-@IF EXIST "%dir%\osmesa.dll" del "%dir%\osmesa.dll"
-@IF EXIST "%dir%\libglapi.dll" del "%dir%\libglapi.dll"
+@IF %foundosmesa% EQU 1 echo Updating Mesa3D off-screen rendering interface deployment...
 @IF EXIST "%mesaloc%\%mesadll%\osmesa.dll" mklink "%dir%\osmesa.dll" "%mesaloc%\%mesadll%\osmesa.dll"
-@mklink "%dir%\libglapi.dll" "%mesaloc%\%mesadll%\libglapi.dll"
+@IF EXIST "%mesaloc%\%mesadll%\libglapi.dll" IF NOT EXIST "%dir%\libglapi.dll" mklink "%dir%\libglapi.dll" "%mesaloc%\%mesadll%\libglapi.dll"
 @echo.
 @IF EXIST "%mesaloc%\%mesadll%\osmesa.dll" GOTO graw
 @IF EXIST "%mesaloc%\%mesadll%\osmesa-gallium\osmesa.dll" IF EXIST "%mesaloc%\%mesadll%\osmesa-swrast\osmesa.dll" echo What version of osmesa off-screen rendering you want:
@@ -156,16 +184,10 @@
 @set /p graw=Do you need graw library (y/n):
 @echo.
 @if /I NOT "%graw%"=="y" GOTO restart
-@if NOT EXIST "%dir%\graw.dll" if NOT EXIST "%dir%\graw_null.dll" GOTO deploygraw
-@echo Updating Mesa3D graw framework deployment...
-
-:deploygraw
-@if EXIST "%dir%\graw.dll" del "%dir%\graw.dll"
-@if EXIST "%dir%\graw_null.dll" del "%dir%\graw_null.dll"
-@IF EXIST "%dir%\libglapi.dll" del "%dir%\libglapi.dll"
-@IF EXIST "%mesaloc%\%mesadll%\graw.dll" mklink "%dir%\graw.dll" "%mesaloc%\%mesadll%\graw.dll"
-@IF EXIST "%mesaloc%\%mesadll%\graw_null.dll" mklink "%dir%\graw_null.dll" "%mesaloc%\%mesadll%\graw_null.dll"
-@mklink "%dir%\libglapi.dll" "%mesaloc%\%mesadll%\libglapi.dll"
+@IF %foundgraw% EQU 1 echo Updating Mesa3D graw framework deployment...
+@IF EXIST "%mesaloc%\%mesadll%\graw.dll" if NOT EXIST "%dir%\graw.dll" mklink "%dir%\graw.dll" "%mesaloc%\%mesadll%\graw.dll"
+@IF EXIST "%mesaloc%\%mesadll%\graw_null.dll" if NOT EXIST "%dir%\graw_null.dll" mklink "%dir%\graw_null.dll" "%mesaloc%\%mesadll%\graw_null.dll"
+@IF EXIST "%mesaloc%\%mesadll%\libglapi.dll" if NOT EXIST "%dir%\libglapi.dll" mklink "%dir%\libglapi.dll" "%mesaloc%\%mesadll%\libglapi.dll"
 @echo.
 
 :restart

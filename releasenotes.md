@@ -1,5 +1,6 @@
 ### Deployment
-- System-wide deployment: Detect and warn about conflict with Microsoft OpenCL and OpenGL Compatibility Pack.
+- System-wide deployment: Detect and warn about conflict with Microsoft OpenCL and OpenGL Compatibility Pack;
+- Per application deployment: Wipe existing deployments in selected folder at startup.
 # 21.3.7
 - Updated Mesa3D to [21.3.7](https://docs.mesa3d.org/relnotes/21.3.7.html).
 ### Build script
