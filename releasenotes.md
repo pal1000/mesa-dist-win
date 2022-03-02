@@ -1,7 +1,8 @@
 ### Deployment
 - System-wide deployment: Detect and warn about conflict with Microsoft OpenCL and OpenGL Compatibility Pack;
 - Per application deployment: Wipe existing deployments in selected folder at startup;
-- Per application deployment: Improve reliability with subsequent deployments.
+- Per application deployment: Improve reliability with subsequent deployments;
+- Per application deployment: Support replacing Mesa3D bundled with QT framework - #31.
 # 21.3.7
 - Updated Mesa3D to [21.3.7](https://docs.mesa3d.org/relnotes/21.3.7.html).
 ### Build script

@@ -60,6 +60,8 @@
 @for /f "tokens=*" %%a IN ('dir /A:L /B "%dir%" 2^>^&1') DO @(
 @IF /I "%%a"=="opengl32.dll" set founddesktopgl=1
 @IF /I "%%a"=="opengl32.dll" del "%dir%\%%a"
+@IF /I "%%a"=="opengl32sw.dll" set founddesktopgl=1
+@IF /I "%%a"=="opengl32sw.dll" del "%dir%\%%a"
 @IF /I "%%a"=="dxil.dll" del "%dir%\%%a"
 @IF /I "%%a"=="libEGL.dll" del "%dir%\%%a"
 @IF /I "%%a"=="libGLESv1_CM.dll" del "%dir%\%%a"
@@ -116,7 +118,9 @@
 @IF %founddesktopgl% EQU 1 echo Updating core desktop OpenGL deployment...
 @IF EXIST "%mesaloc%\%mesadll%\dxil.dll" IF EXIST "%dir%\dxil.dll" del "%dir%\dxil.dll"
 @IF EXIST "%dir%\opengl32.dll" del "%dir%\opengl32.dll"
+@IF EXIST "%dir%\opengl32sw.dll" del "%dir%\opengl32sw.dll"
 @mklink "%dir%\opengl32.dll" "%mesaloc%\%mesadll%\opengl32.dll"
+@mklink "%dir%\opengl32sw.dll" "%mesaloc%\%mesadll%\opengl32.dll"
 @IF EXIST "%mesaloc%\%mesadll%\libglapi.dll" IF NOT EXIST "%dir%\libglapi.dll" mklink "%dir%\libglapi.dll" "%mesaloc%\%mesadll%\libglapi.dll"
 @IF EXIST "%mesaloc%\%mesadll%\libgallium_wgl.dll" IF NOT EXIST "%dir%\libgallium_wgl.dll" mklink "%dir%\libgallium_wgl.dll" "%mesaloc%\%mesadll%\libgallium_wgl.dll"
 @IF EXIST "%mesaloc%\%mesadll%\dxil.dll" IF NOT EXIST "%dir%\dxil.dll" mklink "%dir%\dxil.dll" "%mesaloc%\%mesadll%\dxil.dll"
@@ -142,10 +146,12 @@
 @if EXIST "%dir%\libGLESv1_CM.dll" del "%dir%\libGLESv1_CM.dll"
 @if EXIST "%dir%\libGLESv2.dll" del "%dir%\libGLESv2.dll"
 @IF NOT EXIST "%mesaloc%\%mesadll%\libgallium_wgl.dll" IF EXIST "%mesaloc%\%mesadll%\opengl32.dll" IF EXIST "%dir%\opengl32.dll" del "%dir%\opengl32.dll"
+@IF NOT EXIST "%mesaloc%\%mesadll%\libgallium_wgl.dll" IF EXIST "%mesaloc%\%mesadll%\opengl32.dll" IF EXIST "%dir%\opengl32sw.dll" del "%dir%\opengl32sw.dll"
 @IF EXIST "%mesaloc%\%mesadll%\libglapi.dll" IF NOT EXIST "%dir%\libglapi.dll" mklink "%dir%\libglapi.dll" "%mesaloc%\%mesadll%\libglapi.dll"
 @IF EXIST "%mesaloc%\%mesadll%\libEGL.dll" IF NOT EXIST "%dir%\libEGL.dll" mklink "%dir%\libEGL.dll" "%mesaloc%\%mesadll%\libEGL.dll"
 @IF EXIST "%mesaloc%\%mesadll%\libgallium_wgl.dll" IF NOT EXIST "%dir%\libgallium_wgl.dll" mklink "%dir%\libgallium_wgl.dll" "%mesaloc%\%mesadll%\libgallium_wgl.dll"
 @IF NOT EXIST "%mesaloc%\%mesadll%\libgallium_wgl.dll" IF EXIST "%mesaloc%\%mesadll%\opengl32.dll" IF NOT EXIST "%dir%\opengl32.dll" mklink "%dir%\opengl32.dll" "%mesaloc%\%mesadll%\opengl32.dll"
+@IF NOT EXIST "%mesaloc%\%mesadll%\libgallium_wgl.dll" IF EXIST "%mesaloc%\%mesadll%\opengl32.dll" IF NOT EXIST "%dir%\opengl32sw.dll" mklink "%dir%\opengl32sw.dll" "%mesaloc%\%mesadll%\opengl32.dll"
 @IF EXIST "%mesaloc%\%mesadll%\libGLESv1_CM.dll" IF NOT EXIST "%dir%\libGLESv1_CM.dll" mklink "%dir%\libGLESv1_CM.dll" "%mesaloc%\%mesadll%\libGLESv1_CM.dll"
 @IF EXIST "%mesaloc%\%mesadll%\libGLESv2.dll" IF NOT EXIST "%dir%\libGLESv2.dll" mklink "%dir%\libGLESv2.dll" "%mesaloc%\%mesadll%\libGLESv2.dll"
 @echo.
