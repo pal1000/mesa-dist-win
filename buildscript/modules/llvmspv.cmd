@@ -31,7 +31,7 @@
 @echo.
 )
 @IF EXIST %devroot%\SPIRV-LLVM-Translator\spirv-headers-tag.conf IF NOT EXIST "%devroot%\SPIRV-LLVM-Translator\projects\" MD %devroot%\SPIRV-LLVM-Translator\projects
-@IF EXIST %devroot%\SPIRV-LLVM-Translator\spirv-headers-tag.conf IF NOT EXIST "%devroot%\SPIRV-LLVM-Translator\projects\\SPIRV-Headers\" (
+@IF EXIST %devroot%\SPIRV-LLVM-Translator\spirv-headers-tag.conf IF NOT EXIST "%devroot%\SPIRV-LLVM-Translator\projects\SPIRV-Headers\" (
 @echo Getting source code of SPIRV headers used by LLVM SPIRV translator...
 @git clone https://github.com/KhronosGroup/SPIRV-Headers %devroot%\SPIRV-LLVM-Translator\projects\SPIRV-Headers
 @cd %devroot%\SPIRV-LLVM-Translator\projects\SPIRV-Headers
