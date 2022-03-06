@@ -4,7 +4,8 @@
 - Per application deployment: Improve reliability with subsequent deployments;
 - Per application deployment: Support replacing Mesa3D bundled with QT framework - #31;
 - Per application deployment: Warn about potential overwrite of software own files for which Mesa3D is deployed - #31;
-- System wide deployment: Improve menu options listing reliability.
+- System wide deployment: Improve menu options listing reliability;
+- System wide deployment: Reuse code for deployment termination.
 # 21.3.7
 - Updated Mesa3D to [21.3.7](https://docs.mesa3d.org/relnotes/21.3.7.html).
 ### Build script

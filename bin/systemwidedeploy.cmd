@@ -90,19 +90,13 @@
 @IF "%1"=="" if "%deploychoice%"=="10" IF %mesainstalled%==1 GOTO bye
 @IF "%1"=="" if "%deploychoice%"=="8" IF %mesainstalled%==0 GOTO bye
 @echo Invaild entry
-@IF "%1"=="" pause
-@IF "%1"=="" GOTO deploy
-@IF NOT "%1"=="" GOTO exit
+@GOTO enddeploy
 
 :desktopgl
 @if "%deploychoice%"=="2" if /I NOT %PROCESSOR_ARCHITECTURE%==AMD64 echo Invalid choice. swr driver is only supported on X64/AMD64 systems.
-@if "%deploychoice%"=="2" if /I NOT %PROCESSOR_ARCHITECTURE%==AMD64 IF "%1"=="" pause
-@if "%deploychoice%"=="2" if /I NOT %PROCESSOR_ARCHITECTURE%==AMD64 IF "%1"=="" GOTO deploy
-@if "%deploychoice%"=="2" if /I NOT %PROCESSOR_ARCHITECTURE%==AMD64 IF NOT "%1"=="" GOTO exit
+@if "%deploychoice%"=="2" if /I NOT %PROCESSOR_ARCHITECTURE%==AMD64 GOTO enddeploy
 @if "%deploychoice%"=="2" if /I %PROCESSOR_ARCHITECTURE%==AMD64 IF NOT EXIST "%mesaloc%\x64\swr*.dll" echo Invalid choice. swr driver is not included in this Mesa3D release package.
-@if "%deploychoice%"=="2" if /I %PROCESSOR_ARCHITECTURE%==AMD64 IF NOT EXIST "%mesaloc%\x64\swr*.dll" IF "%1"=="" pause
-@if "%deploychoice%"=="2" if /I %PROCESSOR_ARCHITECTURE%==AMD64 IF NOT EXIST "%mesaloc%\x64\swr*.dll" IF "%1"=="" GOTO deploy
-@if "%deploychoice%"=="2" if /I %PROCESSOR_ARCHITECTURE%==AMD64 IF NOT EXIST "%mesaloc%\x64\swr*.dll" IF NOT "%1"=="" GOTO exit
+@if "%deploychoice%"=="2" if /I %PROCESSOR_ARCHITECTURE%==AMD64 IF NOT EXIST "%mesaloc%\x64\swr*.dll" GOTO enddeploy
 @IF /I %PROCESSOR_ARCHITECTURE%==X86 IF NOT EXIST "%mesaloc%\x86\libgallium_wgl.dll" copy "%mesaloc%\x86\opengl32.dll" "%windir%\System32\mesadrv.dll"
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF NOT EXIST "%mesaloc%\x86\libgallium_wgl.dll" copy "%mesaloc%\x86\opengl32.dll" "%windir%\SysWOW64\mesadrv.dll"
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF NOT EXIST "%mesaloc%\x64\libgallium_wgl.dll" copy "%mesaloc%\x64\opengl32.dll" "%windir%\System32\mesadrv.dll"
@@ -126,31 +120,21 @@
 @REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\OpenGLDrivers\MSOGL" /v "Version" /t REG_DWORD /d "2" /f
 @echo.
 @echo Desktop OpenGL drivers deploy complete.
-@IF "%1"=="" pause
-@IF "%1"=="" GOTO deploy
-@IF NOT "%1"=="" GOTO exit
+@GOTO enddeploy
 
 :instdxil
 @IF NOT EXIST "%mesaloc%\x64\dxil.dll" IF NOT EXIST "%mesaloc%\x86\dxil.dll" echo DirectX IL for redistribution is not available in this release package.
-@IF NOT EXIST "%mesaloc%\x64\dxil.dll" IF NOT EXIST "%mesaloc%\x86\dxil.dll" echo.
-@IF NOT EXIST "%mesaloc%\x64\dxil.dll" IF NOT EXIST "%mesaloc%\x86\dxil.dll" IF "%1"=="" pause
-@IF NOT EXIST "%mesaloc%\x64\dxil.dll" IF NOT EXIST "%mesaloc%\x86\dxil.dll" IF "%1"=="" GOTO deploy
-@IF NOT EXIST "%mesaloc%\x64\dxil.dll" IF NOT EXIST "%mesaloc%\x86\dxil.dll" IF NOT "%1"=="" GOTO exit
+@IF NOT EXIST "%mesaloc%\x64\dxil.dll" IF NOT EXIST "%mesaloc%\x86\dxil.dll" GOTO enddeploy
 @IF /I %PROCESSOR_ARCHITECTURE%==X86 IF EXIST "%mesaloc%\x86\dxil.dll" copy "%mesaloc%\x86\dxil.dll" "%windir%\System32"
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%mesaloc%\x86\dxil.dll" copy "%mesaloc%\x86\dxil.dll" "%windir%\SysWOW64"
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%mesaloc%\x64\dxil.dll" copy "%mesaloc%\x64\dxil.dll" "%windir%\System32"
 @echo.
 @echo Install DirectX IL for redistribution complete.
-@IF "%1"=="" pause
-@IF "%1"=="" GOTO deploy
-@IF NOT "%1"=="" GOTO exit
+@GOTO enddeploy
 
 :instglon12
 @IF NOT EXIST "%mesaloc%\x64\openglon12.dll" IF NOT EXIST "%mesaloc%\x86\openglon12.dll" echo Microsoft OpenGL over D3D12 driver is not available in this release package.
-@IF NOT EXIST "%mesaloc%\x64\openglon12.dll" IF NOT EXIST "%mesaloc%\x86\openglon12.dll" echo.
-@IF NOT EXIST "%mesaloc%\x64\openglon12.dll" IF NOT EXIST "%mesaloc%\x86\openglon12.dll" IF "%1"=="" pause
-@IF NOT EXIST "%mesaloc%\x64\openglon12.dll" IF NOT EXIST "%mesaloc%\x86\openglon12.dll" IF "%1"=="" GOTO deploy
-@IF NOT EXIST "%mesaloc%\x64\openglon12.dll" IF NOT EXIST "%mesaloc%\x86\openglon12.dll" IF NOT "%1"=="" GOTO exit
+@IF NOT EXIST "%mesaloc%\x64\openglon12.dll" IF NOT EXIST "%mesaloc%\x86\openglon12.dll" GOTO enddeploy
 @IF /I %PROCESSOR_ARCHITECTURE%==X86 copy "%mesaloc%\x86\openglon12.dll" "%windir%\System32"
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 copy "%mesaloc%\x86\openglon12.dll" "%windir%\SysWOW64"
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 copy "%mesaloc%\x64\openglon12.dll" "%windir%\System32"
@@ -170,10 +154,7 @@
 @REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\OpenGLDrivers\MSOGL" /v "Version" /t REG_DWORD /d "2" /f
 @echo.
 @echo Microsoft desktop OpenGL over D3D12 driver deploy complete.
-@IF "%1"=="" pause
-@IF "%1"=="" GOTO deploy
-@IF NOT "%1"=="" GOTO exit
-
+@GOTO enddeploy
 
 :osmesa
 @if "%deploychoice%"=="5" IF /I %PROCESSOR_ARCHITECTURE%==X86 IF EXIST "%mesaloc%\x86\osmesa.dll" copy "%mesaloc%\x86\osmesa.dll" "%windir%\System32"
@@ -181,9 +162,7 @@
 @if "%deploychoice%"=="5" IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%mesaloc%\x64\osmesa.dll" copy "%mesaloc%\x64\osmesa.dll" "%windir%\System32"
 @if "%deploychoice%"=="5" IF EXIST %mesaloc%\x86\osmesa.dll IF EXIST %mesaloc%\x64\osmesa.dll GOTO doneosmesa
 @if "%deploychoice%"=="6" IF EXIST %mesaloc%\x86\osmesa.dll IF EXIST %mesaloc%\x64\osmesa.dll echo osmesa swrast is not available on its own.
-@if "%deploychoice%"=="6" IF EXIST %mesaloc%\x86\osmesa.dll IF EXIST %mesaloc%\x64\osmesa.dll IF "%1"=="" pause
-@if "%deploychoice%"=="6" IF EXIST %mesaloc%\x86\osmesa.dll IF EXIST %mesaloc%\x64\osmesa.dll IF "%1"=="" GOTO deploy
-@if "%deploychoice%"=="6" IF EXIST %mesaloc%\x86\osmesa.dll IF EXIST %mesaloc%\x64\osmesa.dll IF NOT "%1"=="" GOTO exit
+@if "%deploychoice%"=="6" IF EXIST %mesaloc%\x86\osmesa.dll IF EXIST %mesaloc%\x64\osmesa.dll GOTO enddeploy
 @IF /I %PROCESSOR_ARCHITECTURE%==X86 IF EXIST "%mesaloc%\x86\libglapi.dll" copy "%mesaloc%\x86\libglapi.dll" "%windir%\System32"
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%mesaloc%\x86\libglapi.dll" copy "%mesaloc%\x86\libglapi.dll" "%windir%\SysWOW64"
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%mesaloc%\x64\libglapi.dll" copy "%mesaloc%\x64\libglapi.dll" "%windir%\System32"
@@ -196,9 +175,7 @@
 :doneosmesa
 @echo.
 @echo Off-screen render driver deploy complete.
-@IF "%1"=="" pause
-@IF "%1"=="" GOTO deploy
-@IF NOT "%1"=="" GOTO exit
+@GOTO enddeploy
 
 :graw
 @IF /I %PROCESSOR_ARCHITECTURE%==X86 copy "%mesaloc%\x86\graw.dll" "%windir%\System32"
@@ -212,16 +189,12 @@
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%mesaloc%\x64\libglapi.dll" copy "%mesaloc%\x64\libglapi.dll" "%windir%\System32"
 @echo.
 @echo graw framework deploy complete.
-@IF "%1"=="" pause
-@IF "%1"=="" GOTO deploy
-@IF NOT "%1"=="" GOTO exit
+@GOTO enddeploy
 
 :update
 @IF %mesainstalled%==0 echo.
 @IF %mesainstalled%==0 echo Error: No Mesa3D drivers installed.
-@IF %mesainstalled%==0 IF "%1"=="" pause
-@IF %mesainstalled%==0 IF "%1"=="" GOTO deploy
-@IF %mesainstalled%==0 IF NOT "%1"=="" GOTO exit
+@IF %mesainstalled%==0 GOTO enddeploy
 
 @IF /I %PROCESSOR_ARCHITECTURE%==X86 IF EXIST "%windir%\System32\mesadrv.dll" IF NOT EXIST "%mesaloc%\x86\libgallium_wgl.dll" copy "%mesaloc%\x86\opengl32.dll" "%windir%\System32\mesadrv.dll"
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%windir%\SysWOW64\mesadrv.dll" IF NOT EXIST "%mesaloc%\x86\libgallium_wgl.dll" copy "%mesaloc%\x86\opengl32.dll" "%windir%\SysWOW64\mesadrv.dll"
@@ -270,9 +243,7 @@
 :doneupdate
 @echo.
 @echo Update complete.
-@IF "%1"=="" pause
-@IF "%1"=="" GOTO deploy
-@IF NOT "%1"=="" GOTO exit
+@GOTO enddeploy
 
 :uninstall
 @IF "%1"=="" set keepdxil=y
@@ -304,6 +275,8 @@
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%windir%\SysWOW64\graw_null.dll" del "%windir%\SysWOW64\graw_null.dll"
 @echo.
 @echo Uninstall complete.
+
+:enddeploy
 @IF "%1"=="" pause
 @IF "%1"=="" GOTO deploy
 @IF NOT "%1"=="" GOTO exit
