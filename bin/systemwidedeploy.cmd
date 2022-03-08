@@ -26,51 +26,67 @@
 
 :deploy
 @IF "%*"=="" cls
-@set mesainstalled=1
-@IF NOT EXIST "%windir%\System32\openglon12.dll" IF NOT EXIST "%windir%\System32\mesadrv.dll" IF NOT EXIST "%windir%\System32\graw.dll" IF NOT EXIST "%windir%\System32\osmesa.dll" set mesainstalled=0
 @echo -------------------------------------
 @echo Mesa3D system-wide deployment utility
 @echo -------------------------------------
 @echo Please make a deployment choice:
 
 :option_1
-@IF NOT EXIST "%mesaloc%\x64\opengl32.dll" IF NOT EXIST "%mesaloc%\x86\opengl32.dll" IF NOT EXIST "%mesaloc%\x64\libgallium_wgl.dll" IF NOT EXIST "%mesaloc%\x86\libgallium_wgl.dll" GOTO option_3
+@set option1=0
+@IF NOT EXIST "%mesaloc%\x64\opengl32.dll" IF NOT EXIST "%mesaloc%\x86\opengl32.dll" IF NOT EXIST "%mesaloc%\x64\libgallium_wgl.dll" IF NOT EXIST "%mesaloc%\x86\libgallium_wgl.dll" GOTO option_2
 @echo 1. Core desktop OpenGL drivers
+@set option1=1
 
 :option_2
-@IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%mesaloc%\x64\swr*.dll" echo 2. Intel swr (depends on Core desktop OpenGL drivers to work)
+@set option2=0
+@IF %option1% EQU 1 IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%mesaloc%\x64\swr*.dll" echo 2. Intel swr (depends on Core desktop OpenGL drivers to work)
+@IF %option1% EQU 1 IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%mesaloc%\x64\swr*.dll" set option2=1
 
 :option_3
+@set option3=0
 @IF NOT EXIST "%mesaloc%\x86\dxil.dll" IF NOT EXIST "%mesaloc%\x64\dxil.dll" GOTO option_4
 @echo 3. Install DirectX IL for redistribution only
+@set option3=1
 
 :option_4
-@IF EXIST "%mesaloc%\x86\dxil.dll" IF EXIST "%mesaloc%\x86\openglon12.dll" echo 4. Microsoft OpenGL over D3D12 driver only (replaces Mesa core desktop OpenGL drivers)
-@IF EXIST "%mesaloc%\x86\dxil.dll" IF EXIST "%mesaloc%\x86\openglon12.dll" GOTO option_5
-@IF EXIST "%mesaloc%\x64\dxil.dll" IF EXIST "%mesaloc%\x64\openglon12.dll" echo 4. Microsoft OpenGL over D3D12 driver only (replaces Mesa core desktop OpenGL drivers)
+@set option4=0
+@IF EXIST "%mesaloc%\x86\dxil.dll" IF EXIST "%mesaloc%\x86\openglon12.dll" set option4=1
+@IF EXIST "%mesaloc%\x64\dxil.dll" IF EXIST "%mesaloc%\x64\openglon12.dll" set option4=1
+@IF %option4% EQU 0 GOTO option_5
+@echo 4. Microsoft OpenGL over D3D12 driver only (replaces Mesa core desktop OpenGL drivers)
 
 :option_5
-@IF NOT EXIST "%mesaloc%\x86\osmesa.dll" IF NOT EXIST "%mesaloc%\x64\osmesa.dll" GOTO option_6
+@set option5=0
+@IF NOT EXIST "%mesaloc%\x86\osmesa.dll" IF NOT EXIST "%mesaloc%\x64\osmesa.dll" IF NOT EXIST "%mesaloc%\x86\osmesa-gallium\osmesa.dll" IF NOT EXIST "%mesaloc%\x64\osmesa-gallium\osmesa.dll" GOTO option_6
 @echo 5. Mesa3D off-screen render driver gallium version (osmesa gallium)
+@set option5=1
 
 :option_6
-@IF NOT EXIST "%mesaloc%\x86\osmesa-swrast\osmesa.dll" IF NOT EXIST "%mesaloc%\x86\osmesa-gallium\osmesa.dll" IF NOT EXIST "%mesaloc%\x64\osmesa-swrast\osmesa.dll" IF NOT EXIST "%mesaloc%\x64\osmesa-gallium\osmesa.dll" GOTO option_7
+@set option6=0
+@IF NOT EXIST "%mesaloc%\x86\osmesa-swrast\osmesa.dll" IF NOT EXIST "%mesaloc%\x64\osmesa-swrast\osmesa.dll" GOTO option_7
 @echo 6. Mesa3D off-screen render driver classic version (osmesa swrast)
+@set option6=1
 
 :option_7
+@set option7=0
 @IF NOT EXIST "%mesaloc%\x86\graw.dll" IF NOT EXIST "%mesaloc%\x64\graw.dll" IF NOT EXIST "%mesaloc%\x86\graw_null.dll" IF NOT EXIST "%mesaloc%\x64\graw_null.dll" GOTO option_8
 @echo 7. Mesa3D graw test framework
+@set option7=1
 
 :option_8
-@IF %mesainstalled%==1 echo 8. Update system-wide deployment
-@IF "%1"=="" IF %mesainstalled%==0 echo 8. Exit
+@set mesainstalled=2
+@IF NOT EXIST "%windir%\System32\openglon12.dll" IF NOT EXIST "%windir%\System32\mesadrv.dll" IF NOT EXIST "%windir%\System32\graw.dll" IF NOT EXIST "%windir%\System32\graw_null.dll" IF NOT EXIST "%windir%\System32\osmesa.dll" set /a mesainstalled-=1
+@IF NOT EXIST "%windir%\SysWOW64\openglon12.dll" IF NOT EXIST "%windir%\SysWOW64\mesadrv.dll" IF NOT EXIST "%windir%\SysWOW64\graw.dll" IF NOT EXIST "%windir%\SysWOW64\graw_null.dll" IF NOT EXIST "%windir%\SysWOW64\osmesa.dll" set /a mesainstalled-=1
+@IF %mesainstalled% GTR 0 echo 8. Update system-wide deployment
+@IF "%1"=="" IF %mesainstalled% EQU 0 echo 8. Exit
 
 :option_9
-@IF %mesainstalled%==1 echo 9. Remove system-wide deployments (uninstall)
+@IF %mesainstalled% GTR 0 echo 9. Remove system-wide deployments (uninstall)
 
 :option_10
-@IF "%1"=="" IF %mesainstalled%==1 echo 10. Exit
+@IF "%1"=="" IF %mesainstalled% GTR 0 echo 10. Exit
 @echo.
+
 @set SystemDrive=
 @IF EXIST "%SystemDrive%\Program Files\WindowsApps\Microsoft.D3DMappingLayers*" echo WARNING: System-wide Mesa3D desktop OpenGL drivers deployment won't work on your computer until you uninstall Microsoft OpenCL and OpenGL Compatibility Pack Windows store application. You are free to perform the deployment right now, but it won't take effect until conflicting software is removed.
 @IF EXIST "%SystemDrive%\Program Files\WindowsApps\Microsoft.D3DMappingLayers*" echo.
@@ -85,10 +101,10 @@
 @if "%deploychoice%"=="5" GOTO osmesa
 @if "%deploychoice%"=="6" GOTO osmesa
 @if "%deploychoice%"=="7" GOTO graw
-@if "%deploychoice%"=="8" IF %mesainstalled%==1 GOTO update
-@if "%deploychoice%"=="9" IF %mesainstalled%==1 GOTO uninstall
-@IF "%1"=="" if "%deploychoice%"=="10" IF %mesainstalled%==1 GOTO bye
-@IF "%1"=="" if "%deploychoice%"=="8" IF %mesainstalled%==0 GOTO bye
+@if "%deploychoice%"=="8" IF %mesainstalled% GTR 0 GOTO update
+@if "%deploychoice%"=="9" IF %mesainstalled% GTR 0 GOTO uninstall
+@IF "%1"=="" if "%deploychoice%"=="10" IF %mesainstalled% GTR 0 GOTO bye
+@IF "%1"=="" if "%deploychoice%"=="8" IF %mesainstalled% EQU 0 GOTO bye
 @echo Invaild entry
 @GOTO enddeploy
 
@@ -192,9 +208,9 @@
 @GOTO enddeploy
 
 :update
-@IF %mesainstalled%==0 echo.
-@IF %mesainstalled%==0 echo Error: No Mesa3D drivers installed.
-@IF %mesainstalled%==0 GOTO enddeploy
+@IF %mesainstalled% EQU 0 echo.
+@IF %mesainstalled% EQU 0 echo Error: No Mesa3D drivers installed.
+@IF %mesainstalled% EQU 0 GOTO enddeploy
 
 @IF /I %PROCESSOR_ARCHITECTURE%==X86 IF EXIST "%windir%\System32\mesadrv.dll" IF NOT EXIST "%mesaloc%\x86\libgallium_wgl.dll" copy "%mesaloc%\x86\opengl32.dll" "%windir%\System32\mesadrv.dll"
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%windir%\SysWOW64\mesadrv.dll" IF NOT EXIST "%mesaloc%\x86\libgallium_wgl.dll" copy "%mesaloc%\x86\opengl32.dll" "%windir%\SysWOW64\mesadrv.dll"
