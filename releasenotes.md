@@ -7,7 +7,8 @@
 - System wide deployment: Improve menu options listing reliability;
 - System wide deployment: Reuse code for deployment termination;
 - System wide deployment: Track available and deployed components with state variables;
-- Per application deployment: Handle invalid osmesa selection.
+- Per application deployment: Handle invalid osmesa selection;
+- System wide deployment: Validate menu selection early.
 # 21.3.7
 - Updated Mesa3D to [21.3.7](https://docs.mesa3d.org/relnotes/21.3.7.html).
 ### Build script
