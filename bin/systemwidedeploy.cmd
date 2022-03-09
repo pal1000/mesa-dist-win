@@ -57,34 +57,28 @@
 
 :option_5
 @set option5=0
-@IF NOT EXIST "%mesaloc%\x86\osmesa.dll" IF NOT EXIST "%mesaloc%\x64\osmesa.dll" IF NOT EXIST "%mesaloc%\x86\osmesa-gallium\osmesa.dll" IF NOT EXIST "%mesaloc%\x64\osmesa-gallium\osmesa.dll" GOTO option_6
+@IF NOT EXIST "%mesaloc%\x86\osmesa.dll" IF NOT EXIST "%mesaloc%\x64\osmesa.dll" GOTO option_6
 @echo 5. Mesa3D off-screen render driver gallium version (osmesa gallium)
 @set option5=1
 
 :option_6
 @set option6=0
-@IF NOT EXIST "%mesaloc%\x86\osmesa-swrast\osmesa.dll" IF NOT EXIST "%mesaloc%\x64\osmesa-swrast\osmesa.dll" GOTO option_7
-@echo 6. Mesa3D off-screen render driver classic version (osmesa swrast)
+@IF NOT EXIST "%mesaloc%\x86\graw.dll" IF NOT EXIST "%mesaloc%\x64\graw.dll" IF NOT EXIST "%mesaloc%\x86\graw_null.dll" IF NOT EXIST "%mesaloc%\x64\graw_null.dll" GOTO option_7
+@echo 6. Mesa3D graw test framework
 @set option6=1
 
 :option_7
-@set option7=0
-@IF NOT EXIST "%mesaloc%\x86\graw.dll" IF NOT EXIST "%mesaloc%\x64\graw.dll" IF NOT EXIST "%mesaloc%\x86\graw_null.dll" IF NOT EXIST "%mesaloc%\x64\graw_null.dll" GOTO option_8
-@echo 7. Mesa3D graw test framework
-@set option7=1
-
-:option_8
 @set mesainstalled=2
 @IF NOT EXIST "%windir%\System32\openglon12.dll" IF NOT EXIST "%windir%\System32\mesadrv.dll" IF NOT EXIST "%windir%\System32\graw.dll" IF NOT EXIST "%windir%\System32\graw_null.dll" IF NOT EXIST "%windir%\System32\osmesa.dll" set /a mesainstalled-=1
 @IF NOT EXIST "%windir%\SysWOW64\openglon12.dll" IF NOT EXIST "%windir%\SysWOW64\mesadrv.dll" IF NOT EXIST "%windir%\SysWOW64\graw.dll" IF NOT EXIST "%windir%\SysWOW64\graw_null.dll" IF NOT EXIST "%windir%\SysWOW64\osmesa.dll" set /a mesainstalled-=1
-@IF %mesainstalled% GTR 0 echo 8. Update system-wide deployment
-@IF "%1"=="" IF %mesainstalled% EQU 0 echo 8. Exit
+@IF %mesainstalled% GTR 0 echo 7. Update system-wide deployment
+@IF "%1"=="" IF %mesainstalled% EQU 0 echo 7. Exit
+
+:option_8
+@IF %mesainstalled% GTR 0 echo 8. Remove system-wide deployments (uninstall)
 
 :option_9
-@IF %mesainstalled% GTR 0 echo 9. Remove system-wide deployments (uninstall)
-
-:option_10
-@IF "%1"=="" IF %mesainstalled% GTR 0 echo 10. Exit
+@IF "%1"=="" IF %mesainstalled% GTR 0 echo 9. Exit
 @echo.
 
 @set SystemDrive=
@@ -99,12 +93,11 @@
 @if "%deploychoice%"=="3" IF %option3% EQU 1 GOTO instdxil
 @if "%deploychoice%"=="4" IF %option4% EQU 1 GOTO instglon12
 @if "%deploychoice%"=="5" IF %option5% EQU 1 GOTO osmesa
-@if "%deploychoice%"=="6" IF %option6% EQU 1 GOTO osmesa
-@if "%deploychoice%"=="7" IF %option7% EQU 1 GOTO graw
-@if "%deploychoice%"=="8" IF %mesainstalled% GTR 0 GOTO update
-@if "%deploychoice%"=="8" IF %mesainstalled% EQU 0 IF "%1"=="" GOTO bye
-@if "%deploychoice%"=="9" IF %mesainstalled% GTR 0 GOTO uninstall
-@if "%deploychoice%"=="10" IF %mesainstalled% GTR 0 IF "%1"=="" GOTO bye
+@if "%deploychoice%"=="6" IF %option6% EQU 1 GOTO graw
+@if "%deploychoice%"=="7" IF %mesainstalled% GTR 0 GOTO update
+@if "%deploychoice%"=="7" IF %mesainstalled% EQU 0 IF "%1"=="" GOTO bye
+@if "%deploychoice%"=="8" IF %mesainstalled% GTR 0 GOTO uninstall
+@if "%deploychoice%"=="9" IF %mesainstalled% GTR 0 IF "%1"=="" GOTO bye
 @set deployerror=
 @if "%deploychoice%"=="1" IF %option1% EQU 0 set deployerror=Invalid choice. Mesa3D desktop OpenGL drivers are not included in this Mesa3D release package.
 @if "%deploychoice%"=="2" IF %option2% EQU 0 if /I NOT %PROCESSOR_ARCHITECTURE%==AMD64 set deployerror=Invalid choice. swr driver is only supported on x64/AMD64 systems.
@@ -112,11 +105,10 @@
 @if "%deploychoice%"=="3" IF %option3% EQU 0 set deployerror=Invalid choice. DirectX IL for redistribution is not available in this release package.
 @if "%deploychoice%"=="4" IF %option4% EQU 0 set deployerror=Invalid choice. Microsoft OpenGL over D3D12 driver is not available in this release package.
 @if "%deploychoice%"=="5" IF %option5% EQU 0 set deployerror=Invalid choice. osmesa gallium is not available in this release package.
-@if "%deploychoice%"=="6" IF %option6% EQU 0 set deployerror=Invalid choice. osmesa swrast is not available in this release package.
-@if "%deploychoice%"=="7" IF %option7% EQU 0 set deployerror=Invalid choice. graw framework is not available in this release package.
-@if "%deploychoice%"=="8" IF %mesainstalled% EQU 0 IF NOT "%1"=="" set deployerror=Unattended mode does not support exit command.
-@if "%deploychoice%"=="9" IF %mesainstalled% EQU 0 set deployerror=Error^: No Mesa3D drivers installed.
-@if "%deploychoice%"=="10" IF %mesainstalled% GTR 0 IF NOT "%1"=="" set deployerror=Unattended mode does not support exit command.
+@if "%deploychoice%"=="6" IF %option6% EQU 0 set deployerror=Invalid choice. graw framework is not available in this release package.
+@if "%deploychoice%"=="7" IF %mesainstalled% EQU 0 IF NOT "%1"=="" set deployerror=Unattended mode does not support exit command.
+@if "%deploychoice%"=="8" IF %mesainstalled% EQU 0 set deployerror=Error^: No Mesa3D drivers installed.
+@if "%deploychoice%"=="9" IF %mesainstalled% GTR 0 IF NOT "%1"=="" set deployerror=Unattended mode does not support exit command.
 @IF NOT defined deployerror set deployerror=Invaild choice.
 @echo %deployerror%
 @GOTO enddeploy
@@ -178,22 +170,12 @@
 @GOTO enddeploy
 
 :osmesa
-@if "%deploychoice%"=="5" IF /I %PROCESSOR_ARCHITECTURE%==X86 IF EXIST "%mesaloc%\x86\osmesa.dll" copy "%mesaloc%\x86\osmesa.dll" "%windir%\System32"
-@if "%deploychoice%"=="5" IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%mesaloc%\x86\osmesa.dll" copy "%mesaloc%\x86\osmesa.dll" "%windir%\SysWOW64"
-@if "%deploychoice%"=="5" IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%mesaloc%\x64\osmesa.dll" copy "%mesaloc%\x64\osmesa.dll" "%windir%\System32"
-@if "%deploychoice%"=="5" IF EXIST %mesaloc%\x86\osmesa.dll IF EXIST %mesaloc%\x64\osmesa.dll GOTO doneosmesa
-@if "%deploychoice%"=="6" IF EXIST %mesaloc%\x86\osmesa.dll IF EXIST %mesaloc%\x64\osmesa.dll echo osmesa swrast is not available on its own.
-@if "%deploychoice%"=="6" IF EXIST %mesaloc%\x86\osmesa.dll IF EXIST %mesaloc%\x64\osmesa.dll GOTO enddeploy
+@IF /I %PROCESSOR_ARCHITECTURE%==X86 IF EXIST "%mesaloc%\x86\osmesa.dll" copy "%mesaloc%\x86\osmesa.dll" "%windir%\System32"
+@IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%mesaloc%\x86\osmesa.dll" copy "%mesaloc%\x86\osmesa.dll" "%windir%\SysWOW64"
+@IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%mesaloc%\x64\osmesa.dll" copy "%mesaloc%\x64\osmesa.dll" "%windir%\System32"
 @IF /I %PROCESSOR_ARCHITECTURE%==X86 IF EXIST "%mesaloc%\x86\libglapi.dll" copy "%mesaloc%\x86\libglapi.dll" "%windir%\System32"
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%mesaloc%\x86\libglapi.dll" copy "%mesaloc%\x86\libglapi.dll" "%windir%\SysWOW64"
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%mesaloc%\x64\libglapi.dll" copy "%mesaloc%\x64\libglapi.dll" "%windir%\System32"
-@if "%deploychoice%"=="5" set osmesatype=gallium
-@if "%deploychoice%"=="6" set osmesatype=swrast
-@IF /I %PROCESSOR_ARCHITECTURE%==X86 copy "%mesaloc%\x86\osmesa-%osmesatype%\osmesa.dll" "%windir%\System32"
-@IF /I %PROCESSOR_ARCHITECTURE%==AMD64 copy "%mesaloc%\x86\osmesa-%osmesatype%\osmesa.dll" "%windir%\SysWOW64"
-@IF /I %PROCESSOR_ARCHITECTURE%==AMD64 copy "%mesaloc%\x64\osmesa-%osmesatype%\osmesa.dll" "%windir%\System32"
-
-:doneosmesa
 @echo.
 @echo Off-screen render driver deploy complete.
 @GOTO enddeploy
@@ -232,32 +214,15 @@
 @IF EXIST "%windir%\System32\swrAVX2.dll" copy "%mesaloc%\x64\swrAVX2.dll" "%windir%\System32"
 @IF EXIST "%windir%\System32\swrSKX.dll" copy "%mesaloc%\x64\swrSKX.dll" "%windir%\System32"
 @IF EXIST "%windir%\System32\swrKNL.dll" copy "%mesaloc%\x64\swrKNL.dll" "%windir%\System32"
-
 @IF /I %PROCESSOR_ARCHITECTURE%==X86 IF EXIST "%windir%\System32\graw.dll" copy "%mesaloc%\x86\graw.dll" "%windir%\System32"
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%windir%\SysWOW64\graw.dll" copy "%mesaloc%\x86\graw.dll" "%windir%\SysWOW64"
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%windir%\System32\graw.dll" copy "%mesaloc%\x64\graw.dll" "%windir%\System32"
-@IF /I %PROCESSOR_ARCHITECTURE%==X86 IF EXIST "%windir%\System32\graw.dll" IF EXIST "%mesaloc%\x86\graw_null.dll" copy "%mesaloc%\x86\graw_null.dll" "%windir%\System32"
-@IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%windir%\SysWOW64\graw.dll" IF EXIST "%mesaloc%\x86\graw_null.dll" copy "%mesaloc%\x86\graw_null.dll" "%windir%\SysWOW64"
-@IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%windir%\System32\graw.dll" IF EXIST "%mesaloc%\x64\graw_null.dll" copy "%mesaloc%\x64\graw_null.dll" "%windir%\System32"
-
+@IF /I %PROCESSOR_ARCHITECTURE%==X86 IF EXIST "%windir%\System32\graw_null.dll" IF EXIST "%mesaloc%\x86\graw_null.dll" copy "%mesaloc%\x86\graw_null.dll" "%windir%\System32"
+@IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%windir%\SysWOW64\graw_null.dll" IF EXIST "%mesaloc%\x86\graw_null.dll" copy "%mesaloc%\x86\graw_null.dll" "%windir%\SysWOW64"
+@IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%windir%\System32\graw_null.dll" IF EXIST "%mesaloc%\x64\graw_null.dll" copy "%mesaloc%\x64\graw_null.dll" "%windir%\System32"
 @IF /I %PROCESSOR_ARCHITECTURE%==X86 IF EXIST "%windir%\System32\osmesa.dll" IF EXIST "%mesaloc%\x86\osmesa.dll" copy "%mesaloc%\x86\osmesa.dll" "%windir%\System32"
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%windir%\System32\osmesa.dll" IF EXIST "%mesaloc%\x86\osmesa.dll" copy "%mesaloc%\x86\osmesa.dll" "%windir%\SysWOW64"
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%windir%\System32\osmesa.dll" IF EXIST "%mesaloc%\x64\osmesa.dll" copy "%mesaloc%\x64\osmesa.dll" "%windir%\System32"
-@IF EXIST "%windir%\System32\osmesa.dll" IF EXIST "%mesaloc%\x86\osmesa.dll" IF EXIST "%mesaloc%\x64\osmesa.dll" GOTO doneupdate
-@set BYTES=10000000
-@IF /I %PROCESSOR_ARCHITECTURE%==X86 IF EXIST "%windir%\System32\osmesa.dll" for %%f in ("%windir%\System32\osmesa.dll") do @set BYTES=%%~zf
-@IF /I %PROCESSOR_ARCHITECTURE%==X86 IF EXIST "%windir%\System32\osmesa.dll" IF %BYTES% GTR 10000000 copy "%mesaloc%\x86\osmesa-gallium\osmesa.dll" "%windir%\System32"
-@IF /I %PROCESSOR_ARCHITECTURE%==X86 IF EXIST "%windir%\System32\osmesa.dll" IF %BYTES% LSS 10000000 copy "%mesaloc%\x86\osmesa-swrast\osmesa.dll" "%windir%\System32"
-@set BYTES=10000000
-@IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%windir%\SysWOW64\osmesa.dll" for %%f in ("%windir%\SysWOW64\osmesa.dll") do @set BYTES=%%~zf
-@IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%windir%\SysWOW64\osmesa.dll" IF %BYTES% GTR 10000000 copy "%mesaloc%\x86\osmesa-gallium\osmesa.dll" "%windir%\SysWOW64"
-@IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%windir%\SysWOW64\osmesa.dll" IF %BYTES% LSS 10000000 copy "%mesaloc%\x86\osmesa-swrast\osmesa.dll" "%windir%\SysWOW64"
-@set BYTES=10000000
-@IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%windir%\System32\osmesa.dll" for %%f in ("%windir%\System32\osmesa.dll") do @set BYTES=%%~zf
-@IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%windir%\System32\osmesa.dll" IF %BYTES% GTR 10000000 copy "%mesaloc%\x64\osmesa-gallium\osmesa.dll" "%windir%\System32"
-@IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%windir%\System32\osmesa.dll" IF %BYTES% LSS 10000000 copy "%mesaloc%\x64\osmesa-swrast\osmesa.dll" "%windir%\System32"
-
-:doneupdate
 @echo.
 @echo Update complete.
 @GOTO enddeploy

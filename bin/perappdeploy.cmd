@@ -179,32 +179,13 @@
 
 :osmesa
 @set osmesa=
-@IF NOT EXIST "%mesaloc%\%mesadll%\osmesa.dll" IF NOT EXIST "%mesaloc%\%mesadll%\osmesa-swrast\osmesa.dll" IF NOT EXIST "%mesaloc%\%mesadll%\osmesa-gallium\osmesa.dll" GOTO graw
-@set /p osmesa=Do you need off-screen rendering (y/n):
-@echo.
+@IF EXIST "%mesaloc%\%mesadll%\osmesa.dll" set /p osmesa=Do you need off-screen rendering (y/n):
+@IF EXIST "%mesaloc%\%mesadll%\osmesa.dll" echo.
 @if /I NOT "%osmesa%"=="y" GOTO graw
 @IF %foundosmesa% EQU 1 echo Updating Mesa3D off-screen rendering interface deployment...
-@IF EXIST "%mesaloc%\%mesadll%\osmesa.dll" mklink "%dir%\osmesa.dll" "%mesaloc%\%mesadll%\osmesa.dll"
+@mklink "%dir%\osmesa.dll" "%mesaloc%\%mesadll%\osmesa.dll"
 @IF EXIST "%mesaloc%\%mesadll%\libglapi.dll" IF NOT EXIST "%dir%\libglapi.dll" mklink "%dir%\libglapi.dll" "%mesaloc%\%mesadll%\libglapi.dll"
 @echo.
-@IF EXIST "%mesaloc%\%mesadll%\osmesa.dll" GOTO graw
-@IF EXIST "%mesaloc%\%mesadll%\osmesa-gallium\osmesa.dll" IF NOT EXIST "%mesaloc%\%mesadll%\osmesa-swrast\osmesa.dll" set osmesatype=1
-@IF NOT EXIST "%mesaloc%\%mesadll%\osmesa-gallium\osmesa.dll" IF EXIST "%mesaloc%\%mesadll%\osmesa-swrast\osmesa.dll" set osmesatype=2
-
-:selectosmesa
-@IF EXIST "%mesaloc%\%mesadll%\osmesa-gallium\osmesa.dll" IF EXIST "%mesaloc%\%mesadll%\osmesa-swrast\osmesa.dll" echo What version of osmesa off-screen rendering you want:
-@IF EXIST "%mesaloc%\%mesadll%\osmesa-gallium\osmesa.dll" IF EXIST "%mesaloc%\%mesadll%\osmesa-swrast\osmesa.dll" echo 1. Gallium based (faster, but lacks certain features)
-@IF EXIST "%mesaloc%\%mesadll%\osmesa-gallium\osmesa.dll" IF EXIST "%mesaloc%\%mesadll%\osmesa-swrast\osmesa.dll" echo 2. Swrast based (slower, but has unique OpenGL 2.1 features)
-@IF EXIST "%mesaloc%\%mesadll%\osmesa-gallium\osmesa.dll" IF EXIST "%mesaloc%\%mesadll%\osmesa-swrast\osmesa.dll" set osmesatype=
-@IF EXIST "%mesaloc%\%mesadll%\osmesa-gallium\osmesa.dll" IF EXIST "%mesaloc%\%mesadll%\osmesa-swrast\osmesa.dll" set /p osmesatype=Enter choice:
-@IF EXIST "%mesaloc%\%mesadll%\osmesa-gallium\osmesa.dll" IF EXIST "%mesaloc%\%mesadll%\osmesa-swrast\osmesa.dll" echo.
-@if "%osmesatype%"=="1" mklink "%dir%\osmesa.dll" "%mesaloc%\%mesadll%\osmesa-gallium\osmesa.dll"
-@if "%osmesatype%"=="2" mklink "%dir%\osmesa.dll" "%mesaloc%\%mesadll%\osmesa-swrast\osmesa.dll"
-@if "%osmesatype%"=="1" echo.
-@if "%osmesatype%"=="2" echo.
-@if NOT "%osmesatype%"=="1" if NOT "%osmesatype%"=="2" echo Invalid entry.
-@if NOT "%osmesatype%"=="1" if NOT "%osmesatype%"=="2" echo.
-@if NOT "%osmesatype%"=="1" if NOT "%osmesatype%"=="2" GOTO selectosmesa
 
 :graw
 @set graw=
