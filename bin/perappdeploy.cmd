@@ -190,6 +190,8 @@
 @IF EXIST "%mesaloc%\%mesadll%\osmesa.dll" GOTO graw
 @IF EXIST "%mesaloc%\%mesadll%\osmesa-gallium\osmesa.dll" IF NOT EXIST "%mesaloc%\%mesadll%\osmesa-swrast\osmesa.dll" set osmesatype=1
 @IF NOT EXIST "%mesaloc%\%mesadll%\osmesa-gallium\osmesa.dll" IF EXIST "%mesaloc%\%mesadll%\osmesa-swrast\osmesa.dll" set osmesatype=2
+
+:selectosmesa
 @IF EXIST "%mesaloc%\%mesadll%\osmesa-gallium\osmesa.dll" IF EXIST "%mesaloc%\%mesadll%\osmesa-swrast\osmesa.dll" echo What version of osmesa off-screen rendering you want:
 @IF EXIST "%mesaloc%\%mesadll%\osmesa-gallium\osmesa.dll" IF EXIST "%mesaloc%\%mesadll%\osmesa-swrast\osmesa.dll" echo 1. Gallium based (faster, but lacks certain features)
 @IF EXIST "%mesaloc%\%mesadll%\osmesa-gallium\osmesa.dll" IF EXIST "%mesaloc%\%mesadll%\osmesa-swrast\osmesa.dll" echo 2. Swrast based (slower, but has unique OpenGL 2.1 features)
@@ -200,6 +202,9 @@
 @if "%osmesatype%"=="2" mklink "%dir%\osmesa.dll" "%mesaloc%\%mesadll%\osmesa-swrast\osmesa.dll"
 @if "%osmesatype%"=="1" echo.
 @if "%osmesatype%"=="2" echo.
+@if NOT "%osmesatype%"=="1" if NOT "%osmesatype%"=="2" echo Invalid entry.
+@if NOT "%osmesatype%"=="1" if NOT "%osmesatype%"=="2" echo.
+@if NOT "%osmesatype%"=="1" if NOT "%osmesatype%"=="2" GOTO selectosmesa
 
 :graw
 @set graw=
