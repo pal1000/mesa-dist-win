@@ -3,7 +3,7 @@ Build environment
 Windows 10.0.22000
 Ressource Hacker 5.1.8.360
 7-Zip 21.07 ultra compression
-Git 2.35.1.1
+Git 2.35.1.2
 LunarG Vulkan SDK 1.3.204.0
 
 MSYS2 environment
@@ -47,7 +47,7 @@ libcrypt 2.1-3
 libcurl 7.80.0-3
 libdb 5.3.28-3
 libedit 20210910_3.1-1
-libexpat 2.4.6-1
+libexpat 2.4.7-1
 libffi 3.3-1
 libgcrypt 1.9.4-1
 libgdbm 1.22-2
@@ -84,7 +84,7 @@ mingw-w64-i686-binutils 2.38-2
 mingw-w64-i686-bzip2 1.0.8-2
 mingw-w64-i686-ca-certificates 20210119-1
 mingw-w64-i686-crt-git 9.0.0.6428.e1b6a2ed7-1
-mingw-w64-i686-expat 2.4.6-1
+mingw-w64-i686-expat 2.4.7-1
 mingw-w64-i686-gcc 11.2.0-10
 mingw-w64-i686-gcc-libs 11.2.0-10
 mingw-w64-i686-gdb 11.2-2
@@ -124,7 +124,7 @@ mingw-w64-i686-tk 8.6.11.1-2
 mingw-w64-i686-tzdata 2021e-1
 mingw-w64-i686-vulkan-headers 1.2.203-1
 mingw-w64-i686-vulkan-loader 1.2.203-1
-mingw-w64-i686-vulkan-validation-layers 1.2.203-2
+mingw-w64-i686-vulkan-validation-layers 1.2.203-3
 mingw-w64-i686-windows-default-manifest 6.4-4
 mingw-w64-i686-winpthreads-git 9.0.0.6428.e1b6a2ed7-1
 mingw-w64-i686-xxhash 0.8.1-1
@@ -135,7 +135,7 @@ mingw-w64-x86_64-binutils 2.38-2
 mingw-w64-x86_64-bzip2 1.0.8-2
 mingw-w64-x86_64-ca-certificates 20210119-1
 mingw-w64-x86_64-crt-git 9.0.0.6428.e1b6a2ed7-1
-mingw-w64-x86_64-expat 2.4.6-1
+mingw-w64-x86_64-expat 2.4.7-1
 mingw-w64-x86_64-gcc 11.2.0-10
 mingw-w64-x86_64-gcc-libs 11.2.0-10
 mingw-w64-x86_64-gdb 11.2-2
@@ -175,7 +175,7 @@ mingw-w64-x86_64-tk 8.6.11.1-2
 mingw-w64-x86_64-tzdata 2021e-1
 mingw-w64-x86_64-vulkan-headers 1.2.203-1
 mingw-w64-x86_64-vulkan-loader 1.2.203-1
-mingw-w64-x86_64-vulkan-validation-layers 1.2.203-2
+mingw-w64-x86_64-vulkan-validation-layers 1.2.203-3
 mingw-w64-x86_64-windows-default-manifest 6.4-4
 mingw-w64-x86_64-winpthreads-git 9.0.0.6428.e1b6a2ed7-1
 mingw-w64-x86_64-xxhash 0.8.1-1

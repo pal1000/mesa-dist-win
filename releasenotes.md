@@ -7,9 +7,9 @@
 - System wide deployment: Improve menu options listing reliability;
 - System wide deployment: Reuse code for deployment termination;
 - System wide deployment: Track available and deployed components with state variables;
-- Per application deployment: Handle invalid osmesa selection;
 - System wide deployment: Validate menu selection early;
-- Deployment tools: Drop support for osmesa classic as it was removed in Mesa 21.0.
+- Deployment tools: Drop support for osmesa classic as it was removed in Mesa 21.0;
+- System wide deployment: Improve Mesa3D OpenGL de-registration.
 # 21.3.7
 - Updated Mesa3D to [21.3.7](https://docs.mesa3d.org/relnotes/21.3.7.html).
 ### Build script
