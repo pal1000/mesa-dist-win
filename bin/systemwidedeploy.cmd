@@ -183,7 +183,7 @@
 :update
 @IF /I %PROCESSOR_ARCHITECTURE%==X86 IF EXIST "%windir%\System32\mesadrv.dll" IF NOT EXIST "%mesaloc%\x86\libgallium_wgl.dll" IF EXIST "%mesaloc%\x86\opengl32.dll" copy "%mesaloc%\x86\opengl32.dll" "%windir%\System32\mesadrv.dll"
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%windir%\SysWOW64\mesadrv.dll" IF NOT EXIST "%mesaloc%\x86\libgallium_wgl.dll" IF EXIST "%mesaloc%\x86\opengl32.dll" copy "%mesaloc%\x86\opengl32.dll" "%windir%\SysWOW64\mesadrv.dll"
-@IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%windir%\System32\mesadrv.dll" IF NOT EXIST "%mesaloc%\x64\libgallium_wgl.dll" IF EXIST "%mesaloc%\x86\opengl32.dll" copy "%mesaloc%\x64\opengl32.dll" "%windir%\System32\mesadrv.dll"
+@IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%windir%\System32\mesadrv.dll" IF NOT EXIST "%mesaloc%\x64\libgallium_wgl.dll" IF EXIST "%mesaloc%\x64\opengl32.dll" copy "%mesaloc%\x64\opengl32.dll" "%windir%\System32\mesadrv.dll"
 @IF /I %PROCESSOR_ARCHITECTURE%==X86 IF EXIST "%windir%\System32\mesadrv.dll" IF EXIST "%mesaloc%\x86\libgallium_wgl.dll" copy "%mesaloc%\x86\libgallium_wgl.dll" "%windir%\System32\mesadrv.dll"
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%windir%\SysWOW64\mesadrv.dll" IF EXIST "%mesaloc%\x86\libgallium_wgl.dll" copy "%mesaloc%\x86\libgallium_wgl.dll" "%windir%\SysWOW64\mesadrv.dll"
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%windir%\System32\mesadrv.dll" IF EXIST "%mesaloc%\x64\libgallium_wgl.dll" copy "%mesaloc%\x64\libgallium_wgl.dll" "%windir%\System32\mesadrv.dll"
