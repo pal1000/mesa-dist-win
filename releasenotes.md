@@ -1,3 +1,5 @@
+### Build script
+- Mesa3D build: Plug opencl-spirv build option leak.
 # 22.0.0
 - Updated Mesa3D to [22.0.0](https://docs.mesa3d.org/relnotes/22.0.0.html).
 ### Deployment
