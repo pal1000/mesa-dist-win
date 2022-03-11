@@ -1,3 +1,5 @@
+# 22.0.0
+- Updated Mesa3D to [22.0.0](https://docs.mesa3d.org/relnotes/22.0.0.html).
 ### Deployment
 - System-wide deployment: Detect and warn about conflict with Microsoft OpenCL and OpenGL Compatibility Pack;
 - Per application deployment: Wipe existing deployments in selected folder at startup;
@@ -11,6 +13,8 @@
 - Deployment tools: Drop support for osmesa classic as it was removed in Mesa 21.0;
 - System wide deployment: Improve Mesa3D OpenGL de-registration;
 - System wide deployment: Handle partial or incomplete Mesa3D packages more seamlessly.
+### Documentation
+- Update docs about OpenGL contexts and drivers availability changes.
 # 21.3.7
 - Updated Mesa3D to [21.3.7](https://docs.mesa3d.org/relnotes/21.3.7.html).
 ### Build script
