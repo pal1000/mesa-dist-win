@@ -66,6 +66,9 @@
 @IF %intmesaver% GEQ 21300 IF %disableootpatch%==1 IF %abi%==x86 IF %toolchain%==gcc echo Building 32-bit Mesa3D using MSYS2 MinGW-W64 GCC requires out of tree patches.
 @IF %intmesaver% GEQ 21300 IF %disableootpatch%==1 IF %abi%==x86 IF %toolchain%==gcc echo.
 @IF %intmesaver% GEQ 21300 IF %disableootpatch%==1 IF %abi%==x86 IF %toolchain%==gcc GOTO skipmesa
+@IF %intmesaver% GEQ 22003 IF %intmesaver% LSS 22051 IF %disableootpatch%==1 IF %abi%==x86 IF %toolchain%==msvc echo Building 32-bit Mesa3D 22.0.0-rc3 through 22.0.0 stable using MSVC requires out of tree patches.
+@IF %intmesaver% GEQ 22003 IF %intmesaver% LSS 22051 IF %disableootpatch%==1 IF %abi%==x86 IF %toolchain%==msvc echo.
+@IF %intmesaver% GEQ 22003 IF %intmesaver% LSS 22051 IF %disableootpatch%==1 IF %abi%==x86 IF %toolchain%==msvc GOTO skipmesa
 @IF %disableootpatch%==1 GOTO configmesabuild
 
 @REM Collect information about Mesa3D code. Apply out of tree patches.
@@ -86,6 +89,9 @@
 @rem Fix MinGW clang build
 @IF %intmesaver% GEQ 21254 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd clang
 @IF %intmesaver% GEQ 21254 IF EXIST %devroot%\mesa\src\gallium\drivers\swr\meson.build call %devroot%\%projectname%\buildscript\modules\applypatch.cmd clang-swr
+
+@rem Fix 32-bit MSVC build for Mesa 22.0.0-rc3 - 22.0.0
+@IF %intmesaver% GEQ 22003 IF %intmesaver% LSS 22051 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd msvc-32_bit-libmesa_util
 
 @rem Make it possible to build both osmesa gallium and swrast at the same time with Meson. Applies to Mesa 20.3 and older.
 @IF %intmesaver% LSS 21000 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd dual-osmesa

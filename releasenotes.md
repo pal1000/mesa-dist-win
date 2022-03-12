@@ -1,3 +1,5 @@
+### Out of tree patches
+- Add patch fixing 32-bit MSVC build of Mesa 22.0.0.
 ### Build script
 - Mesa3D build: Plug opencl-spirv build option leak;
 - Mesa3D: Restore support for build without GLES.
