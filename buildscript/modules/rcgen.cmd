@@ -8,7 +8,7 @@
 
 @set descriptionfield=%1
 @IF NOT %3==null set descriptionfield=%descriptionfield:~0,-1% (%3)"
-@set prodver=%4.0
+@set prodver=%4.%mesabldrev%
 
 @(echo.
 echo 1 VERSIONINFO
@@ -25,7 +25,7 @@ echo VALUE "CompanyName", %5
 echo VALUE "FileDescription", %descriptionfield%
 echo VALUE "FileVersion", "%prodver%"
 echo VALUE "InternalName", "%~n2.dll"
-echo VALUE "LegalCopyright", "Copyright (C) 2021"
+echo VALUE "LegalCopyright", "Copyright (C) 2022"
 echo VALUE "OriginalFilename", "%~n2.dll"
 echo VALUE "ProductName", "Mesa3D"
 echo VALUE "ProductVersion", "%prodver%"

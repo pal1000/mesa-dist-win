@@ -7,7 +7,8 @@
 @IF %rhstate%==0 GOTO noresourcehacker
 @IF %rhstate%==1 SET PATH=%devroot%\resource-hacker\;%PATH%
 
-@pause
+@set mesabldrev=0
+@set /p mesabldrev=Mesa3D build revision (default:0, positive integer expected):
 @echo.
 @echo Adding version information to binaries. Please wait...
 @echo.
