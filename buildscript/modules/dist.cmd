@@ -22,7 +22,8 @@
 @set legacydist=1
 @IF %legacydist% EQU 1 GOTO legacydist
 
-@IF %dualosmesa% EQU 0 %mesonloc% install -C $(/usr/bin/cygpath -m ${devroot})/mesa/build/${abi}"
+@IF %dualosmesa% EQU 0 IF NOT %toolchain%==msvc %mesonloc% install -C $(/usr/bin/cygpath -m ${devroot})/mesa/build/%toolchain%-${abi}"
+@IF %dualosmesa% EQU 0 IF %toolchain%==msvc %mesonloc% install -C %devroot%\mesa\build\%toolchain%-%abi%
 @IF %dualosmesa% EQU 0 GOTO distributed
 
 @if NOT EXIST dist MD dist
@@ -39,21 +40,17 @@
 @GOTO mesondist
 
 :legacydist
-@if NOT EXIST bin MD bin
-@if NOT EXIST lib MD lib
-@if NOT EXIST include MD include
-@cd bin
-@if EXIST %abi% RD /S /Q %abi%
-@MD %abi%
-@cd %abi%
-@IF %dualosmesa% EQU 1 MD osmesa-gallium
-@IF %dualosmesa% EQU 1 MD osmesa-swrast
-@cd ..\..\lib
-@if EXIST %abi% RD /S /Q %abi%
-@MD %abi%
-@cd ..\include
-@if EXIST %abi% RD /S /Q %abi%
-@MD %abi%
+@if NOT EXIST "bin\" MD bin
+@if NOT EXIST "lib\" MD lib
+@if NOT EXIST "include\" MD include
+@if EXIST "bin\%abi%\" RD /S /Q bin\%abi%
+@if EXIST "lib\%abi%\" RD /S /Q lib\%abi%
+@if EXIST "include\%abi%\" RD /S /Q include\%abi%
+@MD bin\%abi%
+@IF %dualosmesa% EQU 1 MD bin\%abi%\osmesa-gallium
+@IF %dualosmesa% EQU 1 MD bin\%abi%\osmesa-swrast
+@MD lib\%abi%
+@MD include\%abi%
 
 :mesondist
 @IF %dualosmesa% EQU 1 forfiles /p %devroot%\mesa\build\%toolchain%-%abi%\src /s /m *.dll /c "cmd /c IF NOT @file==0x22osmesa.dll0x22 IF EXIST @path copy @path %devroot%\%projectname%\bin\%abi%"

@@ -1,5 +1,6 @@
 ### Distribution
-- Improve JSON patcher to operate without renaming RADV ICD.
+- Improve JSON patcher to operate without renaming RADV ICD;
+- Make it easy to use Meson install.
 # 22.0.0-2
 ### Out of tree patches
 - Add patch fixing 32-bit MSVC build of Mesa 22.0.0.
