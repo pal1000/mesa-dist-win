@@ -22,8 +22,13 @@
 @set legacydist=1
 @IF %legacydist% EQU 1 GOTO legacydist
 
-@IF %dualosmesa% EQU 0 IF NOT %toolchain%==msvc %mesonloc% install -C $(/usr/bin/cygpath -m ${devroot})/mesa/build/%toolchain%-${abi}"
-@IF %dualosmesa% EQU 0 IF %toolchain%==msvc %mesonloc% install -C %devroot%\mesa\build\%toolchain%-%abi%
+@IF %dualosmesa% EQU 1 GOTO distributed
+@IF NOT %toolchain%==msvc %mesonloc% install --no-rebuild --skip-subprojects -C $(/usr/bin/cygpath -m ${devroot})/mesa/build/%toolchain%-${abi}"
+@IF NOT %toolchain%==msvc GOTO distributed
+@IF EXIST %devroot%\mesa\build\%toolchain%-%abi%\build.ninja IF %ninjastate% EQU 0 GOTO distributed
+@IF EXIST %devroot%\mesa\build\%toolchain%-%abi%\build.ninja IF %ninjastate% EQU 1 set PATH=%devroot%\ninja\;%PATH%
+@IF EXIST %devroot%\mesa\build\%toolchain%-%abi%\*.sln call %vsenv% %vsabi%
+@%mesonloc% install --no-rebuild --skip-subprojects -C %devroot:\=/%/mesa/build/%toolchain%-%abi%
 @IF %dualosmesa% EQU 0 GOTO distributed
 
 @if NOT EXIST dist MD dist
