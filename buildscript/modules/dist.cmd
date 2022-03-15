@@ -32,16 +32,16 @@
 @IF %dualosmesa% EQU 0 GOTO distributed
 
 @if NOT EXIST dist MD dist
-@if EXIST dist\%abi% RD /S /Q dist\%abi%
-@md dist\%abi%
-@MD dist\%abi%\bin
-@MD dist\%abi%\lib
-@MD dist\%abi%\lib\pkgconfig
-@MD dist\%abi%\include
-@MD dist\%abi%\bin\osmesa-gallium
-@MD dist\%abi%\bin\osmesa-swrast
-@MD dist\%abi%\share
-@MD dist\%abi%\share\drirc.d
+@if EXIST dist\%toolchain%-%abi% RD /S /Q dist\%toolchain%-%abi%
+@md dist\%toolchain%-%abi%
+@MD dist\%toolchain%-%abi%\bin
+@MD dist\%toolchain%-%abi%\lib
+@MD dist\%toolchain%-%abi%\lib\pkgconfig
+@MD dist\%toolchain%-%abi%\include
+@MD dist\%toolchain%-%abi%\bin\osmesa-gallium
+@MD dist\%toolchain%-%abi%\bin\osmesa-swrast
+@MD dist\%toolchain%-%abi%\share
+@MD dist\%toolchain%-%abi%\share\drirc.d
 @GOTO mesondist
 
 :legacydist

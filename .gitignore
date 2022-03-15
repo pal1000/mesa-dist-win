@@ -11,6 +11,7 @@
 # Libraries and headers
 /lib
 /include
+/dist
 # Build script assets
 /buildscript/assets
 # Debug scripts output backup
