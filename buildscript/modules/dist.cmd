@@ -29,7 +29,7 @@
 @IF EXIST %devroot%\mesa\build\%toolchain%-%abi%\build.ninja IF %ninjastate% EQU 1 set PATH=%devroot%\ninja\;%PATH%
 @IF EXIST %devroot%\mesa\build\%toolchain%-%abi%\*.sln call %vsenv% %vsabi%
 @%mesonloc% install --no-rebuild --skip-subprojects -C %devroot:\=/%/mesa/build/%toolchain%-%abi%
-@IF %dualosmesa% EQU 0 GOTO distributed
+@GOTO distributed
 
 @if NOT EXIST dist MD dist
 @if EXIST dist\%toolchain%-%abi% RD /S /Q dist\%toolchain%-%abi%
