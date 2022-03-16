@@ -2,7 +2,8 @@
 - Improve JSON patcher to operate without renaming RADV ICD;
 - Improve Meson install command used to check distribution creation;
 - Distribution creation: Drop support for osmesa classic;
-- Distribution creation: Refactor it to match Meson install as much as possible.
+- Distribution creation: Refactor it to match Meson install as much as possible;
+- Make distribution creation more verbose to keep track of its progress more easily. 
 # 22.0.0-2
 ### Out of tree patches
 - Add patch fixing 32-bit MSVC build of Mesa 22.0.0.
