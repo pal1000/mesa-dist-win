@@ -3,7 +3,7 @@
 @IF %gitstate% EQU 0 set canclon12=0
 @if %cmakestate% EQU 0 set canclon12=0
 @set wdkcount=0
-@for /f tokens^=* %%a IN ('REG QUERY HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Installer /s /d /f "Windows Driver Kit" /e 2^>^&1 ^| find "HKEY_"') DO @set /a wdkcount+=1
+@for /f "tokens=* delims=" %%a IN ('REG QUERY HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Installer /s /d /f "Windows Driver Kit" /e 2^>^&1 ^| find "HKEY_"') DO @set /a wdkcount+=1
 @if %wdkcount% NEQ 1 set canclon12=0
 @if %nugetstate%==0 set canclon12=0
 

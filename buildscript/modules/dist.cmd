@@ -64,7 +64,7 @@
 @echo.
 
 @echo Copying pkg-config scripts...
-@for /R %devroot%\mesa\build\%toolchain%-%abi%\meson-private %%a IN (*.pc) do @IF EXIST "%%a" IF /I NOT "%~na"=="DirectX-Headers" IF /I NOT "%~na"=="libelf" IF /I NOT "%~na"=="zlib" copy "%%a" %devroot%\%projectname%\lib\%abi%\pkgconfig
+@for /R %devroot%\mesa\build\%toolchain%-%abi%\meson-private %%a IN (*.pc) do @IF EXIST "%%a" IF /I NOT "%%~na"=="DirectX-Headers" IF /I NOT "%%~na"=="libelf" IF /I NOT "%%~na"=="zlib" copy "%%a" %devroot%\%projectname%\lib\%abi%\pkgconfig
 @echo.
 
 @echo Copying headers...

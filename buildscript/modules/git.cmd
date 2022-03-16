@@ -7,7 +7,7 @@
 
 @set gitloc=null
 @IF %gitstate% GTR 0 set exitloop=1
-@IF %gitstate% GTR 0 FOR /F "tokens=* USEBACKQ" %%a IN (`where /f git.exe`) DO @IF defined exitloop (
+@IF %gitstate% GTR 0 FOR /F "tokens=* delims=" %%a IN ('where /f git.exe') DO @IF defined exitloop (
 set "exitloop="
 SET gitloc=%%~a
 )

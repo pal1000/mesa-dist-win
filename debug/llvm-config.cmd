@@ -15,7 +15,7 @@
 @if EXIST %devroot%\mesa-dist-win\debug\llvm-config.txt REN %devroot%\mesa-dist-win\debug\llvm-config.txt llvm-config-old.txt
 @set "llvmlibs="
 @setlocal ENABLEDELAYEDEXPANSION
-@FOR /F "tokens=* USEBACKQ" %%a IN (`llvm-config --link-static --libnames %llvmmodules% 2^>^&1`) DO @(
+@FOR /F "tokens=* delims=" %%a IN ('llvm-config --link-static --libnames %llvmmodules% 2^>^&1') DO @(
 SET libname=%%~na
 IF NOT "!libname:~0,5!"=="llvm-" SET llvmlibs=!llvmlibs! !libname!
 )
