@@ -14,69 +14,43 @@
 @if /I NOT "%dist%"=="y" GOTO exit
 @cd %devroot%\%projectname%
 
-@rem Detect if both osmesa classic and gallium are present
-@set dualosmesa=0
-@IF EXIST %devroot%\mesa\build\%toolchain%-%abi%\src\mesa\drivers\osmesa\osmesa.dll IF EXIST %devroot%\mesa\build\%toolchain%-%abi%\src\gallium\targets\osmesa\osmesa.dll set dualosmesa=1
+@rem Normal distribution vs Meson install
+@set normaldist=1
+@IF %normaldist% EQU 1 GOTO normaldist
 
-@rem Use legacy dist until osmesa classic is removed
-@set legacydist=1
-@IF %legacydist% EQU 1 GOTO legacydist
-
-@IF %dualosmesa% EQU 1 GOTO distributed
-@IF NOT %toolchain%==msvc %mesonloc% install --no-rebuild --skip-subprojects -C $(/usr/bin/cygpath -m ${devroot})/mesa/build/%toolchain%-${abi}"
-@IF NOT %toolchain%==msvc GOTO distributed
-@IF EXIST %devroot%\mesa\build\%toolchain%-%abi%\build.ninja IF %ninjastate% EQU 0 GOTO distributed
-@IF EXIST %devroot%\mesa\build\%toolchain%-%abi%\build.ninja IF %ninjastate% EQU 1 set PATH=%devroot%\ninja\;%PATH%
-@IF EXIST %devroot%\mesa\build\%toolchain%-%abi%\*.sln call %vsenv% %vsabi%
-@%mesonloc% install --no-rebuild --skip-subprojects -C %devroot:\=/%/mesa/build/%toolchain%-%abi%
+@IF %toolchain%==msvc GOTO distributed
+@%mesonloc% install --no-rebuild --skip-subprojects -C $(/usr/bin/cygpath -m ${devroot})/mesa/build/%toolchain%-${abi}"
+@echo.
 @GOTO distributed
 
-@if NOT EXIST dist MD dist
-@if EXIST dist\%toolchain%-%abi% RD /S /Q dist\%toolchain%-%abi%
-@md dist\%toolchain%-%abi%
-@MD dist\%toolchain%-%abi%\bin
-@MD dist\%toolchain%-%abi%\lib
-@MD dist\%toolchain%-%abi%\lib\pkgconfig
-@MD dist\%toolchain%-%abi%\include
-@MD dist\%toolchain%-%abi%\bin\osmesa-gallium
-@MD dist\%toolchain%-%abi%\bin\osmesa-swrast
-@MD dist\%toolchain%-%abi%\share
-@MD dist\%toolchain%-%abi%\share\drirc.d
-@GOTO mesondist
-
-:legacydist
+:normaldist
 @if NOT EXIST "bin\" MD bin
 @if NOT EXIST "lib\" MD lib
-@if NOT EXIST "include\" MD include
 @if EXIST "bin\%abi%\" RD /S /Q bin\%abi%
 @if EXIST "lib\%abi%\" RD /S /Q lib\%abi%
-@if EXIST "include\%abi%\" RD /S /Q include\%abi%
+@if EXIST "include\" RD /S /Q include
 @MD bin\%abi%
-@IF %dualosmesa% EQU 1 MD bin\%abi%\osmesa-gallium
-@IF %dualosmesa% EQU 1 MD bin\%abi%\osmesa-swrast
 @MD lib\%abi%
-@MD include\%abi%
+@MD lib\%abi%\pkgconfig
 
 :mesondist
-@IF %dualosmesa% EQU 1 forfiles /p %devroot%\mesa\build\%toolchain%-%abi%\src /s /m *.dll /c "cmd /c IF NOT @file==0x22osmesa.dll0x22 IF EXIST @path copy @path %devroot%\%projectname%\bin\%abi%"
-@IF %dualosmesa% EQU 1 copy %devroot%\mesa\build\%toolchain%-%abi%\src\mesa\drivers\osmesa\osmesa.dll %devroot%\%projectname%\bin\%abi%\osmesa-swrast\osmesa.dll
-@IF %dualosmesa% EQU 1 copy %devroot%\mesa\build\%toolchain%-%abi%\src\gallium\targets\osmesa\osmesa.dll %devroot%\%projectname%\bin\%abi%\osmesa-gallium\osmesa.dll
-@IF %dualosmesa% EQU 0 forfiles /p %devroot%\mesa\build\%toolchain%-%abi%\src /s /m *.dll /c "cmd /c IF EXIST @path copy @path %devroot%\%projectname%\bin\%abi%"
-@IF EXIST %devroot%\%projectname%\bin\%abi%\*on12compiler.dll forfiles /p %devroot%\clon12\out\%abi%\bin /s /m *.dll /c "cmd /c IF EXIST @path copy @path %devroot%\%projectname%\bin\%abi%"
-@IF EXIST %devroot%\%projectname%\bin\%abi%\openglon12.dll IF NOT EXIST %devroot%\%projectname%\bin\%abi%\dxil.dll for /f tokens^=^* %%a in ('@call %devroot%\%projectname%\buildscript\modules\winsdk.cmd dxil') do @IF EXIST %%a copy %%a %devroot%\%projectname%\bin\%abi%
-@IF EXIST %devroot%\%projectname%\bin\%abi%\openclon12.dll IF NOT EXIST %devroot%\%projectname%\bin\%abi%\dxil.dll for /f tokens^=^* %%a in ('@call %devroot%\%projectname%\buildscript\modules\winsdk.cmd dxil') do @IF EXIST %%a copy %%a %devroot%\%projectname%\bin\%abi%
-@forfiles /p %devroot%\mesa\build\%toolchain%-%abi%\src /s /m *.exe /c "cmd /c IF EXIST @path copy @path %devroot%\%projectname%\bin\%abi%"
-@IF EXIST %devroot%\%projectname%\bin\%abi%\vulkan_lvp.dll forfiles /p %devroot%\mesa\build\%toolchain%-%abi%\src /s /m lvp_icd.*.json /c "cmd /c IF EXIST @path copy @path %devroot%\%projectname%\bin\%abi%"
-@IF EXIST %devroot%\%projectname%\bin\%abi%\*ulkan_radeon.dll forfiles /p %devroot%\mesa\build\%toolchain%-%abi%\src /s /m radeon_icd.*.json /c "cmd /c copy @path %devroot%\%projectname%\bin\%abi%"
+@for /f "tokens=* delims=" %%a IN ('dir /B /S %devroot%\mesa\build\%toolchain%-%abi%\src\*.dll 2^>^&1') do @IF EXIST "%%a" copy "%%a" %devroot%\%projectname%\bin\%abi%
+@IF EXIST %devroot%\%projectname%\bin\%abi%\*on12compiler.dll for /f "tokens=* delims=" %%a IN ('dir /B /S %devroot%\clon12\out\%abi%\bin\*.dll 2^>^&1') do @IF EXIST "%%a" copy "%%a" %devroot%\%projectname%\bin\%abi%
+@IF EXIST %devroot%\%projectname%\bin\%abi%\openglon12.dll IF NOT EXIST %devroot%\%projectname%\bin\%abi%\dxil.dll for /f "tokens=* delims=" %%a in ('@call %devroot%\%projectname%\buildscript\modules\winsdk.cmd dxil') do @IF EXIST %%a copy %%a %devroot%\%projectname%\bin\%abi%
+@IF EXIST %devroot%\%projectname%\bin\%abi%\openclon12.dll IF NOT EXIST %devroot%\%projectname%\bin\%abi%\dxil.dll for /f "tokens=* delims=" %%a in ('@call %devroot%\%projectname%\buildscript\modules\winsdk.cmd dxil') do @IF EXIST %%a copy %%a %devroot%\%projectname%\bin\%abi%
+@for /f "tokens=* delims=" %%a IN ('dir /B /S %devroot%\mesa\build\%toolchain%-%abi%\src\*.exe 2^>^&1') do @IF EXIST "%%a" copy "%%a" %devroot%\%projectname%\bin\%abi%
+@IF EXIST %devroot%\%projectname%\bin\%abi%\vulkan_lvp.dll for /f "tokens=* delims=" %%a IN ('dir /B /S %devroot%\mesa\build\%toolchain%-%abi%\src\lvp_icd.*.json 2^>^&1') do @IF EXIST "%%a" copy "%%a" %devroot%\%projectname%\bin\%abi%
+@IF EXIST %devroot%\%projectname%\bin\%abi%\*ulkan_radeon.dll for /f "tokens=* delims=" %%a IN ('dir /B /S %devroot%\mesa\build\%toolchain%-%abi%\src\radeon_icd.*.json 2^>^&1') do @IF EXIST "%%a" copy "%%a" %devroot%\%projectname%\bin\%abi%
 
 @rem Patch Vulkan drivers JSONs
 @IF EXIST %devroot%\%projectname%\bin\%abi%\lvp_icd.*.json call %devroot%\%projectname%\buildscript\modules\fixvulkanjsons.cmd lvp
 @IF EXIST %devroot%\%projectname%\bin\%abi%\radeon_icd.*.json call %devroot%\%projectname%\buildscript\modules\fixvulkanjsons.cmd radeon
 
 @rem Copy build development artifacts
-@xcopy %devroot%\mesa\build\%toolchain%-%abi%\*.lib %devroot%\%projectname%\lib\%abi% /E /I /G
-@xcopy %devroot%\mesa\build\%toolchain%-%abi%\*.a %devroot%\%projectname%\lib\%abi% /E /I /G
-@xcopy %devroot%\mesa\build\%toolchain%-%abi%\*.h %devroot%\%projectname%\include\%abi% /E /I /G
+@for /f "tokens=* delims=" %%a IN ('dir /B /S %devroot%\mesa\build\%toolchain%-%abi%\*.lib 2^>^&1') do @IF EXIST "%%a" copy "%%a" %devroot%\%projectname%\lib\%abi%
+@for /f "tokens=* delims=" %%a IN ('dir /B /S %devroot%\mesa\build\%toolchain%-%abi%\*.dll.a 2^>^&1') do @IF EXIST "%%a" copy "%%a" %devroot%\%projectname%\lib\%abi%
+@for /f "tokens=* delims=" %%a IN ('dir /B /S %devroot%\mesa\build\%toolchain%-%abi%\meson-private\*.pc 2^>^&1') do @IF EXIST "%%a" copy "%%a" %devroot%\%projectname%\lib\%abi%\pkgconfig
+@ROBOCOPY %devroot%\mesa\include "%devroot%\%projectname%\" /S /E
 @echo.
 
 :distributed

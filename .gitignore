@@ -9,7 +9,8 @@
 *.tmp
 *.7z
 # Libraries and headers
-/lib
+/lib/x64
+/lib/x86
 /include
 /dist
 # Build script assets
