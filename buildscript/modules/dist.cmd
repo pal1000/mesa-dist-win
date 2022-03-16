@@ -36,22 +36,22 @@
 
 :mesondist
 @echo Copying Mesa3D shared libraries...
-@for /f "tokens=* delims=" %%a IN ('dir /B /S %devroot%\mesa\build\%toolchain%-%abi%\src\*.dll 2^>^&1') do @IF EXIST "%%a" copy "%%a" %devroot%\%projectname%\bin\%abi%
+@for /R %devroot%\mesa\build\%toolchain%-%abi%\src %%a IN (*.dll) do @IF EXIST "%%a" copy "%%a" %devroot%\%projectname%\bin\%abi%
 @echo.
 
 @if %toolchain%==msvc echo Copying runtimes for Microsoft drivers if needed...
-@IF EXIST %devroot%\%projectname%\bin\%abi%\*on12compiler.dll for /f "tokens=* delims=" %%a IN ('dir /B /S %devroot%\clon12\out\%abi%\bin\*.dll 2^>^&1') do @IF EXIST "%%a" copy "%%a" %devroot%\%projectname%\bin\%abi%
+@IF EXIST %devroot%\%projectname%\bin\%abi%\*on12compiler.dll for /R %devroot%\clon12\out\%abi%\bin %%a IN (*.dll) do @IF EXIST "%%a" copy "%%a" %devroot%\%projectname%\bin\%abi%
 @IF EXIST %devroot%\%projectname%\bin\%abi%\openglon12.dll IF NOT EXIST %devroot%\%projectname%\bin\%abi%\dxil.dll for /f "tokens=* delims=" %%a in ('@call %devroot%\%projectname%\buildscript\modules\winsdk.cmd dxil') do @IF EXIST %%a copy %%a %devroot%\%projectname%\bin\%abi%
 @IF EXIST %devroot%\%projectname%\bin\%abi%\openclon12.dll IF NOT EXIST %devroot%\%projectname%\bin\%abi%\dxil.dll for /f "tokens=* delims=" %%a in ('@call %devroot%\%projectname%\buildscript\modules\winsdk.cmd dxil') do @IF EXIST %%a copy %%a %devroot%\%projectname%\bin\%abi%
 @if %toolchain%==msvc echo.
 
 @echo Copying test suite...
-@for /f "tokens=* delims=" %%a IN ('dir /B /S %devroot%\mesa\build\%toolchain%-%abi%\src\*.exe 2^>^&1') do @IF EXIST "%%a" copy "%%a" %devroot%\%projectname%\bin\%abi%
+@for /R %devroot%\mesa\build\%toolchain%-%abi%\src %%a IN (*.exe) do @IF EXIST "%%a" copy "%%a" %devroot%\%projectname%\bin\%abi%
 @echo.
 
 @echo Copying Vulkan drivers initialization configuration files if needed...
-@IF EXIST %devroot%\%projectname%\bin\%abi%\vulkan_lvp.dll for /f "tokens=* delims=" %%a IN ('dir /B /S %devroot%\mesa\build\%toolchain%-%abi%\src\lvp_icd.*.json 2^>^&1') do @IF EXIST "%%a" copy "%%a" %devroot%\%projectname%\bin\%abi%
-@IF EXIST %devroot%\%projectname%\bin\%abi%\*ulkan_radeon.dll for /f "tokens=* delims=" %%a IN ('dir /B /S %devroot%\mesa\build\%toolchain%-%abi%\src\radeon_icd.*.json 2^>^&1') do @IF EXIST "%%a" copy "%%a" %devroot%\%projectname%\bin\%abi%
+@IF EXIST %devroot%\%projectname%\bin\%abi%\vulkan_lvp.dll for /R %devroot%\mesa\build\%toolchain%-%abi%\src %%a IN (lvp_icd.*.json) do @IF EXIST "%%a" copy "%%a" %devroot%\%projectname%\bin\%abi%
+@IF EXIST %devroot%\%projectname%\bin\%abi%\*ulkan_radeon.dll for /R %devroot%\mesa\build\%toolchain%-%abi%\src %%a IN (radeon_icd.*.json) do @IF EXIST "%%a" copy "%%a" %devroot%\%projectname%\bin\%abi%
 @echo.
 
 @rem Patch Vulkan drivers JSONs
@@ -59,12 +59,12 @@
 @IF EXIST %devroot%\%projectname%\bin\%abi%\radeon_icd.*.json call %devroot%\%projectname%\buildscript\modules\fixvulkanjsons.cmd radeon
 
 @echo Copying static libraries...
-@for /f "tokens=* delims=" %%a IN ('dir /B /S %devroot%\mesa\build\%toolchain%-%abi%\*.lib 2^>^&1') do @IF EXIST "%%a" copy "%%a" %devroot%\%projectname%\lib\%abi%
-@for /f "tokens=* delims=" %%a IN ('dir /B /S %devroot%\mesa\build\%toolchain%-%abi%\*.dll.a 2^>^&1') do @IF EXIST "%%a" copy "%%a" %devroot%\%projectname%\lib\%abi%
+@for /R %devroot%\mesa\build\%toolchain%-%abi% %%a IN (*.lib) do @IF EXIST "%%a" copy "%%a" %devroot%\%projectname%\lib\%abi%
+@for /R %devroot%\mesa\build\%toolchain%-%abi% %%a IN (*.dll.a) do @IF EXIST "%%a" copy "%%a" %devroot%\%projectname%\lib\%abi%
 @echo.
 
 @echo Copying pkg-config scripts...
-@for /f "tokens=* delims=" %%a IN ('dir /B /S %devroot%\mesa\build\%toolchain%-%abi%\meson-private\*.pc 2^>^&1') do @IF EXIST "%%a" copy "%%a" %devroot%\%projectname%\lib\%abi%\pkgconfig
+@for /R %devroot%\mesa\build\%toolchain%-%abi%\meson-private %%a IN (*.pc) do @IF EXIST "%%a" IF /I NOT "%~na"=="DirectX-Headers" IF /I NOT "%~na"=="libelf" IF /I NOT "%~na"=="zlib" copy "%%a" %devroot%\%projectname%\lib\%abi%\pkgconfig
 @echo.
 
 @echo Copying headers...
