@@ -4,7 +4,8 @@
 - Distribution creation: Drop support for osmesa classic;
 - Distribution creation: Refactor it to match Meson install as much as possible;
 - Make distribution creation more verbose to keep track of its progress more easily;
-- Distribution creation: Skip subprojects pkg-config files.
+- Distribution creation: Skip subprojects pkg-config files;
+- Development package: Add fixup tool for pkg config files.
 ### Miscellaneous
 - Improve for loops across the board.
 # 22.0.0-2
