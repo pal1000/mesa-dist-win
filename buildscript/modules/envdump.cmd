@@ -20,7 +20,7 @@
 
 @rem Dump Resource Hacker version
 @IF %rhstate%==1 SET PATH=%devroot%\resource-hacker\;%PATH%
-@IF %rhstate% GTR 0 FOR /F "tokens=* delims=" %%a IN ('where ResourceHacker.exe') do @set rhloc="%%a"
+@IF %rhstate% GTR 0 FOR /F delims^=^ eol^= %%a IN ('where ResourceHacker.exe') do @set rhloc="%%a"
 @IF %rhstate% GTR 0 ResourceHacker.exe -open %rhloc% -action extract -mask VERSIONINFO,, -save %devroot%\%projectname%\buildscript\assets\temp.rc -log NUL
 @IF %rhstate% GTR 0 FOR /F "tokens=1-2 delims= " %%a IN ('type %devroot%\%projectname%\buildscript\assets\temp.rc') do @IF /I "%%a"=="FILEVERSION" set rhver=%%b
 @IF %rhstate% GTR 0 IF NOT %toolchain%==msvc echo Ressource Hacker %rhver:,=.%>>%devroot%\%projectname%\buildinfo\mingw.txt
@@ -44,9 +44,9 @@
 
 @rem Get Vulkan SDK version
 @set vksdkver=0
-@for /f "tokens=* delims=" %%a in ('dir /b "%SystemDrive%\VulkanSDK\"') do @IF EXIST "%SystemDrive%\VulkanSDK\%%a\" set /a vksdkver+=1
+@for /f delims^=^ eol^= %%a in ('dir /b "%SystemDrive%\VulkanSDK\"') do @IF EXIST "%SystemDrive%\VulkanSDK\%%a\" set /a vksdkver+=1
 @IF %vksdkver% GTR 1 set vksdkver=0
-@IF %vksdkver% EQU 1 for /f "tokens=* delims=" %%a in ('dir /b "%SystemDrive%\VulkanSDK\"') do @IF EXIST "%SystemDrive%\VulkanSDK\%%a\" set vksdkver=%%a
+@IF %vksdkver% EQU 1 for /f delims^=^ eol^= %%a in ('dir /b "%SystemDrive%\VulkanSDK\"') do @IF EXIST "%SystemDrive%\VulkanSDK\%%a\" set vksdkver=%%a
 @IF NOT EXIST "%VK_SDK_PATH%" IF NOT EXIST "%VULKAN_SDK%" set vksdkver=0
 @IF NOT %vksdkver%==0 IF NOT %toolchain%==msvc echo LunarG Vulkan SDK %vksdkver%>>%devroot%\%projectname%\buildinfo\mingw.txt
 @IF NOT %vksdkver%==0 IF %toolchain%==msvc echo LunarG Vulkan SDK %vksdkver%>>%devroot%\%projectname%\buildinfo\msvc.txt
@@ -61,14 +61,14 @@
 @IF %toolchain%==msvc echo %msvcname% v%msvcver%>>%devroot%\%projectname%\buildinfo\msvc.txt
 
 @set wsdkcount=0
-@IF %toolchain%==msvc for /f "tokens=* delims=" %%a IN ('REG QUERY HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Installer /s /d /f "Windows SDK" /e 2^>^&1 ^| find "HKEY_"') DO @for /f "tokens=* delims=" %%b IN ('REG QUERY %%a /s /v DisplayVersion 2^>^&1 ^| find "DisplayVersion"') DO @for /f "tokens=3" %%c IN ("%%b") DO @(
+@IF %toolchain%==msvc for /f delims^=^ eol^= %%a IN ('REG QUERY HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Installer /s /d /f "Windows SDK" /e 2^>^&1 ^| find "HKEY_"') DO @for /f delims^=^ eol^= %%b IN ('REG QUERY %%a /s /v DisplayVersion 2^>^&1 ^| find "DisplayVersion"') DO @for /f "tokens=3" %%c IN ("%%b") DO @(
 @set /a wsdkcount+=1
 @set vwsdk=%%c
 )
 @if %wsdkcount% EQU 1 echo Windows SDK %vwsdk%>>%devroot%\%projectname%\buildinfo\msvc.txt
 
 @set wdkcount=0
-@IF %toolchain%==msvc for /f "tokens=* delims=" %%a IN ('REG QUERY HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Installer /s /d /f "Windows Driver Kit" /e 2^>^&1 ^| find "HKEY_"') DO @for /f "tokens=* delims=" %%b IN ('REG QUERY %%a /s /v DisplayVersion 2^>^&1 ^| find "DisplayVersion"') DO @for /f "tokens=3" %%c IN ("%%b") DO @(
+@IF %toolchain%==msvc for /f delims^=^ eol^= %%a IN ('REG QUERY HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Installer /s /d /f "Windows Driver Kit" /e 2^>^&1 ^| find "HKEY_"') DO @for /f delims^=^ eol^= %%b IN ('REG QUERY %%a /s /v DisplayVersion 2^>^&1 ^| find "DisplayVersion"') DO @for /f "tokens=3" %%c IN ("%%b") DO @(
 @set /a wdkcount+=1
 @set vwdk=%%c
 )
@@ -76,7 +76,7 @@
 
 @if NOT defined nugetstate set nugetstate=0
 @IF %rhstate% GTR 0 IF %nugetstate%==1 SET nugetloc=%devroot%\nuget\nuget.exe
-@IF %rhstate% GTR 0 IF %nugetstate% EQU 2 FOR /F "tokens=* delims=" %%a IN ('where nuget.exe') do @set nugetloc="%%a"
+@IF %rhstate% GTR 0 IF %nugetstate% EQU 2 FOR /F delims^=^ eol^= %%a IN ('where nuget.exe') do @set nugetloc="%%a"
 @IF %rhstate% GTR 0 IF %nugetstate% GTR 0 ResourceHacker.exe -open %nugetloc% -action extract -mask VERSIONINFO,, -save %devroot%\%projectname%\buildscript\assets\temp.rc -log NUL
 @IF %rhstate% GTR 0 IF %nugetstate% GTR 0 FOR /F "tokens=1-2 delims= " %%a IN ('type %devroot%\%projectname%\buildscript\assets\temp.rc') do @IF /I "%%a"=="FILEVERSION" set nugetver=%%b
 @IF defined nugetver IF %toolchain%==msvc echo Nuget Commandline tool %nugetver:,=.%>>%devroot%\%projectname%\buildinfo\msvc.txt
@@ -110,7 +110,7 @@ echo CMake %%a>>%devroot%\%projectname%\buildinfo\msvc.txt
 @rem Get flex and bison version
 @IF %toolchain%==msvc IF "%flexstate%"=="1" set PATH=%devroot%\flexbison\;%PATH%
 @IF %toolchain%==msvc IF NOT "%flexstate%"=="0" IF NOT "%flexstate%"=="" set exitloop=1
-@IF %toolchain%==msvc IF NOT "%flexstate%"=="0" IF NOT "%flexstate%"=="" for /f "tokens=* delims=" %%a IN ('where changelog.md') do @for /f "tokens=3 skip=6" %%b IN ('type %%a') do @if defined exitloop (
+@IF %toolchain%==msvc IF NOT "%flexstate%"=="0" IF NOT "%flexstate%"=="" for /f delims^=^ eol^= %%a IN ('where changelog.md') do @for /f "tokens=3 skip=6" %%b IN ('type %%a') do @if defined exitloop (
 set "exitloop="
 echo Winflexbison package %%b>>%devroot%\%projectname%\buildinfo\msvc.txt
 )

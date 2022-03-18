@@ -268,7 +268,7 @@
 @if /I NOT "%glswrast%"=="y" set cand3d10umd=0
 @IF NOT %toolchain%==msvc set cand3d10umd=0
 @IF %intmesaver% LSS 22000 IF %disableootpatch% EQU 1 set cand3d10umd=0
-@IF %cand3d10umd% EQU 1 for /f "tokens=* delims=" %%a in ('@call %devroot%\%projectname%\buildscript\modules\winsdk.cmd wdk') do @IF NOT "%%a"=="OK" set cand3d10umd=0
+@IF %cand3d10umd% EQU 1 for /f delims^=^ eol^= %%a in ('@call %devroot%\%projectname%\buildscript\modules\winsdk.cmd wdk') do @IF NOT "%%a"=="OK" set cand3d10umd=0
 @IF %cand3d10umd% EQU 1 set /p d3d10umd=Build Mesa3D D3D10 software renderer (y/n):
 @IF %cand3d10umd% EQU 1 echo.
 @if /I "%d3d10umd%"=="y" set buildconf=%buildconf% -Dgallium-d3d10umd=true

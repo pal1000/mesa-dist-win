@@ -17,7 +17,7 @@
 )
 
 @set pclines=0
-@for /f "tokens=* delims=" %%b IN ('type %1') do @(
+@for /f delims^=^ eol^= %%b IN ('type %1') do @(
 @set /a pclines+=1
 @if NOT !pclines! EQU %prfxline% if NOT !pclines! EQU %libline% set pcline[!pclines!]=%%b
 @if !pclines! EQU %prfxline% set pcline[!pclines!]=prefix^=%prefix:\=/%

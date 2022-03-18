@@ -7,7 +7,7 @@
 @git pull -v --progress --recurse-submodules origin
 @echo.
 )
-@IF EXIST %devroot%\SPIRV-LLVM-Translator\spirv-headers-tag.conf IF EXIST %devroot%\SPIRV-LLVM-Translator\projects\SPIRV-Headers IF %gitstate% GTR 0 for /f "tokens=* delims=" %%a IN ('type %devroot%\SPIRV-LLVM-Translator\spirv-headers-tag.conf') do @for /f "tokens=* delims=" %%b IN ('type %devroot%\SPIRV-LLVM-Translator\projects\SPIRV-Headers\.git\HEAD') do @IF NOT %%a==%%b (
+@IF EXIST %devroot%\SPIRV-LLVM-Translator\spirv-headers-tag.conf IF EXIST %devroot%\SPIRV-LLVM-Translator\projects\SPIRV-Headers IF %gitstate% GTR 0 for /f delims^=^ eol^= %%a IN ('type %devroot%\SPIRV-LLVM-Translator\spirv-headers-tag.conf') do @for /f delims^=^ eol^= %%b IN ('type %devroot%\SPIRV-LLVM-Translator\projects\SPIRV-Headers\.git\HEAD') do @IF NOT %%a==%%b (
 @echo Updating SPIRV headers used by LLVM SPIRV translator...
 @cd %devroot%\SPIRV-LLVM-Translator\projects\SPIRV-Headers
 @git checkout master
@@ -35,7 +35,7 @@
 @echo Getting source code of SPIRV headers used by LLVM SPIRV translator...
 @git clone https://github.com/KhronosGroup/SPIRV-Headers %devroot%\SPIRV-LLVM-Translator\projects\SPIRV-Headers
 @cd %devroot%\SPIRV-LLVM-Translator\projects\SPIRV-Headers
-@for /f "tokens=* delims=" %%a IN ('type %devroot%\SPIRV-LLVM-Translator\spirv-headers-tag.conf') do @git checkout %%a
+@for /f delims^=^ eol^= %%a IN ('type %devroot%\SPIRV-LLVM-Translator\spirv-headers-tag.conf') do @git checkout %%a
 @echo.
 )
 

@@ -51,7 +51,7 @@
 @IF !goodpython!==1 set /a pythoncount+=1
 @IF !pythoncount!==%pyselect% set selectedpython=-%%a-%%b
 )
-@FOR /F "tokens=* delims=" %%a IN ('py %selectedpython%  -c "import sys; print(sys.executable)"') DO @set pythonloc=%%~sa
+@FOR /F delims^=^ eol^= %%a IN ('py %selectedpython%  -c "import sys; print(sys.executable)"') DO @set pythonloc=%%~sa
 @GOTO loadpypath
 
 :nopylauncher
@@ -67,7 +67,7 @@
 @exit
 )
 @IF %pythonloc%==python.exe set exitloop=1
-@IF %pythonloc%==python.exe FOR /F "tokens=* delims=" %%a IN ('where /f python.exe') DO @IF defined exitloop (
+@IF %pythonloc%==python.exe FOR /F delims^=^ eol^= %%a IN ('where /f python.exe') DO @IF defined exitloop (
 set "exitloop="
 SET pythonloc=%%~sa
 )
@@ -79,7 +79,7 @@ SET pythonloc=%%~sa
 @where /q python.exe
 @if NOT "%ERRORLEVEL%"=="0" set pypath=0
 @IF %pypath%==1 set exitloop=1
-@IF %pypath%==1 FOR /F "tokens=* delims=" %%a IN ('where /f python.exe') DO @IF defined exitloop (
+@IF %pypath%==1 FOR /F delims^=^ eol^= %%a IN ('where /f python.exe') DO @IF defined exitloop (
 set "exitloop="
 SET pypath=%%~sa
 )

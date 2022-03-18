@@ -9,7 +9,7 @@
 @git pull -v --progress --recurse-submodules origin
 @echo.
 )
-@IF EXIST %devroot%\spirv-tools\DEPS IF EXIST %devroot%\spirv-tools\external\spirv-headers IF %gitstate% GTR 0 for /f "tokens=2,4 delims='" %%a IN ('type %devroot%\spirv-tools\DEPS') do @IF /I "%%a"=="spirv_headers_revision" IF NOT "%%b"=="" for /f "tokens=* delims=" %%c IN ('type %devroot%\spirv-tools\external\spirv-headers\.git\HEAD') do @IF NOT %%b==%%c (
+@IF EXIST %devroot%\spirv-tools\DEPS IF EXIST %devroot%\spirv-tools\external\spirv-headers IF %gitstate% GTR 0 for /f "tokens=2,4 delims='" %%a IN ('type %devroot%\spirv-tools\DEPS') do @IF /I "%%a"=="spirv_headers_revision" IF NOT "%%b"=="" for /f delims^=^ eol^= %%c IN ('type %devroot%\spirv-tools\external\spirv-headers\.git\HEAD') do @IF NOT %%b==%%c (
 @echo Updating source code of SPIRV headers used by SPIRV tools...
 @cd %devroot%\spirv-tools\external\spirv-headers
 @git checkout master

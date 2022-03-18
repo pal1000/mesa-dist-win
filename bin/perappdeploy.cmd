@@ -58,7 +58,7 @@
 @set foundosmesa=0
 @set foundgraw=0
 @set overwritewarn=
-@for /f "tokens=* delims=" %%a IN ('dir /A:L /B "%dir%" 2^>^&1') DO @(
+@for /f delims^=^ eol^= %%a IN ('dir /A:L /B "%dir%" 2^>^&1') DO @(
 @IF /I "%%a"=="opengl32.dll" set founddesktopgl=1
 @IF /I "%%a"=="opengl32.dll" del "%dir%\%%a"
 @if EXIST "%dir%\opengl32.dll" set overwritewarn=%overwritewarn%opengl32.dll, 
