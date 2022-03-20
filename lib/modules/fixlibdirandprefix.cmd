@@ -10,7 +10,7 @@
 @set pclines=0
 @set prfxline=0
 @set libline=0
-@for /f "tokens=1 delims=^=" %%b IN ('type %1') do @(
+@for /f tokens^=1^ delims^=^=^ eol^= %%b IN ('type %1') do @(
 @set /a pclines+=1
 @if /I "%%b"=="prefix" set prfxline=!pclines!
 @if /I "%%b"=="libdir" set libline=!pclines!

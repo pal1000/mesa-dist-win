@@ -41,9 +41,9 @@
 @IF /I "%msyscmd%"=="exit" exit
 @IF /I "%msyscmd%"=="shell" GOTO selectshell
 @IF /I "%msyscmd%"=="clearcache" %msysloc%\usr\bin\bash --login -c "pacman -Sc --noconfirm"
-@IF /I "%msyscmd%"=="clearcache" for /R "%msysloc%\var\cache\pacman\pkg" %%a in (*.*) do @for /f "tokens=1 delims=-" %%b in ("%%~na") DO @IF NOT "%%b"=="bison" IF NOT "%%b"=="flex" IF NOT "%%b"=="m4" IF NOT "%%b"=="mingw" IF NOT "%%b"=="patch" IF NOT "%%b"=="tar" del "%%a"
+@IF /I "%msyscmd%"=="clearcache" for /R "%msysloc%\var\cache\pacman\pkg" %%a in (*.*) do @for /f tokens^=1^ delims^=-^ eol^= %%b in ("%%~na") DO @IF NOT "%%b"=="bison" IF NOT "%%b"=="flex" IF NOT "%%b"=="m4" IF NOT "%%b"=="mingw" IF NOT "%%b"=="patch" IF NOT "%%b"=="tar" del "%%a"
 @IF /I "%msyscmd%"=="cleancache" %msysloc%\usr\bin\bash --login -c "pacman -Sc --noconfirm"
-@IF /I "%msyscmd%"=="cleancache" for /R "%msysloc%\var\cache\pacman\pkg" %%a in (*.*) do @for /f "tokens=1 delims=-" %%b in ("%%~na") DO @IF NOT "%%b"=="bison" IF NOT "%%b"=="flex" IF NOT "%%b"=="m4" IF NOT "%%b"=="mingw" IF NOT "%%b"=="patch" IF NOT "%%b"=="tar" del "%%a"
+@IF /I "%msyscmd%"=="cleancache" for /R "%msysloc%\var\cache\pacman\pkg" %%a in (*.*) do @for /f tokens^=1^ delims^=-^ eol^= %%b in ("%%~na") DO @IF NOT "%%b"=="bison" IF NOT "%%b"=="flex" IF NOT "%%b"=="m4" IF NOT "%%b"=="mingw" IF NOT "%%b"=="patch" IF NOT "%%b"=="tar" del "%%a"
 @IF /I "%msyscmd%"=="setup" IF %shell% EQU 1 %msysloc%\usr\bin\bash --login -c "pacman -S flex bison patch tar mingw-w64-i686-{python-mako,meson,pkgconf,vulkan-devel,libelf,zstd,gdb,llvm,cc} mingw-w64-x86_64-{python-mako,meson,pkgconf,vulkan-devel,libelf,zstd,gdb,llvm,cc} --needed"
 @IF /I "%msyscmd%"=="setup" IF %shell% GTR 1 %msysloc%\usr\bin\bash --login -c "pacman -S flex bison patch tar ${MINGW_PACKAGE_PREFIX}-{python-mako,meson,pkgconf,vulkan-devel,libelf,zstd,gdb,llvm,cc} --needed"
 @IF %gitstate% GTR 0 IF /I NOT "%msyscmd%"=="clearcache" IF /I NOT "%msyscmd%"=="cleancache" IF /I NOT "%msyscmd%"=="setup" %msysloc%\usr\bin\bash --login -c "PATH=${PATH}:${gitloc};%msyscmd%"

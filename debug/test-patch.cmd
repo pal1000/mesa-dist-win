@@ -25,7 +25,7 @@
 @IF %gitstate% GTR 0 IF EXIST "%CD%\.git\" pause
 @exit
 )
-@IF /I "%ptstcmd%"=="list" for /f %%i in ('FORFILES /P %devroot%\%projectname%\patches /M *.patch /C "cmd /c echo @fname"') do @echo %%~i
+@IF /I "%ptstcmd%"=="list" for /R %devroot%\%projectname%\patches %%i in (*.patch) do @echo %%~ni
 @IF /I "%ptstcmd%"=="list" echo.
 @IF /I "%ptstcmd:~0,3%"=="cd " %ptstcmd%
 @IF /I "%ptstcmd:~0,3%"=="cd " echo.

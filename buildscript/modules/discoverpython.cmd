@@ -14,7 +14,7 @@
 @rem Count and list supported python installations
 @set pythontotal=0
 @cls
-@FOR /F "tokens=2-3 skip=1 delims=-" %%a IN ('py -0 2^>nul') do @FOR /F "tokens=1-2 delims=." %%c IN ("%%a") do @(
+@FOR /F tokens^=2-3^ skip^=1^ delims^=-^ eol^= %%a IN ('py -0 2^>nul') do @FOR /F tokens^=1-2^ delims^=.^ eol^= %%c IN ("%%a") do @(
 @set goodpython=1
 @IF EXIST %devroot%\mesa IF NOT EXIST %devroot%\mesa\subprojects\.gitignore set goodpython=0
 @if %%c LSS 3 set goodpython=0
@@ -43,7 +43,7 @@
 
 @rem Locate selected Python installation
 @set pythoncount=0
-@FOR /F "tokens=2-3 skip=1 delims=-" %%a IN ('py -0 2^>nul') do @FOR /F "tokens=1-2 delims=." %%c IN ("%%a") do @(
+@FOR /F tokens^=2-3^ skip^=1^ delims^=-^ eol^= %%a IN ('py -0 2^>nul') do @FOR /F tokens^=1-2^ delims^=.^ eol^= %%c IN ("%%a") do @(
 @set goodpython=1
 @IF EXIST %devroot%\mesa IF NOT EXIST %devroot%\mesa\subprojects\.gitignore set goodpython=0
 @if %%c LSS 3 set goodpython=0
@@ -67,7 +67,7 @@
 @exit
 )
 @IF %pythonloc%==python.exe set exitloop=1
-@IF %pythonloc%==python.exe FOR /F delims^=^ eol^= %%a IN ('where /f python.exe') DO @IF defined exitloop (
+@IF %pythonloc%==python.exe FOR /F delims^=^ eol^= %%a IN ('where python.exe') DO @IF defined exitloop (
 set "exitloop="
 SET pythonloc=%%~sa
 )
@@ -79,7 +79,7 @@ SET pythonloc=%%~sa
 @where /q python.exe
 @if NOT "%ERRORLEVEL%"=="0" set pypath=0
 @IF %pypath%==1 set exitloop=1
-@IF %pypath%==1 FOR /F delims^=^ eol^= %%a IN ('where /f python.exe') DO @IF defined exitloop (
+@IF %pypath%==1 FOR /F delims^=^ eol^= %%a IN ('where python.exe') DO @IF defined exitloop (
 set "exitloop="
 SET pypath=%%~sa
 )
@@ -87,11 +87,11 @@ SET pypath=%%~sa
 
 :pyver
 @rem Identify Python version.
-@FOR /F "tokens=1 delims= " %%a IN ('%pythonloc% -c "import sys; print(sys.version)"') DO @SET fpythonver=%%a
+@FOR /F tokens^=1^ eol^= %%a IN ('%pythonloc% -c "import sys; print(sys.version)"') DO @SET fpythonver=%%a
 
 @rem Check if Python version is not too old.
 @set goodpython=1
-@FOR /F "tokens=1-2 delims=." %%a IN ('echo %fpythonver%') DO @(
+@FOR /F tokens^=1-2^ delims^=.^ eol^= %%a IN ("%fpythonver%") DO @(
 @if %%a LSS 3 set goodpython=0
 @if %%a EQU 3 if %%b LSS 6 set goodpython=0
 )
