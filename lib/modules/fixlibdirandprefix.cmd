@@ -25,4 +25,6 @@
 )
 
 @del %1
-@for /L %%b IN (1,1,%pclines%) do @echo !pcline[%%b]!>>%1
+@for /L %%b IN (1,1,3) do @echo !pcline[%%b]!>>%1
+@echo.>>%1
+@for /L %%b IN (4,1,%pclines%) do @echo !pcline[%%b]!>>%1
