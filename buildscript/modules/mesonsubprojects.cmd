@@ -14,7 +14,7 @@ cd /D %devroot%\mesa
 @set llvmconfigbusted=0
 @IF %toolchain%==msvc IF EXIST %devroot%\llvm\build\%abi%\lib\cmake\llvm\LLVMConfig.cmake FOR /F delims^=^ eol^= %%a IN ('type %devroot%\llvm\build\%abi%\lib\cmake\llvm\LLVMConfig.cmake') DO @IF "%%a"=="set(LLVM_ENABLE_RTTI ON)" SET RTTI=true
 @IF NOT %toolchain%==msvc IF EXIST %msysloc%\%LMSYSTEM%\lib\cmake\llvm\LLVMConfig.cmake FOR /F delims^=^ eol^= %%a IN ('type %msysloc%\%LMSYSTEM%\lib\cmake\llvm\LLVMConfig.cmake') DO @IF "%%a"=="set(LLVM_ENABLE_RTTI ON)" SET RTTI=true
-@IF NOT %toolchain%==msvc if /I NOT "%llvmless%"=="y" FOR /F delims^=^ eol^= %%a IN ('%msysloc%\usr\bin\bash --login -c "${MINGW_PREFIX}/bin/llvm-config --has-rtti" 2^>^&1') DO @IF /I NOT "%%a"=="YES" IF /I NOT "%%a"=="NO" set llvmconfigbusted=1
+@IF NOT %toolchain%==msvc if /I NOT "%llvmless%"=="y" FOR /F delims^=^ eol^= %%a IN ('%runmsys% ${MINGW_PREFIX}/bin/llvm-config --has-rtti 2^>^&1') DO @IF /I NOT "%%a"=="YES" IF /I NOT "%%a"=="NO" set llvmconfigbusted=1
 @IF %llvmconfigbusted% EQU 0 IF EXIST "%devroot%\mesa\subprojects\llvm\" RD /S /Q %devroot%\mesa\subprojects\llvm
 @IF %llvmconfigbusted% EQU 0 GOTO msvcwraps
 
@@ -23,7 +23,7 @@ cd /D %devroot%\mesa
 @set llvmlibs=libLLVMCoroutines.a libLLVMipo.a libLLVMInstrumentation.a libLLVMVectorize.a libLLVMLinker.a libLLVMIRReader.a libLLVMAsmParser.a libLLVMFrontendOpenMP.a libLLVMInterpreter.a libLLVMExecutionEngine.a libLLVMRuntimeDyld.a libLLVMOrcTargetProcess.a libLLVMOrcShared.a libLLVMCodeGen.a libLLVMTarget.a libLLVMScalarOpts.a libLLVMInstCombine.a libLLVMAggressiveInstCombine.a libLLVMTransformUtils.a libLLVMBitWriter.a libLLVMAnalysis.a libLLVMProfileData.a libLLVMObject.a libLLVMTextAPI.a libLLVMMCParser.a libLLVMMC.a libLLVMDebugInfoCodeView.a libLLVMBitReader.a libLLVMCore.a libLLVMRemarks.a libLLVMBitstreamReader.a libLLVMBinaryFormat.a libLLVMSupport.a libLLVMDemangle.a
 @set llvmlibs=%llvmlibs:.a=%
 @set llvmlibs='%llvmlibs: =', '%'
-@FOR /F tokens^=2^ eol^= %%a IN ('%msysloc%\usr\bin\bash --login -c "/usr/bin/pacman -Q ${MINGW_PACKAGE_PREFIX}-llvm"') DO @FOR /F tokens^=1^ delims=^-^ eol^= %%b IN ("%%~a") DO @SET llvmver=%%b
+@FOR /F tokens^=2^ eol^= %%a IN ('%runmsys% /usr/bin/pacman -Q ${MINGW_PACKAGE_PREFIX}-llvm') DO @FOR /F tokens^=1^ delims=^-^ eol^= %%b IN ("%%~a") DO @SET llvmver=%%b
 @IF NOT EXIST "%devroot%\mesa\subprojects\llvm\" md %devroot%\mesa\subprojects\llvm
 @(
 echo project^('llvm', ['cpp']^)
@@ -92,7 +92,7 @@ cd /D %devroot%\mesa
 @rem Override zlib dependency
 @for /d %%a in ("%devroot%\mesa\subprojects\zlib-*") do @RD /S /Q "%%~a"
 @IF EXIST %devroot%\mesa\subprojects\zlib.wrap del %devroot%\mesa\subprojects\zlib.wrap
-@FOR /F tokens^=2^ eol^= %%a IN ('%msysloc%\usr\bin\bash --login -c "/usr/bin/pacman -Q ${MINGW_PACKAGE_PREFIX}-zlib"') DO @FOR /F tokens^=1^ delims^=-^ eol^= %%b IN ("%%~a") DO @SET zlibver=%%b
+@FOR /F tokens^=2^ eol^= %%a IN ('%runmsys% /usr/bin/pacman -Q ${MINGW_PACKAGE_PREFIX}-zlib') DO @FOR /F tokens^=1^ delims^=-^ eol^= %%b IN ("%%~a") DO @SET zlibver=%%b
 @IF NOT EXIST "%devroot%\mesa\subprojects\zlib\" MD %devroot%\mesa\subprojects\zlib
 @(
 echo project^('zlib', ['cpp'], version ^: '%zlibver%'^)
@@ -113,7 +113,7 @@ echo ^)
 )
 
 @rem Override ZSTD dependency
-@FOR /F tokens^=2^ eol^= %%a IN ('%msysloc%\usr\bin\bash --login -c "/usr/bin/pacman -Q ${MINGW_PACKAGE_PREFIX}-zstd"') DO @FOR /F tokens^=1^ delims^=-^ eol^= %%b IN ("%%~a") DO @SET zstdver=%%b
+@FOR /F tokens^=2^ eol^= %%a IN ('%runmsys% /usr/bin/pacman -Q ${MINGW_PACKAGE_PREFIX}-zstd') DO @FOR /F tokens^=1^ delims^=-^ eol^= %%b IN ("%%~a") DO @SET zstdver=%%b
 @IF NOT EXIST "%devroot%\mesa\subprojects\libzstd\" MD %devroot%\mesa\subprojects\libzstd
 @(
 echo project^('libzstd', ['cpp'], version ^: '%zstdver%'^)
@@ -139,7 +139,7 @@ echo meson.override_dependency^('libzstd', zstd_override^)
 @IF "%vksdkselect%"=="2" (
 @set "VULKAN_SDK="
 @set "VK_SDK_PATH="
-@%msysloc%\usr\bin\bash --login -c "/usr/bin/pacman -S ${MINGW_PACKAGE_PREFIX}-vulkan-loader --noconfirm"
+@%runmsys% /usr/bin/pacman -S ${MINGW_PACKAGE_PREFIX}-vulkan-loader --noconfirm
 @echo.
 @IF EXIST "%devroot%\mesa\subprojects\vulkan\" RD /S /Q %devroot%\mesa\subprojects\vulkan
 @GOTO donewrap

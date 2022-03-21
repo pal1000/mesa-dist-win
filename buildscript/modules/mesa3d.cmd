@@ -148,7 +148,7 @@
 @IF %intmesaver% GEQ 21200 set buildconf=%buildconf% -Dc_std=c17
 @IF %toolchain%==msvc set buildconf=%buildconf% -Db_vscrt=mt -Dzlib:default_library=static
 @IF %toolchain%==msvc IF %intmesaver% GEQ 21200 set buildconf=%buildconf% -Dcpp_std=vc++latest
-@IF NOT %toolchain%==msvc set buildconf=%buildconf% -Dc_args='-march=core2 -pipe' -Dcpp_args='-march=core2 -pipe'
+@IF NOT %toolchain%==msvc set buildconf=%buildconf% -Dc_args="-march=core2 -pipe" -Dcpp_args="-march=core2 -pipe"
 @IF NOT %toolchain%==msvc set LDFLAGS=-static -s
 @IF NOT %toolchain%==msvc IF %intmesaver% GTR 20000 set buildconf=%buildconf% -Dzstd=%mesonbooltrue%
 @IF NOT %toolchain%==msvc set buildconf=%buildconf% --force-fallback-for=zlib,libzstd
@@ -178,9 +178,9 @@
 @if /I "%useninja%"=="y" if %ninjastate%==1 IF %toolchain%==msvc set PATH=%devroot%\ninja\;%PATH%
 @if /I "%useninja%"=="y" set buildconf=%buildconf% --backend=ninja
 @if /I "%useninja%"=="y" IF %toolchain%==msvc set buildcmd=ninja -C %devroot:\=/%/mesa/build/%toolchain%-%abi% -j %throttle% -k 0
-@IF NOT %toolchain%==msvc set buildcmd=%msysloc%\usr\bin\bash --login -c "
+@IF NOT %toolchain%==msvc set buildcmd=%runmsys% 
 @IF NOT %toolchain%==msvc IF %gitstate% GTR 0 set buildcmd=%buildcmd%PATH=${PATH}:${gitloc};
-@IF NOT %toolchain%==msvc set buildcmd=%buildcmd%${MINGW_PREFIX}/bin/ninja -C $(/usr/bin/cygpath -m ${devroot})/mesa/build/%toolchain%-${abi} -j ${throttle} -k 0"
+@IF NOT %toolchain%==msvc set buildcmd=%buildcmd%${MINGW_PREFIX}/bin/ninja -C $(/usr/bin/cygpath -m ${devroot})/mesa/build/%toolchain%-${abi} -j ${throttle} -k 0
 @if /I NOT "%useninja%"=="y" set buildconf=%buildconf% --backend=vs
 
 @set galliumcount=0
@@ -373,8 +373,7 @@
 @set "PKG_CONFIG_SPV="
 
 @rem Pass additional linker flags
-@if %toolchain%==msvc if defined LDFLAGS set buildconf=%buildconf% -Dc_link_args="%LDFLAGS%" -Dcpp_link_args="%LDFLAGS%"
-@if NOT %toolchain%==msvc set buildconf=%buildconf% -Dc_link_args='%LDFLAGS%' -Dcpp_link_args='%LDFLAGS%'"
+@if defined LDFLAGS set buildconf=%buildconf% -Dc_link_args="%LDFLAGS%" -Dcpp_link_args="%LDFLAGS%"
 
 @rem Load MSVC specific build dependencies
 @IF %toolchain%==msvc IF %flexstate%==1 set PATH=%devroot%\flexbison\;%PATH%

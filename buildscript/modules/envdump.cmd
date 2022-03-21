@@ -55,7 +55,7 @@
 @IF NOT %toolchain%==msvc echo.>>%devroot%\%projectname%\buildinfo\mingw.txt
 @IF NOT %toolchain%==msvc echo MSYS2 environment>>%devroot%\%projectname%\buildinfo\mingw.txt
 @IF NOT %toolchain%==msvc echo ----------------->>%devroot%\%projectname%\buildinfo\mingw.txt
-@IF NOT %toolchain%==msvc %msysloc%\usr\bin\bash --login -c "/usr/bin/pacman -Q">>%devroot%\%projectname%\buildinfo\mingw.txt
+@IF NOT %toolchain%==msvc %runmsys% /usr/bin/pacman -Q>>%devroot%\%projectname%\buildinfo\mingw.txt
 
 @rem Dump Visual Studio environment
 @IF %toolchain%==msvc echo %msvcname% v%msvcver%>>%devroot%\%projectname%\buildinfo\msvc.txt

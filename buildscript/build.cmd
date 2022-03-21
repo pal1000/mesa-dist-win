@@ -9,7 +9,7 @@
 @set projectname=mesa-dist-win
 @set "ERRORLEVEL="
 
-@rem Create folder to store generated resource files
+@rem Create folder to store generated resource files and MSYS2 shell scripts
 @IF NOT EXIST %devroot%\%projectname%\buildscript\assets md %devroot%\%projectname%\buildscript\assets
 
 @rem Command line option to disable out of tree patches for Mesa3D

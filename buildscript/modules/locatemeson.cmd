@@ -1,5 +1,5 @@
 @setlocal
-@IF NOT %toolchain%==msvc set mesonloc=%msysloc%\usr\bin\bash --login -c "cd $(/usr/bin/cygpath -m ${devroot})/mesa;
+@IF NOT %toolchain%==msvc set mesonloc=%runmsys% cd $(/usr/bin/cygpath -m ${devroot})/mesa;
 @IF NOT %toolchain%==msvc IF %gitstate% GTR 0 set mesonloc=%mesonloc%PATH=${PATH}:${gitloc};
 @IF NOT %toolchain%==msvc set mesonloc=%mesonloc%${MINGW_PREFIX}/bin/meson
 @IF NOT %toolchain%==msvc GOTO foundmeson

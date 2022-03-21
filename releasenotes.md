@@ -7,7 +7,8 @@
 - Distribution creation: Skip subprojects pkg-config files;
 - Development package: Add fixup tool for pkg config files.
 ### Miscellaneous
-- Improve for loops across the board.
+- Improve for loops across the board;
+- Support quotes in MSYS2 commands.
 # 22.0.0-2
 ### Out of tree patches
 - Add patch fixing 32-bit MSVC build of Mesa 22.0.0.

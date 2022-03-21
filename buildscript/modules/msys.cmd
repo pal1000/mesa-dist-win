@@ -5,3 +5,4 @@
 @IF NOT EXIST %msysloc% set msysloc=%devroot%\msys32
 @IF NOT EXIST %msysloc% set msysstate=0
 @endlocal&set msysstate=%msysstate%&set msysloc=%msysloc%
+@set runmsys=call %devroot%\%projectname%\buildscript\modules\runmsys.cmd

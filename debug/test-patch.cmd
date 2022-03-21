@@ -6,7 +6,7 @@
 @call %devroot%\mesa-dist-win\buildscript\modules\msysupdate.cmd
 @call %devroot%\mesa-dist-win\buildscript\modules\git.cmd
 @IF %msysstate% GTR 0 (
-@%msysloc%\usr\bin\bash --login -c "pacman -S patch --needed --noconfirm"
+@%runmsys% pacman -S patch --needed --noconfirm
 @echo.
 )
 @if %gitstate%==0 IF NOT EXIST %msysloc%\usr\bin\patch.exe (

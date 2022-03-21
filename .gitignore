@@ -1,10 +1,6 @@
 # Binaries
-*.exe
-*.dll
-# Build time configuration files
-*.json
-# Build logs
-*.log
+/bin/x86
+/bin/x64
 # 7-zip artifacts
 *.tmp
 *.7z
