@@ -19,7 +19,7 @@
 @IF %normaldist% EQU 1 GOTO normaldist
 
 @IF %toolchain%==msvc GOTO distributed
-@%mesonloc% install --no-rebuild --skip-subprojects -C $(/usr/bin/cygpath -m ${devroot})/mesa/build/%toolchain%-${abi}"
+@%mesonloc% install --no-rebuild --skip-subprojects -C "%devroot%\mesa\build\%toolchain%-%abi%"
 @echo.
 @GOTO distributed
 
