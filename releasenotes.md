@@ -10,6 +10,10 @@
 - Improve for loops across the board;
 - Support quotes in MSYS2 commands;
 - MSYS2: Convert paths to Windows quoted format.
+### Build script
+- LLVM MSVC build: Simplify error checks;
+- LLVM MSVC build: Support generating build configuration command without performing the build;
+- LLVM MSVC build: Fetch LLVM 14.0.0 when source is not available.
 # 22.0.0-2
 ### Out of tree patches
 - Add patch fixing 32-bit MSVC build of Mesa 22.0.0.

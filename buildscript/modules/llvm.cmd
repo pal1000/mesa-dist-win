@@ -1,40 +1,18 @@
 @setlocal
 
-@rem Check lf LLVM binaries are available
-@set llvmbinaries=0
-@IF EXIST %devroot%\llvm\build\%abi%\include IF EXIST %devroot%\llvm\build\%abi%\lib set llvmbinaries=1
-
 @rem Check lf LLVM sources are available or obtainable
 @set llvmsources=1
 @if NOT EXIST %devroot%\llvm\cmake if NOT EXIST %devroot%\llvm-project IF %gitstate EQU 0 set llvmsources=0
 
-@rem Verify if LLVM can be used.
-@IF %llvmbinaries% EQU 1 IF %llvmsources% EQU 0 echo LLVM source code not found but LLVM is already built. Skipping LLVM build.
-@IF %llvmbinaries% EQU 1 IF %llvmsources% EQU 0 echo.
-@IF %llvmbinaries% EQU 1 IF %llvmsources% EQU 0 GOTO skipllvm
-@IF %cmakestate%==0 IF %llvmbinaries% EQU 1 echo CMake not found but LLVM is already built. Skipping LLVM build.
-@IF %cmakestate%==0 IF %llvmbinaries% EQU 1 echo.
-@IF %cmakestate%==0 IF %llvmbinaries% EQU 1 GOTO skipllvm
-@IF %cmakestate%==0 echo CMake is required for LLVM build. If you want to build Mesa3D anyway it will be without llvmpipe, swr, RADV, lavapipe and all OpenCL drivers and high performance JIT won't be available for softpipe, osmesa and graw.
-@IF %cmakestate%==0 echo.
-@IF %cmakestate%==0 GOTO skipllvm
-@IF %llvmbinaries% EQU 0 IF %llvmsources% EQU 0 echo WARNING: Both LLVM source code and binaries not found. If you want to build Mesa3D anyway it will be without llvmpipe, swr, RADV, lavapipe and all OpenCL drivers and high performance JIT won't be available for softpipe, osmesa and graw.
-@IF %llvmbinaries% EQU 0 IF %llvmsources% EQU 0 echo.
-@IF %llvmbinaries% EQU 0 IF %llvmsources% EQU 0 GOTO skipllvm
-
-@rem Ask to do LLVM build
-@set /p buildllvm=Begin LLVM build (y/n):
-@echo.
-
-@rem LLVM source is found or is obtainable, binaries not found and LLVM build is refused.
-@IF %llvmsources% EQU 1 IF %llvmbinaries% EQU 0 if /I NOT "%buildllvm%"=="y" echo WARNING: Not building LLVM. If you want to build Mesa3D anyway it will be without llvmpipe, swr, RADV, lavapipe and all OpenCL drivers and high performance JIT won't be available for softpipe, osmesa and graw.
-@IF %llvmsources% EQU 1 IF %llvmbinaries% EQU 0 if /I NOT "%buildllvm%"=="y" echo.
-@if /I NOT "%buildllvm%"=="y" GOTO skipllvm
+@rem Ask to configure LLVM build
+@IF %llvmsources% EQU 1 IF %cmakestate% GTR 0 set /p cfgllvmbuild=Generate LLVM build configuration command (y/n):
+@IF %llvmsources% EQU 1 IF %cmakestate% GTR 0 echo.
+@if /I NOT "%cfgllvmbuild%"=="y" GOTO skipllvm
 
 @rem Getting LLVM monorepo if LLVM source is missing
 @if NOT EXIST %devroot%\llvm\cmake if NOT EXIST %devroot%\llvm-project (
 @echo Getting LLVM source code...
-@git clone https://github.com/llvm/llvm-project.git --branch=llvmorg-13.0.1 --depth=1 %devroot%\llvm-project
+@git clone https://github.com/llvm/llvm-project.git --branch=llvmorg-14.0.0 --depth=1 %devroot%\llvm-project
 @echo.
 )
 
@@ -68,9 +46,9 @@
 @if %cmakestate%==1 set PATH=%devroot%\cmake\bin\;%PATH%
 
 @rem Construct build configuration command.
-@set buildconf=cmake ../..
-@if EXIST %devroot%\llvm-project set buildconf=%buildconf%/llvm
-@set buildconf=%buildconf% -G
+@set buildconf=cmake "%devroot%\llvm
+@if EXIST %devroot%\llvm-project set buildconf=%buildconf%-project\llvm
+@set buildconf=%buildconf%" -G
 @if /I NOT "%ninja%"=="y" set buildconf=%buildconf% "Visual Studio %toolset%"
 @if %abi%==x86 if /I NOT "%ninja%"=="y" set buildconf=%buildconf% -A Win32
 @if %abi%==x64 if /I NOT "%ninja%"=="y" set buildconf=%buildconf% -A x64
@@ -89,6 +67,15 @@
 
 @echo LLVM build configuration command^: %buildconf%
 @echo.
+
+@rem Ask to do LLVM build
+@set /p buildllvm=Begin LLVM build (y/n):
+@echo.
+@IF /I NOT "%buildllvm%"=="y" GOTO skipllvm
+
+@rem Remove LLVM SPIRV translator
+@if EXIST %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator RD /S /Q %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator
+@if EXIST %devroot%\llvm-project\llvm\projects\SPIRV-Headers RD /S /Q %devroot%\llvm-project\llvm\projects\SPIRV-Headers
 
 @rem Always clean build
 @if NOT EXIST %devroot%\llvm-project cd %devroot%\llvm
@@ -127,9 +114,14 @@
 
 @rem Avoid race condition in LLVM SPIRV translator sources checkout.
 @pause
-@echo.
 
 :skipllvm
+@IF %llvmsources% EQU 0 echo WARNING: LLVM source code not found and it couldn't be obtained.
+@IF %cmakestate% EQU 0 echo WARNING: LLVM requires CMake to build.
+@IF NOT EXIST %devroot%\llvm\build\%abi%\lib echo WARNING: LLVM binaries not found. If you want to build Mesa3D anyway it will be without llvmpipe, swr, RADV, lavapipe and all OpenCL drivers and high performance JIT won't be available for softpipe, osmesa and graw.
+@echo.
+@if /I "%cfgllvmbuild%"=="y" call %devroot%\%projectname%\buildscript\modules\llvmspv.cmd
+
 @rem Reset environment after LLVM build.
 @endlocal
 @cd %devroot%

@@ -27,7 +27,7 @@
 
 @IF NOT EXIST "%devroot%\SPIRV-LLVM-Translator\" (
 @echo Getting LLVM SPIRV translator source code...
-@git clone -b llvm_release_130 https://github.com/KhronosGroup/SPIRV-LLVM-Translator %devroot%\SPIRV-LLVM-Translator
+@git clone -b llvm_release_140 https://github.com/KhronosGroup/SPIRV-LLVM-Translator %devroot%\SPIRV-LLVM-Translator
 @echo.
 )
 @IF EXIST %devroot%\SPIRV-LLVM-Translator\spirv-headers-tag.conf IF NOT EXIST "%devroot%\SPIRV-LLVM-Translator\projects\" MD %devroot%\SPIRV-LLVM-Translator\projects

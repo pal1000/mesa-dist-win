@@ -5,7 +5,7 @@ Ressource Hacker 5.1.8.360
 7-Zip 21.07 ultra compression
 Git 2.35.1.2
 LunarG Vulkan SDK 1.3.204.1
-Visual Studio Build Tools 2022 v17.1.1
+Visual Studio Build Tools 2022 v17.1.2
 Windows SDK 10.1.22000.194
 Windows Driver Kit 10.1.22000.1
 Nuget Commandline tool 6.0.0.280
@@ -15,7 +15,7 @@ Python packages
 ---------------
 Mako       1.2.0
 MarkupSafe 2.1.1
-meson      0.61.3
+meson      0.62.0
 pip        22.0.4
 setuptools 60.10.0
 
