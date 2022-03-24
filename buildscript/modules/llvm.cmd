@@ -54,7 +54,7 @@
 @if %abi%==x64 if /I NOT "%ninja%"=="y" set buildconf=%buildconf% -A x64
 @if /I NOT "%ninja%"=="y" IF /I %PROCESSOR_ARCHITECTURE%==AMD64 set buildconf=%buildconf% -Thost=x64
 @if /I "%ninja%"=="y" set buildconf=%buildconf%Ninja
-@set buildconf=%buildconf% -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT -DCMAKE_INSTALL_PREFIX="%devroot:\=/%/llvm/build/%abi%"
+@set buildconf=%buildconf% -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT
 @if EXIST %devroot%\llvm-project IF /I NOT "%buildclang%"=="y" set buildconf=%buildconf% -DLLVM_ENABLE_PROJECTS=""
 @IF /I "%buildclang%"=="y" set buildconf=%buildconf% -DLLVM_ENABLE_PROJECTS="clang;lld"
 @set buildconf=%buildconf% -DLLVM_TARGETS_TO_BUILD=
@@ -65,7 +65,7 @@
 @IF /I "%buildclang%"=="y" set buildconf=%buildconf% -DCLANG_BUILD_TOOLS=ON
 @set buildconf=%buildconf% -DLLVM_ENABLE_RTTI=ON -DLLVM_ENABLE_TERMINFO=OFF
 
-@echo LLVM build configuration command^: %buildconf%
+@echo LLVM build configuration command^: %buildconf% -DCMAKE_INSTALL_PREFIX="%devroot:\=/%/llvm/build/%abi%"
 @echo.
 
 @rem Ask to do LLVM build
@@ -100,7 +100,7 @@
 @if /I "%ninja%"=="y" echo.
 
 @rem Configure and execute the build with the configuration made above.
-@%buildconf%
+@%buildconf% -DCMAKE_INSTALL_PREFIX="%devroot:\=/%/llvm/build/%abi%"
 @echo.
 @pause
 @echo.

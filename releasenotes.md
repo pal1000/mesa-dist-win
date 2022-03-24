@@ -13,7 +13,8 @@
 ### Build script
 - LLVM MSVC build: Simplify error checks;
 - LLVM MSVC build: Support generating build configuration command without performing the build;
-- LLVM MSVC build: Fetch LLVM 14.0.0 when source is not available.
+- LLVM MSVC build: Fetch LLVM 14.0.0 when source is not available;
+- LLVM MSVC: Build SPIRV translator in tree but on a different build folder than the rest of LLVM.
 # 22.0.0-2
 ### Out of tree patches
 - Add patch fixing 32-bit MSVC build of Mesa 22.0.0.
