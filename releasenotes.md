@@ -15,7 +15,8 @@
 - LLVM MSVC build: Support generating build configuration command without performing the build;
 - LLVM MSVC build: Fetch LLVM 14.0.0 when source is not available;
 - LLVM MSVC: Build SPIRV translator in tree but on a different build folder than the rest of LLVM;
-- Offer to build SPIRV trannslator only when building clang because Mesa3D requires both when building the exact same components.
+- Offer to build SPIRV trannslator only when building clang because Mesa3D requires both when building the exact same components;
+- Python: Bump minimum requirement to 3.7 per Meson build demands.
 # 22.0.0-2
 ### Out of tree patches
 - Add patch fixing 32-bit MSVC build of Mesa 22.0.0.

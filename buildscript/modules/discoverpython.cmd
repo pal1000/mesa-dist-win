@@ -18,13 +18,13 @@
 @set goodpython=1
 @IF EXIST %devroot%\mesa IF NOT EXIST %devroot%\mesa\subprojects\.gitignore set goodpython=0
 @if %%c LSS 3 set goodpython=0
-@if %%c EQU 3 if %%d LSS 6 set goodpython=0
+@if %%c EQU 3 if %%d LSS 7 set goodpython=0
 @IF !goodpython!==1 set /a pythontotal+=1
 @IF !pythontotal!==1 echo Select Python installation
 @IF !goodpython!==1 echo !pythontotal!. Python %%a %%b bit
 )
 @IF %pythontotal%==0 echo WARNING: No suitable Python installation found by Python launcher.
-@IF %pythontotal%==0 echo Python 3.6 and newer is required.
+@IF %pythontotal%==0 echo Python 3.7 and newer is required.
 @IF %pythontotal%==0 echo.
 @IF %pythontotal%==0 GOTO nopylauncher
 @IF %pythontotal% GTR 0 echo.
@@ -47,7 +47,7 @@
 @set goodpython=1
 @IF EXIST %devroot%\mesa IF NOT EXIST %devroot%\mesa\subprojects\.gitignore set goodpython=0
 @if %%c LSS 3 set goodpython=0
-@if %%c EQU 3 if %%d LSS 6 set goodpython=0
+@if %%c EQU 3 if %%d LSS 7 set goodpython=0
 @IF !goodpython!==1 set /a pythoncount+=1
 @IF !pythoncount!==%pyselect% set selectedpython=-%%a-%%b
 )
@@ -93,10 +93,10 @@ SET pypath=%%~sa
 @set goodpython=1
 @FOR /F tokens^=1-2^ delims^=.^ eol^= %%a IN ("%fpythonver%") DO @(
 @if %%a LSS 3 set goodpython=0
-@if %%a EQU 3 if %%b LSS 6 set goodpython=0
+@if %%a EQU 3 if %%b LSS 7 set goodpython=0
 )
 @IF %goodpython% EQU 0 (
-@echo Your Python version is too old. Only Python 3.6 and newer is supported.
+@echo Your Python version is too old. Only Python 3.7 and newer is supported.
 @echo.
 @pause
 @exit
