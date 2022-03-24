@@ -122,7 +122,7 @@
 @IF NOT EXIST %devroot%\llvm\build\%abi%\lib echo WARNING: LLVM binaries not found. If you want to build Mesa3D anyway it will be without llvmpipe, swr, RADV, lavapipe and all OpenCL drivers and high performance JIT won't be available for softpipe, osmesa and graw.
 @IF %llvmsources% EQU 0 echo.
 @IF %llvmsources% EQU 1 IF %cmakestate% EQU 0 echo.
-@IF %llvmsources% EQU 1 IF %cmakestate% EQU 1 IF NOT EXIST %devroot%\llvm\build\%abi%\lib echo.
+@IF %llvmsources% EQU 1 IF %cmakestate% GTR 0 IF NOT EXIST %devroot%\llvm\build\%abi%\lib echo.
 @IF /I "%buildclang%"=="y" call %devroot%\%projectname%\buildscript\modules\llvmspv.cmd
 
 @rem Reset environment after LLVM build.
