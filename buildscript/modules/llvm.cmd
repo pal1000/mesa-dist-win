@@ -73,18 +73,14 @@
 @echo.
 @IF /I NOT "%buildllvm%"=="y" GOTO skipllvm
 
-@rem Remove LLVM SPIRV translator
-@if EXIST %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator RD /S /Q %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator
-@if EXIST %devroot%\llvm-project\llvm\projects\SPIRV-Headers RD /S /Q %devroot%\llvm-project\llvm\projects\SPIRV-Headers
-
-@rem Always clean build
-@if NOT EXIST %devroot%\llvm-project cd %devroot%\llvm
-@if EXIST %devroot%\llvm-project cd %devroot%\llvm-project
-@pause
-@echo.
+@rem Always clean build and remove LLVM SPIRV translator
 @echo Cleanning LLVM build. Please wait...
 @echo.
+@if EXIST %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator RD /S /Q %devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator
+@if EXIST %devroot%\llvm-project\llvm\projects\SPIRV-Headers RD /S /Q %devroot%\llvm-project\llvm\projects\SPIRV-Headers
 @if EXIST %devroot%\llvm\build\%abi% RD /S /Q %devroot%\llvm\build\%abi%
+@if NOT EXIST %devroot%\llvm-project cd %devroot%\llvm
+@if EXIST %devroot%\llvm-project cd %devroot%\llvm-project
 @if EXIST build\buildsys-%abi% RD /S /Q build\buildsys-%abi%
 @if NOT EXIST "build\" MD build
 @cd build
