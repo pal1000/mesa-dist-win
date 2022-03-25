@@ -38,9 +38,12 @@
 @echo.
 )
 
-@rem SPIRV Tools integration for LLVM SPIRV translator. LLVM SPIRV translator 14 feature.
-@IF %canllvmspirv% EQU 1 IF EXIST %devroot%\spirv-tools\build\%abi% IF %pkgconfigstate% GTR 0 set PKG_CONFIG_PATH=%devroot:\=/%/spirv-tools/build/%abi%/lib/pkgconfig
-@IF %canllvmspirv% EQU 1 IF EXIST %devroot%\spirv-tools\build\%abi% IF %pkgconfigstate% GTR 0 set PATH=%pkgconfigloc%\;%PATH%
+@rem SPIRV Tools integration for LLVM SPIRV translator. This is a feature introduced in LLVM SPIRV translator 14.x.
+@rem IF %canllvmspirv% EQU 1 IF EXIST %devroot%\spirv-tools\build\%abi% IF %pkgconfigstate% GTR 0 set /p integratespvtools=Build with SPIRV Tools integration (y/n):
+@rem IF %canllvmspirv% EQU 1 IF EXIST %devroot%\spirv-tools\build\%abi% IF %pkgconfigstate% GTR 0 echo.
+@IF /I "%integratespvtools%"=="y" set PATH=%pkgconfigloc%\;%PATH%
+@IF /I "%integratespvtools%"=="y" set PKG_CONFIG_PATH=%devroot:\=/%/spirv-tools/build/%abi%/lib/pkgconfig
+@IF /I NOT "%integratespvtools%"=="y" set PKG_CONFIG_PATH=
 
 @echo SPIRV LLVM translator build configuration command^: %buildconf% -DCMAKE_INSTALL_PREFIX="%devroot:\=/%/llvm/build/spv-%abi%" -DLLVM_SPIRV_INCLUDE_TESTS=OFF
 @echo.
@@ -52,8 +55,8 @@
 @if EXIST %devroot%\llvm-project\build\bldspv-%abi% RD /S /Q %devroot%\llvm-project\build\bldspv-%abi%
 @if NOT EXIST "%devroot%\llvm-project\build\" MD %devroot%\llvm-project\build
 @cd %devroot%\llvm-project\build
-@if NOT EXIST "%devroot%\llvm-project\build\bldspv-%abi%\" md %devroot%\llvm-project\build\bldspv-%abi%
-@cd %devroot%\llvm-project\build\bldspv-%abi%
+@if NOT EXIST "bldspv-%abi%\" md bldspv-%abi%
+@cd bldspv-%abi%
 
 @rem Load Visual Studio environment. Can only be loaded in the background when using MsBuild.
 @if /I "%ninja%"=="y" call %vsenv% %vsabi%
@@ -70,6 +73,6 @@
 @echo.
 
 :skipspvllvm
-@rem Reset environment after LLVM build.
+@rem Reset environment after LLVM SPIRV translator build.
 @endlocal
 @cd %devroot%

@@ -17,7 +17,8 @@
 - LLVM MSVC: Build SPIRV translator in tree but on a different build folder than the rest of LLVM;
 - Offer to build SPIRV trannslator only when building clang because Mesa3D requires both when building the exact same components;
 - Python: Bump minimum requirement to 3.7 per Meson build demands;
-- Avoid race condition in LLVM sources checkout, regression from 7ff9b39788bca17655d8269489fde851a94accee.
+- Avoid race condition in LLVM sources checkout, regression from 7ff9b39788bca17655d8269489fde851a94accee;
+- LLVM SPIRV translator: Disable SPIRV Tools integration as it fails to build, also it's not required anyway as Mesa3D uses SPIRV Tools directly when necessary.
 # 22.0.0-2
 ### Out of tree patches
 - Add patch fixing 32-bit MSVC build of Mesa 22.0.0.

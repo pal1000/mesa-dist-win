@@ -9,7 +9,7 @@ Visual Studio Build Tools 2022 v17.1.2
 Windows SDK 10.1.22000.194
 Windows Driver Kit 10.1.22000.1
 Nuget Commandline tool 6.0.0.280
-Python 3.10.3
+Python 3.10.4
 
 Python packages
 ---------------
@@ -17,11 +17,11 @@ Mako       1.2.0
 MarkupSafe 2.1.1
 meson      0.62.0
 pip        22.0.4
-setuptools 60.10.0
+setuptools 61.0.0
 
 CMake 3.22.3
 Ninja 1.10.2
-LLVM 13.0.1
+LLVM 14.0.0
 SPIRV Tools 2022.2.0
 Winflexbison package 2.5.25
 flex 2.6.4
