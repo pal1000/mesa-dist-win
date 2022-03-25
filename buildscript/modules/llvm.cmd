@@ -110,7 +110,7 @@
 
 @rem Avoid race condition in LLVM SPIRV translator sources checkout.
 @pause
-@echo
+@echo.
 
 :skipllvm
 @IF %llvmsources% EQU 0 echo WARNING: LLVM source code not found and it couldn't be obtained.
