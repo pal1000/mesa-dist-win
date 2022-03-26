@@ -9,7 +9,7 @@
 
 @IF EXIST "%devroot%\clon12\" IF %gitstate% GTR 0 (
 @echo Updating CLonD3D12 ICD source code...
-@cd %devroot%\clon12
+@cd "%devroot%\clon12"
 @git pull -v --progress --recurse-submodules origin
 @echo.
 )
@@ -19,7 +19,7 @@
 @IF /I NOT "%buildclon12%"=="y" GOTO skipclon12
 @IF NOT EXIST "%devroot%\clon12\" (
 @echo Getting CLonD3D12 ICD source code...
-@git clone https://github.com/microsoft/OpenCLOn12 %devroot%\clon12
+@git clone https://github.com/microsoft/OpenCLOn12 "%devroot%\clon12"
 @echo.
 )
 
@@ -36,19 +36,19 @@
 @if %nugetstate%==1 set PATH=%devroot%\nuget\;%PATH%
 
 @rem Construct build configuration command.
-@set buildconf=cmake %devroot:\=/%/clon12 -G
+@set buildconf=cmake "%devroot%\clon12" -G
 @if /I NOT "%ninja%"=="y" set buildconf=%buildconf% "Visual Studio %toolset%"
 @if %abi%==x86 if /I NOT "%ninja%"=="y" set buildconf=%buildconf% -A Win32
 @if %abi%==x64 if /I NOT "%ninja%"=="y" set buildconf=%buildconf% -A x64
 @if /I NOT "%ninja%"=="y" IF /I %PROCESSOR_ARCHITECTURE%==AMD64 set buildconf=%buildconf% -Thost=x64
 @if /I "%ninja%"=="y" set buildconf=%buildconf%Ninja
-@set buildconf=%buildconf% -DBUILD_TESTS=OFF -DCMAKE_INSTALL_PREFIX="%devroot:\=/%/clon12/build/%abi%"
+@set buildconf=%buildconf% -DBUILD_TESTS=OFF -DCMAKE_INSTALL_PREFIX="%devroot%\clon12\build\%abi%"
 
 @echo CLonD3D12 build configuration command^: %buildconf%
 @echo.
 
 @rem Always clean build
-@cd %devroot%\clon12
+@cd "%devroot%\clon12"
 @pause
 @echo.
 @echo Cleanning CLonD3D12 build. Please wait...
@@ -63,7 +63,7 @@
 
 @rem Load Visual Studio environment. Can only be loaded in the background when using MsBuild.
 @if /I "%ninja%"=="y" call %vsenv% %vsabi%
-@if /I "%ninja%"=="y" cd %devroot%\clon12\out\%abi%
+@if /I "%ninja%"=="y" cd "%devroot%\clon12\out\%abi%"
 @if /I "%ninja%"=="y" echo.
 
 @rem Configure and execute the build with the configuration made above.
@@ -84,4 +84,4 @@
 :skipclon12
 @rem Reset environment after CLonD3D12 build.
 @endlocal
-@cd %devroot%
+@cd "%devroot%"

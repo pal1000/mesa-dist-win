@@ -65,7 +65,7 @@
 @IF /I "%buildclang%"=="y" set buildconf=%buildconf% -DCLANG_BUILD_TOOLS=ON
 @set buildconf=%buildconf% -DLLVM_ENABLE_RTTI=ON -DLLVM_ENABLE_TERMINFO=OFF
 
-@echo LLVM build configuration command^: %buildconf% -DCMAKE_INSTALL_PREFIX="%devroot:\=/%/llvm/build/%abi%"
+@echo LLVM build configuration command^: %buildconf% -DCMAKE_INSTALL_PREFIX="%devroot%\llvm\build\%abi%"
 @echo.
 
 @rem Ask to do LLVM build
@@ -96,7 +96,7 @@
 @if /I "%ninja%"=="y" echo.
 
 @rem Configure and execute the build with the configuration made above.
-@%buildconf% -DCMAKE_INSTALL_PREFIX="%devroot:\=/%/llvm/build/%abi%"
+@%buildconf% -DCMAKE_INSTALL_PREFIX="%devroot%\llvm\build\%abi%"
 @echo.
 @pause
 @echo.

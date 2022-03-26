@@ -1,10 +1,13 @@
 @cd "%~dp0"
 @cd ..\..\
-@for %%a in ("%cd%") do @set devroot=%%~sa
+@set CD=
+@set devroot=%CD%
+@IF %devroot:~0,1%%devroot:~-1%=="" set devroot=%devroot:~1,-1%
+@IF "%devroot:~-1%"=="\" set devroot=%devroot:~0,-1%
 @set projectname=mesa-dist-win
-@call %devroot%\%projectname%\buildscript\modules\msys.cmd
-@call %devroot%\%projectname%\buildscript\modules\msysupdate.cmd
-@call %devroot%\%projectname%\buildscript\modules\git.cmd
+@call "%devroot%\%projectname%\buildscript\modules\msys.cmd"
+@call "%devroot%\%projectname%\buildscript\modules\msysupdate.cmd"
+@call "%devroot%\%projectname%\buildscript\modules\git.cmd"
 @IF %msysstate% EQU 0 (
 @echo Fatal error: MSYS2 is missing.
 @pause
@@ -36,8 +39,6 @@
 @set msyscmd=
 @set /p msyscmd=Enter MSYS2 command:
 @echo.
-@set msyscmd=%msyscmd:"=%
-@set msyscmd=%msyscmd:\=/%
 @IF /I "%msyscmd%"=="exit" exit
 @IF /I "%msyscmd%"=="shell" GOTO selectshell
 @IF /I "%msyscmd%"=="clearcache" %runmsys% pacman -Sc --noconfirm

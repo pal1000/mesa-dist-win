@@ -1,7 +1,11 @@
+@cd /d "%~dp0"
 @cd ..\..\
 @set format=pythonlist
 @set llvmmodules=engine coroutines
-@for %%a in ("%cd%") do @set devroot=%%~sa
+@set CD=
+@set devroot=%CD%
+@IF %devroot:~0,1%%devroot:~-1%=="" set devroot=%devroot:~1,-1%
+@IF "%devroot:~-1%"=="\" set devroot=%devroot:~0,-1%
 @IF NOT EXIST llvm\build GOTO error
 @cd llvm\build
 @if NOT EXIST x64 if NOT EXIST x86 GOTO error
@@ -11,8 +15,8 @@
 :writedebugoutput
 @IF NOT EXIST bin GOTO error
 @cd bin
-@if EXIST %devroot%\mesa-dist-win\debug\llvm-config-old.txt del %devroot%\mesa-dist-win\debug\llvm-config-old.txt
-@if EXIST %devroot%\mesa-dist-win\debug\llvm-config.txt REN %devroot%\mesa-dist-win\debug\llvm-config.txt llvm-config-old.txt
+@if EXIST "%devroot%\mesa-dist-win\debug\llvm-config-old.txt" del "%devroot%\mesa-dist-win\debug\llvm-config-old.txt"
+@if EXIST "%devroot%\mesa-dist-win\debug\llvm-config.txt" REN "%devroot%\mesa-dist-win\debug\llvm-config.txt" llvm-config-old.txt
 @set "llvmlibs="
 @setlocal ENABLEDELAYEDEXPANSION
 @FOR /F delims^=^ eol^= %%a IN ('llvm-config --link-static --libnames %llvmmodules% 2^>^&1') DO @(
@@ -24,7 +28,7 @@ IF NOT "!libname:~0,5!"=="llvm-" SET llvmlibs=!llvmlibs! !libname!
 @IF %format%==pythonlist set llvmlibs='%llvmlibs: =', '%'
 @if %format%==ninjatargets set llvmlibs=install-%llvmlibs: = install-%
 @echo LLVM config output updated.
-@echo %llvmlibs%>%devroot%\mesa-dist-win\debug\llvm-config.txt
+@echo %llvmlibs%>"%devroot%\mesa-dist-win\debug\llvm-config.txt"
 @GOTO finished
 
 :error
@@ -32,5 +36,5 @@ IF NOT "!libname:~0,5!"=="llvm-" SET llvmlibs=!llvmlibs! !libname!
 
 :finished
 @pause
-@%devroot%\mesa-dist-win\debug\llvm-config.txt
+@"%devroot%\mesa-dist-win\debug\llvm-config.txt"
 @exit
