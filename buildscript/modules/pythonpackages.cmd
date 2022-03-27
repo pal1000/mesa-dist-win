@@ -9,11 +9,11 @@
 
 :pypackmissing
 @rem Check for Python packages availability.
-@IF NOT EXIST %pythonloc:~0,-10%Lib\site-packages\markupsafe (
+@IF NOT EXIST %pythonloc:~0,-11%Lib\site-packages\markupsafe\" (
 @set pypack=MarkupSafe
 @GOTO pypackinstall
 )
-@IF NOT EXIST %pythonloc:~0,-10%Lib\site-packages\mako (
+@IF NOT EXIST %pythonloc:~0,-11%Lib\site-packages\mako\" (
 @set pypack=Mako
 @GOTO pypackinstall
 )
@@ -22,7 +22,7 @@
 @CMD /C EXIT 0
 @where /q meson.exe
 @if NOT "%ERRORLEVEL%"=="0" set mesonstate=1
-@IF NOT EXIST %pythonloc:~0,-10%Scripts\meson.py IF NOT EXIST %pythonloc:~0,-10%Scripts\meson.exe (
+@IF NOT EXIST %pythonloc:~0,-11%Scripts\meson.py" IF NOT EXIST %pythonloc:~0,-11%Scripts\meson.exe" (
 @set pypack=meson
 @GOTO pypackinstall
 )
@@ -54,7 +54,7 @@
 @if /I NOT "%pyupd%"=="y" GOTO endpython
 @set pywinsetup=2
 @for /f tokens^=1-2^ delims^=.^ eol^= %%a IN ("%pythonver%") DO @set spyver=%%a%%b
-@IF NOT EXIST %pythonloc:~0,-10%Removepywin32.exe set pywinsetup=1
+@IF NOT EXIST %pythonloc:~0,-11%Removepywin32.exe" set pywinsetup=1
 @IF NOT EXIST "%windir%\system32\pythoncom%spyver%.dll" IF NOT EXIST "%windir%\syswow64\pythoncom%spyver%.dll" set pywinsetup=0
 @if EXIST "%LOCALAPPDATA%\pip" RD /S /Q "%LOCALAPPDATA%\pip"
 @for /F skip^=2^ eol^= %%a in ('%pythonloc% -W ignore -m pip list -o --disable-pip-version-check') do @(

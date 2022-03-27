@@ -6,8 +6,8 @@
 @IF %mesonstate%==2 set mesonloc=meson.exe
 @IF %mesonstate%==2 GOTO foundmeson
 
-@set mesonloc=%pythonloc:~0,-10%Scripts\meson.exe
-@IF NOT EXIST %mesonloc% set mesonloc=%pythonloc% %mesonloc:~0,-3%py
+@set mesonloc=%pythonloc:~0,-11%Scripts\meson.exe"
+@IF NOT EXIST %mesonloc% set mesonloc=%pythonloc% %mesonloc:~0,-4%py"
 
 :foundmeson
 @endlocal&set mesonloc=%mesonloc%

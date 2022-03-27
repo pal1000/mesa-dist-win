@@ -16,7 +16,7 @@
 @cls
 @FOR /F tokens^=2-3^ skip^=1^ delims^=-^ eol^= %%a IN ('py -0 2^>nul') do @FOR /F tokens^=1-2^ delims^=.^ eol^= %%c IN ("%%a") do @(
 @set goodpython=1
-@IF EXIST %devroot%\mesa IF NOT EXIST %devroot%\mesa\subprojects\.gitignore set goodpython=0
+@IF EXIST "%devroot%\mesa\" IF NOT EXIST "%devroot%\mesa\subprojects\.gitignore" set goodpython=0
 @if %%c LSS 3 set goodpython=0
 @if %%c EQU 3 if %%d LSS 7 set goodpython=0
 @IF !goodpython!==1 set /a pythontotal+=1
@@ -45,13 +45,13 @@
 @set pythoncount=0
 @FOR /F tokens^=2-3^ skip^=1^ delims^=-^ eol^= %%a IN ('py -0 2^>nul') do @FOR /F tokens^=1-2^ delims^=.^ eol^= %%c IN ("%%a") do @(
 @set goodpython=1
-@IF EXIST %devroot%\mesa IF NOT EXIST %devroot%\mesa\subprojects\.gitignore set goodpython=0
+@IF EXIST "%devroot%\mesa\" IF NOT EXIST "%devroot%\mesa\subprojects\.gitignore" set goodpython=0
 @if %%c LSS 3 set goodpython=0
 @if %%c EQU 3 if %%d LSS 7 set goodpython=0
 @IF !goodpython!==1 set /a pythoncount+=1
 @IF !pythoncount!==%pyselect% set selectedpython=-%%a-%%b
 )
-@FOR /F delims^=^ eol^= %%a IN ('py %selectedpython%  -c "import sys; print(sys.executable)"') DO @set pythonloc=%%~sa
+@FOR /F delims^=^ eol^= %%a IN ('py %selectedpython% -c "import sys; print(sys.executable)"') DO @set pythonloc="%%~a"
 @GOTO loadpypath
 
 :nopylauncher
@@ -59,8 +59,8 @@
 @rem Check if Python is in PATH or if it is provided as a local depedency.
 @CMD /C EXIT 0
 @IF %pythonloc%==python.exe where /q python.exe
-@if NOT "%ERRORLEVEL%"=="0" set pythonloc=%devroot%\python\python.exe
-@IF %pythonloc%==%devroot%\python\python.exe IF NOT EXIST %pythonloc% (
+@if NOT "%ERRORLEVEL%"=="0" set pythonloc="%devroot%\python\python.exe"
+@IF %pythonloc%=="%devroot%\python\python.exe" IF NOT EXIST %pythonloc% (
 @echo Python is unreachable. Cannot continue.
 @echo.
 @pause
@@ -69,7 +69,7 @@
 @IF %pythonloc%==python.exe set exitloop=1
 @IF %pythonloc%==python.exe FOR /F delims^=^ eol^= %%a IN ('where python.exe') DO @IF defined exitloop (
 set "exitloop="
-SET pythonloc=%%~sa
+SET pythonloc="%%~a"
 )
 
 :loadpypath
@@ -81,13 +81,14 @@ SET pythonloc=%%~sa
 @IF %pypath%==1 set exitloop=1
 @IF %pypath%==1 FOR /F delims^=^ eol^= %%a IN ('where python.exe') DO @IF defined exitloop (
 set "exitloop="
-SET pypath=%%~sa
+SET pypath="%%~a"
 )
-@IF NOT %pypath%==%pythonloc% set PATH=%pythonloc:~0,-10%Scripts\;%pythonloc:~0,-10%;%PATH%
+@IF NOT %pypath%==%pythonloc% set PATH=%pythonloc:~1,-11%Scripts\;%pythonloc:~1,-11%;%PATH%
 
 :pyver
 @rem Identify Python version.
-@FOR /F tokens^=1^ eol^= %%a IN ('%pythonloc% -c "import sys; print(sys.version)"') DO @SET fpythonver=%%a
+@cd "%devroot%"
+@FOR /F tokens^=1^ eol^= %%a IN ('%pythonloc% %projectname%\buildscript\modules\pyver.py') DO @SET fpythonver=%%a
 
 @rem Check if Python version is not too old.
 @set goodpython=1
@@ -101,7 +102,7 @@ SET pypath=%%~sa
 @pause
 @exit
 )
-@IF EXIST %devroot%\mesa IF NOT EXIST %devroot%\mesa\subprojects\.gitignore (
+@IF EXIST "%devroot%\mesa\" IF NOT EXIST "%devroot%\mesa\subprojects\.gitignore" (
 @echo Mesa3D source code you are using is too old. Update to 19.3 or newer.
 @echo.
 @pause
