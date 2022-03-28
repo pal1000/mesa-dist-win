@@ -281,8 +281,8 @@
 @IF /I NOT "%spirvtodxil%"=="y" IF %intmesaver% GEQ 21000 set buildconf=%buildconf% -Dspirv-to-dxil=false
 
 @set gles=n
-@IF %intmesaver% LSS 21300 set /p gles=Do you want to build GLAPI as a shared library and standalone GLES drivers (y/n):
-@IF %intmesaver% GEQ 21300 set /p gles=Do you want to build standalone GLES drivers (y/n):
+@IF %intmesaver% LSS 21300 IF %galliumcount% GTR 0 set /p gles=Do you want to build GLAPI as a shared library and standalone GLES drivers (y/n):
+@IF %intmesaver% GEQ 21300 IF %galliumcount% GTR 0 set /p gles=Do you want to build standalone GLES drivers (y/n):
 @echo.
 @if /I "%gles%"=="y" set buildconf=%buildconf% -Dshared-glapi=%mesonbooltrue% -Dgles1=%mesonbooltrue% -Dgles2=%mesonbooltrue%
 @if /I "%gles%"=="y" IF %intmesaver% GEQ 21300 set buildconf=%buildconf% -Degl=%mesonbooltrue%
