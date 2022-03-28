@@ -4,7 +4,10 @@
 @rem Determine Mesa3D build environment root folder and convert the path to it into DOS 8.3 format to avoid quotes mess.
 @cd "%~dp0"
 @cd ..\..\
-@for %%a in ("%cd%") do @set devroot=%%~sa
+@set CD=
+@set devroot=%CD%
+@IF %devroot:~0,1%%devroot:~-1%=="" set devroot=%devroot:~1,-1%
+@IF "%devroot:~-1%"=="\" set devroot=%devroot:~0,-1%
 
 @set projectname=mesa-dist-win
 @set "ERRORLEVEL="
