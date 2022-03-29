@@ -4,26 +4,26 @@
 @IF %flexstate%==0 echo.
 @IF %flexstate%==0 GOTO skipmesa
 
-@cd %devroot%
-@if NOT EXIST mesa if %gitstate%==0 echo Fatal: Both Mesa3D code and Git are missing. At least one is required. Execution halted.
-@if NOT EXIST mesa if %gitstate%==0 echo.
-@if NOT EXIST mesa if %gitstate%==0 GOTO skipmesa
+@cd "%devroot%"
+@if NOT EXIST "mesa\" if %gitstate%==0 echo Fatal: Both Mesa3D code and Git are missing. At least one is required. Execution halted.
+@if NOT EXIST "mesa\" if %gitstate%==0 echo.
+@if NOT EXIST "mesa\" if %gitstate%==0 GOTO skipmesa
 
 @IF %pkgconfigstate%==0 echo No suitable pkg-config implementation found. pkgconf or pkg-config-lite is required to build Mesa3D with Meson and MSVC.
 @IF %pkgconfigstate%==0 echo.
 @IF %pkgconfigstate%==0 GOTO skipmesa
 
 @rem Ask for starting Mesa3D build and aquire source code if missing
-@if EXIST mesa set /p buildmesa=Begin mesa build. Proceed - y/n :
-@if NOT EXIST mesa echo Warning: Mesa3D source code not found.
-@if NOT EXIST mesa echo.
-@if NOT EXIST mesa set /p buildmesa=Download mesa code and build (y/n):
+@if EXIST "mesa\" set /p buildmesa=Begin mesa build. Proceed - y/n :
+@if NOT EXIST "mesa\" echo Warning: Mesa3D source code not found.
+@if NOT EXIST "mesa\" echo.
+@if NOT EXIST "mesa\" set /p buildmesa=Download mesa code and build (y/n):
 @echo.
 @if /i NOT "%buildmesa%"=="y" GOTO skipmesa
-@if NOT EXIST mesa set branch=main
-@if NOT EXIST mesa set /p branch=Enter Mesa source code branch name - defaults to main:
-@if NOT EXIST mesa echo.
-@if NOT EXIST mesa (
+@if NOT EXIST "mesa\" set branch=main
+@if NOT EXIST "mesa\" set /p branch=Enter Mesa source code branch name - defaults to main:
+@if NOT EXIST "mesa\" echo.
+@if NOT EXIST "mesa\" (
 @git clone --recurse-submodules https://gitlab.freedesktop.org/mesa/mesa.git mesa
 @echo.
 @cd mesa
@@ -39,9 +39,9 @@
 @if "%mesaver:~-7%"=="0-devel" set /a intmesaver=%mesaver:~0,2%%mesaver:~3,1%00
 @if "%mesaver:~5,4%"=="0-rc" set /a intmesaver=%mesaver:~0,2%%mesaver:~3,1%00+%mesaver:~9%
 @if NOT "%mesaver:~5,2%"=="0-" set /a intmesaver=%mesaver:~0,2%%mesaver:~3,1%50+%mesaver:~5%
-@IF NOT EXIST %devroot%\mesa\subprojects\.gitignore echo Mesa3D source code you are using is too old. Update to 19.3 or newer.
-@IF NOT EXIST %devroot%\mesa\subprojects\.gitignore echo.
-@IF NOT EXIST %devroot%\mesa\subprojects\.gitignore GOTO skipmesa
+@IF NOT EXIST "%devroot%\mesa\subprojects\.gitignore" echo Mesa3D source code you are using is too old. Update to 19.3 or newer.
+@IF NOT EXIST "%devroot%\mesa\subprojects\.gitignore" echo.
+@IF NOT EXIST "%devroot%\mesa\subprojects\.gitignore" GOTO skipmesa
 
 @rem Support Mesa3D enabled/disabled style booleans for build options as the true/false ones will be removed at some point
 @IF %intmesaver% LSS 20200 set mesonbooltrue=true
@@ -75,76 +75,76 @@
 @set msyspatchdir=%devroot%\mesa
 
 @rem Enable S3TC texture cache
-@call %devroot%\%projectname%\buildscript\modules\applypatch.cmd s3tc
+@call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" s3tc
 
 @rem Fix regression when building with native mingw toolchains affecting Mesa 20.1 branch
-@IF %intmesaver% GEQ 20100 IF %intmesaver% LSS 20103 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd winepath
+@IF %intmesaver% GEQ 20100 IF %intmesaver% LSS 20103 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" winepath
 
 @rem Fix link flags passing for MinGW
-@IF %intmesaver% GEQ 21300 IF %intmesaver% LSS 21352 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd mingw-CRT-link-fix
+@IF %intmesaver% GEQ 21300 IF %intmesaver% LSS 21352 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" mingw-CRT-link-fix
 
 @rem Fix symbols exporting for MinGW GCC x86
-@IF %intmesaver% GEQ 21300 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd def-fixes
+@IF %intmesaver% GEQ 21300 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" def-fixes
 
 @rem Fix MinGW clang build
-@IF %intmesaver% GEQ 21254 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd clang
-@IF %intmesaver% GEQ 21254 IF EXIST %devroot%\mesa\src\gallium\drivers\swr\meson.build call %devroot%\%projectname%\buildscript\modules\applypatch.cmd clang-swr
+@IF %intmesaver% GEQ 21254 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" clang
+@IF %intmesaver% GEQ 21254 IF EXIST "%devroot%\mesa\src\gallium\drivers\swr\meson.build" call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" clang-swr
 
 @rem Fix 32-bit MSVC build for Mesa 22.0.0-rc3 - 22.0.0
-@IF %intmesaver% GEQ 22003 IF %intmesaver% LSS 22051 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd msvc-32_bit-libmesa_util
+@IF %intmesaver% GEQ 22003 IF %intmesaver% LSS 22051 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" msvc-32_bit-libmesa_util
 
 @rem Make it possible to build both osmesa gallium and swrast at the same time with Meson. Applies to Mesa 20.3 and older.
-@IF %intmesaver% LSS 21000 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd dual-osmesa
-@IF %intmesaver% LSS 20200 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd dual-osmesa-part2a
-@IF %intmesaver% GEQ 20200 IF %intmesaver% LSS 21000 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd dual-osmesa-part2b
+@IF %intmesaver% LSS 21000 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" dual-osmesa
+@IF %intmesaver% LSS 20200 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" dual-osmesa-part2a
+@IF %intmesaver% GEQ 20200 IF %intmesaver% LSS 21000 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" dual-osmesa-part2b
 
 @rem Fix swrAVX512 build with MSVC
-@IF %intmesaver% LSS 20000 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swravx512
-@IF %intmesaver% GEQ 20000 IF EXIST %devroot%\mesa\src\gallium\drivers\swr\meson.build call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swravx512-post-static-link
+@IF %intmesaver% LSS 20000 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" swravx512
+@IF %intmesaver% GEQ 20000 IF EXIST "%devroot%\mesa\src\gallium\drivers\swr\meson.build" call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" swravx512-post-static-link
 
 @rem Fix swr build with MSVC
-@IF %intmesaver% LSS 20152 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swr-msvc
-@IF %intmesaver% GEQ 21300 IF %intmesaver% LSS 21353 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swr-msvc-2
+@IF %intmesaver% LSS 20152 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" swr-msvc
+@IF %intmesaver% GEQ 21300 IF %intmesaver% LSS 21353 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" swr-msvc-2
 
 @rem Get swr building with Mingw
-@IF %intmesaver% LSS 20158 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swr-mingw
-@IF %intmesaver% GEQ 20200 IF %intmesaver% LSS 20250 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swr-mingw
+@IF %intmesaver% LSS 20158 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" swr-mingw
+@IF %intmesaver% GEQ 20200 IF %intmesaver% LSS 20250 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" swr-mingw
 
 @rem Fix swr build with LLVM 13
-@IF EXIST %devroot%\mesa\src\gallium\drivers\swr\meson.build call %devroot%\%projectname%\buildscript\modules\applypatch.cmd swr-llvm13
+@IF EXIST "%devroot%\mesa\src\gallium\drivers\swr\meson.build" call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" swr-llvm13
 
 @rem Fix lavapipe crash when built with MinGW
-@IF %intmesaver:~0,3% EQU 211 IF %intmesaver% LSS 21151 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd lavapipe-mingw-crashfix
+@IF %intmesaver:~0,3% EQU 211 IF %intmesaver% LSS 21151 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" lavapipe-mingw-crashfix
 
 @rem Fix lavapipe build with MSVC 32-bit
-@IF %intmesaver:~0,3% EQU 211 IF %intmesaver% LSS 21151 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd lavapipe-32-bit-msvc-buildfix
+@IF %intmesaver:~0,3% EQU 211 IF %intmesaver% LSS 21151 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" lavapipe-32-bit-msvc-buildfix
 
 @rem Fix radv MinGW build
-@IF %intmesaver% GEQ 21200 IF %intmesaver% LSS 21251 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd radv-mingw
+@IF %intmesaver% GEQ 21200 IF %intmesaver% LSS 21251 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" radv-mingw
 
 @rem Fix radv MSVC build with LLVM 13
-@IF %intmesaver:~0,3% EQU 213 IF %intmesaver% LSS 21306 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd radv-msvc-llvm13
-@IF %intmesaver:~0,3% EQU 212 IF %intmesaver% LSS 21256 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd radv-msvc-llvm13-2
+@IF %intmesaver:~0,3% EQU 213 IF %intmesaver% LSS 21306 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" radv-msvc-llvm13
+@IF %intmesaver:~0,3% EQU 212 IF %intmesaver% LSS 21256 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" radv-msvc-llvm13-2
 
 @rem Fix vulkan util build with MSVC 32-bit
-@IF %intmesaver% GEQ 21301 IF %intmesaver% LSS 21303 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd vulkan-core-msvc-32-bit
+@IF %intmesaver% GEQ 21301 IF %intmesaver% LSS 21303 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" vulkan-core-msvc-32-bit
 
 @rem Fix d3d10sw MSVC build
-@IF %intmesaver% GEQ 21200 IF %intmesaver% LSS 22000 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd d3d10sw
-@IF %intmesaver% GEQ 21300 IF %intmesaver% LSS 22000 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd d3d10sw-2
+@IF %intmesaver% GEQ 21200 IF %intmesaver% LSS 22000 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" d3d10sw
+@IF %intmesaver% GEQ 21300 IF %intmesaver% LSS 22000 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" d3d10sw-2
 
 @rem Clover build on Windows
-@IF %intmesaver% GEQ 21300 call %devroot%\%projectname%\buildscript\modules\applypatch.cmd clover
+@IF %intmesaver% GEQ 21300 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" clover
 
 :configmesabuild
 @rem Configure Mesa build.
 @set buildconf=%mesonloc%
-@if EXIST build\%toolchain%-%abi% set /p cleanmesabld=Perform clean build (y/n):
-@if EXIST build\%toolchain%-%abi% echo.
-@if NOT EXIST build\%toolchain%-%abi% set cleanmesabld=y
-@if EXIST build\%toolchain%-%abi% IF /I "%cleanmesabld%"=="y" RD /S /Q build\%toolchain%-%abi%
+@if EXIST "build\%toolchain%-%abi%\" set /p cleanmesabld=Perform clean build (y/n):
+@if EXIST "build\%toolchain%-%abi%\" echo.
+@if NOT EXIST "build\%toolchain%-%abi%\" set cleanmesabld=y
+@if EXIST "build\%toolchain%-%abi%\" IF /I "%cleanmesabld%"=="y" RD /S /Q build\%toolchain%-%abi%
 @IF /I NOT "%cleanmesabld%"=="y" set buildconf=%mesonloc% configure
-@set buildconf=%buildconf% build/%toolchain%-%abi% --buildtype=release -Db_ndebug=true --prefix=%devroot:\=/%/%projectname%/dist/%toolchain%-%abi%
+@set buildconf=%buildconf% build/%toolchain%-%abi% --buildtype=release -Db_ndebug=true --prefix="%devroot:\=/%/%projectname%/dist/%toolchain%-%abi%"
 @IF %intmesaver% GEQ 21200 set buildconf=%buildconf% -Dc_std=c17
 @IF %toolchain%==msvc set buildconf=%buildconf% -Db_vscrt=mt -Dzlib:default_library=static
 @IF %toolchain%==msvc IF %intmesaver% GEQ 21200 set buildconf=%buildconf% -Dcpp_std=vc++latest
@@ -156,18 +156,18 @@
 @IF %abi%==x64 set buildcmd=msbuild /p^:Configuration=release,Platform=x64 mesa.sln /m^:%throttle%
 
 @set havellvm=0
-@IF %toolchain%==msvc IF EXIST %devroot%\llvm\build\%abi% IF %cmakestate% GTR 0 set havellvm=1
+@IF %toolchain%==msvc IF EXIST "%devroot%\llvm\build\%abi%\" IF %cmakestate% GTR 0 set havellvm=1
 @IF NOT %toolchain%==msvc set havellvm=1
 @set llvmless=n
 @if %havellvm%==0 set llvmless=y
 @if %havellvm%==1 set /p llvmless=Build Mesa without LLVM (y/n). llvmpipe, swr, RADV, lavapipe and all OpenCL drivers won't be available and high performance JIT won't be available for softpipe, osmesa and graw:
 @if %havellvm%==1 echo.
-@call %devroot%\%projectname%\buildscript\modules\mesonsubprojects.cmd
+@call "%devroot%\%projectname%\buildscript\modules\mesonsubprojects.cmd"
 @IF "%vksdkselect%"=="1" IF %toolchain%==clang set buildconf=%buildconf%,vulkan
 @if /I NOT "%llvmless%"=="y" IF %llvmconfigbusted% EQU 1 set buildconf=%buildconf%,llvm
 @IF %intmesaver% GEQ 22000 set buildconf=%buildconf% -Dcpp_rtti=%RTTI%
 @if /I NOT "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm=%mesonbooltrue% -Dshared-llvm=%mesonboolfalse%
-@if /I NOT "%llvmless%"=="y" IF %toolchain%==msvc set buildconf=%buildconf% --cmake-prefix-path=%devroot:\=/%/llvm/build/%abi%
+@if /I NOT "%llvmless%"=="y" IF %toolchain%==msvc set buildconf=%buildconf% --cmake-prefix-path="%devroot:\=/%/llvm/build/%abi%"
 @if /I NOT "%llvmless%"=="y" IF %toolchain%==msvc IF %cmakestate% EQU 1 SET PATH=%devroot%\cmake\bin\;%PATH%
 @if /I "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm=%mesonboolfalse%
 
@@ -177,10 +177,10 @@
 @if NOT %ninjastate%==0 IF %toolchain%==msvc echo.
 @if /I "%useninja%"=="y" if %ninjastate%==1 IF %toolchain%==msvc set PATH=%devroot%\ninja\;%PATH%
 @if /I "%useninja%"=="y" set buildconf=%buildconf% --backend=ninja
-@if /I "%useninja%"=="y" IF %toolchain%==msvc set buildcmd=ninja -C %devroot:\=/%/mesa/build/%toolchain%-%abi% -j %throttle% -k 0
+@if /I "%useninja%"=="y" IF %toolchain%==msvc set buildcmd=ninja -C "%devroot%\mesa\build\%toolchain%-%abi%" -j %throttle% -k 0
 @IF NOT %toolchain%==msvc set buildcmd=%runmsys% cd "%devroot%\mesa\build\%toolchain%-%abi%";
 @IF NOT %toolchain%==msvc IF %gitstate% GTR 0 set buildcmd=%buildcmd%PATH=${PATH}:${gitloc};
-@IF NOT %toolchain%==msvc set buildcmd=%buildcmd%${MINGW_PREFIX}/bin/ninja -k 0
+@IF NOT %toolchain%==msvc set buildcmd=%buildcmd%/%LMSYSTEM%/bin/ninja -k 0
 @if /I NOT "%useninja%"=="y" set buildconf=%buildconf% --backend=vs
 
 @set galliumcount=0
@@ -205,13 +205,13 @@
 @IF /I "%zink%"=="y" set /a galliumcount+=1
 
 @set d3d12=n
-@IF EXIST %devroot%\mesa\subprojects\DirectX-Headers.wrap IF %intmesaver% GEQ 21000 IF %toolchain%==msvc set /p d3d12=Do you want to build Mesa3D OpenGL driver over D3D12 - GLonD3D12 (y/n):
-@IF EXIST %devroot%\mesa\subprojects\DirectX-Headers.wrap IF %intmesaver% GEQ 21000 IF %toolchain%==msvc echo.
+@IF EXIST "%devroot%\mesa\subprojects\DirectX-Headers.wrap" IF %intmesaver% GEQ 21000 IF %toolchain%==msvc set /p d3d12=Do you want to build Mesa3D OpenGL driver over D3D12 - GLonD3D12 (y/n):
+@IF EXIST "%devroot%\mesa\subprojects\DirectX-Headers.wrap" IF %intmesaver% GEQ 21000 IF %toolchain%==msvc echo.
 @IF /I "%d3d12%"=="y" set /a galliumcount+=1
 
 @set swrdrv=n
 @set canswr=0
-@if /I NOT "%llvmless%"=="y" if %abi%==x64 IF %disableootpatch%==0 IF EXIST %devroot%\mesa\src\gallium\drivers\swr\meson.build set canswr=1
+@if /I NOT "%llvmless%"=="y" if %abi%==x64 IF %disableootpatch%==0 IF EXIST "%devroot%\mesa\src\gallium\drivers\swr\meson.build" set canswr=1
 @if %canswr% EQU 1 set /p swrdrv=Do you want to build swr drivers? (y=yes):
 @if %canswr% EQU 1 echo.
 @if /I "%swrdrv%"=="y" IF %disableootpatch%==0 set buildconf=%buildconf% -Dswr-arches=avx,avx2,skx,knl
@@ -244,8 +244,8 @@
 @set canradv=1
 @if /I "%llvmless%"=="y" set canradv=0
 @IF %intmesaver% LSS 21200 set canradv=0
-@IF %toolchain%==msvc IF NOT EXIST %devroot%\llvm\build\%abi%\lib\LLVMAMDGPU*.lib set canradv=0
-@IF %toolchain%==msvc IF NOT EXIST %devroot%\mesa\subprojects\libelf-lfg-win32 IF %gitstate% EQU 0 set canradv=0
+@IF %toolchain%==msvc IF NOT EXIST "%devroot%\llvm\build\%abi%\lib\LLVMAMDGPU*.lib" set canradv=0
+@IF %toolchain%==msvc IF NOT EXIST "%devroot%\mesa\subprojects\libelf-lfg-win32\" IF %gitstate% EQU 0 set canradv=0
 @IF %toolchain%==msvc IF %disableootpatch%==1 IF %intmesaver% LSS 21256 set canradv=0
 @IF %toolchain%==msvc IF %disableootpatch%==1 IF %intmesaver% GEQ 21300 IF %intmesaver% LSS 21306 set canradv=0
 @IF NOT %toolchain%==msvc IF %abi%==x86 IF %intmesaver% LSS 22000 set canradv=0
@@ -268,15 +268,15 @@
 @if /I NOT "%glswrast%"=="y" set cand3d10umd=0
 @IF NOT %toolchain%==msvc set cand3d10umd=0
 @IF %intmesaver% LSS 22000 IF %disableootpatch% EQU 1 set cand3d10umd=0
-@IF %cand3d10umd% EQU 1 for /f delims^=^ eol^= %%a in ('@call %devroot%\%projectname%\buildscript\modules\winsdk.cmd wdk') do @IF NOT "%%a"=="OK" set cand3d10umd=0
+@IF %cand3d10umd% EQU 1 for /f delims^=^ eol^= %%a in ('@call "%devroot%\%projectname%\buildscript\modules\winsdk.cmd" wdk') do @IF NOT "%%a"=="OK" set cand3d10umd=0
 @IF %cand3d10umd% EQU 1 set /p d3d10umd=Build Mesa3D D3D10 software renderer (y/n):
 @IF %cand3d10umd% EQU 1 echo.
 @if /I "%d3d10umd%"=="y" set buildconf=%buildconf% -Dgallium-d3d10umd=true
 @if /I NOT "%d3d10umd%"=="y" IF %intmesaver% GEQ 21200 set buildconf=%buildconf% -Dgallium-d3d10umd=false
 
 @set spirvtodxil=n
-@IF EXIST %devroot%\mesa\subprojects\DirectX-Headers.wrap IF %intmesaver% GEQ 21000 IF %toolchain%==msvc set /p spirvtodxil=Do you want to build SPIR-V to DXIL tool (y/n):
-@IF EXIST %devroot%\mesa\subprojects\DirectX-Headers.wrap IF %intmesaver% GEQ 21000 IF %toolchain%==msvc echo.
+@IF EXIST "%devroot%\mesa\subprojects\DirectX-Headers.wrap" IF %intmesaver% GEQ 21000 IF %toolchain%==msvc set /p spirvtodxil=Do you want to build SPIR-V to DXIL tool (y/n):
+@IF EXIST "%devroot%\mesa\subprojects\DirectX-Headers.wrap" IF %intmesaver% GEQ 21000 IF %toolchain%==msvc echo.
 @IF /I "%spirvtodxil%"=="y" set buildconf=%buildconf% -Dspirv-to-dxil=true
 @IF /I NOT "%spirvtodxil%"=="y" IF %intmesaver% GEQ 21000 set buildconf=%buildconf% -Dspirv-to-dxil=false
 
@@ -319,16 +319,16 @@
 @IF %intmesaver% LSS 21000 set canopencl=0
 @IF NOT %toolchain%==msvc set canopencl=0
 @if /I "%llvmless%"=="y" set canopencl=0
-@IF NOT EXIST %devroot%\llvm\build\clc\share\pkgconfig set canopencl=0
-@IF %intmesaver% GEQ 21300 IF EXIST %devroot%\llvm\build\%abi%\lib\LLVMAMDGPU*.lib if /I NOT "%radv%"=="y" set canopencl=0
+@IF NOT EXIST "%devroot%\llvm\build\clc\share\pkgconfig\" set canopencl=0
+@IF %intmesaver% GEQ 21300 IF EXIST "%devroot%\llvm\build\%abi%\lib\LLVMAMDGPU*.lib" if /I NOT "%radv%"=="y" set canopencl=0
 
 @rem OpenCL SPIR-V requirements: basic support + Clang, LLD, LLVM SPIRV translator and SPIRV tools
 @set canclspv=1
 @IF %canopencl% EQU 0 set canclspv=0
-@IF NOT EXIST %devroot%\llvm\build\%abi%\lib\clang*.lib set canclspv=0
-@IF NOT EXIST %devroot%\llvm\build\%abi%\lib\lld*.lib set canclspv=0
-@IF NOT EXIST %devroot%\llvm\build\spv-%abi%\lib\pkgconfig set canclspv=0
-@IF NOT EXIST %devroot%\spirv-tools\build\%abi%\lib\pkgconfig set canclspv=0
+@IF NOT EXIST "%devroot%\llvm\build\%abi%\lib\clang*.lib" set canclspv=0
+@IF NOT EXIST "%devroot%\llvm\build\%abi%\lib\lld*.lib" set canclspv=0
+@IF NOT EXIST "%devroot%\llvm\build\spv-%abi%\lib\pkgconfig\" set canclspv=0
+@IF NOT EXIST "%devroot%\spirv-tools\build\%abi%\lib\pkgconfig\" set canclspv=0
 
 @rem Clover requirements: basic support + Mesa 21.3, LLVM build with RTTI, gallium swrast, out of tree patches.
 @set canclover=1
@@ -343,8 +343,8 @@
 @set PKG_CONFIG_SPV=0
 
 @rem Microsoft OpenCL compiler requires OpenCL SPIR-V and DirectX Headers
-@IF %canclspv% EQU 1 IF EXIST %devroot%\mesa\subprojects\DirectX-Headers.wrap set /p mclc=Build Mesa3D Microsoft OpenCL compiler (y/n):
-@IF %canclspv% EQU 1 IF EXIST %devroot%\mesa\subprojects\DirectX-Headers.wrap echo.
+@IF %canclspv% EQU 1 IF EXIST "%devroot%\mesa\subprojects\DirectX-Headers.wrap" set /p mclc=Build Mesa3D Microsoft OpenCL compiler (y/n):
+@IF %canclspv% EQU 1 IF EXIST "%devroot%\mesa\subprojects\DirectX-Headers.wrap" echo.
 @IF /I "%mclc%"=="y" set PKG_CONFIG_LIBCLC=1
 @IF /I "%mclc%"=="y" set PKG_CONFIG_SPV=1
 @IF /I "%mclc%"=="y" set buildconf=%buildconf% -Dmicrosoft-clc=enabled
@@ -367,8 +367,8 @@
 @IF /I "%buildclover%"=="y" set buildconf=%buildconf% -Dopencl-native=false
 
 @rem Apply PKG_CONFIG search PATH adjustments
-@IF %PKG_CONFIG_LIBCLC% EQU 1 set buildconf=%buildconf% -Dstatic-libclc=all --pkg-config-path=%devroot:\=/%/llvm/build/clc/share/pkgconfig
-@IF %PKG_CONFIG_SPV% EQU 1 set buildconf=%buildconf%;%devroot:\=/%/llvm/build/spv-%abi%/lib/pkgconfig;%devroot:\=/%/spirv-tools/build/%abi%/lib/pkgconfig
+@IF %PKG_CONFIG_LIBCLC% EQU 1 set buildconf=%buildconf% -Dstatic-libclc=all --pkg-config-path="%devroot:\=/%/llvm/build/clc/share/pkgconfig"
+@IF %PKG_CONFIG_SPV% EQU 1 set buildconf=%buildconf:~0,-1%;%devroot:\=/%/llvm/build/spv-%abi%/lib/pkgconfig;%devroot:\=/%/spirv-tools/build/%abi%/lib/pkgconfig"
 @set "PKG_CONFIG_LIBCLC="
 @set "PKG_CONFIG_SPV="
 
@@ -381,9 +381,9 @@
 
 :build_mesa
 @rem Generate dummy header for MSVC build when git is missing.
-@IF %toolchain%==msvc if NOT EXIST build md build
-@IF %toolchain%==msvc if NOT EXIST build\%toolchain%-%abi% md build\%toolchain%-%abi%
-@IF %toolchain%==msvc if NOT EXIST build\%toolchain%-%abi%\src md build\%toolchain%-%abi%\src
+@IF %toolchain%==msvc if NOT EXIST "build\" md build
+@IF %toolchain%==msvc if NOT EXIST "build\%toolchain%-%abi%\" md build\%toolchain%-%abi%
+@IF %toolchain%==msvc if NOT EXIST "build\%toolchain%-%abi%\src\" md build\%toolchain%-%abi%\src
 @IF %toolchain%==msvc if NOT EXIST build\%toolchain%-%abi%\src\git_sha1.h echo 0 > build\%toolchain%-%abi%\src\git_sha1.h
 
 @rem Load MSVC environment if used.

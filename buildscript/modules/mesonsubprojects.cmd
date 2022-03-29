@@ -6,16 +6,16 @@ cd /D "%%~a"
 echo Refreshing DirectX-Headers...
 git pull -v --progress --recurse-submodules origin
 echo.
-cd /D %devroot%\mesa
+cd /D "%devroot%\mesa"
 )
 
 @rem Find LLVM dependency
 @set RTTI=false
 @set llvmconfigbusted=0
-@IF %toolchain%==msvc IF EXIST %devroot%\llvm\build\%abi%\lib\cmake\llvm\LLVMConfig.cmake FOR /F delims^=^ eol^= %%a IN ('type %devroot%\llvm\build\%abi%\lib\cmake\llvm\LLVMConfig.cmake') DO @IF "%%a"=="set(LLVM_ENABLE_RTTI ON)" SET RTTI=true
-@IF NOT %toolchain%==msvc IF EXIST %msysloc%\%LMSYSTEM%\lib\cmake\llvm\LLVMConfig.cmake FOR /F delims^=^ eol^= %%a IN ('type %msysloc%\%LMSYSTEM%\lib\cmake\llvm\LLVMConfig.cmake') DO @IF "%%a"=="set(LLVM_ENABLE_RTTI ON)" SET RTTI=true
-@IF NOT %toolchain%==msvc if /I NOT "%llvmless%"=="y" FOR /F delims^=^ eol^= %%a IN ('%runmsys% ${MINGW_PREFIX}/bin/llvm-config --has-rtti 2^>^&1') DO @IF /I NOT "%%a"=="YES" IF /I NOT "%%a"=="NO" set llvmconfigbusted=1
-@IF %llvmconfigbusted% EQU 0 IF EXIST "%devroot%\mesa\subprojects\llvm\" RD /S /Q %devroot%\mesa\subprojects\llvm
+@IF %toolchain%==msvc IF EXIST "%devroot%\llvm\build\%abi%\lib\cmake\llvm\LLVMConfig.cmake" FOR /F delims^=^ eol^= %%a IN ('type "%devroot%\llvm\build\%abi%\lib\cmake\llvm\LLVMConfig.cmake"') DO @IF "%%a"=="set(LLVM_ENABLE_RTTI ON)" SET RTTI=true
+@IF NOT %toolchain%==msvc IF EXIST "%msysloc%\%LMSYSTEM%\lib\cmake\llvm\LLVMConfig.cmake" FOR /F delims^=^ eol^= %%a IN ('type "%msysloc%\%LMSYSTEM%\lib\cmake\llvm\LLVMConfig.cmake"') DO @IF "%%a"=="set(LLVM_ENABLE_RTTI ON)" SET RTTI=true
+@IF NOT %toolchain%==msvc if /I NOT "%llvmless%"=="y" FOR /F delims^=^ eol^= %%a IN ('%runmsys% /%LMSYSTEM%/bin/llvm-config --has-rtti 2^>^&1') DO @IF /I NOT "%%a"=="YES" IF /I NOT "%%a"=="NO" set llvmconfigbusted=1
+@IF %llvmconfigbusted% EQU 0 IF EXIST "%devroot%\mesa\subprojects\llvm\" RD /S /Q "%devroot%\mesa\subprojects\llvm"
 @IF %llvmconfigbusted% EQU 0 GOTO msvcwraps
 
 @rem llvmlibs must match the output of 'llvm-config --link-static --libnames engine coroutines' stripped of ending newline.
@@ -24,7 +24,7 @@ cd /D %devroot%\mesa
 @set llvmlibs=%llvmlibs:.a=%
 @set llvmlibs='%llvmlibs: =', '%'
 @FOR /F tokens^=2^ eol^= %%a IN ('%runmsys% /usr/bin/pacman -Q ${MINGW_PACKAGE_PREFIX}-llvm') DO @FOR /F tokens^=1^ delims=^-^ eol^= %%b IN ("%%~a") DO @SET llvmver=%%b
-@IF NOT EXIST "%devroot%\mesa\subprojects\llvm\" md %devroot%\mesa\subprojects\llvm
+@IF NOT EXIST "%devroot%\mesa\subprojects\llvm\" md "%devroot%\mesa\subprojects\llvm"
 @(
 echo project^('llvm', ['cpp']^)
 echo.
@@ -43,57 +43,57 @@ echo ^)
 echo.
 echo has_rtti ^= %RTTI%
 echo irbuilder_h ^= files^(llvmloc + '/include/llvm/IR/IRBuilder.h'^)
-)>%devroot%\%projectname%\buildscript\mesonsubprojects\llvm-meson.build
+)>"%devroot%\%projectname%\buildscript\mesonsubprojects\llvm-meson.build"
 @CMD /C EXIT 0
-@FC /B %devroot%\%projectname%\buildscript\mesonsubprojects\llvm-meson.build %devroot%\mesa\subprojects\llvm\meson.build>NUL 2>&1
+@FC /B "%devroot%\%projectname%\buildscript\mesonsubprojects\llvm-meson.build" "%devroot%\mesa\subprojects\llvm\meson.build">NUL 2>&1
 @if NOT "%ERRORLEVEL%"=="0" (
 @echo Using binary wrap to find LLVM...
-@copy /Y %devroot%\%projectname%\buildscript\mesonsubprojects\llvm-meson.build %devroot%\mesa\subprojects\llvm\meson.build
+@copy /Y "%devroot%\%projectname%\buildscript\mesonsubprojects\llvm-meson.build" "%devroot%\mesa\subprojects\llvm\meson.build"
 @echo.
 )
 
 :msvcwraps
 @IF NOT %toolchain%==msvc GOTO mingwwraps
-@IF EXIST "%devroot%\mesa\subprojects\zlib\" RD /S /Q %devroot%\mesa\subprojects\zlib
-@IF EXIST "%devroot%\mesa\subprojects\libzstd\" RD /S /Q %devroot%\mesa\subprojects\libzstd
-@IF EXIST "%devroot%\mesa\subprojects\vulkan\" RD /S /Q %devroot%\mesa\subprojects\vulkan
+@IF EXIST "%devroot%\mesa\subprojects\zlib\" RD /S /Q "%devroot%\mesa\subprojects\zlib"
+@IF EXIST "%devroot%\mesa\subprojects\libzstd\" RD /S /Q "%devroot%\mesa\subprojects\libzstd"
+@IF EXIST "%devroot%\mesa\subprojects\vulkan\" RD /S /Q "%devroot%\mesa\subprojects\vulkan"
 
 @rem Use updated zlib wrap
 @CMD /C EXIT 0
-@FC /B %devroot%\%projectname%\buildscript\mesonsubprojects\zlib.wrap %devroot%\mesa\subprojects\zlib.wrap>NUL 2>&1
+@FC /B "%devroot%\%projectname%\buildscript\mesonsubprojects\zlib.wrap" "%devroot%\mesa\subprojects\zlib.wrap">NUL 2>&1
 @if NOT "%ERRORLEVEL%"=="0" (
 @echo Using wrap file version 1.2.11-5 from Meson wrapdb to build zlib...
-@copy /Y %devroot%\%projectname%\buildscript\mesonsubprojects\zlib.wrap %devroot%\mesa\subprojects\zlib.wrap
+@copy /Y "%devroot%\%projectname%\buildscript\mesonsubprojects\zlib.wrap" "%devroot%\mesa\subprojects\zlib.wrap"
 @echo.
 )
 
 @rem Use up-to-date libelf-lfg-win32
 @CMD /C EXIT 0
-@FC /B %devroot%\%projectname%\buildscript\mesonsubprojects\libelf.wrap %devroot%\mesa\subprojects\libelf.wrap>NUL 2>&1
+@FC /B "%devroot%\%projectname%\buildscript\mesonsubprojects\libelf.wrap" "%devroot%\mesa\subprojects\libelf.wrap">NUL 2>&1
 @if NOT "%ERRORLEVEL%"=="0" (
 @echo Switching libelf to full clone with master branch pre-fetched...
-@copy /Y %devroot%\%projectname%\buildscript\mesonsubprojects\libelf.wrap %devroot%\mesa\subprojects\libelf.wrap
+@copy /Y "%devroot%\%projectname%\buildscript\mesonsubprojects\libelf.wrap" "%devroot%\mesa\subprojects\libelf.wrap"
 @echo.
 )
-@IF EXIST %devroot%\mesa\subprojects\libelf-lfg-win32 IF %gitstate% GTR 0 (
-@cd /D %devroot%\mesa\subprojects\libelf-lfg-win32
+@IF EXIST "%devroot%\mesa\subprojects\libelf-lfg-win32\" IF %gitstate% GTR 0 (
+@cd /D "%devroot%\mesa\subprojects\libelf-lfg-win32"
 echo Refreshing libelf for Windows...
 git pull -v --progress --recurse-submodules origin
 echo.
-cd /D %devroot%\mesa
+cd /D "%devroot%\mesa"
 )
 
 :mingwwraps
 @IF %toolchain%==msvc GOTO donewrap
 @rem Use runtime MinGW libelf dependency
 @for /d %%a in ("%devroot%\mesa\subprojects\libelf-*") do @RD /S /Q "%%~a"
-@IF EXIST %devroot%\mesa\subprojects\libelf.wrap del %devroot%\mesa\subprojects\libelf.wrap
+@IF EXIST "%devroot%\mesa\subprojects\libelf.wrap" del "%devroot%\mesa\subprojects\libelf.wrap"
 
 @rem Override zlib dependency
 @for /d %%a in ("%devroot%\mesa\subprojects\zlib-*") do @RD /S /Q "%%~a"
-@IF EXIST %devroot%\mesa\subprojects\zlib.wrap del %devroot%\mesa\subprojects\zlib.wrap
+@IF EXIST "%devroot%\mesa\subprojects\zlib.wrap" del "%devroot%\mesa\subprojects\zlib.wrap"
 @FOR /F tokens^=2^ eol^= %%a IN ('%runmsys% /usr/bin/pacman -Q ${MINGW_PACKAGE_PREFIX}-zlib') DO @FOR /F tokens^=1^ delims^=-^ eol^= %%b IN ("%%~a") DO @SET zlibver=%%b
-@IF NOT EXIST "%devroot%\mesa\subprojects\zlib\" MD %devroot%\mesa\subprojects\zlib
+@IF NOT EXIST "%devroot%\mesa\subprojects\zlib\" MD "%devroot%\mesa\subprojects\zlib"
 @(
 echo project^('zlib', ['cpp'], version ^: '%zlibver%'^)
 echo.
@@ -103,18 +103,18 @@ echo zlib_dep ^= declare_dependency^(
 echo   dependencies ^: _deps,
 echo   version ^: '%zlibver%'
 echo ^)
-)>%devroot%\%projectname%\buildscript\mesonsubprojects\zlib-meson.build
+)>"%devroot%\%projectname%\buildscript\mesonsubprojects\zlib-meson.build"
 @CMD /C EXIT 0
-@FC /B %devroot%\%projectname%\buildscript\mesonsubprojects\zlib-meson.build %devroot%\mesa\subprojects\zlib\meson.build>NUL 2>&1
+@FC /B "%devroot%\%projectname%\buildscript\mesonsubprojects\zlib-meson.build" "%devroot%\mesa\subprojects\zlib\meson.build">NUL 2>&1
 @if NOT "%ERRORLEVEL%"=="0" (
 @echo Overriding zlib dependency...
-@copy /Y %devroot%\%projectname%\buildscript\mesonsubprojects\zlib-meson.build %devroot%\mesa\subprojects\zlib\meson.build
+@copy /Y "%devroot%\%projectname%\buildscript\mesonsubprojects\zlib-meson.build" "%devroot%\mesa\subprojects\zlib\meson.build"
 @echo.
 )
 
 @rem Override ZSTD dependency
 @FOR /F tokens^=2^ eol^= %%a IN ('%runmsys% /usr/bin/pacman -Q ${MINGW_PACKAGE_PREFIX}-zstd') DO @FOR /F tokens^=1^ delims^=-^ eol^= %%b IN ("%%~a") DO @SET zstdver=%%b
-@IF NOT EXIST "%devroot%\mesa\subprojects\libzstd\" MD %devroot%\mesa\subprojects\libzstd
+@IF NOT EXIST "%devroot%\mesa\subprojects\libzstd\" MD "%devroot%\mesa\subprojects\libzstd"
 @(
 echo project^('libzstd', ['cpp'], version ^: '%zstdver%'^)
 echo.
@@ -126,12 +126,12 @@ echo   version ^: '%zstdver%'
 echo ^)
 echo.
 echo meson.override_dependency^('libzstd', zstd_override^)
-)>%devroot%\%projectname%\buildscript\mesonsubprojects\zstd-meson.build
+)>"%devroot%\%projectname%\buildscript\mesonsubprojects\zstd-meson.build"
 @CMD /C EXIT 0
-@FC /B %devroot%\%projectname%\buildscript\mesonsubprojects\zstd-meson.build %devroot%\mesa\subprojects\libzstd\meson.build>NUL 2>&1
+@FC /B "%devroot%\%projectname%\buildscript\mesonsubprojects\zstd-meson.build" "%devroot%\mesa\subprojects\libzstd\meson.build">NUL 2>&1
 @if NOT "%ERRORLEVEL%"=="0" (
 @echo Overriding ZSTD dependency...
-@copy /Y %devroot%\%projectname%\buildscript\mesonsubprojects\zstd-meson.build %devroot%\mesa\subprojects\libzstd\meson.build
+@copy /Y "%devroot%\%projectname%\buildscript\mesonsubprojects\zstd-meson.build" "%devroot%\mesa\subprojects\libzstd\meson.build"
 @echo.
 )
 
@@ -141,7 +141,7 @@ echo meson.override_dependency^('libzstd', zstd_override^)
 @set "VK_SDK_PATH="
 @%runmsys% /usr/bin/pacman -S ${MINGW_PACKAGE_PREFIX}-vulkan-loader --noconfirm
 @echo.
-@IF EXIST "%devroot%\mesa\subprojects\vulkan\" RD /S /Q %devroot%\mesa\subprojects\vulkan
+@IF EXIST "%devroot%\mesa\subprojects\vulkan\" RD /S /Q "%devroot%\mesa\subprojects\vulkan"
 @GOTO donewrap
 )
 @(
@@ -163,19 +163,19 @@ echo   dependencies ^: _deps
 echo ^)
 echo.
 echo meson.override_dependency^('vulkan', dep_vk_override^)
-)>%devroot%\%projectname%\buildscript\mesonsubprojects\vulkan-meson.build
+)>"%devroot%\%projectname%\buildscript\mesonsubprojects\vulkan-meson.build"
 @CMD /C EXIT 0
-@FC /B %devroot%\%projectname%\buildscript\mesonsubprojects\vulkan-meson.build %devroot%\mesa\subprojects\vulkan\meson.build>NUL 2>&1
+@FC /B "%devroot%\%projectname%\buildscript\mesonsubprojects\vulkan-meson.build" "%devroot%\mesa\subprojects\vulkan\meson.build">NUL 2>&1
 @if NOT "%ERRORLEVEL%"=="0" (
 @IF %toolchain%==clang echo Using binary wrap to find Vulkan...
-@IF %toolchain%==clang IF NOT EXIST "%devroot%\mesa\subprojects\vulkan\" md %devroot%\mesa\subprojects\vulkan
-@IF %toolchain%==clang copy /Y %devroot%\%projectname%\buildscript\mesonsubprojects\vulkan-meson.build %devroot%\mesa\subprojects\vulkan\meson.build
+@IF %toolchain%==clang IF NOT EXIST "%devroot%\mesa\subprojects\vulkan\" md "%devroot%\mesa\subprojects\vulkan"
+@IF %toolchain%==clang copy /Y "%devroot%\%projectname%\buildscript\mesonsubprojects\vulkan-meson.build" "%devroot%\mesa\subprojects\vulkan\meson.build"
 @IF %toolchain%==clang echo.
 )
-@IF %toolchain%==gcc IF EXIST "%devroot%\mesa\subprojects\vulkan\" RD /S /Q %devroot%\mesa\subprojects\vulkan
-@IF %toolchain%==gcc IF EXIST %msysloc%\%LMSYSTEM%\lib\libvulkan.dll.a del %msysloc%\%LMSYSTEM%\lib\libvulkan.dll.a
-@IF %toolchain%==gcc IF EXIST %msysloc%\%LMSYSTEM%\lib\pkgconfig\vulkan.pc del %msysloc%\%LMSYSTEM%\lib\pkgconfig\vulkan.pc
-@IF %toolchain%==gcc IF EXIST %msysloc%\%LMSYSTEM%\bin\libvulkan-1.dll del %msysloc%\%LMSYSTEM%\bin\libvulkan-1.dll
+@IF %toolchain%==gcc IF EXIST "%devroot%\mesa\subprojects\vulkan\" RD /S /Q "%devroot%\mesa\subprojects\vulkan"
+@IF %toolchain%==gcc IF EXIST "%msysloc%\%LMSYSTEM%\lib\libvulkan.dll.a" del "%msysloc%\%LMSYSTEM%\lib\libvulkan.dll.a"
+@IF %toolchain%==gcc IF EXIST "%msysloc%\%LMSYSTEM%\lib\pkgconfig\vulkan.pc" del "%msysloc%\%LMSYSTEM%\lib\pkgconfig\vulkan.pc"
+@IF %toolchain%==gcc IF EXIST "%msysloc%\%LMSYSTEM%\bin\libvulkan-1.dll" del "%msysloc%\%LMSYSTEM%\bin\libvulkan-1.dll"
 
 :donewrap
 @endlocal&set RTTI=%RTTI%&set llvmconfigbusted=%llvmconfigbusted%&set "VK_SDK_PATH=%VK_SDK_PATH%"&set "VULKAN_SDK=%VULKAN_SDK%"

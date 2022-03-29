@@ -55,6 +55,8 @@
 @echo.
 @if EXIST "%devroot%\llvm\build\spv-%abi%\" RD /S /Q "%devroot%\llvm\build\spv-%abi%"
 @if EXIST "%devroot%\llvm-project\build\bldspv-%abi%\" RD /S /Q "%devroot%\llvm-project\build\bldspv-%abi%"
+@pause
+@echo.
 @if NOT EXIST "%devroot%\llvm-project\build\" MD "%devroot%\llvm-project\build"
 @cd "%devroot%\llvm-project\build"
 @if NOT EXIST "bldspv-%abi%\" md bldspv-%abi%
