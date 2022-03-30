@@ -10,7 +10,7 @@
 - Improve for loops across the board;
 - Support quotes in MSYS2 commands;
 - MSYS2: Convert paths to Windows quoted format;
-- Switch away from DOS 8.3 path handling format (work in progress);
+- Switch away from DOS 8.3 path handling format;
 - Performance: Dedublicate a loop in build environment information dumper.
 ### Build script
 - LLVM MSVC build: Simplify error checks;

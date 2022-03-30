@@ -1,36 +1,36 @@
 @setlocal
 @set canspvtools=1
 @IF NOT EXIST "%devroot%\spirv-tools\" IF %gitstate% EQU 0 set canspvtools=0
-@IF EXIST %devroot%\spirv-tools\DEPS IF NOT EXIST %devroot%\spirv-tools\external\spirv-headers IF %gitstate% EQU 0 set canspvtools=0
+@IF EXIST "%devroot%\spirv-tools\DEPS" IF NOT EXIST "%devroot%\spirv-tools\external\spirv-headers\" IF %gitstate% EQU 0 set canspvtools=0
 @if %cmakestate% EQU 0 set canspvtools=0
-@IF EXIST %devroot%\spirv-tools\external IF %gitstate% GTR 0 (
+@IF EXIST "%devroot%\spirv-tools\external\" IF %gitstate% GTR 0 (
 @echo Updating SPIRV tools source code...
-@cd %devroot%\spirv-tools
+@cd "%devroot%\spirv-tools"
 @git pull -v --progress --recurse-submodules origin
 @echo.
 )
-@IF EXIST %devroot%\spirv-tools\DEPS IF EXIST %devroot%\spirv-tools\external\spirv-headers IF %gitstate% GTR 0 for /f tokens^=2^,4^ delims^=^'^ eol^= %%a IN ('type %devroot%\spirv-tools\DEPS') do @IF /I "%%a"=="spirv_headers_revision" IF NOT "%%b"=="" for /f delims^=^ eol^= %%c IN ('type %devroot%\spirv-tools\external\spirv-headers\.git\HEAD') do @IF NOT %%b==%%c (
+@IF EXIST "%devroot%\spirv-tools\DEPS" IF EXIST "%devroot%\spirv-tools\external\spirv-headers\" IF %gitstate% GTR 0 for /f tokens^=2^,4^ delims^=^'^ eol^= %%a IN ('type "%devroot%\spirv-tools\DEPS"') do @IF /I "%%a"=="spirv_headers_revision" IF NOT "%%b"=="" for /f delims^=^ eol^= %%c IN ('type "%devroot%\spirv-tools\external\spirv-headers\.git\HEAD"') do @IF NOT %%b==%%c (
 @echo Updating source code of SPIRV headers used by SPIRV tools...
-@cd %devroot%\spirv-tools\external\spirv-headers
+@cd "%devroot%\spirv-tools\external\spirv-headers"
 @git checkout master
 @git pull -v --progress --recurse-submodules origin
 @git checkout %%b
 @echo.
 )
-@cd %devroot%
+@cd "%devroot%"
 @IF %canspvtools% EQU 1 set /p buildspvtools=Build SPIRV Tools (y/n):
 @IF %canspvtools% EQU 1 echo.
 @IF /I NOT "%buildspvtools%"=="y" GOTO skipspvtools
-@IF NOT EXIST %devroot%\spirv-tools\external IF %gitstate% GTR 0 (
+@IF NOT EXIST "%devroot%\spirv-tools\external\" IF %gitstate% GTR 0 (
 @echo Getting SPIRV tools source code...
-@git clone -b stable https://github.com/KhronosGroup/SPIRV-Tools %devroot%\spirv-tools
+@git clone -b stable https://github.com/KhronosGroup/SPIRV-Tools "%devroot%\spirv-tools"
 @echo.
 )
-@IF NOT EXIST %devroot%\spirv-tools\external\spirv-headers IF %gitstate% GTR 0 (
+@IF NOT EXIST "%devroot%\spirv-tools\external\spirv-headers\" IF %gitstate% GTR 0 (
 @echo Getting source code of SPIRV headers used by SPIRV tools...
-@git clone https://github.com/KhronosGroup/SPIRV-Headers %devroot%\spirv-tools\external\spirv-headers
-@cd %devroot%\spirv-tools\external\spirv-headers
-@for /f tokens^=2^,4^ delims^=^'^ eol^= %%a IN ('type %devroot%\spirv-tools\DEPS') do @IF /I "%%a"=="spirv_headers_revision" IF NOT "%%b"=="" git checkout %%b
+@git clone https://github.com/KhronosGroup/SPIRV-Headers "%devroot%\spirv-tools\external\spirv-headers"
+@cd "%devroot%\spirv-tools\external\spirv-headers"
+@for /f tokens^=2^,4^ delims^=^'^ eol^= %%a IN ('type "%devroot%\spirv-tools\DEPS"') do @IF /I "%%a"=="spirv_headers_revision" IF NOT "%%b"=="" git checkout %%b
 @echo.
 )
 
@@ -56,7 +56,7 @@
 @echo.
 
 @rem Always clean build
-@cd %devroot%\spirv-tools
+@cd "%devroot%\spirv-tools"
 @pause
 @echo.
 @echo Cleanning SPIRV Tools build. Please wait...
@@ -71,7 +71,7 @@
 
 @rem Load Visual Studio environment. Can only be loaded in the background when using MsBuild.
 @if /I "%ninja%"=="y" call %vsenv% %vsabi%
-@if /I "%ninja%"=="y" cd %devroot%\spirv-tools\out\%abi%
+@if /I "%ninja%"=="y" cd "%devroot%\spirv-tools\out\%abi%"
 @if /I "%ninja%"=="y" echo.
 
 @rem Configure and execute the build with the configuration made above.
@@ -90,4 +90,4 @@
 :skipspvtools
 @rem Reset environment after SPIRV Tools build.
 @endlocal
-@cd %devroot%
+@cd "%devroot%"

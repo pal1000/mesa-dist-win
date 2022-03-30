@@ -1,16 +1,16 @@
 @setlocal
 @rem Get and build pkgconf as best pkg-config implementation for Mesa3D Meson build.
-@if NOT EXIST %devroot%\pkgconf IF %gitstate%==0 echo Couldn't get pkgconf. Falling back to pkg-config...
-@if NOT EXIST %devroot%\pkgconf IF %gitstate%==0 echo.
-@if NOT EXIST %devroot%\pkgconf IF %gitstate%==0 GOTO missingpkgconf
-@cd %devroot%
-@if EXIST %devroot%\pkgconf IF %gitstate% GTR 0 (
+@if NOT EXIST "%devroot%\pkgconf\" IF %gitstate%==0 echo Couldn't get pkgconf. Falling back to pkg-config...
+@if NOT EXIST "%devroot%\pkgconf\" IF %gitstate%==0 echo.
+@if NOT EXIST "%devroot%\pkgconf\" IF %gitstate%==0 GOTO missingpkgconf
+@cd "%devroot%"
+@if EXIST "%devroot%\pkgconf\" IF %gitstate% GTR 0 (
 @echo Updating pkgconf source code...
 @cd pkgconf
 @git pull -v --progress --recurse-submodules origin
 @echo.
 )
-@if NOT EXIST %devroot%\pkgconf IF %gitstate% GTR 0 (
+@if NOT EXIST "%devroot%\pkgconf\" IF %gitstate% GTR 0 (
 @echo Getting pkgconf source code...
 @git clone https://github.com/pkgconf/pkgconf.git --recurse-submodules pkgconf
 @echo.
@@ -21,34 +21,35 @@
 @IF NOT EXIST pkgconf\pkg-config.exe set buildpkgconf=y
 @IF NOT EXIST pkgconf\pkg-config.exe echo Begin pkgconf build...
 @echo.
-@IF /I "%buildpkgconf%"=="y" call %vsenv% %hostabi%
-@IF /I "%buildpkgconf%"=="y" echo.
-@IF /I "%buildpkgconf%"=="y" IF EXIST pkgconf RD /S /Q pkgconf
+@IF /I NOT "%buildpkgconf%"=="y" GOTO missingpkgconf
+@call %vsenv% %hostabi%
+@echo.
+@IF EXIST "pkgconf\" RD /S /Q pkgconf
 @set useninja=n
-@IF /I "%buildpkgconf%"=="y" IF %ninjastate% GTR 0 set /p useninja=Use Ninja build system instead of MsBuild (y/n):
-@IF /I "%buildpkgconf%"=="y" IF %ninjastate% GTR 0 echo.
+@IF %ninjastate% GTR 0 set /p useninja=Use Ninja build system instead of MsBuild (y/n):
+@IF %ninjastate% GTR 0 echo.
 @IF /I "%useninja%"=="y" IF %ninjastate%==1 set PATH=%devroot%\ninja\;%PATH%
-@IF /I "%buildpkgconf%"=="y" IF /I NOT "%useninja%"=="y" echo Configuring pkgconf build with : %mesonloc% pkgconf --backend=vs --buildtype=release -Dtests=false
-@IF /I "%buildpkgconf%"=="y" IF /I NOT "%useninja%"=="y" echo.
-@IF /I "%buildpkgconf%"=="y" IF /I NOT "%useninja%"=="y" %mesonloc% pkgconf --backend=vs --buildtype=release -Dtests=false
+@IF /I NOT "%useninja%"=="y" echo Configuring pkgconf build with : %mesonloc% pkgconf --backend=vs --buildtype=release -Dtests=false
+@IF /I NOT "%useninja%"=="y" echo.
+@IF /I NOT "%useninja%"=="y" %mesonloc% pkgconf --backend=vs --buildtype=release -Dtests=false
 @IF /I "%useninja%"=="y" echo Configuring pkgconf build with : %mesonloc% pkgconf --backend=ninja --buildtype=release -Dtests=false
 @IF /I "%useninja%"=="y" echo.
 @IF /I "%useninja%"=="y" %mesonloc% pkgconf --backend=ninja --buildtype=release -Dtests=false
-@IF /I "%buildpkgconf%"=="y" echo.
-@IF /I "%buildpkgconf%"=="y" pause
-@IF /I "%buildpkgconf%"=="y" echo.
-@IF /I "%buildpkgconf%"=="y" cd pkgconf
-@IF /I "%buildpkgconf%"=="y" IF /I NOT "%useninja%"=="y" IF /I %PROCESSOR_ARCHITECTURE%==AMD64 echo Performing pkgconf build with : msbuild /p^:Configuration=release,Platform=x64 pkgconf.sln /m^:%throttle%
-@IF /I "%buildpkgconf%"=="y" IF /I NOT "%useninja%"=="y" IF /I %PROCESSOR_ARCHITECTURE%==x86 echo Performing pkgconf build with : msbuild /p^:Configuration=release,Platform=Win32 pkgconf.sln /m^:%throttle%
-@IF /I "%buildpkgconf%"=="y" IF /I NOT "%useninja%"=="y" echo.
-@IF /I "%buildpkgconf%"=="y" IF /I NOT "%useninja%"=="y" IF /I %PROCESSOR_ARCHITECTURE%==AMD64 msbuild /p^:Configuration=release,Platform=x64 pkgconf.sln /m^:%throttle%
-@IF /I "%buildpkgconf%"=="y" IF /I NOT "%useninja%"=="y" IF /I %PROCESSOR_ARCHITECTURE%==x86 msbuild /p^:Configuration=release,Platform=Win32 pkgconf.sln /m^:%throttle%
+@echo.
+@pause
+@echo.
+@cd pkgconf
+@IF /I NOT "%useninja%"=="y" IF /I %PROCESSOR_ARCHITECTURE%==AMD64 echo Performing pkgconf build with : msbuild /p^:Configuration=release,Platform=x64 pkgconf.sln /m^:%throttle%
+@IF /I NOT "%useninja%"=="y" IF /I %PROCESSOR_ARCHITECTURE%==x86 echo Performing pkgconf build with : msbuild /p^:Configuration=release,Platform=Win32 pkgconf.sln /m^:%throttle%
+@IF /I NOT "%useninja%"=="y" echo.
+@IF /I NOT "%useninja%"=="y" IF /I %PROCESSOR_ARCHITECTURE%==AMD64 msbuild /p^:Configuration=release,Platform=x64 pkgconf.sln /m^:%throttle%
+@IF /I NOT "%useninja%"=="y" IF /I %PROCESSOR_ARCHITECTURE%==x86 msbuild /p^:Configuration=release,Platform=Win32 pkgconf.sln /m^:%throttle%
 @IF /I "%useninja%"=="y" echo Performing pkgconf build with : ninja
 @IF /I "%useninja%"=="y" echo.
 @IF /I "%useninja%"=="y" ninja
-@IF /I "%buildpkgconf%"=="y" echo.
-@IF /I "%buildpkgconf%"=="y" IF EXIST pkgconf.exe REN pkgconf.exe pkg-config.exe
+@echo.
+@IF EXIST pkgconf.exe REN pkgconf.exe pkg-config.exe
 
 :missingpkgconf
 @endlocal
-@cd %devroot%
+@cd "%devroot%"
