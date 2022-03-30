@@ -44,7 +44,7 @@
 @IF %canllvmspirv% EQU 1 IF EXIST "%devroot%\spirv-tools\build\%abi%\" IF %pkgconfigstate% GTR 0 set /p integratespvtools=Build with SPIRV Tools integration (y/n):
 @IF %canllvmspirv% EQU 1 IF EXIST "%devroot%\spirv-tools\build\%abi%\" IF %pkgconfigstate% GTR 0 echo.
 @IF /I "%integratespvtools%"=="y" set PATH=%pkgconfigloc%\;%PATH%
-@IF /I "%integratespvtools%"=="y" set buildconf=%buildconf% -DCMAKE_PREFIX_PATH="%devroot%\spirv-tools\build\%abi%"
+@IF /I "%integratespvtools%"=="y" set PKG_CONFIG_PATH=%devroot%\spirv-tools\build\%abi%
 @IF /I NOT "%integratespvtools%"=="y" set PKG_CONFIG_PATH=
 
 @echo SPIRV LLVM translator build configuration command^: %buildconf%

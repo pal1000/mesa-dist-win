@@ -76,8 +76,8 @@
 @if %wdkcount% EQU 1 echo Windows Driver Kit %vwdk%>>"%devroot%\%projectname%\buildinfo\msvc.txt"
 
 @if NOT defined nugetstate set nugetstate=0
-@IF %rhstate% GTR 0 IF %nugetstate%==1 SET nugetloc="%devroot%\nuget\nuget.exe"
-@IF %rhstate% GTR 0 IF %nugetstate% EQU 2 FOR /F delims^=^ eol^= %%a IN ('where nuget.exe') do @set nugetloc="%%~a"
+@IF %rhstate% GTR 0 IF %nugetstate%==1 SET PATH=%devroot%\nuget\;%PATH%
+@IF %rhstate% GTR 0 IF %nugetstate% GTR 0 FOR /F delims^=^ eol^= %%a IN ('where nuget.exe') do @set nugetloc="%%~a"
 @IF %rhstate% GTR 0 IF %nugetstate% GTR 0 ResourceHacker.exe -open %nugetloc% -action extract -mask VERSIONINFO,, -save "%devroot%\%projectname%\buildscript\assets\temp.rc" -log NUL
 @IF %rhstate% GTR 0 IF %nugetstate% GTR 0 FOR /F tokens^=1-2^ eol^= %%a IN ('type "%devroot%\%projectname%\buildscript\assets\temp.rc"') do @IF /I "%%a"=="FILEVERSION" set nugetver=%%b
 @IF defined nugetver IF %toolchain%==msvc echo Nuget Commandline tool %nugetver:,=.%>>"%devroot%\%projectname%\buildinfo\msvc.txt"
