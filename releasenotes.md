@@ -1,3 +1,5 @@
+# 22.0.1
+- Updated Mesa3D to [22.0.1](https://docs.mesa3d.org/relnotes/22.0.1.html).
 ### Distribution
 - Improve JSON patcher to operate without renaming RADV ICD;
 - Improve Meson install command used to check distribution creation;
