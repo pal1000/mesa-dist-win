@@ -41,10 +41,10 @@
 @set buildconf=%buildconf% -DCMAKE_INSTALL_PREFIX="%devroot%\llvm\build\spv-%abi%" -DLLVM_SPIRV_INCLUDE_TESTS=OFF
 
 @rem SPIRV Tools integration for LLVM SPIRV translator. This is a feature introduced in LLVM SPIRV translator 14.x.
-@IF %canllvmspirv% EQU 1 IF EXIST "%devroot%\spirv-tools\build\%abi%\" IF %pkgconfigstate% GTR 0 set /p integratespvtools=Build with SPIRV Tools integration (y/n):
-@IF %canllvmspirv% EQU 1 IF EXIST "%devroot%\spirv-tools\build\%abi%\" IF %pkgconfigstate% GTR 0 echo.
+@rem IF %canllvmspirv% EQU 1 IF EXIST "%devroot%\spirv-tools\build\%abi%\" IF %pkgconfigstate% GTR 0 set /p integratespvtools=Build with SPIRV Tools integration (y/n):
+@rem IF %canllvmspirv% EQU 1 IF EXIST "%devroot%\spirv-tools\build\%abi%\" IF %pkgconfigstate% GTR 0 echo.
 @IF /I "%integratespvtools%"=="y" set PATH=%pkgconfigloc%\;%PATH%
-@IF /I "%integratespvtools%"=="y" set PKG_CONFIG_PATH=%devroot%\spirv-tools\build\%abi%
+@IF /I "%integratespvtools%"=="y" set PKG_CONFIG_PATH=%devroot:\=/%/spirv-tools/build/%abi%/lib/pkgconfig
 @IF /I NOT "%integratespvtools%"=="y" set PKG_CONFIG_PATH=
 
 @echo SPIRV LLVM translator build configuration command^: %buildconf%
