@@ -47,6 +47,11 @@
 @IF /I "%integratespvtools%"=="y" set PKG_CONFIG_PATH=%devroot:\=/%/spirv-tools/build/%abi%/lib/pkgconfig
 @IF /I NOT "%integratespvtools%"=="y" set PKG_CONFIG_PATH=
 
+@rem Speedup build configuration
+@if EXIST "%devroot%\llvm\build\%abi%\" set /p boostllvmspvbld=Speedup build configuration (y/n):
+@if EXIST "%devroot%\llvm\build\%abi%\" echo.
+@IF /I "%boostllvmspvbld%"=="y" set buildconf=%buildconf% -DCMAKE_PREFIX_PATH="%devroot%\llvm\build\%abi%"
+
 @echo SPIRV LLVM translator build configuration command^: %buildconf%
 @echo.
 @pause
