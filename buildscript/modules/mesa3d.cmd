@@ -145,9 +145,9 @@
 @if EXIST "build\%toolchain%-%abi%\" IF /I "%cleanmesabld%"=="y" RD /S /Q build\%toolchain%-%abi%
 @IF /I NOT "%cleanmesabld%"=="y" set buildconf=%mesonloc% configure
 @set buildconf=%buildconf% build/%toolchain%-%abi% --buildtype=release -Db_ndebug=true --prefix="%devroot:\=/%/%projectname%/dist/%toolchain%-%abi%"
-@IF %intmesaver% GEQ 21200 set buildconf=%buildconf% -Dc_std=c17
+@IF %intmesaver% GEQ 21200 IF %intmesaver% LSS 22100 set buildconf=%buildconf% -Dc_std=c17
 @IF %toolchain%==msvc set buildconf=%buildconf% -Db_vscrt=mt -Dzlib:default_library=static
-@IF %toolchain%==msvc IF %intmesaver% GEQ 21200 set buildconf=%buildconf% -Dcpp_std=vc++latest
+@IF %toolchain%==msvc IF %intmesaver% GEQ 21200 IF %intmesaver% LSS 22100 set buildconf=%buildconf% -Dcpp_std=vc++latest
 @IF NOT %toolchain%==msvc set buildconf=%buildconf% -Dc_args="-march=core2 -pipe" -Dcpp_args="-march=core2 -pipe"
 @IF NOT %toolchain%==msvc set LDFLAGS=-static -s
 @IF NOT %toolchain%==msvc IF %intmesaver% GTR 20000 set buildconf=%buildconf% -Dzstd=%mesonbooltrue%

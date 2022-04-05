@@ -1,5 +1,6 @@
 ### Build script
-- SPIRV translator: Support accelerating build configuration by using LLVM build.
+- SPIRV translator: Support accelerating build configuration by using LLVM build;
+- Mesa3D build: No need to [manually set compiler standards version anymore](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/15706)[22.1+].
 # 22.0.1
 - Updated Mesa3D to [22.0.1](https://docs.mesa3d.org/relnotes/22.0.1.html).
 ### Distribution
