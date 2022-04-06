@@ -248,6 +248,7 @@
 @IF %toolchain%==msvc IF NOT EXIST "%devroot%\mesa\subprojects\libelf-lfg-win32\" IF %gitstate% EQU 0 set canradv=0
 @IF %toolchain%==msvc IF %disableootpatch%==1 IF %intmesaver% LSS 21256 set canradv=0
 @IF %toolchain%==msvc IF %disableootpatch%==1 IF %intmesaver% GEQ 21300 IF %intmesaver% LSS 21306 set canradv=0
+@IF NOT %toolchain%==msvc IF NOT EXIST "%msysloc%\%LMSYSTEM%\lib\libLLVMAMDGPU*.a" set canradv=0
 @IF NOT %toolchain%==msvc IF %abi%==x86 IF %intmesaver% LSS 22000 set canradv=0
 @IF NOT %toolchain%==msvc IF %disableootpatch%==1 IF %intmesaver% LSS 21251 set canradv=0
 @IF %canradv% EQU 1 set /p radv=Build AMD Vulkan driver - radv (y/n):
