@@ -8,7 +8,8 @@
 - Fix build options logic for SPIRV to DXIL and dozen;
 - Dozen: Disable 32-bit build until it's fixed.
 ### Distribution
-- Dozen driver support [22.1+].
+- Dozen driver support [22.1+];
+- SPIRV to DXIL obviously depends on DXIL so make sure it's distributed.
 # 22.0.1
 - Updated Mesa3D to [22.0.1](https://docs.mesa3d.org/relnotes/22.0.1.html).
 ### Distribution

@@ -41,12 +41,13 @@
 
 @if %toolchain%==msvc echo Copying runtimes for Microsoft drivers if needed...
 @IF EXIST "%devroot%\%projectname%\bin\%abi%\*on12compiler.dll" for /R "%devroot%\clon12\out\%abi%\bin" %%a IN (*.dll) do @IF EXIST "%%a" copy "%%a" "%devroot%\%projectname%\bin\%abi%"
+@IF EXIST "%devroot%\%projectname%\bin\%abi%\spirv_to_dxil.dll" IF NOT EXIST "%devroot%\%projectname%\bin\%abi%\dxil.dll" for /f delims^=^ eol^= %%a in ('@call "%devroot%\%projectname%\buildscript\modules\winsdk.cmd" dxil') do @IF EXIST %%a copy %%a "%devroot%\%projectname%\bin\%abi%"
 @IF EXIST "%devroot%\%projectname%\bin\%abi%\openglon12.dll" IF NOT EXIST "%devroot%\%projectname%\bin\%abi%\dxil.dll" for /f delims^=^ eol^= %%a in ('@call "%devroot%\%projectname%\buildscript\modules\winsdk.cmd" dxil') do @IF EXIST %%a copy %%a "%devroot%\%projectname%\bin\%abi%"
 @IF EXIST "%devroot%\%projectname%\bin\%abi%\openclon12.dll" IF NOT EXIST "%devroot%\%projectname%\bin\%abi%\dxil.dll" for /f delims^=^ eol^= %%a in ('@call "%devroot%\%projectname%\buildscript\modules\winsdk.cmd" dxil') do @IF EXIST %%a copy %%a "%devroot%\%projectname%\bin\%abi%"
 @IF EXIST "%devroot%\%projectname%\bin\%abi%\vulkan_dzn.dll" IF NOT EXIST "%devroot%\%projectname%\bin\%abi%\dxil.dll" for /f delims^=^ eol^= %%a in ('@call "%devroot%\%projectname%\buildscript\modules\winsdk.cmd" dxil') do @IF EXIST %%a copy %%a "%devroot%\%projectname%\bin\%abi%"
 @if %toolchain%==msvc echo.
 
-@echo Copying test suite...
+@echo Copying test suite and commandline utilities...
 @for /R "%devroot%\mesa\build\%toolchain%-%abi%\src" %%a IN (*.exe) do @IF EXIST "%%a" copy "%%a" "%devroot%\%projectname%\bin\%abi%"
 @echo.
 
