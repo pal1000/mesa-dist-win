@@ -205,8 +205,13 @@
 @IF /I "%zink%"=="y" set /a galliumcount+=1
 
 @set d3d12=n
-@IF EXIST "%devroot%\mesa\subprojects\DirectX-Headers.wrap" IF %intmesaver% GEQ 21000 IF %toolchain%==msvc set /p d3d12=Do you want to build Mesa3D OpenGL driver over D3D12 - GLonD3D12 (y/n):
-@IF EXIST "%devroot%\mesa\subprojects\DirectX-Headers.wrap" IF %intmesaver% GEQ 21000 IF %toolchain%==msvc echo.
+@set cand3d12=1
+@IF NOT EXIST "%devroot%\mesa\subprojects\DirectX-Headers.wrap" set cand3d12=0
+@for /d %%a in ("%devroot%\mesa\subprojects\DirectX-Headers-*") do @IF NOT EXIST "%%~a" IF %gitstate% EQU 0 set cand3d12=0
+@IF %intmesaver% LSS 21000 set cand3d12=0
+@IF NOT %toolchain%==msvc set cand3d12=0
+@IF %cand3d12% EQU 1 set /p d3d12=Do you want to build Mesa3D OpenGL driver over D3D12 - GLonD3D12 (y/n):
+@IF %cand3d12% EQU 1 echo.
 @IF /I "%d3d12%"=="y" set /a galliumcount+=1
 
 @set swrdrv=n
@@ -276,8 +281,8 @@
 @if /I NOT "%d3d10umd%"=="y" IF %intmesaver% GEQ 21200 set buildconf=%buildconf% -Dgallium-d3d10umd=false
 
 @set spirvtodxil=n
-@IF EXIST "%devroot%\mesa\subprojects\DirectX-Headers.wrap" IF %intmesaver% GEQ 21000 IF %toolchain%==msvc set /p spirvtodxil=Do you want to build SPIR-V to DXIL tool (y/n):
-@IF EXIST "%devroot%\mesa\subprojects\DirectX-Headers.wrap" IF %intmesaver% GEQ 21000 IF %toolchain%==msvc echo.
+@IF %cand3d12% EQU 1 set /p spirvtodxil=Do you want to build SPIR-V to DXIL tool (y/n):
+@IF %cand3d12% EQU 1 echo.
 @IF /I "%spirvtodxil%"=="y" set buildconf=%buildconf% -Dspirv-to-dxil=true
 @IF /I NOT "%spirvtodxil%"=="y" IF %intmesaver% GEQ 21000 set buildconf=%buildconf% -Dspirv-to-dxil=false
 
@@ -344,8 +349,8 @@
 @set PKG_CONFIG_SPV=0
 
 @rem Microsoft OpenCL compiler requires OpenCL SPIR-V and DirectX Headers
-@IF %canclspv% EQU 1 IF EXIST "%devroot%\mesa\subprojects\DirectX-Headers.wrap" set /p mclc=Build Mesa3D Microsoft OpenCL compiler (y/n):
-@IF %canclspv% EQU 1 IF EXIST "%devroot%\mesa\subprojects\DirectX-Headers.wrap" echo.
+@IF %canclspv% EQU 1 IF %cand3d12% EQU 1 set /p mclc=Build Mesa3D Microsoft OpenCL compiler (y/n):
+@IF %canclspv% EQU 1 IF %cand3d12% EQU 1 echo.
 @IF /I "%mclc%"=="y" set PKG_CONFIG_LIBCLC=1
 @IF /I "%mclc%"=="y" set PKG_CONFIG_SPV=1
 @IF /I "%mclc%"=="y" set buildconf=%buildconf% -Dmicrosoft-clc=enabled
