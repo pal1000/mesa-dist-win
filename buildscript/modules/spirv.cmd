@@ -22,14 +22,15 @@
 @echo.
 )
 
-@cd "%devroot%"
 @IF %canspvtools% EQU 1 set /p buildspvtools=Build SPIRV Tools (y/n):
 @IF %canspvtools% EQU 1 echo.
 @IF /I NOT "%buildspvtools%"=="y" GOTO skipspvtools
 
 @IF NOT EXIST "%devroot%\spirv-tools\external\" IF %gitstate% GTR 0 (
 @echo Getting SPIRV tools source code...
-@git clone -b %spvtoolsrel% https://github.com/KhronosGroup/SPIRV-Tools "%devroot%\spirv-tools"
+@git clone https://github.com/KhronosGroup/SPIRV-Tools "%devroot%\spirv-tools"
+@cd "%devroot%\spirv-tools"
+@git checkout %spvtoolsrel%
 @echo.
 )
 @IF EXIST "%devroot%\spirv-tools\DEPS" IF NOT EXIST "%devroot%\spirv-tools\external\spirv-headers\" IF %gitstate% GTR 0 (
