@@ -5,6 +5,8 @@
 - Mesa3D build: Improve checks for DirectX headers dependency;
 - Mesa3D build: Add support for dozen driver [22.1+];
 - SPIRV Tools: Stay on stable releases and manually update to new release.
+### Distribution
+- Dozen driver support [22.1+].
 # 22.0.1
 - Updated Mesa3D to [22.0.1](https://docs.mesa3d.org/relnotes/22.0.1.html).
 ### Distribution

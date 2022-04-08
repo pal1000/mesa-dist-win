@@ -43,6 +43,7 @@
 @IF EXIST "%devroot%\%projectname%\bin\%abi%\*on12compiler.dll" for /R "%devroot%\clon12\out\%abi%\bin" %%a IN (*.dll) do @IF EXIST "%%a" copy "%%a" "%devroot%\%projectname%\bin\%abi%"
 @IF EXIST "%devroot%\%projectname%\bin\%abi%\openglon12.dll" IF NOT EXIST "%devroot%\%projectname%\bin\%abi%\dxil.dll" for /f delims^=^ eol^= %%a in ('@call "%devroot%\%projectname%\buildscript\modules\winsdk.cmd" dxil') do @IF EXIST %%a copy %%a "%devroot%\%projectname%\bin\%abi%"
 @IF EXIST "%devroot%\%projectname%\bin\%abi%\openclon12.dll" IF NOT EXIST "%devroot%\%projectname%\bin\%abi%\dxil.dll" for /f delims^=^ eol^= %%a in ('@call "%devroot%\%projectname%\buildscript\modules\winsdk.cmd" dxil') do @IF EXIST %%a copy %%a "%devroot%\%projectname%\bin\%abi%"
+@IF EXIST "%devroot%\%projectname%\bin\%abi%\vulkan_dzn.dll" IF NOT EXIST "%devroot%\%projectname%\bin\%abi%\dxil.dll" for /f delims^=^ eol^= %%a in ('@call "%devroot%\%projectname%\buildscript\modules\winsdk.cmd" dxil') do @IF EXIST %%a copy %%a "%devroot%\%projectname%\bin\%abi%"
 @if %toolchain%==msvc echo.
 
 @echo Copying test suite...
@@ -52,11 +53,13 @@
 @echo Copying Vulkan drivers initialization configuration files if needed...
 @IF EXIST "%devroot%\%projectname%\bin\%abi%\vulkan_lvp.dll" for /R "%devroot%\mesa\build\%toolchain%-%abi%\src" %%a IN (lvp_icd.*.json) do @IF EXIST "%%a" copy "%%a" "%devroot%\%projectname%\bin\%abi%"
 @IF EXIST "%devroot%\%projectname%\bin\%abi%\*ulkan_radeon.dll" for /R "%devroot%\mesa\build\%toolchain%-%abi%\src" %%a IN (radeon_icd.*.json) do @IF EXIST "%%a" copy "%%a" "%devroot%\%projectname%\bin\%abi%"
+@IF EXIST "%devroot%\%projectname%\bin\%abi%\vulkan_dzn.dll" for /R "%devroot%\mesa\build\%toolchain%-%abi%\src" %%a IN (dzn_icd.*.json) do @IF EXIST "%%a" copy "%%a" "%devroot%\%projectname%\bin\%abi%"
 @echo.
 
 @rem Patch Vulkan drivers JSONs
 @IF EXIST "%devroot%\%projectname%\bin\%abi%\lvp_icd.*.json" call "%devroot%\%projectname%\buildscript\modules\fixvulkanjsons.cmd" lvp
 @IF EXIST "%devroot%\%projectname%\bin\%abi%\radeon_icd.*.json" call "%devroot%\%projectname%\buildscript\modules\fixvulkanjsons.cmd" radeon
+@IF EXIST "%devroot%\%projectname%\bin\%abi%\dzn_icd.*.json" call "%devroot%\%projectname%\buildscript\modules\fixvulkanjsons.cmd" dzn
 
 @echo Copying static libraries...
 @for /R "%devroot%\mesa\build\%toolchain%-%abi%" %%a IN (*.lib) do @IF EXIST "%%a" copy "%%a" "%devroot%\%projectname%\lib\%abi%"
