@@ -261,8 +261,8 @@
 @IF NOT %toolchain%==msvc if /I "%radv%"=="y" set msysregex=1
 @if /I "%radv%"=="y" set /a mesavkcount+=1
 
-@IF %cand3d12% EQU 1 IF %intmesaver% GEQ 22100 set /p dozenmsvk=Build Microsoft Dozen Vulkan driver (y/n):
-@IF %cand3d12% EQU 1 IF %intmesaver% GEQ 22100 echo.
+@IF %cand3d12% EQU 1 IF %intmesaver% GEQ 22100 IF %abi%==x64 set /p dozenmsvk=Build Microsoft Dozen Vulkan driver (y/n):
+@IF %cand3d12% EQU 1 IF %intmesaver% GEQ 22100 IF %abi%==x64 echo.
 @if /I "%dozenmsvk%"=="y" set /a mesavkcount+=1
 
 @set buildconf=%buildconf% -Dvulkan-drivers=
@@ -286,8 +286,9 @@
 @if /I NOT "%d3d10umd%"=="y" IF %intmesaver% GEQ 21200 set buildconf=%buildconf% -Dgallium-d3d10umd=false
 
 @set spirvtodxil=n
-@IF %cand3d12% EQU 1 set /p spirvtodxil=Do you want to build SPIR-V to DXIL tool (y/n):
-@IF %cand3d12% EQU 1 echo.
+@if /I "%dozenmsvk%"=="y" set spirvtodxil=y
+@IF %cand3d12% EQU 1 if /I NOT "%dozenmsvk%"=="y" set /p spirvtodxil=Do you want to build SPIR-V to DXIL tool (y/n):
+@IF %cand3d12% EQU 1 if /I NOT "%dozenmsvk%"=="y" echo.
 @IF /I "%spirvtodxil%"=="y" set buildconf=%buildconf% -Dspirv-to-dxil=true
 @IF /I NOT "%spirvtodxil%"=="y" IF %intmesaver% GEQ 21000 set buildconf=%buildconf% -Dspirv-to-dxil=false
 

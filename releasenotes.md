@@ -4,7 +4,9 @@
 - RADV MSYS2 build: Check if AMDGPU target is available just in case;
 - Mesa3D build: Improve checks for DirectX headers dependency;
 - Mesa3D build: Add support for dozen driver [22.1+];
-- SPIRV Tools: Stay on stable releases and manually update to new release.
+- SPIRV Tools: Stay on stable releases and manually update to new release;
+- Fix build options logic for SPIRV to DXIL and dozen;
+- Dozen: Disable 32-bit build until it's fixed.
 ### Distribution
 - Dozen driver support [22.1+].
 # 22.0.1
