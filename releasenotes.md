@@ -3,7 +3,8 @@
 - Mesa3D build: No need to [manually set compiler standards version anymore](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/15706)[22.1+];
 - RADV MSYS2 build: Check if AMDGPU target is available just in case;
 - Mesa3D build: Improve checks for DirectX headers dependency;
-- Mesa3D build: Add support for dozen driver [22.1+].
+- Mesa3D build: Add support for dozen driver [22.1+];
+- SPIRV Tools: Stay on stable releases and manually update to new release.
 # 22.0.1
 - Updated Mesa3D to [22.0.1](https://docs.mesa3d.org/relnotes/22.0.1.html).
 ### Distribution

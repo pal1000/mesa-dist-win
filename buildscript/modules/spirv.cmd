@@ -3,10 +3,14 @@
 @IF NOT EXIST "%devroot%\spirv-tools\" IF %gitstate% EQU 0 set canspvtools=0
 @IF EXIST "%devroot%\spirv-tools\DEPS" IF NOT EXIST "%devroot%\spirv-tools\external\spirv-headers\" IF %gitstate% EQU 0 set canspvtools=0
 @if %cmakestate% EQU 0 set canspvtools=0
+
+@set spvtoolsrel=v2022.2
 @IF EXIST "%devroot%\spirv-tools\external\" IF %gitstate% GTR 0 (
 @echo Updating SPIRV tools source code...
 @cd "%devroot%\spirv-tools"
+@git checkout master
 @git pull -v --progress --recurse-submodules origin
+@git checkout %spvtoolsrel%
 @echo.
 )
 @IF EXIST "%devroot%\spirv-tools\DEPS" IF EXIST "%devroot%\spirv-tools\external\spirv-headers\" IF %gitstate% GTR 0 for /f tokens^=2^,4^ delims^=^'^ eol^= %%a IN ('type "%devroot%\spirv-tools\DEPS"') do @IF /I "%%a"=="spirv_headers_revision" IF NOT "%%b"=="" for /f delims^=^ eol^= %%c IN ('type "%devroot%\spirv-tools\external\spirv-headers\.git\HEAD"') do @IF NOT %%b==%%c (
@@ -17,16 +21,18 @@
 @git checkout %%b
 @echo.
 )
+
 @cd "%devroot%"
 @IF %canspvtools% EQU 1 set /p buildspvtools=Build SPIRV Tools (y/n):
 @IF %canspvtools% EQU 1 echo.
 @IF /I NOT "%buildspvtools%"=="y" GOTO skipspvtools
+
 @IF NOT EXIST "%devroot%\spirv-tools\external\" IF %gitstate% GTR 0 (
 @echo Getting SPIRV tools source code...
-@git clone -b stable https://github.com/KhronosGroup/SPIRV-Tools "%devroot%\spirv-tools"
+@git clone -b %spvtoolsrel% https://github.com/KhronosGroup/SPIRV-Tools "%devroot%\spirv-tools"
 @echo.
 )
-@IF NOT EXIST "%devroot%\spirv-tools\external\spirv-headers\" IF %gitstate% GTR 0 (
+@IF EXIST "%devroot%\spirv-tools\DEPS" IF NOT EXIST "%devroot%\spirv-tools\external\spirv-headers\" IF %gitstate% GTR 0 (
 @echo Getting source code of SPIRV headers used by SPIRV tools...
 @git clone https://github.com/KhronosGroup/SPIRV-Headers "%devroot%\spirv-tools\external\spirv-headers"
 @cd "%devroot%\spirv-tools\external\spirv-headers"
