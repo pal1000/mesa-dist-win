@@ -22,21 +22,6 @@ index 53ec2c2ef95e65447dd0f0eb65c0f92a5906590d..c124b5fb0d2b28424f33aac54cd4f87c
    endif
  elif host_machine.system() == 'openbsd'
    pre_args += '-D_ISOC11_SOURCE'
-diff --git a/src/compiler/nir/nir.h b/src/compiler/nir/nir.h
-index a36c09589ce36ba6e67ed7159313553c7a483e11..0102ece28814762f706cc146c104015121a9c889 100644
---- a/src/compiler/nir/nir.h
-+++ b/src/compiler/nir/nir.h
-@@ -55,8 +55,10 @@
- #include "nir_opcodes.h"
- 
- #if defined(_WIN32) && !defined(snprintf)
-+#if (defined(_MSC_VER) && _MSC_VER < 1900) || (defined(__MINGW32__) && !defined(_UCRT))
- #define snprintf _snprintf
- #endif
-+#endif
- 
- #ifdef __cplusplus
- extern "C" {
 diff --git a/src/compiler/nir/nir_lower_atomics_to_ssbo.c b/src/compiler/nir/nir_lower_atomics_to_ssbo.c
 index c1799d0b9d0af70148928a4b224172c188c64194..448f63bdc7cc3b9cae123e3c0abe79b4b5af380b 100644
 --- a/src/compiler/nir/nir_lower_atomics_to_ssbo.c
@@ -65,28 +50,3 @@ index b1b40c8ee992eaeea985c58f4e8923724c1d385b..6053c2544a2628300cc8dc3311c8e4f0
    #define vtn_setjmp __builtin_setjmp
    #define vtn_longjmp __builtin_longjmp
  #else
-diff --git a/src/gallium/include/pipe/p_config.h b/src/gallium/include/pipe/p_config.h
-index 978aa455ecbb4801b269f50bf30e1f7dd574c1d0..86c35fffaf69a7176d52da9331b5729bacac5c63 100644
---- a/src/gallium/include/pipe/p_config.h
-+++ b/src/gallium/include/pipe/p_config.h
-@@ -54,6 +54,9 @@
- #if defined(__GNUC__)
- #define PIPE_CC_GCC
- #define PIPE_CC_GCC_VERSION (__GNUC__ * 100 + __GNUC_MINOR__)
-+#if !defined(__clang__)
-+#define PIPE_CC_GCC_REAL /* Not faked by clang or other compiler(update the macro condition). */
-+#endif
- #endif
- 
- /*
-@@ -96,8 +99,8 @@
- #else
- #define PIPE_ARCH_SSE
- #endif
--#if defined(PIPE_CC_GCC) && (__GNUC__ * 100 + __GNUC_MINOR__) < 409 && !defined(__SSSE3__)
--/* #warning SSE3 support requires -msse3 compiler options before GCC 4.9 */
-+#if defined(PIPE_CC_GCC_REAL) && PIPE_CC_GCC_VERSION < 409 && !defined(__SSSE3__)
-+/* #warning SSE3 support requires -msse3 compiler options before GCC(not clang) 4.9 */
- #else
- #define PIPE_ARCH_SSSE3
- #endif

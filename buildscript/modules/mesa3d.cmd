@@ -57,12 +57,12 @@
 @IF %disableootpatch%==1 if NOT %gitstate%==0 git checkout .
 @IF %disableootpatch%==1 if NOT %gitstate%==0 git clean -fd
 @IF %disableootpatch%==1 if NOT %gitstate%==0 echo.
-@IF %disableootpatch%==1 IF %toolchain%==clang echo Building with clang requires out of tree patches.
-@IF %disableootpatch%==1 IF %toolchain%==clang echo.
-@IF %disableootpatch%==1 IF %toolchain%==clang GOTO skipmesa
-@IF %intmesaver% LSS 21254 IF %disableootpatch%==0 IF %toolchain%==clang echo Only Mesa3D 21.2.4 and newer is known to work with MinGW-W64 clang toolchain.
-@IF %intmesaver% LSS 21254 IF %disableootpatch%==0 IF %toolchain%==clang echo.
-@IF %intmesaver% LSS 21254 IF %disableootpatch%==0 IF %toolchain%==clang GOTO skipmesa
+@IF %intmesaver% LSS 22100 IF %disableootpatch%==1 IF %toolchain%==clang echo Building Mesa3D prior to 22.1 with clang requires out of tree patches.
+@IF %intmesaver% LSS 22100 IF %disableootpatch%==1 IF %toolchain%==clang echo.
+@IF %intmesaver% LSS 22100 IF %disableootpatch%==1 IF %toolchain%==clang GOTO skipmesa
+@IF %intmesaver% LSS 21254 IF %toolchain%==clang echo Only Mesa3D 21.2.4 and newer is known to work with MinGW-W64 clang toolchain.
+@IF %intmesaver% LSS 21254 IF %toolchain%==clang echo.
+@IF %intmesaver% LSS 21254 IF %toolchain%==clang GOTO skipmesa
 @IF %intmesaver% GEQ 21300 IF %disableootpatch%==1 IF %abi%==x86 IF %toolchain%==gcc echo Building 32-bit Mesa3D using MSYS2 MinGW-W64 GCC requires out of tree patches.
 @IF %intmesaver% GEQ 21300 IF %disableootpatch%==1 IF %abi%==x86 IF %toolchain%==gcc echo.
 @IF %intmesaver% GEQ 21300 IF %disableootpatch%==1 IF %abi%==x86 IF %toolchain%==gcc GOTO skipmesa
@@ -88,7 +88,7 @@
 @IF %intmesaver% GEQ 22100 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" def-fix-dzn
 
 @rem Fix MinGW clang build
-@IF %intmesaver% GEQ 21254 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" clang
+@IF %intmesaver% GEQ 21254 IF %intmesaver% LSS 22100 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" clang
 @IF %intmesaver% GEQ 21254 IF EXIST "%devroot%\mesa\src\gallium\drivers\swr\meson.build" call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" clang-swr
 
 @rem Fix 32-bit MSVC build for Mesa 22.0.0-rc3 - 22.0.0
