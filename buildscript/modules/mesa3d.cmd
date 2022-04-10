@@ -85,6 +85,7 @@
 
 @rem Fix symbols exporting for MinGW GCC x86
 @IF %intmesaver% GEQ 21300 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" def-fixes
+@IF %intmesaver% GEQ 22100 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" def-fix-dzn
 
 @rem Fix MinGW clang build
 @IF %intmesaver% GEQ 21254 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" clang

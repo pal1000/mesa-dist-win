@@ -1,0 +1,24 @@
+diff --git a/src/microsoft/vulkan/meson.build b/src/microsoft/vulkan/meson.build
+index fb859d97a9de80dbf0426e8da94722943c817c31..d71425b6547a53ddb1b5171aac5a7fcc0a162766 100644
+--- a/src/microsoft/vulkan/meson.build
++++ b/src/microsoft/vulkan/meson.build
+@@ -67,7 +67,7 @@ endif
+ libvulkan_dzn = shared_library(
+   'vulkan_dzn',
+   [libdzn_files, dzn_entrypoints, sha1_h],
+-  vs_module_defs : 'vulkan_dzn.def',
++  vs_module_defs : vulkan_api_def,
+   include_directories : [
+     inc_include, inc_src, inc_mapi, inc_mesa, inc_gallium, inc_gallium_aux,
+     inc_compiler, inc_util
+diff --git a/src/microsoft/vulkan/vulkan_dzn.def b/src/microsoft/vulkan/vulkan_dzn.def
+deleted file mode 100644
+index 64a9caae59398a4768f663f18f8598476991f85c..0000000000000000000000000000000000000000
+--- a/src/microsoft/vulkan/vulkan_dzn.def
++++ /dev/null
+@@ -1,4 +0,0 @@
+-EXPORTS
+-vk_icdNegotiateLoaderICDInterfaceVersion
+-vk_icdGetInstanceProcAddr
+-vk_icdGetPhysicalDeviceProcAddr
+
