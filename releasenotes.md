@@ -15,6 +15,8 @@
 - Revise clang build fix patch and stop appplying it to 22.1+.
 ### Deployment
 - Simplify Mesa3D OpenGL drivers system-wide registration.
+### Toolchains
+- Support finding MSYS2 in registry.
 # 22.0.1
 - Updated Mesa3D to [22.0.1](https://docs.mesa3d.org/relnotes/22.0.1.html).
 ### Distribution
