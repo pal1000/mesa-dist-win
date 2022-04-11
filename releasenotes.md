@@ -5,14 +5,16 @@
 - Mesa3D build: Improve checks for DirectX headers dependency;
 - Mesa3D build: Add support for dozen driver [22.1+];
 - SPIRV Tools: Stay on stable releases and manually update to new release;
-- Fix build options logic for SPIRV to DXIL and dozen;
-- Dozen: Disable 32-bit build until it's fixed.
+- Fix build option logic for SPIRV to DXIL when building dozen [22.1+];
+- Dozen: Disable 32-bit build until it's fixed [22.1+].
 ### Distribution
 - Dozen driver support [22.1+];
 - SPIRV to DXIL obviously depends on DXIL so make sure it's distributed.
 ### Out of tree patches
 - Update def files fixing patch;
 - Revise clang build fix patch and stop appplying it to 22.1+.
+### Deployment
+- Simplify Mesa3D OpenGL drivers system-wide registration.
 # 22.0.1
 - Updated Mesa3D to [22.0.1](https://docs.mesa3d.org/relnotes/22.0.1.html).
 ### Distribution
