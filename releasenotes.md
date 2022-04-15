@@ -11,7 +11,7 @@
 - Dozen driver support [22.1+];
 - SPIRV to DXIL obviously depends on DXIL so make sure it's distributed.
 ### Out of tree patches
-- Update def files fixing patch;
+- Update definition files fixing patches to [r24](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/14041/diffs?diff_id=848204);
 - Revise clang build fix patch and stop appplying it to 22.1+.
 ### Deployment
 - Simplify Mesa3D OpenGL drivers system-wide registration.

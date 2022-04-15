@@ -21,4 +21,3 @@ index 64a9caae59398a4768f663f18f8598476991f85c..00000000000000000000000000000000
 -vk_icdNegotiateLoaderICDInterfaceVersion
 -vk_icdGetInstanceProcAddr
 -vk_icdGetPhysicalDeviceProcAddr
-
