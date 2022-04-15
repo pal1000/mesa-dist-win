@@ -16,6 +16,8 @@
 - Simplify Mesa3D OpenGL drivers system-wide registration.
 ### Toolchains
 - Support finding MSYS2 in registry.
+### Build depencies
+- MSVC build: Update zlib to 1.2.12-1.
 # 22.0.1
 - Updated Mesa3D to [22.0.1](https://docs.mesa3d.org/relnotes/22.0.1.html).
 ### Distribution
