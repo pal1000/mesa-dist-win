@@ -378,6 +378,7 @@
 @IF /I "%cloverspv%"=="y" set buildconf=%buildconf% -Dopencl-spirv=true
 @IF /I "%buildclover%"=="y" IF /I NOT "%cloverspv%"=="y" set buildconf=%buildconf% -Dopencl-spirv=false
 @IF /I "%buildclover%"=="y" set buildconf=%buildconf% -Dopencl-native=false
+@IF /I "%buildclover%"=="y" IF %intmesaver% GEQ 22100 set buildconf=%buildconf% -Dcpp_std=c++20
 
 @rem Apply PKG_CONFIG search PATH adjustments
 @IF %PKG_CONFIG_LIBCLC% EQU 1 set buildconf=%buildconf% -Dstatic-libclc=all --pkg-config-path="%devroot:\=/%/llvm/build/clc/share/pkgconfig"

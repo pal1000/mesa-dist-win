@@ -1,6 +1,6 @@
 ### Build script
 - SPIRV translator: Support accelerating build configuration by using LLVM build;
-- Mesa3D build: No need to [manually set compiler standards version anymore](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/15706)[22.1+];
+- Mesa3D build: No need to [manually set compiler standards version anymore](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/15706) except for clover [22.1+];
 - RADV MSYS2 build: Check if AMDGPU target is available just in case;
 - Mesa3D build: Improve checks for DirectX headers dependency;
 - Mesa3D build: Add support for dozen driver [22.1+];
