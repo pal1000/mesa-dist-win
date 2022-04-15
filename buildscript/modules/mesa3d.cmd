@@ -262,8 +262,8 @@
 @IF NOT %toolchain%==msvc if /I "%radv%"=="y" set msysregex=1
 @if /I "%radv%"=="y" set /a mesavkcount+=1
 
-@IF %cand3d12% EQU 1 IF %intmesaver% GEQ 22100 IF %abi%==x64 set /p dozenmsvk=Build Microsoft Dozen Vulkan driver (y/n):
-@IF %cand3d12% EQU 1 IF %intmesaver% GEQ 22100 IF %abi%==x64 echo.
+@IF %cand3d12% EQU 1 IF %intmesaver% GEQ 22100 set /p dozenmsvk=Build Microsoft Dozen Vulkan driver (y/n):
+@IF %cand3d12% EQU 1 IF %intmesaver% GEQ 22100 echo.
 @if /I "%dozenmsvk%"=="y" set /a mesavkcount+=1
 
 @set buildconf=%buildconf% -Dvulkan-drivers=

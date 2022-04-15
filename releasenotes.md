@@ -5,8 +5,7 @@
 - Mesa3D build: Improve checks for DirectX headers dependency;
 - Mesa3D build: Add support for dozen driver [22.1+];
 - SPIRV Tools: Stay on stable releases and manually update to new release;
-- Fix build option logic for SPIRV to DXIL when building dozen [22.1+];
-- Dozen: Disable 32-bit build until it's fixed [22.1+].
+- Fix build option logic for SPIRV to DXIL when building dozen [22.1+].
 ### Distribution
 - Dozen driver support [22.1+];
 - SPIRV to DXIL obviously depends on DXIL so make sure it's distributed.
