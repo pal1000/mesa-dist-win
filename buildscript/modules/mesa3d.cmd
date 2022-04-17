@@ -156,9 +156,11 @@
 @set buildcmd=msbuild /p^:Configuration=release,Platform=Win32 mesa.sln /m^:%throttle%
 @IF %abi%==x64 set buildcmd=msbuild /p^:Configuration=release,Platform=x64 mesa.sln /m^:%throttle%
 
-@set havellvm=0
-@IF %toolchain%==msvc IF EXIST "%devroot%\llvm\build\%abi%\" IF %cmakestate% GTR 0 set havellvm=1
-@IF NOT %toolchain%==msvc set havellvm=1
+@set havellvm=1
+@set llvmmethod=configtool
+@IF %toolchain%==msvc IF NOT EXIST "%devroot%\llvm\build\%abi%\lib\" set havellvm=0
+@IF %toolchain%==msvc IF NOT EXIST "%devroot%\llvm\build\%abi%\llvmconfig\llvm-config.exe" IF %cmakestate% EQU 0 set havellvm=0
+@IF %toolchain%==msvc IF NOT EXIST "%devroot%\llvm\build\%abi%\llvmconfig\llvm-config.exe" IF %cmakestate% GTR 0 set llvmmethod=cmake
 @set llvmless=n
 @if %havellvm%==0 set llvmless=y
 @if %havellvm%==1 set /p llvmless=Build Mesa without LLVM (y/n). llvmpipe, swr, RADV, lavapipe and all OpenCL drivers won't be available and high performance JIT won't be available for softpipe, osmesa and graw:
@@ -168,8 +170,9 @@
 @if /I NOT "%llvmless%"=="y" IF %llvmconfigbusted% EQU 1 set buildconf=%buildconf%,llvm
 @IF %intmesaver% GEQ 22000 set buildconf=%buildconf% -Dcpp_rtti=%RTTI%
 @if /I NOT "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm=%mesonbooltrue% -Dshared-llvm=%mesonboolfalse%
-@if /I NOT "%llvmless%"=="y" IF %toolchain%==msvc set buildconf=%buildconf% --cmake-prefix-path="%devroot:\=/%/llvm/build/%abi%"
-@if /I NOT "%llvmless%"=="y" IF %toolchain%==msvc IF %cmakestate% EQU 1 SET PATH=%devroot%\cmake\bin\;%PATH%
+@if /I NOT "%llvmless%"=="y" IF %llvmmethod%==cmake set buildconf=%buildconf% --cmake-prefix-path="%devroot:\=/%/llvm/build/%abi%"
+@if /I NOT "%llvmless%"=="y" IF %llvmmethod%==cmake IF %cmakestate% EQU 1 SET PATH=%devroot%\cmake\bin\;%PATH%
+@if /I NOT "%llvmless%"=="y" IF %toolchain%==msvc IF NOT %llvmmethod%==cmake SET PATH=%devroot%\llvm\build\%abi%\llvmconfig\;%PATH%
 @if /I "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm=%mesonboolfalse%
 
 @set useninja=n
