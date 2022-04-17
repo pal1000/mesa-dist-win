@@ -61,7 +61,6 @@
 @IF /I "%amdgpu%"=="y" set buildconf=%buildconf%AMDGPU;
 @set buildconf=%buildconf%X86 -DLLVM_OPTIMIZED_TABLEGEN=TRUE -DLLVM_INCLUDE_UTILS=OFF -DLLVM_INCLUDE_RUNTIMES=OFF -DLLVM_INCLUDE_TESTS=OFF -DLLVM_INCLUDE_EXAMPLES=OFF -DLLVM_INCLUDE_GO_TESTS=OFF -DLLVM_INCLUDE_BENCHMARKS=OFF -DLLVM_BUILD_LLVM_C_DYLIB=OFF -DLLVM_ENABLE_DIA_SDK=OFF
 @if EXIST "%devroot%\llvm-project\" IF /I NOT "%buildclang%"=="y" set buildconf=%buildconf% -DLLVM_BUILD_TOOLS=OFF
-@if EXIST "%devroot%\llvm-project\" IF /I NOT "%buildclang%"=="y" IF NOT %abi%==%hostabi% set buildconf=%buildconf% -DLLVM_INCLUDE_TOOLS=OFF
 @IF /I "%buildclang%"=="y" set buildconf=%buildconf% -DCLANG_BUILD_TOOLS=ON
 @set buildconf=%buildconf% -DLLVM_ENABLE_RTTI=ON -DLLVM_ENABLE_TERMINFO=OFF
 
@@ -101,11 +100,13 @@
 @pause
 @echo.
 @if /I NOT "%ninja%"=="y" cmake --build . -j %throttle% --config Release --target install
-@if /I NOT "%ninja%"=="y" IF /I NOT "%buildclang%"=="y" IF %abi%==%hostabi% cmake --build . -j %throttle% --config Release --target llvm-config
-@if /I NOT "%ninja%"=="y" IF /I NOT "%buildclang%"=="y" IF %abi%==%hostabi% copy .\Release\bin\llvm-config.exe "%devroot%\llvm\build\%abi%\bin\"
+@if /I NOT "%ninja%"=="y" IF /I NOT "%buildclang%"=="y" cmake --build . -j %throttle% --config Release --target llvm-config
+@if /I NOT "%ninja%"=="y" IF /I NOT "%buildclang%"=="y" copy .\Release\bin\llvm-config.exe "%devroot%\llvm\build\%abi%\bin\"
 @if /I "%ninja%"=="y" ninja -j %throttle% install
-@if /I "%ninja%"=="y" IF /I NOT "%buildclang%"=="y" IF %abi%==%hostabi% ninja -j %throttle% llvm-config
-@if /I "%ninja%"=="y" IF /I NOT "%buildclang%"=="y" IF %abi%==%hostabi% copy .\bin\llvm-config.exe "%devroot%\llvm\build\%abi%\bin\"
+@if /I "%ninja%"=="y" IF /I NOT "%buildclang%"=="y" ninja -j %throttle% llvm-config
+@if /I "%ninja%"=="y" IF /I NOT "%buildclang%"=="y" copy .\bin\llvm-config.exe "%devroot%\llvm\build\%abi%\bin\"
+@IF EXIST "%devroot%\llvm\build\%abi%\bin\llvm-config.exe" if NOT EXIST "%devroot%\llvm\build\%abi%\llvmconfig\" md "%devroot%\llvm\build\%abi%\llvmconfig"
+@IF EXIST "%devroot%\llvm\build\%abi%\bin\llvm-config.exe" copy "%devroot%\llvm\build\%abi%\bin\llvm-config.exe" "%devroot%\llvm\build\%abi%\llvmconfig\"
 @echo.
 
 @rem Avoid race condition in LLVM SPIRV translator sources checkout.
