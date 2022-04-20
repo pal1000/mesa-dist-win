@@ -114,10 +114,10 @@ index 000abef770966c4baecd0b47922f42c532a8c2cf..1b7301585f9e4b0f0556ce2ae11b03b1
  symbols_check = find_program('symbols-check.py')
  install_megadrivers_py = find_program('install_megadrivers.py')
 diff --git a/src/amd/vulkan/meson.build b/src/amd/vulkan/meson.build
-index a1a29a31154fdb23f0fde2d31500f31834654171..2607b5bcd4ad140a4cc8f08b6a72ae63e47c2862 100644
+index 523782f281f650d0558af64a0c0a2bf77c217e1e..b6ecd999e71ab3ecb780af4fa2146c617e3c8e41 100644
 --- a/src/amd/vulkan/meson.build
 +++ b/src/amd/vulkan/meson.build
-@@ -150,12 +150,10 @@ if with_ld_version_script
+@@ -149,12 +149,10 @@ if with_ld_version_script
    libvulkan_radeon_link_depends += files('vulkan.sym')
  endif
  

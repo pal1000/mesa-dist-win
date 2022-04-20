@@ -63,9 +63,9 @@
 @IF %intmesaver% LSS 21254 IF %toolchain%==clang echo Only Mesa3D 21.2.4 and newer is known to work with MinGW-W64 clang toolchain.
 @IF %intmesaver% LSS 21254 IF %toolchain%==clang echo.
 @IF %intmesaver% LSS 21254 IF %toolchain%==clang GOTO skipmesa
-@IF %intmesaver% GEQ 21300 IF %disableootpatch%==1 IF %abi%==x86 IF %toolchain%==gcc echo Building 32-bit Mesa3D using MSYS2 MinGW-W64 GCC requires out of tree patches.
-@IF %intmesaver% GEQ 21300 IF %disableootpatch%==1 IF %abi%==x86 IF %toolchain%==gcc echo.
-@IF %intmesaver% GEQ 21300 IF %disableootpatch%==1 IF %abi%==x86 IF %toolchain%==gcc GOTO skipmesa
+@IF %intmesaver% GEQ 21300 IF %intmesaver% LSS 22200 IF %disableootpatch%==1 IF %abi%==x86 IF %toolchain%==gcc echo Building 32-bit Mesa3D 21.3 through 22.1 using MSYS2 MinGW-W64 GCC requires out of tree patches.
+@IF %intmesaver% GEQ 21300 IF %intmesaver% LSS 22200 IF %disableootpatch%==1 IF %abi%==x86 IF %toolchain%==gcc echo.
+@IF %intmesaver% GEQ 21300 IF %intmesaver% LSS 22200 IF %disableootpatch%==1 IF %abi%==x86 IF %toolchain%==gcc GOTO skipmesa
 @IF %intmesaver% GEQ 22003 IF %intmesaver% LSS 22051 IF %disableootpatch%==1 IF %abi%==x86 IF %toolchain%==msvc echo Building 32-bit Mesa3D 22.0.0-rc3 through 22.0.0 stable using MSVC requires out of tree patches.
 @IF %intmesaver% GEQ 22003 IF %intmesaver% LSS 22051 IF %disableootpatch%==1 IF %abi%==x86 IF %toolchain%==msvc echo.
 @IF %intmesaver% GEQ 22003 IF %intmesaver% LSS 22051 IF %disableootpatch%==1 IF %abi%==x86 IF %toolchain%==msvc GOTO skipmesa
@@ -84,8 +84,8 @@
 @IF %intmesaver% GEQ 21300 IF %intmesaver% LSS 21352 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" mingw-CRT-link-fix
 
 @rem Fix symbols exporting for MinGW GCC x86
-@IF %intmesaver% GEQ 21300 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" def-fixes
-@IF %intmesaver% GEQ 22100 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" def-fix-dzn
+@IF %intmesaver% GEQ 21300 IF %intmesaver% LSS 22200 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" def-fixes
+@IF %intmesaver:~0,3% EQU 221 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" def-fix-dzn
 
 @rem Fix MinGW clang build
 @IF %intmesaver% GEQ 21254 IF %intmesaver% LSS 22100 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" clang
