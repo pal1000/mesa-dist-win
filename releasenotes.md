@@ -11,7 +11,7 @@
 - Mesa3D MSYS2 build: Do not set prefix build option as it causes Meson warnings related to Python;
 - MSVC: Always build llvm-config tool and use it for LLVM detection by default with cmake as alternative;
 - LLVM/MSVC: Pull source as admin to always include symlinks;
-- zink MSVC build: Fix compatibility with Lunarg Vulkan SDK >= 1.3.211.0.
+- zink MSVC build: Fix compatibility with LunarG Vulkan SDK >= 1.3.211.0.
 ### Distribution
 - Dozen driver support [22.1+];
 - SPIRV to DXIL obviously depends on DXIL so make sure it's distributed.
@@ -22,7 +22,7 @@
 - Simplify Mesa3D OpenGL drivers system-wide registration.
 ### Toolchains
 - Support finding MSYS2 in registry.
-### Build depencies
+### Build dependencies
 - MSVC build: Update zlib to 1.2.12-1.
 # 22.0.1
 - Updated Mesa3D to [22.0.1](https://docs.mesa3d.org/relnotes/22.0.1.html).
@@ -39,13 +39,13 @@
 - Support quotes in MSYS2 commands;
 - MSYS2: Convert paths to Windows quoted format;
 - Switch away from DOS 8.3 path handling format;
-- Performance: Dedublicate a loop in build environment information dumper.
+- Performance: Deduplicate a loop in build environment information dumper.
 ### Build script
 - LLVM MSVC build: Simplify error checks;
 - LLVM MSVC build: Support generating build configuration command without performing the build;
 - LLVM MSVC build: Fetch LLVM 14.0.0 when source is not available;
 - LLVM MSVC: Build SPIRV translator in tree but on a different build folder than the rest of LLVM;
-- Offer to build SPIRV trannslator only when building clang because Mesa3D requires both when building the exact same components;
+- Offer to build SPIRV translator only when building clang because Mesa3D requires both when building the exact same components;
 - Python: Bump minimum requirement to 3.7 per Meson build demands;
 - Avoid race condition in LLVM sources checkout, regression from 7ff9b39788bca17655d8269489fde851a94accee;
 - Mesa3D: GLES drivers require at least an OpenGL driver;
