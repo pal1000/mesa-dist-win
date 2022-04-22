@@ -8,7 +8,8 @@
 - Fix build option logic for SPIRV to DXIL when building dozen [22.1+];
 - Mesa3D MSYS2 build: Do not set prefix build option as it causes Meson warnings related to Python;
 - MSVC: Always build llvm-config tool and use it for LLVM detection by default with cmake as alternative;
-- LLVM/MSVC: Pull source as admin to include symlinks when possible.
+- LLVM/MSVC: Pull source as admin to always include symlinks;
+- zink MSVC build: Fix compatibility with Lunarg Vulkan SDK >= 1.3.211.0.
 ### Distribution
 - Dozen driver support [22.1+];
 - SPIRV to DXIL obviously depends on DXIL so make sure it's distributed.
