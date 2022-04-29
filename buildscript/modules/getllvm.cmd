@@ -13,7 +13,7 @@
 @CMD /C EXIT 0
 @where /q git.exe
 @if "%ERRORLEVEL%"=="0" (
-@git clone -c core.symlinks=true https://github.com/llvm/llvm-project.git --branch=llvmorg-14.0.1 --depth=1 llvm-project
+@git clone -c core.symlinks=true https://github.com/llvm/llvm-project.git --branch=llvmorg-14.0.3 --depth=1 llvm-project
 @echo.
 )
 @pause

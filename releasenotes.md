@@ -1,3 +1,5 @@
+### Build script
+- LLVM MSVC build: Pull v14.0.3 if source code is missing.
 # 22.0.2
 - Updated Mesa3D to [22.0.2](https://docs.mesa3d.org/relnotes/22.0.2.html).
 ### Build script
