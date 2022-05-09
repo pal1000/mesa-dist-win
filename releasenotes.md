@@ -1,3 +1,5 @@
+### Build script
+- MSYS2: CLANG32 prefix is now available by default.
 # 22.0.3
 - Updated Mesa3D to [22.0.3](https://docs.mesa3d.org/relnotes/22.0.3.html).
 ### Build script
