@@ -1,5 +1,6 @@
 ### Build script
-- MSYS2: CLANG32 prefix is now available by default.
+- MSYS2: CLANG32 prefix is now available by default;
+- Mesa3D depends on Vulkan loader only when zink driver is used [22.2+].
 # 22.0.3
 - Updated Mesa3D to [22.0.3](https://docs.mesa3d.org/relnotes/22.0.3.html).
 ### Build script
