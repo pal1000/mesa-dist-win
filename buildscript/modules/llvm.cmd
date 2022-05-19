@@ -34,9 +34,9 @@
 @if NOT %ninjastate%==0 echo.
 @if /I "%ninja%"=="y" if %ninjastate%==1 set PATH=%devroot%\ninja\;%PATH%
 
-@rem AMDGPU target
-@set /p amdgpu=Build AMDGPU target - required by RADV (y/n):
-@echo.
+@rem AMDGPU target (disabled, see https://github.com/pal1000/mesa-dist-win/issues/103)
+@rem set /p amdgpu=Build AMDGPU target - required by RADV (y/n):
+@rem echo.
 
 @rem Clang and LLD
 @if EXIST "%devroot%\llvm-project\" set /p buildclang=Build clang and LLD - required for OpenCL (y/n):
