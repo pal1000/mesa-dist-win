@@ -1,1 +1,2 @@
 *.cmd text eol=crlf
+*.patch text eol=lf
