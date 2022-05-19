@@ -9,10 +9,21 @@
 @IF %llvmsources% EQU 1 IF %cmakestate% GTR 0 echo.
 @if /I NOT "%cfgllvmbuild%"=="y" GOTO skipllvm
 
-@rem Getting LLVM monorepo if LLVM source is missing
+@rem Get/update LLVM source code
+@if EXIST "%devroot%\llvm-project\" (
+@echo Updating LLVM source code...
+@cd "%devroot%\llvm-project"
+@git checkout release/14.x
+@git pull -v --progress origin
+@git checkout llvmorg-14.0.3
+@echo.
+)
 @if NOT EXIST "%devroot%\llvm\cmake\" if NOT EXIST "%devroot%\llvm-project\" (
 @echo Getting LLVM source code...
-@call "%devroot%\%projectname%\buildscript\modules\getllvm.cmd"
+@git clone --config core.autocrlf=false https://github.com/llvm/llvm-project.git "%devroot%\llvm-project"
+@cd "%devroot%\llvm-project"
+@git checkout release/14.x
+@git checkout llvmorg-14.0.3
 @echo.
 )
 

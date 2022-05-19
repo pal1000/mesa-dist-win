@@ -1,7 +1,8 @@
 ### Build script
 - MSYS2: CLANG32 prefix is now available by default;
 - Mesa3D depends on Vulkan loader only when zink driver is used [22.2+];
-- Disable RADV build, see https://github.com/pal1000/mesa-dist-win/issues/103.
+- Disable RADV build, see https://github.com/pal1000/mesa-dist-win/issues/103;
+- LLVM MSVC: Source code update support.
 ### Miscellaneous
 - Another attempt at enforcing CRLF line endings to CMD files, fixes eb367a2427526faf5b9a3d065b3b14971eb11400.
 # 22.0.3
