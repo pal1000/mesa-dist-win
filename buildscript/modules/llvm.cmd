@@ -10,7 +10,9 @@
 @if /I NOT "%cfgllvmbuild%"=="y" GOTO skipllvm
 
 @rem Get/update LLVM source code
-@if EXIST "%devroot%\llvm-project\" (
+@if EXIST "%devroot%\llvm-project\" set /p updllvmsrc=Update LLVM source code (y/n)):
+@if EXIST "%devroot%\llvm-project\" echo.
+@if /I "%updllvmsrc%"=="y" (
 @echo Updating LLVM source code...
 @cd "%devroot%\llvm-project"
 @git checkout release/14.x
