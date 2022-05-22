@@ -16,12 +16,12 @@ Python packages
 Mako       1.2.0
 MarkupSafe 2.1.1
 meson      0.62.1
-pip        22.1
+pip        22.1.1
 setuptools 62.3.2
 
 CMake 3.23.1
 Ninja 1.11.0
-LLVM 14.0.2
+LLVM 14.0.3
 SPIRV Tools 2022.2.1
 Winflexbison package 2.5.25
 flex 2.6.4

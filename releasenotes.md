@@ -1,3 +1,6 @@
+# 22.1.0
+- Updated Mesa3D to [22.1.0](https://docs.mesa3d.org/relnotes/22.1.0.html).
+- RADV has been removed from distribution per @zmike [suggestion](https://github.com/pal1000/mesa-dist-win/issues/103).
 ### Build script
 - MSYS2: CLANG32 prefix is now available by default;
 - Mesa3D depends on Vulkan loader only when zink driver is used [22.2+];
@@ -5,6 +8,8 @@
 - LLVM MSVC: Source code update support.
 ### Miscellaneous
 - Another attempt at enforcing CRLF line endings to CMD files, fixes eb367a2427526faf5b9a3d065b3b14971eb11400.
+### Documentation
+- Document RADV removal from distribution.
 # 22.0.3
 - Updated Mesa3D to [22.0.3](https://docs.mesa3d.org/relnotes/22.0.3.html).
 ### Build script
