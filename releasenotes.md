@@ -1,3 +1,5 @@
+### Documentation
+- Docunent a complete Mesa3D uninstall procedure as requested [here](https://github.com/pal1000/mesa-dist-win/issues/20#issuecomment-1133666788).
 # 22.1.0
 - Updated Mesa3D to [22.1.0](https://docs.mesa3d.org/relnotes/22.1.0.html).
 - RADV has been removed from distribution per @zmike [suggestion](https://github.com/pal1000/mesa-dist-win/issues/103).

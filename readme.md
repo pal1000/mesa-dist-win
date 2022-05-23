@@ -4,6 +4,7 @@
 - [Differences between MSVC and MinGW packages](#differences-between-msvc-and-mingw-packages)
 - [Mingw and MSVC Package contents](#mingw-and-msvc-package-contents)
 - [Installation and usage](#installation-and-usage)
+- [Uninstall Messa3D](#uninstall-messa3d)
 - [Legacy software compatibility](#legacy-software-compatibility)
 - [OpenGL context configuration override](#opengl-context-configuration-override)
 - [How to set environment variables](#how-to-set-environment-variables)
@@ -98,6 +99,22 @@ Also, [Federico Dossena](https://github.com/adolfintel)'s [Mesainjector](https:/
 - Applications requiring OpenGL 3.2 or newer may need [OpenGL context configuration override](#opengl-context-configuration-override).
 
 Examples on OpenGL context configuration override, switch to other driver and old applications compatibility are available [here](https://github.com/pal1000/mesa-dist-win/tree/master/examples).
+# Uninstall Messa3D
+1. Run system wide deployment and perform uninstall operation if available, then exit;
+2. Download and run [Everything tool](https://www.voidtools.com/) (any flavor should work);
+3. Run per application deployment tool and leave it running;
+4. In Everything tool, in text field under menu enter `libgallium_wgl.dll attrib:L ` and keep Everything tool running;
+5. For each search result in Everything tool:
+- open its location in Windows Explorer via Open Path or Open File location context menu option;
+- find *.local files and remove them, but only if you are certain you specified a filename during deployment to that location;
+- copy location from address bar and feed it to per application deployment tool;
+- send no to all deployments until you are asked to do more deployments, send yes there.
+6. Repeat steps 4 and 5 using osmesa.dll and graw.dll filenames respectively the same way was done for libgallium_wgl.dll;
+7. Close per application deployment and Everything tools;
+8. Revert any registry changes and any environment variables that configure Vulkan runtime to use any of Mesa3D Vulkan drivers;
+9. Repeat stepp 8, but for OpenCL.
+
+WARNING: Programs for which certain files have been overwritten by per application deployment tool may need re-installation/repair. Per application deployment tool detects and warns about this deployment scenario since 22.0.0.
 # Legacy software compatibility
 Old applications from early 200x and older may need MESA_EXTENSION_MAX_YEAR environment variable set to avoid buffer overflows. It expects a year number as value, most commonly used being 2001. It trims the extensions list returned by Mesa3D to extensions released up to and including provided year as Mesa3D extensions list is sorted by year.
 
