@@ -9,6 +9,8 @@
 - Misc documentation improvements.
 ### Build environment
 - Update LLVM source for MSVC build to 14.0.4.
+### Build script
+- Disable clover build as it doesn't work (#88).
 # 22.1.0
 - Updated Mesa3D to [22.1.0](https://docs.mesa3d.org/relnotes/22.1.0.html).
 - RADV has been removed from distribution per @zmike [suggestion](https://github.com/pal1000/mesa-dist-win/issues/103).

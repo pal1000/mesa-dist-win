@@ -348,12 +348,14 @@
 @IF NOT EXIST "%devroot%\spirv-tools\build\%abi%\lib\pkgconfig\" set canclspv=0
 
 @rem Clover requirements: basic support + Mesa 21.3, LLVM build with RTTI, gallium swrast, out of tree patches.
+@rem Disabled as it doesn't work - https://github.com/pal1000/mesa-dist-win/issues/88
 @set canclover=1
 @IF %canopencl% EQU 0 set canclover=0
 @IF %intmesaver% LSS 21300 set canclover=0
 @IF %RTTI%==false set canclover=0
 @if /I NOT "%glswrast%"=="y" set canclover=0
 @IF %disableootpatch%==1 set canclover=0
+@set canclover=0
 
 @rem Add flags tracking PKG_CONFIG search PATH adjustment needs
 @set PKG_CONFIG_LIBCLC=0
