@@ -1,5 +1,12 @@
+# 22.1.1
+- Updated Mesa3D to [22.1.1](https://docs.mesa3d.org/relnotes/22.1.1.html).
 ### Documentation
-- Docunent a complete Mesa3D uninstall procedure as requested [here](https://github.com/pal1000/mesa-dist-win/issues/20#issuecomment-1133666788).
+- Add a complete Mesa3D uninstall procedure as requested [here](https://github.com/pal1000/mesa-dist-win/issues/20#issuecomment-1133666788);
+- Document dozen driver availability, closes #104;
+- Document the work in progress state of Microsoft drivers build with MinGW;
+- Document the new zink driver Vulkan device selection priority system;
+- Add link to official Mesa3D docunentation;
+- Misc documentation improvements.
 ### Build environment
 - Update LLVM source for MSVC build to 14.0.4.
 # 22.1.0
