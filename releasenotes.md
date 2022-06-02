@@ -1140,7 +1140,7 @@ WIP: Disabled: Replicate layout of MSVC Meson install.
 - Standardize Meson build generating directory to `%mesa%\mesa\%abi%`;
 - Make distribution creation work with Meson build.
 ### Documentation
-- Add a notice for enterprise environments documenting a scenario where running 3rd-party unsgned executables is prohibited, See [#11](https://github.com/pal1000/mesa-dist-win/issues/11).
+- Add a notice for enterprise environments documenting a scenario where running 3rd-party unsigned executables is prohibited, See [#11](https://github.com/pal1000/mesa-dist-win/issues/11).
 ### MSVC build environment updates
 - Visual Studio 15.8.1 -> 15.8.3;
 - Add 7-zip to build environment configuration info as it is used to package releases.
