@@ -6,6 +6,7 @@
 - Document the work in progress state of Microsoft drivers build with MinGW;
 - Document the new zink driver Vulkan device selection priority system;
 - Add link to official Mesa3D docunentation;
+- clover driver has been disabled until Windows support is finalized (#88).
 - Misc documentation improvements.
 ### Build environment
 - Update LLVM source for MSVC build to 14.0.4.

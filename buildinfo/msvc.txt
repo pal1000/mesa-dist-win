@@ -16,7 +16,7 @@ Python packages
 Mako       1.2.0
 MarkupSafe 2.1.1
 meson      0.62.1
-pip        22.1.1
+pip        22.1.2
 setuptools 62.3.2
 
 CMake 3.23.2
