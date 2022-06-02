@@ -5,7 +5,7 @@
 - Document dozen driver availability, closes #104;
 - Document the work in progress state of Microsoft drivers build with MinGW;
 - Document the new zink driver Vulkan device selection priority system;
-- Add link to official Mesa3D docunentation;
+- Add link to official Mesa3D documentation;
 - clover driver has been disabled until Windows support is finalized (#88).
 - Misc documentation improvements.
 ### Build environment
@@ -1139,7 +1139,7 @@ WIP: Disabled: Replicate layout of MSVC Meson install.
 - Make clean build and git_sha1.h fallback work with Meson;
 - Standardize Meson build generating directory to `%mesa%\mesa\%abi%`;
 - Make distribution creation work with Meson build.
-### Docunentation
+### Documentation
 - Add a notice for enterprise environments documenting a scenario where running 3rd-party unsgned executables is prohibited, See [#11](https://github.com/pal1000/mesa-dist-win/issues/11).
 ### MSVC build environment updates
 - Visual Studio 15.8.1 -> 15.8.3;
