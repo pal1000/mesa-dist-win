@@ -17,7 +17,7 @@
 @cd "%devroot%\llvm-project"
 @git checkout release/14.x
 @git pull -v --progress origin
-@git checkout llvmorg-14.0.4
+@git checkout llvmorg-14.0.5
 @echo.
 )
 @if NOT EXIST "%devroot%\llvm\cmake\" if NOT EXIST "%devroot%\llvm-project\" (
@@ -25,7 +25,7 @@
 @git clone --config core.autocrlf=false https://github.com/llvm/llvm-project.git "%devroot%\llvm-project"
 @cd "%devroot%\llvm-project"
 @git checkout release/14.x
-@git checkout llvmorg-14.0.4
+@git checkout llvmorg-14.0.5
 @echo.
 )
 
