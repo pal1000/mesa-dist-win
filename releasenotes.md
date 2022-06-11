@@ -1,3 +1,5 @@
+### Build script
+- zink build no longer depends on Vulkan SDK/vulkan-devel [22.2+], fixes a553ad90.
 ### Build environment
 - Update LLVM source for MSVC build to 14.0.5.
 # 22.1.1
