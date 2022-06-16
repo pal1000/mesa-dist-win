@@ -1,6 +1,7 @@
 ### Build script
 - zink build no longer depends on Vulkan SDK/vulkan-devel [22.2+], fixes a553ad90;
-- Don't build EGL when GLES is disabled, fixes b85491cb.
+- Don't build EGL when GLES is disabled, fixes b85491cb;
+- RADV requires Vulkan SDK [22.2+].
 ### Build environment
 - Update LLVM source for MSVC build to 14.0.5;
 - Update SPIRV tools to sdk-1.3.216.0.

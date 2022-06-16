@@ -257,6 +257,7 @@
 @IF %toolchain%==msvc IF NOT EXIST "%devroot%\mesa\subprojects\libelf-lfg-win32\" IF %gitstate% EQU 0 set canradv=0
 @IF %toolchain%==msvc IF %disableootpatch%==1 IF %intmesaver% LSS 21256 set canradv=0
 @IF %toolchain%==msvc IF %disableootpatch%==1 IF %intmesaver% GEQ 21300 IF %intmesaver% LSS 21306 set canradv=0
+@IF %toolchain%==msvc IF NOT EXIST "%VK_SDK_PATH%" IF NOT EXIST "%VULKAN_SDK%" IF %intmesaver% GEQ 22200 set canradv=0
 @rem Disable RADV build, see https://github.com/pal1000/mesa-dist-win/issues/103
 @IF NOT %toolchain%==msvc set canradv=0
 @IF NOT %toolchain%==msvc IF %abi%==x86 IF %intmesaver% LSS 22000 set canradv=0
