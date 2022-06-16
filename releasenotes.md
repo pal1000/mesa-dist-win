@@ -2,7 +2,8 @@
 - zink build no longer depends on Vulkan SDK/vulkan-devel [22.2+], fixes a553ad90;
 - Don't build EGL when GLES is disabled, fixes b85491cb.
 ### Build environment
-- Update LLVM source for MSVC build to 14.0.5.
+- Update LLVM source for MSVC build to 14.0.5;
+- Update SPIRV tools to sdk-1.3.216.0.
 # 22.1.1
 - Updated Mesa3D to [22.1.1](https://docs.mesa3d.org/relnotes/22.1.1.html).
 ### Documentation
