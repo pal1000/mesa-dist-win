@@ -1,3 +1,5 @@
+# 22.1.2
+- Updated Mesa3D to [22.1.2](https://docs.mesa3d.org/relnotes/22.1.2.html).
 ### Build script
 - zink build no longer depends on Vulkan SDK/vulkan-devel [22.2+], fixes a553ad90;
 - Don't build EGL when GLES is disabled, fixes b85491cb;

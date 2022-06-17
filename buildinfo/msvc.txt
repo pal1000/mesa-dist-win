@@ -4,7 +4,7 @@ Windows 10.0.22000
 Ressource Hacker 5.1.8.360
 7-Zip 21.07 ultra compression
 Git 2.36.1.1
-LunarG Vulkan SDK 1.3.211.0
+LunarG Vulkan SDK 1.3.216.0
 Visual Studio Community 2022 v17.2.4
 Windows SDK 10.1.22621.1
 Windows Driver Kit 10.1.22621.1
