@@ -1,5 +1,7 @@
 ### Build script
 - Initial preparation for GLonD3D12, dozen and SPIRV to DXIL MinGW build.
+### Miscellaneous
+- LLVM MSVC: Optimize source code checkout
 # 22.1.2
 - Updated Mesa3D to [22.1.2](https://docs.mesa3d.org/relnotes/22.1.2.html).
 ### Build script

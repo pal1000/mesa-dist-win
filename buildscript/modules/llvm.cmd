@@ -10,23 +10,19 @@
 @if /I NOT "%cfgllvmbuild%"=="y" GOTO skipllvm
 
 @rem Get/update LLVM source code
+@if NOT EXIST "%devroot%\llvm\cmake\" if NOT EXIST "%devroot%\llvm-project\" set updllvmsrc=y
 @if EXIST "%devroot%\llvm-project\" set /p updllvmsrc=Update LLVM source code (y/n):
 @if EXIST "%devroot%\llvm-project\" echo.
+@if /I "%updllvmsrc%"=="y" if EXIST "%devroot%\llvm-project\" echo Updating LLVM source code...
 @if /I "%updllvmsrc%"=="y" (
-@echo Updating LLVM source code...
-@cd "%devroot%\llvm-project"
-@git checkout release/14.x
-@git pull -v --progress origin
-@git checkout llvmorg-14.0.5
-@echo.
-)
-@if NOT EXIST "%devroot%\llvm\cmake\" if NOT EXIST "%devroot%\llvm-project\" (
-@echo Getting LLVM source code...
-@git clone --config core.autocrlf=false https://github.com/llvm/llvm-project.git "%devroot%\llvm-project"
-@cd "%devroot%\llvm-project"
-@git checkout release/14.x
-@git checkout llvmorg-14.0.5
-@echo.
+@if NOT EXIST "%devroot%\llvm-project\" MD "%devroot%\llvm-project"
+@if EXIST "%devroot%\llvm-project\.git\" RD /S /Q "%devroot%\llvm-project\.git"
+@CD "%devroot%\llvm-project"
+@git init
+@git config --local core.autocrlf false
+@git remote add origin https://github.com/llvm/llvm-project.git
+@git fetch --depth=1 origin llvmorg-14.0.6
+@git checkout -f FETCH_HEAD
 )
 
 @rem Apply is_trivially_copyable patch
