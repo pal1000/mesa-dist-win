@@ -213,7 +213,7 @@
 @IF NOT EXIST "%devroot%\mesa\subprojects\DirectX-Headers.wrap" set cand3d12=0
 @for /d %%a in ("%devroot%\mesa\subprojects\DirectX-Headers-*") do @IF NOT EXIST "%%~a" IF %gitstate% EQU 0 set cand3d12=0
 @IF %intmesaver% LSS 21000 set cand3d12=0
-@IF NOT %toolchain%==msvc set cand3d12=0
+@IF NOT %toolchain%==msvc IF %intmesaver% LSS 22300 set cand3d12=0
 @IF %cand3d12% EQU 1 set /p d3d12=Do you want to build Mesa3D OpenGL driver over D3D12 - GLonD3D12 (y/n):
 @IF %cand3d12% EQU 1 echo.
 @IF /I "%d3d12%"=="y" set /a galliumcount+=1
