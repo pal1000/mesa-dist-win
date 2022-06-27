@@ -1,5 +1,5 @@
 ### Build script
-- Initial preparation for GLonD3D12, dozen and SPIRV to DXIL MinGW build.
+- [Support building dozen and SPIRV to DXIL with MSYS2](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/16084) [22.2+].
 ### Miscellaneous
 - LLVM MSVC: Optimize source code checkout
 # 22.1.2

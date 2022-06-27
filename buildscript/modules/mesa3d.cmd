@@ -209,13 +209,13 @@
 @IF /I "%zink%"=="y" set /a galliumcount+=1
 
 @set d3d12=n
-@set cand3d12=1
-@IF NOT EXIST "%devroot%\mesa\subprojects\DirectX-Headers.wrap" set cand3d12=0
-@for /d %%a in ("%devroot%\mesa\subprojects\DirectX-Headers-*") do @IF NOT EXIST "%%~a" IF %gitstate% EQU 0 set cand3d12=0
-@IF %intmesaver% LSS 21000 set cand3d12=0
-@IF NOT %toolchain%==msvc IF %intmesaver% LSS 22300 set cand3d12=0
-@IF %cand3d12% EQU 1 set /p d3d12=Do you want to build Mesa3D OpenGL driver over D3D12 - GLonD3D12 (y/n):
-@IF %cand3d12% EQU 1 echo.
+@set canmcrdrvcom=1
+@IF NOT EXIST "%devroot%\mesa\subprojects\DirectX-Headers.wrap" set canmcrdrvcom=0
+@for /d %%a in ("%devroot%\mesa\subprojects\DirectX-Headers-*") do @IF NOT EXIST "%%~a" IF %gitstate% EQU 0 set canmcrdrvcom=0
+@IF %intmesaver% LSS 21000 set canmcrdrvcom=0
+@IF NOT %toolchain%==msvc IF %intmesaver% LSS 22200 set canmcrdrvcom=0
+@IF %canmcrdrvcom% EQU 1 IF %toolchain%==msvc set /p d3d12=Do you want to build Mesa3D OpenGL driver over D3D12 - GLonD3D12 (y/n):
+@IF %canmcrdrvcom% EQU 1 IF %toolchain%==msvc echo.
 @IF /I "%d3d12%"=="y" set /a galliumcount+=1
 
 @set swrdrv=n
@@ -267,8 +267,8 @@
 @IF NOT %toolchain%==msvc if /I "%radv%"=="y" set msysregex=1
 @if /I "%radv%"=="y" set /a mesavkcount+=1
 
-@IF %cand3d12% EQU 1 IF %intmesaver% GEQ 22100 set /p dozenmsvk=Build Microsoft Dozen Vulkan driver (y/n):
-@IF %cand3d12% EQU 1 IF %intmesaver% GEQ 22100 echo.
+@IF %canmcrdrvcom% EQU 1 IF %intmesaver% GEQ 22100 set /p dozenmsvk=Build Microsoft Dozen Vulkan driver (y/n):
+@IF %canmcrdrvcom% EQU 1 IF %intmesaver% GEQ 22100 echo.
 @if /I "%dozenmsvk%"=="y" set /a mesavkcount+=1
 
 @set buildconf=%buildconf% -Dvulkan-drivers=
@@ -293,15 +293,15 @@
 
 @set spirvtodxil=n
 @if /I "%dozenmsvk%"=="y" set spirvtodxil=y
-@IF %cand3d12% EQU 1 if /I NOT "%dozenmsvk%"=="y" set /p spirvtodxil=Do you want to build SPIR-V to DXIL tool (y/n):
-@IF %cand3d12% EQU 1 if /I NOT "%dozenmsvk%"=="y" echo.
+@IF %canmcrdrvcom% EQU 1 if /I NOT "%dozenmsvk%"=="y" set /p spirvtodxil=Do you want to build SPIR-V to DXIL tool (y/n):
+@IF %canmcrdrvcom% EQU 1 if /I NOT "%dozenmsvk%"=="y" echo.
 @IF /I "%spirvtodxil%"=="y" set buildconf=%buildconf% -Dspirv-to-dxil=true
 @IF /I NOT "%spirvtodxil%"=="y" IF %intmesaver% GEQ 21000 set buildconf=%buildconf% -Dspirv-to-dxil=false
 
 @set gles=n
 @IF %intmesaver% LSS 21300 IF %galliumcount% GTR 0 set /p gles=Do you want to build GLAPI as a shared library and standalone GLES drivers (y/n):
 @IF %intmesaver% GEQ 21300 IF %galliumcount% GTR 0 set /p gles=Do you want to build standalone GLES drivers (y/n):
-@echo.
+@IF %galliumcount% GTR 0 echo.
 @if /I "%gles%"=="y" set buildconf=%buildconf% -Dshared-glapi=%mesonbooltrue% -Dgles1=%mesonbooltrue% -Dgles2=%mesonbooltrue%
 @if /I "%gles%"=="y" IF %intmesaver% GEQ 21300 set buildconf=%buildconf% -Degl=%mesonbooltrue%
 @if /I NOT "%gles%"=="y" set buildconf=%buildconf% -Dgles1=auto -Dgles2=auto
@@ -363,8 +363,8 @@
 @set PKG_CONFIG_SPV=0
 
 @rem Microsoft OpenCL compiler requires OpenCL SPIR-V and DirectX Headers
-@IF %canclspv% EQU 1 IF %cand3d12% EQU 1 set /p mclc=Build Mesa3D Microsoft OpenCL compiler (y/n):
-@IF %canclspv% EQU 1 IF %cand3d12% EQU 1 echo.
+@IF %canclspv% EQU 1 IF %canmcrdrvcom% EQU 1 set /p mclc=Build Mesa3D Microsoft OpenCL compiler (y/n):
+@IF %canclspv% EQU 1 IF %canmcrdrvcom% EQU 1 echo.
 @IF /I "%mclc%"=="y" set PKG_CONFIG_LIBCLC=1
 @IF /I "%mclc%"=="y" set PKG_CONFIG_SPV=1
 @IF /I "%mclc%"=="y" set buildconf=%buildconf% -Dmicrosoft-clc=enabled
