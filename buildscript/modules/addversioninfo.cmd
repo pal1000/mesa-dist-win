@@ -52,7 +52,7 @@
 @rem Add version info to Microsoft OpenCL compiler and driver
 @call "%devroot%\%projectname%\buildscript\modules\rcgen.cmd" "Microsoft OpenCL compiler" "%devroot%\%projectname%\bin\%abi%\clglon12compiler.dll" %abi% %mesaver% "Microsoft Corporation"
 @call "%devroot%\%projectname%\buildscript\modules\rcgen.cmd" "Microsoft OpenCL compiler" "%devroot%\%projectname%\bin\%abi%\clon12compiler.dll" %abi% %mesaver% "Microsoft Corporation"
-@call "%devroot%\%projectname%\buildscript\modules\rcgen.cmd" "Microsoft OpenCL over D3D12 driver" "%devroot%\%projectname%\bin\%abi%\openclon12.dll" %abi% 2022.2.13 "Microsoft Corporation"
+@call "%devroot%\%projectname%\buildscript\modules\rcgen.cmd" "Microsoft OpenCL over D3D12 driver" "%devroot%\%projectname%\bin\%abi%\openclon12.dll" %abi% 2022.6.28 "Microsoft Corporation"
 
 @rem Add version info to clover OpenCL driver and runtime
 @call "%devroot%\%projectname%\buildscript\modules\rcgen.cmd" "Mesa3D clover OpenCL driver" "%devroot%\%projectname%\bin\%abi%\MesaOpenCL.dll" %abi% %mesaver% "Mesa/X.org"
