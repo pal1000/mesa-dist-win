@@ -10,7 +10,7 @@
 @IF EXIST "%devroot%\clon12\" IF %gitstate% GTR 0 (
 @echo Updating CLonD3D12 ICD source code...
 @cd "%devroot%\clon12"
-@git pull -v --progress --recurse-submodules origin
+@git pull -v --progress --tags --recurse-submodules origin
 @echo.
 )
 

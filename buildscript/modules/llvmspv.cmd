@@ -4,14 +4,14 @@
 @IF EXIST "%devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator\" IF %gitstate% GTR 0 (
 @cd "%devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator"
 @echo Updating LLVM SPIRV translator...
-@git pull -v --progress --recurse-submodules origin
+@git pull -v --progress --tags --recurse-submodules origin
 @echo.
 )
 @IF EXIST "%devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator\spirv-headers-tag.conf" IF EXIST "%devroot%\llvm-project\llvm\projects\SPIRV-Headers\" IF %gitstate% GTR 0 for /f delims^=^ eol^= %%a IN ('type "%devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator\spirv-headers-tag.conf"') do @for /f delims^=^ eol^= %%b IN ('type "%devroot%\llvm-project\llvm\projects\SPIRV-Headers\.git\HEAD"') do @IF NOT %%a==%%b (
 @echo Updating SPIRV headers used by LLVM SPIRV translator...
 @cd "%devroot%\llvm-project\llvm\projects\SPIRV-Headers"
 @git checkout master
-@git pull -v --progress --recurse-submodules origin
+@git pull -v --progress --tags --recurse-submodules origin
 @git checkout %%a
 @echo.
 )

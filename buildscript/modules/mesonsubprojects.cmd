@@ -4,7 +4,7 @@
 @for /d %%a in ("%devroot%\mesa\subprojects\DirectX-Headers-*") do @IF EXIST "%%~a" IF %gitstate% GTR 0 (
 cd /D "%%~a"
 echo Refreshing DirectX-Headers...
-git pull -v --progress --recurse-submodules origin
+git pull -v --progress --tags --recurse-submodules origin
 echo.
 cd /D "%devroot%\mesa"
 )
@@ -78,7 +78,7 @@ echo irbuilder_h ^= files^(llvmloc + '/include/llvm/IR/IRBuilder.h'^)
 @IF EXIST "%devroot%\mesa\subprojects\libelf-lfg-win32\" IF %gitstate% GTR 0 (
 @cd /D "%devroot%\mesa\subprojects\libelf-lfg-win32"
 echo Refreshing libelf for Windows...
-git pull -v --progress --recurse-submodules origin
+git pull -v --progress --tags --recurse-submodules origin
 echo.
 cd /D "%devroot%\mesa"
 )

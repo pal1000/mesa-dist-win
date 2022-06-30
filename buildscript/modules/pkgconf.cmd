@@ -7,7 +7,7 @@
 @if EXIST "%devroot%\pkgconf\" IF %gitstate% GTR 0 (
 @echo Updating pkgconf source code...
 @cd pkgconf
-@git pull -v --progress --recurse-submodules origin
+@git pull -v --progress --tags --recurse-submodules origin
 @echo.
 )
 @if NOT EXIST "%devroot%\pkgconf\" IF %gitstate% GTR 0 (

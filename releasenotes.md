@@ -1,7 +1,8 @@
 ### Build script
 - [Support building dozen and SPIRV to DXIL with MSYS2](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/16084) [22.2+].
 ### Miscellaneous
-- LLVM MSVC: Minimize source code size.
+- LLVM MSVC: Minimize source code size;
+- Make sure existing tags are updated when using git pull.
 ### Build environment
 - Update CLonD3D12 ICD to [2022.6.28](https://github.com/microsoft/OpenCLOn12/commits/6abbfaafc47b3b9ffaf19b694d0e32e2b44e0755).
 # 22.1.2

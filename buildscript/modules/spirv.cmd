@@ -9,7 +9,7 @@
 @echo Updating SPIRV tools source code...
 @cd "%devroot%\spirv-tools"
 @git checkout master
-@git pull -v --progress --recurse-submodules origin
+@git pull -v --progress --tags --recurse-submodules origin
 @git checkout %spvtoolsrel%
 @echo.
 )
@@ -17,7 +17,7 @@
 @echo Updating source code of SPIRV headers used by SPIRV tools...
 @cd "%devroot%\spirv-tools\external\spirv-headers"
 @git checkout master
-@git pull -v --progress --recurse-submodules origin
+@git pull -v --progress --tags --recurse-submodules origin
 @git checkout %%b
 @echo.
 )
