@@ -1,3 +1,5 @@
+# 22.1.3
+- Updated Mesa3D to [22.1.3](https://docs.mesa3d.org/relnotes/22.1.3.html).
 ### Build script
 - [Support building dozen and SPIRV to DXIL with MSYS2](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/16084) [22.2+].
 ### Miscellaneous
