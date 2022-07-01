@@ -149,10 +149,10 @@
 @IF %intmesaver% GEQ 21200 IF %intmesaver% LSS 22100 set buildconf=%buildconf% -Dc_std=c17
 @IF %toolchain%==msvc set buildconf=%buildconf% --prefix="%devroot:\=/%/%projectname%/dist/%toolchain%-%abi%" -Db_vscrt=mt -Dzlib:default_library=static
 @IF %toolchain%==msvc IF %intmesaver% GEQ 21200 IF %intmesaver% LSS 22100 set buildconf=%buildconf% -Dcpp_std=vc++latest
-@IF NOT %toolchain%==msvc set buildconf=%buildconf% -Dc_args="-march=core2 -pipe" -Dcpp_args="-march=core2 -pipe"
-@IF NOT %toolchain%==msvc set LDFLAGS=-static -s
 @IF NOT %toolchain%==msvc IF %intmesaver% GTR 20000 set buildconf=%buildconf% -Dzstd=%mesonbooltrue%
 @IF NOT %toolchain%==msvc set buildconf=%buildconf% --force-fallback-for=zlib,libzstd
+@IF NOT %toolchain%==msvc set CFLAGS=-march=core2 -pipe
+@IF NOT %toolchain%==msvc set LDFLAGS=-static -s
 @set buildcmd=msbuild /p^:Configuration=release,Platform=Win32 mesa.sln /m^:%throttle%
 @IF %abi%==x64 set buildcmd=msbuild /p^:Configuration=release,Platform=x64 mesa.sln /m^:%throttle%
 
@@ -393,7 +393,8 @@
 @set "PKG_CONFIG_LIBCLC="
 @set "PKG_CONFIG_SPV="
 
-@rem Pass additional linker flags
+@rem Pass additional compiler and linker flags
+@if defined CFLAGS set buildconf=%buildconf% -Dc_args="%CFLAGS%" -Dcpp_args="%CFLAGS%"
 @if defined LDFLAGS set buildconf=%buildconf% -Dc_link_args="%LDFLAGS%" -Dcpp_link_args="%LDFLAGS%"
 
 @rem Load MSVC specific build dependencies
@@ -417,6 +418,7 @@
 @echo.
 @IF /I "%cleanmesabld%"=="y" pause
 @IF /I "%cleanmesabld%"=="y" echo.
+@set CFLAGS=
 @set LDFLAGS=
 @%buildconf%
 @echo.
