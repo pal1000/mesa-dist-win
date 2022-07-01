@@ -20,8 +20,8 @@ coreutils 8.32-2
 curl 7.84.0-1
 dash 0.5.11.5-2
 db 5.3.28-3
-file 5.41-4
-filesystem 2022.01-4
+file 5.42-1
+filesystem 2022.01-5
 findutils 4.9.0-3
 flex 2.6.4-2
 gawk 5.1.1-1
@@ -34,7 +34,7 @@ gnupg 2.2.35-1
 grep 1~3.0-3
 gzip 1.12-2
 heimdal-libs 7.7.0-3
-inetutils 1.9.4-4
+inetutils 1.9.4-5
 info 6.8-4
 less 590-2
 libargp 20110921-3
@@ -45,13 +45,13 @@ libcrypt 2.1-3
 libcurl 7.84.0-1
 libdb 5.3.28-3
 libedit 20210910_3.1-1
-libexpat 2.4.8-1
+libexpat 2.4.8-2
 libffi 3.4.2-1
-libgcrypt 1.10.1-4
+libgcrypt 1.10.1-5
 libgdbm 1.23-1
 libgettextpo 0.21-2
 libgnutls 3.7.6-1
-libgpg-error 1.45-1
+libgpg-error 1.45-2
 libgpgme 1.17.1-1
 libhogweed 3.8-1
 libiconv 1.17-1

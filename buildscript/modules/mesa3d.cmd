@@ -151,7 +151,7 @@
 @IF %toolchain%==msvc IF %intmesaver% GEQ 21200 IF %intmesaver% LSS 22100 set buildconf=%buildconf% -Dcpp_std=vc++latest
 @IF NOT %toolchain%==msvc IF %intmesaver% GTR 20000 set buildconf=%buildconf% -Dzstd=%mesonbooltrue%
 @IF NOT %toolchain%==msvc set buildconf=%buildconf% --force-fallback-for=zlib,libzstd
-@IF NOT %toolchain%==msvc set CFLAGS=-march=core2 -pipe
+@IF NOT %toolchain%==msvc set CFLAGS=-march^=core2 -pipe
 @IF NOT %toolchain%==msvc set LDFLAGS=-static -s
 @set buildcmd=msbuild /p^:Configuration=release,Platform=Win32 mesa.sln /m^:%throttle%
 @IF %abi%==x64 set buildcmd=msbuild /p^:Configuration=release,Platform=x64 mesa.sln /m^:%throttle%
@@ -205,7 +205,7 @@
 @IF %toolchain%==msvc IF NOT EXIST "%VK_SDK_PATH%" IF NOT EXIST "%VULKAN_SDK%" IF %intmesaver% LSS 22200 set canzink=0
 @IF %canzink% EQU 1 set /p zink=Do you want to build Mesa3D OpenGL driver over Vulkan - zink (y/n):
 @IF %canzink% EQU 1 echo.
-@IF %toolchain%==msvc IF /I "%zink%"=="y" IF %intmesaver% LSS 22200 set LDFLAGS=-ldelayimp /DELAYLOAD:vulkan-1.dll
+@IF %toolchain%==msvc IF /I "%zink%"=="y" IF %intmesaver% LSS 22200 set LDFLAGS=-ldelayimp /DELAYLOAD^:vulkan-1.dll
 @IF /I "%zink%"=="y" set /a galliumcount+=1
 
 @set d3d12=n
