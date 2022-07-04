@@ -12,7 +12,7 @@ base 2022.06-1
 bash 5.1.016-1
 bash-completion 2.11-2
 bison 3.8.2-3
-brotli 1.0.9-3
+brotli 1.0.9-4
 bsdtar 3.6.1-2
 bzip2 1.0.8-4
 ca-certificates 20211016-1
@@ -20,7 +20,7 @@ coreutils 8.32-2
 curl 7.84.0-1
 dash 0.5.11.5-2
 db 5.3.28-3
-file 5.42-1
+file 5.42-2
 filesystem 2022.01-5
 findutils 4.9.0-3
 flex 2.6.4-2
@@ -52,7 +52,7 @@ libgdbm 1.23-1
 libgettextpo 0.21-2
 libgnutls 3.7.6-1
 libgpg-error 1.45-2
-libgpgme 1.17.1-1
+libgpgme 1.17.1-3
 libhogweed 3.8-1
 libiconv 1.17-1
 libidn2 2.3.2-3
@@ -74,7 +74,7 @@ libssh2 1.10.0-1
 libtasn1 4.18.0-3
 libunistring 1.0-1
 libutil-linux 2.35.2-1
-libxml2 2.9.14-3
+libxml2 2.9.14-5
 libxslt 1.1.35-2
 libzstd 1.5.2-2
 m4 1.4.19-2
@@ -85,7 +85,7 @@ mingw-w64-i686-crt-git 10.0.0.r32.g89bacd2be-1
 mingw-w64-i686-expat 2.4.8-1
 mingw-w64-i686-gcc 12.1.0-2
 mingw-w64-i686-gcc-libs 12.1.0-2
-mingw-w64-i686-gdb 12.1-2
+mingw-w64-i686-gdb 12.1-3
 mingw-w64-i686-gettext 0.21-3
 mingw-w64-i686-gmp 6.2.1-3
 mingw-w64-i686-headers-git 10.0.0.r32.g89bacd2be-1
@@ -99,7 +99,7 @@ mingw-w64-i686-libtre-git r128.6fb7206-2
 mingw-w64-i686-libwinpthread-git 10.0.0.r32.g89bacd2be-1
 mingw-w64-i686-libxml2 2.9.14-4
 mingw-w64-i686-llvm 14.0.4-3
-mingw-w64-i686-meson 0.62.2-2
+mingw-w64-i686-meson 0.63.0-1
 mingw-w64-i686-mpc 1.2.1-1
 mingw-w64-i686-mpdecimal 2.5.1-1
 mingw-w64-i686-mpfr 4.1.0.p13-1
@@ -136,7 +136,7 @@ mingw-w64-x86_64-crt-git 10.0.0.r32.g89bacd2be-1
 mingw-w64-x86_64-expat 2.4.8-1
 mingw-w64-x86_64-gcc 12.1.0-2
 mingw-w64-x86_64-gcc-libs 12.1.0-2
-mingw-w64-x86_64-gdb 12.1-2
+mingw-w64-x86_64-gdb 12.1-3
 mingw-w64-x86_64-gettext 0.21-3
 mingw-w64-x86_64-gmp 6.2.1-3
 mingw-w64-x86_64-headers-git 10.0.0.r32.g89bacd2be-1
@@ -150,7 +150,7 @@ mingw-w64-x86_64-libtre-git r128.6fb7206-2
 mingw-w64-x86_64-libwinpthread-git 10.0.0.r32.g89bacd2be-1
 mingw-w64-x86_64-libxml2 2.9.14-4
 mingw-w64-x86_64-llvm 14.0.4-3
-mingw-w64-x86_64-meson 0.62.2-2
+mingw-w64-x86_64-meson 0.63.0-1
 mingw-w64-x86_64-mpc 1.2.1-1
 mingw-w64-x86_64-mpdecimal 2.5.1-1
 mingw-w64-x86_64-mpfr 4.1.0.p13-1

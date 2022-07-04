@@ -139,15 +139,15 @@
 
 :configmesabuild
 @rem Configure Mesa build.
-@set buildconf=%mesonloc%
+@set buildconf=%mesonloc% setup
 @if EXIST "build\%toolchain%-%abi%\" set /p cleanmesabld=Perform clean build (y/n):
 @if EXIST "build\%toolchain%-%abi%\" echo.
 @if NOT EXIST "build\%toolchain%-%abi%\" set cleanmesabld=y
 @if EXIST "build\%toolchain%-%abi%\" IF /I "%cleanmesabld%"=="y" RD /S /Q build\%toolchain%-%abi%
-@IF /I NOT "%cleanmesabld%"=="y" set buildconf=%mesonloc% configure
+@IF /I NOT "%cleanmesabld%"=="y" set buildconf=%mesonloc:~0,-5%configure
 @set buildconf=%buildconf% build/%toolchain%-%abi% --buildtype=release -Db_ndebug=true
 @IF %intmesaver% GEQ 21200 IF %intmesaver% LSS 22100 set buildconf=%buildconf% -Dc_std=c17
-@IF %toolchain%==msvc set buildconf=%buildconf% --prefix="%devroot:\=/%/%projectname%/dist/%toolchain%-%abi%" -Db_vscrt=mt -Dzlib:default_library=static
+@IF %toolchain%==msvc set buildconf=%buildconf% --prefix="%devroot:\=/%/%projectname%" --libdir="lib/%abi%" -Dpkgconfig.relocatable=true -Db_vscrt=mt -Dzlib:default_library=static
 @IF %toolchain%==msvc IF %intmesaver% GEQ 21200 IF %intmesaver% LSS 22100 set buildconf=%buildconf% -Dcpp_std=vc++latest
 @IF NOT %toolchain%==msvc IF %intmesaver% GTR 20000 set buildconf=%buildconf% -Dzstd=%mesonbooltrue%
 @IF NOT %toolchain%==msvc set buildconf=%buildconf% --force-fallback-for=zlib,libzstd
