@@ -1,6 +1,7 @@
 ### Build script
 - Misc: Support adding more compiler flags as needed;
-- Misc: Escape `=` and `:` in CFLAGS and LDFLAGS just to be safe.
+- Misc: Escape `=` and `:` in CFLAGS and LDFLAGS just to be safe;
+- Misc: Reduce git pull verbosity.
 ### Development package
 - Mesa3D pkg-config files are now relocatable.
 # 22.1.3
