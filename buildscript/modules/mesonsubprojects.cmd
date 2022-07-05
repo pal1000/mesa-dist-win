@@ -1,5 +1,9 @@
 @setlocal
 
+@rem Remove zlib and zstd binary wraps as they are no longer used
+@IF EXIST "%devroot%\mesa\subprojects\zlib\" RD /S /Q "%devroot%\mesa\subprojects\zlib"
+@IF EXIST "%devroot%\mesa\subprojects\libzstd\" RD /S /Q "%devroot%\mesa\subprojects\libzstd"
+
 @rem Refreshing DirectX-Headers if found
 @for /d %%a in ("%devroot%\mesa\subprojects\DirectX-Headers-*") do @IF EXIST "%%~a" IF %gitstate% GTR 0 (
 cd /D "%%~a"
@@ -19,8 +23,8 @@ cd /D "%devroot%\mesa"
 @IF %llvmconfigbusted% EQU 0 GOTO msvcwraps
 
 @rem llvmlibs must match the output of 'llvm-config --link-static --libnames engine coroutines' stripped of ending newline.
-@rem Current llvmlibs is valid for LLVM 13.* series.
-@set llvmlibs=libLLVMCoroutines.a libLLVMipo.a libLLVMInstrumentation.a libLLVMVectorize.a libLLVMLinker.a libLLVMIRReader.a libLLVMAsmParser.a libLLVMFrontendOpenMP.a libLLVMInterpreter.a libLLVMExecutionEngine.a libLLVMRuntimeDyld.a libLLVMOrcTargetProcess.a libLLVMOrcShared.a libLLVMCodeGen.a libLLVMTarget.a libLLVMScalarOpts.a libLLVMInstCombine.a libLLVMAggressiveInstCombine.a libLLVMTransformUtils.a libLLVMBitWriter.a libLLVMAnalysis.a libLLVMProfileData.a libLLVMObject.a libLLVMTextAPI.a libLLVMMCParser.a libLLVMMC.a libLLVMDebugInfoCodeView.a libLLVMBitReader.a libLLVMCore.a libLLVMRemarks.a libLLVMBitstreamReader.a libLLVMBinaryFormat.a libLLVMSupport.a libLLVMDemangle.a
+@rem Current llvmlibs is valid for LLVM 14.* series.
+@set llvmlibs=libLLVMCoroutines.a libLLVMipo.a libLLVMInstrumentation.a libLLVMVectorize.a libLLVMLinker.a libLLVMIRReader.a libLLVMAsmParser.a libLLVMFrontendOpenMP.a libLLVMInterpreter.a libLLVMExecutionEngine.a libLLVMRuntimeDyld.a libLLVMOrcTargetProcess.a libLLVMOrcShared.a libLLVMCodeGen.a libLLVMTarget.a libLLVMScalarOpts.a libLLVMInstCombine.a libLLVMAggressiveInstCombine.a libLLVMTransformUtils.a libLLVMBitWriter.a libLLVMAnalysis.a libLLVMProfileData.a libLLVMDebugInfoDWARF.a libLLVMObject.a libLLVMTextAPI.a libLLVMMCParser.a libLLVMMC.a libLLVMDebugInfoCodeView.a libLLVMBitReader.a libLLVMCore.a libLLVMRemarks.a libLLVMBitstreamReader.a libLLVMBinaryFormat.a libLLVMSupport.a libLLVMDemangle.a
 @set llvmlibs=%llvmlibs:.a=%
 @set llvmlibs='%llvmlibs: =', '%'
 @FOR /F tokens^=2^ eol^= %%a IN ('%runmsys% /usr/bin/pacman -Q ${MINGW_PACKAGE_PREFIX}-llvm') DO @FOR /F tokens^=1^ delims=^-^ eol^= %%b IN ("%%~a") DO @SET llvmver=%%b
@@ -54,8 +58,6 @@ echo irbuilder_h ^= files^(llvmloc + '/include/llvm/IR/IRBuilder.h'^)
 
 :msvcwraps
 @IF NOT %toolchain%==msvc GOTO mingwwraps
-@IF EXIST "%devroot%\mesa\subprojects\zlib\" RD /S /Q "%devroot%\mesa\subprojects\zlib"
-@IF EXIST "%devroot%\mesa\subprojects\libzstd\" RD /S /Q "%devroot%\mesa\subprojects\libzstd"
 @IF EXIST "%devroot%\mesa\subprojects\vulkan\" RD /S /Q "%devroot%\mesa\subprojects\vulkan"
 
 @rem Use updated zlib wrap
@@ -85,55 +87,11 @@ cd /D "%devroot%\mesa"
 
 :mingwwraps
 @IF %toolchain%==msvc GOTO donewrap
-@rem Use runtime MinGW libelf dependency
+@rem Use runtime MinGW libelf, zlib and zstd dependencies
 @for /d %%a in ("%devroot%\mesa\subprojects\libelf-*") do @RD /S /Q "%%~a"
 @IF EXIST "%devroot%\mesa\subprojects\libelf.wrap" del "%devroot%\mesa\subprojects\libelf.wrap"
-
-@rem Override zlib dependency
 @for /d %%a in ("%devroot%\mesa\subprojects\zlib-*") do @RD /S /Q "%%~a"
 @IF EXIST "%devroot%\mesa\subprojects\zlib.wrap" del "%devroot%\mesa\subprojects\zlib.wrap"
-@FOR /F tokens^=2^ eol^= %%a IN ('%runmsys% /usr/bin/pacman -Q ${MINGW_PACKAGE_PREFIX}-zlib') DO @FOR /F tokens^=1^ delims^=-^ eol^= %%b IN ("%%~a") DO @SET zlibver=%%b
-@IF NOT EXIST "%devroot%\mesa\subprojects\zlib\" MD "%devroot%\mesa\subprojects\zlib"
-@(
-echo project^('zlib', ['cpp'], version ^: '%zlibver%'^)
-echo.
-echo _deps ^= meson.get_compiler^('cpp'^).find_library^('libz', static ^: true^)
-echo.
-echo zlib_dep ^= declare_dependency^(
-echo   dependencies ^: _deps,
-echo   version ^: '%zlibver%'
-echo ^)
-)>"%devroot%\%projectname%\buildscript\mesonsubprojects\zlib-meson.build"
-@CMD /C EXIT 0
-@FC /B "%devroot%\%projectname%\buildscript\mesonsubprojects\zlib-meson.build" "%devroot%\mesa\subprojects\zlib\meson.build">NUL 2>&1
-@if NOT "%ERRORLEVEL%"=="0" (
-@echo Overriding zlib dependency...
-@copy /Y "%devroot%\%projectname%\buildscript\mesonsubprojects\zlib-meson.build" "%devroot%\mesa\subprojects\zlib\meson.build"
-@echo.
-)
-
-@rem Override ZSTD dependency
-@FOR /F tokens^=2^ eol^= %%a IN ('%runmsys% /usr/bin/pacman -Q ${MINGW_PACKAGE_PREFIX}-zstd') DO @FOR /F tokens^=1^ delims^=-^ eol^= %%b IN ("%%~a") DO @SET zstdver=%%b
-@IF NOT EXIST "%devroot%\mesa\subprojects\libzstd\" MD "%devroot%\mesa\subprojects\libzstd"
-@(
-echo project^('libzstd', ['cpp'], version ^: '%zstdver%'^)
-echo.
-echo _deps ^= meson.get_compiler^('cpp'^).find_library^('libzstd', static ^: true^)
-echo.
-echo zstd_override ^= declare_dependency^(
-echo   dependencies ^: _deps,
-echo   version ^: '%zstdver%'
-echo ^)
-echo.
-echo meson.override_dependency^('libzstd', zstd_override^)
-)>"%devroot%\%projectname%\buildscript\mesonsubprojects\zstd-meson.build"
-@CMD /C EXIT 0
-@FC /B "%devroot%\%projectname%\buildscript\mesonsubprojects\zstd-meson.build" "%devroot%\mesa\subprojects\libzstd\meson.build">NUL 2>&1
-@if NOT "%ERRORLEVEL%"=="0" (
-@echo Overriding ZSTD dependency...
-@copy /Y "%devroot%\%projectname%\buildscript\mesonsubprojects\zstd-meson.build" "%devroot%\mesa\subprojects\libzstd\meson.build"
-@echo.
-)
 
 @rem Vulkan dependency
 @IF "%vksdkselect%"=="2" (

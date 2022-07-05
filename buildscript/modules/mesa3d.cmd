@@ -144,13 +144,13 @@
 @if EXIST "build\%toolchain%-%abi%\" echo.
 @if NOT EXIST "build\%toolchain%-%abi%\" set cleanmesabld=y
 @if EXIST "build\%toolchain%-%abi%\" IF /I "%cleanmesabld%"=="y" RD /S /Q build\%toolchain%-%abi%
-@IF /I NOT "%cleanmesabld%"=="y" set buildconf=%mesonloc:~0,-5%configure
-@set buildconf=%buildconf% build/%toolchain%-%abi% --buildtype=release --libdir="lib/%abi%" -Dpkgconfig.relocatable=true -Db_ndebug=true
+@IF /I NOT "%cleanmesabld%"=="y" set buildconf=%mesonloc% configure
+@set buildconf=%buildconf% build/%toolchain%-%abi% --buildtype=release --libdir="lib/%abi%" --pkgconfig.relocatable -Db_ndebug=true
 @IF %intmesaver% GEQ 21200 IF %intmesaver% LSS 22100 set buildconf=%buildconf% -Dc_std=c17
 @IF %toolchain%==msvc set buildconf=%buildconf% --prefix="%devroot:\=/%/%projectname%" -Db_vscrt=mt -Dzlib:default_library=static
 @IF %toolchain%==msvc IF %intmesaver% GEQ 21200 IF %intmesaver% LSS 22100 set buildconf=%buildconf% -Dcpp_std=vc++latest
 @IF NOT %toolchain%==msvc IF %intmesaver% GTR 20000 set buildconf=%buildconf% -Dzstd=%mesonbooltrue%
-@IF NOT %toolchain%==msvc set buildconf=%buildconf% --force-fallback-for=zlib,libzstd
+@IF NOT %toolchain%==msvc set buildconf=%buildconf% --prefer-static --force-fallback-for=
 @IF NOT %toolchain%==msvc set CFLAGS=-march^=core2 -pipe
 @IF NOT %toolchain%==msvc set LDFLAGS=-static -s
 @set buildcmd=msbuild /p^:Configuration=release,Platform=Win32 mesa.sln /m^:%throttle%

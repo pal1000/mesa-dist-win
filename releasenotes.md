@@ -1,7 +1,8 @@
 ### Build script
 - Misc: Support adding more compiler flags as needed;
 - Misc: Escape `=` and `:` in CFLAGS and LDFLAGS just to be safe;
-- Misc: Reduce git pull verbosity.
+- Misc: Reduce git pull verbosity;
+- MinGW: Use Meson --prefer-static to link zlib, zstd and regex statically.
 ### Development package
 - Mesa3D pkg-config files are now relocatable.
 # 22.1.3
