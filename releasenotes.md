@@ -5,6 +5,8 @@
 - MinGW: Use Meson --prefer-static to link zlib, zstd and regex statically.
 ### Development package
 - Mesa3D pkg-config files are now relocatable.
+### Debug
+- Fix test mingw builds.
 # 22.1.3
 - Updated Mesa3D to [22.1.3](https://docs.mesa3d.org/relnotes/22.1.3.html).
 ### Build script
