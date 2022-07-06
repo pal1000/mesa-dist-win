@@ -2,7 +2,8 @@
 - Misc: Support adding more compiler flags as needed;
 - Misc: Escape `=` and `:` in CFLAGS and LDFLAGS just to be safe;
 - Misc: Reduce git pull verbosity;
-- MinGW: Use Meson --prefer-static to link zlib, zstd and regex statically.
+- MinGW: Use Meson --prefer-static to link zlib, zstd and regex statically;
+- Disable shared glapi when no Mesa3D OpenGL driver is built.
 ### Development package
 - Mesa3D pkg-config files are now relocatable.
 ### Debug
