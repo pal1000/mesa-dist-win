@@ -73,6 +73,7 @@
 
 @rem Add version info to Microsoft SPIR-V to DXIL library
 @call "%devroot%\%projectname%\buildscript\modules\rcgen.cmd" "Microsoft SPIR-V to DXIL library" "%devroot%\%projectname%\bin\%abi%\spirv_to_dxil.dll" %abi% %mesaver% "Microsoft Corporation"
+@call "%devroot%\%projectname%\buildscript\modules\rcgen.cmd" "Microsoft SPIR-V to DXIL library" "%devroot%\%projectname%\bin\%abi%\libspirv_to_dxil.dll" %abi% %mesaver% "Microsoft Corporation"
 
 @echo Done
 @echo.
