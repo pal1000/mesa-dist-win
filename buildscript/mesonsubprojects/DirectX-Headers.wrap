@@ -1,0 +1,5 @@
+[wrap-git]
+url = https://github.com/microsoft/DirectX-Headers.git
+revision = head
+patch_url = https://patch-diff.githubusercontent.com/raw/microsoft/DirectX-Headers/pull/65.patch
+patch_hash = 44b149bf8bad5cadcf240803767b562e2eae09e3e917dec67458550a26807e94

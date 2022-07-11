@@ -5,13 +5,16 @@
 @IF EXIST "%devroot%\mesa\subprojects\libzstd\" RD /S /Q "%devroot%\mesa\subprojects\libzstd"
 
 @rem Refreshing DirectX-Headers if found
-@for /d %%a in ("%devroot%\mesa\subprojects\DirectX-Headers-*") do @IF EXIST "%%~a" IF %gitstate% GTR 0 (
-cd /D "%%~a"
-echo Refreshing DirectX-Headers...
-git pull -f --progress --tags --recurse-submodules origin
-echo.
-cd /D "%devroot%\mesa"
+@CMD /C EXIT 0
+@FC /B "%devroot%\%projectname%\buildscript\mesonsubprojects\DirectX-Headers.wrap" "%devroot%\mesa\subprojects\DirectX-Headers.wrap">NUL 2>&1
+@if NOT "%ERRORLEVEL%"=="0" (
+@echo Patch DirectX headers to make them work in MSYS2 MinGW-W64...
+@copy /Y "%devroot%\%projectname%\buildscript\mesonsubprojects\DirectX-Headers.wrap" "%devroot%\mesa\subprojects\DirectX-Headers.wrap"
+@echo.
 )
+@for /d %%a in ("%devroot%\mesa\subprojects\DirectX-Header*") do @IF EXIST "%%~a" set /p refreshdxheaders=Update DirectX headers (y/n):
+@for /d %%a in ("%devroot%\mesa\subprojects\DirectX-Header*") do @IF EXIST "%%~a" echo.
+@IF /I "%refreshdxheaders%"=="y" RD /S /Q "%%~a"
 
 @rem Find LLVM dependency
 @set RTTI=false
