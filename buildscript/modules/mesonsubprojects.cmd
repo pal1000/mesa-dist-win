@@ -4,17 +4,19 @@
 @IF EXIST "%devroot%\mesa\subprojects\zlib\" RD /S /Q "%devroot%\mesa\subprojects\zlib"
 @IF EXIST "%devroot%\mesa\subprojects\libzstd\" RD /S /Q "%devroot%\mesa\subprojects\libzstd"
 
+@rem Remove DirectX headers wrap, use pure-subproject only
+@IF EXIST "%devroot%\%projectname%\buildscript\mesonsubprojects\DirectX-Headers.wrap" del "%devroot%\%projectname%\buildscript\mesonsubprojects\DirectX-Headers.wrap"
+
 @rem Refreshing DirectX-Headers if found
-@CMD /C EXIT 0
-@FC /B "%devroot%\%projectname%\buildscript\mesonsubprojects\DirectX-Headers.wrap" "%devroot%\mesa\subprojects\DirectX-Headers.wrap">NUL 2>&1
-@if NOT "%ERRORLEVEL%"=="0" (
-@echo Patch DirectX headers to make them work in MSYS2 MinGW-W64...
-@copy /Y "%devroot%\%projectname%\buildscript\mesonsubprojects\DirectX-Headers.wrap" "%devroot%\mesa\subprojects\DirectX-Headers.wrap"
-@echo.
-)
-@set /p refreshdxheaders=Update DirectX headers ^(y/n^)^:
-@echo.
+@if %gitstate% GTR 0 set /p refreshdxheaders=Update DirectX headers (y/n):
+@if %gitstate% GTR 0 echo.
 @IF /I "%refreshdxheaders%"=="y" for /d %%a in ("%devroot%\mesa\subprojects\DirectX-Header*") do @IF EXIST "%%~a" RD /S /Q "%%~a"
+@IF /I "%refreshdxheaders%"=="y" if %disableootpatch% EQU 0 powershell -NoLogo "Invoke-WebRequest -Uri 'https://patch-diff.githubusercontent.com/raw/microsoft/DirectX-Headers/pull/65.patch' -OutFile '%devroot%\%projectname%\patches\dxheaders-msys2.patch'" 2>nul
+@IF /I "%refreshdxheaders%"=="y" git clone --recurse-submodules https://github.com/microsoft/DirectX-Headers.git "%devroot%\mesa\subprojects\DirectX-Headers"
+@IF /I "%refreshdxheaders%"=="y" if %disableootpatch% EQU 0 cd /d "%devroot%\mesa\subprojects\DirectX-Headers"
+@IF /I "%refreshdxheaders%"=="y" if %disableootpatch% EQU 0 set msyspatchdir=%devroot%\\mesa\subprojects\DirectX-Headers
+@IF /I "%refreshdxheaders%"=="y" if %disableootpatch% EQU 0 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" dxheaders-msys2
+@IF /I "%refreshdxheaders%"=="y" if %disableootpatch% EQU 0 cd /d "%devroot%\mesa"
 
 @rem Find LLVM dependency
 @set RTTI=false

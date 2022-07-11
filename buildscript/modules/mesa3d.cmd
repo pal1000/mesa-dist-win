@@ -208,14 +208,16 @@
 @IF %toolchain%==msvc IF /I "%zink%"=="y" IF %intmesaver% LSS 22200 set LDFLAGS=-ldelayimp /DELAYLOAD^:vulkan-1.dll
 @IF /I "%zink%"=="y" set /a galliumcount+=1
 
-@set d3d12=n
 @set canmcrdrvcom=1
-@IF NOT EXIST "%devroot%\mesa\subprojects\DirectX-Headers.wrap" set canmcrdrvcom=0
 @for /d %%a in ("%devroot%\mesa\subprojects\DirectX-Header*") do @IF NOT EXIST "%%~a" IF %gitstate% EQU 0 set canmcrdrvcom=0
 @IF %intmesaver% LSS 21000 set canmcrdrvcom=0
 @IF NOT %toolchain%==msvc IF %intmesaver% LSS 22200 set canmcrdrvcom=0
-@IF %canmcrdrvcom% EQU 1 set /p d3d12=Do you want to build Mesa3D OpenGL driver over D3D12 - GLonD3D12 (y/n):
-@IF %canmcrdrvcom% EQU 1 echo.
+@set cand3d12=0
+@IF %canmcrdrvcom% EQU 1 IF %toolchain%==msvc set cand3d12=1
+@IF %canmcrdrvcom% EQU 1 IF NOT %toolchain%==msvc IF %disableootpatch%==0 set cand3d12=1
+@set d3d12=n
+@IF %cand3d12% EQU 1 set /p d3d12=Do you want to build Mesa3D OpenGL driver over D3D12 - GLonD3D12 (y/n):
+@IF %cand3d12% EQU 1 echo.
 @IF /I "%d3d12%"=="y" set /a galliumcount+=1
 
 @set swrdrv=n
