@@ -14,6 +14,7 @@
 @IF /I "%refreshdxheaders%"=="y" git clone --recurse-submodules https://github.com/lygstate/DirectX-Headers.git "%devroot%\mesa\subprojects\DirectX-Headers"
 @IF /I "%refreshdxheaders%"=="y" cd /d "%devroot%\mesa\subprojects\DirectX-Headers"
 @IF /I "%refreshdxheaders%"=="y" git remote add upstream https://github.com/microsoft/DirectX-Headers.git
+@IF /I "%refreshdxheaders%"=="y" git fetch upstream
 @IF /I "%refreshdxheaders%"=="y" git rebase upstream/main
 @IF /I "%refreshdxheaders%"=="y" cd /d "%devroot%\mesa"
 @IF /I "%refreshdxheaders%"=="y" echo.
