@@ -11,12 +11,12 @@
 @if %gitstate% GTR 0 set /p refreshdxheaders=Update DirectX headers (y/n):
 @if %gitstate% GTR 0 echo.
 @IF /I "%refreshdxheaders%"=="y" for /d %%a in ("%devroot%\mesa\subprojects\DirectX-Header*") do @IF EXIST "%%~a" RD /S /Q "%%~a"
-@IF /I "%refreshdxheaders%"=="y" if %disableootpatch% EQU 0 powershell -NoLogo "Invoke-WebRequest -Uri 'https://patch-diff.githubusercontent.com/raw/microsoft/DirectX-Headers/pull/65.patch' -OutFile '%devroot%\%projectname%\patches\dxheaders-msys2.patch'" 2>nul
-@IF /I "%refreshdxheaders%"=="y" git clone --recurse-submodules https://github.com/microsoft/DirectX-Headers.git "%devroot%\mesa\subprojects\DirectX-Headers"
-@IF /I "%refreshdxheaders%"=="y" if %disableootpatch% EQU 0 cd /d "%devroot%\mesa\subprojects\DirectX-Headers"
-@IF /I "%refreshdxheaders%"=="y" if %disableootpatch% EQU 0 set msyspatchdir=%devroot%\\mesa\subprojects\DirectX-Headers
-@IF /I "%refreshdxheaders%"=="y" if %disableootpatch% EQU 0 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" dxheaders-msys2
-@IF /I "%refreshdxheaders%"=="y" if %disableootpatch% EQU 0 cd /d "%devroot%\mesa"
+@IF /I "%refreshdxheaders%"=="y" git clone --recurse-submodules https://github.com/lygstate/DirectX-Headers.git "%devroot%\mesa\subprojects\DirectX-Headers"
+@IF /I "%refreshdxheaders%"=="y" cd /d "%devroot%\mesa\subprojects\DirectX-Headers"
+@IF /I "%refreshdxheaders%"=="y" git remote add upstream https://github.com/microsoft/DirectX-Headers.git
+@IF /I "%refreshdxheaders%"=="y" git rebase upstream/main
+@IF /I "%refreshdxheaders%"=="y" cd /d "%devroot%\mesa"
+@IF /I "%refreshdxheaders%"=="y" echo.
 
 @rem Find LLVM dependency
 @set RTTI=false
