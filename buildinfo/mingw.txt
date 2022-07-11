@@ -30,7 +30,7 @@ gdbm 1.23-1
 getent 2.18.90-3
 gettext 0.21-2
 gmp 6.2.1-2
-gnupg 2.2.35-1
+gnupg 2.2.36-1
 grep 1~3.0-3
 gzip 1.12-2
 heimdal-libs 7.7.0-3

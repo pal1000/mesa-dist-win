@@ -14,7 +14,7 @@
 )
 @for /d %%a in ("%devroot%\mesa\subprojects\DirectX-Header*") do @IF EXIST "%%~a" set /p refreshdxheaders=Update DirectX headers (y/n):
 @for /d %%a in ("%devroot%\mesa\subprojects\DirectX-Header*") do @IF EXIST "%%~a" echo.
-@IF /I "%refreshdxheaders%"=="y" RD /S /Q "%%~a"
+@for /d %%a in ("%devroot%\mesa\subprojects\DirectX-Header*") do @IF EXIST "%%~a" IF /I "%refreshdxheaders%"=="y" RD /S /Q "%%~a"
 
 @rem Find LLVM dependency
 @set RTTI=false
