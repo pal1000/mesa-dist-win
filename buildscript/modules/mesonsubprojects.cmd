@@ -12,11 +12,9 @@
 @copy /Y "%devroot%\%projectname%\buildscript\mesonsubprojects\DirectX-Headers.wrap" "%devroot%\mesa\subprojects\DirectX-Headers.wrap"
 @echo.
 )
-@for /d %%a in ("%devroot%\mesa\subprojects\DirectX-Header*") do @IF EXIST "%%~a" (
 @set /p refreshdxheaders=Update DirectX headers ^(y/n^)^:
 @echo.
-@IF /I "%refreshdxheaders%"=="y" RD /S /Q "%%~a"
-)
+@IF /I "%refreshdxheaders%"=="y" for /d %%a in ("%devroot%\mesa\subprojects\DirectX-Header*") do @IF EXIST "%%~a" RD /S /Q "%%~a"
 
 @rem Find LLVM dependency
 @set RTTI=false
