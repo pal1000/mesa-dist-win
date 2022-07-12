@@ -11,9 +11,9 @@
 @if %gitstate% GTR 0 set /p refreshdxheaders=Update DirectX headers (y/n):
 @if %gitstate% GTR 0 echo.
 @IF /I "%refreshdxheaders%"=="y" for /d %%a in ("%devroot%\mesa\subprojects\DirectX-Header*") do @IF EXIST "%%~a" RD /S /Q "%%~a"
-@IF /I "%refreshdxheaders%"=="y" git clone --recurse-submodules https://github.com/lygstate/DirectX-Headers.git "%devroot%\mesa\subprojects\DirectX-Headers"
+@IF /I "%refreshdxheaders%"=="y" git clone --recurse-submodules https://github.com/microsoft/DirectX-Headers.git "%devroot%\mesa\subprojects\DirectX-Headers"
 @IF /I "%refreshdxheaders%"=="y" cd /d "%devroot%\mesa\subprojects\DirectX-Headers"
-@IF /I "%refreshdxheaders%"=="y" git remote add upstream https://github.com/microsoft/DirectX-Headers.git
+@IF /I "%refreshdxheaders%"=="y" git remote add upstream https://github.com/lygstate/DirectX-Headers.git
 @IF /I "%refreshdxheaders%"=="y" git fetch upstream
 @IF /I "%refreshdxheaders%"=="y" git rebase upstream/main
 @IF /I "%refreshdxheaders%"=="y" cd /d "%devroot%\mesa"
