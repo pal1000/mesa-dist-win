@@ -91,6 +91,9 @@
 @IF %intmesaver% GEQ 21254 IF %intmesaver% LSS 22100 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" clang
 @IF %intmesaver% GEQ 21254 IF EXIST "%devroot%\mesa\src\gallium\drivers\swr\meson.build" call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" clang-swr
 
+@rem Fix MinGW static link with regex
+@IF %intmesaver% GEQ 21100 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" fix-regex-static-link
+
 @rem Fix 32-bit MSVC build for Mesa 22.0.0-rc3 - 22.0.0
 @IF %intmesaver% GEQ 22003 IF %intmesaver% LSS 22051 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" msvc-32_bit-libmesa_util
 
@@ -278,7 +281,8 @@
 @if /I "%dozenmsvk%"=="y" set buildconf=%buildconf%microsoft-experimental,
 @IF %mesavkcount% GTR 0 set buildconf=%buildconf:~0,-1%
 
-@IF %msysregex%==1 set LDFLAGS=%LDFLAGS% -ltre -lintl -liconv
+@IF %msysregex%==1 IF %disableootpatch% EQU 1 set LDFLAGS=%LDFLAGS% -ltre -lintl
+@IF %msysregex%==1 set LDFLAGS=%LDFLAGS% -liconv
 
 @set d3d10umd=n
 @set cand3d10umd=1

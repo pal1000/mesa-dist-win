@@ -1,0 +1,19 @@
+diff --git a/meson.build b/meson.build
+index 5570a8a1f39..3dc876413d0 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1613,9 +1613,12 @@ endif
+ dep_m = cc.find_library('m', required : false)
+ 
+ if host_machine.system() == 'windows'
+-  dep_regex = meson.get_compiler('c').find_library('regex', required : false)
++  dep_regex = dependency('regex', required : false)
+   if not dep_regex.found()
+-    dep_regex = declare_dependency(compile_args : ['-DNO_REGEX'])
++    dep_regex = meson.get_compiler('c').find_library('regex', required : false)
++    if not dep_regex.found()
++      dep_regex = declare_dependency(compile_args : ['-DNO_REGEX'])
++    endif
+   endif
+ else
+   dep_regex = null_dep
