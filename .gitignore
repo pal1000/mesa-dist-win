@@ -19,3 +19,5 @@
 # /buildscript/mesonconffiles...
 # Debug symbols
 /debugsymbols
+# Debug patches
+/patches/test

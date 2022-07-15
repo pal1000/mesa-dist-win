@@ -9,7 +9,8 @@
 ### Development package
 - Mesa3D pkg-config files are now relocatable.
 ### Debug
-- Fix test mingw builds.
+- Fix test mingw builds;
+- Patch test tool: Add work tree clean command.
 ### Distribution
 - Fixes for Microsoft components built with MinGW [22.2+].
 ### Out of tree patches
