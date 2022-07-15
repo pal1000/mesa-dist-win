@@ -10,13 +10,13 @@
 @rem Refreshing DirectX-Headers if found
 @if %gitstate% GTR 0 set /p refreshdxheaders=Update DirectX headers (y/n):
 @if %gitstate% GTR 0 echo.
-@IF /I "%refreshdxheaders%"=="y" for /f delims^=^ eol^= %%a in ('dir /b /a:d "%devroot%\mesa\subprojects\DirectX-Header*"') do @IF EXIST "%%~a" RD /S /Q "%%~a"
-@IF /I "%refreshdxheaders%"=="y" git clone --recurse-submodules https://github.com/microsoft/DirectX-Headers.git "%devroot%\mesa\subprojects\DirectX-Headers"
-@IF /I "%refreshdxheaders%"=="y" cd /d "%devroot%\mesa\subprojects\DirectX-Headers"
-@IF /I "%refreshdxheaders%"=="y" git remote add upstream https://github.com/lygstate/DirectX-Headers.git
-@IF /I "%refreshdxheaders%"=="y" git fetch upstream
-@IF /I "%refreshdxheaders%"=="y" git rebase upstream/main
-@IF /I "%refreshdxheaders%"=="y" cd /d "%devroot%\mesa"
+@IF /I "%refreshdxheaders%"=="y" for /f delims^=^ eol^= %%a in ('dir /b /a:d "%devroot%\mesa\subprojects\DirectX-Header*"') do @IF EXIST "%devroot%\mesa\subprojects\%%~a" RD /S /Q "%devroot%\mesa\subprojects\%%~a"
+@IF /I "%refreshdxheaders%"=="y" git clone -b v1.606.3 --recurse-submodules https://github.com/microsoft/DirectX-Headers.git "%devroot%\mesa\subprojects\DirectX-Headers"
+@rem IF /I "%refreshdxheaders%"=="y" cd /d "%devroot%\mesa\subprojects\DirectX-Headers"
+@rem IF /I "%refreshdxheaders%"=="y" git remote add upstream https://github.com/lygstate/DirectX-Headers.git
+@rem IF /I "%refreshdxheaders%"=="y" git fetch upstream
+@rem IF /I "%refreshdxheaders%"=="y" git rebase upstream/main
+@rem IF /I "%refreshdxheaders%"=="y" cd /d "%devroot%\mesa"
 @IF /I "%refreshdxheaders%"=="y" echo.
 
 @rem Find LLVM dependency
@@ -94,9 +94,9 @@ cd /D "%devroot%\mesa"
 :mingwwraps
 @IF %toolchain%==msvc GOTO donewrap
 @rem Use runtime MinGW libelf, zlib and zstd dependencies
-@for /f delims^=^ eol^= %%a in ('dir /b /a:d "%devroot%\mesa\subprojects\libelf-*"') do @RD /S /Q "%%~a"
+@for /f delims^=^ eol^= %%a in ('dir /b /a:d "%devroot%\mesa\subprojects\libelf-*"') do @RD /S /Q "%devroot%\mesa\subprojects\%%~a"
 @IF EXIST "%devroot%\mesa\subprojects\libelf.wrap" del "%devroot%\mesa\subprojects\libelf.wrap"
-@for /f delims^=^ eol^= %%a in ('dir /b /a:d "%devroot%\mesa\subprojects\zlib-*"') do @RD /S /Q "%%~a"
+@for /f delims^=^ eol^= %%a in ('dir /b /a:d "%devroot%\mesa\subprojects\zlib-*"') do @RD /S /Q "%devroot%\mesa\subprojects\%%~a"
 @IF EXIST "%devroot%\mesa\subprojects\zlib.wrap" del "%devroot%\mesa\subprojects\zlib.wrap"
 
 @rem Vulkan dependency
