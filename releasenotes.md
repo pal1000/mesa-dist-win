@@ -4,7 +4,8 @@
 - Misc: Reduce git pull verbosity;
 - MinGW: Use Meson --prefer-static to link zlib, zstd and regex statically;
 - Disable shared glapi when no Mesa3D OpenGL driver is built;
-- [Support building GLonD3D12 with MSYS2](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/16084) [22.2+].
+- [Support building GLonD3D12 with MSYS2](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/16084) [22.2+];
+- Misc: Replace `FOR /D` with the [more reliable](https://ss64.com/nt/for_d.html) `FOR /F` and `dir /B /A:D` combo.
 ### Development package
 - Mesa3D pkg-config files are now relocatable.
 ### Debug

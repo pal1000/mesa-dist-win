@@ -10,7 +10,7 @@
 @rem Refreshing DirectX-Headers if found
 @if %gitstate% GTR 0 set /p refreshdxheaders=Update DirectX headers (y/n):
 @if %gitstate% GTR 0 echo.
-@IF /I "%refreshdxheaders%"=="y" for /d %%a in ("%devroot%\mesa\subprojects\DirectX-Header*") do @IF EXIST "%%~a" RD /S /Q "%%~a"
+@IF /I "%refreshdxheaders%"=="y" for /f delims^=^ eol^= %%a in ('dir /b /a:d "%devroot%\mesa\subprojects\DirectX-Header*"') do @IF EXIST "%%~a" RD /S /Q "%%~a"
 @IF /I "%refreshdxheaders%"=="y" git clone --recurse-submodules https://github.com/microsoft/DirectX-Headers.git "%devroot%\mesa\subprojects\DirectX-Headers"
 @IF /I "%refreshdxheaders%"=="y" cd /d "%devroot%\mesa\subprojects\DirectX-Headers"
 @IF /I "%refreshdxheaders%"=="y" git remote add upstream https://github.com/lygstate/DirectX-Headers.git
@@ -94,9 +94,9 @@ cd /D "%devroot%\mesa"
 :mingwwraps
 @IF %toolchain%==msvc GOTO donewrap
 @rem Use runtime MinGW libelf, zlib and zstd dependencies
-@for /d %%a in ("%devroot%\mesa\subprojects\libelf-*") do @RD /S /Q "%%~a"
+@for /f delims^=^ eol^= %%a in ('dir /b /a:d "%devroot%\mesa\subprojects\libelf-*"') do @RD /S /Q "%%~a"
 @IF EXIST "%devroot%\mesa\subprojects\libelf.wrap" del "%devroot%\mesa\subprojects\libelf.wrap"
-@for /d %%a in ("%devroot%\mesa\subprojects\zlib-*") do @RD /S /Q "%%~a"
+@for /f delims^=^ eol^= %%a in ('dir /b /a:d "%devroot%\mesa\subprojects\zlib-*"') do @RD /S /Q "%%~a"
 @IF EXIST "%devroot%\mesa\subprojects\zlib.wrap" del "%devroot%\mesa\subprojects\zlib.wrap"
 
 @rem Vulkan dependency
