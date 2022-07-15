@@ -213,7 +213,7 @@
 
 @rem Prerequisites for all Microsoft components in Mesa3D
 @set canmcrdrvcom=1
-@for /f delims^=^ eol^= %%a in ('dir /b /a:d "%devroot%\mesa\subprojects\DirectX-Header*"') do @IF NOT EXIST "%devroot%\mesa\subprojects\%%~a" set canmcrdrvcom=0
+@for /f delims^=^ eol^= %%a in ('dir /b /a:d "%devroot%\mesa\subprojects\DirectX-Header*" 2^>nul') do @IF NOT EXIST "%devroot%\mesa\subprojects\%%~nxa" set canmcrdrvcom=0
 @IF %intmesaver% LSS 21000 set canmcrdrvcom=0
 @IF NOT %toolchain%==msvc IF %intmesaver% LSS 22200 set canmcrdrvcom=0
 

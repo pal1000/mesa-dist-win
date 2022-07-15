@@ -59,21 +59,21 @@
 @set foundgraw=0
 @set overwritewarn=
 @for /f delims^=^ eol^= %%a IN ('dir /A:L /B "%dir%" 2^>^&1') DO @(
-@IF /I "%%a"=="opengl32.dll" set founddesktopgl=1
-@IF /I "%%a"=="opengl32.dll" del "%dir%\%%a"
+@IF /I "%%~nxa"=="opengl32.dll" set founddesktopgl=1
+@IF /I "%%~nxa"=="opengl32.dll" del "%dir%\%%~nxa"
 @if EXIST "%dir%\opengl32.dll" set overwritewarn=%overwritewarn%opengl32.dll, 
-@IF /I "%%a"=="opengl32sw.dll" set founddesktopgl=1
-@IF /I "%%a"=="opengl32sw.dll" del "%dir%\%%a"
+@IF /I "%%~nxa"=="opengl32sw.dll" set founddesktopgl=1
+@IF /I "%%~nxa"=="opengl32sw.dll" del "%dir%\%%~nxa"
 @if EXIST "%dir%\opengl32sw.dll" set overwritewarn=%overwritewarn%opengl32sw.dll, 
-@IF /I "%%a"=="dxil.dll" del "%dir%\%%a"
+@IF /I "%%~nxa"=="dxil.dll" del "%dir%\%%~nxa"
 @if EXIST "%dir%\dxil.dll" set overwritewarn=%overwritewarn%dxil.dll, 
-@IF /I "%%a"=="libEGL.dll" del "%dir%\%%a"
+@IF /I "%%~nxa"=="libEGL.dll" del "%dir%\%%~nxa"
 @if EXIST "%dir%\libEGL.dll" set overwritewarn=%overwritewarn%libEGL.dll, 
-@IF /I "%%a"=="libGLESv1_CM.dll" del "%dir%\%%a"
+@IF /I "%%~nxa"=="libGLESv1_CM.dll" del "%dir%\%%~nxa"
 @if EXIST "%dir%\libGLESv1_CM.dll" set overwritewarn=%overwritewarn%libGLESv1_CM.dll, 
-@IF /I "%%a"=="libGLESv2.dll" del "%dir%\%%a"
+@IF /I "%%~nxa"=="libGLESv2.dll" del "%dir%\%%~nxa"
 @if EXIST "%dir%\libGLESv2.dll" set overwritewarn=%overwritewarn%libGLESv2.dll, 
-@IF /I "%%a"=="OpenCL.dll" del "%dir%\%%a"
+@IF /I "%%~nxa"=="OpenCL.dll" del "%dir%\%%~nxa"
 @if EXIST "%dir%\OpenCL.dll" set overwritewarn=%overwritewarn%OpenCL.dll, 
 )
 @if defined overwritewarn echo WARNING: These files may get overwritten depending which Mesa3D components you choose to deploy: %overwritewarn:~0,-2%. If Mesa3D doesn't help or you choose to wipe the deployment a reinstall/repair install of affected software is necessary to restore original files.

@@ -44,9 +44,9 @@
 
 @rem Get Vulkan SDK version
 @set vksdkcount=0
-@for /f delims^=^ eol^= %%a in ('dir /A:D /B "%SystemDrive%\VulkanSDK\"') do @IF EXIST "%SystemDrive%\VulkanSDK\%%a\" (
+@for /f delims^=^ eol^= %%a in ('dir /A:D /B "%SystemDrive%\VulkanSDK\" 2^>nul') do @IF EXIST "%SystemDrive%\VulkanSDK\%%~nxa\" (
 @set /a vksdkcount+=1
-@set vksdkver=%%a
+@set vksdkver=%%~nxa
 )
 @IF NOT EXIST "%VK_SDK_PATH%" IF NOT EXIST "%VULKAN_SDK%" set vksdkcount=0
 @IF %vksdkcount% EQU 1 IF NOT %toolchain%==msvc echo LunarG Vulkan SDK %vksdkver%>>"%devroot%\%projectname%\buildinfo\mingw.txt"
