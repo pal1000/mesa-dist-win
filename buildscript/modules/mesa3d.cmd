@@ -281,8 +281,7 @@
 @if /I "%dozenmsvk%"=="y" set buildconf=%buildconf%microsoft-experimental,
 @IF %mesavkcount% GTR 0 set buildconf=%buildconf:~0,-1%
 
-@IF %msysregex%==1 IF %disableootpatch% EQU 1 set LDFLAGS=%LDFLAGS% -ltre -lintl
-@IF %msysregex%==1 set LDFLAGS=%LDFLAGS% -liconv
+@IF %msysregex%==1 IF %disableootpatch% EQU 1 set LDFLAGS=%LDFLAGS% -ltre -lintl -liconv
 
 @set d3d10umd=n
 @set cand3d10umd=1

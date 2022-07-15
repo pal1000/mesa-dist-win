@@ -7,7 +7,7 @@ index 5570a8a1f39..3dc876413d0 100644
  
  if host_machine.system() == 'windows'
 -  dep_regex = meson.get_compiler('c').find_library('regex', required : false)
-+  dep_regex = dependency('regex', required : false)
++  dep_regex = declare_dependency(dependencies : [dependency('regex', required : false), dependency('iconv', required : false)])
    if not dep_regex.found()
 -    dep_regex = declare_dependency(compile_args : ['-DNO_REGEX'])
 +    dep_regex = meson.get_compiler('c').find_library('regex', required : false)
