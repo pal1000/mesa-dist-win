@@ -17,7 +17,7 @@
 ### Out of tree patches
 - Add patch fixing regex dependency lookup with MSYS2.
 ### Build environment
-- Use DirectX headers v1.606.3.
+- Use pure subproject without wrap for DirectX headers discovery.
 # 22.1.3
 - Updated Mesa3D to [22.1.3](https://docs.mesa3d.org/relnotes/22.1.3.html).
 ### Build script

@@ -4,17 +4,18 @@
 @IF EXIST "%devroot%\mesa\subprojects\zlib\" RD /S /Q "%devroot%\mesa\subprojects\zlib"
 @IF EXIST "%devroot%\mesa\subprojects\libzstd\" RD /S /Q "%devroot%\mesa\subprojects\libzstd"
 
-@rem Refreshing DirectX-Headers if found
-@if %gitstate% GTR 0 set /p refreshdxheaders=Update DirectX headers (y/n):
-@if %gitstate% GTR 0 echo.
-@IF /I "%refreshdxheaders%"=="y" for /f delims^=^ eol^= %%a in ('dir /b /a:d "%devroot%\mesa\subprojects\DirectX-Header*" 2^>^&1') do @IF EXIST "%devroot%\mesa\subprojects\%%~nxa\" RD /S /Q "%devroot%\mesa\subprojects\%%~nxa"
-@IF /I "%refreshdxheaders%"=="y" git clone -b v1.606.3 --recurse-submodules https://github.com/microsoft/DirectX-Headers.git "%devroot%\mesa\subprojects\DirectX-Headers"
-@rem IF /I "%refreshdxheaders%"=="y" cd /d "%devroot%\mesa\subprojects\DirectX-Headers"
-@rem IF /I "%refreshdxheaders%"=="y" git remote add upstream https://github.com/lygstate/DirectX-Headers.git
-@rem IF /I "%refreshdxheaders%"=="y" git fetch upstream
-@rem IF /I "%refreshdxheaders%"=="y" git rebase upstream/main
-@rem IF /I "%refreshdxheaders%"=="y" cd /d "%devroot%\mesa"
-@IF /I "%refreshdxheaders%"=="y" echo.
+@rem Use pure subproject without wrap for DirectX headers
+@IF EXIST "%devroot%\mesa\subprojects\DirectX-Headers.wrap" del "%devroot%\mesa\subprojects\DirectX-Headers.wrap"
+
+@rem Obtaining DirectX-Headers
+@if %gitstate% GTR 0 for /f delims^=^ eol^= %%a in ('dir /b /a:d "%devroot%\mesa\subprojects\DirectX-Header*" 2^>^&1') do @(
+@IF EXIST "%devroot%\mesa\subprojects\%%~nxa\" cd "%devroot%\mesa\subprojects\%%~nxa"
+@IF EXIST "%devroot%\mesa\subprojects\%%~nxa\" echo Refreshing DirectX-Headers...
+@IF EXIST "%devroot%\mesa\subprojects\%%~nxa\" git pull -f --progress --tags --recurse-submodules origin
+@IF EXIST "%devroot%\mesa\subprojects\%%~nxa\" cd "%devroot%\mesa"
+@IF NOT EXIST "%devroot%\mesa\subprojects\%%~nxa\" git clone --recurse-submodules https://github.com/microsoft/DirectX-Headers.git "%devroot%\mesa\subprojects\DirectX-Headers"
+@echo.
+)
 
 @rem Find LLVM dependency
 @set RTTI=false
