@@ -28,8 +28,6 @@
 @IF %gitstate% GTR 0 IF EXIST "%CD%\.git\" pause
 @exit
 )
-@IF /I "%ptstcmd%"=="list" for /R "%devroot%\%projectname%\patches\test" %%i in (*.patch) do @echo %%~ni
-@IF /I "%ptstcmd%"=="list" echo.
 @IF /I "%ptstcmd:~0,3%"=="cd " %ptstcmd%
 @IF /I "%ptstcmd:~0,3%"=="cd " echo.
 @IF %gitstate% GTR 0 IF EXIST "%CD%\.git\" IF /I "%ptstcmd:~0,4%"=="git " %ptstcmd%
@@ -39,5 +37,5 @@
 @IF %gitstate% GTR 0 IF EXIST "%CD%\.git\" IF /I "%ptstcmd%"=="clean" git checkout .
 @IF %gitstate% GTR 0 IF EXIST "%CD%\.git\" IF /I "%ptstcmd%"=="clean" git clean -fd
 @IF %gitstate% GTR 0 IF EXIST "%CD%\.git\" IF /I "%ptstcmd%"=="clean" echo.
-@IF /I NOT "%ptstcmd:~0,3%"=="cd " IF /I NOT "%ptstcmd:~0,4%"=="git " IF /I NOT "%ptstcmd%"=="cd" IF /I NOT "%ptstcmd%"=="list" IF /I NOT "%ptstcmd%"=="clean" call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" %ptstcmd%
+@IF /I "%ptstcmd%"=="patch" for /R "%devroot%\%projectname%\patches\test" %%i in (*.patch) do @call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" test\%%~ni
 @GOTO command
