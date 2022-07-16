@@ -4,9 +4,6 @@
 @IF EXIST "%devroot%\mesa\subprojects\zlib\" RD /S /Q "%devroot%\mesa\subprojects\zlib"
 @IF EXIST "%devroot%\mesa\subprojects\libzstd\" RD /S /Q "%devroot%\mesa\subprojects\libzstd"
 
-@rem Remove DirectX headers wrap, use pure-subproject only
-@IF EXIST "%devroot%\%projectname%\buildscript\mesonsubprojects\DirectX-Headers.wrap" del "%devroot%\%projectname%\buildscript\mesonsubprojects\DirectX-Headers.wrap"
-
 @rem Refreshing DirectX-Headers if found
 @if %gitstate% GTR 0 set /p refreshdxheaders=Update DirectX headers (y/n):
 @if %gitstate% GTR 0 echo.
