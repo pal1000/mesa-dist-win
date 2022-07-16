@@ -1,12 +1,13 @@
 diff --git a/meson.build b/meson.build
-index cdff0312e56..46efce97533 100644
+index cdff0312e56..eefb02c4d4b 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -1566,7 +1566,12 @@ endif
+@@ -1566,7 +1566,13 @@ endif
  dep_m = cc.find_library('m', required : false)
  
  if host_machine.system() == 'windows'
 -  dep_regex = meson.get_compiler('c').find_library('regex', required : false)
++# In MSYS2 at least, regex has dependencies of its own
 +  dep_part_regex = dependency('regex', required : false)
 +  if dep_part_regex.found()
 +    dep_regex = declare_dependency(dependencies : [dep_part_regex], link_args : ['-liconv'])
