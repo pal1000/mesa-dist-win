@@ -25,7 +25,7 @@
 @IF "%multilib%"=="1" set CXXFLAGS=-m32
 @IF "%multilib%"=="1" set LDFLAGS=%LDFLAGS% -m32
 @set buildcmd=ninja -C build/gcc-%abi% -j 2
-@for /f delims^=^ eol^= %%a in ('dir /b /a:d "%devroot%\mesa\subprojects\zlib-*" 2^>nul') do @RD /S /Q "%devroot%\mesa\subprojects\%%~nxa"
+@for /f delims^=^ eol^= %%a in ('dir /b /a:d "%devroot%\mesa\subprojects\zlib-*" 2^>^&1') do @IF EXIST "%devroot%\mesa\subprojects\%%~nxa\" RD /S /Q "%devroot%\mesa\subprojects\%%~nxa"
 @IF EXIST "%devroot%\mesa\subprojects\zlib\" RD /S /Q "%devroot%\mesa\subprojects\zlib"
 @IF EXIST "build\gcc-%abi%\" RD /S /Q build\gcc-%abi%
 @IF EXIST "%devroot%\%projectname%\bin\%abi%\" RD /S /Q "%devroot%\%projectname%\bin\%abi%"

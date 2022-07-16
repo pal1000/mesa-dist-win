@@ -17,12 +17,12 @@
 @"%msysloc%\%LMSYSTEM%\bin\strip.exe" --strip-debug --strip-unneeded "%devroot%\%projectname%\bin\%abi%\osmesa-swrast\osmesa.dll"
 )
 
-@for /f delims^=^ eol^= %%a in ('dir /b "%devroot%\%projectname%\bin\%abi%\*.dll" 2^>nul') do @(
+@for /f delims^=^ eol^= %%a in ('dir /b "%devroot%\%projectname%\bin\%abi%\*.dll" 2^>^&1') do @IF EXIST "%devroot%\%projectname%\bin\%abi%\%%~nxa"(
 @copy "%devroot%\%projectname%\bin\%abi%\%%~nxa" "%devroot%\%projectname%\debugsymbols\%abi%\%%~nxa.symbols"
 @"%msysloc%\%LMSYSTEM%\bin\strip.exe" --only-keep-debug "%devroot%\%projectname%\debugsymbols\%abi%\%%~nxa.symbols"
 @"%msysloc%\%LMSYSTEM%\bin\strip.exe" --strip-debug --strip-unneeded "%devroot%\%projectname%\bin\%abi%\%%~nxa"
 )
-@for /f delims^=^ eol^= %%a in ('dir /b "%devroot%\%projectname%\bin\%abi%\*.exe" 2^>nul') do @(
+@for /f delims^=^ eol^= %%a in ('dir /b "%devroot%\%projectname%\bin\%abi%\*.exe" 2^>^&1') do @IF EXIST "%devroot%\%projectname%\bin\%abi%\%%~nxa"(
 @copy "%devroot%\%projectname%\bin\%abi%\%%~nxa" "%devroot%\%projectname%\debugsymbols\%abi%\%%~nxa.symbols"
 @"%msysloc%\%LMSYSTEM%\bin\strip.exe" --only-keep-debug "%devroot%\%projectname%\debugsymbols\%abi%\%%~nxa.symbols"
 @"%msysloc%\%LMSYSTEM%\bin\strip.exe" --strip-debug --strip-unneeded "%devroot%\%projectname%\bin\%abi%\%%~nxa"

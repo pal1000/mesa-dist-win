@@ -16,7 +16,7 @@
 @echo.
 @set buildconf=meson build/clang-%abi% --buildtype=release --cross-file="%devroot:\=/%/%projectname%/buildscript/mesonconffiles/%abi%-clang.txt" -Dllvm=false
 @set buildcmd=ninja -C build/clang-%abi% -j 2
-@for /f delims^=^ eol^= %%a in ('dir /b /a:d "%devroot%\mesa\subprojects\zlib-*" 2^>nul') do @RD /S /Q "%devroot%\mesa\subprojects\%%~nxa"
+@for /f delims^=^ eol^= %%a in ('dir /b /a:d "%devroot%\mesa\subprojects\zlib-*" 2^>^&1') do @IF EXIST "%devroot%\mesa\subprojects\%%~nxa\" RD /S /Q "%devroot%\mesa\subprojects\%%~nxa"
 @IF EXIST "%devroot%\mesa\subprojects\zlib\" RD /S /Q "%devroot%\mesa\subprojects\zlib"
 @IF EXIST "build\clang-%abi%\" RD /S /Q build\clang-%abi%
 @IF EXIST "%devroot%\%projectname%\bin\%abi%\" RD /S /Q "%devroot%\%projectname%\bin\%abi%"

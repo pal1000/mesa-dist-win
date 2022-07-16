@@ -44,7 +44,7 @@
 
 @rem Get Vulkan SDK version
 @set vksdkcount=0
-@for /f delims^=^ eol^= %%a in ('dir /A:D /B "%SystemDrive%\VulkanSDK\" 2^>nul') do @IF EXIST "%SystemDrive%\VulkanSDK\%%~nxa\" (
+@for /f delims^=^ eol^= %%a in ('dir /A:D /B "%SystemDrive%\VulkanSDK\" 2^>^&1') do @IF EXIST "%SystemDrive%\VulkanSDK\%%~nxa\" (
 @set /a vksdkcount+=1
 @set vksdkver=%%~nxa
 )
