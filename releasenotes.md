@@ -1,3 +1,5 @@
+# 22.1.4
+- Updated Mesa3D to [22.1.4](https://docs.mesa3d.org/relnotes/22.1.4.html).
 ### Build script
 - Misc: Support adding more compiler flags as needed;
 - Misc: Escape `=` and `:` in CFLAGS and LDFLAGS just to be safe;
