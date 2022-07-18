@@ -1,6 +1,7 @@
 ### Build script
 - Mesa3D incremental build: Support LLVM discovery method change;
-- Allow building osmesa with swr and without swrast.
+- Allow building osmesa with swr and without swrast;
+- Disable draw with LLVM if LLVM is unused and at least 1 OpenGL driver is built, workaround for [upstream issue 6817](https://gitlab.freedesktop.org/mesa/mesa/-/issues/6817).
 # 22.1.4
 - Updated Mesa3D to [22.1.4](https://docs.mesa3d.org/relnotes/22.1.4.html).
 ### Build script

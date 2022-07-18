@@ -404,6 +404,18 @@
 @if defined CFLAGS set buildconf=%buildconf% -Dc_args="%CFLAGS%" -Dcpp_args="%CFLAGS%"
 @if defined LDFLAGS set buildconf=%buildconf% -Dc_link_args="%LDFLAGS%" -Dcpp_link_args="%LDFLAGS%"
 
+@rem Disable draw with LLVM if LLVM is unused and at least 1 OpenGL driver is built - workaround for https://gitlab.freedesktop.org/mesa/mesa/-/issues/6817
+@set drawwithllvm=7
+@if /I NOT "%glswrast%"=="y" set /a drawwithllvm-=1
+@if /I NOT "%swrdrv%"=="y" set /a drawwithllvm-=1
+@if /I NOT "%radv%"=="y" set /a drawwithllvm-=1
+@IF /I NOT "%osmesa%"=="y" set /a drawwithllvm-=1
+@if /I NOT "%graw%"=="y" set /a drawwithllvm-=1
+@IF /I NOT "%mclc%"=="y" set /a drawwithllvm-=1
+@IF /I NOT "%buildclover%"=="y" set /a drawwithllvm-=1
+@IF %intmesaver% GEQ 21100 if /I NOT "%llvmless%"=="y" set buildconf=%buildconf% -Ddraw-use-llvm=true
+@IF %intmesaver% GEQ 21100 if /I NOT "%llvmless%"=="y" IF %drawwithllvm% EQU 0 IF %galliumcount% GTR 0 set buildconf=%buildconf:~0,-4%false
+
 @rem Load MSVC specific build dependencies
 @IF %toolchain%==msvc IF %flexstate%==1 set PATH=%devroot%\flexbison\;%PATH%
 @IF %toolchain%==msvc set PATH=%pkgconfigloc%\;%PATH%
