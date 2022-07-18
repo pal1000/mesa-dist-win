@@ -1,5 +1,6 @@
 ### Build script
-- Mesa3D incremental build: Support LLVM discovery method change.
+- Mesa3D incremental build: Support LLVM discovery method change;
+- Allow building osmesa with swr and without swrast.
 # 22.1.4
 - Updated Mesa3D to [22.1.4](https://docs.mesa3d.org/relnotes/22.1.4.html).
 ### Build script

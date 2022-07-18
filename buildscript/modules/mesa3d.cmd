@@ -314,9 +314,11 @@
 @if /I NOT "%gles%"=="y" IF %intmesaver% GEQ 21300 set buildconf=%buildconf% -Degl=%mesonboolfalse%
 
 @set osmesa=n
-@if /I "%glswrast%"=="y" IF %intmesaver% LSS 21000 set /p osmesa=Do you want to build off-screen rendering drivers (y/n):
-@if /I "%glswrast%"=="y" IF %intmesaver% GEQ 21000 set /p osmesa=Do you want to build off-screen rendering driver (y/n):
-@if /I "%glswrast%"=="y" echo.
+@set canosmesa=1
+@if /I NOT "%glswrast%"=="y" if /I NOT "%swrdrv%"=="y" set canosmesa=0
+@if %canosmesa% EQU 1 IF %intmesaver% LSS 21000 set /p osmesa=Do you want to build off-screen rendering drivers (y/n):
+@if %canosmesa% EQU 1 IF %intmesaver% GEQ 21000 set /p osmesa=Do you want to build off-screen rendering driver (y/n):
+@if %canosmesa% EQU 1 echo.
 @rem osmesa classic is gone in Mesa 21.0 and newer
 @IF /I "%osmesa%"=="y" IF %intmesaver% GEQ 21000 set buildconf=%buildconf% -Dosmesa=true
 @IF /I "%osmesa%"=="y" IF %intmesaver% LSS 21000 set buildconf=%buildconf% -Dosmesa=gallium,classic
