@@ -227,11 +227,10 @@
 
 @set swrdrv=n
 @set canswr=0
-@if /I NOT "%llvmless%"=="y" if %abi%==x64 IF %disableootpatch%==0 IF EXIST "%devroot%\mesa\src\gallium\drivers\swr\meson.build" set canswr=1
+@if /I NOT "%llvmless%"=="y" if %abi%==x64 IF %disableootpatch%==0 IF EXIST "%devroot%\mesa\src\gallium\drivers\swr\meson.build" if /I "%glswrast%"=="y" set canswr=1
 @if %canswr% EQU 1 set /p swrdrv=Do you want to build swr drivers? (y=yes):
 @if %canswr% EQU 1 echo.
-@if /I "%swrdrv%"=="y" IF %disableootpatch%==0 set buildconf=%buildconf% -Dswr-arches=avx,avx2,skx,knl
-@if /I "%swrdrv%"=="y" IF %disableootpatch%==1 IF NOT %toolchain%==msvc set buildconf=%buildconf% -Dswr-arches=avx,avx2,skx,knl
+@if /I "%swrdrv%"=="y" set buildconf=%buildconf% -Dswr-arches=avx,avx2,skx,knl
 @if /I "%swrdrv%"=="y" set /a galliumcount+=1
 
 @set buildconf=%buildconf% -Dgallium-drivers=
@@ -406,17 +405,16 @@
 @if defined CFLAGS set buildconf=%buildconf% -Dc_args="%CFLAGS%" -Dcpp_args="%CFLAGS%"
 @if defined LDFLAGS set buildconf=%buildconf% -Dc_link_args="%LDFLAGS%" -Dcpp_link_args="%LDFLAGS%"
 
-@rem Disable draw with LLVM if LLVM is unused and at least 1 OpenGL driver is built - workaround for https://gitlab.freedesktop.org/mesa/mesa/-/issues/6817
-@set drawwithllvm=7
+@rem Disable draw with LLVM if LLVM native module ends being unused but needed
+@rem workaround for https://gitlab.freedesktop.org/mesa/mesa/-/issues/6817
+@set drawwithllvm=3
 @if /I NOT "%glswrast%"=="y" set /a drawwithllvm-=1
-@if /I NOT "%swrdrv%"=="y" set /a drawwithllvm-=1
 @if /I NOT "%radv%"=="y" set /a drawwithllvm-=1
-@IF /I NOT "%osmesa%"=="y" set /a drawwithllvm-=1
 @if /I NOT "%graw%"=="y" set /a drawwithllvm-=1
-@IF /I NOT "%mclc%"=="y" set /a drawwithllvm-=1
-@IF /I NOT "%buildclover%"=="y" set /a drawwithllvm-=1
 @IF %intmesaver% GEQ 21100 if /I NOT "%llvmless%"=="y" set buildconf=%buildconf% -Ddraw-use-llvm=true
 @IF %intmesaver% GEQ 21100 if /I NOT "%llvmless%"=="y" IF %drawwithllvm% EQU 0 IF %galliumcount% GTR 0 set buildconf=%buildconf:~0,-4%false
+@IF %intmesaver% GEQ 21100 if /I NOT "%llvmless%"=="y" IF %drawwithllvm% EQU 0 IF %galliumcount% EQU 0 IF /I "%mclc%"=="y" set buildconf=%buildconf:~0,-4%false
+@IF %intmesaver% GEQ 21100 if /I NOT "%llvmless%"=="y" IF %drawwithllvm% EQU 0 IF %galliumcount% EQU 0 IF /I NOT "%mclc%"=="y" IF /I "%buildclover%"=="y" set buildconf=%buildconf:~0,-4%false
 
 @rem Control futex support - https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/17431
 @IF %intmesaver% GEQ 22200 echo Enable Futex (https://en.wikipedia.org/wiki/Futex) support, raises minimum requirements for Mesa3D overall to run to Windows 8/Server 2012

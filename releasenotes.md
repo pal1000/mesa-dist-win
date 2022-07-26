@@ -1,9 +1,10 @@
 ### Build script
 - Mesa3D incremental build: Support LLVM discovery method change;
 - Allow building osmesa with swr and without swrast;
-- Disable draw with LLVM if LLVM is unused and at least 1 OpenGL driver is built, workaround for [upstream issue 6817](https://gitlab.freedesktop.org/mesa/mesa/-/issues/6817);
+- Disable draw with LLVM if LLVM native module ends being unused but needed, workaround for [upstream issue 6817](https://gitlab.freedesktop.org/mesa/mesa/-/issues/6817);
 - Add [control mechanism](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/17431) for [Futex](https://en.wikipedia.org/wiki/Futex) usage [22.2+];
-- clover: Allow using [LLVM lacking RTTI](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/17055) [MSVC 22.0+/MinGW 22.2+].
+- clover: Allow using [LLVM lacking RTTI](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/17055) [MSVC 22.0+/MinGW 22.2+];
+- Require swrast to build swr otherwise swrast, tessts and radv disabling would pull out draw with LLVM which swr requires.
 # 22.1.4
 - Updated Mesa3D to [22.1.4](https://docs.mesa3d.org/relnotes/22.1.4.html).
 ### Build script
