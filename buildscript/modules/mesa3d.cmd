@@ -158,6 +158,7 @@
 @IF NOT %toolchain%==msvc set LDFLAGS=-static -s
 @set buildcmd=msbuild /p^:Configuration=release,Platform=Win32 mesa.sln /m^:%throttle%
 @IF %abi%==x64 set buildcmd=msbuild /p^:Configuration=release,Platform=x64 mesa.sln /m^:%throttle%
+@IF %intmesaver% GEQ 22000 set RTTI=true
 
 @set havellvm=1
 @set llvmmethod=configtool
@@ -171,6 +172,7 @@
 @call "%devroot%\%projectname%\buildscript\modules\mesonsubprojects.cmd"
 @IF "%vksdkselect%"=="1" IF %toolchain%==clang set buildconf=%buildconf%,vulkan
 @if /I NOT "%llvmless%"=="y" IF %llvmconfigbusted% EQU 1 set buildconf=%buildconf%,llvm
+@if /I NOT "%llvmless%"=="y" IF %intmesaver% GEQ 22000 IF %intmesaver% LSS 22200 IF NOT %toolchain%==msvc set RTTI=%LLVMRTTI%
 @IF %intmesaver% GEQ 22000 set buildconf=%buildconf% -Dcpp_rtti=%RTTI%
 @if /I NOT "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm=%mesonbooltrue% -Dshared-llvm=%mesonboolfalse%
 @if /I NOT "%llvmless%"=="y" IF %llvmmethod%==cmake set buildconf=%buildconf% --cmake-prefix-path="%devroot:\=/%/llvm/build/%abi%"
@@ -355,7 +357,7 @@
 @IF NOT EXIST "%devroot%\llvm\build\spv-%abi%\lib\pkgconfig\" set canclspv=0
 @IF NOT EXIST "%devroot%\spirv-tools\build\%abi%\lib\pkgconfig\" set canclspv=0
 
-@rem Clover requirements: basic support + Mesa 21.3, LLVM build with RTTI, gallium swrast, out of tree patches.
+@rem Clover requirements: basic OpenCL support, Mesa 21.3 source code or newer, LLVM build with RTTI [Mesa 22.1 and older], gallium swrast, out of tree patches.
 @rem Disabled as it doesn't work - https://github.com/pal1000/mesa-dist-win/issues/88
 @set canclover=1
 @IF %canopencl% EQU 0 set canclover=0

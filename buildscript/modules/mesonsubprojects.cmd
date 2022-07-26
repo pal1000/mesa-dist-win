@@ -18,10 +18,10 @@
 )
 
 @rem Find LLVM dependency
-@set RTTI=false
+@set LLVMRTTI=false
 @set llvmconfigbusted=0
-@IF %toolchain%==msvc IF EXIST "%devroot%\llvm\build\%abi%\lib\cmake\llvm\LLVMConfig.cmake" FOR /F delims^=^ eol^= %%a IN ('type "%devroot%\llvm\build\%abi%\lib\cmake\llvm\LLVMConfig.cmake"') DO @IF "%%a"=="set(LLVM_ENABLE_RTTI ON)" SET RTTI=true
-@IF NOT %toolchain%==msvc IF EXIST "%msysloc%\%LMSYSTEM%\lib\cmake\llvm\LLVMConfig.cmake" FOR /F delims^=^ eol^= %%a IN ('type "%msysloc%\%LMSYSTEM%\lib\cmake\llvm\LLVMConfig.cmake"') DO @IF "%%a"=="set(LLVM_ENABLE_RTTI ON)" SET RTTI=true
+@IF %toolchain%==msvc IF EXIST "%devroot%\llvm\build\%abi%\lib\cmake\llvm\LLVMConfig.cmake" FOR /F delims^=^ eol^= %%a IN ('type "%devroot%\llvm\build\%abi%\lib\cmake\llvm\LLVMConfig.cmake"') DO @IF "%%a"=="set(LLVM_ENABLE_RTTI ON)" SET LLVMRTTI=true
+@IF NOT %toolchain%==msvc IF EXIST "%msysloc%\%LMSYSTEM%\lib\cmake\llvm\LLVMConfig.cmake" FOR /F delims^=^ eol^= %%a IN ('type "%msysloc%\%LMSYSTEM%\lib\cmake\llvm\LLVMConfig.cmake"') DO @IF "%%a"=="set(LLVM_ENABLE_RTTI ON)" SET LLVMRTTI=true
 @IF NOT %toolchain%==msvc if /I NOT "%llvmless%"=="y" FOR /F delims^=^ eol^= %%a IN ('%runmsys% /%LMSYSTEM%/bin/llvm-config --has-rtti 2^>^&1') DO @IF /I NOT "%%a"=="YES" IF /I NOT "%%a"=="NO" set llvmconfigbusted=1
 @IF %llvmconfigbusted% EQU 0 IF EXIST "%devroot%\mesa\subprojects\llvm\" RD /S /Q "%devroot%\mesa\subprojects\llvm"
 @IF %llvmconfigbusted% EQU 0 GOTO msvcwraps
@@ -49,7 +49,7 @@ echo   dependencies ^: _deps,
 echo   version ^: '%llvmver%',
 echo ^)
 echo.
-echo has_rtti ^= %RTTI%
+echo has_rtti ^= %LLVMRTTI%
 echo irbuilder_h ^= files^(llvmloc + '/include/llvm/IR/IRBuilder.h'^)
 )>"%devroot%\%projectname%\buildscript\mesonsubprojects\llvm-meson.build"
 @CMD /C EXIT 0
@@ -140,4 +140,4 @@ echo meson.override_dependency^('vulkan', dep_vk_override^)
 @IF %toolchain%==gcc IF EXIST "%msysloc%\%LMSYSTEM%\bin\libvulkan-1.dll" del "%msysloc%\%LMSYSTEM%\bin\libvulkan-1.dll"
 
 :donewrap
-@endlocal&set RTTI=%RTTI%&set llvmconfigbusted=%llvmconfigbusted%&set "VK_SDK_PATH=%VK_SDK_PATH%"&set "VULKAN_SDK=%VULKAN_SDK%"
+@endlocal&set LLVMRTTI=%LLVMRTTI%&set llvmconfigbusted=%llvmconfigbusted%&set "VK_SDK_PATH=%VK_SDK_PATH%"&set "VULKAN_SDK=%VULKAN_SDK%"

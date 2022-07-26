@@ -2,8 +2,8 @@ Build environment
 -----------------
 Windows 10.0.22000
 Ressource Hacker 5.1.8.360
-7-Zip 22.00 ultra compression
-Git 2.37.0.1
+7-Zip 22.01 ultra compression
+Git 2.37.1.1
 LunarG Vulkan SDK 1.3.216.0
 
 MSYS2 environment
@@ -110,19 +110,19 @@ mingw-w64-i686-p11-kit 0.24.1-2
 mingw-w64-i686-pkgconf 1.8.0-2
 mingw-w64-i686-python 3.10.5-2
 mingw-w64-i686-python-beaker 1.11.0-3
-mingw-w64-i686-python-mako 1.2.0-2
+mingw-w64-i686-python-mako 1.2.1-1
 mingw-w64-i686-python-markupsafe 2.1.1-2
 mingw-w64-i686-readline 8.1.002-1
-mingw-w64-i686-spirv-headers 1~1.3.211.0-2
+mingw-w64-i686-spirv-headers 1~1.3.216.0-1
 mingw-w64-i686-spirv-tools 2022.2-1
 mingw-w64-i686-sqlite3 3.39.1-1
 mingw-w64-i686-tcl 8.6.11-5
 mingw-w64-i686-termcap 1.3.1-6
 mingw-w64-i686-tk 8.6.11.1-2
 mingw-w64-i686-tzdata 2022a-1
-mingw-w64-i686-vulkan-headers 1.3.211-1
-mingw-w64-i686-vulkan-loader 1.3.211-1
-mingw-w64-i686-vulkan-validation-layers 1.3.211-2
+mingw-w64-i686-vulkan-headers 1.3.221-1
+mingw-w64-i686-vulkan-loader 1.3.221-1
+mingw-w64-i686-vulkan-validation-layers 1.3.221-1
 mingw-w64-i686-windows-default-manifest 6.4-4
 mingw-w64-i686-winpthreads-git 10.0.0.r54.gb4116e310-1
 mingw-w64-i686-xxhash 0.8.1-2
@@ -161,19 +161,19 @@ mingw-w64-x86_64-p11-kit 0.24.1-2
 mingw-w64-x86_64-pkgconf 1.8.0-2
 mingw-w64-x86_64-python 3.10.5-2
 mingw-w64-x86_64-python-beaker 1.11.0-3
-mingw-w64-x86_64-python-mako 1.2.0-2
+mingw-w64-x86_64-python-mako 1.2.1-1
 mingw-w64-x86_64-python-markupsafe 2.1.1-2
 mingw-w64-x86_64-readline 8.1.002-1
-mingw-w64-x86_64-spirv-headers 1~1.3.211.0-2
+mingw-w64-x86_64-spirv-headers 1~1.3.216.0-1
 mingw-w64-x86_64-spirv-tools 2022.2-1
 mingw-w64-x86_64-sqlite3 3.39.1-1
 mingw-w64-x86_64-tcl 8.6.11-5
 mingw-w64-x86_64-termcap 1.3.1-6
 mingw-w64-x86_64-tk 8.6.11.1-2
 mingw-w64-x86_64-tzdata 2022a-1
-mingw-w64-x86_64-vulkan-headers 1.3.211-1
-mingw-w64-x86_64-vulkan-loader 1.3.211-1
-mingw-w64-x86_64-vulkan-validation-layers 1.3.211-2
+mingw-w64-x86_64-vulkan-headers 1.3.221-1
+mingw-w64-x86_64-vulkan-loader 1.3.221-1
+mingw-w64-x86_64-vulkan-validation-layers 1.3.221-1
 mingw-w64-x86_64-windows-default-manifest 6.4-4
 mingw-w64-x86_64-winpthreads-git 10.0.0.r54.gb4116e310-1
 mingw-w64-x86_64-xxhash 0.8.1-2
