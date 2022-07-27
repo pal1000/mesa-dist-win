@@ -348,11 +348,10 @@
 @IF NOT EXIST "%devroot%\llvm\build\clc\share\pkgconfig\" set canopencl=0
 @IF %intmesaver% GEQ 21300 IF EXIST "%devroot%\llvm\build\%abi%\lib\LLVMAMDGPU*.lib" if /I NOT "%radv%"=="y" set canopencl=0
 
-@rem OpenCL SPIR-V requirements: basic support + Clang, LLD, LLVM SPIRV translator and SPIRV tools
+@rem OpenCL SPIR-V requirements: basic OpenCL support + Clang, LLVM SPIRV translator and SPIRV tools
 @set canclspv=1
 @IF %canopencl% EQU 0 set canclspv=0
 @IF NOT EXIST "%devroot%\llvm\build\%abi%\lib\clang*.lib" set canclspv=0
-@IF NOT EXIST "%devroot%\llvm\build\%abi%\lib\lld*.lib" set canclspv=0
 @IF NOT EXIST "%devroot%\llvm\build\spv-%abi%\lib\pkgconfig\" set canclspv=0
 @IF NOT EXIST "%devroot%\spirv-tools\build\%abi%\lib\pkgconfig\" set canclspv=0
 

@@ -47,8 +47,8 @@
 @rem set /p amdgpu=Build AMDGPU target - required by RADV (y/n):
 @rem echo.
 
-@rem Clang and LLD
-@if EXIST "%devroot%\llvm-project\" set /p buildclang=Build clang and LLD - required for OpenCL (y/n):
+@rem Clang
+@if EXIST "%devroot%\llvm-project\" set /p buildclang=Build clang - required for OpenCL (y/n):
 @if EXIST "%devroot%\llvm-project\" echo.
 
 @rem Load cmake into build environment.
@@ -65,7 +65,7 @@
 @if /I "%ninja%"=="y" set buildconf=%buildconf%Ninja
 @set buildconf=%buildconf% -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT
 @if EXIST "%devroot%\llvm-project\" IF /I NOT "%buildclang%"=="y" set buildconf=%buildconf% -DLLVM_ENABLE_PROJECTS=""
-@IF /I "%buildclang%"=="y" set buildconf=%buildconf% -DLLVM_ENABLE_PROJECTS="clang;lld"
+@IF /I "%buildclang%"=="y" set buildconf=%buildconf% -DLLVM_ENABLE_PROJECTS="clang"
 @set buildconf=%buildconf% -DLLVM_TARGETS_TO_BUILD=
 @IF /I "%amdgpu%"=="y" set buildconf=%buildconf%AMDGPU;
 @set buildconf=%buildconf%X86 -DLLVM_OPTIMIZED_TABLEGEN=TRUE -DLLVM_INCLUDE_UTILS=OFF -DLLVM_INCLUDE_RUNTIMES=OFF -DLLVM_INCLUDE_TESTS=OFF -DLLVM_INCLUDE_EXAMPLES=OFF -DLLVM_INCLUDE_GO_TESTS=OFF -DLLVM_INCLUDE_BENCHMARKS=OFF -DLLVM_BUILD_LLVM_C_DYLIB=OFF -DLLVM_ENABLE_DIA_SDK=OFF

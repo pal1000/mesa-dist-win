@@ -6,9 +6,8 @@
 @if %ninjastate% EQU 1 set PATH=%devroot%\ninja\;%PATH%
 @if NOT EXIST "%devroot%\llvm\build\spv-%hostabi%\bin\llvm-spirv.exe" set canclc=0
 @if NOT EXIST "%devroot%\llvm\build\%hostabi%\bin\clang.exe" set canclc=0
-@if NOT EXIST "%devroot%\llvm\build\%hostabi%\bin\lld.exe" set canclc=0
 @if NOT EXIST "%devroot%\llvm-project\" set canclc=0
-@if %canclc% EQU 0 echo libclc requires cmake, ninja and %hostabi% LLVM build with clang, LLD and SPIRV translator.
+@if %canclc% EQU 0 echo libclc requires cmake, ninja and %hostabi% LLVM build with clang and SPIRV translator.
 @if %canclc% EQU 0 echo.
 @if %canclc% EQU 0 GOTO finishclc
 @if %canclc% EQU 1 set /p buildclc=Build LLVM libclc project (y/n):
