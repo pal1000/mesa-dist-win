@@ -1,6 +1,6 @@
 @setlocal
 @rem Get dependencies
-@%runmsys% /usr/bin/pacman -S ${MINGW_PACKAGE_PREFIX}-{python-mako,meson,pkgconf,vulkan-devel,libelf,zstd,gdb,llvm,cc} flex bison patch tar --needed --noconfirm --disable-download-timeout
+@%runmsys% /usr/bin/pacman -S ${MINGW_PACKAGE_PREFIX}-%mingwpkglst% flex bison patch tar --needed --noconfirm --disable-download-timeout
 @echo.
 @FOR /F tokens^=1^ delims^=^:^ eol^= %%a IN ('%runmsys% /usr/bin/pacman -Q git 2^>^&1') do @(
 IF /I "%%a"=="error" IF %gitstate% EQU 0 %runmsys% /usr/bin/pacman -S git --noconfirm --disable-download-timeout

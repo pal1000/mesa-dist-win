@@ -8,6 +8,8 @@
 - LLD is not needed to build Mesa3D OpenCL stack.
 ### Out of tree patches
 - Disable cloveer patch as it doesn't help.
+### Build environment
+- MSYS2: Install Mesa3D OpenCL stack build dependencies.
 # 22.1.4
 - Updated Mesa3D to [22.1.4](https://docs.mesa3d.org/relnotes/22.1.4.html).
 ### Build script

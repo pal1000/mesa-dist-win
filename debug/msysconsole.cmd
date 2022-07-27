@@ -44,8 +44,8 @@
 @IF /I "%msyscmd%"=="clearcache" for /R "%msysloc%\var\cache\pacman\pkg" %%a in (*.*) do @for /f tokens^=1^ delims^=-^ eol^= %%b in ("%%~na") DO @IF NOT "%%b"=="bison" IF NOT "%%b"=="flex" IF NOT "%%b"=="m4" IF NOT "%%b"=="mingw" IF NOT "%%b"=="patch" IF NOT "%%b"=="tar" del "%%a"
 @IF /I "%msyscmd%"=="cleancache" %runmsys% pacman -Sc --noconfirm
 @IF /I "%msyscmd%"=="cleancache" for /R "%msysloc%\var\cache\pacman\pkg" %%a in (*.*) do @for /f tokens^=1^ delims^=-^ eol^= %%b in ("%%~na") DO @IF NOT "%%b"=="bison" IF NOT "%%b"=="flex" IF NOT "%%b"=="m4" IF NOT "%%b"=="mingw" IF NOT "%%b"=="patch" IF NOT "%%b"=="tar" del "%%a"
-@IF /I "%msyscmd%"=="setup" IF %shell% EQU 1 %runmsys% pacman -S flex bison patch tar mingw-w64-i686-{python-mako,meson,pkgconf,vulkan-devel,libelf,zstd,gdb,llvm,cc} mingw-w64-x86_64-{python-mako,meson,pkgconf,vulkan-devel,libelf,zstd,gdb,llvm,cc} --needed
-@IF /I "%msyscmd%"=="setup" IF %shell% GTR 1 %runmsys% pacman -S flex bison patch tar ${MINGW_PACKAGE_PREFIX}-{python-mako,meson,pkgconf,vulkan-devel,libelf,zstd,gdb,llvm,cc} --needed
+@IF /I "%msyscmd%"=="setup" IF %shell% EQU 1 %runmsys% pacman -S flex bison patch tar mingw-w64-i686-%mingwpkglst% mingw-w64-x86_64-%mingwpkglst% --needed
+@IF /I "%msyscmd%"=="setup" IF %shell% GTR 1 %runmsys% pacman -S flex bison patch tar ${MINGW_PACKAGE_PREFIX}-%mingwpkglst% --needed
 @IF %gitstate% GTR 0 IF /I NOT "%msyscmd%"=="clearcache" IF /I NOT "%msyscmd%"=="cleancache" IF /I NOT "%msyscmd%"=="setup" %runmsys% PATH=${PATH}:${gitloc};%msyscmd%
 @IF %gitstate% EQU 0 IF /I NOT "%msyscmd%"=="clearcache" IF /I NOT "%msyscmd%"=="cleancache" IF /I NOT "%msyscmd%"=="setup" %runmsys% %msyscmd%
 @echo.
