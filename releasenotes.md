@@ -6,6 +6,8 @@
 - clover: Allow using [LLVM lacking RTTI](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/17055) [22.0+ MSVC/22.2+ MinGW];
 - Require swrast to build swr otherwise swrast, tessts and radv disabling would pull out draw with LLVM which swr requires;
 - LLD is not needed to build Mesa3D OpenCL stack.
+### Out of tree patches
+- Disable cloveer patch as it doesn't help.
 # 22.1.4
 - Updated Mesa3D to [22.1.4](https://docs.mesa3d.org/relnotes/22.1.4.html).
 ### Build script
