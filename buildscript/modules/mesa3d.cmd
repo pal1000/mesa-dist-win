@@ -140,6 +140,10 @@
 @rem Clover build on Windows
 @rem IF %intmesaver% GEQ 21300 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" clover
 
+@rem Fix OpenCL stack link with LLVM targets
+@IF %intmesaver% GEQ 21300 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" mclc-all-targets
+@IF %intmesaver:~0,3% EQU 213 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" clover-all-targets
+
 :configmesabuild
 @rem Configure Mesa build.
 @set buildconf=%mesonloc% setup
@@ -254,20 +258,19 @@
 @if NOT %toolchain%==msvc if /I "%lavapipe%"=="y" set msysregex=1
 @if /I "%lavapipe%"=="y" set /a mesavkcount+=1
 
-@rem HACK: OpenCL stack on Mesa 21.3+ requires RADV if LLVM AMDGPU target is available so allow building RADV with MSVC for 32-bit even when we know is going to fail
 @set radv=n
 @set canradv=1
 @if /I "%llvmless%"=="y" set canradv=0
 @IF %intmesaver% LSS 21200 set canradv=0
+@IF %abi%==x86 IF %intmesaver% LSS 22000 set canradv=0
 @IF %toolchain%==msvc IF NOT EXIST "%devroot%\llvm\build\%abi%\lib\LLVMAMDGPU*.lib" set canradv=0
 @IF %toolchain%==msvc IF NOT EXIST "%devroot%\mesa\subprojects\libelf-lfg-win32\" IF %gitstate% EQU 0 set canradv=0
 @IF %toolchain%==msvc IF %disableootpatch%==1 IF %intmesaver% LSS 21256 set canradv=0
 @IF %toolchain%==msvc IF %disableootpatch%==1 IF %intmesaver% GEQ 21300 IF %intmesaver% LSS 21306 set canradv=0
 @IF %toolchain%==msvc IF NOT EXIST "%VK_SDK_PATH%" IF NOT EXIST "%VULKAN_SDK%" IF %intmesaver% GEQ 22200 set canradv=0
-@rem Disable RADV build, see https://github.com/pal1000/mesa-dist-win/issues/103
-@IF NOT %toolchain%==msvc set canradv=0
-@IF NOT %toolchain%==msvc IF %abi%==x86 IF %intmesaver% LSS 22000 set canradv=0
 @IF NOT %toolchain%==msvc IF %disableootpatch%==1 IF %intmesaver% LSS 21251 set canradv=0
+@rem Disable RADV build, see https://github.com/pal1000/mesa-dist-win/issues/103
+@set canradv=0
 @IF %canradv% EQU 1 set /p radv=Build AMD Vulkan driver - radv (y/n):
 @IF %canradv% EQU 1 echo.
 @IF NOT %toolchain%==msvc if /I "%radv%"=="y" set msysregex=1
@@ -340,44 +343,43 @@
 @if /I NOT "%graw%"=="y" set buildconf=%buildconf% -Dbuild-tests=false
 
 @rem Basic OpenCL requirements: Mesa 21.0+, LLVM and libclc
-@rem HACK: OpenCL stack on Mesa 21.3+ requires RADV if LLVM AMDGPU target is available
 @set canopencl=1
 @IF %intmesaver% LSS 21000 set canopencl=0
-@IF NOT %toolchain%==msvc set canopencl=0
+@IF NOT %toolchain%==msvc IF %intmesaver% LSS 22200 set canopencl=0
 @if /I "%llvmless%"=="y" set canopencl=0
-@IF NOT EXIST "%devroot%\llvm\build\clc\share\pkgconfig\" set canopencl=0
-@IF %intmesaver% GEQ 21300 IF EXIST "%devroot%\llvm\build\%abi%\lib\LLVMAMDGPU*.lib" if /I NOT "%radv%"=="y" set canopencl=0
+@IF %toolchain%==msvc IF NOT EXIST "%devroot%\llvm\build\clc\share\pkgconfig\" set canopencl=0
 
 @rem OpenCL SPIR-V requirements: basic OpenCL support + Clang, LLVM SPIRV translator and SPIRV tools
 @set canclspv=1
 @IF %canopencl% EQU 0 set canclspv=0
-@IF NOT EXIST "%devroot%\llvm\build\%abi%\lib\clang*.lib" set canclspv=0
-@IF NOT EXIST "%devroot%\llvm\build\spv-%abi%\lib\pkgconfig\" set canclspv=0
-@IF NOT EXIST "%devroot%\spirv-tools\build\%abi%\lib\pkgconfig\" set canclspv=0
-
-@rem Clover requirements: basic OpenCL support, Mesa 21.3 source code or newer, LLVM build with RTTI [Mesa 22.1 and older], gallium swrast, out of tree patches.
-@rem Disabled as it doesn't work - https://github.com/pal1000/mesa-dist-win/issues/88
-@set canclover=1
-@IF %canopencl% EQU 0 set canclover=0
-@IF %intmesaver% LSS 21300 set canclover=0
-@IF %RTTI%==false set canclover=0
-@if /I NOT "%glswrast%"=="y" set canclover=0
-@IF %disableootpatch%==1 set canclover=0
-@set canclover=0
+@IF %toolchain%==msvc IF NOT EXIST "%devroot%\llvm\build\%abi%\lib\clang*.lib" set canclspv=0
+@IF %toolchain%==msvc IF NOT EXIST "%devroot%\llvm\build\spv-%abi%\lib\pkgconfig\" set canclspv=0
+@IF %toolchain%==msvc IF NOT EXIST "%devroot%\spirv-tools\build\%abi%\lib\pkgconfig\" set canclspv=0
 
 @rem Add flags tracking PKG_CONFIG search PATH adjustment needs
 @set PKG_CONFIG_LIBCLC=0
 @set PKG_CONFIG_SPV=0
 
-@rem Microsoft OpenCL compiler requires OpenCL SPIR-V and DirectX Headers
-@IF %canclspv% EQU 1 IF %canmcrdrvcom% EQU 1 set /p mclc=Build Mesa3D Microsoft OpenCL compiler (y/n):
-@IF %canclspv% EQU 1 IF %canmcrdrvcom% EQU 1 echo.
+@rem Microsoft OpenCL compiler requires OpenCL SPIR-V, DirectX Headers and out of tree patches [21.3+]
+@set canmclc=0
+@IF %canclspv% EQU 1 IF %canmcrdrvcom% EQU 1 set canmclc=1
+@IF %disableootpatch%==1 IF %intmesaver% GEQ 21300 set canmclc=0
+@IF %canmclc% EQU 1 set /p mclc=Build Mesa3D Microsoft OpenCL compiler (y/n):
+@IF %canmclc% EQU 1 echo.
 @IF /I "%mclc%"=="y" set PKG_CONFIG_LIBCLC=1
 @IF /I "%mclc%"=="y" set PKG_CONFIG_SPV=1
 @IF /I "%mclc%"=="y" set buildconf=%buildconf% -Dmicrosoft-clc=enabled
 @IF /I NOT "%mclc%"=="y" IF %intmesaver% GEQ 21000 set buildconf=%buildconf% -Dmicrosoft-clc=disabled
 
 @rem Build clover
+@rem Clover requirements: basic OpenCL support, Mesa 21.3 source code or newer, LLVM build with RTTI [Mesa 22.1 and older], gallium swrast, out of tree patches.
+@rem Disabled as it doesn't work - https://github.com/pal1000/mesa-dist-win/issues/88
+@set canclover=0
+@IF %canopencl% EQU 0 set canclover=0
+@IF %intmesaver% LSS 21300 set canclover=0
+@IF %RTTI%==false set canclover=0
+@if /I NOT "%glswrast%"=="y" set canclover=0
+@IF %disableootpatch%==1 set canclover=0
 @if %canclover% EQU 1 set /p buildclover=Build OpenCL clover driver (y/n):
 @if %canclover% EQU 1 echo.
 @IF /I NOT "%buildclover%"=="y" set buildconf=%buildconf% -Dgallium-opencl=disabled
@@ -394,9 +396,10 @@
 @IF /I "%buildclover%"=="y" set buildconf=%buildconf% -Dopencl-native=false
 @IF /I "%buildclover%"=="y" IF %intmesaver% GEQ 22100 set buildconf=%buildconf% -Dcpp_std=c++20
 
-@rem Apply PKG_CONFIG search PATH adjustments
-@IF %PKG_CONFIG_LIBCLC% EQU 1 set buildconf=%buildconf% -Dstatic-libclc=all --pkg-config-path="%devroot:\=/%/llvm/build/clc/share/pkgconfig"
-@IF %PKG_CONFIG_SPV% EQU 1 set buildconf=%buildconf:~0,-1%;%devroot:\=/%/llvm/build/spv-%abi%/lib/pkgconfig;%devroot:\=/%/spirv-tools/build/%abi%/lib/pkgconfig"
+@rem Apply PKG_CONFIG search PATH adjustments on MSVC
+@IF %PKG_CONFIG_LIBCLC% EQU 1 set buildconf=%buildconf% -Dstatic-libclc=all
+@IF %PKG_CONFIG_LIBCLC% EQU 1 IF %toolchain%==msvc set buildconf=%buildconf% --pkg-config-path="%devroot:\=/%/llvm/build/clc/share/pkgconfig"
+@IF %PKG_CONFIG_SPV% EQU 1 IF %toolchain%==msvc set buildconf=%buildconf:~0,-1%;%devroot:\=/%/llvm/build/spv-%abi%/lib/pkgconfig;%devroot:\=/%/spirv-tools/build/%abi%/lib/pkgconfig"
 @set "PKG_CONFIG_LIBCLC="
 @set "PKG_CONFIG_SPV="
 
@@ -406,14 +409,8 @@
 
 @rem Disable draw with LLVM if LLVM native module ends being unused but needed
 @rem workaround for https://gitlab.freedesktop.org/mesa/mesa/-/issues/6817
-@set drawwithllvm=3
-@if /I NOT "%glswrast%"=="y" set /a drawwithllvm-=1
-@if /I NOT "%radv%"=="y" set /a drawwithllvm-=1
-@if /I NOT "%graw%"=="y" set /a drawwithllvm-=1
 @IF %intmesaver% GEQ 21100 if /I NOT "%llvmless%"=="y" set buildconf=%buildconf% -Ddraw-use-llvm=true
-@IF %intmesaver% GEQ 21100 if /I NOT "%llvmless%"=="y" IF %drawwithllvm% EQU 0 IF %galliumcount% GTR 0 set buildconf=%buildconf:~0,-4%false
-@IF %intmesaver% GEQ 21100 if /I NOT "%llvmless%"=="y" IF %drawwithllvm% EQU 0 IF %galliumcount% EQU 0 IF /I "%mclc%"=="y" set buildconf=%buildconf:~0,-4%false
-@IF %intmesaver% GEQ 21100 if /I NOT "%llvmless%"=="y" IF %drawwithllvm% EQU 0 IF %galliumcount% EQU 0 IF /I NOT "%mclc%"=="y" IF /I "%buildclover%"=="y" set buildconf=%buildconf:~0,-4%false
+@IF %intmesaver% GEQ 21100 if /I NOT "%llvmless%"=="y" if /I NOT "%glswrast%"=="y" if /I NOT "%radv%"=="y" if /I NOT "%graw%"=="y" IF %galliumcount% GTR 0 set buildconf=%buildconf:~0,-4%false
 
 @rem Control futex support - https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/17431
 @IF %intmesaver% GEQ 22200 echo Enable Futex (https://en.wikipedia.org/wiki/Futex) support, raises minimum requirements for Mesa3D overall to run to Windows 8/Server 2012

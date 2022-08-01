@@ -1,0 +1,13 @@
+diff --git a/meson.build b/meson.build
+index 07f681ad5d85d32af04fe0d71e7bf01d2c9a306c..94bbfd3594071d7912083ba9251499fcba1bc635 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1634,7 +1634,7 @@ if with_gallium_opencl
+     'linker', 'coverage', 'instrumentation', 'ipo', 'irreader',
+     'lto', 'option', 'objcarcopts', 'profiledata'
+   ]
+-  llvm_optional_modules += ['frontendopenmp']
++  llvm_optional_modules += ['all-targets', 'frontendopenmp']
+ endif
+ if with_clc
+   llvm_modules += ['coverage', 'target', 'linker', 'irreader', 'option', 'libdriver', 'lto']

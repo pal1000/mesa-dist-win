@@ -1,0 +1,12 @@
+diff --git a/meson.build b/meson.build
+index 466e31de0c276d38b6acd9cdd38ca5f38e711334..e362f83566294dfed77d3daa237fba6585c2af28 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1707,6 +1707,7 @@ if with_gallium_opencl
+ endif
+ if with_clc
+   llvm_modules += ['coverage', 'target', 'linker', 'irreader', 'option', 'libdriver', 'lto']
++  llvm_optional_modules += ['all-targets']
+ endif
+ if with_tests or with_gallium_softpipe
+   llvm_modules += 'native'

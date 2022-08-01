@@ -69,7 +69,7 @@ libpcre 8.45-1
 libpcre2_8 10.40-1
 libpsl 0.21.1-4
 libreadline 8.1.002-2
-libsqlite 3.38.5-1
+libsqlite 3.39.2-1
 libssh2 1.10.0-1
 libtasn1 4.18.0-3
 libunistring 1.0-1
@@ -81,6 +81,7 @@ m4 1.4.19-2
 mingw-w64-i686-binutils 2.38-3
 mingw-w64-i686-bzip2 1.0.8-2
 mingw-w64-i686-ca-certificates 20211016-3
+mingw-w64-i686-clang 14.0.4-3
 mingw-w64-i686-crt-git 10.0.0.r54.gb4116e310-1
 mingw-w64-i686-expat 2.4.8-1
 mingw-w64-i686-gcc 12.1.0-3
@@ -90,6 +91,7 @@ mingw-w64-i686-gettext 0.21-3
 mingw-w64-i686-gmp 6.2.1-3
 mingw-w64-i686-headers-git 10.0.0.r54.gb4116e310-1
 mingw-w64-i686-isl 0.25-1
+mingw-w64-i686-libclc 14.0.3-2
 mingw-w64-i686-libelf 0.8.13-6
 mingw-w64-i686-libffi 3.3-4
 mingw-w64-i686-libiconv 1.17-1
@@ -114,13 +116,14 @@ mingw-w64-i686-python-mako 1.2.1-1
 mingw-w64-i686-python-markupsafe 2.1.1-2
 mingw-w64-i686-readline 8.1.002-1
 mingw-w64-i686-spirv-headers 1~1.3.216.0-1
+mingw-w64-i686-spirv-llvm-translator 14.0.0-1
 mingw-w64-i686-spirv-tools 2022.2-1
 mingw-w64-i686-sqlite3 3.39.1-1
 mingw-w64-i686-tcl 8.6.11-5
 mingw-w64-i686-termcap 1.3.1-6
 mingw-w64-i686-tk 8.6.11.1-2
 mingw-w64-i686-tzdata 2022a-1
-mingw-w64-i686-vulkan-headers 1.3.221-1
+mingw-w64-i686-vulkan-headers 1.3.222-1
 mingw-w64-i686-vulkan-loader 1.3.221-1
 mingw-w64-i686-vulkan-validation-layers 1.3.221-1
 mingw-w64-i686-windows-default-manifest 6.4-4
@@ -132,6 +135,7 @@ mingw-w64-i686-zstd 1.5.2-2
 mingw-w64-x86_64-binutils 2.38-3
 mingw-w64-x86_64-bzip2 1.0.8-2
 mingw-w64-x86_64-ca-certificates 20211016-3
+mingw-w64-x86_64-clang 14.0.4-3
 mingw-w64-x86_64-crt-git 10.0.0.r54.gb4116e310-1
 mingw-w64-x86_64-expat 2.4.8-1
 mingw-w64-x86_64-gcc 12.1.0-3
@@ -141,6 +145,7 @@ mingw-w64-x86_64-gettext 0.21-3
 mingw-w64-x86_64-gmp 6.2.1-3
 mingw-w64-x86_64-headers-git 10.0.0.r54.gb4116e310-1
 mingw-w64-x86_64-isl 0.25-1
+mingw-w64-x86_64-libclc 14.0.3-2
 mingw-w64-x86_64-libelf 0.8.13-6
 mingw-w64-x86_64-libffi 3.3-4
 mingw-w64-x86_64-libiconv 1.17-1
@@ -165,13 +170,14 @@ mingw-w64-x86_64-python-mako 1.2.1-1
 mingw-w64-x86_64-python-markupsafe 2.1.1-2
 mingw-w64-x86_64-readline 8.1.002-1
 mingw-w64-x86_64-spirv-headers 1~1.3.216.0-1
+mingw-w64-x86_64-spirv-llvm-translator 14.0.0-1
 mingw-w64-x86_64-spirv-tools 2022.2-1
 mingw-w64-x86_64-sqlite3 3.39.1-1
 mingw-w64-x86_64-tcl 8.6.11-5
 mingw-w64-x86_64-termcap 1.3.1-6
 mingw-w64-x86_64-tk 8.6.11.1-2
 mingw-w64-x86_64-tzdata 2022a-1
-mingw-w64-x86_64-vulkan-headers 1.3.221-1
+mingw-w64-x86_64-vulkan-headers 1.3.222-1
 mingw-w64-x86_64-vulkan-loader 1.3.221-1
 mingw-w64-x86_64-vulkan-validation-layers 1.3.221-1
 mingw-w64-x86_64-windows-default-manifest 6.4-4
@@ -180,7 +186,7 @@ mingw-w64-x86_64-xxhash 0.8.1-2
 mingw-w64-x86_64-xz 5.2.5-3
 mingw-w64-x86_64-zlib 1.2.12-1
 mingw-w64-x86_64-zstd 1.5.2-2
-mintty 1~3.6.1-1
+mintty 1~3.6.1-2
 mpfr 4.1.0.p13-1
 msys2-keyring 1~20220623-1
 msys2-launcher 1.5-1
