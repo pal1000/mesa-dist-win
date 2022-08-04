@@ -7,7 +7,8 @@
 - Require swrast to build swr otherwise swrast, tessts and radv disabling would pull out draw with LLVM which swr requires;
 - LLD is not needed to build Mesa3D OpenCL stack;
 - OpenCL stack: Fix linking against a LLVM build with multiple targets;
-- OpenCL stack: Support build with MinGW [22.2+].
+- OpenCL stack: Support build with MinGW [22.2+];
+- clover: Allow build for release candidates and development branch.
 ### Out of tree patches
 - Disable clover patch as it doesn't help.
 ### Build environment

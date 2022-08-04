@@ -373,8 +373,9 @@
 
 @rem Build clover
 @rem Clover requirements: basic OpenCL support, Mesa 21.3 source code or newer, LLVM build with RTTI [Mesa 22.1 and older], gallium swrast, out of tree patches.
-@rem Disabled as it doesn't work - https://github.com/pal1000/mesa-dist-win/issues/88
-@set canclover=0
+@rem Disabled on Mesa stable as it doesn't work - https://github.com/pal1000/mesa-dist-win/issues/88
+@set canclover=1
+@if %intmesaver:~-2,1% GEQ 5 set canclover=0
 @IF %canopencl% EQU 0 set canclover=0
 @IF %intmesaver% LSS 21300 set canclover=0
 @IF %RTTI%==false set canclover=0

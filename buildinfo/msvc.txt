@@ -9,17 +9,17 @@ Visual Studio Community 2022 v17.2.6
 Windows SDK 10.1.22621.1
 Windows Driver Kit 10.1.22621.1
 Nuget Commandline tool 6.2.1.2
-Python 3.10.5
+Python 3.10.6
 
 Python packages
 ---------------
 Mako       1.2.1
 MarkupSafe 2.1.1
 meson      0.63.0
-pip        22.2
-setuptools 63.2.0
+pip        22.2.2
+setuptools 63.4.1
 
-CMake 3.23.2
+CMake 3.23.3
 Ninja 1.11.0
 LLVM 14.0.6
 SPIRV Tools 2022.3.0
