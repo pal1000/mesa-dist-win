@@ -77,7 +77,7 @@ echo irbuilder_h ^= files^(llvmloc + '/include/llvm/IR/IRBuilder.h'^)
 @CMD /C EXIT 0
 @FC /B "%devroot%\%projectname%\buildscript\mesonsubprojects\libelf.wrap" "%devroot%\mesa\subprojects\libelf.wrap">NUL 2>&1
 @if NOT "%ERRORLEVEL%"=="0" (
-@echo Switching libelf to full clone with master branch pre-fetched...
+@echo Switching libelf to full clone with default branch pre-fetched...
 @copy /Y "%devroot%\%projectname%\buildscript\mesonsubprojects\libelf.wrap" "%devroot%\mesa\subprojects\libelf.wrap"
 @echo.
 )

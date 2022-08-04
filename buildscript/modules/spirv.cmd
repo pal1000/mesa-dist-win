@@ -8,7 +8,7 @@
 @IF EXIST "%devroot%\spirv-tools\external\" IF %gitstate% GTR 0 (
 @echo Updating SPIRV tools source code...
 @cd "%devroot%\spirv-tools"
-@git checkout master
+@for /f tokens^=2^ delims^=/^ eol^= %%a in ('git symbolic-ref --short refs/remotes/origin/HEAD 2^>^&^1') do @git checkout %%a
 @git pull --progress --tags --recurse-submodules origin
 @git checkout %spvtoolsrel%
 @echo.
@@ -16,7 +16,7 @@
 @IF EXIST "%devroot%\spirv-tools\DEPS" IF EXIST "%devroot%\spirv-tools\external\spirv-headers\" IF %gitstate% GTR 0 for /f tokens^=2^,4^ delims^=^'^ eol^= %%a IN ('type "%devroot%\spirv-tools\DEPS"') do @IF /I "%%a"=="spirv_headers_revision" IF NOT "%%b"=="" for /f delims^=^ eol^= %%c IN ('type "%devroot%\spirv-tools\external\spirv-headers\.git\HEAD"') do @IF NOT %%b==%%c (
 @echo Updating source code of SPIRV headers used by SPIRV tools...
 @cd "%devroot%\spirv-tools\external\spirv-headers"
-@git checkout master
+@for /f tokens^=2^ delims^=/^ eol^= %%d in ('git symbolic-ref --short refs/remotes/origin/HEAD 2^>^&^1') do @git checkout %%d
 @git pull --progress --tags --recurse-submodules origin
 @git checkout %%b
 @echo.

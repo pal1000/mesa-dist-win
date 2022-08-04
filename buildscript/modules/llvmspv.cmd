@@ -10,7 +10,7 @@
 @IF EXIST "%devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator\spirv-headers-tag.conf" IF EXIST "%devroot%\llvm-project\llvm\projects\SPIRV-Headers\" IF %gitstate% GTR 0 for /f delims^=^ eol^= %%a IN ('type "%devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator\spirv-headers-tag.conf"') do @for /f delims^=^ eol^= %%b IN ('type "%devroot%\llvm-project\llvm\projects\SPIRV-Headers\.git\HEAD"') do @IF NOT %%a==%%b (
 @echo Updating SPIRV headers used by LLVM SPIRV translator...
 @cd "%devroot%\llvm-project\llvm\projects\SPIRV-Headers"
-@git checkout master
+@for /f tokens^=2^ delims^=/^ eol^= %%c in ('git symbolic-ref --short refs/remotes/origin/HEAD 2^>^&^1') do @git checkout %%c
 @git pull --progress --tags --recurse-submodules origin
 @git checkout %%a
 @echo.
