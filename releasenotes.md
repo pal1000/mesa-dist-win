@@ -11,7 +11,7 @@
 - OpenCL stack: Fix linking against a LLVM build with multiple targets;
 - OpenCL stack: Support build with MinGW [22.2+];
 - clover: Allow build for release candidates and development branch;
-- Misc: Autodetct default branch for repositories still using master.
+- Misc: Auto-detect default branch for repositories still using master.
 ### Out of tree patches
 - Disable clover patch as it doesn't help.
 ### Build environment
