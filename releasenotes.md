@@ -3,7 +3,8 @@
 - Misc: Avoid Windows where tool internal error messages;
 - Misc: Check if Git is available as quickly as possible;
 - MSYS2: Always load Git for Windows when available;
-- MSYS2: Change currrent directory to Windows current folder.
+- MSYS2: Change currrent directory to Windows current folder;
+- MSYS2/Meson: Don't hardcode source code directory.
 # 22.1.5
 - Updated Mesa3D to [22.1.5](https://docs.mesa3d.org/relnotes/22.1.5.html).
 ### Build script

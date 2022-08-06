@@ -1,5 +1,5 @@
 @setlocal
-@IF NOT %toolchain%==msvc set mesonloc=%runmsys% cd "%devroot%\mesa";/%LMSYSTEM%/bin/meson
+@IF NOT %toolchain%==msvc set mesonloc=%runmsys% /%LMSYSTEM%/bin/meson
 @IF NOT %toolchain%==msvc GOTO foundmeson
 @IF %mesonstate%==2 set mesonloc=meson.exe
 @IF %mesonstate%==2 GOTO foundmeson
