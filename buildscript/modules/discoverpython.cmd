@@ -67,7 +67,7 @@
 @exit
 )
 @IF %pythonloc%==python.exe set exitloop=1
-@IF %pythonloc%==python.exe FOR /F delims^=^ eol^= %%a IN ('where python.exe') DO @IF defined exitloop (
+@IF %pythonloc%==python.exe FOR /F delims^=^ eol^= %%a IN ('where python.exe 2^>nul') DO @IF defined exitloop (
 set "exitloop="
 SET pythonloc="%%~a"
 )
@@ -79,7 +79,7 @@ SET pythonloc="%%~a"
 @where /q python.exe
 @if NOT "%ERRORLEVEL%"=="0" set pypath=0
 @IF %pypath%==1 set exitloop=1
-@IF %pypath%==1 FOR /F delims^=^ eol^= %%a IN ('where python.exe') DO @IF defined exitloop (
+@IF %pypath%==1 FOR /F delims^=^ eol^= %%a IN ('where python.exe 2^>nul') DO @IF defined exitloop (
 set "exitloop="
 SET pypath="%%~a"
 )

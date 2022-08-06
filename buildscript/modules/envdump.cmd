@@ -20,7 +20,7 @@
 
 @rem Dump Resource Hacker version
 @IF %rhstate%==1 SET PATH=%devroot%\resource-hacker\;%PATH%
-@IF %rhstate% GTR 0 FOR /F delims^=^ eol^= %%a IN ('where ResourceHacker.exe') do @set rhloc="%%~a"
+@IF %rhstate% GTR 0 FOR /F delims^=^ eol^= %%a IN ('where ResourceHacker.exe 2^>nul') do @set rhloc="%%~a"
 @IF %rhstate% GTR 0 ResourceHacker.exe -open %rhloc% -action extract -mask VERSIONINFO,, -save "%devroot%\%projectname%\buildscript\assets\temp.rc" -log NUL
 @IF %rhstate% GTR 0 FOR /F tokens^=1-2^ eol^= %%a IN ('type "%devroot%\%projectname%\buildscript\assets\temp.rc"') do @IF /I "%%a"=="FILEVERSION" set rhver=%%b
 @IF %rhstate% GTR 0 IF NOT %toolchain%==msvc echo Ressource Hacker %rhver:,=.%>>"%devroot%\%projectname%\buildinfo\mingw.txt"
@@ -77,7 +77,7 @@
 
 @if NOT defined nugetstate set nugetstate=0
 @IF %rhstate% GTR 0 IF %nugetstate%==1 SET PATH=%devroot%\nuget\;%PATH%
-@IF %rhstate% GTR 0 IF %nugetstate% GTR 0 FOR /F delims^=^ eol^= %%a IN ('where nuget.exe') do @set nugetloc="%%~a"
+@IF %rhstate% GTR 0 IF %nugetstate% GTR 0 FOR /F delims^=^ eol^= %%a IN ('where nuget.exe 2^>nul') do @set nugetloc="%%~a"
 @IF %rhstate% GTR 0 IF %nugetstate% GTR 0 ResourceHacker.exe -open %nugetloc% -action extract -mask VERSIONINFO,, -save "%devroot%\%projectname%\buildscript\assets\temp.rc" -log NUL
 @IF %rhstate% GTR 0 IF %nugetstate% GTR 0 FOR /F tokens^=1-2^ eol^= %%a IN ('type "%devroot%\%projectname%\buildscript\assets\temp.rc"') do @IF /I "%%a"=="FILEVERSION" set nugetver=%%b
 @IF defined nugetver IF %toolchain%==msvc echo Nuget Commandline tool %nugetver:,=.%>>"%devroot%\%projectname%\buildinfo\msvc.txt"
@@ -111,7 +111,7 @@ echo CMake %%a>>"%devroot%\%projectname%\buildinfo\msvc.txt"
 @rem Get flex and bison version
 @IF %toolchain%==msvc IF "%flexstate%"=="1" set PATH=%devroot%\flexbison\;%PATH%
 @IF %toolchain%==msvc IF NOT "%flexstate%"=="0" IF NOT "%flexstate%"=="" set exitloop=1
-@IF %toolchain%==msvc IF NOT "%flexstate%"=="0" IF NOT "%flexstate%"=="" for /f delims^=^ eol^= %%a IN ('where changelog.md') do @for /f tokens^=3^ skip^=6^ eol^= %%b IN ('type "%%~a"') do @if defined exitloop (
+@IF %toolchain%==msvc IF NOT "%flexstate%"=="0" IF NOT "%flexstate%"=="" for /f delims^=^ eol^= %%a IN ('where changelog.md 2^>nul') do @for /f tokens^=3^ skip^=6^ eol^= %%b IN ('type "%%~a"') do @if defined exitloop (
 set "exitloop="
 echo Winflexbison package %%b>>"%devroot%\%projectname%\buildinfo\msvc.txt"
 )
