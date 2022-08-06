@@ -23,16 +23,12 @@
 @set ptstcmd=
 @set /p ptstcmd=Enter patch testing command:
 @echo.
-@set msyspatchdir=%CD%
-@IF /I "%ptstcmd%"=="exit" (
-@IF %gitstate% GTR 0 IF EXIST "%CD%\.git\" pause
-@exit
-)
+@IF /I "%ptstcmd%"=="exit" exit
 @IF /I "%ptstcmd:~0,3%"=="cd " %ptstcmd%
 @IF /I "%ptstcmd:~0,3%"=="cd " echo.
 @IF %gitstate% GTR 0 IF EXIST "%CD%\.git\" IF /I "%ptstcmd:~0,4%"=="git " %ptstcmd%
 @IF %gitstate% GTR 0 IF EXIST "%CD%\.git\" IF /I "%ptstcmd:~0,4%"=="git " echo.
-@IF /I "%ptstcmd%"=="cd" echo %msyspatchdir%
+@IF /I "%ptstcmd%"=="cd" echo %CD%
 @IF /I "%ptstcmd%"=="cd" echo.
 @IF %gitstate% GTR 0 IF EXIST "%CD%\.git\" IF /I "%ptstcmd%"=="clean" git checkout .
 @IF %gitstate% GTR 0 IF EXIST "%CD%\.git\" IF /I "%ptstcmd%"=="clean" git clean -fd

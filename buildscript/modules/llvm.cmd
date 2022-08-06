@@ -27,14 +27,12 @@
 
 @rem Apply is_trivially_copyable patch
 @if NOT EXIST "%devroot%\llvm-project\" cd "%devroot%"
-@if NOT EXIST "%devroot%\llvm-project\" set msyspatchdir=%devroot%
 @if EXIST "%devroot%\llvm-project\" cd "%devroot%\llvm-project"
-@if EXIST "%devroot%\llvm-project\" set msyspatchdir=%devroot%\llvm-project
 
 @rem Uncomment next line if still using LLVM<11 and build goes on fire
 @rem IF %disableootpatch%==0 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" llvm-vs-16_7
 @IF %disableootpatch%==1 if EXIST "%msysloc%\usr\bin\patch.exe" echo Reverting out of tree patches...
-@IF %disableootpatch%==1 IF EXIST "%msysloc%\usr\bin\patch.exe" %runmsys% cd "%msyspatchdir%";patch -Np1 --no-backup-if-mismatch -R -r - -i "%devroot%\%projectname%\patches\llvm-vs-16_7.patch"
+@IF %disableootpatch%==1 IF EXIST "%msysloc%\usr\bin\patch.exe" %runmsys% patch -Np1 --no-backup-if-mismatch -R -r - -i "%devroot%\%projectname%\patches\llvm-vs-16_7.patch"
 @IF %disableootpatch%==1 if EXIST "%msysloc%\usr\bin\patch.exe" echo.
 
 @rem Ask for Ninja use if exists. Load it if opted for it.
