@@ -192,9 +192,7 @@
 @if /I "%useninja%"=="y" if %ninjastate%==1 IF %toolchain%==msvc set PATH=%devroot%\ninja\;%PATH%
 @if /I "%useninja%"=="y" set buildconf=%buildconf% --backend=ninja
 @if /I "%useninja%"=="y" IF %toolchain%==msvc set buildcmd=ninja -C "%devroot%\mesa\build\%toolchain%-%abi%" -j %throttle% -k 0
-@IF NOT %toolchain%==msvc set buildcmd=%runmsys% cd "%devroot%\mesa\build\%toolchain%-%abi%";
-@IF NOT %toolchain%==msvc IF %gitstate% GTR 0 set buildcmd=%buildcmd%PATH=${PATH}:${gitloc};cp -f ${USERPROFILE}/.gitconfig ~;
-@IF NOT %toolchain%==msvc set buildcmd=%buildcmd%/%LMSYSTEM%/bin/ninja -j %throttle% -k 0
+@IF NOT %toolchain%==msvc set buildcmd=%runmsys% cd "%devroot%\mesa\build\%toolchain%-%abi%";/%LMSYSTEM%/bin/ninja -j %throttle% -k 0
 @if /I NOT "%useninja%"=="y" set buildconf=%buildconf% --backend=vs
 
 @set galliumcount=0
