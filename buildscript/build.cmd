@@ -23,6 +23,9 @@
 @rem Analyze environment. Get each dependency status: 0=missing, 1=standby/load manually in PATH, 2=cannot be unloaded.
 @rem Not all dependencies can have all these states.
 
+@rem Version control
+@call "%devroot%\%projectname%\buildscript\modules\git.cmd"
+
 @rem Look for MSYS2 build environment
 @call "%devroot%\%projectname%\buildscript\modules\msys.cmd"
 
@@ -43,9 +46,6 @@
 
 @rem Build throttle.
 @call "%devroot%\%projectname%\buildscript\modules\throttle.cmd"
-
-@rem Version control
-@call "%devroot%\%projectname%\buildscript\modules\git.cmd"
 
 @rem Verify if out of tree patches can be applied.
 @call "%devroot%\%projectname%\buildscript\modules\patching.cmd"

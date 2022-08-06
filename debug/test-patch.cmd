@@ -5,9 +5,9 @@
 @IF %devroot:~0,1%%devroot:~-1%=="" set devroot=%devroot:~1,-1%
 @IF "%devroot:~-1%"=="\" set devroot=%devroot:~0,-1%
 @set projectname=mesa-dist-win
+@call "%devroot%\mesa-dist-win\buildscript\modules\git.cmd"
 @call "%devroot%\mesa-dist-win\buildscript\modules\msys.cmd"
 @call "%devroot%\mesa-dist-win\buildscript\modules\msysupdate.cmd"
-@call "%devroot%\mesa-dist-win\buildscript\modules\git.cmd"
 @IF %msysstate% GTR 0 (
 @%runmsys% pacman -S patch --needed --noconfirm
 @echo.
