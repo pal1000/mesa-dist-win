@@ -112,8 +112,6 @@
 @if /I "%ninja%"=="y" ninja -j %throttle% install
 @if /I "%ninja%"=="y" IF /I NOT "%buildclang%"=="y" ninja -j %throttle% llvm-config
 @if /I "%ninja%"=="y" IF /I NOT "%buildclang%"=="y" copy .\bin\llvm-config.exe "%devroot%\llvm\build\%abi%\bin\"
-@IF EXIST "%devroot%\llvm\build\%abi%\bin\llvm-config.exe" if NOT EXIST "%devroot%\llvm\build\%abi%\llvmconfig\" md "%devroot%\llvm\build\%abi%\llvmconfig"
-@IF EXIST "%devroot%\llvm\build\%abi%\bin\llvm-config.exe" copy "%devroot%\llvm\build\%abi%\bin\llvm-config.exe" "%devroot%\llvm\build\%abi%\llvmconfig\"
 @echo.
 
 @rem Avoid race condition in LLVM SPIRV translator sources checkout.

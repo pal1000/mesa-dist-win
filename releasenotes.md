@@ -5,7 +5,8 @@
 - MSYS2: Always load Git for Windows when available;
 - MSYS2: Change currrent directory to Windows current folder;
 - MSYS2/Meson: Don't hardcode source code directory;
-- MSYS2: Restore option to clear package cache after installing packages.
+- MSYS2: Restore option to clear package cache after installing packages;
+- MSVC: Prepare to use clang build used by clc to build whole Mesa.
 ### Distribution
 - MSYS2: Strip lib prefix from Microsoft CLC filename.
 # 22.1.5

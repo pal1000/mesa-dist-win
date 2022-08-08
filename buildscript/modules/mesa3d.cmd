@@ -166,8 +166,8 @@
 @set havellvm=1
 @set llvmmethod=configtool
 @IF %toolchain%==msvc IF NOT EXIST "%devroot%\llvm\build\%abi%\lib\" set havellvm=0
-@IF %toolchain%==msvc IF NOT EXIST "%devroot%\llvm\build\%abi%\llvmconfig\llvm-config.exe" IF %cmakestate% EQU 0 set havellvm=0
-@IF %toolchain%==msvc IF NOT EXIST "%devroot%\llvm\build\%abi%\llvmconfig\llvm-config.exe" IF %cmakestate% GTR 0 set llvmmethod=cmake
+@IF %toolchain%==msvc IF NOT EXIST "%devroot%\llvm\build\%abi%\bin\llvm-config.exe" IF %cmakestate% EQU 0 set havellvm=0
+@IF %toolchain%==msvc IF NOT EXIST "%devroot%\llvm\build\%abi%\bin\llvm-config.exe" IF %cmakestate% GTR 0 set llvmmethod=cmake
 @set llvmless=n
 @if %havellvm%==0 set llvmless=y
 @if %havellvm%==1 set /p llvmless=Build Mesa without LLVM (y/n). llvmpipe, swr, RADV, lavapipe and all OpenCL drivers won't be available and high performance JIT won't be available for softpipe, osmesa and graw:
@@ -181,7 +181,7 @@
 @if /I NOT "%llvmless%"=="y" IF %llvmmethod%==cmake set buildconf=%buildconf% --cmake-prefix-path="%devroot:\=/%/llvm/build/%abi%"
 @if /I NOT "%llvmless%"=="y" IF %llvmmethod%==cmake IF %cmakestate% EQU 1 SET PATH=%devroot%\cmake\bin\;%PATH%
 @if /I NOT "%llvmless%"=="y" IF NOT %llvmmethod%==cmake set buildconf=%buildconf% --cmake-prefix-path=
-@if /I NOT "%llvmless%"=="y" IF NOT %llvmmethod%==cmake IF %toolchain%==msvc SET PATH=%devroot%\llvm\build\%abi%\llvmconfig\;%PATH%
+@if /I NOT "%llvmless%"=="y" IF NOT %llvmmethod%==cmake IF %toolchain%==msvc SET PATH=%devroot%\llvm\build\%abi%\bin\;%PATH%
 @if /I "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm=%mesonboolfalse%
 
 @set useninja=n

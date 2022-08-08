@@ -17,13 +17,13 @@ Mako       1.2.1
 MarkupSafe 2.1.1
 meson      0.63.0
 pip        22.2.2
-setuptools 63.4.1
+setuptools 63.4.2
 
-CMake 3.23.3
+CMake 3.24.0
 Ninja 1.11.0
 LLVM 14.0.6
 SPIRV Tools 2022.3.0
 Winflexbison package 2.5.25
 flex 2.6.4
 Bison 3.8.2
-pkgconf 1.8.0
+pkgconf 1.9.2
