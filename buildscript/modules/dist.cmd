@@ -37,6 +37,7 @@
 :mesondist
 @echo Copying Mesa3D shared libraries...
 @for /R "%devroot%\mesa\build\%toolchain%-%abi%\src" %%a IN (*.dll) do @IF EXIST "%%a" copy "%%a" "%devroot%\%projectname%\bin\%abi%"
+@IF EXIST "%devroot%\%projectname%\bin\%abi%\libclon12compiler.dll" REN "%devroot%\%projectname%\bin\%abi%\libclon12compiler.dll" clon12compiler.dll
 @echo.
 
 @echo Copying runtimes for Microsoft drivers if needed...
