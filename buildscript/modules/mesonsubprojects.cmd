@@ -96,6 +96,7 @@ cd /D "%devroot%\mesa"
 @IF EXIST "%devroot%\mesa\subprojects\libelf.wrap" del "%devroot%\mesa\subprojects\libelf.wrap"
 @for /f delims^=^ eol^= %%a in ('dir /b /a:d "%devroot%\mesa\subprojects\zlib-*" 2^>^&1') do @IF EXIST "%devroot%\mesa\subprojects\%%~nxa\" RD /S /Q "%devroot%\mesa\subprojects\%%~nxa"
 @IF EXIST "%devroot%\mesa\subprojects\zlib.wrap" del "%devroot%\mesa\subprojects\zlib.wrap"
+@IF EXIST "%msysloc%\%LMSYSTEM%\lib\libclang-cpp.dll.a" del "%msysloc%\%LMSYSTEM%\lib\libclang-cpp.dll.a"
 
 @rem Vulkan dependency
 @IF "%vksdkselect%"=="2" (

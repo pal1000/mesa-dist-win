@@ -6,9 +6,10 @@
 - MSYS2: Change currrent directory to Windows current folder;
 - MSYS2/Meson: Don't hardcode source code directory;
 - MSYS2: Restore option to clear package cache after installing packages;
-- MSVC: Prepare to use clang build used by clc to build whole Mesa.
+- MSVC: Prepare to use clang build used by clc to build whole Mesa;
+- OpenCL stack: Make sure we never link against clang-cpp library.
 ### Distribution
-- MSYS2: Strip lib prefix from Microsoft CLC filename.
+- MSYS2: Strip lib prefix from Microsoft CLC filename [22.2+].
 # 22.1.5
 - Updated Mesa3D to [22.1.5](https://docs.mesa3d.org/relnotes/22.1.5.html).
 ### Build script
