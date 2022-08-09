@@ -181,7 +181,7 @@
 @if /I NOT "%llvmless%"=="y" IF %llvmmethod%==cmake set buildconf=%buildconf% --cmake-prefix-path="%devroot:\=/%/llvm/build/%abi%"
 @if /I NOT "%llvmless%"=="y" IF %llvmmethod%==cmake IF %cmakestate% EQU 1 SET PATH=%devroot%\cmake\bin\;%PATH%
 @if /I NOT "%llvmless%"=="y" IF NOT %llvmmethod%==cmake set buildconf=%buildconf% --cmake-prefix-path=
-@if /I NOT "%llvmless%"=="y" IF NOT %llvmmethod%==cmake IF %toolchain%==msvc SET PATH=%devroot%\llvm\build\%abi%\bin\;%PATH%
+@if /I NOT "%llvmless%"=="y" IF NOT %llvmmethod%==cmake IF %toolchain%==msvc if %llvmalreadyloaded% EQU 0 SET PATH=%devroot%\llvm\build\%abi%\bin\;%PATH%
 @if /I "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm=%mesonboolfalse%
 
 @set useninja=n
