@@ -221,9 +221,13 @@
 @IF %intmesaver% LSS 21000 set canmcrdrvcom=0
 @IF NOT %toolchain%==msvc IF %intmesaver% LSS 22200 set canmcrdrvcom=0
 
+@rem Building GLonD3D12 with MinGW requires Mesa 22.2.0-rc2 and up
 @set d3d12=n
-@IF %canmcrdrvcom% EQU 1 set /p d3d12=Do you want to build Mesa3D OpenGL driver over D3D12 - GLonD3D12 (y/n):
-@IF %canmcrdrvcom% EQU 1 echo.
+@set cand3d12=1
+@IF %canmcrdrvcom% EQU 0 set cand3d12=0
+@IF NOT %toolchain%==msvc IF %intmesaver% LSS 22202 set cand3d12=0
+@IF %cand3d12% EQU 1 set /p d3d12=Do you want to build Mesa3D OpenGL driver over D3D12 - GLonD3D12 (y/n):
+@IF %cand3d12% EQU 1 echo.
 @IF /I "%d3d12%"=="y" set /a galliumcount+=1
 
 @set swrdrv=n

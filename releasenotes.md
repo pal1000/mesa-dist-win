@@ -1,3 +1,5 @@
+### Build script
+- Building GLonD3D12 with MinGW requires Mesa 22.2.0-rc2 and up.
 # 22.1.6
 - Updated Mesa3D to [22.1.6](https://docs.mesa3d.org/relnotes/22.1.6.html).
 ### Build script
