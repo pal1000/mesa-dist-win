@@ -1,3 +1,5 @@
+# 22.1.6
+- Updated Mesa3D to [22.1.6](https://docs.mesa3d.org/relnotes/22.1.6.html).
 ### Build script
 - MSYS2: Import credentials from Git for Windows;
 - Misc: Avoid Windows where tool internal error messages;
