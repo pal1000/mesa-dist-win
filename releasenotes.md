@@ -1,5 +1,7 @@
 ### Distribution
-- clover: Support MinGW built binaries.
+- clover: Support MinGW built binaries;
+- SPIRV to DXIL MSVC binary distribution: Fix DXIL runtime distribution, regression from 952d8771c0bbd5f575d2073d50339a3dcbd4233c, fortunately other Microsoft components ensure DXIL runtime distribution as
+well so this regresssion had no real world impact.
 ### Build script
 - Building GLonD3D12 with MinGW requires Mesa 22.2.0-rc2 and up.
 # 22.1.6
