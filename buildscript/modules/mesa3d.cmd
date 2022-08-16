@@ -140,7 +140,7 @@
 @rem IF %intmesaver% GEQ 21300 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" clover
 
 @rem Fix OpenCL stack link with LLVM targets
-@IF %intmesaver% GEQ 21300 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" mclc-all-targets
+@IF %intmesaver% GEQ 21300 IF %intmesaver% LSS 22300 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" mclc-all-targets
 @IF %intmesaver:~0,3% EQU 213 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" clover-all-targets
 
 :configmesabuild
@@ -364,7 +364,7 @@
 @rem Microsoft OpenCL compiler requires OpenCL SPIR-V, DirectX Headers and out of tree patches [21.3+]
 @set canmclc=0
 @IF %canclspv% EQU 1 IF %canmcrdrvcom% EQU 1 set canmclc=1
-@IF %disableootpatch%==1 IF %intmesaver% GEQ 21300 set canmclc=0
+@IF %disableootpatch%==1 IF %intmesaver% GEQ 21300 IF %intmesaver% LSS 22300 set canmclc=0
 @IF %canmclc% EQU 1 set /p mclc=Build Mesa3D Microsoft OpenCL compiler (y/n):
 @IF %canmclc% EQU 1 echo.
 @IF /I "%mclc%"=="y" set PKG_CONFIG_LIBCLC=1
