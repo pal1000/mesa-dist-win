@@ -140,7 +140,7 @@
 @rem IF %intmesaver% GEQ 21300 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" clover
 
 @rem Fix OpenCL stack link with LLVM targets
-@IF %intmesaver% GEQ 21300 IF %intmesaver% LSS 22300 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" mclc-all-targets
+@IF %intmesaver% GEQ 21300 IF %intmesaver% LSS 22203 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" mclc-all-targets
 @IF %intmesaver:~0,3% EQU 213 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" clover-all-targets
 
 :configmesabuild
@@ -151,14 +151,14 @@
 @if NOT EXIST "build\%toolchain%-%abi%\" set cleanmesabld=y
 @if EXIST "build\%toolchain%-%abi%\" IF /I "%cleanmesabld%"=="y" RD /S /Q build\%toolchain%-%abi%
 @IF /I NOT "%cleanmesabld%"=="y" set buildconf=%mesonloc% configure
-@set buildconf=%buildconf% build/%toolchain%-%abi% --buildtype=release --libdir="lib/%abi%" --pkgconfig.relocatable -Db_ndebug=true
+@set buildconf=%buildconf% build/%toolchain%-%abi% --libdir="lib/%abi%" --pkgconfig.relocatable -Db_ndebug=true
 @IF %intmesaver% GEQ 21200 IF %intmesaver% LSS 22100 set buildconf=%buildconf% -Dc_std=c17
 @IF %toolchain%==msvc set buildconf=%buildconf% --prefix="%devroot:\=/%/%projectname%" -Db_vscrt=mt -Dzlib:default_library=static
 @IF %toolchain%==msvc IF %intmesaver% GEQ 21200 IF %intmesaver% LSS 22100 set buildconf=%buildconf% -Dcpp_std=vc++latest
 @IF NOT %toolchain%==msvc IF %intmesaver% GTR 20000 set buildconf=%buildconf% -Dzstd=%mesonbooltrue%
 @IF NOT %toolchain%==msvc set buildconf=%buildconf% --prefer-static --force-fallback-for=
 @IF NOT %toolchain%==msvc set CFLAGS=-march^=core2 -pipe
-@IF NOT %toolchain%==msvc set LDFLAGS=-static -s
+@IF NOT %toolchain%==msvc set LDFLAGS=-static
 @set buildcmd=msbuild /p^:Configuration=release,Platform=Win32 mesa.sln /m^:%throttle%
 @IF %abi%==x64 set buildcmd=msbuild /p^:Configuration=release,Platform=x64 mesa.sln /m^:%throttle%
 @IF %intmesaver% GEQ 22000 set RTTI=true
@@ -193,6 +193,13 @@
 @if /I "%useninja%"=="y" IF %toolchain%==msvc set buildcmd=ninja -C "%devroot%\mesa\build\%toolchain%-%abi%" -j %throttle% -k 0
 @IF NOT %toolchain%==msvc set buildcmd=%runmsys% /%LMSYSTEM%/bin/ninja -C "%devroot%\mesa\build\%toolchain%-%abi%" -j %throttle% -k 0
 @if /I NOT "%useninja%"=="y" set buildconf=%buildconf% --backend=vs
+
+@set mesadbgbld=n
+@if /I "%useninja%"=="y" set /p mesadbgbld=Debug friendly binaries (y/n):
+@if /I "%useninja%"=="y" echo.
+@if /I NOT "%mesadbgbld%"=="y" set buildconf=%buildconf% --buildtype=release
+@if /I NOT "%mesadbgbld%"=="y" IF NOT %toolchain%==msvc set LDFLAGS=%LDFLAGS% -s
+@if /I "%mesadbgbld%"=="y" set buildconf=%buildconf% --buildtype=debugoptimized
 
 @set galliumcount=0
 @set msysregex=0
@@ -364,7 +371,7 @@
 @rem Microsoft OpenCL compiler requires OpenCL SPIR-V, DirectX Headers and out of tree patches [21.3+]
 @set canmclc=0
 @IF %canclspv% EQU 1 IF %canmcrdrvcom% EQU 1 set canmclc=1
-@IF %disableootpatch%==1 IF %intmesaver% GEQ 21300 IF %intmesaver% LSS 22300 set canmclc=0
+@IF %disableootpatch%==1 IF %intmesaver% GEQ 21300 IF %intmesaver% LSS 22203 set canmclc=0
 @IF %canmclc% EQU 1 set /p mclc=Build Mesa3D Microsoft OpenCL compiler (y/n):
 @IF %canmclc% EQU 1 echo.
 @IF /I "%mclc%"=="y" set PKG_CONFIG_LIBCLC=1

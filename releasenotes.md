@@ -3,9 +3,10 @@
 - SPIRV to DXIL MSVC binary distribution: Fix DXIL runtime distribution, regression from 952d8771c0bbd5f575d2073d50339a3dcbd4233c, fortunately other Microsoft components ensure DXIL runtime distribution as
 well so this regresssion had no real world impact.
 ### Build script
-- Building GLonD3D12 with MinGW requires Mesa 22.2.0-rc2 and up.
+- Building GLonD3D12 with MinGW requires Mesa 22.2.0-rc2 and up;
+- Support creating debug friendly binaries.
 ### Out of tree patches
-- Don't apply LLVM all targets linking patch for Microsoft CLC [22.3+].
+- Don't apply LLVM all targets linking patch for Microsoft CLC [22.2.0-rc3+].
 # 22.1.6
 - Updated Mesa3D to [22.1.6](https://docs.mesa3d.org/relnotes/22.1.6.html).
 ### Build script
