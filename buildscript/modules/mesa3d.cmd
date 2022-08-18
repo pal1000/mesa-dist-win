@@ -195,8 +195,8 @@
 @if /I NOT "%useninja%"=="y" set buildconf=%buildconf% --backend=vs
 
 @set mesadbgbld=n
-@if /I "%useninja%"=="y" set /p mesadbgbld=Debug friendly binaries (y/n):
-@if /I "%useninja%"=="y" echo.
+@if /I "%useninja%"=="y" IF %toolchain%==msvc set /p mesadbgbld=Debug friendly binaries (y/n):
+@if /I "%useninja%"=="y" IF %toolchain%==msvc echo.
 @if /I NOT "%mesadbgbld%"=="y" set buildconf=%buildconf% --buildtype=release
 @if /I NOT "%mesadbgbld%"=="y" IF NOT %toolchain%==msvc set LDFLAGS=%LDFLAGS% -s
 @if /I "%mesadbgbld%"=="y" set buildconf=%buildconf% --buildtype=debugoptimized

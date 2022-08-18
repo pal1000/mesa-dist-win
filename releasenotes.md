@@ -4,7 +4,7 @@
 well so this regresssion had no real world impact.
 ### Build script
 - Building GLonD3D12 with MinGW requires Mesa 22.2.0-rc2 and up;
-- Support creating debug friendly binaries.
+- Support creating debug friendly binaries when building with MSVC.
 ### Out of tree patches
 - Don't apply LLVM all targets linking patch for Microsoft CLC [22.2.0-rc3+].
 # 22.1.6
