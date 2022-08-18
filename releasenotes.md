@@ -1,3 +1,5 @@
+# 22.1.7
+- Updated Mesa3D to [22.1.7](https://docs.mesa3d.org/relnotes/22.1.7.html).
 ### Distribution
 - clover: Support MinGW built binaries;
 - SPIRV to DXIL MSVC binary distribution: Fix DXIL runtime distribution, regression from 952d8771c0bbd5f575d2073d50339a3dcbd4233c, fortunately other Microsoft components ensure DXIL runtime distribution as
