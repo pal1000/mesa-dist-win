@@ -1,3 +1,5 @@
+### Distribution
+- MSVC debug symbols support.
 # 22.1.7
 - Updated Mesa3D to [22.1.7](https://docs.mesa3d.org/relnotes/22.1.7.html).
 ### Distribution

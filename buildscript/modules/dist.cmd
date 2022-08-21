@@ -26,11 +26,14 @@
 
 :normaldist
 @if NOT EXIST "bin\" MD bin
+@if NOT EXIST "debugsymbols\" MD debugsymbols
 @if NOT EXIST "lib\" MD lib
 @if EXIST "bin\%abi%\" RD /S /Q bin\%abi%
+@if EXIST "debugsymbols\%abi%\" RD /S /Q debugsymbols\%abi%
 @if EXIST "lib\%abi%\" RD /S /Q lib\%abi%
 @if EXIST "include\" RD /S /Q include
 @MD bin\%abi%
+@MD debugsymbols\%abi%
 @MD lib\%abi%
 @MD lib\%abi%\pkgconfig
 @MD include
@@ -74,7 +77,11 @@
 @echo.
 
 @echo Copying headers...
-@ROBOCOPY "%devroot%\mesa\include" "%devroot%\%projectname%\include" /S /E
+@ROBOCOPY "%devroot%\mesa\include" "%devroot%\%projectname%\include" /E
+@echo.
+
+@echo Copying debug information...
+@ROBOCOPY "%devroot%\mesa\build\%toolchain%-%abi%" "%devroot%\%projectname%\debugsymbols\%abi%" *.pdb /E
 @echo.
 
 :distributed
