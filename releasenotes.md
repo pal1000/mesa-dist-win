@@ -1,5 +1,5 @@
 ### Distribution
-- MSVC debug symbols support.
+- MSVC debug symbols support (#54).
 # 22.1.7
 - Updated Mesa3D to [22.1.7](https://docs.mesa3d.org/relnotes/22.1.7.html).
 ### Distribution
@@ -8,7 +8,7 @@
 well so this regresssion had no real world impact.
 ### Build script
 - Building GLonD3D12 with MinGW requires Mesa 22.2.0-rc2 and up;
-- Support creating debug friendly binaries when building with MSVC.
+- Support creating debug friendly binaries when building with MSVC (#54).
 ### Out of tree patches
 - Don't apply LLVM all targets linking patch for Microsoft CLC [22.2.0-rc3+].
 # 22.1.6
