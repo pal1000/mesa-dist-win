@@ -8,8 +8,4 @@ IF /I "%%a"=="error" IF %gitstate% EQU 0 echo.
 IF /I NOT "%%a"=="error" IF %gitstate% GTR 0 %runmsys% /usr/bin/pacman -Rs git --noconfirm
 IF /I NOT "%%a"=="error" IF %gitstate% GTR 0 echo.
 )
-@set /p msyspkgclear=Clear MSYS2 package cache (y/n):
-@echo.
-@IF /I "%msyspkgclear%"=="y" call "%devroot%\%projectname%\buildscript\modules\msyspkgclean.cmd"
-@IF /I "%msyspkgclear%"=="y" echo.
 @endlocal&set flexstate=2&set ninjastate=2&set pkgconfigstate=1&set cmakestate=0
