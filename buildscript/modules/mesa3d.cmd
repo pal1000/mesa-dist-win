@@ -422,11 +422,10 @@
 @IF %intmesaver% GEQ 21100 if /I NOT "%llvmless%"=="y" if /I NOT "%glswrast%"=="y" if /I NOT "%radv%"=="y" if /I NOT "%graw%"=="y" IF %galliumcount% GTR 0 set buildconf=%buildconf:~0,-4%false
 
 @rem Control futex support - https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/17431
-@IF %intmesaver% GEQ 22200 echo Enable Futex (https://en.wikipedia.org/wiki/Futex) support, raises minimum requirements for Mesa3D overall to run to Windows 8/Server 2012
-@IF %intmesaver% GEQ 22200 set /p winfutex=Enabled by default if left blank (y/n):
+@IF %intmesaver% GEQ 22200 set /p winfutex=Enable Futex (https://en.wikipedia.org/wiki/Futex) support, raises minimum requirements for Mesa3D overall to run to Windows 8/Server 2012 (y/n):
 @IF %intmesaver% GEQ 22200 echo.
-@IF /I NOT "%winfutex%"=="n" IF %intmesaver% GEQ 22200 set buildconf=%buildconf% -Dmin-windows-version=8
-@IF /I "%winfutex%"=="n" set buildconf=%buildconf% -Dmin-windows-version=7
+@IF /I NOT "%winfutex%"=="y" IF %intmesaver% GEQ 22200 set buildconf=%buildconf% -Dmin-windows-version=7
+@IF /I "%winfutex%"=="y" set buildconf=%buildconf% -Dmin-windows-version=8
 
 @rem Load MSVC specific build dependencies
 @IF %toolchain%==msvc IF %flexstate%==1 set PATH=%devroot%\flexbison\;%PATH%

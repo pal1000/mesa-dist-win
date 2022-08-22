@@ -2,7 +2,8 @@
 - MSVC debug symbols support (#54).
 ### Build script
 - pkgconf build: tests option is now a feature;
-- pkgconf source code was relocated to Gitea Teahouse.
+- pkgconf source code was relocated to Gitea Teahouse;
+- Disable Futex usage by default to reflect [poll](https://github.com/pal1000/mesa-dist-win/discussions/112) results.
 ### Misc. refactor
 - MSYS2: Move package cache cleanning inside package update module.
 # 22.1.7
