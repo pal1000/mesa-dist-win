@@ -12,7 +12,7 @@
 )
 @if NOT EXIST "%devroot%\pkgconf\" IF %gitstate% GTR 0 (
 @echo Getting pkgconf source code...
-@git clone https://github.com/pkgconf/pkgconf.git --recurse-submodules pkgconf
+@git clone https://gitea.treehouse.systems/ariadne/pkgconf.git --recurse-submodules pkgconf
 @echo.
 @cd pkgconf
 )
@@ -29,12 +29,12 @@
 @IF %ninjastate% GTR 0 set /p useninja=Use Ninja build system instead of MsBuild (y/n):
 @IF %ninjastate% GTR 0 echo.
 @IF /I "%useninja%"=="y" IF %ninjastate%==1 set PATH=%devroot%\ninja\;%PATH%
-@IF /I NOT "%useninja%"=="y" echo Configuring pkgconf build with : %mesonloc% pkgconf --backend=vs --buildtype=release -Dtests=false
+@IF /I NOT "%useninja%"=="y" echo Configuring pkgconf build with : %mesonloc% pkgconf --backend=vs --buildtype=release
 @IF /I NOT "%useninja%"=="y" echo.
-@IF /I NOT "%useninja%"=="y" %mesonloc% pkgconf --backend=vs --buildtype=release -Dtests=false
-@IF /I "%useninja%"=="y" echo Configuring pkgconf build with : %mesonloc% pkgconf --backend=ninja --buildtype=release -Dtests=false
+@IF /I NOT "%useninja%"=="y" %mesonloc% pkgconf --backend=vs --buildtype=release
+@IF /I "%useninja%"=="y" echo Configuring pkgconf build with : %mesonloc% pkgconf --backend=ninja --buildtype=release
 @IF /I "%useninja%"=="y" echo.
-@IF /I "%useninja%"=="y" %mesonloc% pkgconf --backend=ninja --buildtype=release -Dtests=false
+@IF /I "%useninja%"=="y" %mesonloc% pkgconf --backend=ninja --buildtype=release
 @echo.
 @pause
 @echo.

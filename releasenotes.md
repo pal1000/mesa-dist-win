@@ -1,5 +1,8 @@
 ### Distribution
 - MSVC debug symbols support (#54).
+### Build script
+- pkgconf build: tests option is now a feature;
+- pkgconf source code was relocated to Gitea Teahouse.
 # 22.1.7
 - Updated Mesa3D to [22.1.7](https://docs.mesa3d.org/relnotes/22.1.7.html).
 ### Distribution
