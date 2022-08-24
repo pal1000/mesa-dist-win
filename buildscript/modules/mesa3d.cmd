@@ -145,6 +145,7 @@
 
 :configmesabuild
 @rem Configure Mesa build.
+@set useninja=n
 @set buildconf=%mesonloc% setup
 @if EXIST "build\%toolchain%-%abi%\" set /p cleanmesabld=Perform clean build (y/n):
 @if EXIST "build\%toolchain%-%abi%\" echo.
@@ -153,15 +154,34 @@
 @IF /I NOT "%cleanmesabld%"=="y" set buildconf=%mesonloc% configure
 @set buildconf=%buildconf% build/%toolchain%-%abi% --libdir="lib/%abi%" --pkgconfig.relocatable -Db_ndebug=true
 @IF %intmesaver% GEQ 21200 IF %intmesaver% LSS 22100 set buildconf=%buildconf% -Dc_std=c17
+@IF %intmesaver% GEQ 22000 set RTTI=true
+
 @IF %toolchain%==msvc set buildconf=%buildconf% --prefix="%devroot:\=/%/%projectname%" -Db_vscrt=mt -Dzlib:default_library=static
+@IF %toolchain%==msvc if NOT %ninjastate%==0 set /p useninja=Use Ninja build system instead of MsBuild (y/n); less storage device strain and maybe faster build:
+@IF %toolchain%==msvc if NOT %ninjastate%==0 echo.
 @IF %toolchain%==msvc IF %intmesaver% GEQ 21200 IF %intmesaver% LSS 22100 set buildconf=%buildconf% -Dcpp_std=vc++latest
-@IF NOT %toolchain%==msvc IF %intmesaver% GTR 20000 set buildconf=%buildconf% -Dzstd=%mesonbooltrue%
-@IF NOT %toolchain%==msvc set buildconf=%buildconf% --prefer-static --force-fallback-for=
+
+@IF NOT %toolchain%==msvc set useninja=y
 @IF NOT %toolchain%==msvc set CFLAGS=-march^=core2 -pipe
 @IF NOT %toolchain%==msvc set LDFLAGS=-static
-@set buildcmd=msbuild /p^:Configuration=release,Platform=Win32 mesa.sln /m^:%throttle%
-@IF %abi%==x64 set buildcmd=msbuild /p^:Configuration=release,Platform=x64 mesa.sln /m^:%throttle%
-@IF %intmesaver% GEQ 22000 set RTTI=true
+@IF NOT %toolchain%==msvc set buildconf=%buildconf% --prefer-static
+@IF NOT %toolchain%==msvc set buildcmd=%runmsys% /%LMSYSTEM%/bin/ninja -C "%devroot%\mesa\build\%toolchain%-%abi%" -j %throttle% -k 0
+@IF NOT %toolchain%==msvc IF %intmesaver% GTR 20000 set buildconf=%buildconf% -Dzstd=%mesonbooltrue%
+
+@if /I "%useninja%"=="y" if %ninjastate%==1 IF %toolchain%==msvc set PATH=%devroot%\ninja\;%PATH%
+@if /I "%useninja%"=="y" set buildconf=%buildconf% --backend=ninja
+@if /I "%useninja%"=="y" IF %toolchain%==msvc set buildcmd=ninja -C "%devroot%\mesa\build\%toolchain%-%abi%" -j %throttle% -k 0
+
+@if /I NOT "%useninja%"=="y" set buildconf=%buildconf% --backend=vs
+@if /I NOT "%useninja%"=="y" set buildcmd=msbuild /p^:Configuration=release,Platform=Win32 mesa.sln /m^:%throttle%
+@if /I NOT "%useninja%"=="y" IF %abi%==x64 set buildcmd=msbuild /p^:Configuration=release,Platform=x64 mesa.sln /m^:%throttle%
+
+@set mesadbgbld=n
+@if /I "%useninja%"=="y" IF %toolchain%==msvc set /p mesadbgbld=Debug friendly binaries (y/n):
+@if /I "%useninja%"=="y" IF %toolchain%==msvc echo.
+@if /I NOT "%mesadbgbld%"=="y" set buildconf=%buildconf% --buildtype=release
+@if /I NOT "%mesadbgbld%"=="y" IF NOT %toolchain%==msvc set LDFLAGS=%LDFLAGS% -s
+@if /I "%mesadbgbld%"=="y" set buildconf=%buildconf% --buildtype=debugoptimized
 
 @set havellvm=1
 @set llvmmethod=configtool
@@ -173,6 +193,7 @@
 @if %havellvm%==1 set /p llvmless=Build Mesa without LLVM (y/n). llvmpipe, swr, RADV, lavapipe and all OpenCL drivers won't be available and high performance JIT won't be available for softpipe, osmesa and graw:
 @if %havellvm%==1 echo.
 @call "%devroot%\%projectname%\buildscript\modules\mesonsubprojects.cmd"
+@IF NOT %toolchain%==msvc set buildconf=%buildconf% --force-fallback-for=
 @IF "%vksdkselect%"=="1" IF %toolchain%==clang set buildconf=%buildconf%,vulkan
 @if /I NOT "%llvmless%"=="y" IF %llvmconfigbusted% EQU 1 set buildconf=%buildconf%,llvm
 @if /I NOT "%llvmless%"=="y" IF %intmesaver% GEQ 22000 IF %intmesaver% LSS 22200 IF NOT %toolchain%==msvc set RTTI=%LLVMRTTI%
@@ -183,23 +204,6 @@
 @if /I NOT "%llvmless%"=="y" IF NOT %llvmmethod%==cmake set buildconf=%buildconf% --cmake-prefix-path=
 @if /I NOT "%llvmless%"=="y" IF NOT %llvmmethod%==cmake IF %toolchain%==msvc if %llvmalreadyloaded% EQU 0 SET PATH=%devroot%\llvm\build\%abi%\bin\;%PATH%
 @if /I "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm=%mesonboolfalse%
-
-@set useninja=n
-@IF NOT %toolchain%==msvc set useninja=y
-@if NOT %ninjastate%==0 IF %toolchain%==msvc set /p useninja=Use Ninja build system instead of MsBuild (y/n); less storage device strain and maybe faster build:
-@if NOT %ninjastate%==0 IF %toolchain%==msvc echo.
-@if /I "%useninja%"=="y" if %ninjastate%==1 IF %toolchain%==msvc set PATH=%devroot%\ninja\;%PATH%
-@if /I "%useninja%"=="y" set buildconf=%buildconf% --backend=ninja
-@if /I "%useninja%"=="y" IF %toolchain%==msvc set buildcmd=ninja -C "%devroot%\mesa\build\%toolchain%-%abi%" -j %throttle% -k 0
-@IF NOT %toolchain%==msvc set buildcmd=%runmsys% /%LMSYSTEM%/bin/ninja -C "%devroot%\mesa\build\%toolchain%-%abi%" -j %throttle% -k 0
-@if /I NOT "%useninja%"=="y" set buildconf=%buildconf% --backend=vs
-
-@set mesadbgbld=n
-@if /I "%useninja%"=="y" IF %toolchain%==msvc set /p mesadbgbld=Debug friendly binaries (y/n):
-@if /I "%useninja%"=="y" IF %toolchain%==msvc echo.
-@if /I NOT "%mesadbgbld%"=="y" set buildconf=%buildconf% --buildtype=release
-@if /I NOT "%mesadbgbld%"=="y" IF NOT %toolchain%==msvc set LDFLAGS=%LDFLAGS% -s
-@if /I "%mesadbgbld%"=="y" set buildconf=%buildconf% --buildtype=debugoptimized
 
 @set galliumcount=0
 @set msysregex=0
