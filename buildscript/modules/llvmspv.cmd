@@ -68,17 +68,17 @@
 @cd bldspv-%abi%
 
 @rem Load Visual Studio environment. Can only be loaded in the background when using MsBuild.
-@if /I "%ninja%"=="y" call %vsenv% %vsabi%
-@if /I "%ninja%"=="y" cd "%devroot%\llvm-project\build\bldspv-%abi%"
-@if /I "%ninja%"=="y" echo.
+@if /I "%useninja%"=="y" call %vsenv% %vsabi%
+@if /I "%useninja%"=="y" cd "%devroot%\llvm-project\build\bldspv-%abi%"
+@if /I "%useninja%"=="y" echo.
 
 @rem Configure and execute the build with the configuration made above.
 @%buildconf%
 @echo.
 @pause
 @echo.
-@if /I NOT "%ninja%"=="y" cmake --build . -j %throttle% --config Release --target install
-@if /I "%ninja%"=="y" ninja -j %throttle% projects/SPIRV-LLVM-Translator/install
+@if /I NOT "%useninja%"=="y" cmake --build . -j %throttle% --config Release --target install
+@if /I "%useninja%"=="y" ninja -j %throttle% projects/SPIRV-LLVM-Translator/install
 @echo.
 
 :skipspvllvm

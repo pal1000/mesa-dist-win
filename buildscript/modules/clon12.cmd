@@ -24,10 +24,10 @@
 )
 
 @rem Ask for Ninja use if exists. Load it if opted for it.
-@set ninja=n
-@rem if NOT %ninjastate%==0 set /p ninja=Use Ninja build system instead of MsBuild (y/n); less storage device strain, faster and more efficient build:
+@set useninja=n
+@rem if NOT %ninjastate%==0 set /p useninja=Use Ninja build system instead of MsBuild (y/n); less storage device strain, faster and more efficient build:
 @rem if NOT %ninjastate%==0 echo.
-@if /I "%ninja%"=="y" if %ninjastate%==1 set PATH=%devroot%\ninja\;%PATH%
+@if /I "%useninja%"=="y" if %ninjastate%==1 set PATH=%devroot%\ninja\;%PATH%
 
 @rem Load cmake into build environment.
 @if %cmakestate%==1 set PATH=%devroot%\cmake\bin\;%PATH%
@@ -37,11 +37,11 @@
 
 @rem Construct build configuration command.
 @set buildconf=cmake "%devroot%\clon12" -G
-@if /I NOT "%ninja%"=="y" set buildconf=%buildconf% "Visual Studio %toolset%"
-@if %abi%==x86 if /I NOT "%ninja%"=="y" set buildconf=%buildconf% -A Win32
-@if %abi%==x64 if /I NOT "%ninja%"=="y" set buildconf=%buildconf% -A x64
-@if /I NOT "%ninja%"=="y" IF /I %PROCESSOR_ARCHITECTURE%==AMD64 set buildconf=%buildconf% -Thost=x64
-@if /I "%ninja%"=="y" set buildconf=%buildconf%Ninja
+@if /I NOT "%useninja%"=="y" set buildconf=%buildconf% "Visual Studio %toolset%"
+@if %abi%==x86 if /I NOT "%useninja%"=="y" set buildconf=%buildconf% -A Win32
+@if %abi%==x64 if /I NOT "%useninja%"=="y" set buildconf=%buildconf% -A x64
+@if /I NOT "%useninja%"=="y" IF /I %PROCESSOR_ARCHITECTURE%==AMD64 set buildconf=%buildconf% -Thost=x64
+@if /I "%useninja%"=="y" set buildconf=%buildconf%Ninja
 @set buildconf=%buildconf% -DBUILD_TESTS=OFF -DCMAKE_INSTALL_PREFIX="%devroot%\clon12\build\%abi%"
 
 @echo CLonD3D12 build configuration command^: %buildconf%
@@ -62,9 +62,9 @@
 @echo.
 
 @rem Load Visual Studio environment. Can only be loaded in the background when using MsBuild.
-@if /I "%ninja%"=="y" call %vsenv% %vsabi%
-@if /I "%ninja%"=="y" cd "%devroot%\clon12\out\%abi%"
-@if /I "%ninja%"=="y" echo.
+@if /I "%useninja%"=="y" call %vsenv% %vsabi%
+@if /I "%useninja%"=="y" cd "%devroot%\clon12\out\%abi%"
+@if /I "%useninja%"=="y" echo.
 
 @rem Configure and execute the build with the configuration made above.
 @%buildconf%
@@ -73,8 +73,8 @@
 @echo.
 @pause
 @echo.
-@if /I NOT "%ninja%"=="y" cmake --build . -j %throttle% --config Release
-@if /I "%ninja%"=="y" ninja -j %throttle%
+@if /I NOT "%useninja%"=="y" cmake --build . -j %throttle% --config Release
+@if /I "%useninja%"=="y" ninja -j %throttle%
 @echo.
 
 @rem Avoid race condition in SPIRV Tools sources checkout.
