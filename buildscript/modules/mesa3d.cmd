@@ -168,20 +168,24 @@
 @IF NOT %toolchain%==msvc set buildcmd=%runmsys% /%LMSYSTEM%/bin/ninja -C "%devroot%\mesa\build\%toolchain%-%abi%" -j %throttle% -k 0
 @IF NOT %toolchain%==msvc IF %intmesaver% GTR 20000 set buildconf=%buildconf% -Dzstd=%mesonbooltrue%
 
-@if /I "%useninja%"=="y" if %ninjastate%==1 IF %toolchain%==msvc set PATH=%devroot%\ninja\;%PATH%
 @if /I "%useninja%"=="y" set buildconf=%buildconf% --backend=ninja
+@if /I "%useninja%"=="y" if %ninjastate%==1 IF %toolchain%==msvc set PATH=%devroot%\ninja\;%PATH%
 @if /I "%useninja%"=="y" IF %toolchain%==msvc set buildcmd=ninja -C "%devroot%\mesa\build\%toolchain%-%abi%" -j %throttle% -k 0
 
 @if /I NOT "%useninja%"=="y" set buildconf=%buildconf% --backend=vs
 @if /I NOT "%useninja%"=="y" set buildcmd=msbuild /p^:Configuration=release,Platform=Win32 mesa.sln /m^:%throttle%
-@if /I NOT "%useninja%"=="y" IF %abi%==x64 set buildcmd=msbuild /p^:Configuration=release,Platform=x64 mesa.sln /m^:%throttle%
+@if /I NOT "%useninja%"=="y" IF %abi%==x64 set buildcmd=%buildcmd:Win32=x64%
 
 @set mesadbgbld=n
+@set mesadbgoptim=n
 @if /I "%useninja%"=="y" IF %toolchain%==msvc set /p mesadbgbld=Debug friendly binaries (y/n):
 @if /I "%useninja%"=="y" IF %toolchain%==msvc echo.
 @if /I NOT "%mesadbgbld%"=="y" set buildconf=%buildconf% --buildtype=release
 @if /I NOT "%mesadbgbld%"=="y" IF NOT %toolchain%==msvc set LDFLAGS=%LDFLAGS% -s
-@if /I "%mesadbgbld%"=="y" set buildconf=%buildconf% --buildtype=debugoptimized
+@if /I "%mesadbgbld%"=="y" set buildconf=%buildconf% --buildtype=debug
+@if /I "%mesadbgbld%"=="y" set /p mesadbgoptim=Optimize debug binaries (require a lot of RAM when using MSVC) (y/n):
+@if /I "%mesadbgbld%"=="y" echo.
+@if /I "%mesadbgoptim%"=="y" set buildconf=%buildconf%optimized
 
 @set havellvm=1
 @set llvmmethod=configtool

@@ -3,7 +3,8 @@
 ### Build script
 - pkgconf source code: go back 2 commits to workaround [Windows build break](https://gitea.treehouse.systems/ariadne/pkgconf/pulls/244);
 - pkgconf source code was relocated to Gitea Teehouse;
-- Disable Futex usage by default to reflect [poll](https://github.com/pal1000/mesa-dist-win/discussions/112) results.
+- Disable Futex usage by default to reflect [poll](https://github.com/pal1000/mesa-dist-win/discussions/112) results;
+- Make debug binaries optimization optional as they take a lot of RAM to link when using MSVC.
 ### Misc. refactor
 - MSYS2: Move package cache cleanning inside package update module.
 # 22.1.7
