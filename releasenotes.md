@@ -8,7 +8,8 @@
 - Allow doing debug build with MinGW.
 ### Misc. refactor
 - MSYS2: Move package cache cleanning inside package update module;
-- Move question about Ninja build usage to a module to reuse it in all builds.
+- Move question about Ninja build usage to a module to reuse it in all builds;
+- Mesa3D build: Ask for Ninja build usage as soon as possible.
 # 22.1.7
 - Updated Mesa3D to [22.1.7](https://docs.mesa3d.org/relnotes/22.1.7.html).
 ### Distribution
