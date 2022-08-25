@@ -145,23 +145,20 @@
 
 :configmesabuild
 @rem Configure Mesa build.
-@set useninja=n
 @set buildconf=%mesonloc% setup
 @if EXIST "build\%toolchain%-%abi%\" set /p cleanmesabld=Perform clean build (y/n):
 @if EXIST "build\%toolchain%-%abi%\" echo.
 @if NOT EXIST "build\%toolchain%-%abi%\" set cleanmesabld=y
 @if EXIST "build\%toolchain%-%abi%\" IF /I "%cleanmesabld%"=="y" RD /S /Q build\%toolchain%-%abi%
 @IF /I NOT "%cleanmesabld%"=="y" set buildconf=%mesonloc% configure
+@call "%devroot%\%projectname%\buildscript\modules\useninja.cmd"
 @set buildconf=%buildconf% build/%toolchain%-%abi% --libdir="lib/%abi%" --pkgconfig.relocatable -Db_ndebug=true
 @IF %intmesaver% GEQ 21200 IF %intmesaver% LSS 22100 set buildconf=%buildconf% -Dc_std=c17
 @IF %intmesaver% GEQ 22000 set RTTI=true
 
 @IF %toolchain%==msvc set buildconf=%buildconf% --prefix="%devroot:\=/%/%projectname%" -Db_vscrt=mt -Dzlib:default_library=static
-@IF %toolchain%==msvc if NOT %ninjastate%==0 set /p useninja=Use Ninja build system instead of MsBuild (y/n); less storage device strain and maybe faster build:
-@IF %toolchain%==msvc if NOT %ninjastate%==0 echo.
 @IF %toolchain%==msvc IF %intmesaver% GEQ 21200 IF %intmesaver% LSS 22100 set buildconf=%buildconf% -Dcpp_std=vc++latest
 
-@IF NOT %toolchain%==msvc set useninja=y
 @IF NOT %toolchain%==msvc set CFLAGS=-march^=core2 -pipe
 @IF NOT %toolchain%==msvc set LDFLAGS=-static
 @IF NOT %toolchain%==msvc set buildconf=%buildconf% --prefer-static

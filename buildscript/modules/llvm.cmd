@@ -36,9 +36,7 @@
 @IF %disableootpatch%==1 if EXIST "%msysloc%\usr\bin\patch.exe" echo.
 
 @rem Ask for Ninja use if exists. Load it if opted for it.
-@set useninja=n
-@if NOT %ninjastate%==0 set /p useninja=Use Ninja build system instead of MsBuild (y/n); less storage device strain, faster and more efficient build:
-@if NOT %ninjastate%==0 echo.
+@call "%devroot%\%projectname%\buildscript\modules\useninja.cmd"
 @if /I "%useninja%"=="y" if %ninjastate%==1 set PATH=%devroot%\ninja\;%PATH%
 
 @rem AMDGPU target (disabled, see https://github.com/pal1000/mesa-dist-win/issues/103)

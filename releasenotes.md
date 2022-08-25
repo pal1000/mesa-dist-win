@@ -7,7 +7,8 @@
 - Make debug binaries optimization optional as they take a lot of RAM to link when using MSVC;
 - Allow doing debug build with MinGW.
 ### Misc. refactor
-- MSYS2: Move package cache cleanning inside package update module.
+- MSYS2: Move package cache cleanning inside package update module;
+- Move question about Ninja build usage to a module to reuse it in all builds.
 # 22.1.7
 - Updated Mesa3D to [22.1.7](https://docs.mesa3d.org/relnotes/22.1.7.html).
 ### Distribution

@@ -28,9 +28,7 @@
 @call %vsenv% %hostabi%
 @echo.
 @IF EXIST "pkgconf\" RD /S /Q pkgconf
-@set useninja=n
-@IF %ninjastate% GTR 0 set /p useninja=Use Ninja build system instead of MsBuild (y/n):
-@IF %ninjastate% GTR 0 echo.
+@call "%devroot%\%projectname%\buildscript\modules\useninja.cmd"
 @IF /I "%useninja%"=="y" IF %ninjastate%==1 set PATH=%devroot%\ninja\;%PATH%
 @IF /I NOT "%useninja%"=="y" echo Configuring pkgconf build with : %mesonloc% pkgconf --backend=vs --buildtype=release -Dtests=false
 @IF /I NOT "%useninja%"=="y" echo.
