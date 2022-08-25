@@ -178,12 +178,12 @@
 
 @set mesadbgbld=n
 @set mesadbgoptim=n
-@if /I "%useninja%"=="y" IF %toolchain%==msvc set /p mesadbgbld=Debug friendly binaries (y/n):
-@if /I "%useninja%"=="y" IF %toolchain%==msvc echo.
+@if /I "%useninja%"=="y" set /p mesadbgbld=Debug friendly binaries (require a lot of RAM when using MSVC) (y/n):
+@if /I "%useninja%"=="y" echo.
 @if /I NOT "%mesadbgbld%"=="y" set buildconf=%buildconf% --buildtype=release
 @if /I NOT "%mesadbgbld%"=="y" IF NOT %toolchain%==msvc set LDFLAGS=%LDFLAGS% -s
 @if /I "%mesadbgbld%"=="y" set buildconf=%buildconf% --buildtype=debug
-@if /I "%mesadbgbld%"=="y" set /p mesadbgoptim=Optimize debug binaries (require a lot of RAM when using MSVC) (y/n):
+@if /I "%mesadbgbld%"=="y" set /p mesadbgoptim=Optimize debug binaries (y/n):
 @if /I "%mesadbgbld%"=="y" echo.
 @if /I "%mesadbgoptim%"=="y" set buildconf=%buildconf%optimized
 
