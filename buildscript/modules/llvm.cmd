@@ -51,9 +51,7 @@
 @if %cmakestate%==1 set PATH=%devroot%\cmake\bin\;%PATH%
 
 @rem Construct build configuration command.
-@set buildconf=cmake "%devroot%\llvm
-@if EXIST "%devroot%\llvm-project\" set buildconf=%buildconf%-project\llvm
-@set buildconf=%buildconf%" -G
+@set buildconf=cmake -G
 @if /I NOT "%useninja%"=="y" set buildconf=%buildconf% "Visual Studio %toolset%"
 @if %abi%==x86 if /I NOT "%useninja%"=="y" set buildconf=%buildconf% -A Win32
 @if %abi%==x64 if /I NOT "%useninja%"=="y" set buildconf=%buildconf% -A x64
@@ -69,7 +67,8 @@
 @IF /I "%buildclang%"=="y" set buildconf=%buildconf% -DCLANG_BUILD_TOOLS=ON
 @set buildconf=%buildconf% -DLLVM_ENABLE_RTTI=ON -DLLVM_ENABLE_TERMINFO=OFF
 
-@echo LLVM build configuration command^: %buildconf% -DCMAKE_INSTALL_PREFIX="%devroot%\llvm\build\%abi%"
+@if NOT EXIST "%devroot%\llvm-project\" echo LLVM build configuration command^: %buildconf% -DCMAKE_INSTALL_PREFIX="%devroot%\llvm\build\%abi%" "%devroot%\llvm"
+@if EXIST "%devroot%\llvm-project\" echo LLVM build configuration command^: %buildconf% -DCMAKE_INSTALL_PREFIX="%devroot%\llvm\build\%abi%" "%devroot%\llvm-project\llvm"
 @echo.
 
 @rem Ask to do LLVM build
@@ -77,11 +76,9 @@
 @echo.
 @IF /I NOT "%buildllvm%"=="y" GOTO skipllvm
 
-@rem Always clean build and remove LLVM SPIRV translator
+@rem Always clean build
 @echo Cleanning LLVM build. Please wait...
 @echo.
-@if EXIST "%devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator\" RD /S /Q "%devroot%\llvm-project\llvm\projects\SPIRV-LLVM-Translator"
-@if EXIST "%devroot%\llvm-project\llvm\projects\SPIRV-Headers\" RD /S /Q "%devroot%\llvm-project\llvm\projects\SPIRV-Headers"
 @if EXIST "%devroot%\llvm\build\%abi%\" RD /S /Q "%devroot%\llvm\build\%abi%"
 @if NOT EXIST "%devroot%\llvm-project\" cd "%devroot%\llvm"
 @if EXIST "%devroot%\llvm-project\" cd "%devroot%\llvm-project"
@@ -100,7 +97,8 @@
 @if /I "%useninja%"=="y" echo.
 
 @rem Configure and execute the build with the configuration made above.
-@%buildconf% -DCMAKE_INSTALL_PREFIX="%devroot%\llvm\build\%abi%"
+@if NOT EXIST "%devroot%\llvm-project\" %buildconf% -DCMAKE_INSTALL_PREFIX="%devroot%\llvm\build\%abi%" "%devroot%\llvm"
+@if EXIST "%devroot%\llvm-project\" %buildconf% -DCMAKE_INSTALL_PREFIX="%devroot%\llvm\build\%abi%" "%devroot%\llvm-project\llvm"
 @echo.
 @pause
 @echo.
@@ -123,7 +121,7 @@
 @IF %llvmsources% EQU 0 echo.
 @IF %llvmsources% EQU 1 IF %cmakestate% EQU 0 echo.
 @IF %llvmsources% EQU 1 IF %cmakestate% GTR 0 IF NOT EXIST "%devroot%\llvm\build\%abi%\lib\" echo.
-@IF /I "%buildclang%"=="y" call "%devroot%\%projectname%\buildscript\modules\llvmspv.cmd"
+@IF EXIST "%devroot%\llvm\build\%abi%\lib\" call "%devroot%\%projectname%\buildscript\modules\llvmspv.cmd"
 
 @rem Reset environment after LLVM build.
 @endlocal
