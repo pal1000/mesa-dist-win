@@ -77,16 +77,19 @@ echo irbuilder_h ^= files^(llvmloc + '/include/llvm/IR/IRBuilder.h'^)
 @CMD /C EXIT 0
 @FC /B "%devroot%\%projectname%\buildscript\mesonsubprojects\libelf.wrap" "%devroot%\mesa\subprojects\libelf.wrap">NUL 2>&1
 @if NOT "%ERRORLEVEL%"=="0" (
-@echo Switching libelf to full clone with default branch pre-fetched...
+@echo Switching libelf to full clone...
 @copy /Y "%devroot%\%projectname%\buildscript\mesonsubprojects\libelf.wrap" "%devroot%\mesa\subprojects\libelf.wrap"
 @echo.
 )
 @IF EXIST "%devroot%\mesa\subprojects\libelf-lfg-win32\" IF %gitstate% GTR 0 (
 @cd /D "%devroot%\mesa\subprojects\libelf-lfg-win32"
-echo Refreshing libelf for Windows...
-git pull --progress --tags --recurse-submodules origin
-echo.
-cd /D "%devroot%\mesa"
+@echo Refreshing libelf for Windows...
+@git remote set-url origin https://github.com/jenatali/libelf-lfg-win32.git
+@for /f tokens^=2^ delims^=/^ eol^= %%a in ('git symbolic-ref --short refs/remotes/origin/HEAD 2^>^&^1') do @git checkout %%a
+@git pull --progress --tags --recurse-submodules origin
+@git checkout 1.1.1
+@echo.
+@cd /D "%devroot%\mesa"
 )
 
 :mingwwraps
