@@ -80,14 +80,12 @@
 @ROBOCOPY "%devroot%\mesa\include" "%devroot%\%projectname%\include" /E
 @echo.
 
-@echo Copying debug information...
-@ROBOCOPY "%devroot%\mesa\build\%toolchain%-%abi%" "%devroot%\%projectname%\debugsymbols\%abi%" *.pdb /E
+@set /p getdebuginfo=Collect debug symbols (y/n):
 @echo.
+@if /I "%getdebuginfo%"=="y" call "%devroot%\%projectname%\buildscript\modules\collectdebugsymbols.cmd"
 
 :distributed
 @call "%devroot%\%projectname%\buildscript\modules\addversioninfo.cmd"
-@rem IF EXIST "%devroot%\%projectname%\lib\%abi%\src\gallium\targets\libgl-gdi\opengl32.dll.a" IF EXIST "%msysloc%\%LMSYSTEM%\bin\strip.exe" IF EXIST "%msysloc%\%LMSYSTEM%\bin\objcopy.exe" echo.
-@rem IF EXIST "%devroot%\%projectname%\lib\%abi%\src\gallium\targets\libgl-gdi\opengl32.dll.a" IF EXIST "%msysloc%\%LMSYSTEM%\bin\strip.exe" call "%devroot%\%projectname%\buildscript\modules\collectdebugsymbols.cmd"
 
 :exit
 @endlocal
