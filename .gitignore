@@ -18,6 +18,7 @@
 # Dynamically generated Meson native/cross files
 # /buildscript/mesonconffiles...
 # Debug symbols
-/debugsymbols
+/debugsymbols/x64
+/debugsymbols/x86
 # Debug patches
 /patches/test

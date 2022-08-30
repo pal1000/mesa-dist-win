@@ -13,6 +13,8 @@
 - Mesa3D build: Ask for Ninja build usage as soon as possible.
 ### Build environment updates
 - Update libelf-lfg-win32 to 1.1.1.
+### Debugging
+- MinGW: Add start debugging example.
 # 22.1.7
 - Updated Mesa3D to [22.1.7](https://docs.mesa3d.org/relnotes/22.1.7.html).
 ### Distribution
