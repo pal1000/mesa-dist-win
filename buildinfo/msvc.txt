@@ -3,17 +3,17 @@ Build environment
 Windows 10.0.22000
 Ressource Hacker 5.1.8.360
 7-Zip 22.01 ultra compression
-Git 2.37.1.1
+Git 2.37.2.2
 LunarG Vulkan SDK 1.3.224.0
 Visual Studio Community 2022 v17.3.2
 Windows SDK 10.1.22621.1
-Windows Driver Kit 10.1.22621.1
+Windows Driver Kit 10.1.22621.382
 Nuget Commandline tool 6.2.1.2
 Python 3.10.6
 
 Python packages
 ---------------
-Mako       1.2.1
+Mako       1.2.2
 MarkupSafe 2.1.1
 meson      0.63.1
 pip        22.2.2
