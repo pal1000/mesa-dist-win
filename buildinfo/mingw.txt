@@ -81,7 +81,7 @@ m4 1.4.19-2
 mingw-w64-i686-binutils 2.39-2
 mingw-w64-i686-bzip2 1.0.8-2
 mingw-w64-i686-ca-certificates 20211016-3
-mingw-w64-i686-clang 14.0.6-5
+mingw-w64-i686-clang 14.0.6-6
 mingw-w64-i686-crt-git 10.0.0.r72.g1dd2a4993-1
 mingw-w64-i686-expat 2.4.8-1
 mingw-w64-i686-gcc 12.2.0-1
@@ -100,7 +100,7 @@ mingw-w64-i686-libtasn1 4.19.0-1
 mingw-w64-i686-libtre-git r128.6fb7206-2
 mingw-w64-i686-libwinpthread-git 10.0.0.r72.g1dd2a4993-1
 mingw-w64-i686-libxml2 2.9.14-4
-mingw-w64-i686-llvm 14.0.6-5
+mingw-w64-i686-llvm 14.0.6-6
 mingw-w64-i686-meson 0.63.1-1
 mingw-w64-i686-mpc 1.2.1-1
 mingw-w64-i686-mpdecimal 2.5.1-1
@@ -135,7 +135,7 @@ mingw-w64-i686-zstd 1.5.2-2
 mingw-w64-x86_64-binutils 2.39-2
 mingw-w64-x86_64-bzip2 1.0.8-2
 mingw-w64-x86_64-ca-certificates 20211016-3
-mingw-w64-x86_64-clang 14.0.6-5
+mingw-w64-x86_64-clang 14.0.6-6
 mingw-w64-x86_64-crt-git 10.0.0.r72.g1dd2a4993-1
 mingw-w64-x86_64-expat 2.4.8-1
 mingw-w64-x86_64-gcc 12.2.0-1
@@ -154,7 +154,7 @@ mingw-w64-x86_64-libtasn1 4.19.0-1
 mingw-w64-x86_64-libtre-git r128.6fb7206-2
 mingw-w64-x86_64-libwinpthread-git 10.0.0.r72.g1dd2a4993-1
 mingw-w64-x86_64-libxml2 2.9.14-4
-mingw-w64-x86_64-llvm 14.0.6-5
+mingw-w64-x86_64-llvm 14.0.6-6
 mingw-w64-x86_64-meson 0.63.1-1
 mingw-w64-x86_64-mpc 1.2.1-1
 mingw-w64-x86_64-mpdecimal 2.5.1-1
