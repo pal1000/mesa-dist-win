@@ -128,7 +128,7 @@
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%mesaloc%\x86\dxil.dll" copy "%mesaloc%\x86\dxil.dll" "%windir%\SysWOW64"
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%mesaloc%\x64\dxil.dll" copy "%mesaloc%\x64\dxil.dll" "%windir%\System32"
 @if "%deploychoice%"=="2" IF /I %PROCESSOR_ARCHITECTURE%==AMD64 copy "%mesaloc%\x64\swr*.dll" "%windir%\System32"
-@call sydm\reggl.cmd mesadrv
+@call modules\reggl.cmd mesadrv
 @echo.
 @echo Desktop OpenGL drivers deploy complete.
 @GOTO enddeploy
@@ -151,7 +151,7 @@
 @IF /I %PROCESSOR_ARCHITECTURE%==X86 IF EXIST "%mesaloc%\x86\dxil.dll" copy "%mesaloc%\x86\dxil.dll" "%windir%\System32"
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%mesaloc%\x86\dxil.dll" copy "%mesaloc%\x86\dxil.dll" "%windir%\SysWOW64"
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%mesaloc%\x64\dxil.dll" copy "%mesaloc%\x64\dxil.dll" "%windir%\System32"
-@call sydm\reggl.cmd openglon12
+@call modules\reggl.cmd openglon12
 @echo.
 @echo Microsoft desktop OpenGL over D3D12 driver deploy complete.
 @GOTO enddeploy
@@ -219,8 +219,8 @@
 @IF "%1"=="" set /p keepdxil=Do you want to keep DirectX IL for redistribution (y/n, default - y):
 @IF "%1"=="" echo.
 @IF NOT "%1"=="" set keepdxil=n
-@call sydm\unreggl.cmd mesadrv
-@call sydm\unreggl.cmd openglon12
+@call modules\unreggl.cmd mesadrv
+@call modules\unreggl.cmd openglon12
 @IF EXIST "%windir%\System32\mesadrv.dll" del "%windir%\System32\mesadrv.dll"
 @IF EXIST "%windir%\System32\libglapi.dll" del "%windir%\System32\libglapi.dll"
 @IF /I "%keepdxil%"=="n" IF EXIST "%windir%\System32\dxil.dll" del "%windir%\System32\dxil.dll"

@@ -62,22 +62,22 @@
 @for /f delims^=^ eol^= %%a IN ('dir /A:L /B "%dir%" 2^>^&1') DO @(
 @IF /I "%%~nxa"=="opengl32.dll" set founddesktopgl=1
 @IF /I "%%~nxa"=="opengl32.dll" del "%dir%\%%~nxa"
-@if EXIST "%dir%\opengl32.dll" set overwritewarn=%overwritewarn%opengl32.dll, 
+@if EXIST "%dir%\opengl32.dll" set overwritewarn=%overwritewarn%opengl32.dll,
 @IF /I "%%~nxa"=="opengl32sw.dll" set founddesktopgl=1
 @IF /I "%%~nxa"=="opengl32sw.dll" del "%dir%\%%~nxa"
-@if EXIST "%dir%\opengl32sw.dll" set overwritewarn=%overwritewarn%opengl32sw.dll, 
+@if EXIST "%dir%\opengl32sw.dll" set overwritewarn=%overwritewarn%opengl32sw.dll,
 @IF /I "%%~nxa"=="dxil.dll" del "%dir%\%%~nxa"
-@if EXIST "%dir%\dxil.dll" set overwritewarn=%overwritewarn%dxil.dll, 
+@if EXIST "%dir%\dxil.dll" set overwritewarn=%overwritewarn%dxil.dll,
 @IF /I "%%~nxa"=="libEGL.dll" del "%dir%\%%~nxa"
-@if EXIST "%dir%\libEGL.dll" set overwritewarn=%overwritewarn%libEGL.dll, 
+@if EXIST "%dir%\libEGL.dll" set overwritewarn=%overwritewarn%libEGL.dll,
 @IF /I "%%~nxa"=="libGLESv1_CM.dll" del "%dir%\%%~nxa"
-@if EXIST "%dir%\libGLESv1_CM.dll" set overwritewarn=%overwritewarn%libGLESv1_CM.dll, 
+@if EXIST "%dir%\libGLESv1_CM.dll" set overwritewarn=%overwritewarn%libGLESv1_CM.dll,
 @IF /I "%%~nxa"=="libGLESv2.dll" del "%dir%\%%~nxa"
-@if EXIST "%dir%\libGLESv2.dll" set overwritewarn=%overwritewarn%libGLESv2.dll, 
+@if EXIST "%dir%\libGLESv2.dll" set overwritewarn=%overwritewarn%libGLESv2.dll,
 @IF /I "%%~nxa"=="OpenCL.dll" del "%dir%\%%~nxa"
-@if EXIST "%dir%\OpenCL.dll" set overwritewarn=%overwritewarn%OpenCL.dll, 
+@if EXIST "%dir%\OpenCL.dll" set overwritewarn=%overwritewarn%OpenCL.dll,
 )
-@if defined overwritewarn echo WARNING: These files may get overwritten depending which Mesa3D components you choose to deploy: %overwritewarn:~0,-2%. If Mesa3D doesn't help or you choose to wipe the deployment a reinstall/repair install of affected software is necessary to restore original files.
+@if defined overwritewarn echo WARNING: These files may get overwritten depending which Mesa3D components you choose to deploy: %overwritewarn:~0,-1%. If Mesa3D doesn't help or you choose to wipe the deployment a reinstall/repair install of affected software is necessary to restore original files.
 @if defined overwritewarn echo.
 @IF EXIST "%dir%\libgallium_wgl.dll" del "%dir%\libgallium_wgl.dll"
 @IF EXIST "%dir%\libglapi.dll" del "%dir%\libglapi.dll"
@@ -130,11 +130,11 @@
 @IF EXIST "%mesaloc%\%mesadll%\dxil.dll" IF EXIST "%dir%\dxil.dll" del "%dir%\dxil.dll"
 @IF EXIST "%dir%\opengl32.dll" del "%dir%\opengl32.dll"
 @IF EXIST "%dir%\opengl32sw.dll" del "%dir%\opengl32sw.dll"
-@mklink "%dir%\opengl32.dll" "%mesaloc%\%mesadll%\opengl32.dll"
-@mklink "%dir%\opengl32sw.dll" "%mesaloc%\%mesadll%\opengl32.dll"
-@IF EXIST "%mesaloc%\%mesadll%\libglapi.dll" IF NOT EXIST "%dir%\libglapi.dll" mklink "%dir%\libglapi.dll" "%mesaloc%\%mesadll%\libglapi.dll"
-@IF EXIST "%mesaloc%\%mesadll%\libgallium_wgl.dll" IF NOT EXIST "%dir%\libgallium_wgl.dll" mklink "%dir%\libgallium_wgl.dll" "%mesaloc%\%mesadll%\libgallium_wgl.dll"
-@IF EXIST "%mesaloc%\%mesadll%\dxil.dll" IF NOT EXIST "%dir%\dxil.dll" mklink "%dir%\dxil.dll" "%mesaloc%\%mesadll%\dxil.dll"
+@call modules\mklink.cmd opengl32
+@call modules\mklink.cmd opengl32sw
+@IF EXIST "%mesaloc%\%mesadll%\libglapi.dll" IF NOT EXIST "%dir%\libglapi.dll" call modules\mklink.cmd libglapi
+@IF EXIST "%mesaloc%\%mesadll%\libgallium_wgl.dll" IF NOT EXIST "%dir%\libgallium_wgl.dll" call modules\mklink.cmd libgallium_wgl
+@IF EXIST "%mesaloc%\%mesadll%\dxil.dll" IF NOT EXIST "%dir%\dxil.dll" call modules\mklink.cmd dxil
 @IF NOT "%dir%\%appexe%"=="%dir%\" echo dummy > "%dir%\%appexe%.local"
 @echo.
 @set swr=n
@@ -142,10 +142,10 @@
 @IF EXIST "%mesaloc%\%mesadll%\swr*.dll" if %mesadll%==x64 echo.
 @IF /I NOT "%swr%"=="y" GOTO opengles
 @IF %foundswr% EQU 1 echo Updating swr driver deployment...
-@IF EXIST "%mesaloc%\x64\swrAVX.dll" IF NOT EXIST "%dir%\swrAVX.dll" mklink "%dir%\swrAVX.dll" "%mesaloc%\x64\swrAVX.dll"
-@IF EXIST "%mesaloc%\x64\swrAVX2.dll" IF NOT EXIST "%dir%\swrAVX2.dll" mklink "%dir%\swrAVX2.dll" "%mesaloc%\x64\swrAVX2.dll"
-@IF EXIST "%mesaloc%\x64\swrSKX.dll" IF NOT EXIST "%dir%\swrSKX.dll" mklink "%dir%\swrSKX.dll" "%mesaloc%\x64\swrSKX.dll"
-@IF EXIST "%mesaloc%\x64\swrKNL.dll" IF NOT EXIST "%dir%\swrKNL.dll" mklink "%dir%\swrKNL.dll" "%mesaloc%\x64\swrKNL.dll"
+@IF EXIST "%mesaloc%\%mesadll%\swrAVX.dll" IF NOT EXIST "%dir%\swrAVX.dll" call modules\mklink.cmd swrAVX
+@IF EXIST "%mesaloc%\%mesadll%\swrAVX2.dll" IF NOT EXIST "%dir%\swrAVX2.dll" call modules\mklink.cmd swrAVX2
+@IF EXIST "%mesaloc%\%mesadll%\swrSKX.dll" IF NOT EXIST "%dir%\swrSKX.dll" call modules\mklink.cmd swrSKX
+@IF EXIST "%mesaloc%\%mesadll%\swrKNL.dll" IF NOT EXIST "%dir%\swrKNL.dll" call modules\mklink.cmd swrKNL
 @echo.
 
 :opengles
@@ -158,13 +158,13 @@
 @if EXIST "%dir%\libGLESv2.dll" del "%dir%\libGLESv2.dll"
 @IF NOT EXIST "%mesaloc%\%mesadll%\libgallium_wgl.dll" IF EXIST "%mesaloc%\%mesadll%\opengl32.dll" IF EXIST "%dir%\opengl32.dll" del "%dir%\opengl32.dll"
 @IF NOT EXIST "%mesaloc%\%mesadll%\libgallium_wgl.dll" IF EXIST "%mesaloc%\%mesadll%\opengl32.dll" IF EXIST "%dir%\opengl32sw.dll" del "%dir%\opengl32sw.dll"
-@IF EXIST "%mesaloc%\%mesadll%\libglapi.dll" IF NOT EXIST "%dir%\libglapi.dll" mklink "%dir%\libglapi.dll" "%mesaloc%\%mesadll%\libglapi.dll"
-@IF EXIST "%mesaloc%\%mesadll%\libEGL.dll" IF NOT EXIST "%dir%\libEGL.dll" mklink "%dir%\libEGL.dll" "%mesaloc%\%mesadll%\libEGL.dll"
-@IF EXIST "%mesaloc%\%mesadll%\libgallium_wgl.dll" IF NOT EXIST "%dir%\libgallium_wgl.dll" mklink "%dir%\libgallium_wgl.dll" "%mesaloc%\%mesadll%\libgallium_wgl.dll"
-@IF NOT EXIST "%mesaloc%\%mesadll%\libgallium_wgl.dll" IF EXIST "%mesaloc%\%mesadll%\opengl32.dll" IF NOT EXIST "%dir%\opengl32.dll" mklink "%dir%\opengl32.dll" "%mesaloc%\%mesadll%\opengl32.dll"
-@IF NOT EXIST "%mesaloc%\%mesadll%\libgallium_wgl.dll" IF EXIST "%mesaloc%\%mesadll%\opengl32.dll" IF NOT EXIST "%dir%\opengl32sw.dll" mklink "%dir%\opengl32sw.dll" "%mesaloc%\%mesadll%\opengl32.dll"
-@IF EXIST "%mesaloc%\%mesadll%\libGLESv1_CM.dll" IF NOT EXIST "%dir%\libGLESv1_CM.dll" mklink "%dir%\libGLESv1_CM.dll" "%mesaloc%\%mesadll%\libGLESv1_CM.dll"
-@IF EXIST "%mesaloc%\%mesadll%\libGLESv2.dll" IF NOT EXIST "%dir%\libGLESv2.dll" mklink "%dir%\libGLESv2.dll" "%mesaloc%\%mesadll%\libGLESv2.dll"
+@IF EXIST "%mesaloc%\%mesadll%\libglapi.dll" IF NOT EXIST "%dir%\libglapi.dll" call modules\mklink.cmd libglapi
+@IF EXIST "%mesaloc%\%mesadll%\libEGL.dll" IF NOT EXIST "%dir%\libEGL.dll" call modules\mklink.cmd libEGL
+@IF EXIST "%mesaloc%\%mesadll%\libgallium_wgl.dll" IF NOT EXIST "%dir%\libgallium_wgl.dll" call modules\mklink.cmd libgallium_wgl
+@IF NOT EXIST "%mesaloc%\%mesadll%\libgallium_wgl.dll" IF EXIST "%mesaloc%\%mesadll%\opengl32.dll" IF NOT EXIST "%dir%\opengl32.dll" call modules\mklink.cmd opengl32
+@IF NOT EXIST "%mesaloc%\%mesadll%\libgallium_wgl.dll" IF EXIST "%mesaloc%\%mesadll%\opengl32.dll" IF NOT EXIST "%dir%\opengl32sw.dll" call modules\mklink.cmd opengl32sw
+@IF EXIST "%mesaloc%\%mesadll%\libGLESv1_CM.dll" IF NOT EXIST "%dir%\libGLESv1_CM.dll" call modules\mklink.cmd libGLESv1_CM
+@IF EXIST "%mesaloc%\%mesadll%\libGLESv2.dll" IF NOT EXIST "%dir%\libGLESv2.dll" call modules\mklink.cmd libGLESv2
 @echo.
 
 :clover
@@ -174,8 +174,8 @@
 @if /I NOT "%deploy_clover%"=="y" GOTO osmesa
 @IF %foundclover% EQU 1 echo Updating Mesa3D clover deployment...
 @IF EXIST "%dir%\OpenCL.dll" del "%dir%\OpenCL.dll"
-@IF EXIST "%mesaloc%\%mesadll%\OpenCL.dll" IF NOT EXIST "%dir%\OpenCL.dll" mklink "%dir%\OpenCL.dll" "%mesaloc%\%mesadll%\OpenCL.dll"
-@IF EXIST "%mesaloc%\%mesadll%\pipe_swrast.dll" IF NOT EXIST "%dir%\pipe_swrast.dll" mklink "%dir%\pipe_swrast.dll" "%mesaloc%\%mesadll%\pipe_swrast.dll"
+@IF EXIST "%mesaloc%\%mesadll%\OpenCL.dll" IF NOT EXIST "%dir%\OpenCL.dll" call modules\mklink.cmd OpenCL
+@IF EXIST "%mesaloc%\%mesadll%\pipe_swrast.dll" IF NOT EXIST "%dir%\pipe_swrast.dll" call modules\mklink.cmd pipe_swrast
 @echo.
 
 :osmesa
@@ -184,8 +184,8 @@
 @IF EXIST "%mesaloc%\%mesadll%\osmesa.dll" echo.
 @if /I NOT "%osmesa%"=="y" GOTO graw
 @IF %foundosmesa% EQU 1 echo Updating Mesa3D off-screen rendering interface deployment...
-@mklink "%dir%\osmesa.dll" "%mesaloc%\%mesadll%\osmesa.dll"
-@IF EXIST "%mesaloc%\%mesadll%\libglapi.dll" IF NOT EXIST "%dir%\libglapi.dll" mklink "%dir%\libglapi.dll" "%mesaloc%\%mesadll%\libglapi.dll"
+@call modules\mklink.cmd osmesa
+@IF EXIST "%mesaloc%\%mesadll%\libglapi.dll" IF NOT EXIST "%dir%\libglapi.dll" call modules\mklink.cmd libglapi
 @echo.
 
 :graw
@@ -195,9 +195,9 @@
 @echo.
 @if /I NOT "%graw%"=="y" GOTO restart
 @IF %foundgraw% EQU 1 echo Updating Mesa3D graw framework deployment...
-@IF EXIST "%mesaloc%\%mesadll%\graw.dll" if NOT EXIST "%dir%\graw.dll" mklink "%dir%\graw.dll" "%mesaloc%\%mesadll%\graw.dll"
-@IF EXIST "%mesaloc%\%mesadll%\graw_null.dll" if NOT EXIST "%dir%\graw_null.dll" mklink "%dir%\graw_null.dll" "%mesaloc%\%mesadll%\graw_null.dll"
-@IF EXIST "%mesaloc%\%mesadll%\libglapi.dll" if NOT EXIST "%dir%\libglapi.dll" mklink "%dir%\libglapi.dll" "%mesaloc%\%mesadll%\libglapi.dll"
+@IF EXIST "%mesaloc%\%mesadll%\graw.dll" if NOT EXIST "%dir%\graw.dll" call modules\mklink.cmd graw
+@IF EXIST "%mesaloc%\%mesadll%\graw_null.dll" if NOT EXIST "%dir%\graw_null.dll" call modules\mklink.cmd graw_null
+@IF EXIST "%mesaloc%\%mesadll%\libglapi.dll" if NOT EXIST "%dir%\libglapi.dll" call modules\mklink.cmd libglapi
 @echo.
 
 :restart

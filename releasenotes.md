@@ -15,6 +15,8 @@
 - Update libelf-lfg-win32 to 1.1.1.
 ### Debugging
 - MinGW: Add start debugging tutorial and script.
+### Deployment
+- Per application deployment: Use hard links when possible to workaround msys2/MINGW-packages#12889.
 # 22.1.7
 - Updated Mesa3D to [22.1.7](https://docs.mesa3d.org/relnotes/22.1.7.html).
 ### Distribution
