@@ -2,7 +2,7 @@
 @TITLE %TITLE%
 
 @rem Determine Mesa3D build environment root folder and convert the path to it into DOS 8.3 format to avoid quotes mess.
-@cd "%~dp0"
+@cd /d "%~dp0"
 @cd ..\..\
 @set CD=
 @set devroot=%CD%

@@ -20,7 +20,8 @@
 @IF "%*"=="" echo driver with Mesa3D OpenGL drivers.
 @IF "%*"=="" echo.
 @IF "%*"=="" pause
-@set mesaloc=%~dp0
+@set CD=
+@set mesaloc=%CD%
 @IF %mesaloc:~0,1%%mesaloc:~-1%=="" set mesaloc=%mesaloc:~1,-1%
 @IF "%mesaloc:~-1%"=="\" set mesaloc=%mesaloc:~0,-1%
 

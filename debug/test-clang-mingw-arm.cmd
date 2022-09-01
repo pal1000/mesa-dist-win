@@ -1,5 +1,5 @@
 @set projectname=mesa-dist-win
-@cd "%~dp0"
+@cd /d "%~dp0"
 @cd ..\..\
 @set CD=
 @set devroot=%CD%

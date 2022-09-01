@@ -24,7 +24,8 @@
 @echo Build Mesainjector - https://fdossena.com/?p=mesa/injector_build.frag
 @echo.
 @pause
-@set mesaloc=%~dp0
+@set CD=
+@set mesaloc=%CD%
 @IF %mesaloc:~0,1%%mesaloc:~-1%=="" set mesaloc=%mesaloc:~1,-1%
 @IF "%mesaloc:~-1%"=="\" set mesaloc=%mesaloc:~0,-1%
 
