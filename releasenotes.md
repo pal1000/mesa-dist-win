@@ -16,7 +16,8 @@
 ### Debugging
 - MinGW: Add start debugging tutorial and script.
 ### Deployment
-- Per application deployment: Use hard links when possible to workaround msys2/MINGW-packages#12889.
+- Per application deployment: Use hard links when possible to workaround msys2/MINGW-packages#12889;
+- Per application deployment: Do overwrite checks later to avoid race conditions that lead to false positives.
 # 22.1.7
 - Updated Mesa3D to [22.1.7](https://docs.mesa3d.org/relnotes/22.1.7.html).
 ### Distribution
