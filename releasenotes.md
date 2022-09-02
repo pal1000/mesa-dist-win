@@ -1,5 +1,6 @@
 ### Distribution
-- Debug symbols support with both MSVC and MinGW (#54).
+- Debug symbols support with both MSVC and MinGW (#54);
+- Keep previously collected debug symbols if not collecting them again.
 ### Build script
 - pkgconf source code: go back 2 commits to workaround [Windows build break](https://gitea.treehouse.systems/ariadne/pkgconf/pulls/244);
 - pkgconf source code was relocated to Gitea Teehouse;
