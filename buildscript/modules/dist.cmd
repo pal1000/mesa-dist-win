@@ -10,7 +10,7 @@
 @set dist=n
 @set /p dist=Create or update Mesa3D distribution package (y/n):
 @echo.
-@if /I NOT "%dist%"=="y" GOTO exit
+@if /I NOT "%dist%"=="y" GOTO donedist
 @cd "%devroot%\%projectname%"
 
 @rem Normal distribution vs Meson install
@@ -77,4 +77,6 @@
 
 :distributed
 @call "%devroot%\%projectname%\buildscript\modules\addversioninfo.cmd"
+
+:donedist
 @endlocal
