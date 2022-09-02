@@ -143,6 +143,9 @@
 @IF %intmesaver% GEQ 21300 IF %intmesaver% LSS 22203 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" mclc-all-targets
 @IF %intmesaver:~0,3% EQU 213 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" clover-all-targets
 
+@rem Link clang like LLVM
+@call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" link-clang-like-llvm
+
 :configmesabuild
 @rem Configure Mesa build.
 @set buildconf=%mesonloc% setup
@@ -160,8 +163,7 @@
 @IF %toolchain%==msvc IF %intmesaver% GEQ 21200 IF %intmesaver% LSS 22100 set buildconf=%buildconf% -Dcpp_std=vc++latest
 
 @IF NOT %toolchain%==msvc set CFLAGS=-march^=core2 -pipe
-@IF NOT %toolchain%==msvc set LDFLAGS=-static
-@IF NOT %toolchain%==msvc set buildconf=%buildconf% --prefer-static
+@IF NOT %toolchain%==msvc set LDFLAGS=
 @IF NOT %toolchain%==msvc set buildcmd=%runmsys% /%LMSYSTEM%/bin/ninja -C "%devroot%\mesa\build\%toolchain%-%abi%" -j %throttle% -k 0
 @IF NOT %toolchain%==msvc IF %intmesaver% GTR 20000 set buildconf=%buildconf% -Dzstd=%mesonbooltrue%
 
@@ -178,7 +180,9 @@
 @if /I "%useninja%"=="y" set /p mesadbgbld=Debug friendly binaries (require a lot of RAM when using MSVC) (y/n):
 @if /I "%useninja%"=="y" echo.
 @if /I NOT "%mesadbgbld%"=="y" set buildconf=%buildconf% --buildtype=release
-@if /I NOT "%mesadbgbld%"=="y" IF NOT %toolchain%==msvc set LDFLAGS=%LDFLAGS% -s
+@if /I NOT "%mesadbgbld%"=="y" IF NOT %toolchain%==msvc set LDFLAGS=-static -s
+@if /I NOT "%mesadbgbld%"=="y" IF NOT %toolchain%==msvc set buildconf=%buildconf% --prefer-static
+
 @if /I "%mesadbgbld%"=="y" set buildconf=%buildconf% --buildtype=debug
 @if /I "%mesadbgbld%"=="y" set /p mesadbgoptim=Optimize debug binaries (y/n):
 @if /I "%mesadbgbld%"=="y" echo.
@@ -199,7 +203,9 @@
 @if /I NOT "%llvmless%"=="y" IF %llvmconfigbusted% EQU 1 set buildconf=%buildconf%,llvm
 @if /I NOT "%llvmless%"=="y" IF %intmesaver% GEQ 22000 IF %intmesaver% LSS 22200 IF NOT %toolchain%==msvc set RTTI=%LLVMRTTI%
 @IF %intmesaver% GEQ 22000 set buildconf=%buildconf% -Dcpp_rtti=%RTTI%
-@if /I NOT "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm=%mesonbooltrue% -Dshared-llvm=%mesonboolfalse%
+@if /I NOT "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm=%mesonbooltrue%
+@if /I NOT "%llvmless%"=="y" if /I NOT "%mesadbgbld%"=="y" set buildconf=%buildconf% -Dshared-llvm=%mesonboolfalse%
+@if /I NOT "%llvmless%"=="y" if /I "%mesadbgbld%"=="y" set buildconf=%buildconf% -Dshared-llvm=%mesonbooltrue%
 @if /I NOT "%llvmless%"=="y" IF %llvmmethod%==cmake set buildconf=%buildconf% --cmake-prefix-path="%devroot:\=/%/llvm/build/%abi%"
 @if /I NOT "%llvmless%"=="y" IF %llvmmethod%==cmake IF %cmakestate% EQU 1 SET PATH=%devroot%\cmake\bin\;%PATH%
 @if /I NOT "%llvmless%"=="y" IF NOT %llvmmethod%==cmake set buildconf=%buildconf% --cmake-prefix-path=
@@ -299,7 +305,7 @@
 @if /I "%dozenmsvk%"=="y" set buildconf=%buildconf%microsoft-experimental,
 @IF %mesavkcount% GTR 0 set buildconf=%buildconf:~0,-1%
 
-@IF %msysregex%==1 IF %disableootpatch% EQU 1 set LDFLAGS=%LDFLAGS% -ltre -lintl -liconv
+@IF %msysregex%==1 IF %disableootpatch% EQU 1 if /I NOT "%mesadbgbld%"=="y" set LDFLAGS=%LDFLAGS% -ltre -lintl -liconv
 
 @set d3d10umd=n
 @set cand3d10umd=1
@@ -373,7 +379,7 @@
 @set PKG_CONFIG_LIBCLC=0
 @set PKG_CONFIG_SPV=0
 
-@rem Microsoft OpenCL compiler requires OpenCL SPIR-V, DirectX Headers and out of tree patches [21.3+]
+@rem Microsoft OpenCL compiler requires OpenCL SPIR-V, DirectX Headers and out of tree patches [21.3-22.2]
 @set canmclc=0
 @IF %canclspv% EQU 1 IF %canmcrdrvcom% EQU 1 set canmclc=1
 @IF %disableootpatch%==1 IF %intmesaver% GEQ 21300 IF %intmesaver% LSS 22203 set canmclc=0

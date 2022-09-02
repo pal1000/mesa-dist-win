@@ -1,0 +1,26 @@
+diff --git a/meson.build b/meson.build
+index f5383757acc9043553e2cd0bc1e4ef834310dd7d..da63f71fd00c3882193c00e8ff88a999734a001a 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1856,7 +1856,7 @@ if with_clc
+ 
+   dep_clang = cpp.find_library('clang-cpp', dirs : llvm_libdir, required : false)
+ 
+-  if not dep_clang.found()
++  if not dep_clang.found() or not _shared_llvm
+     clang_modules = [
+       'clangBasic', 'clangAST', 'clangCodeGen', 'clangLex',
+       'clangDriver', 'clangFrontend', 'clangFrontendTool',
+diff --git a/src/gallium/targets/opencl/meson.build b/src/gallium/targets/opencl/meson.build
+index 14df6b86f7fc2f54411f8f550f81e467c1acfe2b..8f9d7ac5a537fedc6f7e6c161f1f49d3910a10c5 100644
+--- a/src/gallium/targets/opencl/meson.build
++++ b/src/gallium/targets/opencl/meson.build
+@@ -58,7 +58,7 @@ if can_check_clang
+ else
+   dep_clang_usable = true
+ endif
+-if not (dep_clang.found() and dep_clang_usable)
++if not _shared_llvm or not (dep_clang.found() and dep_clang_usable)
+   dep_clang = [
+     cpp.find_library('clangCodeGen', dirs : llvm_libdir),
+     cpp.find_library('clangFrontendTool', dirs : llvm_libdir),

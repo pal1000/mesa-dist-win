@@ -7,7 +7,8 @@
 - Disable Futex usage by default to reflect [poll](https://github.com/pal1000/mesa-dist-win/discussions/112) results;
 - Make debug binaries optimization optional as they take a lot of RAM to link when using MSVC;
 - Allow doing debug build with MinGW;
-- LLVM SPIRV translator: Build out of tree and allow build without clang.
+- LLVM SPIRV translator: Build out of tree and allow build without clang;
+- MinGW: Link everything dynamically when doing debug build to avoid LLVM JIT getting into symbol file and confuse GDB.
 ### Misc. refactor
 - MSYS2: Move package cache cleanning inside package update module;
 - Move question about Ninja build usage to a module to reuse it in all builds;
