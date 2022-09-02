@@ -1,7 +1,5 @@
 @setlocal
 @rem Create distribution.
-@if NOT EXIST "%devroot%\mesa\build\%toolchain%-%abi%\" GOTO exit
-
 @rem Keep both clover standalone and ICD intact
 @IF EXIST "%devroot%\mesa\build\%toolchain%-%abi%\src\gallium\targets\opencl\*penCL-1.dll" IF EXIST "%devroot%\mesa\build\%toolchain%-%abi%\src\gallium\targets\opencl\*penCL.dll" del /Q "%devroot%\mesa\build\%toolchain%-%abi%\src\gallium\targets\opencl\*penCL.dll"
 @IF EXIST "%devroot%\mesa\build\%toolchain%-%abi%\src\gallium\targets\opencl\MesaOpenCL-1.dll" REN "%devroot%\mesa\build\%toolchain%-%abi%\src\gallium\targets\opencl\MesaOpenCL-1.dll" MesaOpenCL.dll
@@ -77,14 +75,6 @@
 @ROBOCOPY "%devroot%\mesa\include" "%devroot%\%projectname%\include" /E
 @echo.
 
-@set /p getdebuginfo=Collect debug symbols (y/n):
-@echo.
-@if /I "%getdebuginfo%"=="y" call "%devroot%\%projectname%\buildscript\modules\collectdebugsymbols.cmd"
-
 :distributed
 @call "%devroot%\%projectname%\buildscript\modules\addversioninfo.cmd"
-
-:exit
 @endlocal
-@pause
-@exit

@@ -89,4 +89,9 @@
 @call "%devroot%\%projectname%\buildscript\modules\mesa3d.cmd"
 
 @rem Create distribution
-@call "%devroot%\%projectname%\buildscript\modules\dist.cmd"
+@IF EXIST "%devroot%\mesa\build\%toolchain%-%abi%\" call "%devroot%\%projectname%\buildscript\modules\dist.cmd"
+
+@rem Collect debug symbols
+@IF EXIST "%devroot%\mesa\build\%toolchain%-%abi%\" call "%devroot%\%projectname%\buildscript\modules\collectdebugsymbols.cmd"
+@pause
+@exit
