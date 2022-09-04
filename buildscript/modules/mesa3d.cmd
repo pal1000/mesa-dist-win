@@ -177,7 +177,8 @@
 
 @set mesadbgbld=n
 @set mesadbgoptim=n
-@if /I "%useninja%"=="y" set /p mesadbgbld=Debug friendly binaries (require a lot of RAM when using MSVC) (y/n):
+@if /I "%useninja%"=="y" IF %toolchain%==msvc set /p mesadbgbld=Debug friendly binaries (require a lot of RAM) (y/n):
+@if /I "%useninja%"=="y" IF NOT %toolchain%==msvc set /p mesadbgbld=Debug friendly binaries (can only link dependencies dynamically) (y/n):
 @if /I "%useninja%"=="y" echo.
 @if /I NOT "%mesadbgbld%"=="y" set buildconf=%buildconf% --buildtype=release
 @if /I NOT "%mesadbgbld%"=="y" IF NOT %toolchain%==msvc set LDFLAGS=-static -s
