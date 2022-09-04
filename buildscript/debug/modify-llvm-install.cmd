@@ -1,5 +1,5 @@
 @cd /d "%~dp0"
-@cd ..\..\
+@cd ..\..\..\
 @set CD=
 @set devroot=%CD%
 @IF %devroot:~0,1%%devroot:~-1%=="" set devroot=%devroot:~1,-1%

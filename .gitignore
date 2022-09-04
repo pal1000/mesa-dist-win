@@ -11,14 +11,14 @@
 /dist
 # Build script assets
 /buildscript/assets
-# Debug scripts output backup
-/debug/llvm-config-old.txt
+# Debug scripts output
+/buildscript/debug/*.txt
 # Dynamically generated Meson subprojects wraps
 /buildscript/mesonsubprojects/*.build
 # Dynamically generated Meson native/cross files
 # /buildscript/mesonconffiles...
 # Debug symbols
-/debugsymbols/x64
-/debugsymbols/x86
+/debug/x64
+/debug/x86
 # Debug patches
 /patches/test

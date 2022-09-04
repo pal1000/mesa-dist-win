@@ -1,5 +1,5 @@
 @cd /d "%~dp0"
-@cd ..\..\
+@cd ..\..\..\
 @set format=pythonlist
 @set llvmmodules=engine coroutines
 @set CD=

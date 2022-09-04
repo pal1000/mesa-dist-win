@@ -18,7 +18,7 @@
 # The symbol file name has to match faulting module name with extra .sym extension and the path to it has to use / as
 # separator, run cygpath -m <path> to easily convert path to symbol file for GDB usage, don't forget to add sorounding
 # quotes to this path
-cd "c:\Software\systools\GPU/GPU_Caps_Viewer";gdb -ex 'symbol-file "c:/Software/Development/projects/mesa-dist-win/debugsymbols/x86/clon12compiler.dll.sym"' -ex 'target exec GPU_Caps_Viewer.exe' -ex 'run'
+cd "c:\Software\systools\GPU/GPU_Caps_Viewer";gdb -ex 'symbol-file "c:/Software/Development/projects/mesa-dist-win/debugsymbols/x86/libgallium_wgl.dll.debug"' -ex 'target exec GPU_Caps_Viewer.exe' -ex 'run'
 # - Once program crashes collect backtrace by entering `bt` at GDB shell then type `continue`;
 # - Repeat last step until the crashing program is closed;
 # You can do more complex debugging if you are an advanced GDB user.
