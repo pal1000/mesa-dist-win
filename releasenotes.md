@@ -12,7 +12,8 @@
 ### Misc. refactor
 - MSYS2: Move package cache cleanning inside package update module;
 - Move question about Ninja build usage to a module to reuse it in all builds;
-- Mesa3D build: Ask for Ninja build usage as soon as possible.
+- Mesa3D build: Ask for Ninja build usage as soon as possible;
+- MSYS2 vulkan-loader: Re-install only when necessary.
 ### Build environment updates
 - Update libelf-lfg-win32 to 1.1.1.
 ### Debugging

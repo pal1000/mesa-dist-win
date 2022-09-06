@@ -113,8 +113,10 @@ echo irbuilder_h ^= files^(llvmloc + '/include/llvm/IR/IRBuilder.h'^)
 @IF "%vksdkselect%"=="2" (
 @set "VULKAN_SDK="
 @set "VK_SDK_PATH="
+@IF NOT EXIST "%msysloc%\%LMSYSTEM%\lib\pkgconfig\vulkan.pc" (
 @%runmsys% /usr/bin/pacman -S ${MINGW_PACKAGE_PREFIX}-vulkan-loader --noconfirm
 @echo.
+)
 @IF EXIST "%devroot%\mesa\subprojects\vulkan\" RD /S /Q "%devroot%\mesa\subprojects\vulkan"
 @GOTO donewrap
 )
@@ -150,6 +152,7 @@ echo meson.override_dependency^('vulkan', dep_vk_override^)
 @IF %toolchain%==gcc IF EXIST "%msysloc%\%LMSYSTEM%\lib\libvulkan.dll.a" del "%msysloc%\%LMSYSTEM%\lib\libvulkan.dll.a"
 @IF %toolchain%==gcc IF EXIST "%msysloc%\%LMSYSTEM%\lib\pkgconfig\vulkan.pc" del "%msysloc%\%LMSYSTEM%\lib\pkgconfig\vulkan.pc"
 @IF %toolchain%==gcc IF EXIST "%msysloc%\%LMSYSTEM%\bin\libvulkan-1.dll" del "%msysloc%\%LMSYSTEM%\bin\libvulkan-1.dll"
+@IF %toolchain%==gcc IF EXIST "%msysloc%\%LMSYSTEM%\bin\vulkan-1.dll" del "%msysloc%\%LMSYSTEM%\bin\vulkan-1.dll"
 
 :donewrap
 @endlocal&set LLVMRTTI=%LLVMRTTI%&set llvmconfigbusted=%llvmconfigbusted%&set "VK_SDK_PATH=%VK_SDK_PATH%"&set "VULKAN_SDK=%VULKAN_SDK%"
