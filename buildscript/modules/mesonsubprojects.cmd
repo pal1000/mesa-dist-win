@@ -28,8 +28,8 @@
 
 @rem llvmlibs must match the output of 'llvm-config --link-static --libnames engine coroutines' stripped of ending newline.
 @rem Current llvmlibs is valid for LLVM 14.* series.
-@if /I NOT "%mesadbgbld%"=="y" set llvmlibs=libLLVMCoroutines.a libLLVMipo.a libLLVMInstrumentation.a libLLVMVectorize.a libLLVMLinker.a libLLVMIRReader.a libLLVMAsmParser.a libLLVMFrontendOpenMP.a libLLVMInterpreter.a libLLVMExecutionEngine.a libLLVMRuntimeDyld.a libLLVMOrcTargetProcess.a libLLVMOrcShared.a libLLVMCodeGen.a libLLVMTarget.a libLLVMScalarOpts.a libLLVMInstCombine.a libLLVMAggressiveInstCombine.a libLLVMTransformUtils.a libLLVMBitWriter.a libLLVMAnalysis.a libLLVMProfileData.a libLLVMDebugInfoDWARF.a libLLVMObject.a libLLVMTextAPI.a libLLVMMCParser.a libLLVMMC.a libLLVMDebugInfoCodeView.a libLLVMBitReader.a libLLVMCore.a libLLVMRemarks.a libLLVMBitstreamReader.a libLLVMBinaryFormat.a libLLVMSupport.a libLLVMDemangle.a
-@if /I "%mesadbgbld%"=="y" set llvmlibs=libLLVM-14
+@if /I NOT "%linkmingwdynamic%"=="y" set llvmlibs=libLLVMCoroutines.a libLLVMipo.a libLLVMInstrumentation.a libLLVMVectorize.a libLLVMLinker.a libLLVMIRReader.a libLLVMAsmParser.a libLLVMFrontendOpenMP.a libLLVMInterpreter.a libLLVMExecutionEngine.a libLLVMRuntimeDyld.a libLLVMOrcTargetProcess.a libLLVMOrcShared.a libLLVMCodeGen.a libLLVMTarget.a libLLVMScalarOpts.a libLLVMInstCombine.a libLLVMAggressiveInstCombine.a libLLVMTransformUtils.a libLLVMBitWriter.a libLLVMAnalysis.a libLLVMProfileData.a libLLVMDebugInfoDWARF.a libLLVMObject.a libLLVMTextAPI.a libLLVMMCParser.a libLLVMMC.a libLLVMDebugInfoCodeView.a libLLVMBitReader.a libLLVMCore.a libLLVMRemarks.a libLLVMBitstreamReader.a libLLVMBinaryFormat.a libLLVMSupport.a libLLVMDemangle.a
+@if /I "%linkmingwdynamic%"=="y" set llvmlibs=libLLVM-14
 @set llvmlibs=%llvmlibs:.a=%
 @set llvmlibs='%llvmlibs: =', '%'
 @FOR /F tokens^=2^ eol^= %%a IN ('%runmsys% /usr/bin/pacman -Q ${MINGW_PACKAGE_PREFIX}-llvm') DO @FOR /F tokens^=1^ delims=^-^ eol^= %%b IN ("%%~a") DO @SET llvmver=%%b
@@ -42,8 +42,8 @@ echo.
 echo _deps ^= []
 echo llvmloc ^= run_command^('%devroot:\=/%/%projectname%/buildscript/modules/msysmingwruntimeloc.cmd', check^: true^).stdout^(^).strip^(^)
 echo foreach d ^: [%llvmlibs%]
-if /I NOT "%mesadbgbld%"=="y" echo   _deps ^+^= cpp.find_library^(d, static ^: true^)
-if /I "%mesadbgbld%"=="y" echo   _deps ^+^= cpp.find_library^(d^)
+if /I NOT "%linkmingwdynamic%"=="y" echo   _deps ^+^= cpp.find_library^(d, static ^: true^)
+if /I "%linkmingwdynamic%"=="y" echo   _deps ^+^= cpp.find_library^(d^)
 echo endforeach
 echo.
 echo dep_llvm ^= declare_dependency^(
@@ -103,8 +103,8 @@ echo irbuilder_h ^= files^(llvmloc + '/include/llvm/IR/IRBuilder.h'^)
 @IF EXIST "%devroot%\mesa\subprojects\zlib.wrap" del "%devroot%\mesa\subprojects\zlib.wrap"
 
 @rem Link clang in same way as LLVM
-@if /I NOT "%mesadbgbld%"=="y" IF %disableootpatch%==1 IF EXIST "%msysloc%\%LMSYSTEM%\lib\libclang-cpp.dll.a" del "%msysloc%\%LMSYSTEM%\lib\libclang-cpp.dll.a"
-@if /I "%mesadbgbld%"=="y" IF NOT EXIST "%msysloc%\%LMSYSTEM%\lib\libclang-cpp.dll.a" (
+@if /I NOT "%linkmingwdynamic%"=="y" IF %disableootpatch%==1 IF EXIST "%msysloc%\%LMSYSTEM%\lib\libclang-cpp.dll.a" del "%msysloc%\%LMSYSTEM%\lib\libclang-cpp.dll.a"
+@if /I "%linkmingwdynamic%"=="y" IF NOT EXIST "%msysloc%\%LMSYSTEM%\lib\libclang-cpp.dll.a" (
 @%runmsys% /usr/bin/pacman -S ${MINGW_PACKAGE_PREFIX}-clang --noconfirm
 @echo.
 )

@@ -178,16 +178,22 @@
 @set mesadbgbld=n
 @set mesadbgoptim=n
 @if /I "%useninja%"=="y" IF %toolchain%==msvc set /p mesadbgbld=Debug friendly binaries (require a lot of RAM) (y/n):
-@if /I "%useninja%"=="y" IF NOT %toolchain%==msvc set /p mesadbgbld=Debug friendly binaries (can only link dependencies dynamically) (y/n):
+@IF NOT %toolchain%==msvc set /p mesadbgbld=Debug friendly binaries (has issues when linking statically) (y/n):
 @if /I "%useninja%"=="y" echo.
 @if /I NOT "%mesadbgbld%"=="y" set buildconf=%buildconf% --buildtype=release
-@if /I NOT "%mesadbgbld%"=="y" IF NOT %toolchain%==msvc set LDFLAGS=-static -s
-@if /I NOT "%mesadbgbld%"=="y" IF NOT %toolchain%==msvc set buildconf=%buildconf% --prefer-static
+@if /I NOT "%mesadbgbld%"=="y" IF NOT %toolchain%==msvc set LDFLAGS=%LDFLAGS% -s
 
 @if /I "%mesadbgbld%"=="y" set buildconf=%buildconf% --buildtype=debug
 @if /I "%mesadbgbld%"=="y" set /p mesadbgoptim=Optimize debug binaries (y/n):
 @if /I "%mesadbgbld%"=="y" echo.
 @if /I "%mesadbgoptim%"=="y" set buildconf=%buildconf%optimized
+
+@set linkmingwdynamic=n
+@if /I "%mesadbgbld%"=="y" IF NOT %toolchain%==msvc set linkmingwdynamic=y
+@IF NOT %toolchain%==msvc set /p linkmingwdynamic=Link dependencies dynamically for debuggging purposes - default "y" for MinGW debug build, "n" otherwise (y/n):
+@IF NOT %toolchain%==msvc echo.
+@IF NOT %toolchain%==msvc IF /I NOT "%linkmingwdynamic%"=="y" set LDFLAGS=%LDFLAGS% -static
+@IF NOT %toolchain%==msvc IF /I NOT "%linkmingwdynamic%"=="y" set buildconf=%buildconf% --prefer-static
 
 @set havellvm=1
 @set llvmmethod=configtool
@@ -205,8 +211,8 @@
 @if /I NOT "%llvmless%"=="y" IF %intmesaver% GEQ 22000 IF %intmesaver% LSS 22200 IF NOT %toolchain%==msvc set RTTI=%LLVMRTTI%
 @IF %intmesaver% GEQ 22000 set buildconf=%buildconf% -Dcpp_rtti=%RTTI%
 @if /I NOT "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm=%mesonbooltrue%
-@if /I NOT "%llvmless%"=="y" if /I NOT "%mesadbgbld%"=="y" set buildconf=%buildconf% -Dshared-llvm=%mesonboolfalse%
-@if /I NOT "%llvmless%"=="y" if /I "%mesadbgbld%"=="y" set buildconf=%buildconf% -Dshared-llvm=%mesonbooltrue%
+@if /I NOT "%llvmless%"=="y" IF /I NOT "%linkmingwdynamic%"=="y" set buildconf=%buildconf% -Dshared-llvm=%mesonboolfalse%
+@if /I NOT "%llvmless%"=="y" IF /I "%linkmingwdynamic%"=="y" set buildconf=%buildconf% -Dshared-llvm=%mesonbooltrue%
 @if /I NOT "%llvmless%"=="y" IF %llvmmethod%==cmake set buildconf=%buildconf% --cmake-prefix-path="%devroot:\=/%/llvm/build/%abi%"
 @if /I NOT "%llvmless%"=="y" IF %llvmmethod%==cmake IF %cmakestate% EQU 1 SET PATH=%devroot%\cmake\bin\;%PATH%
 @if /I NOT "%llvmless%"=="y" IF NOT %llvmmethod%==cmake set buildconf=%buildconf% --cmake-prefix-path=
@@ -306,7 +312,7 @@
 @if /I "%dozenmsvk%"=="y" set buildconf=%buildconf%microsoft-experimental,
 @IF %mesavkcount% GTR 0 set buildconf=%buildconf:~0,-1%
 
-@IF %msysregex%==1 IF %disableootpatch% EQU 1 if /I NOT "%mesadbgbld%"=="y" set LDFLAGS=%LDFLAGS% -ltre -lintl -liconv
+@IF %msysregex%==1 IF %disableootpatch% EQU 1 IF /I NOT "%linkmingwdynamic%"=="y" set LDFLAGS=%LDFLAGS% -ltre -lintl -liconv
 
 @set d3d10umd=n
 @set cand3d10umd=1
@@ -426,6 +432,7 @@
 
 @rem Pass additional compiler and linker flags
 @if defined CFLAGS set buildconf=%buildconf% -Dc_args="%CFLAGS%" -Dcpp_args="%CFLAGS%"
+@if defined LDFLAGS IF NOT %toolchain%==msvc set LDFLAGS=%LDFLAGS:~1%
 @if defined LDFLAGS set buildconf=%buildconf% -Dc_link_args="%LDFLAGS%" -Dcpp_link_args="%LDFLAGS%"
 
 @rem Disable draw with LLVM if LLVM native module ends being unused but needed
