@@ -17,7 +17,8 @@
 ### Build environment updates
 - Update libelf-lfg-win32 to 1.1.1.
 ### Debugging
-- MinGW: Add start debugging tutorial and script.
+- MinGW: Add start debugging tutorial and script;
+- MinGW: Try to get debug symbols loading as seamless as possible in GDB.
 ### Deployment
 - Per application deployment: Do overwrite checks after previous deployment removal loop completes, fixes 13e86ba8889274cb892e2025ac3348d836279798.
 # 22.1.7
