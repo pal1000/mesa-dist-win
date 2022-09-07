@@ -8,7 +8,8 @@
 - Make debug binaries optimization optional as they take a lot of RAM to link when using MSVC;
 - Allow doing debug build with MinGW;
 - LLVM SPIRV translator: Build out of tree and allow build without clang;
-- MinGW: Support linking dependencies dynamically and make this default when doing debug build to avoid LLVM JIT getting into symbol file and confuse GDB and other issues.
+- MinGW: Support linking dependencies dynamically and make this default when doing debug build to avoid LLVM JIT getting into symbol file and confuse GDB and other issues;
+- Support building Mesa3D with asserts.
 ### Misc. refactor
 - MSYS2: Move package cache cleanning inside package update module;
 - Move question about Ninja build usage to a module to reuse it in all builds;

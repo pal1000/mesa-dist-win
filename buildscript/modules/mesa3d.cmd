@@ -155,7 +155,7 @@
 @if EXIST "build\%toolchain%-%abi%\" IF /I "%cleanmesabld%"=="y" RD /S /Q build\%toolchain%-%abi%
 @IF /I NOT "%cleanmesabld%"=="y" set buildconf=%mesonloc% configure
 @call "%devroot%\%projectname%\buildscript\modules\useninja.cmd"
-@set buildconf=%buildconf% build/%toolchain%-%abi% --libdir="lib/%abi%" --pkgconfig.relocatable -Db_ndebug=true
+@set buildconf=%buildconf% build/%toolchain%-%abi% --libdir="lib/%abi%" --pkgconfig.relocatable
 @IF %intmesaver% GEQ 21200 IF %intmesaver% LSS 22100 set buildconf=%buildconf% -Dc_std=c17
 @IF %intmesaver% GEQ 22000 set RTTI=true
 
@@ -187,6 +187,12 @@
 @if /I "%mesadbgbld%"=="y" set /p mesadbgoptim=Optimize debug binaries (y/n):
 @if /I "%mesadbgbld%"=="y" echo.
 @if /I "%mesadbgoptim%"=="y" set buildconf=%buildconf%optimized
+
+@set mesaenableasserts=n
+@set /p mesaenableasserts=Enable asserts (y/n):
+@echo.
+@if /I "%mesaenableasserts%"=="y" set buildconf=%buildconf% -Db_ndebug=false
+@if /I NOT "%mesaenableasserts%"=="y" set buildconf=%buildconf% -Db_ndebug=true
 
 @set linkmingwdynamic=n
 @if /I "%mesadbgbld%"=="y" IF NOT %toolchain%==msvc set linkmingwdynamic=y
