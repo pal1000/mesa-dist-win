@@ -1,6 +1,7 @@
 ### Distribution
 - Debug symbols support with both MSVC and MinGW (#54);
-- Perform debug symbols collection decoupled from distribution creation.
+- Perform debug symbols collection decoupled from distribution creation;
+- Always add version info after debug info extraction as GDB is unforgiving when it comes to binary tampering.
 ### Build script
 - pkgconf source code: go back 2 commits to workaround [Windows build break](https://gitea.treehouse.systems/ariadne/pkgconf/pulls/244);
 - pkgconf source code was relocated to Gitea Teehouse;

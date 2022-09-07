@@ -17,10 +17,10 @@
 @set normaldist=1
 @IF %normaldist% EQU 1 GOTO normaldist
 
-@IF %toolchain%==msvc GOTO distributed
+@IF %toolchain%==msvc GOTO donedist
 @%mesonloc% install --no-rebuild --skip-subprojects -C "%devroot%\mesa\build\%toolchain%-%abi%"
 @echo.
-@GOTO distributed
+@GOTO donedist
 
 :normaldist
 @if NOT EXIST "bin\" MD bin
@@ -74,9 +74,6 @@
 @echo Copying headers...
 @ROBOCOPY "%devroot%\mesa\include" "%devroot%\%projectname%\include" /E
 @echo.
-
-:distributed
-@call "%devroot%\%projectname%\buildscript\modules\addversioninfo.cmd"
 
 :donedist
 @endlocal

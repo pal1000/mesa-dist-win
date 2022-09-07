@@ -93,5 +93,9 @@
 
 @rem Collect debug symbols
 @IF EXIST "%devroot%\mesa\build\%toolchain%-%abi%\" call "%devroot%\%projectname%\buildscript\modules\collectdebugsymbols.cmd"
+
+@rem Add version info to binaries
+@call "%devroot%\%projectname%\buildscript\modules\addversioninfo.cmd"
+
 @pause
 @exit
