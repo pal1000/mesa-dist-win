@@ -4,6 +4,7 @@
 @IF EXIST "%devroot%\SPIRV-LLVM-Translator\" IF %gitstate% GTR 0 (
 @cd "%devroot%\SPIRV-LLVM-Translator"
 @echo Updating LLVM SPIRV translator...
+@git checkout llvm_release_150
 @git pull --progress --tags --recurse-submodules origin
 @echo.
 )
@@ -27,7 +28,7 @@
 
 @IF NOT EXIST "%devroot%\SPIRV-LLVM-Translator\" (
 @echo Getting LLVM SPIRV translator source code...
-@git clone -b llvm_release_140 https://github.com/KhronosGroup/SPIRV-LLVM-Translator "%devroot%\SPIRV-LLVM-Translator"
+@git clone -b llvm_release_150 https://github.com/KhronosGroup/SPIRV-LLVM-Translator "%devroot%\SPIRV-LLVM-Translator"
 @echo.
 )
 @IF EXIST "%devroot%\SPIRV-LLVM-Translator\spirv-headers-tag.conf" IF NOT EXIST "%devroot%\SPIRV-Headers\" (
@@ -39,6 +40,7 @@
 )
 
 @rem SPIRV Tools integration for LLVM SPIRV translator. This is a feature introduced in LLVM SPIRV translator 14.x.
+@rem However it fails to link SPIRV Tools for some reason.
 @rem IF %canllvmspirv% EQU 1 IF EXIST "%devroot%\spirv-tools\build\%abi%\" IF %pkgconfigstate% GTR 0 set /p integratespvtools=Build with SPIRV Tools integration (y/n):
 @rem IF %canllvmspirv% EQU 1 IF EXIST "%devroot%\spirv-tools\build\%abi%\" IF %pkgconfigstate% GTR 0 echo.
 @IF /I "%integratespvtools%"=="y" set PATH=%pkgconfigloc%\;%PATH%

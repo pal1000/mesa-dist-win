@@ -17,7 +17,8 @@
 - Mesa3D build: Ask for Ninja build usage as soon as possible;
 - MSYS2 vulkan-loader: Re-install only when necessary.
 ### Build environment updates
-- Update libelf-lfg-win32 to 1.1.1.
+- Update libelf-lfg-win32 to 1.1.1;
+- MSVC: Update LLVM to 15.0.0.
 ### Debugging
 - MinGW: Add start debugging tutorial and script;
 ### Deployment

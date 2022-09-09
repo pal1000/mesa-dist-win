@@ -21,7 +21,7 @@
 @git init
 @git config --local core.autocrlf false
 @git remote add origin https://github.com/llvm/llvm-project.git
-@git fetch --depth=1 origin llvmorg-14.0.6
+@git fetch --depth=1 origin llvmorg-15.0.0
 @git checkout -f FETCH_HEAD
 )
 
