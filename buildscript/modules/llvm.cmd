@@ -23,6 +23,7 @@
 @git remote add origin https://github.com/llvm/llvm-project.git
 @git fetch --depth=1 origin llvmorg-15.0.0
 @git checkout -f FETCH_HEAD
+@git clean -df
 @echo.
 )
 
