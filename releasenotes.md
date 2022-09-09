@@ -1,7 +1,7 @@
 ### Distribution
-- Debug symbols support with both MSVC and MinGW (#54);
-- Perform debug symbols collection decoupled from distribution creation;
-- Always add version info after debug info extraction as GDB is unforgiving when it comes to binary tampering.
+- Debugging support with PDBs for MSVC and debug optimized binaries for MinGW (#54);
+- Perform debug information collection decoupled from distribution creation when posssible;
+- Support disabling version information addition to binaries as GDB is unforgiving when it comes to binary tampering.
 ### Build script
 - pkgconf source code: go back 2 commits to workaround [Windows build break](https://gitea.treehouse.systems/ariadne/pkgconf/pulls/244);
 - pkgconf source code was relocated to Gitea Teehouse;
@@ -9,7 +9,7 @@
 - Make debug binaries optimization optional as they take a lot of RAM to link when using MSVC;
 - Allow doing debug build with MinGW;
 - LLVM SPIRV translator: Build out of tree and allow build without clang;
-- MinGW: Support linking dependencies dynamically and make this default when doing debug build to avoid LLVM JIT getting into symbol file and confuse GDB and other issues;
+- MinGW: Support linking dependencies dynamically and make this default when doing debug build to reduce binaries size;
 - Support building Mesa3D with asserts.
 ### Misc. refactor
 - MSYS2: Move package cache cleanning inside package update module;
@@ -20,7 +20,6 @@
 - Update libelf-lfg-win32 to 1.1.1.
 ### Debugging
 - MinGW: Add start debugging tutorial and script;
-- MinGW: Try to get debug symbols loading as seamless as possible in GDB.
 ### Deployment
 - Per application deployment: Do overwrite checks after previous deployment removal loop completes, fixes 13e86ba8889274cb892e2025ac3348d836279798.
 # 22.1.7

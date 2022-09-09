@@ -7,9 +7,10 @@
 @IF %rhstate%==0 GOTO noresourcehacker
 @IF %rhstate%==1 SET PATH=%devroot%\resource-hacker\;%PATH%
 
-@set mesabldrev=0
-@set /p mesabldrev=Mesa3D build revision (default:0, positive integer expected):
+@set mesabldrev=
+@set /p mesabldrev=Mesa3D build revision (default:blank, positive integer or blank expected, disables adding version information to binaries if left blank, MinGW debug binaries should have this left blank):
 @echo.
+@IF NOT defined mesabldrev GOTO noresourcehacker
 @echo Adding version information to binaries. Please wait...
 @echo.
 
