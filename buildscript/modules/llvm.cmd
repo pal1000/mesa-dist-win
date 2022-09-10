@@ -74,8 +74,10 @@
 @echo.
 
 @rem Ask to do LLVM build
-@set /p buildllvm=Begin LLVM build (y/n):
-@echo.
+@if EXIST "%devroot%\llvm-project\" set /p buildllvm=Begin LLVM build (y/n):
+@if EXIST "%devroot%\llvm-project\" echo.
+@if NOT EXIST "%devroot%\llvm-project\" if EXIST "%devroot%\llvm\cmake\" set /p buildllvm=Begin LLVM build (y/n):
+@if NOT EXIST "%devroot%\llvm-project\" if EXIST "%devroot%\llvm\cmake\" echo.
 @IF /I NOT "%buildllvm%"=="y" GOTO skipllvm
 
 @rem Always clean build
@@ -123,7 +125,7 @@
 @IF %llvmsources% EQU 0 echo.
 @IF %llvmsources% EQU 1 IF %cmakestate% EQU 0 echo.
 @IF %llvmsources% EQU 1 IF %cmakestate% GTR 0 IF NOT EXIST "%devroot%\llvm\build\%abi%\lib\" echo.
-@IF EXIST "%devroot%\llvm\build\%abi%\lib\" call "%devroot%\%projectname%\buildscript\modules\llvmspv.cmd"
+@IF EXIST "%devroot%\llvm\build\%abi%\lib\" if /I "%cfgllvmbuild%"=="y" call "%devroot%\%projectname%\buildscript\modules\llvmspv.cmd"
 
 @rem Reset environment after LLVM build.
 @endlocal
