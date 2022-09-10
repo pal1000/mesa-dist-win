@@ -7,6 +7,8 @@
 @rem Ask to configure LLVM build
 @IF %llvmsources% EQU 1 IF %cmakestate% GTR 0 set /p cfgllvmbuild=Generate LLVM build configuration command (y/n):
 @IF %llvmsources% EQU 1 IF %cmakestate% GTR 0 echo.
+@IF %llvmsources% EQU 0 IF %cmakestate% GTR 0 IF EXIST "%devroot%\llvm\build\%abi%\lib\" set /p cfgllvmbuild=Generate LLVM build configuration command (y/n):
+@IF %llvmsources% EQU 0 IF %cmakestate% GTR 0 IF EXIST "%devroot%\llvm\build\%abi%\lib\" echo.
 @if /I NOT "%cfgllvmbuild%"=="y" GOTO skipllvm
 
 @rem Get/update LLVM source code

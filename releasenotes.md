@@ -11,7 +11,8 @@
 - LLVM SPIRV translator: Build out of tree and allow build without clang;
 - MinGW: Support linking dependencies dynamically and make this default when doing debug build to reduce binaries size;
 - Support building Mesa3D with asserts;
-- LLVM SPIRV translator: Support switching LLVM major version.
+- LLVM SPIRV translator: Support switching LLVM major version;
+- LLVM SPIRV translator: Support build with LLVM binaries only.
 ### Misc. refactor
 - MSYS2: Move package cache cleanning inside package update module;
 - Move question about Ninja build usage to a module to reuse it in all builds;
