@@ -4,6 +4,7 @@
 @IF EXIST "%devroot%\SPIRV-LLVM-Translator\" IF %gitstate% GTR 0 (
 @cd "%devroot%\SPIRV-LLVM-Translator"
 @echo Updating LLVM SPIRV translator...
+@git pull --progress --tags --recurse-submodules origin
 @git checkout llvm_release_150
 @git pull --progress --tags --recurse-submodules origin
 @echo.
