@@ -381,7 +381,7 @@
 @if /I "%llvmless%"=="y" set canopencl=0
 @IF %toolchain%==msvc IF NOT EXIST "%devroot%\llvm\build\clc\share\pkgconfig\" set canopencl=0
 
-@rem OpenCL SPIR-V requirements: basic OpenCL support + Clang, LLVM SPIRV translator and SPIRV tools
+@rem OpenCL SPIR-V requirements: basic OpenCL support + Clang, SPIRV LLVM translator and SPIRV tools
 @set canclspv=1
 @IF %canopencl% EQU 0 set canclspv=0
 @IF %toolchain%==msvc IF NOT EXIST "%devroot%\llvm\build\%abi%\lib\clang*.lib" set canclspv=0

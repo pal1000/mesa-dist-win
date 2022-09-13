@@ -116,7 +116,7 @@
 @if /I "%useninja%"=="y" IF /I NOT "%buildclang%"=="y" copy .\bin\llvm-config.exe "%devroot%\llvm\build\%abi%\bin\"
 @echo.
 
-@rem Avoid race condition in LLVM SPIRV translator sources checkout.
+@rem Avoid race condition in SPIRV LLVM translator sources checkout.
 @pause
 @echo.
 
@@ -127,7 +127,7 @@
 @IF %llvmsources% EQU 0 echo.
 @IF %llvmsources% EQU 1 IF %cmakestate% EQU 0 echo.
 @IF %llvmsources% EQU 1 IF %cmakestate% GTR 0 IF NOT EXIST "%devroot%\llvm\build\%abi%\lib\" echo.
-@IF EXIST "%devroot%\llvm\build\%abi%\lib\" if /I "%cfgllvmbuild%"=="y" call "%devroot%\%projectname%\buildscript\modules\llvmspv.cmd"
+@IF EXIST "%devroot%\llvm\build\%abi%\lib\cmake\llvm\LLVMConfig.cmake" if /I "%cfgllvmbuild%"=="y" call "%devroot%\%projectname%\buildscript\modules\llvmspv.cmd"
 
 @rem Reset environment after LLVM build.
 @endlocal

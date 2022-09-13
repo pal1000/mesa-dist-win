@@ -8,11 +8,11 @@
 - Disable Futex usage by default to reflect [poll](https://github.com/pal1000/mesa-dist-win/discussions/112) results;
 - Make debug binaries optimization optional as they take a lot of RAM to link when using MSVC;
 - Allow doing debug build with MinGW;
-- LLVM SPIRV translator: Build out of tree and allow build without clang;
+- SPIRV LLVM translator: Build out of tree and allow build without clang;
 - MinGW: Support linking dependencies dynamically and make this default when doing debug build to reduce binaries size;
 - Support building Mesa3D with asserts;
-- LLVM SPIRV translator: Support switching LLVM major version;
-- LLVM SPIRV translator: Support build with LLVM binaries only.
+- SPIRV LLVM translator: Support build with LLVM binaries only;
+- SPIRV LLVM translator: Retrieve LLVM major version from pre-built LLVM and support switching source branch automatically if necessary.
 ### Misc. refactor
 - MSYS2: Move package cache cleanning inside package update module;
 - Move question about Ninja build usage to a module to reuse it in all builds;
@@ -259,7 +259,7 @@ well so this regresssion had no real world impact.
 # 21.3.5
 - Updated Mesa3D to [21.3.5](https://docs.mesa3d.org/relnotes/21.3.5.html).
 ### Build script
-- Support building LLVM SPIRV translator with SPIRV Tools integration;
+- Support building SPIRV LLVM translator with SPIRV Tools integration;
 - HACK: OpenCL stack on Mesa 21.3+ requires RADV to be part of build if LLVM AMDGPU target is available, see [[1](https://gitlab.freedesktop.org/mesa/mesa/-/issues/5666)] and [[2](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/12276#note_1200369)].
 ### Distribution
 - RADV: Do not distribute JSON manifest if ICD is missing as JSON manifest is generated even if RADV build fails.
