@@ -1,7 +1,8 @@
 ### Distribution
 - Debugging support with PDBs for MSVC and debug optimized binaries for MinGW (#54);
 - Perform debug information collection decoupled from distribution creation when posssible;
-- Support disabling version information addition to binaries as GDB is unforgiving when it comes to binary tampering.
+- Support disabling version information addition to binaries as GDB is unforgiving when it comes to binary tampering;
+- MSVC: Support keeping binaries from previous build to support building different Mesa3D components with different major LLVM and clang releases.
 ### Build script
 - pkgconf source code: go back 2 commits to workaround [Windows build break](https://gitea.treehouse.systems/ariadne/pkgconf/pulls/244);
 - pkgconf source code was relocated to Gitea Teehouse;

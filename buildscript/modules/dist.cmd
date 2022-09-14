@@ -23,14 +23,17 @@
 @GOTO donedist
 
 :normaldist
+@set keeplastbuild=n
+@set /p keeplastbuild=Keep binaries and libraries from previous build (y/n):
+@echo.
 @if NOT EXIST "bin\" MD bin
 @if NOT EXIST "lib\" MD lib
-@if EXIST "bin\%abi%\" RD /S /Q bin\%abi%
-@if EXIST "lib\%abi%\" RD /S /Q lib\%abi%
+@IF /I NOT "%keeplastbuild%"=="y" if EXIST "bin\%abi%\" RD /S /Q bin\%abi%
+@IF /I NOT "%keeplastbuild%"=="y" if EXIST "lib\%abi%\" RD /S /Q lib\%abi%
 @if EXIST "include\" RD /S /Q include
-@MD bin\%abi%
-@MD lib\%abi%
-@MD lib\%abi%\pkgconfig
+@if NOT EXIST "bin\%abi%\" MD bin\%abi%
+@if NOT EXIST "lib\%abi%\" MD lib\%abi%
+@if NOT EXIST "lib\%abi%\pkgconfig\" MD lib\%abi%\pkgconfig
 @MD include
 
 :mesondist
