@@ -12,18 +12,29 @@
 @if /I NOT "%cfgllvmbuild%"=="y" GOTO skipllvm
 
 @rem Get/update LLVM source code
-@if NOT EXIST "%devroot%\llvm\cmake\" if NOT EXIST "%devroot%\llvm-project\" set updllvmsrc=y
-@if EXIST "%devroot%\llvm-project\" set /p updllvmsrc=Update LLVM source code (y/n):
-@if EXIST "%devroot%\llvm-project\" echo.
-@if /I "%updllvmsrc%"=="y" if EXIST "%devroot%\llvm-project\" echo Updating LLVM source code...
-@if /I "%updllvmsrc%"=="y" (
+@IF %gitstate% GTR 0 set /p legacyllvm=Use previous LLVM major version (y/n):
+@IF %gitstate% GTR 0 echo.
+@set updllvmsrcver=15.0.0
+@if /I "%legacyllvm%"=="y" set updllvmsrcver=14.0.6
+@set llvmsrcver=0
+@set llvmsrcloc="%devroot%\llvm-project\llvm\CMakeLists.txt"
+@if NOT EXIST %llvmsrcloc% set llvmsrcloc="%devroot%\llvm\CMakeLists.txt"
+@if NOT EXIST %llvmsrcloc% set llvmsrcloc=null
+@if NOT %llvmsrcloc%==null for /f tokens^=2^ delims^=^(^)^ eol^= %%a IN ('type %llvmsrcloc%') DO @for /f tokens^=1^,2^ eol^= %%b IN ("%%a") DO @(
+@IF /I "%%b"=="LLVM_VERSION_MAJOR" set /a llvmsrcver+=%%c*100
+@IF /I "%%b"=="LLVM_VERSION_MINOR" set /a llvmsrcver+=%%c*10
+@IF /I "%%b"=="LLVM_VERSION_PATCH" set /a llvmsrcver+=%%c
+)
+@if %llvmsrcver% GTR 0 set llvmsrcver=%llvmsrcver:~0,-2%.%llvmsrcver:~-2,1%.%llvmsrcver:~-1,1%
+@IF %gitstate% GTR 0 if NOT %llvmsrcver%==%updllvmsrcver% (
+@if EXIST "%devroot%\llvm-project\" echo Updating LLVM source code...
 @if NOT EXIST "%devroot%\llvm-project\" MD "%devroot%\llvm-project"
 @if EXIST "%devroot%\llvm-project\.git\" RD /S /Q "%devroot%\llvm-project\.git"
 @CD "%devroot%\llvm-project"
 @git init
 @git config --local core.autocrlf false
 @git remote add origin https://github.com/llvm/llvm-project.git
-@git fetch --depth=1 origin llvmorg-15.0.0
+@git fetch --depth=1 origin llvmorg-%updllvmsrcver%
 @git checkout -f FETCH_HEAD
 @git clean -df
 @echo.

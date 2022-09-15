@@ -13,7 +13,8 @@
 - MinGW: Support linking dependencies dynamically and make this default when doing debug build to reduce binaries size;
 - Support building Mesa3D with asserts;
 - SPIRV LLVM translator: Support build with LLVM binaries only;
-- SPIRV LLVM translator: Retrieve LLVM major version from pre-built LLVM and support switching source branch automatically if necessary.
+- SPIRV LLVM translator: Retrieve LLVM major version from pre-built LLVM and support switching source branch automatically if necessary;
+- LLVM MSVC: Support 2 parallel major versions via automatic source update to workaround https://gitlab.freedesktop.org/mesa/mesa/-/issues/7243.
 ### Misc. refactor
 - MSYS2: Move package cache cleanning inside package update module;
 - Move question about Ninja build usage to a module to reuse it in all builds;
