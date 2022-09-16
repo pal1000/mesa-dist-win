@@ -23,7 +23,8 @@
 ### Build environment updates
 - Update libelf-lfg-win32 to 1.1.1;
 - MSVC: Update LLVM to 15.0.0;
-- MSVC LLVM source update: Delete files and folders that become untracked.
+- MSVC LLVM source update: Delete files and folders that become untracked;
+- Build environment info: Add old LLVM version.
 ### Debugging
 - MinGW: Add start debugging tutorial and script;
 ### Deployment

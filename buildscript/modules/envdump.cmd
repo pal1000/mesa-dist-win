@@ -104,6 +104,7 @@ echo CMake %%a>>"%devroot%\%projectname%\buildinfo\msvc.txt"
 
 @rem Get LLVM version
 @IF %toolchain%==msvc IF EXIST "%devroot%\llvm\build\%hostabi%\bin\llvm-config.exe" FOR /F eol^= %%a IN ('"%devroot%\llvm\build\%hostabi%\bin\llvm-config.exe" --version') do @echo LLVM %%a>>"%devroot%\%projectname%\buildinfo\msvc.txt"
+@IF %toolchain%==msvc IF EXIST "%devroot%\llvmold\build\%hostabi%\bin\llvm-config.exe" FOR /F eol^= %%a IN ('"%devroot%\llvmold\build\%hostabi%\bin\llvm-config.exe" --version') do @echo Old LLVM %%a>>"%devroot%\%projectname%\buildinfo\msvc.txt"
 
 @rem Get SPIRV Tools version
 @IF %toolchain%==msvc IF EXIST "%devroot%\spirv-tools\build\%abi%\bin\" for /f tokens^=1-2^ eol^= %%a IN ('type "%devroot%\spirv-tools\build\%abi%\lib\pkgconfig\SPIRV-Tools.pc"') do @IF /I "%%a"=="Version:" echo SPIRV Tools %%b>>"%devroot%\%projectname%\buildinfo\msvc.txt"
