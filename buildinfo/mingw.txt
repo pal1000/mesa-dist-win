@@ -3,8 +3,8 @@ Build environment
 Windows 10.0.22000
 Ressource Hacker 5.1.8.360
 7-Zip 22.01 ultra compression
-Git 2.37.2.2
-LunarG Vulkan SDK 1.3.224.0
+Git 2.37.3.1
+LunarG Vulkan SDK 1.3.224.1
 
 MSYS2 environment
 -----------------
@@ -45,7 +45,7 @@ libcrypt 2.1-3
 libcurl 7.85.0-1
 libdb 5.3.28-3
 libedit 20210910_3.1-1
-libexpat 2.4.8-2
+libexpat 2.4.9-1
 libffi 3.4.2-1
 libgcrypt 1.10.1-5
 libgdbm 1.23-1
@@ -57,7 +57,7 @@ libhogweed 3.8.1-1
 libiconv 1.17-1
 libidn2 2.3.3-1
 libintl 0.21-2
-libksba 1.6.0-2
+libksba 1.6.1-1
 liblz4 1.9.4-1
 liblzma 5.2.6-1
 libnettle 3.8.1-1
@@ -81,9 +81,9 @@ m4 1.4.19-2
 mingw-w64-i686-binutils 2.39-2
 mingw-w64-i686-bzip2 1.0.8-2
 mingw-w64-i686-ca-certificates 20211016-3
-mingw-w64-i686-clang 14.0.6-6
+mingw-w64-i686-clang 15.0.0-3
 mingw-w64-i686-crt-git 10.0.0.r72.g1dd2a4993-1
-mingw-w64-i686-expat 2.4.8-1
+mingw-w64-i686-expat 2.4.9-1
 mingw-w64-i686-gcc 12.2.0-1
 mingw-w64-i686-gcc-libs 12.2.0-1
 mingw-w64-i686-gdb 12.1-3
@@ -100,8 +100,8 @@ mingw-w64-i686-libtasn1 4.19.0-1
 mingw-w64-i686-libtre-git r128.6fb7206-2
 mingw-w64-i686-libwinpthread-git 10.0.0.r72.g1dd2a4993-1
 mingw-w64-i686-libxml2 2.9.14-4
-mingw-w64-i686-llvm 14.0.6-6
-mingw-w64-i686-meson 0.63.1-1
+mingw-w64-i686-llvm 15.0.0-3
+mingw-w64-i686-meson 0.63.2-1
 mingw-w64-i686-mpc 1.2.1-1
 mingw-w64-i686-mpdecimal 2.5.1-1
 mingw-w64-i686-mpfr 4.1.0.p13-1
@@ -110,21 +110,21 @@ mingw-w64-i686-ninja 1.11.1-1
 mingw-w64-i686-openssl 1.1.1.q-1
 mingw-w64-i686-p11-kit 0.24.1-3
 mingw-w64-i686-pkgconf 1.8.0-2
-mingw-w64-i686-python 3.10.6-1
+mingw-w64-i686-python 3.10.7-1
 mingw-w64-i686-python-beaker 1.11.0-3
 mingw-w64-i686-python-mako 1.2.2-1
 mingw-w64-i686-python-markupsafe 2.1.1-2
 mingw-w64-i686-readline 8.1.002-2
 mingw-w64-i686-spirv-headers 1~1.3.224.1-1
-mingw-w64-i686-spirv-llvm-translator 14.0.0-2
+mingw-w64-i686-spirv-llvm-translator 15.0.0-1
 mingw-w64-i686-spirv-tools 2022.3-1
 mingw-w64-i686-sqlite3 3.39.2-1
 mingw-w64-i686-tcl 8.6.11-5
 mingw-w64-i686-termcap 1.3.1-6
 mingw-w64-i686-tk 8.6.11.1-2
 mingw-w64-i686-tzdata 2022b-1
-mingw-w64-i686-vulkan-headers 1.3.226-1
-mingw-w64-i686-vulkan-loader 1.3.226-1
+mingw-w64-i686-vulkan-headers 1.3.228-1
+mingw-w64-i686-vulkan-loader 1.3.228-1
 mingw-w64-i686-vulkan-validation-layers 1.3.225-1
 mingw-w64-i686-windows-default-manifest 6.4-4
 mingw-w64-i686-winpthreads-git 10.0.0.r72.g1dd2a4993-1
@@ -135,9 +135,9 @@ mingw-w64-i686-zstd 1.5.2-2
 mingw-w64-x86_64-binutils 2.39-2
 mingw-w64-x86_64-bzip2 1.0.8-2
 mingw-w64-x86_64-ca-certificates 20211016-3
-mingw-w64-x86_64-clang 14.0.6-6
+mingw-w64-x86_64-clang 15.0.0-3
 mingw-w64-x86_64-crt-git 10.0.0.r72.g1dd2a4993-1
-mingw-w64-x86_64-expat 2.4.8-1
+mingw-w64-x86_64-expat 2.4.9-1
 mingw-w64-x86_64-gcc 12.2.0-1
 mingw-w64-x86_64-gcc-libs 12.2.0-1
 mingw-w64-x86_64-gdb 12.1-3
@@ -154,8 +154,8 @@ mingw-w64-x86_64-libtasn1 4.19.0-1
 mingw-w64-x86_64-libtre-git r128.6fb7206-2
 mingw-w64-x86_64-libwinpthread-git 10.0.0.r72.g1dd2a4993-1
 mingw-w64-x86_64-libxml2 2.9.14-4
-mingw-w64-x86_64-llvm 14.0.6-6
-mingw-w64-x86_64-meson 0.63.1-1
+mingw-w64-x86_64-llvm 15.0.0-3
+mingw-w64-x86_64-meson 0.63.2-1
 mingw-w64-x86_64-mpc 1.2.1-1
 mingw-w64-x86_64-mpdecimal 2.5.1-1
 mingw-w64-x86_64-mpfr 4.1.0.p13-1
@@ -164,21 +164,21 @@ mingw-w64-x86_64-ninja 1.11.1-1
 mingw-w64-x86_64-openssl 1.1.1.q-1
 mingw-w64-x86_64-p11-kit 0.24.1-3
 mingw-w64-x86_64-pkgconf 1.8.0-2
-mingw-w64-x86_64-python 3.10.6-1
+mingw-w64-x86_64-python 3.10.7-1
 mingw-w64-x86_64-python-beaker 1.11.0-3
 mingw-w64-x86_64-python-mako 1.2.2-1
 mingw-w64-x86_64-python-markupsafe 2.1.1-2
 mingw-w64-x86_64-readline 8.1.002-2
 mingw-w64-x86_64-spirv-headers 1~1.3.224.1-1
-mingw-w64-x86_64-spirv-llvm-translator 14.0.0-2
+mingw-w64-x86_64-spirv-llvm-translator 15.0.0-1
 mingw-w64-x86_64-spirv-tools 2022.3-1
 mingw-w64-x86_64-sqlite3 3.39.2-1
 mingw-w64-x86_64-tcl 8.6.11-5
 mingw-w64-x86_64-termcap 1.3.1-6
 mingw-w64-x86_64-tk 8.6.11.1-2
 mingw-w64-x86_64-tzdata 2022b-1
-mingw-w64-x86_64-vulkan-headers 1.3.226-1
-mingw-w64-x86_64-vulkan-loader 1.3.226-1
+mingw-w64-x86_64-vulkan-headers 1.3.228-1
+mingw-w64-x86_64-vulkan-loader 1.3.228-1
 mingw-w64-x86_64-vulkan-validation-layers 1.3.225-1
 mingw-w64-x86_64-windows-default-manifest 6.4-4
 mingw-w64-x86_64-winpthreads-git 10.0.0.r72.g1dd2a4993-1
@@ -190,13 +190,13 @@ mintty 1~3.6.1-2
 mpfr 4.1.0.p13-1
 msys2-keyring 1~20220623-1
 msys2-launcher 1.5-1
-msys2-runtime 3.3.5-3
+msys2-runtime 3.3.6-1
 nano 6.4-1
 ncurses 6.3-3
 nettle 3.8.1-1
 openssl 1.1.1.q-1
 p11-kit 0.24.1-4
-pacman 6.0.1-16
+pacman 6.0.1-17
 pacman-contrib 1.6.0-1
 pacman-mirrors 20220205-1
 patch 2.7.6-1

@@ -14,7 +14,7 @@
 @rem Get/update LLVM source code
 @IF %gitstate% GTR 0 set /p legacyllvm=Use previous LLVM major version (y/n):
 @IF %gitstate% GTR 0 echo.
-@set updllvmsrcver=15.0.0
+@set updllvmsrcver=15.0.1
 @if /I "%legacyllvm%"=="y" set updllvmsrcver=14.0.6
 @set llvmsrcver=0
 @set llvmsrcloc="%devroot%\llvm-project\llvm\CMakeLists.txt"
