@@ -91,9 +91,6 @@
 @rem Create distribution
 @IF EXIST "%devroot%\mesa\build\%toolchain%-%abi%\" call "%devroot%\%projectname%\buildscript\modules\dist.cmd"
 
-@rem Collect debug binaries or PDBs
-@IF EXIST "%devroot%\mesa\build\%toolchain%-%abi%\" call "%devroot%\%projectname%\buildscript\modules\collectdebug.cmd"
-
 @rem Add version info to binaries
 @call "%devroot%\%projectname%\buildscript\modules\addversioninfo.cmd"
 

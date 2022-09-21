@@ -79,4 +79,6 @@
 @echo.
 
 :donedist
+@rem Collect debug binaries or PDBs
+@IF EXIST "%devroot%\mesa\build\%toolchain%-%abi%\" call "%devroot%\%projectname%\buildscript\modules\collectdebug.cmd"
 @endlocal
