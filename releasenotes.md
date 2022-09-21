@@ -25,7 +25,8 @@
 - Update libelf-lfg-win32 to 1.1.1;
 - MSVC: Update LLVM to 15.0.1;
 - MSVC LLVM source update: Delete files and folders that become untracked;
-- Build environment info: Add old LLVM version.
+- Build environment info: Add old LLVM version;
+- Update LLVM MinGW binary wrap fallback for 15.x releases.
 ### Debugging
 - MinGW: Add start debugging tutorial and script;
 ### Deployment
