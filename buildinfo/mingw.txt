@@ -17,7 +17,7 @@ bsdtar 3.6.1-2
 bzip2 1.0.8-4
 ca-certificates 20211016-1
 coreutils 8.32-4
-curl 7.85.0-1
+curl 7.85.0-2
 dash 0.5.11.5-2
 db 5.3.28-3
 file 5.42-2
@@ -42,11 +42,11 @@ libasprintf 0.21-2
 libassuan 2.5.5-2
 libbz2 1.0.8-4
 libcrypt 2.1-3
-libcurl 7.85.0-1
+libcurl 7.85.0-2
 libdb 5.3.28-3
 libedit 20210910_3.1-1
 libexpat 2.4.9-1
-libffi 3.4.2-1
+libffi 3.4.3-1
 libgcrypt 1.10.1-5
 libgdbm 1.23-1
 libgettextpo 0.21-2
@@ -61,7 +61,7 @@ libksba 1.6.1-1
 liblz4 1.9.4-1
 liblzma 5.2.6-1
 libnettle 3.8.1-1
-libnghttp2 1.49.0-1
+libnghttp2 1.50.0-1
 libnpth 1.6-1
 libopenssl 1.1.1.q-1
 libp11-kit 0.24.1-4
@@ -190,13 +190,13 @@ mintty 1~3.6.1-2
 mpfr 4.1.0.p13-1
 msys2-keyring 1~20220623-1
 msys2-launcher 1.5-1
-msys2-runtime 3.3.6-1
+msys2-runtime 3.3.6-2
 nano 6.4-1
 ncurses 6.3-3
 nettle 3.8.1-1
 openssl 1.1.1.q-1
 p11-kit 0.24.1-4
-pacman 6.0.1-17
+pacman 6.0.1-18
 pacman-contrib 1.6.0-1
 pacman-mirrors 20220205-1
 patch 2.7.6-1

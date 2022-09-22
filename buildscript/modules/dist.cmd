@@ -30,11 +30,11 @@
 @if NOT EXIST "lib\" MD lib
 @IF /I NOT "%keeplastbuild%"=="y" if EXIST "bin\%abi%\" RD /S /Q bin\%abi%
 @IF /I NOT "%keeplastbuild%"=="y" if EXIST "lib\%abi%\" RD /S /Q lib\%abi%
-@if EXIST "include\" RD /S /Q include
+@IF /I NOT "%keeplastbuild%"=="y" if EXIST "include\" RD /S /Q include
 @if NOT EXIST "bin\%abi%\" MD bin\%abi%
 @if NOT EXIST "lib\%abi%\" MD lib\%abi%
 @if NOT EXIST "lib\%abi%\pkgconfig\" MD lib\%abi%\pkgconfig
-@MD include
+@if NOT EXIST "include\" MD include
 
 :mesondist
 @echo Copying Mesa3D shared libraries...
@@ -74,9 +74,9 @@
 @for /R "%devroot%\mesa\build\%toolchain%-%abi%\meson-private" %%a IN (*.pc) do @IF EXIST "%%a" IF /I NOT "%%~na"=="DirectX-Headers" IF /I NOT "%%~na"=="libelf" IF /I NOT "%%~na"=="zlib" copy "%%a" "%devroot%\%projectname%\lib\%abi%\pkgconfig"
 @echo.
 
-@echo Copying headers...
-@ROBOCOPY "%devroot%\mesa\include" "%devroot%\%projectname%\include" /E
-@echo.
+@IF /I NOT "%keeplastbuild%"=="y" echo Copying headers...
+@IF /I NOT "%keeplastbuild%"=="y" ROBOCOPY "%devroot%\mesa\include" "%devroot%\%projectname%\include" /E
+@IF /I NOT "%keeplastbuild%"=="y" echo.
 
 :donedist
 @rem Collect debug binaries or PDBs
