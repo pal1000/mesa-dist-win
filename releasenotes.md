@@ -10,7 +10,7 @@
 - Make debug binaries optimization optional as they take a lot of RAM to link when using MSVC;
 - Allow doing debug build with MinGW;
 - SPIRV LLVM translator: Build out of tree and allow build without clang;
-- MinGW: Support linking dependencies dynamically and make this default when doing debug build to reduce binaries size;
+- MinGW: Support linking dependencies dynamically;
 - Support building Mesa3D with asserts;
 - SPIRV LLVM translator: Support build with LLVM binaries only;
 - SPIRV LLVM translator: Retrieve LLVM major version from pre-built LLVM and support switching source branch automatically if necessary;

@@ -195,7 +195,6 @@
 @if /I NOT "%mesaenableasserts%"=="y" set buildconf=%buildconf% -Db_ndebug=true
 
 @set linkmingwdynamic=n
-@if /I "%mesadbgbld%"=="y" IF NOT %toolchain%==msvc set linkmingwdynamic=y
 @IF NOT %toolchain%==msvc set /p linkmingwdynamic=Link dependencies dynamically for debuggging purposes - default "y" for MinGW debug build, "n" otherwise (y/n):
 @IF NOT %toolchain%==msvc echo.
 @IF NOT %toolchain%==msvc IF /I NOT "%linkmingwdynamic%"=="y" set LDFLAGS=%LDFLAGS% -static
