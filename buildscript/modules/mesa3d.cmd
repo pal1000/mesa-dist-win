@@ -178,7 +178,7 @@
 @set mesadbgbld=n
 @set mesadbgoptim=n
 @if /I "%useninja%"=="y" IF %toolchain%==msvc set /p mesadbgbld=Debug friendly binaries (require a lot of RAM) (y/n):
-@IF NOT %toolchain%==msvc set /p mesadbgbld=Debug friendly binaries (has issues when linking statically) (y/n):
+@IF NOT %toolchain%==msvc set /p mesadbgbld=Debug friendly binaries (y/n):
 @if /I "%useninja%"=="y" echo.
 @if /I NOT "%mesadbgbld%"=="y" set buildconf=%buildconf% --buildtype=release
 @if /I NOT "%mesadbgbld%"=="y" IF NOT %toolchain%==msvc set LDFLAGS=%LDFLAGS% -s
@@ -195,7 +195,7 @@
 @if /I NOT "%mesaenableasserts%"=="y" set buildconf=%buildconf% -Db_ndebug=true
 
 @set linkmingwdynamic=n
-@IF NOT %toolchain%==msvc set /p linkmingwdynamic=Link dependencies dynamically for debuggging purposes - default "y" for MinGW debug build, "n" otherwise (y/n):
+@IF NOT %toolchain%==msvc set /p linkmingwdynamic=Link dependencies dynamically for debuggging purposes (y/n):
 @IF NOT %toolchain%==msvc echo.
 @IF NOT %toolchain%==msvc IF /I NOT "%linkmingwdynamic%"=="y" set LDFLAGS=%LDFLAGS% -static
 @IF NOT %toolchain%==msvc IF /I NOT "%linkmingwdynamic%"=="y" set buildconf=%buildconf% --prefer-static
