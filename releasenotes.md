@@ -1,3 +1,5 @@
+# 22.2.0
+- Updated Mesa3D to [22.2.0](https://docs.mesa3d.org/relnotes/22.2.0.html).
 ### Distribution
 - Debugging support with PDBs for MSVC and debug optimized binaries for MinGW (#54);
 - Perform debug information collection decoupled from distribution creation when posssible;
