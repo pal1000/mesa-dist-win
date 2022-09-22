@@ -26,7 +26,8 @@
 - MSVC: Update LLVM to 15.0.1;
 - MSVC LLVM source update: Delete files and folders that become untracked;
 - Build environment info: Add old LLVM version;
-- Update LLVM MinGW binary wrap fallback for 15.x releases.
+- Update LLVM MinGW binary wrap fallback for 15.x releases;
+- Freeze DirectX headers on stable release 1.606.4.
 ### Debugging
 - MinGW: Add start debugging tutorial and script;
 ### Deployment
