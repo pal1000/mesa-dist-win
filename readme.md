@@ -11,21 +11,22 @@
 # Downloads
 Mesa 22.2.0 builds with Visual Studio and MSYS2 Mingw-w64 are now available in [releases section](https://github.com/pal1000/mesa-dist-win/releases).
 # Known issues
+This is a list of all comonly encountered issues with known solutions or workarounds. A specific release is only affected by a subset of them.
 - `libgallium_wgl.dll` missing error with Mesa3D OpenGL ES and desktop OpenGL drivers
 
-Just redo per app deployment to fix it. Gallium megadriver separation from `opengl32.dll` was a very invasive change that existing per app deployments didn't stand a chance against. If you don't remember if an affected program is 32-bit or 64-bit, right click on `opengl32.dll` shortcut in the folder where the program executable is located and select open file location. If location ends in x64 then it's 64-bit, otherwise it's 32-bit.
+This is encountered with existing per application deployments made with 21.2.x or oldeer when updating to 21.3.0 or newer. Just redo per app deployment to fix it. Gallium megadriver separation from `opengl32.dll` was a very invasive change that existing per app deployments didn't stand a chance against. If you don't remember if an affected program is 32-bit or 64-bit, right click on `opengl32.dll` shortcut in the folder where the program executable is located and select open file location. If location ends in x64 then it's 64-bit, otherwise it's 32-bit.
 - `libEGL.dll` missing error with Mesa3D OpenGL ES
 
-Just redo per app deployment to fix it. The EGL support was a very invasive change that existing per app deployments didn't stand a chance against. If you don't remember if an affected program is 32-bit or 64-bit, right click on `opengl32.dll` shortcut in the folder where the program executable is located and select open file location. If location ends in x64 then it's 64-bit, otherwise it's 32-bit.
+This is encountered with existing per application deployments made with 21.2.x or oldeer when updating to 21.3.0 or newer. Just redo per app deployment to fix it. The EGL support was a very invasive change that existing per app deployments didn't stand a chance against. If you don't remember if an affected program is 32-bit or 64-bit, right click on `opengl32.dll` shortcut in the folder where the program executable is located and select open file location. If location ends in x64 then it's 64-bit, otherwise it's 32-bit.
 - `libvulkan-1.dll` missing error with Mesa3D `opengl32.dll` from MinGW release package
 
-Run `fix-libvulkan-1.dll-missing-error.cmd` from MinGW release package to correct it.  This tool supports unattended execution via `auto` command line option. This tool is only bundled in MinGW release package when needed because only releases for which zink driver was built with MSYS2 MinGW-W64 vulkan-devel package group are affected. The decision to use this Vulkan SDK over LunarG's is done based on which comes with newer loader and headers.
+Only releases prior to 22.2.0 for which zink driver was built with MSYS2 MinGW-W64 vulkan-devel package group are affected. .Run `fix-libvulkan-1.dll-missing-error.cmd` from MinGW release package to correct it.  This tool supports unattended execution via `auto` command line option. This tool is only bundled in MinGW release package when needed otherwise it's intentionally missing. The decision to use this Vulkan SDK over LunarG's is done based on which comes with newer loader and headers.
 - 64-bit binaries in both MSVC and MinGW packages require a CPU with AVX even though they shouldn't
 
 This is no longer an issue as of Mesa 22.0 or newer. This issue is caused by 64-bit binaries containing swr driver which leaks AVX usage into common code. This is an upstream bug reported [here](https://gitlab.freedesktop.org/mesa/mesa/-/issues/4437), [here](https://gitlab.freedesktop.org/mesa/mesa/-/issues/3860) and [here](https://github.com/msys2/MINGW-packages/issues/7530).
-- Mesa `opengl32.dll` from MinGW package depends on [Vulkan runtime](https://vulkan.lunarg.com/sdk/home#windows) since 21.0.0
+- Mesa `opengl32.dll` from MinGW package depends on [Vulkan runtime](https://vulkan.lunarg.com/sdk/home#windows) since 21.0.0.
 
-This is an [upstream regression](https://gitlab.freedesktop.org/mesa/mesa/-/issues/3855) introduced when zink driver was patched to support Windows.
+ This was fixed in 22.2.0 by containing this requirement to zink driver explicit usage. This is an [upstream regression](https://gitlab.freedesktop.org/mesa/mesa/-/issues/3855) introduced when zink driver was patched to support Windows.
 - Programs can behave like there is no OpenGL support when using Mesa `opengl32.dll` since 21.0.0
 
 This is not a defect but rather a behavior change of Mesa when environment variables are misconfigured. It usually happens when selecting a Mesa driver that doesn't exist in release package used or it fails to initialize due to host system not meeting hardware requirements or lacking dependencies. Reading [differences between MSVC and MinGW packages](#differences-between-msvc-and-mingw-packages) and [Mingw and MSVC Package contents](#mingw-and-msvc-package-contents) should aid in troubleshooting.
