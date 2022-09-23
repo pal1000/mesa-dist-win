@@ -20,11 +20,11 @@ This is encountered with existing per application deployments made with 21.2.x o
 This is encountered with existing per application deployments made with 21.2.x or oldeer when updating to 21.3.0 or newer. Just redo per app deployment to fix it. The EGL support was a very invasive change that existing per app deployments didn't stand a chance against. If you don't remember if an affected program is 32-bit or 64-bit, right click on `opengl32.dll` shortcut in the folder where the program executable is located and select open file location. If location ends in x64 then it's 64-bit, otherwise it's 32-bit.
 - `libvulkan-1.dll` missing error with Mesa3D `opengl32.dll` from MinGW release package
 
-Only releases prior to 22.2.0 for which zink driver was built with MSYS2 MinGW-W64 vulkan-devel package group are affected. .Run `fix-libvulkan-1.dll-missing-error.cmd` from MinGW release package to correct it.  This tool supports unattended execution via `auto` command line option. This tool is only bundled in MinGW release package when needed otherwise it's intentionally missing. The decision to use this Vulkan SDK over LunarG's is done based on which comes with newer loader and headers.
+Only releases prior to 22.2.0 for which zink driver was built with MSYS2 MinGW-W64 vulkan-devel package group are affected. Run `fix-libvulkan-1.dll-missing-error.cmd` from MinGW release package to correct it. This tool supports unattended execution via `auto` command line option. This tool is only bundled in MinGW release package when needed otherwise it's intentionally missing. The decision to use this Vulkan SDK over LunarG's is done based on which comes with newer loader and headers.
 - 64-bit binaries in both MSVC and MinGW packages require a CPU with AVX even though they shouldn't
 
 This is no longer an issue as of Mesa 22.0 or newer. This issue is caused by 64-bit binaries containing swr driver which leaks AVX usage into common code. This is an upstream bug reported [here](https://gitlab.freedesktop.org/mesa/mesa/-/issues/4437), [here](https://gitlab.freedesktop.org/mesa/mesa/-/issues/3860) and [here](https://github.com/msys2/MINGW-packages/issues/7530).
-- Mesa `opengl32.dll` from MinGW package depends on [Vulkan runtime](https://vulkan.lunarg.com/sdk/home#windows) since 21.0.0.
+- Mesa `opengl32.dll` from MinGW package depends on [Vulkan runtime](https://vulkan.lunarg.com/sdk/home#windows) since 21.0.0
 
  This was fixed in 22.2.0 by containing this requirement to zink driver explicit usage. This is an [upstream regression](https://gitlab.freedesktop.org/mesa/mesa/-/issues/3855) introduced when zink driver was patched to support Windows.
 - Programs can behave like there is no OpenGL support when using Mesa `opengl32.dll` since 21.0.0
@@ -39,12 +39,9 @@ To correct these errors regardless of cause you have to re-deploy. If you don't 
 Same problem with same solution applies to osmesa if you are upgrading from 17.3.5.501-1 or older.
 # Differences between MSVC and MinGW packages
 - MinGW package requires a CPU with [SSSE3](https://en.wikipedia.org/wiki/SSSE3#CPUs_with_SSSE3) with benefit of providing 3-5% performance boost with software rendering drivers;
-- GLonD3D12 introduced in 21.0.0 is only available in MSVC package;
-- SPIR-V to DXIL tool introduced in 21.0.0 is only available in MSVC package but MinGW support is in progress;
 - d3d10sw introduced in 21.2.0 is only available in MSVC package;
-- dozen driver introduced in 22.1.0 is only available in MSVC package but MinGW support is in progress.
 - MinGW package uses ZSTD for certain compression tasks since 20.1.8;
-- OpenCL support which began appearing piece by piece since 21.3.0 is only available for MSVC package and also clover specifically needing LLVM with RTTI support, but MinGW support is in progress anyway.
+- OpenCL support which began appearing piece by piece since 21.3.0 is only available for MSVC package until [this issue](https://gitlab.freedesktop.org/mesa/mesa/-/issues/7243) is resolved.
 
 If you need to migrate from Mingw to MSVC binaries you just need to replace Mesa binaries folder from Mingw package with MSVC counterpart.
 # Mingw and MSVC Package contents
