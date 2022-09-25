@@ -78,8 +78,10 @@ Due to their commmon build dependency on libclc they are not available in MinGW 
 - graw. File names: `graw.dll`, `graw_null.dll`. This is Mesa3D plug-in library mainly used by unit tests. It is not a driver. Available for both x86 and x64 and in full (with window system support) and headless (no window) versions. This is used in special cases by software that is designed to use Mesa3D code internal APIs. Since 20.0.2 both full and headless versions are available in both MSVC and MSYS2 Mingw-w64 packages.
 - test suite. Many executable unit tests.
 ### Development pack
-- Headers and libraries for both 32-bit and 64-bit builds are located in a separate archive called development pack.
-
+Headers and libraries for both 32-bit and 64-bit builds are located in a separate archive called development pack.
+### Debug packs
+Starting with 22.2.0 a MSVC debug info package containing debug symbols in PDB format and a MinGW asserts enabled debug optimized build package are available. MinGW debug binaries can be used as drop-in replacements for their release counterparts. With software using per application deployment, this should be seamless, but for system-wide deployment, re-deployment is necessary to switch from release to debug builds and vice-versa. For more info on MinGW debugging, see [debug/mingw-start-debugging.sh](https://github.com/pal1000/mesa-dist-win/blob/master/debug/mingw-start-debugging.sh)
+# Build Mesa3D yourself
 Build instructions, if you want to replicate my builds, are available [here](https://github.com/pal1000/mesa-dist-win/tree/master/buildscript).
 # Installation and usage
 First choose between Mingw and MSVC package. See [About Mingw package](#about-mingw-package) section for details. Before [extracting](https://www.7-zip.org/) release package close all programs that use Mesa if any is running. After extraction you will have access to 2 deployment options, both located in the directory you installed Mesa. Both deployment utilities have a start-over mechanism so you can do all deployments you need in one session. The deployment tools only support OpenGL and OpenGL ES components of Messa3D plus OpenCL clover standalone.
