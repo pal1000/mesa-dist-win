@@ -7,14 +7,12 @@
 @rem Ask to configure LLVM build
 @IF %llvmsources% EQU 1 IF %cmakestate% GTR 0 set /p cfgllvmbuild=Generate LLVM build configuration command (y/n):
 @IF %llvmsources% EQU 1 IF %cmakestate% GTR 0 echo.
-@IF %llvmsources% EQU 0 IF %cmakestate% GTR 0 IF EXIST "%devroot%\llvm\build\%abi%\lib\" set /p cfgllvmbuild=Generate LLVM build configuration command (y/n):
-@IF %llvmsources% EQU 0 IF %cmakestate% GTR 0 IF EXIST "%devroot%\llvm\build\%abi%\lib\" echo.
+@IF %llvmsources% EQU 0 IF %cmakestate% GTR 0 IF EXIST "%llvminstloc%\%abi%\lib\" set /p cfgllvmbuild=Generate LLVM build configuration command (y/n):
+@IF %llvmsources% EQU 0 IF %cmakestate% GTR 0 IF EXIST "%llvminstloc%\%abi%\lib\" echo.
 @if /I NOT "%cfgllvmbuild%"=="y" GOTO skipllvm
 
 @rem Get/update LLVM source code
-@IF %gitstate% GTR 0 set /p legacyllvm=Use previous LLVM major version (y/n):
-@IF %gitstate% GTR 0 echo.
-@set updllvmsrcver=15.0.1
+@set updllvmsrcver=15.0.2
 @if /I "%legacyllvm%"=="y" set updllvmsrcver=14.0.6
 @set llvmsrcver=0
 @set llvmsrcloc="%devroot%\llvm-project\llvm\CMakeLists.txt"
@@ -82,8 +80,8 @@
 @IF /I "%buildclang%"=="y" set buildconf=%buildconf% -DCLANG_BUILD_TOOLS=ON
 @set buildconf=%buildconf% -DLLVM_ENABLE_RTTI=ON -DLLVM_ENABLE_TERMINFO=OFF
 
-@if NOT EXIST "%devroot%\llvm-project\" echo LLVM build configuration command^: %buildconf% -DCMAKE_INSTALL_PREFIX="%devroot%\llvm\build\%abi%" "%devroot%\llvm"
-@if EXIST "%devroot%\llvm-project\" echo LLVM build configuration command^: %buildconf% -DCMAKE_INSTALL_PREFIX="%devroot%\llvm\build\%abi%" "%devroot%\llvm-project\llvm"
+@if NOT EXIST "%devroot%\llvm-project\" echo LLVM build configuration command^: %buildconf% -DCMAKE_INSTALL_PREFIX="%llvminstloc%\%abi%" "%devroot%\llvm"
+@if EXIST "%devroot%\llvm-project\" echo LLVM build configuration command^: %buildconf% -DCMAKE_INSTALL_PREFIX="%llvminstloc%\%abi%" "%devroot%\llvm-project\llvm"
 @echo.
 
 @rem Ask to do LLVM build
@@ -96,7 +94,7 @@
 @rem Always clean build
 @echo Cleanning LLVM build. Please wait...
 @echo.
-@if EXIST "%devroot%\llvm\build\%abi%\" RD /S /Q "%devroot%\llvm\build\%abi%"
+@if EXIST "%llvminstloc%\%abi%\" RD /S /Q "%llvminstloc%\%abi%"
 @if NOT EXIST "%devroot%\llvm-project\" cd "%devroot%\llvm"
 @if EXIST "%devroot%\llvm-project\" cd "%devroot%\llvm-project"
 @if EXIST "build\buildsys-%abi%\" RD /S /Q build\buildsys-%abi%
@@ -109,22 +107,22 @@
 
 @rem Load Visual Studio environment. Can only be loaded in the background when using MsBuild.
 @if /I "%useninja%"=="y" call %vsenv% %vsabi%
-@if /I "%useninja%"=="y" if NOT EXIST "%devroot%\llvm-project\" cd "%devroot%\llvm\build\buildsys-%abi%"
+@if /I "%useninja%"=="y" if NOT EXIST "%devroot%\llvm-project\" cd "%llvminstloc%\buildsys-%abi%"
 @if /I "%useninja%"=="y" if EXIST "%devroot%\llvm-project\" cd "%devroot%\llvm-project\build\buildsys-%abi%"
 @if /I "%useninja%"=="y" echo.
 
 @rem Configure and execute the build with the configuration made above.
-@if NOT EXIST "%devroot%\llvm-project\" %buildconf% -DCMAKE_INSTALL_PREFIX="%devroot%\llvm\build\%abi%" "%devroot%\llvm"
-@if EXIST "%devroot%\llvm-project\" %buildconf% -DCMAKE_INSTALL_PREFIX="%devroot%\llvm\build\%abi%" "%devroot%\llvm-project\llvm"
+@if NOT EXIST "%devroot%\llvm-project\" %buildconf% -DCMAKE_INSTALL_PREFIX="%llvminstloc%\%abi%" "%devroot%\llvm"
+@if EXIST "%devroot%\llvm-project\" %buildconf% -DCMAKE_INSTALL_PREFIX="%llvminstloc%\%abi%" "%devroot%\llvm-project\llvm"
 @echo.
 @pause
 @echo.
 @if /I NOT "%useninja%"=="y" cmake --build . -j %throttle% --config Release --target install
 @if /I NOT "%useninja%"=="y" IF /I NOT "%buildclang%"=="y" cmake --build . -j %throttle% --config Release --target llvm-config
-@if /I NOT "%useninja%"=="y" IF /I NOT "%buildclang%"=="y" copy .\Release\bin\llvm-config.exe "%devroot%\llvm\build\%abi%\bin\"
+@if /I NOT "%useninja%"=="y" IF /I NOT "%buildclang%"=="y" copy .\Release\bin\llvm-config.exe "%llvminstloc%\%abi%\bin\"
 @if /I "%useninja%"=="y" ninja -j %throttle% install
 @if /I "%useninja%"=="y" IF /I NOT "%buildclang%"=="y" ninja -j %throttle% llvm-config
-@if /I "%useninja%"=="y" IF /I NOT "%buildclang%"=="y" copy .\bin\llvm-config.exe "%devroot%\llvm\build\%abi%\bin\"
+@if /I "%useninja%"=="y" IF /I NOT "%buildclang%"=="y" copy .\bin\llvm-config.exe "%llvminstloc%\%abi%\bin\"
 @echo.
 
 @rem Avoid race condition in SPIRV LLVM translator sources checkout.
@@ -134,11 +132,11 @@
 :skipllvm
 @IF %llvmsources% EQU 0 echo WARNING: LLVM source code not found and it couldn't be obtained.
 @IF %cmakestate% EQU 0 echo WARNING: LLVM requires CMake to build.
-@IF NOT EXIST "%devroot%\llvm\build\%abi%\lib\" echo WARNING: LLVM binaries not found. If you want to build Mesa3D anyway it will be without llvmpipe, swr, RADV, lavapipe and all OpenCL drivers and high performance JIT won't be available for softpipe, osmesa and graw.
+@IF NOT EXIST "%llvminstloc%\%abi%\lib\" echo WARNING: LLVM binaries not found. If you want to build Mesa3D anyway it will be without llvmpipe, swr, RADV, lavapipe and all OpenCL drivers and high performance JIT won't be available for softpipe, osmesa and graw.
 @IF %llvmsources% EQU 0 echo.
 @IF %llvmsources% EQU 1 IF %cmakestate% EQU 0 echo.
-@IF %llvmsources% EQU 1 IF %cmakestate% GTR 0 IF NOT EXIST "%devroot%\llvm\build\%abi%\lib\" echo.
-@IF EXIST "%devroot%\llvm\build\%abi%\lib\cmake\llvm\LLVMConfig.cmake" if /I "%cfgllvmbuild%"=="y" call "%devroot%\%projectname%\buildscript\modules\llvmspv.cmd"
+@IF %llvmsources% EQU 1 IF %cmakestate% GTR 0 IF NOT EXIST "%llvminstloc%\%abi%\lib\" echo.
+@IF EXIST "%llvminstloc%\%abi%\lib\cmake\llvm\LLVMConfig.cmake" if /I "%cfgllvmbuild%"=="y" call "%devroot%\%projectname%\buildscript\modules\llvmspv.cmd"
 
 @rem Reset environment after LLVM build.
 @endlocal

@@ -5,7 +5,7 @@
 @cd "%devroot%\SPIRV-LLVM-Translator"
 @echo Updating SPIRV LLVM translator...
 @git pull --progress --tags --recurse-submodules origin
-@FOR /F tokens^=^1^,2^ eol^= %%a IN ('type "%devroot%\llvm\build\%abi%\lib\cmake\llvm\LLVMConfig.cmake"') DO @IF "%%a"=="set(LLVM_PACKAGE_VERSION" FOR /F tokens^=^1^,2^ delims^=^.^ eol^= %%c IN ("%%b") DO @git checkout llvm_release_%%c%%d
+@FOR /F tokens^=^1^,2^ eol^= %%a IN ('type "%llvminstloc%\%abi%\lib\cmake\llvm\LLVMConfig.cmake"') DO @IF "%%a"=="set(LLVM_PACKAGE_VERSION" FOR /F tokens^=^1^,2^ delims^=^.^ eol^= %%c IN ("%%b") DO @git checkout llvm_release_%%c%%d
 @git pull --progress --tags --recurse-submodules origin
 @echo.
 )
@@ -29,7 +29,7 @@
 
 @IF NOT EXIST "%devroot%\SPIRV-LLVM-Translator\" (
 @echo Getting SPIRV LLVM translator source code...
-@FOR /F tokens^=^1^,2^ eol^= %%a IN ('type "%devroot%\llvm\build\%abi%\lib\cmake\llvm\LLVMConfig.cmake"') DO @IF "%%a"=="set(LLVM_PACKAGE_VERSION" FOR /F tokens^=^1^,2^ delims^=^.^ eol^= %%c IN ("%%b") DO @git clone -b llvm_release_%%c%%d https://github.com/KhronosGroup/SPIRV-LLVM-Translator "%devroot%\SPIRV-LLVM-Translator"
+@FOR /F tokens^=^1^,2^ eol^= %%a IN ('type "%llvminstloc%\%abi%\lib\cmake\llvm\LLVMConfig.cmake"') DO @IF "%%a"=="set(LLVM_PACKAGE_VERSION" FOR /F tokens^=^1^,2^ delims^=^.^ eol^= %%c IN ("%%b") DO @git clone -b llvm_release_%%c%%d https://github.com/KhronosGroup/SPIRV-LLVM-Translator "%devroot%\SPIRV-LLVM-Translator"
 @echo.
 )
 @IF EXIST "%devroot%\SPIRV-LLVM-Translator\spirv-headers-tag.conf" IF NOT EXIST "%devroot%\SPIRV-Headers\" (
@@ -48,14 +48,14 @@
 @IF /I "%integratespvtools%"=="y" set PKG_CONFIG_PATH=%devroot:\=/%/spirv-tools/build/%abi%/lib/pkgconfig
 @IF /I NOT "%integratespvtools%"=="y" set PKG_CONFIG_PATH=
 
-@set buildconf=%buildconf% -DLLVM_EXTERNAL_SPIRV_HEADERS_SOURCE_DIR="%devroot%\SPIRV-Headers" -DCMAKE_INSTALL_PREFIX="%devroot%\llvm\build\spv-%abi%" -DCMAKE_PREFIX_PATH="%devroot%\llvm\build\%abi%" -DLLVM_SPIRV_INCLUDE_TESTS=OFF "%devroot%\SPIRV-LLVM-Translator"
+@set buildconf=%buildconf% -DLLVM_EXTERNAL_SPIRV_HEADERS_SOURCE_DIR="%devroot%\SPIRV-Headers" -DCMAKE_INSTALL_PREFIX="%llvminstloc%\spv-%abi%" -DCMAKE_PREFIX_PATH="%llvminstloc%\%abi%" -DLLVM_SPIRV_INCLUDE_TESTS=OFF "%devroot%\SPIRV-LLVM-Translator"
 @echo SPIRV LLVM translator build configuration command^: %buildconf%
 @echo.
 @pause
 @echo.
 @echo Cleanning SPIRV LLVM translator build. Please wait...
 @echo.
-@if EXIST "%devroot%\llvm\build\spv-%abi%\" RD /S /Q "%devroot%\llvm\build\spv-%abi%"
+@if EXIST "%llvminstloc%\spv-%abi%\" RD /S /Q "%llvminstloc%\spv-%abi%"
 @if EXIST "%devroot%\llvm-project\build\bldspv-%abi%\" RD /S /Q "%devroot%\llvm-project\build\bldspv-%abi%"
 @pause
 @echo.

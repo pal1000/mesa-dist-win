@@ -35,6 +35,9 @@
 @rem Select target architecture
 @call "%devroot%\%projectname%\buildscript\modules\abi.cmd"
 
+@rem MSVC: Select between legacy and current LLVM version
+@IF %toolchain%==msvc call "%devroot%\%projectname%\buildscript\modules\selectllvm.cmd"
+
 @rem Offer option to build with clang
 @call "%devroot%\%projectname%\buildscript\modules\clang.cmd"
 

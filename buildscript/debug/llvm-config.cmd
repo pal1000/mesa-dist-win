@@ -6,8 +6,9 @@
 @set devroot=%CD%
 @IF %devroot:~0,1%%devroot:~-1%=="" set devroot=%devroot:~1,-1%
 @IF "%devroot:~-1%"=="\" set devroot=%devroot:~0,-1%
-@IF NOT EXIST llvm\build GOTO error
-@cd llvm\build
+@call "%devroot%\mesa-dist-win\buildscript\modules\selectllvm.cmd"
+@IF NOT EXIST "%llvminstloc%\" GOTO error
+@cd %llvminstloc%
 @if NOT EXIST x64 if NOT EXIST x86 GOTO error
 @if EXIST x64 cd x64
 @if EXIST x86 cd x86

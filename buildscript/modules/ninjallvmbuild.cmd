@@ -5,9 +5,9 @@
 
 @rem Build LLVM libraries
 @set llvmlibstotal=0
-@FOR /F tokens^=4^ eol^= %%a IN ('"%devroot%\llvm\build\%abi%\bin\llvm-config.exe" --link-static --libnames 2^>^&1') DO @set /a llvmlibstotal+=1
+@FOR /F tokens^=4^ eol^= %%a IN ('"%llvminstloc%\%abi%\bin\llvm-config.exe" --link-static --libnames 2^>^&1') DO @set /a llvmlibstotal+=1
 @set llvmlibscount=0
-@FOR /F tokens^=4^ eol^= %%a IN ('"%devroot%\llvm\build\%abi%\bin\llvm-config.exe" --link-static --libnames 2^>^&1') DO @(
+@FOR /F tokens^=4^ eol^= %%a IN ('"%llvminstloc%\%abi%\bin\llvm-config.exe" --link-static --libnames 2^>^&1') DO @(
 set /a llvmlibscount+=1
 echo Building library %%~na - !llvmlibscount! of %llvmlibstotal%...
 ninja -j %throttle% install-%%~na

@@ -202,9 +202,9 @@
 
 @set havellvm=1
 @set llvmmethod=configtool
-@IF %toolchain%==msvc IF NOT EXIST "%devroot%\llvm\build\%abi%\lib\" set havellvm=0
-@IF %toolchain%==msvc IF NOT EXIST "%devroot%\llvm\build\%abi%\bin\llvm-config.exe" IF %cmakestate% EQU 0 set havellvm=0
-@IF %toolchain%==msvc IF NOT EXIST "%devroot%\llvm\build\%abi%\bin\llvm-config.exe" IF %cmakestate% GTR 0 set llvmmethod=cmake
+@IF %toolchain%==msvc IF NOT EXIST "%llvminstloc%\%abi%\lib\" set havellvm=0
+@IF %toolchain%==msvc IF NOT EXIST "%llvminstloc%\%abi%\bin\llvm-config.exe" IF %cmakestate% EQU 0 set havellvm=0
+@IF %toolchain%==msvc IF NOT EXIST "%llvminstloc%\%abi%\bin\llvm-config.exe" IF %cmakestate% GTR 0 set llvmmethod=cmake
 @set llvmless=n
 @if %havellvm%==0 set llvmless=y
 @if %havellvm%==1 set /p llvmless=Build Mesa without LLVM (y/n). llvmpipe, swr, RADV, lavapipe and all OpenCL drivers won't be available and high performance JIT won't be available for softpipe, osmesa and graw:
@@ -218,10 +218,10 @@
 @if /I NOT "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm=%mesonbooltrue%
 @if /I NOT "%llvmless%"=="y" IF /I NOT "%linkmingwdynamic%"=="y" set buildconf=%buildconf% -Dshared-llvm=%mesonboolfalse%
 @if /I NOT "%llvmless%"=="y" IF /I "%linkmingwdynamic%"=="y" set buildconf=%buildconf% -Dshared-llvm=%mesonbooltrue%
-@if /I NOT "%llvmless%"=="y" IF %llvmmethod%==cmake set buildconf=%buildconf% --cmake-prefix-path="%devroot:\=/%/llvm/build/%abi%"
+@if /I NOT "%llvmless%"=="y" IF %llvmmethod%==cmake set buildconf=%buildconf% --cmake-prefix-path="%llvminstloc:\=/%/%abi%"
 @if /I NOT "%llvmless%"=="y" IF %llvmmethod%==cmake IF %cmakestate% EQU 1 SET PATH=%devroot%\cmake\bin\;%PATH%
 @if /I NOT "%llvmless%"=="y" IF NOT %llvmmethod%==cmake set buildconf=%buildconf% --cmake-prefix-path=
-@if /I NOT "%llvmless%"=="y" IF NOT %llvmmethod%==cmake IF %toolchain%==msvc if %llvmalreadyloaded% EQU 0 SET PATH=%devroot%\llvm\build\%abi%\bin\;%PATH%
+@if /I NOT "%llvmless%"=="y" IF NOT %llvmmethod%==cmake IF %toolchain%==msvc if %llvmalreadyloaded% EQU 0 SET PATH=%llvminstloc%\%abi%\bin\;%PATH%
 @if /I "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm=%mesonboolfalse%
 
 @set galliumcount=0
@@ -294,7 +294,7 @@
 @if /I "%llvmless%"=="y" set canradv=0
 @IF %intmesaver% LSS 21200 set canradv=0
 @IF %abi%==x86 IF %intmesaver% LSS 22000 set canradv=0
-@IF %toolchain%==msvc IF NOT EXIST "%devroot%\llvm\build\%abi%\lib\LLVMAMDGPU*.lib" set canradv=0
+@IF %toolchain%==msvc IF NOT EXIST "%llvminstloc%\%abi%\lib\LLVMAMDGPU*.lib" set canradv=0
 @IF %toolchain%==msvc IF NOT EXIST "%devroot%\mesa\subprojects\libelf-lfg-win32\" IF %gitstate% EQU 0 set canradv=0
 @IF %toolchain%==msvc IF %disableootpatch%==1 IF %intmesaver% LSS 21256 set canradv=0
 @IF %toolchain%==msvc IF %disableootpatch%==1 IF %intmesaver% GEQ 21300 IF %intmesaver% LSS 21306 set canradv=0
@@ -378,13 +378,13 @@
 @IF %intmesaver% LSS 21000 set canopencl=0
 @IF NOT %toolchain%==msvc IF %intmesaver% LSS 22200 set canopencl=0
 @if /I "%llvmless%"=="y" set canopencl=0
-@IF %toolchain%==msvc IF NOT EXIST "%devroot%\llvm\build\clc\share\pkgconfig\" set canopencl=0
+@IF %toolchain%==msvc IF NOT EXIST "%llvminstloc%\clc\share\pkgconfig\" set canopencl=0
 
 @rem OpenCL SPIR-V requirements: basic OpenCL support + Clang, SPIRV LLVM translator and SPIRV tools
 @set canclspv=1
 @IF %canopencl% EQU 0 set canclspv=0
-@IF %toolchain%==msvc IF NOT EXIST "%devroot%\llvm\build\%abi%\lib\clang*.lib" set canclspv=0
-@IF %toolchain%==msvc IF NOT EXIST "%devroot%\llvm\build\spv-%abi%\lib\pkgconfig\" set canclspv=0
+@IF %toolchain%==msvc IF NOT EXIST "%llvminstloc%\%abi%\lib\clang*.lib" set canclspv=0
+@IF %toolchain%==msvc IF NOT EXIST "%llvminstloc%\spv-%abi%\lib\pkgconfig\" set canclspv=0
 @IF %toolchain%==msvc IF NOT EXIST "%devroot%\spirv-tools\build\%abi%\lib\pkgconfig\" set canclspv=0
 
 @rem Add flags tracking PKG_CONFIG search PATH adjustment needs
@@ -430,8 +430,8 @@
 
 @rem Apply PKG_CONFIG search PATH adjustments on MSVC
 @IF %PKG_CONFIG_LIBCLC% EQU 1 set buildconf=%buildconf% -Dstatic-libclc=all
-@IF %PKG_CONFIG_LIBCLC% EQU 1 IF %toolchain%==msvc set buildconf=%buildconf% --pkg-config-path="%devroot:\=/%/llvm/build/clc/share/pkgconfig"
-@IF %PKG_CONFIG_SPV% EQU 1 IF %toolchain%==msvc set buildconf=%buildconf:~0,-1%;%devroot:\=/%/llvm/build/spv-%abi%/lib/pkgconfig;%devroot:\=/%/spirv-tools/build/%abi%/lib/pkgconfig"
+@IF %PKG_CONFIG_LIBCLC% EQU 1 IF %toolchain%==msvc set buildconf=%buildconf% --pkg-config-path="%llvminstloc:\=/%/clc/share/pkgconfig"
+@IF %PKG_CONFIG_SPV% EQU 1 IF %toolchain%==msvc set buildconf=%buildconf:~0,-1%;%llvminstloc:\=/%/spv-%abi%/lib/pkgconfig;%devroot:\=/%/spirv-tools/build/%abi%/lib/pkgconfig"
 @set "PKG_CONFIG_LIBCLC="
 @set "PKG_CONFIG_SPV="
 
