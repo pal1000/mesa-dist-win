@@ -430,7 +430,7 @@
 @IF /I "%cloverspv%"=="y" set PKG_CONFIG_SPV=1
 @IF /I "%cloverspv%"=="y" set buildconf=%buildconf% -Dopencl-spirv=true
 @IF /I "%buildclover%"=="y" IF /I NOT "%cloverspv%"=="y" set buildconf=%buildconf% -Dopencl-spirv=false
-@IF /I "%buildclover%"=="y" set buildconf=%buildconf% -Dopencl-native=false
+@IF /I "%buildclover%"=="y" IF %intmesaver% LSS 22300 set buildconf=%buildconf% -Dopencl-native=false
 @IF /I "%buildclover%"=="y" IF %intmesaver% GEQ 22100 set buildconf=%buildconf% -Dcpp_std=c++20
 
 @rem Apply PKG_CONFIG search PATH adjustments on MSVC

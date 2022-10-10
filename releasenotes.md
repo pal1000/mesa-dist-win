@@ -6,7 +6,8 @@
 ### Build script
 - LLVM MSVC: Seamless switch between legacy and current LLVM version;
 - SPIRV LLVM Translator: Support build with LLVM binaries only take 2, fixes 649e3f8f4a74594a45e32b037bc7543501bd88d5;
-- OpenCL stack: Support link with clang 15.
+- OpenCL stack: Draft support link with clang 15 (incomplete);
+- clover opencl-native build option was removed in mesa3d/mesa@c74595ead3.
 ### Build environment updates
 - LLVM MSVC: Update current version to 15.0.2.
 # 22.2.0
