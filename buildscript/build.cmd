@@ -32,6 +32,9 @@
 @rem Search for compiler toolchain. Hard fail if none found
 @call "%devroot%\%projectname%\buildscript\modules\toolchain.cmd"
 
+@rem Verify if out of tree patches can be applied.
+@call "%devroot%\%projectname%\buildscript\modules\patching.cmd"
+
 @rem Select target architecture
 @call "%devroot%\%projectname%\buildscript\modules\abi.cmd"
 
@@ -49,9 +52,6 @@
 
 @rem Build throttle.
 @call "%devroot%\%projectname%\buildscript\modules\throttle.cmd"
-
-@rem Verify if out of tree patches can be applied.
-@call "%devroot%\%projectname%\buildscript\modules\patching.cmd"
 
 @rem Get Meson build location
 @call "%devroot%\%projectname%\buildscript\modules\locatemeson.cmd"

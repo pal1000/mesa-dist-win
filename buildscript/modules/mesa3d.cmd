@@ -146,6 +146,9 @@
 @rem Link clang like LLVM
 @call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" link-clang-like-llvm
 
+@rem Fix OpenCL stack link with Clang 15
+@call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" fix-clang15-link
+
 :configmesabuild
 @rem Configure Mesa build.
 @set buildconf=%mesonloc% setup
@@ -376,16 +379,18 @@
 @rem Basic OpenCL requirements: Mesa 21.0+, LLVM and libclc
 @set canopencl=1
 @IF %intmesaver% LSS 21000 set canopencl=0
-@IF NOT %toolchain%==msvc IF %intmesaver% LSS 22200 set canopencl=0
 @if /I "%llvmless%"=="y" set canopencl=0
+@IF NOT %toolchain%==msvc IF %intmesaver% LSS 22200 set canopencl=0
 @IF %toolchain%==msvc IF NOT EXIST "%llvminstloc%\clc\share\pkgconfig\" set canopencl=0
 
-@rem OpenCL SPIR-V requirements: basic OpenCL support + Clang, SPIRV LLVM translator and SPIRV tools
+@rem OpenCL SPIR-V requirements: basic OpenCL support + Clang, SPIRV LLVM translator, SPIRV tools and out of tree patches if linking with clang>=15
 @set canclspv=1
 @IF %canopencl% EQU 0 set canclspv=0
 @IF %toolchain%==msvc IF NOT EXIST "%llvminstloc%\%abi%\lib\clang*.lib" set canclspv=0
 @IF %toolchain%==msvc IF NOT EXIST "%llvminstloc%\spv-%abi%\lib\pkgconfig\" set canclspv=0
 @IF %toolchain%==msvc IF NOT EXIST "%devroot%\spirv-tools\build\%abi%\lib\pkgconfig\" set canclspv=0
+@IF %toolchain%==msvc IF EXIST "%llvminstloc%\%abi%\lib\clang\" for /f tokens^=1^ delims^=.^ eol^= %%a IN ('dir /B /A:D "%llvminstloc%\%abi%\lib\clang\"') DO @IF %%a GEQ 15 IF %disableootpatch%==1 set canclspv=0
+@IF NOT %toolchain%==msvc IF EXIST "%msysloc%\%LMSYSTEM%\lib\clang\" for /f tokens^=1^ delims^=.^ eol^= %%a IN ('dir /B /A:D "%msysloc%\%LMSYSTEM%\lib\clang\"') DO @IF %%a GEQ 15 IF %disableootpatch%==1 set canclspv=0
 
 @rem Add flags tracking PKG_CONFIG search PATH adjustment needs
 @set PKG_CONFIG_LIBCLC=0

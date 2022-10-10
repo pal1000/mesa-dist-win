@@ -1,0 +1,29 @@
+diff --git a/meson.build b/meson.build
+index 7247c32b9ac..517de293bb9 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1891,6 +1891,9 @@ if with_clc
+       'clangHandleCXX', 'clangHandleLLVM', 'clangSerialization',
+       'clangSema', 'clangParse', 'clangEdit', 'clangAnalysis'
+     ]
++    if dep_llvm.version().version_compare('>= 15.0')
++      clang_modules += 'clangSupport'
++    endif
+ 
+     dep_clang = []
+     foreach m : clang_modules
+diff --git a/src/gallium/targets/opencl/meson.build b/src/gallium/targets/opencl/meson.build
+index 14df6b86f7f..62073d8ec05 100644
+--- a/src/gallium/targets/opencl/meson.build
++++ b/src/gallium/targets/opencl/meson.build
+@@ -75,6 +75,10 @@ if not (dep_clang.found() and dep_clang_usable)
+     cpp.find_library('clangBasic', dirs : llvm_libdir),
+     polly_dep, polly_isl_dep,
+   ]
++  if dep_llvm.version().version_compare('>= 15.0')
++    dep_clang += cpp.find_library('clangSupport', dirs : llvm_libdir)
++  endif
++
+   # check clang once more
+   if can_check_clang
+     test_run = cpp.run(clang_test_code, name : 'dep-clang-usable',

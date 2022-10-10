@@ -5,7 +5,8 @@
 - Update and improve table of contents.
 ### Build script
 - LLVM MSVC: Seamless switch between legacy and current LLVM version;
-- SPIRV LLVM Translator: Support build with LLVM binaries only take 2, fixes 649e3f8f4a74594a45e32b037bc7543501bd88d5.
+- SPIRV LLVM Translator: Support build with LLVM binaries only take 2, fixes 649e3f8f4a74594a45e32b037bc7543501bd88d5;
+- OpenCL stack: Support link with clang 15.
 ### Build environment updates
 - LLVM MSVC: Update current version to 15.0.2.
 # 22.2.0
