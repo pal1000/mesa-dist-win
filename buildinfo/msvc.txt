@@ -4,18 +4,17 @@ Windows 10.0.22000
 Ressource Hacker 5.1.8.360
 7-Zip 22.01 ultra compression
 Git 2.38.0.1
-LunarG Vulkan SDK 1.3.224.1
 Visual Studio Community 2022 v17.3.5
 Windows SDK 10.1.22621.1
 Windows Driver Kit 10.1.22621.382
-Nuget Commandline tool 6.3.0.131
+Nuget Commandline tool 6.3.1.1
 Python 3.10.7
 
 Python packages
 ---------------
 Mako       1.2.3
 MarkupSafe 2.1.1
-meson      0.63.2
+meson      0.63.3
 pip        22.2.2
 setuptools 65.4.1
 
