@@ -1,3 +1,5 @@
+# 22.2.1
+- Updated Mesa3D to [22.2.1](https://docs.mesa3d.org/relnotes/22.2.1.html).
 ### End-user documentation
 - Document GLonD3D12, SPIRV to DXIL and dozen availablability in MinGW package [22.2+];
 - Document that development package is now in standard format, see #91 and [22.0.1 release notes](https://github.com/pal1000/mesa-dist-win/releases/tag/22.0.1);
