@@ -4,25 +4,25 @@ Windows 10.0.22000
 Ressource Hacker 5.1.8.360
 7-Zip 22.01 ultra compression
 Git 2.38.0.1
-Visual Studio Community 2022 v17.3.5
+Visual Studio Community 2022 v17.3.6
 Windows SDK 10.1.22621.1
 Windows Driver Kit 10.1.22621.382
 Nuget Commandline tool 6.3.1.1
-Python 3.10.7
+Python 3.10.8
 
 Python packages
 ---------------
 Mako       1.2.3
 MarkupSafe 2.1.1
 meson      0.63.3
-pip        22.2.2
-setuptools 65.4.1
+pip        22.3
+setuptools 65.5.0
 
 CMake 3.24.2
 Ninja 1.11.1
 LLVM 15.0.2
 Old LLVM 14.0.6
-SPIRV Tools 2022.3.1
+SPIRV Tools 2022.4.1
 Winflexbison package 2.5.25
 flex 2.6.4
 Bison 3.8.2
