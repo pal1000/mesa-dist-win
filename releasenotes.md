@@ -1,3 +1,5 @@
+### Distribution
+- [Improve MSVC debug info package layout](https://gitlab.freedesktop.org/mesa/mesa/-/issues/7494#note_1592313).
 # 22.2.1
 - Updated Mesa3D to [22.2.1](https://docs.mesa3d.org/relnotes/22.2.1.html).
 ### End-user documentation

@@ -30,15 +30,20 @@
 @if NOT EXIST "lib\" MD lib
 @IF /I NOT "%keeplastbuild%"=="y" if EXIST "bin\%abi%\" RD /S /Q bin\%abi%
 @IF /I NOT "%keeplastbuild%"=="y" if EXIST "lib\%abi%\" RD /S /Q lib\%abi%
+@IF /I NOT "%keeplastbuild%"=="y" if EXIST "debug\%abi%\" RD /S /Q debug\%abi%
 @IF /I NOT "%keeplastbuild%"=="y" if EXIST "include\" RD /S /Q include
 @if NOT EXIST "bin\%abi%\" MD bin\%abi%
 @if NOT EXIST "lib\%abi%\" MD lib\%abi%
 @if NOT EXIST "lib\%abi%\pkgconfig\" MD lib\%abi%\pkgconfig
+@if NOT EXIST "debug\%abi%\" MD debug\%abi%
 @if NOT EXIST "include\" MD include
 
 :mesondist
-@echo Copying Mesa3D shared libraries...
-@for /R "%devroot%\mesa\build\%toolchain%-%abi%\src" %%a IN (*.dll) do @IF EXIST "%%a" copy "%%a" "%devroot%\%projectname%\bin\%abi%"
+@echo Copying Mesa3D shared libraries and PDBs...
+@for /R "%devroot%\mesa\build\%toolchain%-%abi%\src" %%a IN (*.dll) do @(
+@IF EXIST "%%a" copy "%%a" "%devroot%\%projectname%\bin\%abi%"
+@IF EXIST "%%~dpna.pdb" copy "%%~dpna.pdb" "%devroot%\%projectname%\debug\%abi%"
+)
 @IF EXIST "%devroot%\%projectname%\bin\%abi%\libclon12compiler.dll" REN "%devroot%\%projectname%\bin\%abi%\libclon12compiler.dll" clon12compiler.dll
 @echo.
 
@@ -79,6 +84,9 @@
 @IF /I NOT "%keeplastbuild%"=="y" echo.
 
 :donedist
-@rem Collect debug binaries or PDBs
-@IF EXIST "%devroot%\mesa\build\%toolchain%-%abi%\" call "%devroot%\%projectname%\buildscript\modules\collectdebug.cmd"
+@IF EXIST "%devroot%\%projectname%\bin\%abi%\*.dll" IF NOT EXIST "%devroot%\%projectname%\bin\%abi%\*.pdb" set /p getdebugbin=Collect MinGW debug binaries (y/n):
+@IF EXIST "%devroot%\%projectname%\bin\%abi%\*.dll" IF NOT EXIST "%devroot%\%projectname%\bin\%abi%\*.pdb" echo.
+@if /I "%getdebugbin%"=="y" echo Moving debug binaries to distinct location...
+@if /I "%getdebugbin%"=="y" MOVE "%devroot%\%projectname%\bin\%abi%\*.*" "%devroot%\%projectname%\debug\%abi%\"
+@if /I "%getdebugbin%"=="y" echo.
 @endlocal
