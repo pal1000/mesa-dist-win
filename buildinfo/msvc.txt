@@ -20,7 +20,7 @@ setuptools 65.5.0
 
 CMake 3.24.2
 Ninja 1.11.1
-LLVM 15.0.2
+LLVM 15.0.3
 Old LLVM 14.0.6
 SPIRV Tools 2022.4.1
 Winflexbison package 2.5.25
