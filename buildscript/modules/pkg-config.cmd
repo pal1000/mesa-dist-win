@@ -15,7 +15,7 @@
 @%runmsys% /usr/bin/pacman -S ${MINGW_PACKAGE_PREFIX}-pkgconf --needed --noconfirm --disable-download-timeout
 @echo.
 @set pkgconfigloc=%msysloc%\mingw32\bin
-@IF %abi%==x64 set pkgconfigloc=%msysloc%\mingw64\bin
+@IF %abi%==x64 set pkgconfigloc=%msysloc%\ucrt64\bin
 @GOTO doneenvcheck
 
 :nonmingwpkgconfig

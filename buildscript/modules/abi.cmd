@@ -5,8 +5,8 @@
 @if /I "%x64%"=="y" set abi=x64
 
 @rem Select MinGW shell based on ABI
-@set MSYSTEM=MINGW64
-@set LMSYSTEM=mingw64
+@set MSYSTEM=UCRT64
+@set LMSYSTEM=ucrt64
 @IF %abi%==x86 set MSYSTEM=MINGW32
 @IF %abi%==x86 set LMSYSTEM=mingw32
 
