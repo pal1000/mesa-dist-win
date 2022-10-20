@@ -72,7 +72,7 @@ echo irbuilder_h ^= files^(llvmloc + '/include/llvm/IR/IRBuilder.h'^)
 @CMD /C EXIT 0
 @FC /B "%devroot%\%projectname%\buildscript\mesonsubprojects\zlib.wrap" "%devroot%\mesa\subprojects\zlib.wrap">NUL 2>&1
 @if NOT "%ERRORLEVEL%"=="0" (
-@echo Using wrap file version 1.2.12-1 from Meson wrapdb to build zlib...
+@echo Using wrap file version 1.2.13-1 from Meson wrapdb to build zlib...
 @copy /Y "%devroot%\%projectname%\buildscript\mesonsubprojects\zlib.wrap" "%devroot%\mesa\subprojects\zlib.wrap"
 @echo.
 )
