@@ -3,7 +3,7 @@ Build environment
 Windows 10.0.22000
 Ressource Hacker 5.1.8.360
 7-Zip 22.01 ultra compression
-Git 2.38.0.1
+Git 2.38.1.1
 Visual Studio Community 2022 v17.3.6
 Windows SDK 10.1.22621.1
 Windows Driver Kit 10.1.22621.382

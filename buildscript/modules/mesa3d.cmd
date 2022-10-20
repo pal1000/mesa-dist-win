@@ -144,7 +144,7 @@
 @IF %intmesaver:~0,3% EQU 213 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" clover-all-targets
 
 @rem Link clang like LLVM
-@call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" link-clang-like-llvm
+@IF %intmesaver% LSS 22252 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" link-clang-like-llvm
 
 @rem Draft/WIP: Fix OpenCL stack link with Clang 15
 @call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" fix-clang15-link

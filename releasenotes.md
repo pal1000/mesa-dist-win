@@ -5,6 +5,10 @@
 - MinGW: Don't offer to keep binaries from previous build as this is only useful for MSVC.
 ### Build script
 - Switch x64 MinGW build from MSVCRT to UCRT.
+### Out of tree patches
+- LLVM<->Clang linking match has been upstreamed in 22.2.2.
+### Build environment
+- MSVC: Update zlib to 1.2.13.
 # 22.2.1
 - Updated Mesa3D to [22.2.1](https://docs.mesa3d.org/relnotes/22.2.1.html).
 ### End-user documentation
