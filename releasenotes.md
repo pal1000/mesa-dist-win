@@ -1,3 +1,5 @@
+# 22.2.2
+- Updated Mesa3D to [22.2.2](https://docs.mesa3d.org/relnotes/22.2.2.html).
 ### Distribution
 - [Improve MSVC debug info package layout](https://gitlab.freedesktop.org/mesa/mesa/-/issues/7494#note_1592313);
 - Fix check detecting MSVC build and hiding MinGW debug package creation;
