@@ -1,7 +1,8 @@
 ### Distribution
 - [Improve MSVC debug info package layout](https://gitlab.freedesktop.org/mesa/mesa/-/issues/7494#note_1592313);
 - MinGW debug package: Fix sanity check that detects MSVC debug build;
-- MinGW debug package: Don't collect unit tests if they are built.
+- MinGW debug package: Don't collect unit tests if they are built;
+- MinGW: Don't offer to keep binaries from previous build as this is only useful for MSVC.
 ### Build script
 - Switch x64 MinGW build from MSVCRT to UCRT.
 # 22.2.1

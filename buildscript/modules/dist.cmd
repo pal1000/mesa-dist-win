@@ -24,8 +24,8 @@
 
 :normaldist
 @set keeplastbuild=n
-@set /p keeplastbuild=Keep binaries and libraries from previous build (y/n):
-@echo.
+@IF %toolchain%==msvc set /p keeplastbuild=Keep binaries and libraries from previous build (y/n):
+@IF %toolchain%==msvc echo.
 @if NOT EXIST "bin\" MD bin
 @if NOT EXIST "lib\" MD lib
 @IF /I NOT "%keeplastbuild%"=="y" if EXIST "bin\%abi%\" RD /S /Q bin\%abi%
