@@ -84,9 +84,10 @@
 @IF /I NOT "%keeplastbuild%"=="y" echo.
 
 :donedist
-@IF EXIST "%devroot%\%projectname%\bin\%abi%\*.dll" IF NOT EXIST "%devroot%\%projectname%\bin\%abi%\*.pdb" set /p getdebugbin=Collect MinGW debug binaries (y/n):
-@IF EXIST "%devroot%\%projectname%\bin\%abi%\*.dll" IF NOT EXIST "%devroot%\%projectname%\bin\%abi%\*.pdb" echo.
+@IF EXIST "%devroot%\%projectname%\bin\%abi%\*.dll" IF NOT EXIST "%devroot%\%projectname%\debug\%abi%\*.pdb" set /p getdebugbin=Collect MinGW debug binaries (y/n):
+@IF EXIST "%devroot%\%projectname%\bin\%abi%\*.dll" IF NOT EXIST "%devroot%\%projectname%\debug\%abi%\*.pdb" echo.
 @if /I "%getdebugbin%"=="y" echo Moving debug binaries to distinct location...
-@if /I "%getdebugbin%"=="y" MOVE "%devroot%\%projectname%\bin\%abi%\*.*" "%devroot%\%projectname%\debug\%abi%\"
+@if /I "%getdebugbin%"=="y" MOVE "%devroot%\%projectname%\bin\%abi%\*.dll" "%devroot%\%projectname%\debug\%abi%\"
+@if /I "%getdebugbin%"=="y" IF EXIST "%devroot%\%projectname%\bin\%abi%\*.json" MOVE "%devroot%\%projectname%\bin\%abi%\*.json" "%devroot%\%projectname%\debug\%abi%\"
 @if /I "%getdebugbin%"=="y" echo.
 @endlocal
