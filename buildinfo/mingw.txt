@@ -73,14 +73,14 @@ libssh2 1.10.0-1
 libtasn1 4.19.0-1
 libunistring 1.0-1
 libutil-linux 2.35.2-1
-libxml2 2.10.2-1
+libxml2 2.10.3-1
 libxslt 1.1.37-1
 libzstd 1.5.2-2
 m4 1.4.19-2
 mingw-w64-i686-binutils 2.39-2
 mingw-w64-i686-bzip2 1.0.8-2
 mingw-w64-i686-ca-certificates 20211016-3
-mingw-w64-i686-clang 15.0.2-1
+mingw-w64-i686-clang 15.0.3-1
 mingw-w64-i686-crt-git 10.0.0.r113.g57fd0b77a-1
 mingw-w64-i686-expat 2.4.9-1
 mingw-w64-i686-gcc 12.2.0-4
@@ -98,8 +98,8 @@ mingw-w64-i686-libsystre 1.0.1-4
 mingw-w64-i686-libtasn1 4.19.0-1
 mingw-w64-i686-libtre-git r128.6fb7206-2
 mingw-w64-i686-libwinpthread-git 10.0.0.r113.g57fd0b77a-1
-mingw-w64-i686-libxml2 2.10.2-4
-mingw-w64-i686-llvm 15.0.2-1
+mingw-w64-i686-libxml2 2.10.3-1
+mingw-w64-i686-llvm 15.0.3-1
 mingw-w64-i686-meson 0.63.3-1
 mingw-w64-i686-mpc 1.2.1-1
 mingw-w64-i686-mpdecimal 2.5.1-1
@@ -134,7 +134,7 @@ mingw-w64-i686-zstd 1.5.2-2
 mingw-w64-ucrt-x86_64-binutils 2.39-2
 mingw-w64-ucrt-x86_64-bzip2 1.0.8-2
 mingw-w64-ucrt-x86_64-ca-certificates 20211016-3
-mingw-w64-ucrt-x86_64-clang 15.0.2-1
+mingw-w64-ucrt-x86_64-clang 15.0.3-1
 mingw-w64-ucrt-x86_64-crt-git 10.0.0.r113.g57fd0b77a-1
 mingw-w64-ucrt-x86_64-expat 2.4.9-1
 mingw-w64-ucrt-x86_64-gcc 12.2.0-4
@@ -152,8 +152,8 @@ mingw-w64-ucrt-x86_64-libsystre 1.0.1-4
 mingw-w64-ucrt-x86_64-libtasn1 4.19.0-1
 mingw-w64-ucrt-x86_64-libtre-git r128.6fb7206-2
 mingw-w64-ucrt-x86_64-libwinpthread-git 10.0.0.r113.g57fd0b77a-1
-mingw-w64-ucrt-x86_64-libxml2 2.10.2-4
-mingw-w64-ucrt-x86_64-llvm 15.0.2-1
+mingw-w64-ucrt-x86_64-libxml2 2.10.3-1
+mingw-w64-ucrt-x86_64-llvm 15.0.3-1
 mingw-w64-ucrt-x86_64-meson 0.63.3-1
 mingw-w64-ucrt-x86_64-mpc 1.2.1-1
 mingw-w64-ucrt-x86_64-mpdecimal 2.5.1-1
@@ -195,7 +195,7 @@ ncurses 6.3-3
 nettle 3.8.1-1
 openssl 1.1.1.q-1
 p11-kit 0.24.1-4
-pacman 6.0.1-21
+pacman 6.0.1-22
 pacman-contrib 1.7.1-1
 pacman-mirrors 20221016-1
 patch 2.7.6-1

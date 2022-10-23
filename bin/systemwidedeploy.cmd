@@ -65,7 +65,7 @@
 :option_6
 @set option6=0
 @IF NOT EXIST "%mesaloc%\x86\graw.dll" IF NOT EXIST "%mesaloc%\x64\graw.dll" IF NOT EXIST "%mesaloc%\x86\graw_null.dll" IF NOT EXIST "%mesaloc%\x64\graw_null.dll" GOTO option_7
-@echo 6. Mesa3D graw test framework
+@echo 6. Gallium raw interface
 @set option6=1
 
 :option_7
@@ -106,7 +106,7 @@
 @if "%deploychoice%"=="3" IF %option3% EQU 0 set deployerror=Invalid choice. DirectX IL for redistribution is not available in this release package.
 @if "%deploychoice%"=="4" IF %option4% EQU 0 set deployerror=Invalid choice. Microsoft OpenGL over D3D12 driver is not available in this release package.
 @if "%deploychoice%"=="5" IF %option5% EQU 0 set deployerror=Invalid choice. osmesa gallium is not available in this release package.
-@if "%deploychoice%"=="6" IF %option6% EQU 0 set deployerror=Invalid choice. graw framework is not available in this release package.
+@if "%deploychoice%"=="6" IF %option6% EQU 0 set deployerror=Invalid choice. Gallium raw interface is not available in this release package.
 @if "%deploychoice%"=="7" IF %mesainstalled% EQU 0 IF NOT "%1"=="" set deployerror=Unattended mode does not support exit command.
 @if "%deploychoice%"=="8" IF %mesainstalled% EQU 0 set deployerror=Error^: No Mesa3D drivers installed.
 @if "%deploychoice%"=="9" IF %mesainstalled% GTR 0 IF NOT "%1"=="" set deployerror=Unattended mode does not support exit command.
@@ -178,7 +178,7 @@
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%mesaloc%\x86\libglapi.dll" copy "%mesaloc%\x86\libglapi.dll" "%windir%\SysWOW64"
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%mesaloc%\x64\libglapi.dll" copy "%mesaloc%\x64\libglapi.dll" "%windir%\System32"
 @echo.
-@echo graw framework deploy complete.
+@echo Gallium raw interface deploy complete.
 @GOTO enddeploy
 
 :update

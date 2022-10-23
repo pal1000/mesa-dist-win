@@ -191,10 +191,10 @@
 :graw
 @set graw=
 @if NOT EXIST "%mesaloc%\%mesadll%\graw.dll" if NOT EXIST "%mesaloc%\%mesadll%\graw_null.dll" GOTO restart
-@set /p graw=Do you need graw library (y/n):
+@set /p graw=Do you need gallium raw interface (y/n):
 @echo.
 @if /I NOT "%graw%"=="y" GOTO restart
-@IF %foundgraw% EQU 1 echo Updating Mesa3D graw framework deployment...
+@IF %foundgraw% EQU 1 echo Updating Gallium raw interface deployment...
 @IF EXIST "%mesaloc%\%mesadll%\graw.dll" if NOT EXIST "%dir%\graw.dll" call modules\mklink.cmd graw
 @IF EXIST "%mesaloc%\%mesadll%\graw_null.dll" if NOT EXIST "%dir%\graw_null.dll" call modules\mklink.cmd graw_null
 @IF EXIST "%mesaloc%\%mesadll%\libglapi.dll" if NOT EXIST "%dir%\libglapi.dll" call modules\mklink.cmd libglapi

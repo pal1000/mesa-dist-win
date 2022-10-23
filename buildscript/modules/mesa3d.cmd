@@ -368,13 +368,14 @@
 @IF /I NOT "%osmesa%"=="y" IF %intmesaver% LSS 21000 set buildconf=%buildconf% -Dosmesa=
 @IF /I NOT "%osmesa%"=="y" IF %intmesaver% GEQ 21000 set buildconf=%buildconf% -Dosmesa=false
 
-@set graw=n
-@set cangraw=1
-@IF %disableootpatch%==1 IF %intmesaver% GEQ 20100 IF %intmesaver% LSS 20103 IF NOT %toolchain%==msvc set cangraw=0
-@IF %cangraw% EQU 1 set /p graw=Do you want to build graw library (y/n):
-@IF %cangraw% EQU 1 echo.
-@if /I "%graw%"=="y" set buildconf=%buildconf% -Dbuild-tests=true
-@if /I NOT "%graw%"=="y" set buildconf=%buildconf% -Dbuild-tests=false
+@set mesatests=n
+@set canmesatests=1
+@IF %disableootpatch%==1 IF %intmesaver% GEQ 20100 IF %intmesaver% LSS 20103 IF NOT %toolchain%==msvc set canmesatests=0
+@IF %canmesatests% EQU 1 IF %intmesaver% LSS 22300 set /p mesatests=Do you want to build unit tests and gallium raw interface (y/n):
+@IF %canmesatests% EQU 1 IF %intmesaver% GEQ 22300 set /p mesatests=Do you want to build unit tests (y/n):
+@IF %canmesatests% EQU 1 echo.
+@if /I "%mesatests%"=="y" set buildconf=%buildconf% -Dbuild-tests=true
+@if /I NOT "%mesatests%"=="y" set buildconf=%buildconf% -Dbuild-tests=false
 
 @rem Basic OpenCL requirements: Mesa 21.0+, LLVM and libclc
 @set canopencl=1
@@ -448,7 +449,7 @@
 @rem Disable draw with LLVM if LLVM native module ends being unused but needed
 @rem workaround for https://gitlab.freedesktop.org/mesa/mesa/-/issues/6817
 @IF %intmesaver% GEQ 21100 if /I NOT "%llvmless%"=="y" set buildconf=%buildconf% -Ddraw-use-llvm=true
-@IF %intmesaver% GEQ 21100 if /I NOT "%llvmless%"=="y" if /I NOT "%glswrast%"=="y" if /I NOT "%radv%"=="y" if /I NOT "%graw%"=="y" IF %galliumcount% GTR 0 set buildconf=%buildconf:~0,-4%false
+@IF %intmesaver% GEQ 21100 if /I NOT "%llvmless%"=="y" if /I NOT "%glswrast%"=="y" if /I NOT "%radv%"=="y" if /I NOT "%mesatests%"=="y" IF %galliumcount% GTR 0 set buildconf=%buildconf:~0,-4%false
 
 @rem Control futex support - https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/17431
 @IF %intmesaver% GEQ 22200 set /p winfutex=Enable Futex (https://en.wikipedia.org/wiki/Futex) support, raises minimum requirements for Mesa3D overall to run to Windows 8/Server 2012 (y/n):

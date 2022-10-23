@@ -88,7 +88,7 @@ Due to their commmon build dependency on libclc they are not available in MinGW 
 - D3D10 software renderer is available in MSVC package since 21.2.0. File name: `d3d10sw.dll`. This is a drop in replacement for Microsoft WARP and unfortunately there is no clean way of [deploying](https://gitlab.freedesktop.org/mesa/mesa/-/blob/main/src/gallium/targets/d3d10sw/README.md) it.
 - SPIR-V to DXIL tool and library are available in MSVC package since 21.0.0 and since 22.2.0 in MinGW package as well. File names: `libspirv_to_dxil.dll`, `spirv_to_dxil.dll` and `spirv2dxil.exe`.
 ### Testing library and tools
-- graw. File names: `graw.dll`, `graw_null.dll`. This is Mesa3D plug-in library mainly used by unit tests. It is not a driver. Available for both x86 and x64 and in full (with window system support) and headless (no window) versions. This is used in special cases by software that is designed to use Mesa3D code internal APIs. Since 20.0.2 both full and headless versions are available in both MSVC and MSYS2 Mingw-w64 packages.
+- Gallium raw interface. File names: `graw.dll`, `graw_null.dll`. This is a dummy gallium driver without any graphics API mainly used for testing. Available for both x86 and x64 and in full (with window system support) and headless (no window) versions. Since 20.0.2 both windowed and windowless versions are available in both MSVC and MSYS2 Mingw-w64 packages. This deprecated component has been [removed in Mesa3D 22.3.0-devel](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/19099).
 - test suite. Many executable unit tests.
 ### Development packages
 Headers and libraries for both 32-bit and 64-bit builds are located in a separate archive called development pack.
