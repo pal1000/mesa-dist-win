@@ -1,5 +1,6 @@
 ### Misc
-- Make it clear that graw stands for gallium raw interface.
+- Make it clear that graw stands for gallium raw interface;
+- pkgconf: Update meson setup command out of deprecated format.
 ### End user guide
 - Gallium raw interface is a dummy driver without any graphics API support;
 -  Gallium raw interface has been removed [22.3+].
