@@ -88,7 +88,7 @@
 @if /I "%useninja%"=="y" ninja -j %throttle% install
 @echo.
 
-@rem Avoid race condition in LLVM sources checkout.
+@rem Avoid race condition in VA-API library sources checkout.
 @pause
 @echo.
 

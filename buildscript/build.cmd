@@ -69,6 +69,9 @@
 @rem If using MSVC do SPIR-V Tools build
 @IF %toolchain%==msvc call "%devroot%\%projectname%\buildscript\modules\spirv.cmd"
 
+@rem If using MSVC do VA-API library build
+@IF %toolchain%==msvc call "%devroot%\%projectname%\buildscript\modules\libva.cmd"
+
 @rem If using MSVC do LLVM build.
 @IF %toolchain%==msvc call "%devroot%\%projectname%\buildscript\modules\llvm.cmd"
 @IF %toolchain%==msvc call "%devroot%\%projectname%\buildscript\modules\libclc.cmd"

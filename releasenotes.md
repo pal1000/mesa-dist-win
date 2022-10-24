@@ -1,3 +1,5 @@
+### Build script
+- VA-API: Implement libva MSVC build [22.3+].
 ### Misc
 - Make it clear that graw stands for gallium raw interface;
 - pkgconf: Update meson setup command out of deprecated format.
