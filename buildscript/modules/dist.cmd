@@ -24,8 +24,8 @@
 
 :normaldist
 @set keeplastbuild=n
-@IF %toolchain%==msvc IF EXIST "%devroot%\%projectname%\lib\%abi%\*.lib set /p keeplastbuild=Keep binaries and libraries from previous build (y/n):
-@IF %toolchain%==msvc IF EXIST "%devroot%\%projectname%\lib\%abi%\*.lib echo.
+@IF %toolchain%==msvc IF EXIST lib\%abi%\*.lib set /p keeplastbuild=Keep binaries and libraries from previous build (y/n):
+@IF %toolchain%==msvc IF EXIST lib\%abi%\*.lib echo.
 @if NOT EXIST "bin\" MD bin
 @if NOT EXIST "lib\" MD lib
 @IF /I NOT "%keeplastbuild%"=="y" if EXIST "bin\%abi%\" RD /S /Q bin\%abi%
@@ -84,8 +84,8 @@
 @IF /I NOT "%keeplastbuild%"=="y" echo.
 
 :donedist
-@IF EXIST "%devroot%\%projectname%\bin\%abi%\*.dll" IF NOT EXIST "%devroot%\%projectname%\lib\%abi%\*.lib set /p getdebugbin=Collect MinGW debug binaries (y/n):
-@IF EXIST "%devroot%\%projectname%\bin\%abi%\*.dll" IF NOT EXIST "%devroot%\%projectname%\lib\%abi%\*.lib echo.
+@IF EXIST "%devroot%\%projectname%\bin\%abi%\*.dll" IF NOT EXIST "%devroot%\%projectname%\lib\%abi%\*.lib" set /p getdebugbin=Collect MinGW debug binaries (y/n):
+@IF EXIST "%devroot%\%projectname%\bin\%abi%\*.dll" IF NOT EXIST "%devroot%\%projectname%\lib\%abi%\*.lib" echo.
 @if /I "%getdebugbin%"=="y" echo Moving debug binaries to distinct location...
 @if /I "%getdebugbin%"=="y" MOVE "%devroot%\%projectname%\bin\%abi%\*.dll" "%devroot%\%projectname%\debug\%abi%\"
 @if /I "%getdebugbin%"=="y" IF EXIST "%devroot%\%projectname%\bin\%abi%\*.json" MOVE "%devroot%\%projectname%\bin\%abi%\*.json" "%devroot%\%projectname%\debug\%abi%\"
