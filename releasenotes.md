@@ -2,10 +2,11 @@
 - VA-API: Implement libva MSVC build [22.3+].
 ### Misc
 - Make it clear that graw stands for gallium raw interface;
-- pkgconf: Update meson setup command out of deprecated format.
+- pkgconf: Update meson setup command out of deprecated format;
+- Update CLonD3D12 ICD version.
 ### End user guide
 - Gallium raw interface is a dummy driver without any graphics API support;
--  Gallium raw interface has been removed [22.3+].
+- Gallium raw interface has been removed [22.3+].
 # 22.2.2
 - Updated Mesa3D to [22.2.2](https://docs.mesa3d.org/relnotes/22.2.2.html).
 ### Distribution
