@@ -7,6 +7,8 @@
 ### End user guide
 - Gallium raw interface is a dummy driver without any graphics API support;
 - Gallium raw interface has been removed [22.3+].
+### Build environment information
+- MSVC: Add zlib version
 # 22.2.2
 - Updated Mesa3D to [22.2.2](https://docs.mesa3d.org/relnotes/22.2.2.html).
 ### Distribution

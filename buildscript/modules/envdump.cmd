@@ -130,6 +130,13 @@ echo Bison %%a>>"%devroot%\%projectname%\buildinfo\msvc.txt"
 @IF NOT "%pkgconfigver%"=="null" IF NOT %pkgconfigver:~0,1%==0 set pkgconfigver=pkgconf %pkgconfigver%
 @IF NOT "%pkgconfigver%"=="null" echo %pkgconfigver%>>"%devroot%\%projectname%\buildinfo\msvc.txt"
 
+@rem Get zlib version
+@set exitloop=1
+@IF %toolchain%==msvc for /f tokens^=3^ delims^=_^ eol^= %%a IN ('type "%devroot%\%projectname%\buildscript\mesonsubprojects\zlib.wrap"') DO @for /f tokens^=1^ delims^=-^ eol^= %%b IN ("%%a") DO @IF defined exitloop (
+echo zlib %%b>>"%devroot%\%projectname%\buildinfo\msvc.txt"
+set "exitloop="
+)
+
 @rem Finished environment information dump.
 @echo Done.
 @IF NOT %toolchain%==msvc echo Environment information has been written to "%devroot%\%projectname%\buildinfo\mingw.txt".

@@ -27,3 +27,4 @@ Winflexbison package 2.5.25
 flex 2.6.4
 Bison 3.8.2
 pkgconf 1.9.3
+zlib 1.2.13
