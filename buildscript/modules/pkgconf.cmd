@@ -31,10 +31,9 @@
 @call "%devroot%\%projectname%\buildscript\modules\useninja.cmd"
 @IF /I "%useninja%"=="y" IF %ninjastate%==1 set PATH=%devroot%\ninja\;%PATH%
 @IF /I NOT "%useninja%"=="y" echo Configuring pkgconf build with : %mesonloc% setup pkgconf --backend=vs --buildtype=release -Dtests=false
-@IF /I NOT "%useninja%"=="y" echo.
-@IF /I NOT "%useninja%"=="y" %mesonloc% setup pkgconf --backend=vs --buildtype=release -Dtests=false
 @IF /I "%useninja%"=="y" echo Configuring pkgconf build with : %mesonloc% setup pkgconf --backend=ninja --buildtype=release -Dtests=false
-@IF /I "%useninja%"=="y" echo.
+@echo.
+@IF /I NOT "%useninja%"=="y" %mesonloc% setup pkgconf --backend=vs --buildtype=release -Dtests=false
 @IF /I "%useninja%"=="y" %mesonloc% setup pkgconf --backend=ninja --buildtype=release -Dtests=false
 @echo.
 @pause
@@ -42,11 +41,10 @@
 @cd pkgconf
 @IF /I NOT "%useninja%"=="y" IF /I %PROCESSOR_ARCHITECTURE%==AMD64 echo Performing pkgconf build with : msbuild /p^:Configuration=release,Platform=x64 pkgconf.sln /m^:%throttle%
 @IF /I NOT "%useninja%"=="y" IF /I %PROCESSOR_ARCHITECTURE%==x86 echo Performing pkgconf build with : msbuild /p^:Configuration=release,Platform=Win32 pkgconf.sln /m^:%throttle%
-@IF /I NOT "%useninja%"=="y" echo.
+@IF /I "%useninja%"=="y" echo Performing pkgconf build with : ninja
+@echo.
 @IF /I NOT "%useninja%"=="y" IF /I %PROCESSOR_ARCHITECTURE%==AMD64 msbuild /p^:Configuration=release,Platform=x64 pkgconf.sln /m^:%throttle%
 @IF /I NOT "%useninja%"=="y" IF /I %PROCESSOR_ARCHITECTURE%==x86 msbuild /p^:Configuration=release,Platform=Win32 pkgconf.sln /m^:%throttle%
-@IF /I "%useninja%"=="y" echo Performing pkgconf build with : ninja
-@IF /I "%useninja%"=="y" echo.
 @IF /I "%useninja%"=="y" ninja
 @echo.
 @IF EXIST pkgconf.exe REN pkgconf.exe pkg-config.exe
