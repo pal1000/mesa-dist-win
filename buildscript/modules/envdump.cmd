@@ -137,6 +137,12 @@ echo zlib %%b>>"%devroot%\%projectname%\buildinfo\msvc.txt"
 set "exitloop="
 )
 
+@rem Get libva and VA-API versions
+@IF %toolchain%==msvc IF EXIST "%devroot%\libva\build\%hostabi%\lib\pkgconfig\libva-win32.pc" for /f tokens^=1^-2^ delims^=^=^ eol^= %%a IN ('type "%devroot%\libva\build\%hostabi%\lib\pkgconfig\libva-win32.pc"') DO @(
+@if "%%a"=="libva_version" echo libva %%b>>"%devroot%\%projectname%\buildinfo\msvc.txt"
+@if "%%a"=="va_api_version" echo VA-API %%b>>"%devroot%\%projectname%\buildinfo\msvc.txt"
+)
+
 @rem Finished environment information dump.
 @echo Done.
 @IF NOT %toolchain%==msvc echo Environment information has been written to "%devroot%\%projectname%\buildinfo\mingw.txt".
