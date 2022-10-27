@@ -30,3 +30,4 @@ pkgconf 1.9.3
 zlib 1.2.13
 libva 2.17.0.pre1
 VA-API 1.17.0
+OpenCLonD3D12 ICD 2022.10.21

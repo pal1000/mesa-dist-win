@@ -52,12 +52,6 @@
 @IF %vksdkcount% EQU 1 IF NOT %toolchain%==msvc echo LunarG Vulkan SDK %vksdkver%>>"%devroot%\%projectname%\buildinfo\mingw.txt"
 @IF %vksdkcount% EQU 1 IF %toolchain%==msvc echo LunarG Vulkan SDK %vksdkver%>>"%devroot%\%projectname%\buildinfo\msvc.txt"
 
-@rem Dump MSYS2 environment
-@IF NOT %toolchain%==msvc echo.>>"%devroot%\%projectname%\buildinfo\mingw.txt"
-@IF NOT %toolchain%==msvc echo MSYS2 environment>>"%devroot%\%projectname%\buildinfo\mingw.txt"
-@IF NOT %toolchain%==msvc echo ----------------->>"%devroot%\%projectname%\buildinfo\mingw.txt"
-@IF NOT %toolchain%==msvc %runmsys% /usr/bin/pacman -Q>>"%devroot%\%projectname%\buildinfo\mingw.txt"
-
 @rem Dump Visual Studio environment
 @IF %toolchain%==msvc echo %msvcname% v%msvcver%>>"%devroot%\%projectname%\buildinfo\msvc.txt"
 
@@ -142,6 +136,19 @@ set "exitloop="
 @if "%%a"=="libva_version" echo libva %%b>>"%devroot%\%projectname%\buildinfo\msvc.txt"
 @if "%%a"=="va_api_version" echo VA-API %%b>>"%devroot%\%projectname%\buildinfo\msvc.txt"
 )
+
+@rem Get OpenCLonD3D12 ICD version
+@if %gitstate% GTR 0 IF EXIST "%devroot%\clon12\" cd "%devroot%\clon12"
+@if %gitstate% GTR 0 IF EXIST "%devroot%\clon12\" for /f tokens^=1^-3^ delims^=^-^,^  %%a IN ('git show -s --format^=%%ci') DO @(
+@IF %toolchain%==msvc echo OpenCLonD3D12 ICD %%a.%%b.%%c>>"%devroot%\%projectname%\buildinfo\msvc.txt"
+@IF NOT %toolchain%==msvc echo OpenCLonD3D12 ICD %%a.%%b.%%c>>"%devroot%\%projectname%\buildinfo\mingw.txt"
+)
+
+@rem Dump MSYS2 environment
+@IF NOT %toolchain%==msvc echo.>>"%devroot%\%projectname%\buildinfo\mingw.txt"
+@IF NOT %toolchain%==msvc echo MSYS2 environment>>"%devroot%\%projectname%\buildinfo\mingw.txt"
+@IF NOT %toolchain%==msvc echo ----------------->>"%devroot%\%projectname%\buildinfo\mingw.txt"
+@IF NOT %toolchain%==msvc %runmsys% /usr/bin/pacman -Q>>"%devroot%\%projectname%\buildinfo\mingw.txt"
 
 @rem Finished environment information dump.
 @echo Done.
