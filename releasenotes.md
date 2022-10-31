@@ -1,5 +1,6 @@
 ### Build script
-- VA-API: Implement libva MSVC build [22.3+].
+- VA-API: Implement libva MSVC build [22.3+];
+- Python discovery: Python launcher 3.11 support.
 ### Misc
 - Make it clear that graw stands for gallium raw interface;
 - pkgconf: Update meson setup command out of deprecated format;

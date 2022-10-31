@@ -10,18 +10,16 @@
 @where /q py.exe
 @if NOT "%ERRORLEVEL%"=="0" GOTO nopylauncher
 
-:pylist
 @rem Count and list supported python installations
 @set pythontotal=0
-@cls
-@FOR /F tokens^=2-3^ skip^=1^ delims^=-^ eol^= %%a IN ('py -0 2^>nul') do @FOR /F tokens^=1-2^ delims^=.^ eol^= %%c IN ("%%a") do @(
+@FOR /F delims^=^ eol^= %%a IN ('py -0 2^>nul') do @IF NOT "%%a"=="" FOR /F tokens^=1^ eol^= %%b IN ("%%a") do @FOR /F "tokens=1-2 delims=. " %%c IN ('py %%b -c "import sys; print(sys.version)"') DO @(
 @set goodpython=1
-@IF EXIST "%devroot%\mesa\" IF NOT EXIST "%devroot%\mesa\subprojects\.gitignore" set goodpython=0
 @if %%c LSS 3 set goodpython=0
 @if %%c EQU 3 if %%d LSS 7 set goodpython=0
 @IF !goodpython!==1 set /a pythontotal+=1
 @IF !pythontotal!==1 echo Select Python installation
-@IF !goodpython!==1 echo !pythontotal!. Python %%a %%b bit
+@IF !goodpython!==1 echo !pythontotal!. %%a
+@IF !goodpython!==1 set pyl[!pythontotal!]=%%b
 )
 @IF %pythontotal%==0 echo WARNING: No suitable Python installation found by Python launcher.
 @IF %pythontotal%==0 echo Python 3.7 and newer is required.
@@ -29,29 +27,24 @@
 @IF %pythontotal%==0 GOTO nopylauncher
 @IF %pythontotal% GTR 0 echo.
 
+:pyselect
 @set /p pyselect=Select Python version by entering its index from the table above:
 @echo.
 @IF "%pyselect%"=="" echo Invalid entry.
 @IF "%pyselect%"=="" pause
-@IF "%pyselect%"=="" GOTO pylist
+@IF "%pyselect%"=="" echo.
+@IF "%pyselect%"=="" GOTO pyselect
 @IF %pyselect% LEQ 0 echo Invalid entry.
 @IF %pyselect% LEQ 0 pause
-@IF %pyselect% LEQ 0 GOTO pylist
+@IF %pyselect% LEQ 0 echo.
+@IF %pyselect% LEQ 0 GOTO pyselect
 @IF %pyselect% GTR %pythontotal% echo Invalid entry.
 @IF %pyselect% GTR %pythontotal% pause
-@IF %pyselect% GTR %pythontotal% GOTO pylist
+@IF %pyselect% GTR %pythontotal% echo.
+@IF %pyselect% GTR %pythontotal% GOTO pyselect
 
 @rem Locate selected Python installation
-@set pythoncount=0
-@FOR /F tokens^=2-3^ skip^=1^ delims^=-^ eol^= %%a IN ('py -0 2^>nul') do @FOR /F tokens^=1-2^ delims^=.^ eol^= %%c IN ("%%a") do @(
-@set goodpython=1
-@IF EXIST "%devroot%\mesa\" IF NOT EXIST "%devroot%\mesa\subprojects\.gitignore" set goodpython=0
-@if %%c LSS 3 set goodpython=0
-@if %%c EQU 3 if %%d LSS 7 set goodpython=0
-@IF !goodpython!==1 set /a pythoncount+=1
-@IF !pythoncount!==%pyselect% set selectedpython=-%%a-%%b
-)
-@FOR /F delims^=^ eol^= %%a IN ('py %selectedpython% -c "import sys; print(sys.executable)"') DO @set pythonloc="%%~a"
+@FOR /F delims^=^ eol^= %%a IN ('py !pyl[%pyselect%]! -c "import sys; print(sys.executable)"') DO @set pythonloc="%%~a"
 @GOTO loadpypath
 
 :nopylauncher
@@ -98,12 +91,6 @@ SET pypath="%%~a"
 )
 @IF %goodpython% EQU 0 (
 @echo Your Python version is too old. Only Python 3.7 and newer is supported.
-@echo.
-@pause
-@exit
-)
-@IF EXIST "%devroot%\mesa\" IF NOT EXIST "%devroot%\mesa\subprojects\.gitignore" (
-@echo Mesa3D source code you are using is too old. Update to 19.3 or newer.
 @echo.
 @pause
 @exit
