@@ -19,6 +19,8 @@
 @echo.
 @IF /I NOT "%buildlibva%"=="y" GOTO nolibva
 @call %vsenv% %vsabi%
+@cd "%devroot%\libva"
+
 @echo.
 @IF NOT EXIST "build\" MD build
 @echo Cleanning VA-API library build...

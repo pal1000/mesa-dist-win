@@ -478,6 +478,7 @@
 @rem Load MSVC environment if used.
 @IF %toolchain%==msvc echo.
 @IF %toolchain%==msvc call %vsenv% %vsabi%
+@IF %toolchain%==msvc cd %devroot%\mesa
 @IF %toolchain%==msvc echo.
 
 @rem Execute build configuration.

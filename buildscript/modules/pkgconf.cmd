@@ -26,6 +26,7 @@
 @echo.
 @IF /I NOT "%buildpkgconf%"=="y" GOTO missingpkgconf
 @call %vsenv% %hostabi%
+@cd %devroot%\pkgconf
 @echo.
 @IF EXIST "pkgconf\" RD /S /Q pkgconf
 @call "%devroot%\%projectname%\buildscript\modules\useninja.cmd"
