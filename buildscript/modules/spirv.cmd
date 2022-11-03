@@ -43,7 +43,6 @@
 
 @rem Ask for Ninja use if exists. Load it if opted for it.
 @call "%devroot%\%projectname%\buildscript\modules\useninja.cmd"
-@if /I "%useninja%"=="y" if %ninjastate%==1 set PATH=%devroot%\ninja\;%PATH%
 
 @rem Load cmake into build environment.
 @if %cmakestate%==1 set PATH=%devroot%\cmake\bin\;%PATH%

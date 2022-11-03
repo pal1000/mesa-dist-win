@@ -30,7 +30,6 @@
 @echo.
 @IF EXIST "pkgconf\" RD /S /Q pkgconf
 @call "%devroot%\%projectname%\buildscript\modules\useninja.cmd"
-@IF /I "%useninja%"=="y" IF %ninjastate%==1 set PATH=%devroot%\ninja\;%PATH%
 @IF /I NOT "%useninja%"=="y" echo Configuring pkgconf build with : %mesonloc% setup pkgconf --backend=vs --buildtype=release -Dtests=false
 @IF /I "%useninja%"=="y" echo Configuring pkgconf build with : %mesonloc% setup pkgconf --backend=ninja --buildtype=release -Dtests=false
 @echo.

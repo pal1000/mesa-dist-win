@@ -50,7 +50,6 @@
 
 @rem Ask for Ninja use if exists. Load it if opted for it.
 @call "%devroot%\%projectname%\buildscript\modules\useninja.cmd"
-@if /I "%useninja%"=="y" if %ninjastate%==1 set PATH=%devroot%\ninja\;%PATH%
 
 @rem AMDGPU target (disabled, see https://github.com/pal1000/mesa-dist-win/issues/103)
 @rem set /p amdgpu=Build AMDGPU target - required by RADV (y/n):

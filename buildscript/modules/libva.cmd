@@ -28,7 +28,6 @@
 @IF EXIST "build\%abi%" RD /S /Q build\%abi%
 @IF EXIST "build\buildsys-%abi%" RD /S /Q build\buildsys-%abi%
 @call "%devroot%\%projectname%\buildscript\modules\useninja.cmd"
-@IF /I "%useninja%"=="y" IF %ninjastate%==1 set PATH=%devroot%\ninja\;%PATH%
 @IF %pkgconfigstate% GTR 0 set PATH=%pkgconfigloc%\;%PATH%
 @IF /I NOT "%useninja%"=="y" echo Configuring VA-API build with : %mesonloc% setup build\buildsys-%abi% --backend=vs --buildtype=release --prefix="%devroot:\=/%/libva/build/%abi%"
 @IF /I "%useninja%"=="y" echo Configuring VA-API build with : %mesonloc% setup build\buildsys-%abi% --backend=ninja --buildtype=release --prefix="%devroot:\=/%/libva/build/%abi%"
