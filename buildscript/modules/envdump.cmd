@@ -138,6 +138,20 @@ set "exitloop="
 @IF NOT %toolchain%==msvc echo OpenCLonD3D12 ICD %%a.%%b.%%c>>"%devroot%\%projectname%\buildinfo\mingw.txt"
 )
 
+@rem Get libva version
+@IF EXIST "%devroot%\mesa\subprojects\libva\meson.build" for /f "tokens=1-2 delims='^:^= " %%a IN ('type "%devroot%\mesa\subprojects\libva\meson.build"') DO @(
+@IF %toolchain%==msvc if /I "%%a"=="version" echo libva %%b>>"%devroot%\%projectname%\buildinfo\msvc.txt"
+@IF NOT %toolchain%==msvc if /I "%%a"=="version" echo libva %%b>>"%devroot%\%projectname%\buildinfo\mingw.txt"
+)
+
+@rem Get DirectX headers version
+@set exitloop=1
+@for /f delims^=^ eol^= %%a in ('dir /b /a^:d "%devroot%\mesa\subprojects\DirectX-Header*" 2^>^&1') do @IF EXIST "%devroot%\mesa\subprojects\%%~nxa\CMakeLists.txt" for /f tokens^=1^-2^ eol^= %%b IN ('type "%devroot%\mesa\subprojects\%%~nxa\CMakeLists.txt"') DO @if /I "%%b"=="version" if defined exitloop (
+@IF %toolchain%==msvc echo DirectX headers %%c>>"%devroot%\%projectname%\buildinfo\msvc.txt"
+@IF NOT %toolchain%==msvc echo DirectX headers %%c>>"%devroot%\%projectname%\buildinfo\mingw.txt"
+@set "exitloop="
+)
+
 @rem Dump MSYS2 environment
 @IF NOT %toolchain%==msvc echo.>>"%devroot%\%projectname%\buildinfo\mingw.txt"
 @IF NOT %toolchain%==msvc echo MSYS2 environment>>"%devroot%\%projectname%\buildinfo\mingw.txt"

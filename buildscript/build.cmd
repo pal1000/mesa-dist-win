@@ -85,9 +85,6 @@
 @rem Binary resource editor
 @call "%devroot%\%projectname%\buildscript\modules\resourcehacker.cmd"
 
-@rem Dump build environment information
-@call "%devroot%\%projectname%\buildscript\modules\envdump.cmd"
-
 @rem Mesa3D build.
 @call "%devroot%\%projectname%\buildscript\modules\mesa3d.cmd"
 
@@ -96,6 +93,9 @@
 
 @rem Add version info to binaries
 @call "%devroot%\%projectname%\buildscript\modules\addversioninfo.cmd"
+
+@rem Dump build environment information
+@call "%devroot%\%projectname%\buildscript\modules\envdump.cmd"
 
 @pause
 @exit

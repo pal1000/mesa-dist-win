@@ -13,7 +13,9 @@
 ### Build environment information
 - MSVC: Add zlib version;
 - Add OpenCLonD3D12 ICD version;
-- MSVC: Roll LLVM 15.0.4.
+- MSVC: Roll LLVM 15.0.4;
+- Add libva version;
+- Add DirectX headers version.
 # 22.2.2
 - Updated Mesa3D to [22.2.2](https://docs.mesa3d.org/relnotes/22.2.2.html).
 ### Distribution

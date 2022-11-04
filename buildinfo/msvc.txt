@@ -28,6 +28,6 @@ flex 2.6.4
 Bison 3.8.2
 pkgconf 1.9.3
 zlib 1.2.13
-libva 2.17.0.pre1
-VA-API 1.17.0
-OpenCLonD3D12 ICD 2022.10.28
+OpenCLonD3D12 ICD 2022.11.02
+libva 2.17.0.1
+DirectX headers 1.606.4

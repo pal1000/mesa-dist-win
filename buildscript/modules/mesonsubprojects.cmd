@@ -8,7 +8,7 @@
 @IF EXIST "%devroot%\mesa\subprojects\DirectX-Headers.wrap" del "%devroot%\mesa\subprojects\DirectX-Headers.wrap"
 
 @rem Obtaining DirectX-Headers
-@if %gitstate% GTR 0 for /f delims^=^ eol^= %%a in ('dir /b /a:d "%devroot%\mesa\subprojects\DirectX-Header*" 2^>^&1') do @(
+@if %gitstate% GTR 0 for /f delims^=^ eol^= %%a in ('dir /b /a^:d "%devroot%\mesa\subprojects\DirectX-Header*" 2^>^&1') do @(
 @IF NOT EXIST "%devroot%\mesa\subprojects\%%~nxa\" git clone --recurse-submodules https://github.com/microsoft/DirectX-Headers.git "%devroot%\mesa\subprojects\DirectX-Headers"
 @IF EXIST "%devroot%\mesa\subprojects\%%~nxa\" cd "%devroot%\mesa\subprojects\%%~nxa"
 @IF EXIST "%devroot%\mesa\subprojects\%%~nxa\" echo Refreshing DirectX-Headers...
@@ -117,9 +117,9 @@ set "exitloop="
 :mingwwraps
 @IF %toolchain%==msvc GOTO donewrap
 @rem Use runtime MinGW libelf, zlib and zstd dependencies
-@for /f delims^=^ eol^= %%a in ('dir /b /a:d "%devroot%\mesa\subprojects\libelf-*" 2^>^&1') do @IF EXIST "%devroot%\mesa\subprojects\%%~nxa\" RD /S /Q "%devroot%\mesa\subprojects\%%~nxa"
+@for /f delims^=^ eol^= %%a in ('dir /b /a^:d "%devroot%\mesa\subprojects\libelf-*" 2^>^&1') do @IF EXIST "%devroot%\mesa\subprojects\%%~nxa\" RD /S /Q "%devroot%\mesa\subprojects\%%~nxa"
 @IF EXIST "%devroot%\mesa\subprojects\libelf.wrap" del "%devroot%\mesa\subprojects\libelf.wrap"
-@for /f delims^=^ eol^= %%a in ('dir /b /a:d "%devroot%\mesa\subprojects\zlib-*" 2^>^&1') do @IF EXIST "%devroot%\mesa\subprojects\%%~nxa\" RD /S /Q "%devroot%\mesa\subprojects\%%~nxa"
+@for /f delims^=^ eol^= %%a in ('dir /b /a^:d "%devroot%\mesa\subprojects\zlib-*" 2^>^&1') do @IF EXIST "%devroot%\mesa\subprojects\%%~nxa\" RD /S /Q "%devroot%\mesa\subprojects\%%~nxa"
 @IF EXIST "%devroot%\mesa\subprojects\zlib.wrap" del "%devroot%\mesa\subprojects\zlib.wrap"
 
 @rem Link clang in same way as LLVM

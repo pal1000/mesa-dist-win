@@ -4,7 +4,9 @@ Windows 10.0.22000
 Ressource Hacker 5.1.8.360
 7-Zip 22.01 ultra compression
 Git 2.38.1.1
-OpenCLonD3D12 ICD 2022.10.28
+OpenCLonD3D12 ICD 2022.11.02
+libva 2.17.0.1
+DirectX headers 1.606.4
 
 MSYS2 environment
 -----------------
@@ -83,9 +85,9 @@ mingw-w64-i686-bzip2 1.0.8-2
 mingw-w64-i686-ca-certificates 20211016-3
 mingw-w64-i686-clang 15.0.3-1
 mingw-w64-i686-crt-git 10.0.0.r113.g57fd0b77a-1
-mingw-w64-i686-expat 2.4.9-1
-mingw-w64-i686-gcc 12.2.0-5
-mingw-w64-i686-gcc-libs 12.2.0-5
+mingw-w64-i686-expat 2.5.0-1
+mingw-w64-i686-gcc 12.2.0-6
+mingw-w64-i686-gcc-libs 12.2.0-6
 mingw-w64-i686-gdb 12.1-4
 mingw-w64-i686-gettext 0.21-3
 mingw-w64-i686-gmp 6.2.1-3
@@ -137,9 +139,9 @@ mingw-w64-ucrt-x86_64-bzip2 1.0.8-2
 mingw-w64-ucrt-x86_64-ca-certificates 20211016-3
 mingw-w64-ucrt-x86_64-clang 15.0.3-1
 mingw-w64-ucrt-x86_64-crt-git 10.0.0.r113.g57fd0b77a-1
-mingw-w64-ucrt-x86_64-expat 2.4.9-1
-mingw-w64-ucrt-x86_64-gcc 12.2.0-5
-mingw-w64-ucrt-x86_64-gcc-libs 12.2.0-5
+mingw-w64-ucrt-x86_64-expat 2.5.0-1
+mingw-w64-ucrt-x86_64-gcc 12.2.0-6
+mingw-w64-ucrt-x86_64-gcc-libs 12.2.0-6
 mingw-w64-ucrt-x86_64-gdb 12.1-4
 mingw-w64-ucrt-x86_64-gettext 0.21-3
 mingw-w64-ucrt-x86_64-gmp 6.2.1-3
