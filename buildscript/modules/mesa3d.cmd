@@ -395,7 +395,6 @@
 @rem Add flags tracking PKG_CONFIG search PATH adjustment needs
 @set PKG_CONFIG_LIBCLC=0
 @set PKG_CONFIG_SPV=0
-@set PKG_CONFIG_LIBVA=0
 @set "PKG_CONFIG_PATH="
 
 @rem Microsoft OpenCL compiler requires OpenCL SPIR-V, DirectX Headers and out of tree patches [21.3-22.2]
@@ -439,12 +438,10 @@
 @IF %PKG_CONFIG_LIBCLC% EQU 1 set buildconf=%buildconf% -Dstatic-libclc=all
 @IF %PKG_CONFIG_LIBCLC% EQU 1 IF %toolchain%==msvc set PKG_CONFIG_PATH=%PKG_CONFIG_PATH%%llvminstloc:\=/%/clc/share/pkgconfig;
 @IF %PKG_CONFIG_SPV% EQU 1 IF %toolchain%==msvc set PKG_CONFIG_PATH=%PKG_CONFIG_PATH%%llvminstloc:\=/%/spv-%abi%/lib/pkgconfig;%devroot:\=/%/spirv-tools/build/%abi%/lib/pkgconfig;
-@IF %PKG_CONFIG_LIBVA% EQU 1 IF %toolchain%==msvc set PKG_CONFIG_PATH=%PKG_CONFIG_PATH%%devroot:\=/%/libva/build/%abi%/lib/pkgconfig;
 @IF NOT defined PKG_CONFIG_PATH set PKG_CONFIG_PATH=;
 @set buildconf=%buildconf% --pkg-config-path="%PKG_CONFIG_PATH:~0,-1%"
 @set "PKG_CONFIG_LIBCLC="
 @set "PKG_CONFIG_SPV="
-@set "PKG_CONFIG_LIBVA="
 @set "PKG_CONFIG_PATH="
 
 @rem Pass additional compiler and linker flags

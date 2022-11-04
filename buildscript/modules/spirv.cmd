@@ -87,10 +87,6 @@
 @if /I "%useninja%"=="y" ninja -j %throttle% install
 @echo.
 
-@rem Avoid race condition in VA-API library sources checkout.
-@pause
-@echo.
-
 :skipspvtools
 @rem Reset environment after SPIRV Tools build.
 @endlocal

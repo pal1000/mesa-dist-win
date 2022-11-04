@@ -19,6 +19,20 @@
 @echo.
 )
 
+@rem Obtaining libva
+@if EXIST "%devroot%\mesa\subprojects\libva\" IF %gitstate% GTR 0 (
+@echo Updating VA-API source code...
+@cd %devroot%\mesa\subprojects\libva
+@for /f tokens^=2^ delims^=/^ eol^= %%a in ('git symbolic-ref --short refs/remotes/origin/HEAD 2^>^&^1') do @git checkout %%a
+@git pull --progress --tags --recurse-submodules origin
+@cd "%devroot%\mesa"
+)
+@if NOT EXIST "%devroot%\mesa\subprojects\libva\" IF %gitstate% GTR 0 (
+@echo Getting VA-API source code...
+@git clone https://github.com/intel/libva.git --recurse-submodules "%devroot%\mesa\subprojects\libva"
+)
+@IF %gitstate% GTR 0 echo.
+
 @rem Find LLVM dependency
 @set LLVMRTTI=false
 @set llvmconfigbusted=0
