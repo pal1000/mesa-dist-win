@@ -405,8 +405,8 @@
 @IF %canmclc% EQU 1 echo.
 @IF /I "%mclc%"=="y" set PKG_CONFIG_LIBCLC=1
 @IF /I "%mclc%"=="y" set PKG_CONFIG_SPV=1
-@IF /I "%mclc%"=="y" set buildconf=%buildconf% -Dmicrosoft-clc=enabled
-@IF /I NOT "%mclc%"=="y" IF %intmesaver% GEQ 21000 set buildconf=%buildconf% -Dmicrosoft-clc=disabled
+@IF /I "%mclc%"=="y" set buildconf=%buildconf% -Dmicrosoft-clc=%mesonbooltrue%
+@IF /I NOT "%mclc%"=="y" IF %intmesaver% GEQ 21000 set buildconf=%buildconf% -Dmicrosoft-clc=%mesonboolfalse%
 
 @rem Build clover
 @rem Clover requirements: basic OpenCL support, Mesa 21.3 source code or newer, LLVM build with RTTI [Mesa 22.1 and older], gallium swrast and out of tree patches on 21.3.
@@ -420,7 +420,7 @@
 @IF %intmesaver:~0,3% EQU 213 IF %disableootpatch%==1 set canclover=0
 @if %canclover% EQU 1 set /p buildclover=Build OpenCL clover driver (y/n):
 @if %canclover% EQU 1 echo.
-@IF /I NOT "%buildclover%"=="y" set buildconf=%buildconf% -Dgallium-opencl=disabled
+@IF /I NOT "%buildclover%"=="y" set buildconf=%buildconf% -Dgallium-opencl=%mesonboolfalse%
 @IF /I "%buildclover%"=="y" set PKG_CONFIG_LIBCLC=1
 @IF /I "%buildclover%"=="y" set /p icdclover=Build clover in ICD format (y/n):
 @IF /I "%buildclover%"=="y" echo.
@@ -433,6 +433,17 @@
 @IF /I "%buildclover%"=="y" IF /I NOT "%cloverspv%"=="y" set buildconf=%buildconf% -Dopencl-spirv=false
 @IF /I "%buildclover%"=="y" IF %intmesaver% LSS 22300 set buildconf=%buildconf% -Dopencl-native=false
 @IF /I "%buildclover%"=="y" IF %intmesaver% GEQ 22100 set buildconf=%buildconf% -Dcpp_std=c++20
+
+@rem Build VA-API D3D12 driver
+@IF %intmesaver% GEQ 22200 set buildconf=%buildconf% -Dgallium-d3d12-video=auto
+@IF /I "%d3d12%"=="y" IF %intmesaver% GEQ 22300 IF EXIST "%devroot%\mesa\subprojects\libva\meson.build" set /p buildvaapi=Build Mesa3D VA-API interface (y/n):
+@IF /I "%d3d12%"=="y" IF %intmesaver% GEQ 22300 IF EXIST "%devroot%\mesa\subprojects\libva\meson.build" echo.
+@IF /I "%buildvaapi%"=="y" set buildconf=%buildconf% -Dgallium-va=%mesonbooltrue%
+@IF /I NOT "%buildvaapi%"=="y" set buildconf=%buildconf% -Dgallium-va=auto
+@IF %intmesaver% GEQ 22200 set buildconf=%buildconf% -Dvideo-codecs=
+@IF /I "%buildvaapi%"=="y" set /p buildpatentedcodecs=Build Mesa3D video acceleration patented codecs (y/n):
+@IF /I "%buildvaapi%"=="y" echo.
+@IF /I "%buildpatentedcodecs%"=="y" set buildconf=%buildconf%h264dec,h264enc,h265dec,h265enc,vc1dec
 
 @rem Apply PKG_CONFIG search PATH adjustments on MSVC
 @IF %PKG_CONFIG_LIBCLC% EQU 1 set buildconf=%buildconf% -Dstatic-libclc=all

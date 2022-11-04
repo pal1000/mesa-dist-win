@@ -1,6 +1,7 @@
 ### Build script
 - Python discovery: Python launcher 3.11 support;
-- VA-API: Implement libva Meson subproject build [22.3+].
+- VA-API: Implement libva Meson subproject build [22.3+];
+- Support building D3D12 VA-API driver with and without patented codecs [22.3+].
 ### Misc
 - Make it clear that graw stands for gallium raw interface;
 - pkgconf: Update meson setup command out of deprecated format;
