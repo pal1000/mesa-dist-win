@@ -20,16 +20,16 @@
 )
 
 @rem Obtaining libva
-@if EXIST "%devroot%\mesa\subprojects\libva\" IF %gitstate% GTR 0 (
+@if EXIST "%devroot%\mesa\subprojects\libva-win32\" IF %gitstate% GTR 0 (
 @echo Updating VA-API source code...
-@cd %devroot%\mesa\subprojects\libva
+@cd %devroot%\mesa\subprojects\libva-win32
 @for /f tokens^=2^ delims^=/^ eol^= %%a in ('git symbolic-ref --short refs/remotes/origin/HEAD 2^>^&^1') do @git checkout %%a
 @git pull --progress --tags --recurse-submodules origin
 @cd "%devroot%\mesa"
 )
-@if NOT EXIST "%devroot%\mesa\subprojects\libva\" IF %gitstate% GTR 0 (
+@if NOT EXIST "%devroot%\mesa\subprojects\libva-win32\" IF %gitstate% GTR 0 (
 @echo Getting VA-API source code...
-@git clone https://github.com/intel/libva.git --recurse-submodules "%devroot%\mesa\subprojects\libva"
+@git clone https://github.com/intel/libva.git --recurse-submodules "%devroot%\mesa\subprojects\libva-win32"
 )
 @IF %gitstate% GTR 0 echo.
 

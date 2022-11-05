@@ -139,7 +139,7 @@ set "exitloop="
 )
 
 @rem Get libva version
-@IF EXIST "%devroot%\mesa\subprojects\libva\meson.build" for /f "tokens=1-2 delims='^:^= " %%a IN ('type "%devroot%\mesa\subprojects\libva\meson.build"') DO @(
+@IF EXIST "%devroot%\mesa\subprojects\libva-win32\meson.build" for /f "tokens=1-2 delims='^:^= " %%a IN ('type "%devroot%\mesa\subprojects\libva-win32\meson.build"') DO @(
 @IF %toolchain%==msvc if /I "%%a"=="version" echo libva %%b>>"%devroot%\%projectname%\buildinfo\msvc.txt"
 @IF NOT %toolchain%==msvc if /I "%%a"=="version" echo libva %%b>>"%devroot%\%projectname%\buildinfo\mingw.txt"
 )
