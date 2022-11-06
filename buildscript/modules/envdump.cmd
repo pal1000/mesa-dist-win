@@ -138,10 +138,12 @@ set "exitloop="
 @IF NOT %toolchain%==msvc echo OpenCLonD3D12 ICD %%a.%%b.%%c>>"%devroot%\%projectname%\buildinfo\mingw.txt"
 )
 
-@rem Get libva version
-@IF EXIST "%devroot%\mesa\subprojects\libva-win32\meson.build" for /f "tokens=1-2 delims='^:^= " %%a IN ('type "%devroot%\mesa\subprojects\libva-win32\meson.build"') DO @(
-@IF %toolchain%==msvc if /I "%%a"=="version" echo libva %%b>>"%devroot%\%projectname%\buildinfo\msvc.txt"
-@IF NOT %toolchain%==msvc if /I "%%a"=="version" echo libva %%b>>"%devroot%\%projectname%\buildinfo\mingw.txt"
+@rem Get libva and VA-API versions
+@IF EXIST "%devroot%\libva\build\%toolchain%-%abi%\lib\pkgconfig\libva-win32.pc" for /f tokens^=1^-2^ delims^=^=^ eol^= %%a IN ('type "%devroot%\libva\build\%toolchain%-%abi%\lib\pkgconfig\libva-win32.pc"') DO @(
+@IF %toolchain%==msvc if "%%a"=="libva_version" echo libva %%b>>"%devroot%\%projectname%\buildinfo\msvc.txt"
+@IF NOT %toolchain%==msvc if "%%a"=="libva_version" echo libva %%b>>"%devroot%\%projectname%\buildinfo\mingw.txt"
+@IF %toolchain%==msvc if "%%a"=="va_api_version" echo VA-API %%b>>"%devroot%\%projectname%\buildinfo\msvc.txt"
+@IF NOT %toolchain%==msvc if "%%a"=="va_api_version" echo VA-API %%b>>"%devroot%\%projectname%\buildinfo\mingw.txt"
 )
 
 @rem Get DirectX headers version

@@ -1,6 +1,6 @@
 ### Build script
 - Python discovery: Python launcher 3.11 support;
-- VA-API: Implement libva Meson subproject build [22.3+];
+- VA-API: Implement libva build [22.3+];
 - Support building D3D12 VA-API driver with and without patented codecs [22.3+].
 ### Misc
 - Make it clear that graw stands for gallium raw interface;
@@ -15,7 +15,7 @@
 - MSVC: Add zlib version;
 - Add OpenCLonD3D12 ICD version;
 - MSVC: Roll LLVM 15.0.4;
-- Add libva version;
+- Add libva and VA-API versions;
 - Add DirectX headers version.
 # 22.2.2
 - Updated Mesa3D to [22.2.2](https://docs.mesa3d.org/relnotes/22.2.2.html).

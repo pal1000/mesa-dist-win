@@ -395,6 +395,7 @@
 @rem Add flags tracking PKG_CONFIG search PATH adjustment needs
 @set PKG_CONFIG_LIBCLC=0
 @set PKG_CONFIG_SPV=0
+@set PKG_CONFIG_LIBVA=0
 @set "PKG_CONFIG_PATH="
 
 @rem Microsoft OpenCL compiler requires OpenCL SPIR-V, DirectX Headers and out of tree patches [21.3-22.2]
@@ -436,23 +437,26 @@
 
 @rem Build VA-API D3D12 driver
 @IF %intmesaver% GEQ 22200 set buildconf=%buildconf% -Dgallium-d3d12-video=auto
-@IF /I "%d3d12%"=="y" IF %intmesaver% GEQ 22300 IF EXIST "%devroot%\mesa\subprojects\libva-win32\meson.build" set /p buildvaapi=Build Mesa3D VA-API interface (y/n):
-@IF /I "%d3d12%"=="y" IF %intmesaver% GEQ 22300 IF EXIST "%devroot%\mesa\subprojects\libva-win32\meson.build" echo.
+@IF /I "%d3d12%"=="y" IF %intmesaver% GEQ 22300 IF EXIST "%devroot%\libva\build\%toolchain%-%abi%\lib\pkgconfig\" set /p buildvaapi=Build Mesa3D VA-API interface (y/n):
+@IF /I "%d3d12%"=="y" IF %intmesaver% GEQ 22300 IF EXIST "%devroot%\libva\build\%toolchain%-%abi%\lib\pkgconfig\" echo.
 @IF /I "%buildvaapi%"=="y" set buildconf=%buildconf% -Dgallium-va=%mesonbooltrue%
-@IF /I NOT "%buildvaapi%"=="y" set buildconf=%buildconf% -Dgallium-va=auto
+@IF /I "%buildvaapi%"=="y" set PKG_CONFIG_LIBVA=1
 @IF %intmesaver% GEQ 22200 set buildconf=%buildconf% -Dvideo-codecs=
 @IF /I "%buildvaapi%"=="y" set /p buildpatentedcodecs=Build Mesa3D video acceleration patented codecs (y/n):
 @IF /I "%buildvaapi%"=="y" echo.
 @IF /I "%buildpatentedcodecs%"=="y" set buildconf=%buildconf%h264dec,h264enc,h265dec,h265enc,vc1dec
+@IF /I NOT "%buildvaapi%"=="y" set buildconf=%buildconf% -Dgallium-va=auto
 
 @rem Apply PKG_CONFIG search PATH adjustments on MSVC
 @IF %PKG_CONFIG_LIBCLC% EQU 1 set buildconf=%buildconf% -Dstatic-libclc=all
 @IF %PKG_CONFIG_LIBCLC% EQU 1 IF %toolchain%==msvc set PKG_CONFIG_PATH=%PKG_CONFIG_PATH%%llvminstloc:\=/%/clc/share/pkgconfig;
 @IF %PKG_CONFIG_SPV% EQU 1 IF %toolchain%==msvc set PKG_CONFIG_PATH=%PKG_CONFIG_PATH%%llvminstloc:\=/%/spv-%abi%/lib/pkgconfig;%devroot:\=/%/spirv-tools/build/%abi%/lib/pkgconfig;
+@IF %PKG_CONFIG_LIBVA% EQU 1 set PKG_CONFIG_PATH=%PKG_CONFIG_PATH%%devroot:\=/%/libva/build/%toolchain%-%abi%/lib/pkgconfig;
 @IF NOT defined PKG_CONFIG_PATH set PKG_CONFIG_PATH=;
 @set buildconf=%buildconf% --pkg-config-path="%PKG_CONFIG_PATH:~0,-1%"
 @set "PKG_CONFIG_LIBCLC="
 @set "PKG_CONFIG_SPV="
+@set "PKG_CONFIG_LIBVA="
 @set "PKG_CONFIG_PATH="
 
 @rem Pass additional compiler and linker flags
