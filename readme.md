@@ -17,7 +17,7 @@
 - [Build Mesa3D yourself](#build-mesa3d-yourself)
 - [Installation and usage](#installation-and-usage)
   - [Usage notes](#usage-notes)
-- [Uninstall Messa3D](#uninstall-messa3d)
+- [Uninstall Mesa3D](#uninstall-mesa3d)
 - [Legacy software compatibility](#legacy-software-compatibility)
 - [OpenGL context configuration override](#opengl-context-configuration-override)
 - [How to set environment variables](#how-to-set-environment-variables)
@@ -97,7 +97,7 @@ Starting with 22.2.0 a MSVC debug info package containing debug symbols in PDB f
 # Build Mesa3D yourself
 Build instructions, if you want to replicate my builds, are available [here](https://github.com/pal1000/mesa-dist-win/tree/master/buildscript).
 # Installation and usage
-First choose between Mingw and MSVC package. See [About Mingw package](#about-mingw-package) section for details. Before [extracting](https://www.7-zip.org/) release package close all programs that use Mesa if any is running. After extraction you will have access to 2 deployment options, both located in the directory you installed Mesa. Both deployment utilities have a start-over mechanism so you can do all deployments you need in one session. The deployment tools only support OpenGL and OpenGL ES components of Messa3D plus OpenCL clover standalone.
+First choose between Mingw and MSVC package. See [Differences between MSVC and MinGW packages](#differences-between-msvc-and-mingw-packages) section for details. Before [extracting](https://www.7-zip.org/) release package close all programs that use Mesa if any is running. After extraction you will have access to 2 deployment options, both located in the directory you installed Mesa. Both deployment utilities have a start-over mechanism so you can do all deployments you need in one session. The deployment tools only support OpenGL and OpenGL ES components of Mesa3D plus OpenCL clover standalone.
 - A system-wide deployment tool. While intended for systems lacking hardware accelerated OpenGL support like virtual machines in cloud environments, it can also be used on any Windows system to replace the inbox software rendering OpenGL 1.1 driver extending OpenGL support for use cases where hardware accelerated OpenGL is not available like RDP connections. Due to potential issues with Virtualbox VMs running Windows it is recommended to disable 3D acceleration in such VMs if Mesa3D desktop OpenGL driver is installed inside them using the system-wide deployment tool, see [#9](https://github.com/pal1000/mesa-dist-win/issues/9).
 - A per-application deployment tool, used to deploy Mesa3D for a single program regardless of hardware accelerated OpenGL support being present or not.
 Per-app deployment utility changes are persistent and are being kept across upgrades and re-installations.
@@ -117,7 +117,7 @@ Examples on OpenGL context configuration override, switch to other driver and ol
 - The official Mesa3D documentation is available [here](https://docs.mesa3d.org/).
 - OpenCL ICDs deployment is done through [registration of ICD file](https://github.com/KhronosGroup/OpenCL-ICD-Loader/blob/master/README.md#opencl-icd-loader-tests) with [system OpenCL runtime](https://github.com/KhronosGroup/OpenCL-ICD-Loader/blob/master/README.md#table-of-debug-environment-variables) (e.g. `opencl.dll` from `Windows\system32`). If you don't have system OpenCL runtime you can get it by installing [Intel OpenCL CPU runtime](https://www.intel.com/content/www/us/en/developer/tools/opencl-cpu-runtime/overview.html). It works for AMD CPUs as well.
 - Deployment for Vulkan drivers is done through [Vulkan runtime](https://vulkan.lunarg.com/sdk/home#windows) using [ICD discovery](https://github.com/KhronosGroup/Vulkan-Loader/blob/master/docs/LoaderDriverInterface.md#driver-discovery) method. Note that Vulkan runtime commes bundled with graphics drivers supporting Vulkan so manually installing it may not be necessary.
-# Uninstall Messa3D
+# Uninstall Mesa3D
 1. Run system wide deployment and perform uninstall operation if available, then exit;
 2. Download and run [Everything tool](https://www.voidtools.com/) (any flavor should work);
 3. Run per application deployment tool and leave it running;
