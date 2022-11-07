@@ -14,8 +14,8 @@ Python packages
 ---------------
 Mako       1.2.3
 MarkupSafe 2.1.1
-meson      0.63.3
-pip        22.3
+meson      0.64.0
+pip        22.3.1
 setuptools 65.5.1
 
 CMake 3.24.2
@@ -29,5 +29,6 @@ Bison 3.8.2
 pkgconf 1.9.3
 zlib 1.2.13
 OpenCLonD3D12 ICD 2022.11.02
-libva 2.17.0.1
+libva 2.17.0.pre1
+VA-API 1.17.0
 DirectX headers 1.606.4

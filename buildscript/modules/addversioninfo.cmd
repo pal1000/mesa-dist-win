@@ -77,6 +77,9 @@
 @call "%devroot%\%projectname%\buildscript\modules\rcgen.cmd" "Microsoft SPIR-V to DXIL library" "%devroot%\%projectname%\bin\%abi%\spirv_to_dxil.dll" %abi% %mesaver% "Microsoft Corporation"
 @call "%devroot%\%projectname%\buildscript\modules\rcgen.cmd" "Microsoft SPIR-V to DXIL library" "%devroot%\%projectname%\bin\%abi%\libspirv_to_dxil.dll" %abi% %mesaver% "Microsoft Corporation"
 
+@rem Add version info to Microsoft D3D12 VA-API driver
+@call "%devroot%\%projectname%\buildscript\modules\rcgen.cmd" "Microsoft VA-API over D3D12 driver" "%devroot%\%projectname%\bin\%abi%\vaon12_drv_video.dll" %abi% %mesaver% "Microsoft Corporation"
+
 @echo Done
 @echo.
 

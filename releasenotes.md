@@ -17,6 +17,8 @@
 - MSVC: Roll LLVM 15.0.4;
 - Add libva and VA-API versions;
 - Add DirectX headers version.
+### Distribution
+- Add version info to D3D12 VA-API driver.
 # 22.2.2
 - Updated Mesa3D to [22.2.2](https://docs.mesa3d.org/relnotes/22.2.2.html).
 ### Distribution
