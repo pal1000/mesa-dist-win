@@ -31,13 +31,17 @@
 @call "%devroot%\%projectname%\buildscript\modules\useninja.cmd"
 @IF %toolchain%==msvc IF NOT "%pkgconfigstate%"=="0" set PATH=%pkgconfigloc%\;%PATH%
 
+@IF NOT %toolchain%==msvc set CFLAGS=-march^=core2 -pipe
+
 @IF /I NOT "%useninja%"=="y" set buildconf=%mesonloc% setup build\buildsys-%toolchain%-%abi% --backend=vs --buildtype=release --prefix="%devroot:\=/%/libva/build/%toolchain%-%abi%"
 @IF /I "%useninja%"=="y" set buildconf=%mesonloc% setup build/buildsys-%toolchain%-%abi% --backend=ninja --buildtype=release --prefix="%devroot:\=/%/libva/build/%toolchain%-%abi%"
 @IF NOT %toolchain%==msvc set /p dynamiclink=Link binaries dynamically (y/n):
 @IF NOT %toolchain%==msvc echo.
-@IF /I "%dynamiclink%"=="y" set buildconf=%buildconf% -Dc_args="-march^=core2 -pipe" -Dcpp_args="-march^=core2 -pipe" -Dc_link_args="-s" -Dcpp_link_args="-s"
-@IF NOT %toolchain%==msvc IF /I NOT "%dynamiclink%"=="y" set buildconf=%buildconf% -Dc_args="-march^=core2 -pipe" -Dcpp_args="-march^=core2 -pipe" -Dc_link_args="-s -static" -Dcpp_link_args="-s -static"
+@IF NOT %toolchain%==msvc set buildconf=%buildconf% -Dc_args="%CFLAGS%" -Dcpp_args="%CFLAGS%"
+@IF /I "%dynamiclink%"=="y" set buildconf=%buildconf% -Dc_link_args="-s" -Dcpp_link_args="-s"
+@IF NOT %toolchain%==msvc IF /I NOT "%dynamiclink%"=="y" set buildconf=%buildconf% --prefer-static -Dc_link_args="-s -static" -Dcpp_link_args="-s -static"
 @IF %toolchain%==msvc set buildconf=%buildconf% -Db_vscrt=mt
+@IF NOT %toolchain%==msvc set CFLAGS=
 
 @echo Configuring VA-API build with : %buildconf%
 @echo.

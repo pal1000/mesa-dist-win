@@ -5,7 +5,8 @@ Ressource Hacker 5.1.8.360
 7-Zip 22.01 ultra compression
 Git 2.38.1.1
 OpenCLonD3D12 ICD 2022.11.02
-libva 2.17.0.1
+libva 2.17.0.pre1
+VA-API 1.17.0
 DirectX headers 1.606.4
 
 MSYS2 environment
@@ -65,7 +66,7 @@ liblzma 5.2.7-1
 libnettle 3.8.1-1
 libnghttp2 1.50.0-1
 libnpth 1.6-1
-libopenssl 1.1.1.q-1
+libopenssl 1.1.1.s-1
 libp11-kit 0.24.1-4
 libpcre 8.45-3
 libpcre2_8 10.40-1
@@ -83,15 +84,15 @@ m4 1.4.19-2
 mingw-w64-i686-binutils 2.39-2
 mingw-w64-i686-bzip2 1.0.8-2
 mingw-w64-i686-ca-certificates 20211016-3
-mingw-w64-i686-clang 15.0.3-1
-mingw-w64-i686-crt-git 10.0.0.r113.g57fd0b77a-1
+mingw-w64-i686-clang 15.0.4-1
+mingw-w64-i686-crt-git 10.0.0.r130.g13f9449c1-1
 mingw-w64-i686-expat 2.5.0-1
 mingw-w64-i686-gcc 12.2.0-6
 mingw-w64-i686-gcc-libs 12.2.0-6
 mingw-w64-i686-gdb 12.1-4
 mingw-w64-i686-gettext 0.21-3
 mingw-w64-i686-gmp 6.2.1-3
-mingw-w64-i686-headers-git 10.0.0.r113.g57fd0b77a-1
+mingw-w64-i686-headers-git 10.0.0.r130.g13f9449c1-1
 mingw-w64-i686-isl 0.25-1
 mingw-w64-i686-libclc 14.0.6-1
 mingw-w64-i686-libelf 0.8.13-6
@@ -100,19 +101,19 @@ mingw-w64-i686-libiconv 1.17-1
 mingw-w64-i686-libsystre 1.0.1-4
 mingw-w64-i686-libtasn1 4.19.0-1
 mingw-w64-i686-libtre-git r128.6fb7206-2
-mingw-w64-i686-libwinpthread-git 10.0.0.r113.g57fd0b77a-1
+mingw-w64-i686-libwinpthread-git 10.0.0.r130.g13f9449c1-1
 mingw-w64-i686-libxml2 2.10.3-1
-mingw-w64-i686-llvm 15.0.3-1
+mingw-w64-i686-llvm 15.0.4-1
 mingw-w64-i686-meson 0.63.3-1
 mingw-w64-i686-mpc 1.2.1-1
 mingw-w64-i686-mpdecimal 2.5.1-1
 mingw-w64-i686-mpfr 4.1.0.p13-1
 mingw-w64-i686-ncurses 6.3-5
 mingw-w64-i686-ninja 1.11.1-2
-mingw-w64-i686-openssl 1.1.1.q-1
+mingw-w64-i686-openssl 1.1.1.s-1
 mingw-w64-i686-p11-kit 0.24.1-3
 mingw-w64-i686-pkgconf 1~1.8.0-2
-mingw-w64-i686-python 3.10.8-1
+mingw-w64-i686-python 3.10.8-2
 mingw-w64-i686-python-beaker 1.11.0-3
 mingw-w64-i686-python-mako 1.2.3-1
 mingw-w64-i686-python-markupsafe 2.1.1-2
@@ -129,7 +130,7 @@ mingw-w64-i686-vulkan-headers 1.3.232-1
 mingw-w64-i686-vulkan-loader 1.3.232-1
 mingw-w64-i686-vulkan-validation-layers 1.3.225-1
 mingw-w64-i686-windows-default-manifest 6.4-4
-mingw-w64-i686-winpthreads-git 10.0.0.r113.g57fd0b77a-1
+mingw-w64-i686-winpthreads-git 10.0.0.r130.g13f9449c1-1
 mingw-w64-i686-xxhash 0.8.1-2
 mingw-w64-i686-xz 5.2.7-1
 mingw-w64-i686-zlib 1.2.13-1
@@ -137,15 +138,15 @@ mingw-w64-i686-zstd 1.5.2-2
 mingw-w64-ucrt-x86_64-binutils 2.39-2
 mingw-w64-ucrt-x86_64-bzip2 1.0.8-2
 mingw-w64-ucrt-x86_64-ca-certificates 20211016-3
-mingw-w64-ucrt-x86_64-clang 15.0.3-1
-mingw-w64-ucrt-x86_64-crt-git 10.0.0.r113.g57fd0b77a-1
+mingw-w64-ucrt-x86_64-clang 15.0.4-1
+mingw-w64-ucrt-x86_64-crt-git 10.0.0.r130.g13f9449c1-1
 mingw-w64-ucrt-x86_64-expat 2.5.0-1
 mingw-w64-ucrt-x86_64-gcc 12.2.0-6
 mingw-w64-ucrt-x86_64-gcc-libs 12.2.0-6
 mingw-w64-ucrt-x86_64-gdb 12.1-4
 mingw-w64-ucrt-x86_64-gettext 0.21-3
 mingw-w64-ucrt-x86_64-gmp 6.2.1-3
-mingw-w64-ucrt-x86_64-headers-git 10.0.0.r113.g57fd0b77a-1
+mingw-w64-ucrt-x86_64-headers-git 10.0.0.r130.g13f9449c1-1
 mingw-w64-ucrt-x86_64-isl 0.25-1
 mingw-w64-ucrt-x86_64-libclc 14.0.6-1
 mingw-w64-ucrt-x86_64-libelf 0.8.13-6
@@ -154,19 +155,19 @@ mingw-w64-ucrt-x86_64-libiconv 1.17-1
 mingw-w64-ucrt-x86_64-libsystre 1.0.1-4
 mingw-w64-ucrt-x86_64-libtasn1 4.19.0-1
 mingw-w64-ucrt-x86_64-libtre-git r128.6fb7206-2
-mingw-w64-ucrt-x86_64-libwinpthread-git 10.0.0.r113.g57fd0b77a-1
+mingw-w64-ucrt-x86_64-libwinpthread-git 10.0.0.r130.g13f9449c1-1
 mingw-w64-ucrt-x86_64-libxml2 2.10.3-1
-mingw-w64-ucrt-x86_64-llvm 15.0.3-1
+mingw-w64-ucrt-x86_64-llvm 15.0.4-1
 mingw-w64-ucrt-x86_64-meson 0.63.3-1
 mingw-w64-ucrt-x86_64-mpc 1.2.1-1
 mingw-w64-ucrt-x86_64-mpdecimal 2.5.1-1
 mingw-w64-ucrt-x86_64-mpfr 4.1.0.p13-1
 mingw-w64-ucrt-x86_64-ncurses 6.3-5
 mingw-w64-ucrt-x86_64-ninja 1.11.1-2
-mingw-w64-ucrt-x86_64-openssl 1.1.1.q-1
+mingw-w64-ucrt-x86_64-openssl 1.1.1.s-1
 mingw-w64-ucrt-x86_64-p11-kit 0.24.1-3
 mingw-w64-ucrt-x86_64-pkgconf 1~1.8.0-2
-mingw-w64-ucrt-x86_64-python 3.10.8-1
+mingw-w64-ucrt-x86_64-python 3.10.8-2
 mingw-w64-ucrt-x86_64-python-beaker 1.11.0-3
 mingw-w64-ucrt-x86_64-python-mako 1.2.3-1
 mingw-w64-ucrt-x86_64-python-markupsafe 2.1.1-2
@@ -183,7 +184,7 @@ mingw-w64-ucrt-x86_64-vulkan-headers 1.3.232-1
 mingw-w64-ucrt-x86_64-vulkan-loader 1.3.232-1
 mingw-w64-ucrt-x86_64-vulkan-validation-layers 1.3.225-1
 mingw-w64-ucrt-x86_64-windows-default-manifest 6.4-4
-mingw-w64-ucrt-x86_64-winpthreads-git 10.0.0.r113.g57fd0b77a-1
+mingw-w64-ucrt-x86_64-winpthreads-git 10.0.0.r130.g13f9449c1-1
 mingw-w64-ucrt-x86_64-xxhash 0.8.1-2
 mingw-w64-ucrt-x86_64-xz 5.2.7-1
 mingw-w64-ucrt-x86_64-zlib 1.2.13-1
@@ -196,9 +197,9 @@ msys2-runtime 3.3.6-3
 nano 6.4-1
 ncurses 6.3-3
 nettle 3.8.1-1
-openssl 1.1.1.q-1
+openssl 1.1.1.s-1
 p11-kit 0.24.1-4
-pacman 6.0.1-23
+pacman 6.0.1-24
 pacman-contrib 1.7.1-1
 pacman-mirrors 20221016-1
 patch 2.7.6-1
