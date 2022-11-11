@@ -1,3 +1,5 @@
+# 22.2.3
+- Updated Mesa3D to [22.2.3](https://docs.mesa3d.org/relnotes/22.2.3.html).
 ### Build script
 - Python discovery: Python launcher 3.11 support;
 - VA-API: Implement libva build [22.3+];
@@ -10,7 +12,8 @@
 - MSVC: Load Ninja into build environment from Ninja usage module.
 ### End user guide
 - Gallium raw interface is a dummy driver without any graphics API support;
-- Gallium raw interface has been removed [22.3+].
+- Gallium raw interface has been removed [22.3+];
+- [Misc fixes by Hans Loeblich](https://github.com/pal1000/mesa-dist-win/pull/123).
 ### Build environment information
 - MSVC: Add zlib version;
 - Add OpenCLonD3D12 ICD version;

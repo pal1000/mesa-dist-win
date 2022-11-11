@@ -4,8 +4,8 @@ Windows 10.0.22000
 Ressource Hacker 5.1.8.360
 7-Zip 22.01 ultra compression
 Git 2.38.1.1
-Visual Studio Community 2022 v17.3.6
-Windows SDK 10.1.22621.1
+Visual Studio Community 2022 v17.4.0
+Windows SDK 10.1.22621.755
 Windows Driver Kit 10.1.22621.382
 Nuget Commandline tool 6.3.1.1
 Python 3.11.0
@@ -18,7 +18,7 @@ meson      0.64.0
 pip        22.3.1
 setuptools 65.5.1
 
-CMake 3.24.2
+CMake 3.24.3
 Ninja 1.11.1
 LLVM 15.0.4
 Old LLVM 14.0.6
