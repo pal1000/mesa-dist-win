@@ -433,7 +433,7 @@
 @IF /I "%cloverspv%"=="y" set buildconf=%buildconf% -Dopencl-spirv=true
 @IF /I "%buildclover%"=="y" IF /I NOT "%cloverspv%"=="y" set buildconf=%buildconf% -Dopencl-spirv=false
 @IF /I "%buildclover%"=="y" IF %intmesaver% LSS 22300 set buildconf=%buildconf% -Dopencl-native=false
-@IF /I "%buildclover%"=="y" IF %intmesaver% GEQ 22100 set buildconf=%buildconf% -Dcpp_std=c++20
+@IF /I "%buildclover%"=="y" IF %intmesaver% GEQ 22100 IF %intmesaver% LSS 22300 set buildconf=%buildconf% -Dcpp_std=c++20
 
 @rem Build VA-API D3D12 driver
 @IF %intmesaver% GEQ 22200 set buildconf=%buildconf% -Dgallium-d3d12-video=auto
