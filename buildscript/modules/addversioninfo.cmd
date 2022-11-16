@@ -79,6 +79,7 @@
 
 @rem Add version info to Microsoft D3D12 VA-API driver
 @call "%devroot%\%projectname%\buildscript\modules\rcgen.cmd" "Microsoft VA-API over D3D12 driver" "%devroot%\%projectname%\bin\%abi%\vaon12_drv_video.dll" %abi% %mesaver% "Microsoft Corporation"
+@call "%devroot%\%projectname%\buildscript\modules\rcgen.cmd" "Microsoft VA-API over D3D12 driver" "%devroot%\%projectname%\bin\%abi%\libvaon12_drv_video.dll" %abi% %mesaver% "Microsoft Corporation"
 
 @echo Done
 @echo.
