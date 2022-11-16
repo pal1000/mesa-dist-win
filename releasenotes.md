@@ -1,5 +1,7 @@
 ### Build script
 - clover: Stop forcing C++20 [22.3+].
+### Build environment
+- MSVC: Roll LLVM 15.0.5.
 # 22.2.3
 - Updated Mesa3D to [22.2.3](https://docs.mesa3d.org/relnotes/22.2.3.html).
 ### Build script
