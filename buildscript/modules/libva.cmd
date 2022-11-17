@@ -33,8 +33,9 @@
 
 @IF NOT %toolchain%==msvc set CFLAGS=-march^=core2 -pipe
 
-@IF /I NOT "%useninja%"=="y" set buildconf=%mesonloc% setup build\buildsys-%toolchain%-%abi% --backend=vs --buildtype=release --prefix="%devroot:\=/%/libva/build/%toolchain%-%abi%"
-@IF /I "%useninja%"=="y" set buildconf=%mesonloc% setup build/buildsys-%toolchain%-%abi% --backend=ninja --buildtype=release --prefix="%devroot:\=/%/libva/build/%toolchain%-%abi%"
+@set buildconf=%mesonloc% setup build/buildsys-%toolchain%-%abi% --buildtype=release --pkgconfig.relocatable --prefix="%devroot:\=/%/libva/build/%toolchain%-%abi%"
+@IF /I NOT "%useninja%"=="y" set buildconf=%buildconf% --backend=vs
+@IF /I "%useninja%"=="y" set buildconf=%buildconf% --backend=ninja
 @IF NOT %toolchain%==msvc set /p dynamiclink=Link binaries dynamically (y/n):
 @IF NOT %toolchain%==msvc echo.
 @IF NOT %toolchain%==msvc set buildconf=%buildconf% -Dc_args="%CFLAGS%" -Dcpp_args="%CFLAGS%"
