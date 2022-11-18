@@ -1,5 +1,6 @@
 ### Build script
-- clover: Stop forcing C++20 [22.3+].
+- clover: Stop forcing C++20 [22.3+];
+- When disabling VA-API frontend do it explicitly or it remains enabled if libva dependency is found.
 ### Build environment
 - MSVC: Roll LLVM 15.0.5.
 ### Distribution

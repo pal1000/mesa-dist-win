@@ -445,7 +445,7 @@
 @IF /I "%buildvaapi%"=="y" set /p buildpatentedcodecs=Build Mesa3D video acceleration patented codecs (y/n):
 @IF /I "%buildvaapi%"=="y" echo.
 @IF /I "%buildpatentedcodecs%"=="y" set buildconf=%buildconf%h264dec,h264enc,h265dec,h265enc,vc1dec
-@IF /I NOT "%buildvaapi%"=="y" set buildconf=%buildconf% -Dgallium-va=auto
+@IF /I NOT "%buildvaapi%"=="y" set buildconf=%buildconf% -Dgallium-va=%mesonboolfalse%
 
 @rem Apply PKG_CONFIG search PATH adjustments on MSVC
 @IF %PKG_CONFIG_LIBCLC% EQU 1 set buildconf=%buildconf% -Dstatic-libclc=all
