@@ -6,6 +6,8 @@
 - Add version info to MinGW built D3D12 VA-API driver [22.3+].
 ### Misc
 - libva build: Generate pkg-config files in relocatable format.
+### Out of tree patches
+- Finish patch for static linking OpenCL stack with LLVM and clang 15.
 # 22.2.3
 - Updated Mesa3D to [22.2.3](https://docs.mesa3d.org/relnotes/22.2.3.html).
 ### Build script

@@ -146,8 +146,8 @@
 @rem Link clang like LLVM
 @IF %intmesaver% LSS 22252 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" link-clang-like-llvm
 
-@rem Draft/WIP: Fix OpenCL stack link with Clang 15
-@call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" fix-clang15-link
+@rem Fix OpenCL stack link with LLVM and Clang 15
+@call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" fix-llvm-clang15-link
 
 :configmesabuild
 @rem Configure Mesa build.

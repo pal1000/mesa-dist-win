@@ -1,8 +1,22 @@
 diff --git a/meson.build b/meson.build
-index 7247c32b9ac..517de293bb9 100644
+index f85650bccea..6fb7436d8fd 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -1891,6 +1891,9 @@ if with_clc
+@@ -1723,11 +1723,11 @@ if with_gallium_opencl
+     'linker', 'coverage', 'instrumentation', 'ipo', 'irreader',
+     'lto', 'option', 'objcarcopts', 'profiledata'
+   ]
+-  llvm_optional_modules += ['all-targets', 'frontendopenmp']
++  llvm_optional_modules += ['all-targets', 'frontendopenmp', 'windowsdriver']
+ endif
+ if with_clc
+   llvm_modules += ['coverage', 'target', 'linker', 'irreader', 'option', 'libdriver', 'lto']
+-  llvm_optional_modules += ['all-targets']
++  llvm_optional_modules += ['all-targets', 'windowsdriver']
+ endif
+ draw_with_llvm = get_option('draw-use-llvm')
+ if draw_with_llvm
+@@ -1883,6 +1883,9 @@ if with_clc
        'clangHandleCXX', 'clangHandleLLVM', 'clangSerialization',
        'clangSema', 'clangParse', 'clangEdit', 'clangAnalysis'
      ]
@@ -13,10 +27,10 @@ index 7247c32b9ac..517de293bb9 100644
      dep_clang = []
      foreach m : clang_modules
 diff --git a/src/gallium/targets/opencl/meson.build b/src/gallium/targets/opencl/meson.build
-index 14df6b86f7f..62073d8ec05 100644
+index 6c36244a9d7..9ab62331d4c 100644
 --- a/src/gallium/targets/opencl/meson.build
 +++ b/src/gallium/targets/opencl/meson.build
-@@ -75,6 +75,10 @@ if not (dep_clang.found() and dep_clang_usable)
+@@ -75,6 +75,10 @@ if not _shared_llvm or not (dep_clang.found() and dep_clang_usable)
      cpp.find_library('clangBasic', dirs : llvm_libdir),
      polly_dep, polly_isl_dep,
    ]
