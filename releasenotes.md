@@ -1,3 +1,5 @@
+# 22.2.4
+- Updated Mesa3D to [22.2.4](https://docs.mesa3d.org/relnotes/22.2.4.html).
 ### Build script
 - clover: Stop forcing C++20 [22.3+];
 - When disabling VA-API frontend do it explicitly or it remains enabled if libva dependency is found.
