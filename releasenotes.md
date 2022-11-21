@@ -1,3 +1,5 @@
+### Build script
+- Fix binary version info module crash when Mesa3D source is missing.
 ### Debug
 - MSYS2 debug tool: Make sure shell script can be generated.
 # 22.2.4

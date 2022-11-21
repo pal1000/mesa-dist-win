@@ -1,16 +1,17 @@
 @setlocal
 @rem Get Mesa3D version
+@IF NOT EXIST "%devroot%\mesa\VERSION" GOTO nomesaverinfo
 @set /p mesaver=<"%devroot%\mesa\VERSION"
 @if "%mesaver:~5,2%"=="0-" set mesaver=%mesaver:~0,6%
 
 @rem Check if resource hacker can be reached.
-@IF %rhstate%==0 GOTO noresourcehacker
+@IF %rhstate%==0 GOTO nomesaverinfo
 @IF %rhstate%==1 SET PATH=%devroot%\resource-hacker\;%PATH%
 
 @set mesabldrev=
 @set /p mesabldrev=Mesa3D build revision (default:blank, positive integer or blank expected, leaving blank disables adding version information to binaries, MinGW debug binaries should have this left blank as GDB is intolerant to any binary tampering):
 @echo.
-@IF NOT defined mesabldrev GOTO noresourcehacker
+@IF NOT defined mesabldrev GOTO nomesaverinfo
 @echo Adding version information to binaries. Please wait...
 @echo.
 
@@ -84,5 +85,5 @@
 @echo Done
 @echo.
 
-:noresourcehacker
+:nomesaverinfo
 @endlocal
