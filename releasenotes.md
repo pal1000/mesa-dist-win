@@ -1,3 +1,5 @@
+### Debug
+- MSYS2 debug tool: Make sure shell script can be generated.
 # 22.2.4
 - Updated Mesa3D to [22.2.4](https://docs.mesa3d.org/relnotes/22.2.4.html).
 ### Build script

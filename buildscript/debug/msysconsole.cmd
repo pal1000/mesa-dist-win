@@ -5,6 +5,10 @@
 @IF %devroot:~0,1%%devroot:~-1%=="" set devroot=%devroot:~1,-1%
 @IF "%devroot:~-1%"=="\" set devroot=%devroot:~0,-1%
 @set projectname=mesa-dist-win
+
+@rem Create folder to store generated resource files and MSYS2 shell scripts
+@IF NOT EXIST "%devroot%\%projectname%\buildscript\assets\" md "%devroot%\%projectname%\buildscript\assets"
+
 @call "%devroot%\%projectname%\buildscript\modules\git.cmd"
 @call "%devroot%\%projectname%\buildscript\modules\msys.cmd"
 @call "%devroot%\%projectname%\buildscript\modules\msysupdate.cmd"
