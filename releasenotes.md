@@ -2,6 +2,8 @@
 - Fix binary version info module crash when Mesa3D source is missing.
 ### Debug
 - MSYS2 debug tool: Make sure shell script can be generated.
+### Build environment
+- DirectX headers: fix code switch to release tag on initial clone.
 # 22.2.4
 - Updated Mesa3D to [22.2.4](https://docs.mesa3d.org/relnotes/22.2.4.html).
 ### Build script
