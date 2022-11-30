@@ -7,15 +7,17 @@
 @rem Use pure subproject without wrap for DirectX headers
 @IF EXIST "%devroot%\mesa\subprojects\DirectX-Headers.wrap" del "%devroot%\mesa\subprojects\DirectX-Headers.wrap"
 
-@rem Obtaining DirectX-Headers
-@if %gitstate% GTR 0 for /f delims^=^ eol^= %%a in ('dir /b /a^:d "%devroot%\mesa\subprojects\DirectX-Header*" 2^>^&1') do @
-@IF NOT EXIST "%devroot%\mesa\subprojects\%%~nxa\" git clone --recurse-submodules https://github.com/microsoft/DirectX-Headers.git "%devroot%\mesa\subprojects\DirectX-Headers"
+@if %gitstate% GTR 0 for /f delims^=^ eol^= %%a in ('dir /b /a^:d "%devroot%\mesa\subprojects\DirectX-Header*" 2^>^&1') do @IF NOT EXIST "%devroot%\mesa\subprojects\%%~nxa\" (
+@echo Obtaining DirectX-Headers...
+@git clone --recurse-submodules https://github.com/microsoft/DirectX-Headers.git "%devroot%\mesa\subprojects\DirectX-Headers"
+@echo.
+)
 @if %gitstate% GTR 0 for /f delims^=^ eol^= %%a in ('dir /b /a^:d "%devroot%\mesa\subprojects\DirectX-Header*" 2^>^&1') do @IF EXIST "%devroot%\mesa\subprojects\%%~nxa\" (
 @cd "%devroot%\mesa\subprojects\%%~nxa"
-@echo Refreshing DirectX-Headers...
+@echo Using DirectX-Headers stable release...
 @for /f tokens^=2^ delims^=/^ eol^= %%a in ('git symbolic-ref --short refs/remotes/origin/HEAD 2^>^&^1') do @git checkout %%a
 @git pull -f --progress --tags --recurse-submodules origin
-@git checkout v1.606.4
+@git checkout v1.608.0
 @cd "%devroot%\mesa"
 )
 @if %gitstate% GTR 0 echo.

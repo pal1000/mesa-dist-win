@@ -4,7 +4,8 @@
 - MSYS2 debug tool: Make sure shell script can be generated.
 ### Build environment
 - DirectX headers: fix code switch to release tag on initial clone;
-- MSVC: Update LLVM to 15.0.6.
+- MSVC: Update LLVM to 15.0.6;
+- Update DirectX headers to v1.608.0.
 ### Misc
 - Nuget CLI: Improve setup module.
 # 22.2.4
