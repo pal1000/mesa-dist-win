@@ -3,7 +3,8 @@
 ### Debug
 - MSYS2 debug tool: Make sure shell script can be generated.
 ### Build environment
-- DirectX headers: fix code switch to release tag on initial clone.
+- DirectX headers: fix code switch to release tag on initial clone;
+- MSVC: Update LLVM to 15.0.6.
 ### Misc
 - Nuget CLI: Announce initial download.
 # 22.2.4
