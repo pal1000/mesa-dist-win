@@ -6,7 +6,7 @@
 - DirectX headers: fix code switch to release tag on initial clone;
 - MSVC: Update LLVM to 15.0.6.
 ### Misc
-- Nuget CLI: Announce initial download.
+- Nuget CLI: Improve setup module.
 # 22.2.4
 - Updated Mesa3D to [22.2.4](https://docs.mesa3d.org/relnotes/22.2.4.html).
 ### Build script
