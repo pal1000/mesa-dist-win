@@ -184,11 +184,11 @@
 @if /I "%useninja%"=="y" echo.
 @if /I NOT "%mesadbgbld%"=="y" set buildconf=%buildconf% --buildtype=release
 @if /I NOT "%mesadbgbld%"=="y" IF NOT %toolchain%==msvc set LDFLAGS=%LDFLAGS% -s
-
-@if /I "%mesadbgbld%"=="y" set buildconf=%buildconf% --buildtype=debug
 @if /I "%mesadbgbld%"=="y" set /p mesadbgoptim=Optimize debug binaries (y/n):
 @if /I "%mesadbgbld%"=="y" echo.
-@if /I "%mesadbgoptim%"=="y" set buildconf=%buildconf%optimized
+@if /I "%mesadbgbld%"=="y" if /I NOT "%mesadbgoptim%"=="y" set buildconf=%buildconf% --buildtype=debug
+@if /I "%mesadbgoptim%"=="y" IF NOT %toolchain%==msvc set buildconf=%buildconf% --buildtype=debugoptimized
+@if /I "%mesadbgoptim%"=="y" IF %toolchain%==msvc set buildconf=%buildconf% -Ddebug=true -Doptimization=3
 
 @set mesaenableasserts=n
 @set /p mesaenableasserts=Enable asserts (y/n):

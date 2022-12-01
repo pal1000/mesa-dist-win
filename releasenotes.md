@@ -1,5 +1,6 @@
 ### Build script
-- Fix binary version info module crash when Mesa3D source is missing.
+- Fix binary version info module crash when Mesa3D source is missing;
+- MSVC: Increase build with debug symbols optimization.
 ### Debug
 - MSYS2 debug tool: Make sure shell script can be generated.
 ### Build environment
