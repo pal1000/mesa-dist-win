@@ -22,7 +22,7 @@
 - [OpenGL context configuration override](#opengl-context-configuration-override)
 - [How to set environment variables](#how-to-set-environment-variables)
 # Downloads
-Mesa 22.2.4 builds with Visual Studio and MSYS2 Mingw-w64 are now available in [releases section](https://github.com/pal1000/mesa-dist-win/releases).
+Mesa 22.3.0 builds with Visual Studio and MSYS2 Mingw-w64 are now available in [releases section](https://github.com/pal1000/mesa-dist-win/releases).
 # Known issues
 This is a list of all comonly encountered issues with known solutions or workarounds. A specific release is only affected by a subset of them.
 - `libgallium_wgl.dll` missing error with Mesa3D OpenGL ES and desktop OpenGL drivers
