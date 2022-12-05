@@ -1,5 +1,6 @@
 ### End user guide
-- Readme: Document VPS hosting sponsorship.
+- Readme: Document VPS hosting sponsorship;
+- Readme: Docment CLonD3D12 driver debut in MinGW package.
 # 22.3.0
 - Updated Mesa3D to [22.3.0](https://docs.mesa3d.org/relnotes/22.3.0.html).
 ### Build script
