@@ -1,5 +1,6 @@
 # Table of Contents
 - [Downloads](#downloads)
+- [Sponsorship](#sponsorship)
 - [Known issues](#known-issues)
 - [Differences between MSVC and MinGW packages](#differences-between-msvc-and-mingw-packages)
 - [Mingw and MSVC Package contents](#mingw-and-msvc-package-contents)
@@ -23,6 +24,9 @@
 - [How to set environment variables](#how-to-set-environment-variables)
 # Downloads
 Mesa 22.3.0 builds with Visual Studio and MSYS2 Mingw-w64 are now available in [releases section](https://github.com/pal1000/mesa-dist-win/releases).
+# Sponsorship
+mesa-dist-win project recieved a sponsorship from [Petrosky](https://petrosky.io/), a virtual private server hosting company thanks to [@Directox01](https://github.com/Directox01). This [discussion](https://github.com/pal1000/mesa-dist-win/discussions/120#discussioncomment-4124376) eventually led to sponsorship - a free VPS to use as build machine with 12 GB RAM, 6 threads [AMD EPYC 7413](https://www.amd.com/en/products/cpu/amd-epyc-7413) and 150 GB NVMe SSD.
+![Screenshot_20221205_065713](https://user-images.githubusercontent.com/1138235/205717369-21062d47-7c66-4e6a-8427-6560f9aeaaf7.png)
 # Known issues
 This is a list of all comonly encountered issues with known solutions or workarounds. A specific release is only affected by a subset of them.
 - `libgallium_wgl.dll` missing error with Mesa3D OpenGL ES and desktop OpenGL drivers
