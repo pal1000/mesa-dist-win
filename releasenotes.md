@@ -1,7 +1,8 @@
 ### End user guide
 - Readme: Document VPS hosting sponsorship;
 - Readme: Docment CLonD3D12 driver debut in MinGW package;
-- Readme: Bring info about gallium raw interface removal in front, updates 5f3273a41beae48c258e946484059a8f3643a44f.
+- Readme: Bring info about gallium raw interface removal in front, updates 5f3273a41beae48c258e946484059a8f3643a44f;
+- Readme: Document GLonD3D12 standalone ICD removal in 22.3.0.
 # 22.3.0
 - Updated Mesa3D to [22.3.0](https://docs.mesa3d.org/relnotes/22.3.0.html).
 ### Build script
