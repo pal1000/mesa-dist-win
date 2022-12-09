@@ -1,3 +1,5 @@
+### Out of tree patches
+- Update patch fixing static link with LLVM and clang 15 to cover draw module as well, see [#125](https://github.com/pal1000/mesa-dist-win/issues/125).
 ### End user guide
 - Readme: Document VPS hosting sponsorship;
 - Readme: Docment CLonD3D12 driver debut in MinGW package;

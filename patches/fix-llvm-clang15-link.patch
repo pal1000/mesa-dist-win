@@ -1,22 +1,32 @@
 diff --git a/meson.build b/meson.build
-index f85650bccea..6fb7436d8fd 100644
+index 45d04da92766e3ea361161a91b8883502ec95a23..cd9c3101a990e4040a6e5702024b5bb6fa894d26 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -1723,11 +1723,11 @@ if with_gallium_opencl
+@@ -1783,15 +1783,21 @@ if with_gallium_opencl
      'linker', 'coverage', 'instrumentation', 'ipo', 'irreader',
      'lto', 'option', 'objcarcopts', 'profiledata'
    ]
 -  llvm_optional_modules += ['all-targets', 'frontendopenmp']
++  # all-targets is needed to support static linking LLVM build with multiple targets
++  # windowsdriver is needded with LLVM>=15, but we don't know what LLVM verrsion we are using yet
 +  llvm_optional_modules += ['all-targets', 'frontendopenmp', 'windowsdriver']
  endif
  if with_clc
    llvm_modules += ['coverage', 'target', 'linker', 'irreader', 'option', 'libdriver', 'lto']
 -  llvm_optional_modules += ['all-targets']
++  # all-targets is needed to support static linking LLVM build with multiple targets
++  # windowsdriver is needded with LLVM>=15, but we don't know what LLVM verrsion we are using yet
 +  llvm_optional_modules += ['all-targets', 'windowsdriver']
  endif
  draw_with_llvm = get_option('draw-use-llvm')
  if draw_with_llvm
-@@ -1883,6 +1883,9 @@ if with_clc
+   llvm_modules += 'native'
++  # lto is needded with LLVM>=15, but we don't know what LLVM verrsion we are using yet
++  llvm_optional_modules += ['lto']
+ endif
+ 
+ if with_intel_clc
+@@ -1949,6 +1955,9 @@ if with_clc
        'clangHandleCXX', 'clangHandleLLVM', 'clangSerialization',
        'clangSema', 'clangParse', 'clangEdit', 'clangAnalysis'
      ]
@@ -27,7 +37,7 @@ index f85650bccea..6fb7436d8fd 100644
      dep_clang = []
      foreach m : clang_modules
 diff --git a/src/gallium/targets/opencl/meson.build b/src/gallium/targets/opencl/meson.build
-index 6c36244a9d7..9ab62331d4c 100644
+index 7af210b5693848d9f02166d2115577bed0bf904a..db3586bd7fb516858fac0ae823c581b47c934d4a 100644
 --- a/src/gallium/targets/opencl/meson.build
 +++ b/src/gallium/targets/opencl/meson.build
 @@ -75,6 +75,10 @@ if not _shared_llvm or not (dep_clang.found() and dep_clang_usable)
