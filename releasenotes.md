@@ -1,5 +1,3 @@
-### Build environment
-- Update SPIRV Tools to sdk-1.3.236.0.
 ### Out of tree patches
 - Update patch fixing static link with LLVM and clang 15 to cover draw module as well, see [#125](https://github.com/pal1000/mesa-dist-win/issues/125).
 ### End user guide
