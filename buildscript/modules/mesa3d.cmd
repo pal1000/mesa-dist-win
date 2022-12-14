@@ -389,8 +389,8 @@
 @IF %toolchain%==msvc IF NOT EXIST "%llvminstloc%\%abi%\lib\clang*.lib" set canclspv=0
 @IF %toolchain%==msvc IF NOT EXIST "%llvminstloc%\spv-%abi%\lib\pkgconfig\" set canclspv=0
 @IF %toolchain%==msvc IF NOT EXIST "%devroot%\spirv-tools\build\%abi%\lib\pkgconfig\" set canclspv=0
-@rem IF %toolchain%==msvc IF EXIST "%llvminstloc%\%abi%\lib\clang\" for /f tokens^=1^ delims^=.^ eol^= %%a IN ('dir /B /A:D "%llvminstloc%\%abi%\lib\clang\"') DO @IF %%a GEQ 15 set canclspv=0
-@rem IF NOT %toolchain%==msvc IF EXIST "%msysloc%\%LMSYSTEM%\lib\clang\" for /f tokens^=1^ delims^=.^ eol^= %%a IN ('dir /B /A:D "%msysloc%\%LMSYSTEM%\lib\clang\"') DO @IF %%a GEQ 15 set canclspv=0
+@IF %toolchain%==msvc IF %disableootpatch%==1 IF EXIST "%llvminstloc%\%abi%\lib\clang\" for /f tokens^=1^ delims^=.^ eol^= %%a IN ('dir /B /A:D "%llvminstloc%\%abi%\lib\clang\"') DO @IF %%a GEQ 15 set canclspv=0
+@IF NOT %toolchain%==msvc IF %disableootpatch%==1 IF EXIST "%msysloc%\%LMSYSTEM%\lib\clang\" for /f tokens^=1^ delims^=.^ eol^= %%a IN ('dir /B /A:D "%msysloc%\%LMSYSTEM%\lib\clang\"') DO @IF %%a GEQ 15 set canclspv=0
 
 @rem Add flags tracking PKG_CONFIG search PATH adjustment needs
 @set PKG_CONFIG_LIBCLC=0
@@ -466,8 +466,12 @@
 
 @rem Disable draw with LLVM if LLVM native module ends being unused but needed
 @rem workaround for https://gitlab.freedesktop.org/mesa/mesa/-/issues/6817
+@rem Also when using LLVM>=15, out of tree patches disabled and not building OpenCL
+@rem workaround for https://gitlab.freedesktop.org/mesa/mesa/-/issues/7487
 @IF %intmesaver% GEQ 21100 if /I NOT "%llvmless%"=="y" set buildconf=%buildconf% -Ddraw-use-llvm=true
-@IF %intmesaver% GEQ 21100 if /I NOT "%llvmless%"=="y" if /I NOT "%glswrast%"=="y" if /I NOT "%radv%"=="y" if /I NOT "%mesatests%"=="y" IF %galliumcount% GTR 0 set buildconf=%buildconf:~0,-4%false
+@IF %intmesaver% GEQ 21100 IF %intmesaver% LSS 22250 if /I NOT "%llvmless%"=="y" if /I NOT "%glswrast%"=="y" if /I NOT "%radv%"=="y" if /I NOT "%mesatests%"=="y" IF %galliumcount% GTR 0 set buildconf=%buildconf:~0,-4%false
+@IF %intmesaver% GEQ 21100 if /I NOT "%llvmless%"=="y" if %buildconf:~-4%==true IF %disableootpatch%==1 IF /I NOT "%buildclover%"=="y" IF /I NOT "%mclc%"=="y" IF %toolchain%==msvc IF EXIST "%llvminstloc%\%abi%\lib\cmake\llvm\LLVMConfig.cmake" FOR /F tokens^=^1^,2^ eol^= %%a IN ('type "%llvminstloc%\%abi%\lib\cmake\llvm\LLVMConfig.cmake"') DO @IF "%%a"=="set(LLVM_PACKAGE_VERSION" FOR /F tokens^=^1^ delims^=^.^ eol^= %%c IN ("%%b") DO @if %%c GEQ 15 set buildconf=%buildconf:~0,-4%false
+@IF %intmesaver% GEQ 21100 if /I NOT "%llvmless%"=="y" if %buildconf:~-4%==true IF %disableootpatch%==1 IF /I NOT "%buildclover%"=="y" IF /I NOT "%mclc%"=="y" IF NOT %toolchain%==msvc IF EXIST "%msysloc%\%LMSYSTEM%\lib\cmake\llvm\LLVMConfig.cmake" FOR /F tokens^=^1^,2^ eol^= %%a IN ('type "%msysloc%\%LMSYSTEM%\lib\cmake\llvm\LLVMConfig.cmake"') DO @IF "%%a"=="set(LLVM_PACKAGE_VERSION" FOR /F tokens^=^1^ delims^=^.^ eol^= %%c IN ("%%b") DO @if %%c GEQ 15 set buildconf=%buildconf:~0,-4%false
 
 @rem Control futex support - https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/17431
 @IF %intmesaver% GEQ 22200 set /p winfutex=Enable Futex (https://en.wikipedia.org/wiki/Futex) support, raises minimum requirements for Mesa3D overall to run to Windows 8/Server 2012 (y/n):
