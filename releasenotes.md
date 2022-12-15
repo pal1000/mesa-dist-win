@@ -1,3 +1,5 @@
+# 22.3.1
+- Updated Mesa3D to [22.3.1](https://docs.mesa3d.org/relnotes/22.3.1.html).
 ### Build script
 - Handle OpenCL drivers and draw module out of tree patch requiirements with LLVM/Clang 15.
 ### Out of tree patches
