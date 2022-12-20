@@ -1,3 +1,5 @@
+### Misc
+- Sponsorship: Activate paid affiliation, add initial ending date.
 # 22.3.1
 - Updated Mesa3D to [22.3.1](https://docs.mesa3d.org/relnotes/22.3.1.html).
 ### Build script

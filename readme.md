@@ -5,7 +5,7 @@
 - [Differences between MSVC and MinGW packages](#differences-between-msvc-and-mingw-packages)
 - [Mingw and MSVC Package contents](#mingw-and-msvc-package-contents)
   - [OpenGL and OpenGL ES common shared libraries](#opengl-and-opengl-es-common-shared-libraries)
-  - [Microsoft CLonD3D12 and GLonD3D12 common dependency](#microsoft-clond3d12-and-glond3d12-icds-common-dependency)
+  - [Microsoft CLonD3D12 and GLonD3D12 common dependency](#microsoft-clond3d12-and-glond3d12-common-dependency)
   - [Desktop OpenGL drivers](#desktop-opengl-drivers)
   - [OpenGL off-screen rendering driver](#opengl-off-screen-rendering-driver)
   - [OpenGL ES drivers and EGL library](#opengl-es-drivers-and-egl-library)
@@ -25,7 +25,9 @@
 # Downloads
 Mesa 22.3.1 builds with Visual Studio and MSYS2 Mingw-w64 are now available in [releases section](https://github.com/pal1000/mesa-dist-win/releases).
 # Sponsorship
-mesa-dist-win project was sponsored with a free VPS to use as build machine with 12 GB RAM, 6 threads [AMD EPYC 7413](https://www.amd.com/en/products/cpu/amd-epyc-7413) and 150 GB NVMe SSD by [Petrosky](https://petrosky.io/), a virtual private server hosting company thanks to [@Directox01](https://github.com/Directox01).
+mesa-dist-win project was given an extensible sponsorship with initial due date of November 1st 2023. Sponsorship consists in a free VPS to use as build machine with 12 GB RAM, 6 threads [AMD EPYC 7413](https://www.amd.com/en/products/cpu/amd-epyc-7413) and 150 GB NVMe SSD from [Petrosky](https://client.petrosky.io/aff.php?aff=174), a virtual private server hosting company thanks to [@Directox01](https://github.com/Directox01).
+
+![Screenshot_20221220_055523](https://user-images.githubusercontent.com/1138235/208716880-a28cdff9-b7dd-4f94-bed6-fd903a1956bd.png)
 ![Screenshot_20221205_065713](https://user-images.githubusercontent.com/1138235/205717369-21062d47-7c66-4e6a-8427-6560f9aeaaf7.png)
 # Known issues
 This is a list of all comonly encountered issues with known solutions or workarounds. A specific release is only affected by a subset of them.
