@@ -1,5 +1,7 @@
 ### Misc
-- Sponsorship: Activate paid affiliation, add initial ending date.
+- Sponsorship: Activate paid affiliation, add initial ending date;
+- Refactor Windows SDK and DXIL location deetection;
+- Refactor WDK install validaation.
 ### Distribution
 - VA-API driver: Make sure DXIL is distributed with it.
 # 22.3.1
