@@ -53,6 +53,7 @@
 @IF EXIST "%devroot%\%projectname%\bin\%abi%\openglon12.dll" IF NOT EXIST "%devroot%\%projectname%\bin\%abi%\dxil.dll" for /f delims^=^ eol^= %%a in ('@call "%devroot%\%projectname%\buildscript\modules\winsdk.cmd" dxil') do @IF EXIST %%a copy %%a "%devroot%\%projectname%\bin\%abi%"
 @IF EXIST "%devroot%\%projectname%\bin\%abi%\openclon12.dll" IF NOT EXIST "%devroot%\%projectname%\bin\%abi%\dxil.dll" for /f delims^=^ eol^= %%a in ('@call "%devroot%\%projectname%\buildscript\modules\winsdk.cmd" dxil') do @IF EXIST %%a copy %%a "%devroot%\%projectname%\bin\%abi%"
 @IF EXIST "%devroot%\%projectname%\bin\%abi%\vulkan_dzn.dll" IF NOT EXIST "%devroot%\%projectname%\bin\%abi%\dxil.dll" for /f delims^=^ eol^= %%a in ('@call "%devroot%\%projectname%\buildscript\modules\winsdk.cmd" dxil') do @IF EXIST %%a copy %%a "%devroot%\%projectname%\bin\%abi%"
+@IF EXIST "%devroot%\%projectname%\bin\%abi%\*aon12_drv_video.dll IF NOT EXIST "%devroot%\%projectname%\bin\%abi%\dxil.dll" for /f delims^=^ eol^= %%a in ('@call "%devroot%\%projectname%\buildscript\modules\winsdk.cmd" dxil') do @IF EXIST %%a copy %%a "%devroot%\%projectname%\bin\%abi%"
 @echo.
 
 @echo Copying test suite and commandline utilities...

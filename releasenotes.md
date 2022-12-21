@@ -1,9 +1,11 @@
 ### Misc
 - Sponsorship: Activate paid affiliation, add initial ending date.
+### Distribution
+- VA-API driver: Make sure DXIL is distributed with it.
 # 22.3.1
 - Updated Mesa3D to [22.3.1](https://docs.mesa3d.org/relnotes/22.3.1.html).
 ### Build script
-- Handle OpenCL drivers and draw module out of tree patch requiirements with LLVM/Clang 15.
+- Handle OpenCL drivers and draw module out of tree patch requirements with LLVM/Clang 15.
 ### Out of tree patches
 - Update patch fixing static link with LLVM and clang 15 to cover draw module as well, see [#125](https://github.com/pal1000/mesa-dist-win/issues/125).
 ### End user guide
