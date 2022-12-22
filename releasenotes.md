@@ -1,9 +1,10 @@
 ### Misc
 - Sponsorship: Activate paid affiliation, add initial ending date;
-- Refactor Windows SDK and DXIL location deetection;
+- Refactor Windows SDK and DXIL location detection;
 - Refactor WDK install validaation.
 ### Distribution
-- VA-API driver: Make sure DXIL is distributed with it.
+- VA-API driver: Make sure DXIL is distributed with it;
+- Use DXIL from [DirectX shader compiler release package](https://github.com/microsoft/DirectXShaderCompiler/tags) if present.
 # 22.3.1
 - Updated Mesa3D to [22.3.1](https://docs.mesa3d.org/relnotes/22.3.1.html).
 ### Build script
