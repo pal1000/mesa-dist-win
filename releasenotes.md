@@ -1,5 +1,5 @@
 ### Misc
-- Sponsorship: Activate paid affiliation, add initial ending date;
+- Sponsorship: Activate paid affiliation, add initial ending date and add sponsor button;
 - Refactor Windows SDK and DXIL location detection;
 - Refactor WDK install validaation.
 ### Distribution
