@@ -2,16 +2,16 @@
 @rem Get and build VA-API library.
 @if NOT EXIST "%devroot%\libva\" IF %gitstate%==0 GOTO nolibva
 @cd "%devroot%"
-@if EXIST "%devroot%\libva\" IF %gitstate% GTR 0 (
-@echo Updating VA-API source code...
-@cd libva
-@for /f tokens^=2^ delims^=/^ eol^= %%a in ('git symbolic-ref --short refs/remotes/origin/HEAD 2^>^&^1') do @git checkout %%a
-@git pull --progress --tags --recurse-submodules origin
-)
 @if NOT EXIST "%devroot%\libva\" IF %gitstate% GTR 0 (
 @echo Getting VA-API source code...
 @git clone https://github.com/intel/libva.git --recurse-submodules libva
+)
+@if EXIST "%devroot%\libva\" IF %gitstate% GTR 0 (
+@echo Switching VA-API source code to stable release...
 @cd libva
+@for /f tokens^=2^ delims^=/^ eol^= %%a in ('git symbolic-ref --short refs/remotes/origin/HEAD 2^>^&^1') do @git checkout %%a
+@git pull --progress --tags --recurse-submodules origin
+@git checkout 2.17.0
 )
 @IF %gitstate% GTR 0 echo.
 @IF %toolchain%==msvc IF "%pkgconfigstate%"=="0" GOTO nolibva

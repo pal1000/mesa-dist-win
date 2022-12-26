@@ -7,6 +7,8 @@
 - Use DXIL from [DirectX shader compiler release package](https://github.com/microsoft/DirectXShaderCompiler/tags) if present.
 ### Out of tree patches
 - Stop applying build fix patch for static linking LLVM+Clang 15 as it was queued upstream for backport [22.3.2+].
+### Build environment
+- libva: Switch to stable release 2.17.0.
 # 22.3.1
 - Updated Mesa3D to [22.3.1](https://docs.mesa3d.org/relnotes/22.3.1.html).
 ### Build script
