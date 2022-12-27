@@ -31,9 +31,9 @@
 @call "%devroot%\%projectname%\buildscript\modules\useninja.cmd"
 @IF %toolchain%==msvc IF NOT "%pkgconfigstate%"=="0" set PATH=%pkgconfigloc%\;%PATH%
 
-@IF NOT %toolchain%==msvc set CFLAGS=-march^=core2 -pipe
+@IF NOT %toolchain%==msvc set CFLAGS=-march^=armv8-a -pipe
 
-@set buildconf=%mesonloc% setup build/buildsys-%toolchain%-%abi% --buildtype=release --pkgconfig.relocatable --prefix="%devroot:\=/%/libva/build/%toolchain%-%abi%"
+@set buildconf=%mesonloc% setup --cross-file="%devroot:\=/%/%projectname%/buildscript/mesonconffiles/%abi%-clang.txt" build/buildsys-%toolchain%-%abi% --buildtype=release --pkgconfig.relocatable --prefix="%devroot:\=/%/libva/build/%toolchain%-%abi%"
 @IF /I NOT "%useninja%"=="y" set buildconf=%buildconf% --backend=vs
 @IF /I "%useninja%"=="y" set buildconf=%buildconf% --backend=ninja
 @IF NOT %toolchain%==msvc set /p dynamiclink=Link binaries dynamically (y/n):
@@ -54,6 +54,7 @@
 
 @IF /I NOT "%useninja%"=="y" IF %abi%==x64 set buildcmd=msbuild /p^:Configuration=release,Platform=x64 libva.sln /m^:%throttle% ^&^& msbuild /p^:Configuration=release,Platform=x64 RUN_INSTALL.vcxproj /m^:%throttle%
 @IF /I NOT "%useninja%"=="y" IF %abi%==x86 set buildcmd=msbuild /p^:Configuration=release,Platform=Win32 libva.sln /m^:%throttle% ^&^& msbuild /p^:Configuration=release,Platform=Win32 RUN_INSTALL.vcxproj /m^:%throttle%
+@IF /I NOT "%useninja%"=="y" IF %abi%==aarch64 set buildcmd=msbuild /p^:Configuration=release,Platform=ARM64 libva.sln /m^:%throttle% ^&^& msbuild /p^:Configuration=release,Platform=ARM64 RUN_INSTALL.vcxproj /m^:%throttle%
 @IF /I "%useninja%"=="y" IF %toolchain%==msvc set buildcmd=ninja -j %throttle% install
 @IF NOT %toolchain%==msvc set buildcmd=%runmsys% /%LMSYSTEM%/bin/ninja -j %throttle% install
 @echo Performing VA-API build with ^: %buildcmd%

@@ -117,7 +117,7 @@
 @if /I NOT %PROCESSOR_ARCHITECTURE%==AMD64 GOTO desktopgl
 @set ABI=
 @set /p ABI=This is a 64-bit application (y=yes):
-@if /I "%ABI%"=="y" set mesadll=x64
+@if /I "%ABI%"=="y" set mesadll=aarch64
 @echo.
 
 :desktopgl
