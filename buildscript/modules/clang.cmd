@@ -23,8 +23,10 @@
 @if /I "%useclang%"=="y" IF %toolchain%==msvc set CC=clang-cl.exe
 @if /I "%useclang%"=="y" IF %toolchain%==msvc set CXX=clang-cl.exe
 @rem These two lines don't work on arm64 becuase they are 5 chars and it only takes the last 2 chars 
-@rem @if /I "%useclang%"=="y" IF NOT %toolchain%==msvc set MSYSTEM=CLANG%MSYSTEM:~-2%
-@rem @if /I "%useclang%"=="y" IF NOT %toolchain%==msvc set LMSYSTEM=clang%MSYSTEM:~-2%
+@if /I "%useclang%"=="y" IF NOT %toolchain%==msvc IF NOT %abi%==aarch64 set MSYSTEM=CLANG%MSYSTEM:~-2%
+@if /I "%useclang%"=="y" IF NOT %toolchain%==msvc IF NOT %abi%==aarch64 set LMSYSTEM=clang%MSYSTEM:~-2%
+@if /I "%useclang%"=="y" IF NOT %toolchain%==msvc IF %abi%==aarch64 set MSYSTEM=CLANGARM64
+@if /I "%useclang%"=="y" IF NOT %toolchain%==msvc IF %abi%==aarch64 set LMSYSTEM=clangarm64
 @if /I "%useclang%"=="y" IF NOT %toolchain%==msvc set toolchain=clang
 @if /I "%useclang%"=="y" set TITLE=%TITLE% with clang compiler
 @if /I "%useclang%"=="y" TITLE %TITLE%
