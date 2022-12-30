@@ -29,5 +29,3 @@
 @if /I "%useclang%"=="y" set TITLE=%TITLE% with clang compiler
 @if /I "%useclang%"=="y" TITLE %TITLE%
 @set useclang=
-
-@echo %LMSYSTEM%

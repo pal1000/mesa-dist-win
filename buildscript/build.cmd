@@ -28,7 +28,6 @@
 
 @rem Look for MSYS2 build environment
 @call "%devroot%\%projectname%\buildscript\modules\msys.cmd"
-@echo %msysloc%
 
 @rem Search for compiler toolchain. Hard fail if none found
 @call "%devroot%\%projectname%\buildscript\modules\toolchain.cmd"
