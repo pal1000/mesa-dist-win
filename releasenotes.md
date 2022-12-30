@@ -1,3 +1,6 @@
+### Build script
+- Avoid harmless error due to git package removal attempt when missing;
+- Don't install MSYS2 git package as it's not supported yet.
 ### Misc
 - Sponsorship: Activate paid affiliation, add initial ending date and add sponsor button;
 - Refactor Windows SDK and DXIL location detection;
