@@ -33,7 +33,7 @@
 
 @IF NOT %toolchain%==msvc set CFLAGS=-march^=armv8-a -pipe
 
-@set buildconf=%mesonloc% setup --cross-file="%devroot:\=/%/%projectname%/buildscript/mesonconffiles/%abi%-clang.txt" build/buildsys-%toolchain%-%abi% --buildtype=release --pkgconfig.relocatable --prefix="%devroot:\=/%/libva/build/%toolchain%-%abi%"
+@set buildconf=%mesonloc% setup build/buildsys-%toolchain%-%abi% --buildtype=release --pkgconfig.relocatable --prefix="%devroot:\=/%/libva/build/%toolchain%-%abi%"
 @IF /I NOT "%useninja%"=="y" set buildconf=%buildconf% --backend=vs
 @IF /I "%useninja%"=="y" set buildconf=%buildconf% --backend=ninja
 @IF NOT %toolchain%==msvc set /p dynamiclink=Link binaries dynamically (y/n):
