@@ -31,7 +31,8 @@
 @call "%devroot%\%projectname%\buildscript\modules\useninja.cmd"
 @IF %toolchain%==msvc IF NOT "%pkgconfigstate%"=="0" set PATH=%pkgconfigloc%\;%PATH%
 
-@IF NOT %toolchain%==msvc set CFLAGS=-march^=armv8-a -pipe
+@IF NOT %toolchain%==msvc IF %abi%==aarch64 set CFLAGS=-march^=armv8-a -pipe
+@IF NOT %toolchain%==msvc IF NOT %abi%==aarch64 set CFLAGS=-march^=core2 -pipe
 
 @set buildconf=%mesonloc% setup build/buildsys-%toolchain%-%abi% --buildtype=release --pkgconfig.relocatable --prefix="%devroot:\=/%/libva/build/%toolchain%-%abi%"
 @IF /I NOT "%useninja%"=="y" set buildconf=%buildconf% --backend=vs
