@@ -1,3 +1,5 @@
+# 22.3.2
+- Updated Mesa3D to [22.3.2](https://docs.mesa3d.org/relnotes/22.3.2.html).
 ### Build script
 - Avoid harmless error due to git package removal attempt when missing;
 - Don't install MSYS2 git package as it's not supported yet.
