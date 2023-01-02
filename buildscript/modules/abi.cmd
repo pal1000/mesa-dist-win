@@ -3,7 +3,7 @@
 @echo Select CPU processor architecture to build for
 @echo 1. x86 32-bit (Default)
 @echo 2. x64 (x86 64-bit)
-@echo 3. ARM64
+@if /I %PROCESSOR_ARCHITECTURE%==ARM64 echo 3. ARM64
 @set /p cpuchoice=Enter choice:
 @echo.
 @if %cpuchoice% EQU 2 set abi=x64
