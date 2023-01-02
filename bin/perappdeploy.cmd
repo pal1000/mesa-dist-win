@@ -114,11 +114,11 @@
 
 :ask_for_app_abi
 @set mesadll=x86
-@if /I NOT %PROCESSOR_ARCHITECTURE%==AMD64 GOTO desktopgl
+@if /I NOT %PROCESSOR_ARCHITECTURE%==AMD64 if /I NOT %PROCESSOR_ARCHITECTURE%==ARM64 GOTO desktopgl
 @echo Select CPU processor architecture
 @echo 1. x86 32-bit (Default)
 @echo 2. x64 (x86 64-bit)
-@echo 3. ARM64
+@if /I %PROCESSOR_ARCHITECTURE%==ARM64 echo 3. ARM64
 @set ABI=
 @set /p ABI=Enter choice:
 @if %ABI% EQU 2 set mesadll=x64
