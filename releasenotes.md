@@ -1,3 +1,5 @@
+### Misc
+- Implement an ABI selection module with ARM64 support to use by both build and deployment scripts.
 # 22.3.2
 - Updated Mesa3D to [22.3.2](https://docs.mesa3d.org/relnotes/22.3.2.html).
 ### Build script
