@@ -115,14 +115,10 @@
 :ask_for_app_abi
 @set mesadll=x86
 @if /I NOT %PROCESSOR_ARCHITECTURE%==AMD64 if /I NOT %PROCESSOR_ARCHITECTURE%==ARM64 GOTO desktopgl
-@echo Select CPU processor architecture
-@echo 1. x86 32-bit (Default)
-@echo 2. x64 (x86 64-bit)
-@if /I %PROCESSOR_ARCHITECTURE%==ARM64 echo 3. ARM64
-@set ABI=
-@set /p ABI=Enter choice:
-@if %ABI% EQU 2 set mesadll=x64
-@if %ABI% EQU 3 set mesadll=aarch64
+@echo Select processor architecture compatible with program you want to use Mesa3D with
+@call modules\abiselect.cmd
+@if %cpuchoice% EQU 2 set mesadll=x64
+@if %cpuchoice% EQU 3 set mesadll=aarch64
 @echo.
 
 :desktopgl

@@ -1,11 +1,7 @@
 @setlocal
 @set abi=x86
-@echo Select CPU processor architecture to build for
-@echo 1. x86 32-bit (Default)
-@echo 2. x64 (x86 64-bit)
-@if /I %PROCESSOR_ARCHITECTURE%==ARM64 echo 3. ARM64
-@set /p cpuchoice=Enter choice:
-@echo.
+@if /I NOT %PROCESSOR_ARCHITECTURE%==X86 echo Select processor architecture to build for
+@call "%devroot%\%projectname%\bin\modules\abiselect.cmd"
 @if %cpuchoice% EQU 2 set abi=x64
 @if %cpuchoice% EQU 3 set abi=aarch64
 

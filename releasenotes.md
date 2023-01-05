@@ -1,3 +1,5 @@
+### New
+- Early ARM64 build support contributed by [@yourWaifu](https://github.com/pal1000/mesa-dist-win/pull/130).
 ### Misc
 - Implement an ABI selection module with ARM64 support to use by both build and deployment scripts.
 # 22.3.2
