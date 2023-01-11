@@ -5,13 +5,14 @@
 - [Differences between MSVC and MinGW packages](#differences-between-msvc-and-mingw-packages)
 - [Mingw and MSVC Package contents](#mingw-and-msvc-package-contents)
   - [OpenGL and OpenGL ES common shared libraries](#opengl-and-opengl-es-common-shared-libraries)
-  - [Microsoft CLonD3D12 and GLonD3D12 common dependency](#microsoft-clond3d12-and-glond3d12-common-dependency)
+  - [Microsoft CLonD3D12, GLonD3D12 and D3D12 VA-API common dependency](#microsoft-clond3d12-glond3d12-and-d3d12-va-api-common-dependency)
   - [Desktop OpenGL drivers](#desktop-opengl-drivers)
   - [OpenGL off-screen rendering driver](#opengl-off-screen-rendering-driver)
   - [OpenGL ES drivers and EGL library](#opengl-es-drivers-and-egl-library)
   - [Vulkan drivers](#vulkan-drivers)
   - [OpenCL drivers, compilers and backends](#opencl-drivers-compilers-and-backends)
   - [Direct3D drivers, libraries and tools](#direct3d-drivers-libraries-and-tools)
+  - [VA-API drivers](#va-api-drivers)
   - [Testing library and tools](#testing-library-and-tools)
   - [Development packages](#development-packages)
   - [Debug packages](#debug-packages)
@@ -68,7 +69,7 @@ The following Mesa3D drivers and build artifacts are shipped in each release:
 - GLAPI shared library. File name: `libglapi.dll`. Its presence is required when providing both OpenGL and OpenGL ES support. Mesa3D off-screen renderer and all Mesa3D OpenGL and OpenGL ES drivers depend on it when present. Since 20.0.2 it's available in both MSVC and MSYS2 Mingw-w64 packages.
 - Gallium OpenGL megadriver. File name: `libgallium_wgl.dll`. When present it contains all Mesa3D desktop OpenGL drivers instead of `opengl32.dll`. It debuted in 21.3.0. Mesa3D EGL library and OpenGL ES drivers depend on it when present.
 - Mesa3D WGL runtime. File name: `opengl32.dll`. This used to contain all Mesa3D desktop OpenGL drivers and OpenGL ES depended on it, but since 21.3.0 it was reduced to only being a loader for gallium OpenGL megadriver, so only programs using Mesa3D desktop OpenGL drivers via per-application deployment depend on it now.
-### Microsoft CLonD3D12 and GLonD3D12 common dependency
+### Microsoft CLonD3D12, GLonD3D12 and D3D12 VA-API common dependency
 - DirectX IL for redistribution. File name: `dxil.dll`. This Windows SDK binary is installable via [deployment tools](#installation-and-usage) as necessary.
 ### Desktop OpenGL drivers
 - [llvmpipe](https://www.mesa3d.org/llvmpipe.html). llvmpipe is a Desktop OpenGL software renderer intended as fallback when hardware acceleration is not possible. It can only handle very light gaming with good performance. This is the default Mesa3D desktop OpenGL driver when GLonD3D12 is either unavailable or fails to load. It's available for both x86 and x64 as part of Mesa3D Desktop OpenGL bundle `opengl32.dll` or `libgallium_wgl.dll` if the latter is available. When it's not the default driver select it by setting environment variable `GALLIUM_DRIVER=llvmpipe`.
@@ -91,6 +92,8 @@ The following Mesa3D drivers and build artifacts are shipped in each release:
 ### Direct3D drivers, libraries and tools
 - D3D10 software renderer is available in MSVC package since 21.2.0. File name: `d3d10sw.dll`. This is a drop in replacement for Microsoft WARP and unfortunately there is no clean way of [deploying](https://gitlab.freedesktop.org/mesa/mesa/-/blob/main/src/gallium/targets/d3d10sw/README.md) it.
 - SPIR-V to DXIL tool and library are available in MSVC package since 21.0.0 and since 22.2.0 in MinGW package as well. File names: `libspirv_to_dxil.dll`, `spirv_to_dxil.dll` and `spirv2dxil.exe`.
+### VA-API drivers
+- VA-API D3D12 driver. File names: `vaon12_drv_video.dll` (MSVC) and `libvaon12_drv_video.dll` (MinGW). This driver was made available in 22.3.0. Unfortunately there is very little documentation on how to deploy and use VA-API drivers on Windows since it's a new thing.
 ### Testing library and tools
 - Gallium raw interface. This deprecated component has been [removed in Mesa3D 22.3.0](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/19099). File names: `graw.dll`, `graw_null.dll`. This is a dummy gallium driver without any graphics API mainly used for testing. Available for both x86 and x64 and in full (with window system support) and headless (no window) versions. Since 20.0.2 both windowed and windowless versions are available in both MSVC and MSYS2 Mingw-w64 packages.
 - test suite. Many executable unit tests.

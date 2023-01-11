@@ -2,6 +2,10 @@
 - Early ARM64 build support contributed by [@yourWaifu](https://github.com/pal1000/mesa-dist-win/pull/130).
 ### Misc
 - Implement an ABI selection module with ARM64 support to use by both build and deployment scripts.
+### End user guide
+- Readme: Document VA-API D3D12 driver.
+### Build environment
+- Update DirectX headers to v1.608.2b.
 # 22.3.2
 - Updated Mesa3D to [22.3.2](https://docs.mesa3d.org/relnotes/22.3.2.html).
 ### Build script
