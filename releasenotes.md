@@ -1,3 +1,6 @@
+# 22.3.3-2
+### Build environment
+- MSVC: Update LLVM to 15.0.7.
 # 22.3.3
 - Updated Mesa3D to [22.3.3](https://docs.mesa3d.org/relnotes/22.3.3.html).
 ### New
