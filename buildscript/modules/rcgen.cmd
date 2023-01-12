@@ -25,7 +25,7 @@ echo VALUE "CompanyName", %5
 echo VALUE "FileDescription", %descriptionfield%
 echo VALUE "FileVersion", "%prodver%"
 echo VALUE "InternalName", "%~n2.dll"
-echo VALUE "LegalCopyright", "Copyright (C) 2022"
+echo VALUE "LegalCopyright", "Copyright (C) 2023"
 echo VALUE "OriginalFilename", "%~n2.dll"
 echo VALUE "ProductName", "Mesa3D"
 echo VALUE "ProductVersion", "%prodver%"

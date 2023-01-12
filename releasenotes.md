@@ -1,5 +1,7 @@
+# 22.3.3
+- Updated Mesa3D to [22.3.3](https://docs.mesa3d.org/relnotes/22.3.3.html).
 ### New
-- Early ARM64 build support contributed by [@yourWaifu](https://github.com/pal1000/mesa-dist-win/pull/130).
+- Early ARM64 build support contributed by [@yourWaifu](https://github.com/pal1000/mesa-dist-win/pull/130). For binaries ask @yourWaifu [here](https://github.com/pal1000/mesa-dist-win/issues/35) or on [his fork](https://github.com/yourWaifu/mesa-dist-win).
 ### Misc
 - Implement an ABI selection module with ARM64 support to use by both build and deployment scripts.
 ### End user guide
