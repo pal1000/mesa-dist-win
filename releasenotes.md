@@ -1,3 +1,5 @@
+### Build script
+- MinGW ARM64 implies using clang toolchain.
 # 22.3.3-2
 ### Build environment
 - MSVC: Update LLVM to 15.0.7.
