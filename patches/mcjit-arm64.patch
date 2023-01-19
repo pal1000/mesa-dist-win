@@ -1,0 +1,34 @@
+From e7088654f2c53120438983ce5a95891dbbb7f167 Mon Sep 17 00:00:00 2001
+From: GH Cao <driver1998.ms@outlook.com>
+Date: Fri, 13 Jan 2023 01:04:42 +0800
+Subject: [PATCH] gallium: Add MCJIT target triplet for Windows ARM64
+
+MCJIT on Windows requires a special LLVM target triplet with ELF object
+format, add one for Windows ARM64.
+
+Tested locally on real hardware.
+
+Signed-off-by: GH Cao <driver1998.ms@outlook.com>
+---
+ src/gallium/auxiliary/gallivm/lp_bld_misc.cpp | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/src/gallium/auxiliary/gallivm/lp_bld_misc.cpp b/src/gallium/auxiliary/gallivm/lp_bld_misc.cpp
+index a79cbdf3baa6..2333e9b74546 100644
+--- a/src/gallium/auxiliary/gallivm/lp_bld_misc.cpp
++++ b/src/gallium/auxiliary/gallivm/lp_bld_misc.cpp
+@@ -370,8 +370,10 @@ lp_build_create_jit_compiler_for_module(LLVMExecutionEngineRef *OutJIT,
+      * different strings for MinGW/MSVC, so better play it safe and be
+      * explicit.
+      */
+-#  ifdef _WIN64
++#  if DETECT_ARCH_X86_64
+     LLVMSetTarget(M, "x86_64-pc-win32-elf");
++#  elif DETECT_ARCH_AARCH64
++    LLVMSetTarget(M, "aarch64-pc-win32-elf");
+ #  else
+     LLVMSetTarget(M, "i686-pc-win32-elf");
+ #  endif
+-- 
+GitLab
+

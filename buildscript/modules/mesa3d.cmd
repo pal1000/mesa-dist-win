@@ -116,6 +116,9 @@
 @rem Fix swr build with LLVM 13
 @IF EXIST "%devroot%\mesa\src\gallium\drivers\swr\meson.build" call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" swr-llvm13
 
+@rem Fix llvmpipe build on ARM64
+@call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" mcjit-arm64
+
 @rem Fix lavapipe crash when built with MinGW
 @IF %intmesaver:~0,3% EQU 211 IF %intmesaver% LSS 21151 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" lavapipe-mingw-crashfix
 
@@ -231,10 +234,12 @@
 @set msysregex=0
 @if NOT %toolchain%==msvc IF %intmesaver% GEQ 21300 set msysregex=1
 
+@set canglswrast=1
+@IF %abi%==aarch64 if /I NOT "%llvmless%"=="y" IF %disableootpatch%==1 set canglswrast=0
 @set glswrast=n
-@if /I NOT "%llvmless%"=="y" set /p glswrast=Do you want to build Mesa3D softpipe and llvmpipe drivers (y/n):
+@if /I NOT "%llvmless%"=="y" IF %canglswrast% EQU 1 set /p glswrast=Do you want to build Mesa3D softpipe and llvmpipe drivers (y/n):
 @if /I "%llvmless%"=="y" set /p glswrast=Do you want to build Mesa3D softpipe driver (y/n):
-@echo.
+@IF %canglswrast% EQU 1 echo.
 @if /I "%glswrast%"=="y" set /a galliumcount+=1
 
 @set zink=n
