@@ -1,3 +1,5 @@
+### Distribution
+- ARM64: Use DXIL from DirectX shader compiler release package if present.
 ### Build script
 - MinGW ARM64 implies using clang toolchain.
 # 22.3.3-2
