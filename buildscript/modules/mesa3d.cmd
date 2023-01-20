@@ -57,12 +57,12 @@
 @IF %disableootpatch%==1 if NOT %gitstate%==0 git checkout .
 @IF %disableootpatch%==1 if NOT %gitstate%==0 git clean -fd
 @IF %disableootpatch%==1 if NOT %gitstate%==0 echo.
-@IF %intmesaver% LSS 22100 IF %disableootpatch%==1 IF %toolchain%==clang echo Building Mesa3D prior to 22.1 with clang requires out of tree patches.
-@IF %intmesaver% LSS 22100 IF %disableootpatch%==1 IF %toolchain%==clang echo.
-@IF %intmesaver% LSS 22100 IF %disableootpatch%==1 IF %toolchain%==clang GOTO skipmesa
-@IF %intmesaver% LSS 21254 IF %toolchain%==clang echo Only Mesa3D 21.2.4 and newer is known to work with MinGW-W64 clang toolchain.
-@IF %intmesaver% LSS 21254 IF %toolchain%==clang echo.
-@IF %intmesaver% LSS 21254 IF %toolchain%==clang GOTO skipmesa
+@IF %intmesaver% LSS 22100 IF %disableootpatch%==1 IF /I "%useclang%"=="y" echo Building Mesa3D prior to 22.1 with clang requires out of tree patches.
+@IF %intmesaver% LSS 22100 IF %disableootpatch%==1 IF /I "%useclang%"=="y" echo.
+@IF %intmesaver% LSS 22100 IF %disableootpatch%==1 IF /I "%useclang%"=="y" GOTO skipmesa
+@IF %intmesaver% LSS 21254 IF /I "%useclang%"=="y" echo Only Mesa3D 21.2.4 and newer is known to work with clang toolchain.
+@IF %intmesaver% LSS 21254 IF /I "%useclang%"=="y" echo.
+@IF %intmesaver% LSS 21254 IF /I "%useclang%"=="y" GOTO skipmesa
 @IF %intmesaver% GEQ 21300 IF %intmesaver% LSS 22200 IF %disableootpatch%==1 IF %abi%==x86 IF %toolchain%==gcc echo Building 32-bit Mesa3D 21.3 through 22.1 using MSYS2 MinGW-W64 GCC requires out of tree patches.
 @IF %intmesaver% GEQ 21300 IF %intmesaver% LSS 22200 IF %disableootpatch%==1 IF %abi%==x86 IF %toolchain%==gcc echo.
 @IF %intmesaver% GEQ 21300 IF %intmesaver% LSS 22200 IF %disableootpatch%==1 IF %abi%==x86 IF %toolchain%==gcc GOTO skipmesa
@@ -124,6 +124,9 @@
 
 @rem Fix lavapipe build with MSVC 32-bit
 @IF %intmesaver:~0,3% EQU 211 IF %intmesaver% LSS 21151 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" lavapipe-32-bit-msvc-buildfix
+
+@rem Fix dozen build with clang
+@IF %intmesaver% LSS 23000 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" dzn-clang
 
 @rem Fix radv MinGW build
 @IF %intmesaver% GEQ 21200 IF %intmesaver% LSS 21251 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" radv-mingw
@@ -315,8 +318,11 @@
 @IF NOT %toolchain%==msvc if /I "%radv%"=="y" set msysregex=1
 @if /I "%radv%"=="y" set /a mesavkcount+=1
 
-@IF %canmcrdrvcom% EQU 1 IF %intmesaver% GEQ 22100 set /p dozenmsvk=Build Microsoft Dozen Vulkan driver (y/n):
-@IF %canmcrdrvcom% EQU 1 IF %intmesaver% GEQ 22100 echo.
+@set candzn=0
+@IF %canmcrdrvcom% EQU 1 IF %intmesaver% GEQ 22100 set candzn=1
+@IF /I "%useclang%"=="y" IF %disableootpatch%==1 IF %intmesaver% LSS 23000 set candzn=0
+@IF %candzn% EQU 1 set /p dozenmsvk=Build Microsoft Dozen Vulkan driver (y/n):
+@IF %candzn% EQU 1 echo.
 @if /I "%dozenmsvk%"=="y" set /a mesavkcount+=1
 
 @set buildconf=%buildconf% -Dvulkan-drivers=

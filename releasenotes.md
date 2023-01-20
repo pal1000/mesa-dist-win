@@ -2,7 +2,8 @@
 - ARM64: Use DXIL from DirectX shader compiler release package if present.
 ### Build script
 - MinGW ARM64 implies using clang toolchain;
-- Building llvmpipe for ARM64 requires an out of tree patch.
+- Building llvmpipe for ARM64 requires an out of tree patch;
+- Building dozen with clang requires an out of tree patch prior to 23.0.
 # 22.3.3-2
 ### Build environment
 - MSVC: Update LLVM to 15.0.7.
