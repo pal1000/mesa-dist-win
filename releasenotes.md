@@ -4,8 +4,9 @@
 - MinGW ARM64 implies using clang toolchain;
 - Building llvmpipe for ARM64 requires an out of tree patch;
 - Building dozen with clang requires an out of tree patch prior to 23.0.
-### Build environment
-- Update SPIRV Tools to 2023.1.
+### MSVC build environment
+- Update SPIRV Tools to 2023.1;
+- Update pkgconf 1.9.4.
 # 22.3.3-2
 ### Build environment
 - MSVC: Update LLVM to 15.0.7.
