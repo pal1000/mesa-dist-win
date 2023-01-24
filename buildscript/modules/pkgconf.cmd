@@ -30,11 +30,11 @@
 @echo.
 @IF EXIST "pkgconf\" RD /S /Q pkgconf
 @call "%devroot%\%projectname%\buildscript\modules\useninja.cmd"
-@IF /I NOT "%useninja%"=="y" echo Configuring pkgconf build with : %mesonloc% setup pkgconf --backend=vs --buildtype=release -Dtests=false
-@IF /I "%useninja%"=="y" echo Configuring pkgconf build with : %mesonloc% setup pkgconf --backend=ninja --buildtype=release -Dtests=false
+@IF /I NOT "%useninja%"=="y" echo Configuring pkgconf build with : %mesonloc% setup pkgconf --backend=vs --buildtype=release
+@IF /I "%useninja%"=="y" echo Configuring pkgconf build with : %mesonloc% setup pkgconf --backend=ninja --buildtype=release
 @echo.
-@IF /I NOT "%useninja%"=="y" %mesonloc% setup pkgconf --backend=vs --buildtype=release -Dtests=false
-@IF /I "%useninja%"=="y" %mesonloc% setup pkgconf --backend=ninja --buildtype=release -Dtests=false
+@IF /I NOT "%useninja%"=="y" %mesonloc% setup pkgconf --backend=vs --buildtype=release
+@IF /I "%useninja%"=="y" %mesonloc% setup pkgconf --backend=ninja --buildtype=release
 @echo.
 @pause
 @echo.
