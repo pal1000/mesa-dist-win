@@ -7,6 +7,8 @@
 ### MSVC build environment
 - Update SPIRV Tools to 2023.1;
 - Update pkgconf 1.9.4.
+### MSYS2 build environment
+- libva: Use distro package.
 # 22.3.3-2
 ### Build environment
 - MSVC: Update LLVM to 15.0.7.

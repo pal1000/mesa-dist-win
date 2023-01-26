@@ -139,11 +139,9 @@ set "exitloop="
 )
 
 @rem Get libva and VA-API versions
-@IF EXIST "%devroot%\libva\build\%toolchain%-%abi%\lib\pkgconfig\libva-win32.pc" for /f tokens^=1^-2^ delims^=^=^ eol^= %%a IN ('type "%devroot%\libva\build\%toolchain%-%abi%\lib\pkgconfig\libva-win32.pc"') DO @(
-@IF %toolchain%==msvc if "%%a"=="libva_version" echo libva %%b>>"%devroot%\%projectname%\buildinfo\msvc.txt"
-@IF NOT %toolchain%==msvc if "%%a"=="libva_version" echo libva %%b>>"%devroot%\%projectname%\buildinfo\mingw.txt"
-@IF %toolchain%==msvc if "%%a"=="va_api_version" echo VA-API %%b>>"%devroot%\%projectname%\buildinfo\msvc.txt"
-@IF NOT %toolchain%==msvc if "%%a"=="va_api_version" echo VA-API %%b>>"%devroot%\%projectname%\buildinfo\mingw.txt"
+@IF %toolchain%==msvc IF EXIST "%devroot%\libva\build\%abi%\lib\pkgconfig\libva-win32.pc" for /f tokens^=1^-2^ delims^=^=^ eol^= %%a IN ('type "%devroot%\libva\build\%abi%\lib\pkgconfig\libva-win32.pc"') DO @(
+@if "%%a"=="libva_version" echo libva %%b>>"%devroot%\%projectname%\buildinfo\msvc.txt"
+@if "%%a"=="va_api_version" echo VA-API %%b>>"%devroot%\%projectname%\buildinfo\msvc.txt"
 )
 
 @rem Get DirectX headers version

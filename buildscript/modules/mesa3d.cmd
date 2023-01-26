@@ -449,8 +449,8 @@
 
 @rem Build VA-API D3D12 driver
 @IF %intmesaver% GEQ 22200 set buildconf=%buildconf% -Dgallium-d3d12-video=auto
-@IF /I "%d3d12%"=="y" IF %intmesaver% GEQ 22300 IF EXIST "%devroot%\libva\build\%toolchain%-%abi%\lib\pkgconfig\" set /p buildvaapi=Build Mesa3D VA-API interface (y/n):
-@IF /I "%d3d12%"=="y" IF %intmesaver% GEQ 22300 IF EXIST "%devroot%\libva\build\%toolchain%-%abi%\lib\pkgconfig\" echo.
+@IF /I "%d3d12%"=="y" IF %intmesaver% GEQ 22300 IF EXIST "%devroot%\libva\build\%abi%\lib\pkgconfig\" set /p buildvaapi=Build Mesa3D VA-API interface (y/n):
+@IF /I "%d3d12%"=="y" IF %intmesaver% GEQ 22300 IF EXIST "%devroot%\libva\build\%abi%\lib\pkgconfig\" echo.
 @IF /I "%buildvaapi%"=="y" set buildconf=%buildconf% -Dgallium-va=%mesonbooltrue%
 @IF /I "%buildvaapi%"=="y" set PKG_CONFIG_LIBVA=1
 @IF %intmesaver% GEQ 22200 set buildconf=%buildconf% -Dvideo-codecs=
@@ -463,7 +463,7 @@
 @IF %PKG_CONFIG_LIBCLC% EQU 1 set buildconf=%buildconf% -Dstatic-libclc=all
 @IF %PKG_CONFIG_LIBCLC% EQU 1 IF %toolchain%==msvc set PKG_CONFIG_PATH=%PKG_CONFIG_PATH%%llvminstloc:\=/%/clc/share/pkgconfig;
 @IF %PKG_CONFIG_SPV% EQU 1 IF %toolchain%==msvc set PKG_CONFIG_PATH=%PKG_CONFIG_PATH%%llvminstloc:\=/%/spv-%abi%/lib/pkgconfig;%devroot:\=/%/spirv-tools/build/%abi%/lib/pkgconfig;
-@IF %PKG_CONFIG_LIBVA% EQU 1 set PKG_CONFIG_PATH=%PKG_CONFIG_PATH%%devroot:\=/%/libva/build/%toolchain%-%abi%/lib/pkgconfig;
+@IF %PKG_CONFIG_LIBVA% EQU 1 IF %toolchain%==msvc set PKG_CONFIG_PATH=%PKG_CONFIG_PATH%%devroot:\=/%/libva/build/%abi%/lib/pkgconfig;
 @IF NOT defined PKG_CONFIG_PATH set PKG_CONFIG_PATH=;
 @set buildconf=%buildconf% --pkg-config-path="%PKG_CONFIG_PATH:~0,-1%"
 @set "PKG_CONFIG_LIBCLC="

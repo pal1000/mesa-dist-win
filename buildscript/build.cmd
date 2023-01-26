@@ -69,14 +69,14 @@
 @rem If using MSVC do SPIR-V Tools build
 @IF %toolchain%==msvc call "%devroot%\%projectname%\buildscript\modules\spirv.cmd"
 
+@rem If using MSVC do VA-API library build
+@IF %toolchain%==msvc call "%devroot%\%projectname%\buildscript\modules\libva.cmd"
+
 @rem If using MSYS2 Mingw-w64 update MSYS2 packages
 @IF NOT %toolchain%==msvc call "%devroot%\%projectname%\buildscript\modules\msysupdate.cmd"
 
 @rem If using MSYS2 Mingw-w64 install necessary packages
 @IF NOT %toolchain%==msvc call "%devroot%\%projectname%\buildscript\modules\msyspackages.cmd"
-
-@rem VA-API library build
-@call "%devroot%\%projectname%\buildscript\modules\libva.cmd"
 
 @rem If using MSVC do LLVM build.
 @IF %toolchain%==msvc call "%devroot%\%projectname%\buildscript\modules\llvm.cmd"
