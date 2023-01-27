@@ -1,3 +1,5 @@
+# 22.3.4
+- Updated Mesa3D to [22.3.4](https://docs.mesa3d.org/relnotes/22.3.4.html).
 ### Distribution
 - ARM64: Use DXIL from DirectX shader compiler release package if present.
 ### Build script
@@ -6,7 +8,7 @@
 - Building dozen with clang requires an out of tree patch prior to 23.0.
 ### MSVC build environment
 - Update SPIRV Tools to 2023.1;
-- Update pkgconf 1.9.4.
+- Update pkgconf to 1.9.4.
 ### MSYS2 build environment
 - libva: Use distro package.
 # 22.3.3-2
