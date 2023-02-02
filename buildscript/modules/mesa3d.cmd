@@ -169,6 +169,7 @@
 @IF %intmesaver% GEQ 22000 set RTTI=true
 
 @IF %toolchain%==msvc set buildconf=%buildconf% --prefix="%devroot:\=/%/%projectname%" -Db_vscrt=mt -Dzlib:default_library=static
+@IF %toolchain%==msvc set CFLAGS=/wd4189
 @IF %toolchain%==msvc IF %intmesaver% GEQ 21200 IF %intmesaver% LSS 22100 set buildconf=%buildconf% -Dcpp_std=vc++latest
 
 @IF NOT %toolchain%==msvc IF %abi%==aarch64 set CFLAGS=-march^=armv8-a -pipe

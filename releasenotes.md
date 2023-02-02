@@ -1,3 +1,5 @@
+### Build script
+- MSVC: Disable [compiler warninng 4189](https://learn.microsoft.com/en-us/cpp/error-messages/compiler-warnings/compiler-warning-level-4-c4189) as it's not crucial and causes build failure due to global treating warnings as errors codebase policy.
 # 22.3.4
 - Updated Mesa3D to [22.3.4](https://docs.mesa3d.org/relnotes/22.3.4.html).
 ### Distribution
