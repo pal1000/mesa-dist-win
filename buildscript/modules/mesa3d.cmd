@@ -441,8 +441,11 @@
 
 @rem Build VA-API D3D12 driver
 @IF %intmesaver% GEQ 22200 set buildconf=%buildconf% -Dgallium-d3d12-video=auto
-@IF /I "%d3d12%"=="y" IF %intmesaver% GEQ 22300 IF EXIST "%devroot%\libva\build\%abi%\lib\pkgconfig\" set /p buildvaapi=Build Mesa3D VA-API interface (y/n):
-@IF /I "%d3d12%"=="y" IF %intmesaver% GEQ 22300 IF EXIST "%devroot%\libva\build\%abi%\lib\pkgconfig\" echo.
+@set canvaapi=0
+@IF /I "%d3d12%"=="y" IF %intmesaver% GEQ 22300 set canvaapi=1
+@IF %toolchain%==msvc IF NOT EXIST "%devroot%\libva\build\%abi%\lib\pkgconfig\" set canvaapi=0
+@IF %canvaapi% EQU 1 set /p buildvaapi=Build Mesa3D VA-API interface (y/n):
+@IF %canvaapi% EQU 1 echo.
 @IF /I "%buildvaapi%"=="y" set buildconf=%buildconf% -Dgallium-va=%mesonbooltrue%
 @IF /I "%buildvaapi%"=="y" set PKG_CONFIG_LIBVA=1
 @IF %intmesaver% GEQ 22200 set buildconf=%buildconf% -Dvideo-codecs=
