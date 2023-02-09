@@ -380,15 +380,6 @@
 @IF /I NOT "%osmesa%"=="y" IF %intmesaver% LSS 21000 set buildconf=%buildconf% -Dosmesa=
 @IF /I NOT "%osmesa%"=="y" IF %intmesaver% GEQ 21000 set buildconf=%buildconf% -Dosmesa=false
 
-@set mesatests=n
-@set canmesatests=1
-@IF %disableootpatch%==1 IF %intmesaver% GEQ 20100 IF %intmesaver% LSS 20103 IF NOT %toolchain%==msvc set canmesatests=0
-@IF %canmesatests% EQU 1 IF %intmesaver% LSS 22300 set /p mesatests=Do you want to build unit tests and gallium raw interface (y/n):
-@IF %canmesatests% EQU 1 IF %intmesaver% GEQ 22300 set /p mesatests=Do you want to build unit tests (y/n):
-@IF %canmesatests% EQU 1 echo.
-@if /I "%mesatests%"=="y" set buildconf=%buildconf% -Dbuild-tests=true
-@if /I NOT "%mesatests%"=="y" set buildconf=%buildconf% -Dbuild-tests=false
-
 @rem Basic OpenCL requirements: Mesa 21.0+, LLVM and libclc
 @set canopencl=1
 @IF %intmesaver% LSS 21000 set canopencl=0
@@ -476,6 +467,15 @@
 @if defined CFLAGS set buildconf=%buildconf% -Dc_args="%CFLAGS%" -Dcpp_args="%CFLAGS%"
 @if defined LDFLAGS IF NOT %toolchain%==msvc set LDFLAGS=%LDFLAGS:~1%
 @if defined LDFLAGS set buildconf=%buildconf% -Dc_link_args="%LDFLAGS%" -Dcpp_link_args="%LDFLAGS%"
+
+@set mesatests=n
+@set canmesatests=1
+@IF %disableootpatch%==1 IF %intmesaver% GEQ 20100 IF %intmesaver% LSS 20103 IF NOT %toolchain%==msvc set canmesatests=0
+@IF %canmesatests% EQU 1 IF %intmesaver% LSS 22300 set /p mesatests=Do you want to build unit tests and gallium raw interface (y/n):
+@IF %canmesatests% EQU 1 IF %intmesaver% GEQ 22300 set /p mesatests=Do you want to build unit tests (y/n):
+@IF %canmesatests% EQU 1 echo.
+@if /I "%mesatests%"=="y" set buildconf=%buildconf% -Dbuild-tests=true
+@if /I NOT "%mesatests%"=="y" set buildconf=%buildconf% -Dbuild-tests=false
 
 @rem Disable draw with LLVM if LLVM native module ends being unused but needed
 @rem workaround for https://gitlab.freedesktop.org/mesa/mesa/-/issues/6817
