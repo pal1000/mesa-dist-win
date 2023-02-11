@@ -1,9 +1,11 @@
+### Sponsorship
+- Upate affiliate link.
 # 22.3.5
 - Updated Mesa3D to [22.3.5](https://docs.mesa3d.org/relnotes/22.3.5.html).
 ### Build script
-- MSVC: Disable [compiler warninng 4189](https://learn.microsoft.com/en-us/cpp/error-messages/compiler-warnings/compiler-warning-level-4-c4189) when asserts are disabled otherwise build may fail [23.0];
+- MSVC: Disable [compiler warning 4189](https://learn.microsoft.com/en-us/cpp/error-messages/compiler-warnings/compiler-warning-level-4-c4189) when asserts are disabled otherwise build may fail [23.0];
 - Move question about unit tests build right before futex usage as they are both enabled or disabled based on [user feedback](https://github.com/pal1000/mesa-dist-win/discussions);
-- Fix VA-API support being diisabled in MinGW build if libva MSVC build is missing, regression from 59e6f6a4b5286c0e357052ec929512a4a204759c.
+- Fix VA-API support being disabled in MinGW build if libva MSVC build is missing, regression from 59e6f6a4b5286c0e357052ec929512a4a204759c.
 # 22.3.4
 - Updated Mesa3D to [22.3.4](https://docs.mesa3d.org/relnotes/22.3.4.html).
 ### Distribution
