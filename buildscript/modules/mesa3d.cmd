@@ -471,6 +471,12 @@
 @if defined LDFLAGS IF NOT %toolchain%==msvc set LDFLAGS=%LDFLAGS:~1%
 @if defined LDFLAGS set buildconf=%buildconf% -Dc_link_args="%LDFLAGS%" -Dcpp_link_args="%LDFLAGS%"
 
+@rem Control futex support - https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/17431
+@IF %intmesaver% GEQ 22200 set /p winfutex=Enable Futex (https://en.wikipedia.org/wiki/Futex) support, raises minimum requirements for Mesa3D overall to run to Windows 8/Server 2012 (y/n):
+@IF %intmesaver% GEQ 22200 echo.
+@IF /I NOT "%winfutex%"=="y" IF %intmesaver% GEQ 22200 set buildconf=%buildconf% -Dmin-windows-version=7
+@IF /I "%winfutex%"=="y" set buildconf=%buildconf% -Dmin-windows-version=8
+
 @set mesatests=n
 @set canmesatests=1
 @IF %disableootpatch%==1 IF %intmesaver% GEQ 20100 IF %intmesaver% LSS 20103 IF NOT %toolchain%==msvc set canmesatests=0
@@ -492,12 +498,6 @@
 @IF %intmesaver% GEQ 21100 if /I NOT "%llvmless%"=="y" if %buildconf:~-4%==true IF %disableootpatch%==1 IF %intmesaver% LSS 22352 IF /I NOT "%buildclover%"=="y" IF /I NOT "%mclc%"=="y" IF %toolchain%==msvc IF EXIST "%llvminstloc%\%abi%\lib\cmake\llvm\LLVMConfig.cmake" FOR /F tokens^=^1^,2^ eol^= %%a IN ('type "%llvminstloc%\%abi%\lib\cmake\llvm\LLVMConfig.cmake"') DO @IF "%%a"=="set(LLVM_PACKAGE_VERSION" FOR /F tokens^=^1^ delims^=^.^ eol^= %%c IN ("%%b") DO @if %%c GEQ 15 set buildconf=%buildconf:~0,-4%false
 
 @IF %intmesaver% GEQ 21100 if /I NOT "%llvmless%"=="y" if %buildconf:~-4%==true IF %disableootpatch%==1 IF %intmesaver% LSS 22352 IF /I NOT "%buildclover%"=="y" IF /I NOT "%mclc%"=="y" IF NOT %toolchain%==msvc IF EXIST "%msysloc%\%LMSYSTEM%\lib\cmake\llvm\LLVMConfig.cmake" FOR /F tokens^=^1^,2^ eol^= %%a IN ('type "%msysloc%\%LMSYSTEM%\lib\cmake\llvm\LLVMConfig.cmake"') DO @IF "%%a"=="set(LLVM_PACKAGE_VERSION" FOR /F tokens^=^1^ delims^=^.^ eol^= %%c IN ("%%b") DO @if %%c GEQ 15 set buildconf=%buildconf:~0,-4%false
-
-@rem Control futex support - https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/17431
-@IF %intmesaver% GEQ 22200 set /p winfutex=Enable Futex (https://en.wikipedia.org/wiki/Futex) support, raises minimum requirements for Mesa3D overall to run to Windows 8/Server 2012 (y/n):
-@IF %intmesaver% GEQ 22200 echo.
-@IF /I NOT "%winfutex%"=="y" IF %intmesaver% GEQ 22200 set buildconf=%buildconf% -Dmin-windows-version=7
-@IF /I "%winfutex%"=="y" set buildconf=%buildconf% -Dmin-windows-version=8
 
 @rem Load MSVC specific build dependencies
 @IF %toolchain%==msvc IF %flexstate%==1 set PATH=%devroot%\flexbison\;%PATH%
