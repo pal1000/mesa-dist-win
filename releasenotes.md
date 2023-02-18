@@ -2,6 +2,8 @@
 - Upate affiliate link.
 ### Build script
 - Move question about futex usage before unit tests build one to reflect [user feedback](https://github.com/pal1000/mesa-dist-win/discussions) trend.
+### Build environment
+- ARM64: Update MCJIT patch to final form.
 # 22.3.5
 - Updated Mesa3D to [22.3.5](https://docs.mesa3d.org/relnotes/22.3.5.html).
 ### Build script
