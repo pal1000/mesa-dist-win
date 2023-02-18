@@ -117,7 +117,7 @@
 @IF EXIST "%devroot%\mesa\src\gallium\drivers\swr\meson.build" call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" swr-llvm13
 
 @rem Fix llvmpipe build on ARM64
-@call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" mcjit-arm64
+@IF %intmesaver% LSS 23100 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" mcjit-arm64
 
 @rem Fix lavapipe crash when built with MinGW
 @IF %intmesaver:~0,3% EQU 211 IF %intmesaver% LSS 21151 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" lavapipe-mingw-crashfix
@@ -126,7 +126,7 @@
 @IF %intmesaver:~0,3% EQU 211 IF %intmesaver% LSS 21151 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" lavapipe-32-bit-msvc-buildfix
 
 @rem Fix dozen build with clang
-@IF %intmesaver% LSS 23000 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" dzn-clang
+@IF %intmesaver% LSS 22356 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" dzn-clang
 
 @rem Fix radv MinGW build
 @IF %intmesaver% GEQ 21200 IF %intmesaver% LSS 21251 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" radv-mingw
@@ -152,7 +152,7 @@
 @rem Link clang like LLVM
 @IF %intmesaver% LSS 22252 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" link-clang-like-llvm
 
-@rem Fix OpenCL stack link with LLVM and Clang 15
+@rem Fix link with LLVM and Clang 15
 @IF %intmesaver% LSS 22352 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" fix-llvm-clang15-link
 
 :configmesabuild
