@@ -58,6 +58,7 @@
 @set foundswr=0
 @set foundosmesa=0
 @set foundgraw=0
+@set foundvaapi=0
 @set overwritewarn=
 @for /f delims^=^ eol^= %%a IN ('dir /A:L /B "%dir%" 2^>^&1') DO @(
 @IF /I "%%~nxa"=="opengl32.dll" set founddesktopgl=1
@@ -97,6 +98,10 @@
 @if EXIST "%dir%\graw.dll" del "%dir%\graw.dll"
 @if EXIST "%dir%\graw_null.dll" set foundgraw=1
 @if EXIST "%dir%\graw_null.dll" del "%dir%\graw_null.dll"
+@if EXIST "%dir%\va.dll" set foundvaapi=1
+@if EXIST "%dir%\va.dll" del "%dir%\va.dll"
+@if EXIST "%dir%\va_win32.dll" set foundvaapi=1
+@if EXIST "%dir%\va_win32.dll" del "%dir%\va_win32.dll"
 @echo Done.
 @echo.
 
@@ -191,15 +196,25 @@
 
 :graw
 @set graw=
-@if NOT EXIST "%mesaloc%\%mesadll%\graw.dll" if NOT EXIST "%mesaloc%\%mesadll%\graw_null.dll" GOTO restart
+@if NOT EXIST "%mesaloc%\%mesadll%\graw.dll" if NOT EXIST "%mesaloc%\%mesadll%\graw_null.dll" GOTO vaapi
 @set /p graw=Do you need gallium raw interface (y/n):
 @echo.
-@if /I NOT "%graw%"=="y" GOTO restart
+@if /I NOT "%graw%"=="y" GOTO vaapi
 @IF %foundgraw% EQU 1 echo Updating Gallium raw interface deployment...
 @IF EXIST "%mesaloc%\%mesadll%\graw.dll" if NOT EXIST "%dir%\graw.dll" call modules\mklink.cmd graw
 @IF EXIST "%mesaloc%\%mesadll%\graw_null.dll" if NOT EXIST "%dir%\graw_null.dll" call modules\mklink.cmd graw_null
 @IF EXIST "%mesaloc%\%mesadll%\libglapi.dll" if NOT EXIST "%dir%\libglapi.dll" call modules\mklink.cmd libglapi
 @echo.
+
+:vaapi
+@if EXIST "%mesaloc%\%mesadll%\va.dll" if EXIST "%mesaloc%\%mesadll%\va_win32.dll" set /p vaapi=Deploy video acceleration support (y/n):
+@if EXIST "%mesaloc%\%mesadll%\va.dll" if EXIST "%mesaloc%\%mesadll%\va_win32.dll" echo.
+@if /I NOT "%vaapi%"=="y" GOTO restart
+@IF %foundvaapi% EQU 1 echo Updating VA-API interface deployment...
+@IF EXIST "%mesaloc%\%mesadll%\va.dll" if NOT EXIST "%dir%\va.dll" call modules\mklink.cmd va
+@IF EXIST "%mesaloc%\%mesadll%\va_win32.dll" if NOT EXIST "%dir%\va_win32.dll" call modules\mklink.cmd va_win32
+@IF EXIST "%mesaloc%\%mesadll%\dxil.dll" IF EXIST "%dir%\dxil.dll" del "%dir%\dxil.dll"
+@IF EXIST "%mesaloc%\%mesadll%\dxil.dll" IF NOT EXIST "%dir%\dxil.dll" call modules\mklink.cmd dxil
 
 :restart
 @set rerun=
