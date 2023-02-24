@@ -78,7 +78,11 @@
 @call "%devroot%\%projectname%\buildscript\modules\rcgen.cmd" "Microsoft SPIR-V to DXIL library" "%devroot%\%projectname%\bin\%abi%\spirv_to_dxil.dll" %abi% %mesaver% "Microsoft Corporation"
 @call "%devroot%\%projectname%\buildscript\modules\rcgen.cmd" "Microsoft SPIR-V to DXIL library" "%devroot%\%projectname%\bin\%abi%\libspirv_to_dxil.dll" %abi% %mesaver% "Microsoft Corporation"
 
-@rem Add version info to Microsoft D3D12 VA-API driver
+@rem Add version info to Microsoft D3D12 VA-API driver and library
+@IF EXIST "%devroot%\libva\build\%abi%\lib\pkgconfig\libva.pc" for /f tokens^=1^,2^ delims^=^=^ eol^= %%a IN ('type "%devroot%\libva\build\%abi%\lib\pkgconfig\libva.pc"') DO @IF "%%a"=="libva_version" (
+@call "%devroot%\%projectname%\buildscript\modules\rcgen.cmd" "Userspace Video acceleration core interface" "%devroot%\%projectname%\bin\%abi%\va.dll" %abi% %%b "Intel Corporation"
+@call "%devroot%\%projectname%\buildscript\modules\rcgen.cmd" "Userspace Video acceleration Win32 interface" "%devroot%\%projectname%\bin\%abi%\va_win32.dll" %abi% %%b "Microsoft Corporation"
+)
 @call "%devroot%\%projectname%\buildscript\modules\rcgen.cmd" "Microsoft VA-API over D3D12 driver" "%devroot%\%projectname%\bin\%abi%\vaon12_drv_video.dll" %abi% %mesaver% "Microsoft Corporation"
 @call "%devroot%\%projectname%\buildscript\modules\rcgen.cmd" "Microsoft VA-API over D3D12 driver" "%devroot%\%projectname%\bin\%abi%\libvaon12_drv_video.dll" %abi% %mesaver% "Microsoft Corporation"
 

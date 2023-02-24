@@ -6,7 +6,7 @@
 - ARM64: Update MCJIT patch to final form and stop applying it to 23.1;
 - OpenCL SPIRV: Add patch fixing CLC JIT compilation with LLVM and clang 15 [22.3/23.0 up to 23.0.0].
 ### Distribution
-- Add libva to release package.
+- Add VA-API library to release package.
 # 22.3.5
 - Updated Mesa3D to [22.3.5](https://docs.mesa3d.org/relnotes/22.3.5.html).
 ### Build script
