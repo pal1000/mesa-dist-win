@@ -1,7 +1,8 @@
 ### Sponsorship
 - Upate affiliate link.
 ### Build script
-- Move question about futex usage before unit tests build one to reflect [user feedback](https://github.com/pal1000/mesa-dist-win/discussions) trend.
+- Move question about futex usage before unit tests build one to reflect [user feedback](https://github.com/pal1000/mesa-dist-win/discussions) trend;
+- Keep disabling warning 4189 as d3d10sw still fails to build otherwise, revert 78ba58430edbd06b6233b37756af3fde608530ce.
 ### Out of tree patches
 - ARM64: Update MCJIT patch to final form and stop applying it to 23.1;
 - OpenCL SPIRV: Add patch fixing CLC JIT compilation with LLVM and clang 15 [22.3/23.0 up to 23.0.0].

@@ -205,7 +205,7 @@
 @echo.
 @if /I "%mesaenableasserts%"=="y" set buildconf=%buildconf% -Db_ndebug=false
 @if /I NOT "%mesaenableasserts%"=="y" set buildconf=%buildconf% -Db_ndebug=true
-@if /I NOT "%mesaenableasserts%"=="y" IF %toolchain%==msvc IF %intmesaver:~0,3% EQU 230 IF %intmesaver% LSS 23005 set CFLAGS=/wd4189
+@if /I NOT "%mesaenableasserts%"=="y" IF %toolchain%==msvc set CFLAGS=/wd4189
 
 @set linkmingwdynamic=n
 @IF NOT %toolchain%==msvc set /p linkmingwdynamic=Link dependencies dynamically for debuggging purposes (y/n):
