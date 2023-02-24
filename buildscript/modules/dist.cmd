@@ -54,6 +54,8 @@
 @IF EXIST "%devroot%\%projectname%\bin\%abi%\openclon12.dll" IF NOT EXIST "%devroot%\%projectname%\bin\%abi%\dxil.dll" for /f delims^=^ eol^= %%a in ('@call "%devroot%\%projectname%\buildscript\modules\dxil.cmd"') do @IF EXIST %%a copy %%a "%devroot%\%projectname%\bin\%abi%"
 @IF EXIST "%devroot%\%projectname%\bin\%abi%\vulkan_dzn.dll" IF NOT EXIST "%devroot%\%projectname%\bin\%abi%\dxil.dll" for /f delims^=^ eol^= %%a in ('@call "%devroot%\%projectname%\buildscript\modules\dxil.cmd"') do @IF EXIST %%a copy %%a "%devroot%\%projectname%\bin\%abi%"
 @IF EXIST "%devroot%\%projectname%\bin\%abi%\*aon12_drv_video.dll" IF NOT EXIST "%devroot%\%projectname%\bin\%abi%\dxil.dll" for /f delims^=^ eol^= %%a in ('@call "%devroot%\%projectname%\buildscript\modules\dxil.cmd"') do @IF EXIST %%a copy %%a "%devroot%\%projectname%\bin\%abi%"
+@IF EXIST "%devroot%\%projectname%\bin\%abi%\*aon12_drv_video.dll" IF NOT EXIST "%devroot%\%projectname%\bin\%abi%\va.dll" IF EXIST "%devroot%\libva\build\%abi%\bin\va.dll" copy "%devroot%\libva\build\%abi%\bin\va.dll" "%devroot%\%projectname%\bin\%abi%"
+@IF EXIST "%devroot%\%projectname%\bin\%abi%\*aon12_drv_video.dll" IF NOT EXIST "%devroot%\%projectname%\bin\%abi%\va_win32.dll" IF EXIST "%devroot%\libva\build\%abi%\bin\va_win32.dll" copy "%devroot%\libva\build\%abi%\bin\va_win32.dll" "%devroot%\%projectname%\bin\%abi%"
 @echo.
 
 @echo Copying test suite and commandline utilities...
