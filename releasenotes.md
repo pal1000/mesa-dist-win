@@ -1,3 +1,7 @@
+# 23.0.0
+- Updated Mesa3D to [23.0.0](https://docs.mesa3d.org/relnotes/23.0.0.html).
+### End-user guide
+- Document CLonD3D12 behavior change and D3D12 VA-API deployment.
 ### Sponsorship
 - Upate affiliate link.
 ### Build script
