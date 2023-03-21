@@ -1,3 +1,7 @@
+### End-user guide
+- Typo fixes;
+- Update sponsorship link;
+- improve uninstall documentation as requested in #145.
 # 23.0.0
 - Updated Mesa3D to [23.0.0](https://docs.mesa3d.org/relnotes/23.0.0.html).
 ### End-user guide
