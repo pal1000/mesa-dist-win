@@ -13,7 +13,7 @@
 
 @rem Get/update LLVM source code
 @set updllvmsrcver=16.0.0
-@if /I "%legacyllvm%"=="y" set updllvmsrcver=14.0.6
+@if /I "%legacyllvm%"=="y" set updllvmsrcver=15.0.7
 @set llvmsrcver=0
 @set llvmsrcloc="%devroot%\llvm-project\llvm\CMakeLists.txt"
 @if NOT EXIST %llvmsrcloc% set llvmsrcloc="%devroot%\llvm\CMakeLists.txt"
