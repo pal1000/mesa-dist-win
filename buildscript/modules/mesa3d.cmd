@@ -158,6 +158,9 @@
 @rem Fix Microsoft CLC runtime compilation with LLVM and clang 15
 @IF %intmesaver% LSS 23050 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" mclc-clang15
 
+@rem Fix Microsoft CLC build with LLVM and clang 16
+@IF %intmesaver% LSS 23100 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" mclc-clang16
+
 :configmesabuild
 @rem Configure Mesa build.
 @set buildconf=%mesonloc% setup

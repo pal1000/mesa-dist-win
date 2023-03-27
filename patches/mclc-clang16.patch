@@ -1,0 +1,169 @@
+From cd2609b12ca7b4f915b674cd04d35dbdd47b9227 Mon Sep 17 00:00:00 2001
+From: Karol Herbst <kherbst@redhat.com>
+Date: Wed, 9 Nov 2022 15:12:19 +0100
+Subject: [PATCH 1/2] clc: generate sources only with with_microsoft_clc
+
+Signed-off-by: Karol Herbst <kherbst@redhat.com>
+Reviewed-by: Jesse Natalie <jenatali@microsoft.com>
+Part-of: <https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/19617>
+---
+ src/compiler/clc/meson.build | 44 +++++++++++++++++++-----------------
+ 1 file changed, 23 insertions(+), 21 deletions(-)
+
+diff --git a/src/compiler/clc/meson.build b/src/compiler/clc/meson.build
+index a082a877c600..4fd4a220f6ad 100644
+--- a/src/compiler/clc/meson.build
++++ b/src/compiler/clc/meson.build
+@@ -21,34 +21,36 @@
+ 
+ clang_resource_dir = join_paths(llvm_libdir, 'clang', dep_llvm.version(), 'include')
+ 
+-if dep_llvm.version().version_compare('< 15.0')
+-  opencl_c_h = custom_target(
+-    'opencl-c.h',
+-    input : [files_xxd, join_paths(clang_resource_dir, 'opencl-c.h')],
+-    output : 'opencl-c.h.h',
+-    command : [prog_python, '@INPUT@', '@OUTPUT@', '-n', 'opencl_c_source'],
+-  )
+-endif
+-
+-opencl_c_base_h = custom_target(
+-  'opencl-c-base.h',
+-  input : [files_xxd, join_paths(clang_resource_dir, 'opencl-c-base.h')],
+-  output : 'opencl-c-base.h.h',
+-  command : [prog_python, '@INPUT@', '@OUTPUT@', '-n', 'opencl_c_base_source'],
+-)
+-
+-_libclc_sources = [opencl_c_base_h]
+-if dep_llvm.version().version_compare('< 15.0')
+-  _libclc_sources += [opencl_c_h]
+-endif
+-
+ files_libclc = files(
+   'clc.c',
+   'clc_helpers.cpp',
+ )
+ 
+ _libclc_cpp_args = ['-DCLANG_RESOURCE_DIR="@0@"'.format(clang_resource_dir)]
++_libclc_sources = []
++
+ if with_microsoft_clc
++  if dep_llvm.version().version_compare('< 15.0')
++    opencl_c_h = custom_target(
++      'opencl-c.h',
++      input : [files_xxd, join_paths(clang_resource_dir, 'opencl-c.h')],
++      output : 'opencl-c.h.h',
++      command : [prog_python, '@INPUT@', '@OUTPUT@', '-n', 'opencl_c_source'],
++    )
++  endif
++
++  opencl_c_base_h = custom_target(
++    'opencl-c-base.h',
++    input : [files_xxd, join_paths(clang_resource_dir, 'opencl-c-base.h')],
++    output : 'opencl-c-base.h.h',
++    command : [prog_python, '@INPUT@', '@OUTPUT@', '-n', 'opencl_c_base_source'],
++  )
++
++  _libclc_sources += [opencl_c_base_h]
++  if dep_llvm.version().version_compare('< 15.0')
++    _libclc_sources += [opencl_c_h]
++  endif
++
+   _libclc_cpp_args += ['-DUSE_STATIC_OPENCL_C_H=1']
+ endif
+ 
+-- 
+GitLab
+
+
+From e22491c83265200f518e9fb4deff54e3c2823b68 Mon Sep 17 00:00:00 2001
+From: Karol Herbst <kherbst@redhat.com>
+Date: Tue, 22 Nov 2022 11:48:08 +0100
+Subject: [PATCH 2/2] clc: fetch clang resource dir at runtime
+
+Signed-off-by: Karol Herbst <kherbst@redhat.com>
+Reviewed-by: Jesse Natalie <jenatali@microsoft.com>
+Part-of: <https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/19617>
+---
+ src/compiler/clc/clc_helpers.cpp | 15 +++++++++++++--
+ src/compiler/clc/meson.build     |  4 ++--
+ 2 files changed, 15 insertions(+), 4 deletions(-)
+
+diff --git a/src/compiler/clc/clc_helpers.cpp b/src/compiler/clc/clc_helpers.cpp
+index 5827d0663380..fe30b6aac0f8 100644
+--- a/src/compiler/clc/clc_helpers.cpp
++++ b/src/compiler/clc/clc_helpers.cpp
+@@ -23,6 +23,7 @@
+ // ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ // OTHER DEALINGS IN THE SOFTWARE.
+ 
++#include <filesystem>
+ #include <sstream>
+ #include <mutex>
+ 
+@@ -38,6 +39,7 @@
+ #include <llvm-c/Target.h>
+ #include <LLVMSPIRVLib/LLVMSPIRVLib.h>
+ 
++#include <clang/Driver/Driver.h>
+ #include <clang/CodeGen/CodeGenAction.h>
+ #include <clang/Lex/PreprocessorOptions.h>
+ #include <clang/Frontend/CompilerInstance.h>
+@@ -63,6 +65,8 @@
+ 
+ #include "clc_helpers.h"
+ 
++namespace fs = std::filesystem;
++
+ /* Use the highest version of SPIRV supported by SPIRV-Tools. */
+ constexpr spv_target_env spirv_target = SPV_ENV_UNIVERSAL_1_5;
+ 
+@@ -853,12 +857,19 @@ clc_compile_to_llvm_module(LLVMContext &llvm_ctx,
+          ::llvm::MemoryBuffer::getMemBuffer(llvm::StringRef(opencl_c_base_source, ARRAY_SIZE(opencl_c_base_source) - 1)).release());
+    }
+ #else
++   // GetResourcePath is a way to retrive the actual libclang resource dir based on a given binary
++   // or library. The path doesn't even need to exist, we just have to put something in there,
++   // because we might have linked clang statically.
++   auto libclang_path = fs::path(LLVM_LIB_DIR) / "libclang.so";
++   auto clang_res_path =
++      fs::path(clang::driver::Driver::GetResourcesPath(libclang_path.string())) / "include";
++
+    c->getHeaderSearchOpts().UseBuiltinIncludes = true;
+    c->getHeaderSearchOpts().UseStandardSystemIncludes = true;
+-   c->getHeaderSearchOpts().ResourceDir = CLANG_RESOURCE_DIR;
++   c->getHeaderSearchOpts().ResourceDir = clang_res_path.string();
+ 
+    // Add opencl-c generic search path
+-   c->getHeaderSearchOpts().AddPath(CLANG_RESOURCE_DIR,
++   c->getHeaderSearchOpts().AddPath(clang_res_path.string(),
+                                     clang::frontend::Angled,
+                                     false, false);
+    // Add opencl include
+diff --git a/src/compiler/clc/meson.build b/src/compiler/clc/meson.build
+index 4fd4a220f6ad..caae07e26dd8 100644
+--- a/src/compiler/clc/meson.build
++++ b/src/compiler/clc/meson.build
+@@ -19,17 +19,17 @@
+ # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+ # IN THE SOFTWARE.
+ 
+-clang_resource_dir = join_paths(llvm_libdir, 'clang', dep_llvm.version(), 'include')
+ 
+ files_libclc = files(
+   'clc.c',
+   'clc_helpers.cpp',
+ )
+ 
+-_libclc_cpp_args = ['-DCLANG_RESOURCE_DIR="@0@"'.format(clang_resource_dir)]
++_libclc_cpp_args = ['-DLLVM_LIB_DIR="@0@"'.format(llvm_libdir)]
+ _libclc_sources = []
+ 
+ if with_microsoft_clc
++  clang_resource_dir = join_paths(llvm_libdir, 'clang', dep_llvm.version(), 'include')
+   if dep_llvm.version().version_compare('< 15.0')
+     opencl_c_h = custom_target(
+       'opencl-c.h',
+-- 
+GitLab
+

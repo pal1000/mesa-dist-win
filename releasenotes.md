@@ -1,3 +1,5 @@
+### Custom patches
+- Backport patch resolving clc build with clang 16 to 23.0.
 ### End-user guide
 - Typo fixes;
 - Update sponsorship link;
