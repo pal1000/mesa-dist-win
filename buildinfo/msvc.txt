@@ -3,8 +3,8 @@ Build environment
 Windows 10.0.20348
 Ressource Hacker 5.1.8.360
 7-Zip 22.01 ultra compression
-Git 2.39.2.1
-Visual Studio Build Tools 2022 v17.5.0
+Git 2.40.0.1
+Visual Studio Build Tools 2022 v17.5.3
 Windows SDK 10.1.22621.755
 Windows Driver Kit 10.1.22621.382
 Nuget Commandline tool 6.4.0.123
@@ -16,11 +16,12 @@ Mako       1.2.4
 MarkupSafe 2.1.2
 meson      1.0.1
 pip        23.0.1
-setuptools 67.4.0
+setuptools 67.6.0
 
-CMake 3.25.2
+CMake 3.26.1
 Ninja 1.11.1
-LLVM 15.0.7
+LLVM 16.0.0
+Old LLVM 15.0.7
 SPIRV Tools 2023.1.1
 Winflexbison package 2.5.25
 flex 2.6.4
@@ -28,6 +29,6 @@ Bison 3.8.2
 pkgconf 1.9.4
 zlib 1.2.13
 OpenCLonD3D12 ICD 2023.02.17
-libva 2.17.0
-VA-API 1.17.0
+libva 2.18.0
+VA-API 1.18.0
 DirectX headers 1.608.2

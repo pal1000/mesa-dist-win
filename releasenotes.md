@@ -1,5 +1,5 @@
-### Custom patches
-- Backport patch resolving clc build with clang 16 to 23.0.
+# 23.0.1
+- Updated Mesa3D to [23.0.1](https://docs.mesa3d.org/relnotes/23.0.1.html).
 ### End-user guide
 - Typo fixes;
 - Update sponsorship link;
