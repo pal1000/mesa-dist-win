@@ -1,3 +1,5 @@
+### Build script
+- Mesa3D OpenCL SPIRV doesn't support clang 16 yet.
 # 23.0.1
 - Updated Mesa3D to [23.0.1](https://docs.mesa3d.org/relnotes/23.0.1.html).
 ### End-user guide
