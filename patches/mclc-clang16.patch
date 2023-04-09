@@ -1,0 +1,18 @@
+diff --unified --recursive --text mesa.org/src/compiler/clc/meson.build mesa.new/src/compiler/clc/meson.build
+--- mesa.org/src/compiler/clc/meson.build	2022-11-19 15:05:17.588934413 +0100
++++ mesa.new/src/compiler/clc/meson.build	2022-11-19 15:11:51.911670875 +0100
+@@ -19,7 +19,13 @@
+ # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+ # IN THE SOFTWARE.
+ 
+-clang_resource_dir = join_paths(llvm_libdir, 'clang', dep_llvm.version(), 'include')
++if dep_llvm.version().version_compare('< 16')
++  clang_resource_dir = join_paths(llvm_libdir, 'clang', dep_llvm.version(), 'include')
++else
++  installed_llvm_version_array = dep_llvm.version().split('.')
++  installed_llvm_version_major =  installed_llvm_version_array[0]
++  clang_resource_dir = join_paths(llvm_libdir, 'clang', installed_llvm_version_major, 'include')
++endif
+ 
+ if dep_llvm.version().version_compare('< 15.0')
+   opencl_c_h = custom_target(
