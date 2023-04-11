@@ -126,8 +126,8 @@ echo Bison %%a>>"%devroot%\%projectname%\buildinfo\msvc.txt"
 
 @rem Get zlib version
 @set exitloop=1
-@IF %toolchain%==msvc for /f tokens^=3^ delims^=_^ eol^= %%a IN ('type "%devroot%\%projectname%\buildscript\mesonsubprojects\zlib.wrap"') DO @for /f tokens^=1^ delims^=-^ eol^= %%b IN ("%%a") DO @IF defined exitloop (
-echo zlib %%b>>"%devroot%\%projectname%\buildinfo\msvc.txt"
+@IF %toolchain%==msvc for /f tokens^=2^ delims^=^=^ eol^= %%a IN ('type "%devroot%\%projectname%\buildscript\mesonsubprojects\zlib.wrap"') DO @for /f tokens^=2^ delims^=_^ eol^= %%b IN ("%%a") DO @for /f tokens^=1^ delims^=-^ eol^= %%c IN ("%%b") DO @IF defined exitloop (
+echo zlib %%c>>"%devroot%\%projectname%\buildinfo\msvc.txt"
 set "exitloop="
 )
 
