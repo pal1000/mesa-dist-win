@@ -1,18 +1,20 @@
-diff --unified --recursive --text mesa.org/src/compiler/clc/meson.build mesa.new/src/compiler/clc/meson.build
---- mesa.org/src/compiler/clc/meson.build	2022-11-19 15:05:17.588934413 +0100
-+++ mesa.new/src/compiler/clc/meson.build	2022-11-19 15:11:51.911670875 +0100
-@@ -19,7 +19,13 @@
- # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
- # IN THE SOFTWARE.
+diff --git a/src/compiler/clc/meson.build b/src/compiler/clc/meson.build
+index caae07e26dd..a3e6240a154 100644
+--- a/src/compiler/clc/meson.build
++++ b/src/compiler/clc/meson.build
+@@ -29,7 +29,14 @@ _libclc_cpp_args = ['-DLLVM_LIB_DIR="@0@"'.format(llvm_libdir)]
+ _libclc_sources = []
  
--clang_resource_dir = join_paths(llvm_libdir, 'clang', dep_llvm.version(), 'include')
-+if dep_llvm.version().version_compare('< 16')
-+  clang_resource_dir = join_paths(llvm_libdir, 'clang', dep_llvm.version(), 'include')
-+else
-+  installed_llvm_version_array = dep_llvm.version().split('.')
-+  installed_llvm_version_major =  installed_llvm_version_array[0]
-+  clang_resource_dir = join_paths(llvm_libdir, 'clang', installed_llvm_version_major, 'include')
-+endif
- 
- if dep_llvm.version().version_compare('< 15.0')
-   opencl_c_h = custom_target(
+ if with_microsoft_clc
+-  clang_resource_dir = join_paths(llvm_libdir, 'clang', dep_llvm.version(), 'include')
++  if dep_llvm.version().version_compare('< 16')
++    clang_resource_dir = join_paths(llvm_libdir, 'clang', dep_llvm.version(), 'include')
++  else
++    installed_llvm_version_array = dep_llvm.version().split('.')
++    installed_llvm_version_major =  installed_llvm_version_array[0]
++    clang_resource_dir = join_paths(llvm_libdir, 'clang', installed_llvm_version_major, 'include')
++  endif
++
+   if dep_llvm.version().version_compare('< 15.0')
+     opencl_c_h = custom_target(
+       'opencl-c.h',
