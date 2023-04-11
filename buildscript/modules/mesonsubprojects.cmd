@@ -76,8 +76,8 @@ echo irbuilder_h ^= files^(llvmloc + '/include/llvm/IR/IRBuilder.h'^)
 @FC /B "%devroot%\%projectname%\buildscript\mesonsubprojects\zlib.wrap" "%devroot%\mesa\subprojects\zlib.wrap">NUL 2>&1
 @if NOT "%ERRORLEVEL%"=="0" (
 @set exitloop=1
-@for /f tokens^=3^ delims^=_^ eol^= %%a IN ('type "%devroot%\%projectname%\buildscript\mesonsubprojects\zlib.wrap"') DO @for /f tokens^=1^ delims^=/^ eol^= %%b IN ("%%a") DO @IF defined exitloop (
-@echo Using wrap file version %%b from Meson wrapdb to build zlib...
+@for /f tokens^=2^ delims^=^=^ eol^= %%a IN ('type "%devroot%\%projectname%\buildscript\mesonsubprojects\zlib.wrap"') DO @for /f tokens^=2^ delims^=_^ eol^= %%b IN ("%%a") DO @for /f tokens^=1^ delims^=/^ eol^= %%c IN ("%%b") DO @IF defined exitloop (
+@echo Using wrap file version %%c from Meson wrapdb to build zlib...
 set "exitloop="
 )
 @copy /Y "%devroot%\%projectname%\buildscript\mesonsubprojects\zlib.wrap" "%devroot%\mesa\subprojects\zlib.wrap"
