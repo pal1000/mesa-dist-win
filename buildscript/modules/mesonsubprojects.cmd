@@ -17,7 +17,8 @@
 @echo Using DirectX-Headers stable release...
 @for /f tokens^=2^ delims^=/^ eol^= %%a in ('git symbolic-ref --short refs/remotes/origin/HEAD 2^>^&^1') do @git checkout %%a
 @git pull -f --progress --tags --recurse-submodules origin
-@git checkout v1.710.0-preview
+@IF %toolchain%==msvc git checkout v1.710.0-preview
+@IF NOT %toolchain%==msvc git checkout v1.608.2b
 @cd "%devroot%\mesa"
 )
 @if %gitstate% GTR 0 echo.

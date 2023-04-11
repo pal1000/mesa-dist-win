@@ -1,7 +1,9 @@
 # 23.0.2
 - Updated Mesa3D to [23.0.2](https://docs.mesa3d.org/relnotes/23.0.2.html).
 ### Custom patching
-- [Add patch fixing Microsoft CLC build with clang 16](https://gitlab.freedesktop.org/mesa/mesa/-/issues/7742#note_1647953).
+- [Add incomplete patch trying to fix Microsoft CLC build with clang 16](https://gitlab.freedesktop.org/mesa/mesa/-/issues/7742#note_1647953).
+### Build environment
+- MinGW: Use older DirectX headers version.
 # 23.0.1
 - Updated Mesa3D to [23.0.1](https://docs.mesa3d.org/relnotes/23.0.1.html).
 ### End-user guide
