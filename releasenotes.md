@@ -1,3 +1,5 @@
+# 23.0.2
+- Updated Mesa3D to [23.0.2](https://docs.mesa3d.org/relnotes/23.0.2.html).
 ### Custom patching
 - [Add patch fixing Microsoft CLC build with clang 16](https://gitlab.freedesktop.org/mesa/mesa/-/issues/7742#note_1647953).
 # 23.0.1
