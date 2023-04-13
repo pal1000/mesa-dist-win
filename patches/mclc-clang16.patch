@@ -1,20 +1,37 @@
 diff --git a/src/compiler/clc/meson.build b/src/compiler/clc/meson.build
-index caae07e26dd..a3e6240a154 100644
+index caae07e26dd87bb6d6ede8dc1b4d26b3f8169cb0..64f2e1f6816c736d12a80267170a4d95dff338c6 100644
 --- a/src/compiler/clc/meson.build
 +++ b/src/compiler/clc/meson.build
-@@ -29,7 +29,14 @@ _libclc_cpp_args = ['-DLLVM_LIB_DIR="@0@"'.format(llvm_libdir)]
+@@ -29,7 +29,17 @@ _libclc_cpp_args = ['-DLLVM_LIB_DIR="@0@"'.format(llvm_libdir)]
  _libclc_sources = []
  
  if with_microsoft_clc
 -  clang_resource_dir = join_paths(llvm_libdir, 'clang', dep_llvm.version(), 'include')
++
++  # LLVM 16 moved clang header path from using full version to only major version
 +  if dep_llvm.version().version_compare('< 16')
-+    clang_resource_dir = join_paths(llvm_libdir, 'clang', dep_llvm.version(), 'include')
++    # Prior to LLVM 16, this path used a full version
++    clang_version_dir = dep_llvm.version()
 +  else
-+    installed_llvm_version_array = dep_llvm.version().split('.')
-+    installed_llvm_version_major =  installed_llvm_version_array[0]
-+    clang_resource_dir = join_paths(llvm_libdir, 'clang', installed_llvm_version_major, 'include')
++    # LLVM 16 changed to only using a major version
++    clang_version_dir = dep_llvm.version().split('.')[0]
 +  endif
++  clang_resource_dir = join_paths(llvm_libdir, 'clang', clang_version_dir, 'include')
 +
    if dep_llvm.version().version_compare('< 15.0')
      opencl_c_h = custom_target(
        'opencl-c.h',
+diff --git a/meson.build b/meson.build
+index c99aaed797f..d7a0fc6e782 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1757,6 +1757,9 @@ if with_clc
+     if dep_llvm.version().version_compare('>= 15.0')
+       clang_modules += 'clangSupport'
+     endif
++    if dep_llvm.version().version_compare('>= 16.0')
++      clang_modules += 'clangASTMatchers'
++    endif
+
+     dep_clang = []
+     foreach m : clang_modules
