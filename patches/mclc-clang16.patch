@@ -22,9 +22,23 @@ index caae07e26dd87bb6d6ede8dc1b4d26b3f8169cb0..64f2e1f6816c736d12a80267170a4d95
      opencl_c_h = custom_target(
        'opencl-c.h',
 diff --git a/meson.build b/meson.build
-index c99aaed797f..d7a0fc6e782 100644
+index c99aaed797f..5f7bfa36a41 100644
 --- a/meson.build
 +++ b/meson.build
+@@ -1616,9 +1616,10 @@ if with_gallium_opencl
+ endif
+ if with_clc
+   llvm_modules += ['coverage', 'target', 'linker', 'irreader', 'option', 'libdriver', 'lto']
+-  # all-targets is needed to support static linking LLVM build with multiple targets
+-  # windowsdriver is needded with LLVM>=15, but we don't know what LLVM verrsion we are using yet
+-  llvm_optional_modules += ['all-targets', 'windowsdriver']
++  # all-targets is needed to support static linking LLVM build with multiple targets.
++  # windowsdriver is needded with LLVM>=15 and frontendhlsl is needed with LLVM>=16,
++  # but we don't know what LLVM version we are using yet
++  llvm_optional_modules += ['all-targets', 'windowsdriver', 'frontendhlsl']
+ endif
+ draw_with_llvm = get_option('draw-use-llvm')
+ if draw_with_llvm
 @@ -1757,6 +1757,9 @@ if with_clc
      if dep_llvm.version().version_compare('>= 15.0')
        clang_modules += 'clangSupport'

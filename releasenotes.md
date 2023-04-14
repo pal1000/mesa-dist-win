@@ -1,3 +1,5 @@
+### Custom patching
+- Finish patch fixing Microsoft CLC link with clang 16.
 # 23.0.2
 - Updated Mesa3D to [23.0.2](https://docs.mesa3d.org/relnotes/23.0.2.html).
 ### Custom patching
