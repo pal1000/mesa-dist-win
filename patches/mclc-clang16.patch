@@ -1,3 +1,31 @@
+diff --git a/meson.build b/meson.build
+index 24e42dd1978134b3f4c6531447b72ff633fb83d5..37c323200a82fd6329a74e6069b6ce67c6e820fe 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1624,9 +1624,10 @@ if with_gallium_opencl
+ endif
+ if with_clc
+   llvm_modules += ['coverage', 'target', 'linker', 'irreader', 'option', 'libdriver', 'lto']
+-  # all-targets is needed to support static linking LLVM build with multiple targets
+-  # windowsdriver is needded with LLVM>=15, but we don't know what LLVM verrsion we are using yet
+-  llvm_optional_modules += ['all-targets', 'windowsdriver']
++  # all-targets is needed to support static linking LLVM build with multiple targets.
++  # windowsdriver is needded with LLVM>=15 and frontendhlsl is needed with LLVM>=16,
++  # but we don't know what LLVM version we are using yet
++  llvm_optional_modules += ['all-targets', 'windowsdriver', 'frontendhlsl']
+ endif
+ draw_with_llvm = get_option('draw-use-llvm')
+ if draw_with_llvm
+@@ -1765,6 +1766,9 @@ if with_clc
+     if dep_llvm.version().version_compare('>= 15.0')
+       clang_modules += 'clangSupport'
+     endif
++    if dep_llvm.version().version_compare('>= 16.0')
++      clang_modules += 'clangASTMatchers'
++    endif
+ 
+     dep_clang = []
+     foreach m : clang_modules
 diff --git a/src/compiler/clc/meson.build b/src/compiler/clc/meson.build
 index caae07e26dd87bb6d6ede8dc1b4d26b3f8169cb0..64f2e1f6816c736d12a80267170a4d95dff338c6 100644
 --- a/src/compiler/clc/meson.build
@@ -21,31 +49,3 @@ index caae07e26dd87bb6d6ede8dc1b4d26b3f8169cb0..64f2e1f6816c736d12a80267170a4d95
    if dep_llvm.version().version_compare('< 15.0')
      opencl_c_h = custom_target(
        'opencl-c.h',
-diff --git a/meson.build b/meson.build
-index c99aaed797f..5f7bfa36a41 100644
---- a/meson.build
-+++ b/meson.build
-@@ -1616,9 +1616,10 @@ if with_gallium_opencl
- endif
- if with_clc
-   llvm_modules += ['coverage', 'target', 'linker', 'irreader', 'option', 'libdriver', 'lto']
--  # all-targets is needed to support static linking LLVM build with multiple targets
--  # windowsdriver is needded with LLVM>=15, but we don't know what LLVM verrsion we are using yet
--  llvm_optional_modules += ['all-targets', 'windowsdriver']
-+  # all-targets is needed to support static linking LLVM build with multiple targets.
-+  # windowsdriver is needded with LLVM>=15 and frontendhlsl is needed with LLVM>=16,
-+  # but we don't know what LLVM version we are using yet
-+  llvm_optional_modules += ['all-targets', 'windowsdriver', 'frontendhlsl']
- endif
- draw_with_llvm = get_option('draw-use-llvm')
- if draw_with_llvm
-@@ -1757,6 +1757,9 @@ if with_clc
-     if dep_llvm.version().version_compare('>= 15.0')
-       clang_modules += 'clangSupport'
-     endif
-+    if dep_llvm.version().version_compare('>= 16.0')
-+      clang_modules += 'clangASTMatchers'
-+    endif
-
-     dep_clang = []
-     foreach m : clang_modules
