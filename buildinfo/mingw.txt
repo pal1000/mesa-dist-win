@@ -3,9 +3,9 @@ Build environment
 Windows 10.0.20348
 Ressource Hacker 5.1.8.360
 7-Zip 22.01 ultra compression
-Git 2.40.0.1
+Git 2.40.1.1
 OpenCLonD3D12 ICD 2023.04.06
-DirectX headers 1.608.2
+DirectX headers 1.610.0
 
 MSYS2 environment
 -----------------
@@ -53,7 +53,7 @@ libgdbm 1.23-1
 libgettextpo 0.21-2
 libgnutls 3.8.0-1
 libgpg-error 1.47-1
-libgpgme 1.19.0-1
+libgpgme 1.20.0-1
 libhogweed 3.8.1-1
 libiconv 1.17-1
 libidn2 2.3.4-2
@@ -64,25 +64,25 @@ liblzma 5.4.2-1
 libnettle 3.8.1-1
 libnghttp2 1.52.0-1
 libnpth 1.6-1
-libopenssl 3.1.0-1
+libopenssl 3.1.0-2
 libp11-kit 0.24.1-4
 libpcre 8.45-3
 libpcre2_8 10.42-1
 libpsl 0.21.2-1
 libreadline 8.2.001-3
-libsqlite 3.41.2-1
+libsqlite 3.41.2-3
 libssh2 1.10.0-3
 libtasn1 4.19.0-1
 libunistring 1.1-2
 libutil-linux 2.35.2-3
-libxml2 2.10.3-3
+libxml2 2.10.4-1
 libxslt 1.1.37-1
 libzstd 1.5.5-1
 m4 1.4.19-2
 mingw-w64-i686-binutils 2.40-2
 mingw-w64-i686-bzip2 1.0.8-2
-mingw-w64-i686-clang 16.0.1-1
-mingw-w64-i686-crt-git 10.0.0.r258.g530c58e17-1
+mingw-w64-i686-clang 16.0.2-1
+mingw-w64-i686-crt-git 10.0.0.r258.g530c58e17-2
 mingw-w64-i686-expat 2.5.0-1
 mingw-w64-i686-gcc 12.2.0-10
 mingw-w64-i686-gcc-libs 12.2.0-10
@@ -90,8 +90,8 @@ mingw-w64-i686-gdb 13.1-4
 mingw-w64-i686-gettext 0.21.1-1
 mingw-w64-i686-gmp 6.2.1-5
 mingw-w64-i686-headers-git 10.0.0.r258.g530c58e17-1
-mingw-w64-i686-isl 0.25-1
-mingw-w64-i686-libclc 16.0.1-1
+mingw-w64-i686-isl 0.26-1
+mingw-w64-i686-libclc 16.0.2-1
 mingw-w64-i686-libelf 0.8.13-7
 mingw-w64-i686-libffi 3.4.4-1
 mingw-w64-i686-libiconv 1.17-3
@@ -99,12 +99,12 @@ mingw-w64-i686-libsystre 1.0.1-4
 mingw-w64-i686-libtre-git r128.6fb7206-2
 mingw-w64-i686-libva 2.18.0-1
 mingw-w64-i686-libwinpthread-git 10.0.0.r258.g530c58e17-1
-mingw-w64-i686-libxml2 2.10.3-1
-mingw-w64-i686-llvm 16.0.1-1
-mingw-w64-i686-meson 1.0.1-1
+mingw-w64-i686-libxml2 2.10.4-1
+mingw-w64-i686-llvm 16.0.2-1
+mingw-w64-i686-meson 1.1.0-1
 mingw-w64-i686-mpc 1.3.1-1
 mingw-w64-i686-mpdecimal 2.5.1-1
-mingw-w64-i686-mpfr 4.2.0-1
+mingw-w64-i686-mpfr 4.2.0.p4-1
 mingw-w64-i686-ncurses 6.4.20230211-1
 mingw-w64-i686-ninja 1.11.1-3
 mingw-w64-i686-openssl 3.1.0-1
@@ -118,13 +118,13 @@ mingw-w64-i686-spirv-headers 1~1.3.243.0-1
 mingw-w64-i686-spirv-llvm-translator 16.0.0-1
 mingw-w64-i686-spirv-tools 2023.2-1
 mingw-w64-i686-sqlite3 3.41.2-1
-mingw-w64-i686-tcl 8.6.12-1
+mingw-w64-i686-tcl 8.6.12-2
 mingw-w64-i686-termcap 1.3.1-6
 mingw-w64-i686-tk 8.6.12-1
 mingw-w64-i686-tzdata 2023c-1
-mingw-w64-i686-vulkan-headers 1.3.246-1
-mingw-w64-i686-vulkan-loader 1.3.246-1
-mingw-w64-i686-vulkan-validation-layers 1.3.246-1
+mingw-w64-i686-vulkan-headers 1.3.248-1
+mingw-w64-i686-vulkan-loader 1.3.248-1
+mingw-w64-i686-vulkan-validation-layers 1.3.247-1
 mingw-w64-i686-windows-default-manifest 6.4-4
 mingw-w64-i686-winpthreads-git 10.0.0.r258.g530c58e17-1
 mingw-w64-i686-xxhash 0.8.1-2
@@ -133,8 +133,8 @@ mingw-w64-i686-zlib 1.2.13-3
 mingw-w64-i686-zstd 1.5.5-1
 mingw-w64-ucrt-x86_64-binutils 2.40-2
 mingw-w64-ucrt-x86_64-bzip2 1.0.8-2
-mingw-w64-ucrt-x86_64-clang 16.0.1-1
-mingw-w64-ucrt-x86_64-crt-git 10.0.0.r258.g530c58e17-1
+mingw-w64-ucrt-x86_64-clang 16.0.2-1
+mingw-w64-ucrt-x86_64-crt-git 10.0.0.r258.g530c58e17-2
 mingw-w64-ucrt-x86_64-expat 2.5.0-1
 mingw-w64-ucrt-x86_64-gcc 12.2.0-10
 mingw-w64-ucrt-x86_64-gcc-libs 12.2.0-10
@@ -142,8 +142,8 @@ mingw-w64-ucrt-x86_64-gdb 13.1-4
 mingw-w64-ucrt-x86_64-gettext 0.21.1-1
 mingw-w64-ucrt-x86_64-gmp 6.2.1-5
 mingw-w64-ucrt-x86_64-headers-git 10.0.0.r258.g530c58e17-1
-mingw-w64-ucrt-x86_64-isl 0.25-1
-mingw-w64-ucrt-x86_64-libclc 16.0.1-1
+mingw-w64-ucrt-x86_64-isl 0.26-1
+mingw-w64-ucrt-x86_64-libclc 16.0.2-1
 mingw-w64-ucrt-x86_64-libelf 0.8.13-7
 mingw-w64-ucrt-x86_64-libffi 3.4.4-1
 mingw-w64-ucrt-x86_64-libiconv 1.17-3
@@ -151,12 +151,12 @@ mingw-w64-ucrt-x86_64-libsystre 1.0.1-4
 mingw-w64-ucrt-x86_64-libtre-git r128.6fb7206-2
 mingw-w64-ucrt-x86_64-libva 2.18.0-1
 mingw-w64-ucrt-x86_64-libwinpthread-git 10.0.0.r258.g530c58e17-1
-mingw-w64-ucrt-x86_64-libxml2 2.10.3-1
-mingw-w64-ucrt-x86_64-llvm 16.0.1-1
-mingw-w64-ucrt-x86_64-meson 1.0.1-1
+mingw-w64-ucrt-x86_64-libxml2 2.10.4-1
+mingw-w64-ucrt-x86_64-llvm 16.0.2-1
+mingw-w64-ucrt-x86_64-meson 1.1.0-1
 mingw-w64-ucrt-x86_64-mpc 1.3.1-1
 mingw-w64-ucrt-x86_64-mpdecimal 2.5.1-1
-mingw-w64-ucrt-x86_64-mpfr 4.2.0-1
+mingw-w64-ucrt-x86_64-mpfr 4.2.0.p4-1
 mingw-w64-ucrt-x86_64-ncurses 6.4.20230211-1
 mingw-w64-ucrt-x86_64-ninja 1.11.1-3
 mingw-w64-ucrt-x86_64-openssl 3.1.0-1
@@ -170,13 +170,13 @@ mingw-w64-ucrt-x86_64-spirv-headers 1~1.3.243.0-1
 mingw-w64-ucrt-x86_64-spirv-llvm-translator 16.0.0-1
 mingw-w64-ucrt-x86_64-spirv-tools 2023.2-1
 mingw-w64-ucrt-x86_64-sqlite3 3.41.2-1
-mingw-w64-ucrt-x86_64-tcl 8.6.12-1
+mingw-w64-ucrt-x86_64-tcl 8.6.12-2
 mingw-w64-ucrt-x86_64-termcap 1.3.1-6
 mingw-w64-ucrt-x86_64-tk 8.6.12-1
 mingw-w64-ucrt-x86_64-tzdata 2023c-1
-mingw-w64-ucrt-x86_64-vulkan-headers 1.3.246-1
-mingw-w64-ucrt-x86_64-vulkan-loader 1.3.246-1
-mingw-w64-ucrt-x86_64-vulkan-validation-layers 1.3.246-1
+mingw-w64-ucrt-x86_64-vulkan-headers 1.3.248-1
+mingw-w64-ucrt-x86_64-vulkan-loader 1.3.248-1
+mingw-w64-ucrt-x86_64-vulkan-validation-layers 1.3.247-1
 mingw-w64-ucrt-x86_64-windows-default-manifest 6.4-4
 mingw-w64-ucrt-x86_64-winpthreads-git 10.0.0.r258.g530c58e17-1
 mingw-w64-ucrt-x86_64-xxhash 0.8.1-2
@@ -184,14 +184,14 @@ mingw-w64-ucrt-x86_64-xz 5.4.2-1
 mingw-w64-ucrt-x86_64-zlib 1.2.13-3
 mingw-w64-ucrt-x86_64-zstd 1.5.5-1
 mintty 1~3.6.4-1
-mpfr 4.2.0-2
+mpfr 4.2.0.p4-1
 msys2-keyring 1~20230316-1
 msys2-launcher 1.5-1
 msys2-runtime 3.4.6-2
 nano 7.2-1
 ncurses 6.4-1
 nettle 3.8.1-1
-openssl 3.1.0-1
+openssl 3.1.0-2
 p11-kit 0.24.1-4
 pacman 6.0.2-4
 pacman-contrib 1.9.0-1
@@ -199,10 +199,10 @@ pacman-mirrors 20221016-1
 patch 2.7.6-2
 perl 5.36.0-1
 pinentry 1.2.1-1
-rebase 4.5.0-2
+rebase 4.5.0-4
 sed 4.9-1
 tar 1.34-3
-tcl 8.6.12-1
+tcl 8.6.12-3
 time 1.9-3
 tzcode 2023c-1
 util-linux 2.35.2-3
