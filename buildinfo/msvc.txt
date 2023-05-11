@@ -4,7 +4,7 @@ Windows 10.0.20348
 Ressource Hacker 5.1.8.360
 7-Zip 22.01 ultra compression
 Git 2.40.1.1
-Visual Studio Build Tools 2022 v17.5.4
+Visual Studio Build Tools 2022 v17.5.5
 Windows SDK 10.1.22621.755
 Windows Driver Kit 10.1.22621.382
 Nuget Commandline tool 6.5.0.154
@@ -20,13 +20,12 @@ setuptools 67.7.2
 
 CMake 3.26.3
 Ninja 1.11.1
-LLVM 16.0.2
-Old LLVM 15.0.7
+LLVM 16.0.3
 SPIRV Tools 2023.2.1
 Winflexbison package 2.5.25
 flex 2.6.4
 Bison 3.8.2
-pkgconf 1.9.4
+pkgconf 1.9.5
 zlib 1.2.13
 OpenCLonD3D12 ICD 2023.04.06
 libva 2.18.0
