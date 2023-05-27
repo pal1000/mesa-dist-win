@@ -1,3 +1,5 @@
+# 23.1.1
+- Updated Mesa3D to [23.1.1](https://docs.mesa3d.org/relnotes/23.1.1.html).
 # 23.1.0
 - Updated Mesa3D to [23.1.0](https://docs.mesa3d.org/relnotes/23.1.0.html).
 ### Custom patching
