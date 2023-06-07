@@ -1,5 +1,6 @@
 ### Build environment
-- MinGW: Use DirectX headers distro package.
+- MinGW: Use DirectX headers distro package;
+- MinGW: Enable LLVM Polyhedral optimizations.
 # 23.1.1
 - Updated Mesa3D to [23.1.1](https://docs.mesa3d.org/relnotes/23.1.1.html).
 # 23.1.0
