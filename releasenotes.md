@@ -1,3 +1,5 @@
+# 23.1.2
+- Updated Mesa3D to [23.1.2](https://docs.mesa3d.org/relnotes/23.1.2.html).
 ### Build script
 - MinGW: Enable LLVM Polyhedral optimizations;
 - MinGW: Strip lib prefix from vaon12 driver filename.

@@ -3,24 +3,24 @@ Build environment
 Windows 10.0.20348
 Ressource Hacker 5.1.8.360
 7-Zip 22.01 ultra compression
-Git 2.40.1.1
+Git 2.41.0.1
 Visual Studio Build Tools 2022 v17.6.2
 Windows SDK 10.1.22621.1778
 Windows Driver Kit 10.1.22621.382
 Nuget Commandline tool 6.5.0.154
-Python 3.11.3
+Python 3.11.4
 
 Python packages
 ---------------
 Mako       1.2.4
-MarkupSafe 2.1.2
+MarkupSafe 2.1.3
 meson      1.1.1
 pip        23.1.2
 setuptools 67.8.0
 
 CMake 3.26.4
 Ninja 1.11.1
-LLVM 16.0.4
+LLVM 16.0.5
 SPIRV Tools 2023.2.1
 Winflexbison package 2.5.25
 flex 2.6.4
