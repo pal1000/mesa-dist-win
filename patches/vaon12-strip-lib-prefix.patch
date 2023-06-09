@@ -1,0 +1,12 @@
+diff --git a/src/gallium/targets/va/meson.build b/src/gallium/targets/va/meson.build
+index b4cfbfb70e8065f1acc0d7862319209629c7cd6d..c6c50bccb19eb8b520ce38423d2519636b61e889 100644
+--- a/src/gallium/targets/va/meson.build
++++ b/src/gallium/targets/va/meson.build
+@@ -73,6 +73,7 @@ if host_machine.system() == 'windows'
+     link_depends : va_link_depends,
+     install : true,
+     name_suffix : 'dll',
++    name_prefix : '',  # otherwise mingw will create libvaon12_drv_video.dll
+   )
+ else
+   libva_gallium = shared_library(

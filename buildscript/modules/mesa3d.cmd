@@ -161,6 +161,9 @@
 @rem Fix Microsoft CLC build with LLVM and clang 16
 @IF %intmesaver% LSS 23104 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" mclc-clang16
 
+@rem Fix vaon12 filename
+@IF %intmesaver% LSS 23200 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" vaon12-strip-lib-prefix
+
 :configmesabuild
 @rem Configure Mesa build.
 @set buildconf=%mesonloc% setup
