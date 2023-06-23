@@ -1,3 +1,5 @@
+# 23.1.3
+- Updated Mesa3D to [23.1.3](https://docs.mesa3d.org/relnotes/23.1.3.html).
 # 23.1.2
 - Updated Mesa3D to [23.1.2](https://docs.mesa3d.org/relnotes/23.1.2.html).
 ### Build script
