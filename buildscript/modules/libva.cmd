@@ -11,7 +11,7 @@
 @cd libva
 @for /f tokens^=2^ delims^=/^ eol^= %%a in ('git symbolic-ref --short refs/remotes/origin/HEAD 2^>^&^1') do @git checkout %%a
 @git pull --progress --tags --recurse-submodules origin
-@git checkout 2.18.0
+@git checkout 2.19.0
 )
 @IF %gitstate% GTR 0 echo.
 @IF "%pkgconfigstate%"=="0" GOTO nolibva
