@@ -1,3 +1,5 @@
+# 23.1.4
+- Updated Mesa3D to [23.1.4](https://docs.mesa3d.org/relnotes/23.1.4.html).
 ### Build script
 - llvmpipe S3TC texture cache doesn't build anymore [23.2+].
 # 23.1.3
