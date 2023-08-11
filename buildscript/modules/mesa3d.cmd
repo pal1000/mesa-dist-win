@@ -75,6 +75,7 @@
 
 @rem Enable S3TC texture cache
 @IF %intmesaver% LSS 23200 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" s3tc
+@IF %intmesaver% GEQ 23203 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" s3tc
 
 @rem Fix regression when building with native mingw toolchains affecting Mesa 20.1 branch
 @IF %intmesaver% GEQ 20100 IF %intmesaver% LSS 20103 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" winepath
