@@ -1,3 +1,5 @@
+### Build script
+- Link clang headers statically only when static linking OpenCL SPIRV [23.2+].
 # 23.1.6
 - Updated Mesa3D to [23.1.6](https://docs.mesa3d.org/relnotes/23.1.6.html).
 ### Build script

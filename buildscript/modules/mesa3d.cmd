@@ -450,6 +450,8 @@
 @IF /I "%buildclover%"=="y" IF %intmesaver% LSS 22300 set buildconf=%buildconf% -Dopencl-native=false
 @IF /I "%buildclover%"=="y" IF %intmesaver% GEQ 22100 IF %intmesaver% LSS 22300 set buildconf=%buildconf% -Dcpp_std=c++20
 
+@IF %PKG_CONFIG_SPV% EQU 1 IF %intmesaver% GEQ 23200 IF /I NOT "%linkmingwdynamic%"=="y" set buildconf=%buildconf% -Dopencl-external-clang-headers=disabled
+
 @rem Build VA-API D3D12 driver
 @IF %intmesaver% GEQ 22200 set buildconf=%buildconf% -Dgallium-d3d12-video=auto
 @set canvaapi=0
