@@ -1,6 +1,6 @@
-mesa3d-23.1.7-development-pack-msvc.7z
-..\mesa3d-23.1.7-release-msvc.7z
-..\mesa3d-23.1.7-debug-info-msvc.7z
-mesa3d-23.1.7-development-pack-mingw.7z
-..\mesa3d-23.1.7-release-mingw.7z
-..\mesa3d-23.1.7-debug-mingw.7z
+mesa3d-23.1.8-development-pack-msvc.7z
+..\mesa3d-23.1.8-release-msvc.7z
+..\mesa3d-23.1.8-debug-info-msvc.7z
+mesa3d-23.1.8-development-pack-mingw.7z
+..\mesa3d-23.1.8-release-mingw.7z
+..\mesa3d-23.1.8-debug-mingw.7z
