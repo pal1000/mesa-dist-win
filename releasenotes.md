@@ -1,7 +1,7 @@
 # 23.1.8
 - Updated Mesa3D to [23.1.8](https://docs.mesa3d.org/relnotes/23.1.8.html).
 ### Build script
-- MinGW build: Replace vulkan-validation-layers with glslang as the former is only useful for runtime debugging now that gllslangValidator migrated to later package.
+- MinGW build: Replace vulkan-validation-layers with glslang as the former is only useful for runtime debugging now that glslangValidator migrated to later package.
 # 23.1.7
 - Updated Mesa3D to [23.1.7](https://docs.mesa3d.org/relnotes/23.1.7.html).
 ### Build script
