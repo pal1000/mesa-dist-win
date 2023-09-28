@@ -23,8 +23,7 @@
 @IF /I "%%b"=="LLVM_VERSION_MINOR" set /a llvmsrcver+=%%c*10
 @IF /I "%%b"=="LLVM_VERSION_PATCH" set /a llvmsrcver+=%%c
 )
-@if %llvmsrcver% GTR 0 set llvmsrcver=%llvmsrcver:~0,-2%.%llvmsrcver:~-2,1%.%llvmsrcver:~-1,1%
-@IF %gitstate% GTR 0 if NOT %llvmsrcver%==%updllvmsrcver% (
+@IF %gitstate% GTR 0 if NOT %llvmsrcver%==%updllvmsrcver:.=% (
 @if EXIST "%devroot%\llvm-project\" echo Updating LLVM source code...
 @if NOT EXIST "%devroot%\llvm-project\" MD "%devroot%\llvm-project"
 @if EXIST "%devroot%\llvm-project\.git\" RD /S /Q "%devroot%\llvm-project\.git"
@@ -70,7 +69,9 @@
 @if %abi%==aarch64 if /I NOT "%useninja%"=="y" set buildconf=%buildconf% -A ARM64
 @if /I NOT "%useninja%"=="y" IF /I %PROCESSOR_ARCHITECTURE%==AMD64 set buildconf=%buildconf% -Thost=x64
 @if /I "%useninja%"=="y" set buildconf=%buildconf%Ninja
-@set buildconf=%buildconf% -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_CRT_RELEASE=MT
+@set buildconf=%buildconf% -DCMAKE_BUILD_TYPE=Release
+@if %llvmsrcver% LSS 1700 set buildconf=%buildconf% -DLLVM_USE_CRT_RELEASE=MT
+@if %llvmsrcver% GEQ 1700 set buildconf=%buildconf% -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
 @if EXIST "%devroot%\llvm-project\" IF /I NOT "%buildclang%"=="y" set buildconf=%buildconf% -DLLVM_ENABLE_PROJECTS=""
 @IF /I "%buildclang%"=="y" set buildconf=%buildconf% -DLLVM_ENABLE_PROJECTS="clang"
 @set buildconf=%buildconf% -DLLVM_TARGETS_TO_BUILD=
