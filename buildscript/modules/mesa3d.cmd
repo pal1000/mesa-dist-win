@@ -161,6 +161,10 @@
 @rem Fix Microsoft CLC build with LLVM and clang 16
 @IF %intmesaver% LSS 23104 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" mclc-clang16
 
+@rem LLVM+clang 17 linking compatibility
+@call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" gallium-fix build-with-llvm-17
+@IF %intmesaver% LSS 23300 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" clover_llvm-move-to-modern-pass-manager
+
 @rem Fix vaon12 filename
 @IF %intmesaver% LSS 23200 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" vaon12-strip-lib-prefix
 
