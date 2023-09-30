@@ -1,3 +1,5 @@
+# 23.2.1
+- Updated Mesa3D to [23.2.1](https://docs.mesa3d.org/relnotes/23.2.1.html).
 ### Build script
 - LLVM MSVC build: LLVM_INCLUDE_TESTS=OFF implies LLVM_INCLUDE_GO_TESTS=OFF since at least LLVM 16;
 - LLVM>=17 MSVC build: Replace LLVM_USE_CRT_RELEASE=MT with CMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded to avoid deprecation warning and prepare for the former removal in LLVM 18.
