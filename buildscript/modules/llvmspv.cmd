@@ -48,7 +48,7 @@
 @IF /I "%integratespvtools%"=="y" set PKG_CONFIG_PATH=%devroot:\=/%/spirv-tools/build/%abi%/lib/pkgconfig
 @IF /I NOT "%integratespvtools%"=="y" set PKG_CONFIG_PATH=
 
-@set buildconf=%buildconf% -DLLVM_EXTERNAL_SPIRV_HEADERS_SOURCE_DIR="%devroot%\SPIRV-Headers" -DCMAKE_INSTALL_PREFIX="%llvminstloc%\spv-%abi%" -DCMAKE_PREFIX_PATH="%llvminstloc%\%abi%" -DLLVM_SPIRV_INCLUDE_TESTS=OFF "%devroot%\SPIRV-LLVM-Translator"
+@set buildconf=%buildconf% -DLLVM_EXTERNAL_SPIRV_HEADERS_SOURCE_DIR="%devroot%\SPIRV-Headers" -DCMAKE_INSTALL_PREFIX="%llvminstloc%\spv-%abi%" -DCMAKE_PREFIX_PATH="%llvminstloc%\%abi%" -DLLVM_SPIRV_INCLUDE_TESTS=OFF -DBUILD_SHARED_LIBS=OFF "%devroot%\SPIRV-LLVM-Translator"
 @echo SPIRV LLVM translator build configuration command^: %buildconf%
 @echo.
 @pause
