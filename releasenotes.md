@@ -1,3 +1,5 @@
+### Out of tree patches
+- Swrast patch supporting LLVM 17 only applies to 23.2 and up.
 # 23.2.1
 - Updated Mesa3D to [23.2.1](https://docs.mesa3d.org/relnotes/23.2.1.html).
 ### Build script
