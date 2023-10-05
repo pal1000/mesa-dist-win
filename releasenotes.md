@@ -1,5 +1,7 @@
 ### Release notes
 - Fix dead links to Mesa3D release notes.
+### Sponsorship
+- Extended till November 2024.
 ### Out of tree patches
 - Swrast patch supporting LLVM 17 only applies to 23.2 and up.
 # 23.2.1
