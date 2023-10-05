@@ -1,7 +1,9 @@
+### Release notes
+- Fix dead links to Mesa3D release notes.
 ### Out of tree patches
 - Swrast patch supporting LLVM 17 only applies to 23.2 and up.
 # 23.2.1
-- Updated Mesa3D to [23.2.1](https://docs.mesa3d.org/relnotes/23.2.1.html).
+- Updated Mesa3D to [23.2.1](https://gitlab.freedesktop.org/mesa/mesa/-/blob/23.2/docs/relnotes/23.2.1.rst?ref_type=heads&plain=0).
 ### Build script
 - LLVM MSVC build: LLVM_INCLUDE_TESTS=OFF implies LLVM_INCLUDE_GO_TESTS=OFF since at least LLVM 16;
 - LLVM>=17 MSVC build: Replace LLVM_USE_CRT_RELEASE=MT with CMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded to avoid deprecation warning and prepare for the former removal in LLVM 18.
@@ -617,7 +619,7 @@ well so this regresssion had no real world impact.
 ### Distribution and deployment
 - Add support for [standalone OpenGL gallium megadriver](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/12677) [21.3+].
 # 21.2.1
-- Updated Mesa3D to [21.2.1](https://docs.mesa3d.org/relnotes/21.2.1.html).
+- Updated Mesa3D to [21.2.1](https://gitlab.freedesktop.org/mesa/mesa/-/blob/21.2/docs/relnotes/21.2.1.rst?ref_type=heads&plain=0).
 ### Build script
 - MinGW: Build RADV with mingw-w64-libelf instead of libelf-lfg-win32.
 ### End-user guide
