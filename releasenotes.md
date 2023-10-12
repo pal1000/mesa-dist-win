@@ -1,5 +1,6 @@
 ### Build script
-- MSVC build: Finish LLVM 17 support.
+- MSVC build: Finish LLVM 17 support;
+- Mesa3D: Fix GLES build disabling logic
 ### Release notes
 - Fix dead links to Mesa3D release notes.
 ### Sponsorship

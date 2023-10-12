@@ -372,7 +372,7 @@
 @IF %galliumcount% GTR 0 echo.
 @if /I "%gles%"=="y" set buildconf=%buildconf% -Dshared-glapi=%mesonbooltrue% -Dgles1=%mesonbooltrue% -Dgles2=%mesonbooltrue%
 @if /I "%gles%"=="y" IF %intmesaver% GEQ 21300 set buildconf=%buildconf% -Degl=%mesonbooltrue%
-@if /I NOT "%gles%"=="y" set buildconf=%buildconf% -Dgles1=auto -Dgles2=auto -Dshared-glapi=auto
+@if /I NOT "%gles%"=="y" set buildconf=%buildconf% -Dgles1=%mesonboolfalse% -Dgles2=%mesonboolfalse% -Dshared-glapi=auto
 @if /I NOT "%gles%"=="y" IF %intmesaver% GEQ 21300 IF %galliumcount% GTR 0 set buildconf=%buildconf:~0,-4%%mesonbooltrue%
 @if /I NOT "%gles%"=="y" IF %intmesaver% GEQ 21300 set buildconf=%buildconf% -Degl=%mesonboolfalse%
 
