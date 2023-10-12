@@ -1,3 +1,5 @@
+### Build script
+- MSVC build: Finish LLVM 17 support.
 ### Release notes
 - Fix dead links to Mesa3D release notes.
 ### Sponsorship
