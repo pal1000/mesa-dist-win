@@ -3,7 +3,8 @@
 - Mesa3D: Fix GLES build disabling logic;
 - Misc: Fetch Resource Hacker over HTTPS;
 - MSVC build: Update zlib and LLVM dependencies;
-- MSVC build: Update DirectX headers to what is expected to be 1.611.0 stable.
+- MSVC build: Update DirectX headers to what is expected to be 1.611.0 stable;
+- CLI: Make prompt for Ninja build fit in one line at 800x600 resolution.
 ### Release notes
 - Fix dead links to Mesa3D release notes.
 ### Sponsorship
