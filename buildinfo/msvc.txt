@@ -1,7 +1,7 @@
 Build environment
 -----------------
 Windows 10.0.20348
-Ressource Hacker 5.2.3.379
+Ressource Hacker 5.2.4.386
 7-Zip 23.01 ultra compression
 Git 2.42.0.2
 Visual Studio Build Tools 2022 v17.7.6
@@ -20,14 +20,14 @@ setuptools 68.2.2
 
 CMake 3.27.7
 Ninja 1.11.1
-LLVM 17.0.3
+LLVM 17.0.4
 SPIRV Tools 2023.5.1
 Winflexbison package 2.5.25
 flex 2.6.4
 Bison 3.8.2
 pkgconf 2.0.3
 zlib 1.3
-OpenCLonD3D12 ICD 2023.04.06
+OpenCLonD3D12 ICD 2023.10.31
 libva 2.20.0
 VA-API 1.20.0
 DirectX headers 1.611.0
