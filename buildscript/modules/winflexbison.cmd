@@ -1,6 +1,6 @@
 @setlocal
 @rem winflexbison. Can have all states.
-@if NOT EXIST "%devroot%\flexbison\" IF %msysstate% GTR 0 (
+@if NOT EXIST "%devroot%\flexbison\" IF EXIST "%msysloc%" (
 )
 @set flexstate=2
 @CMD /C EXIT 0

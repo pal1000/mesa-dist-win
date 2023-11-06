@@ -9,7 +9,7 @@
 @IF EXIST "%devroot%\pkgconf\pkgconf\pkg-config.exe" GOTO doneenvcheck
 
 @rem pkg-config fallback code
-@IF %msysstate%==0 GOTO nonmingwpkgconfig
+@IF NOT EXIST "%msysloc%" GOTO nonmingwpkgconfig
 @GOTO nonmingwpkgconfig
 @call "%devroot%\%projectname%\buildscript\modules\msysupdate.cmd"
 @%runmsys% /usr/bin/pacman -S ${MINGW_PACKAGE_PREFIX}-pkgconf --needed --noconfirm --disable-download-timeout

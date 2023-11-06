@@ -17,7 +17,7 @@ set /a totalmsvc+=1
 set /a totaltoolchains+=1
 set msvcversions[!totalmsvc!]=%%a
 )
-@IF NOT %msysstate%==0 set /a totaltoolchains+=1
+@IF EXIST "%msysloc%" set /a totaltoolchains+=1
 @IF %totaltoolchains%==0 (
 @echo Error: No compiler found. Cannot continue.
 @echo.
@@ -32,14 +32,14 @@ set msvcnames[!msvccount!]=%%a
 @cls
 @echo Available compile toolchains
 @IF %totalmsvc% GTR 0 FOR /L %%a IN (1,1,%totalmsvc%) do @echo %%a.!msvcnames[%%a]! v!msvcversions[%%a]!
-@IF NOT %msysstate%==0 echo %totaltoolchains%. MSYS2 Mingw-w64
+@IF EXIST "%msysloc%" echo %totaltoolchains%. MSYS2 Mingw-w64
 @echo.
 
 @rem Select toolchain
 @set selecttoolchain=0
 @set /p selecttoolchain=Select toolchain:
 @echo.
-@IF "%selecttoolchain%"=="%totaltoolchains%" IF NOT %msysstate%==0 (
+@IF "%selecttoolchain%"=="%totaltoolchains%" IF EXIST "%msysloc%" (
 @set toolchain=gcc
 @GOTO selectedgcc
 )

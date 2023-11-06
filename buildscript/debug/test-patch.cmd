@@ -8,7 +8,7 @@
 @call "%devroot%\mesa-dist-win\buildscript\modules\git.cmd"
 @call "%devroot%\mesa-dist-win\buildscript\modules\msys.cmd"
 @call "%devroot%\mesa-dist-win\buildscript\modules\msysupdate.cmd"
-@IF %msysstate% GTR 0 (
+@IF EXIST "%msysloc%" (
 @%runmsys% pacman -S patch --needed --noconfirm
 @echo.
 )

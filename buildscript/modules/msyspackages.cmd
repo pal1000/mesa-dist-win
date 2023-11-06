@@ -1,7 +1,9 @@
 @setlocal
 @rem Get dependencies
-@%runmsys% /usr/bin/pacman -S ${MINGW_PACKAGE_PREFIX}-%mingwpkglst% flex bison patch tar --needed --noconfirm --disable-download-timeout
+@%runmsys% /usr/bin/pacman -S flex bison patch tar --needed --noconfirm --disable-download-timeout
 @echo.
+@IF NOT %toolchain%==msvc %runmsys% /usr/bin/pacman -S ${MINGW_PACKAGE_PREFIX}-%mingwpkglst% --needed --noconfirm --disable-download-timeout
+@IF NOT %toolchain%==msvc echo.
 @IF EXIST "%msysloc%\usr\bin\git.exe" IF %gitstate% GTR 0 (
 @%runmsys% /usr/bin/pacman -Rs git --noconfirm
 @echo.
@@ -10,4 +12,4 @@
 @%runmsys% /usr/bin/pacman -Rs git --noconfirm
 @echo.
 )
-@endlocal&set flexstate=2&set ninjastate=2&set pkgconfigstate=1&set cmakestate=0
+@endlocal&set flexstate=2&set ninjastate=2&set pkgconfigstate=1&set cmakestate=2

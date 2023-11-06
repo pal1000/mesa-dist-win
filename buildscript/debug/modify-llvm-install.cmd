@@ -4,7 +4,6 @@
 @set devroot=%CD%
 @IF %devroot:~0,1%%devroot:~-1%=="" set devroot=%devroot:~1,-1%
 @IF "%devroot:~-1%"=="\" set devroot=%devroot:~0,-1%
-@set msysstate=0
 @set projectname=mesa-dist-win
 @set TITLE=Modify LLVM build
 @call "%devroot%\%projectname%\buildscript\modules\toolchain.cmd"

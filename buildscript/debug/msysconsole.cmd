@@ -12,7 +12,7 @@
 @call "%devroot%\%projectname%\buildscript\modules\git.cmd"
 @call "%devroot%\%projectname%\buildscript\modules\msys.cmd"
 @call "%devroot%\%projectname%\buildscript\modules\msysupdate.cmd"
-@IF %msysstate% EQU 0 (
+@IF NOT EXIST "%msysloc%" (
 @echo Fatal error: MSYS2 is missing.
 @pause
 @exit

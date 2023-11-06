@@ -75,8 +75,8 @@
 @rem Offer to update MSYS2 packages even if using MSVC to get MSYS2 flex-bison update coverage
 @call "%devroot%\%projectname%\buildscript\modules\msysupdate.cmd"
 
-@rem If using MSYS2 Mingw-w64 install necessary packages
-@IF NOT %toolchain%==msvc call "%devroot%\%projectname%\buildscript\modules\msyspackages.cmd"
+@rem Install MSYS2 necessary packages. Install MSYS packages even using MSVC for alternative flex and bison support
+@IF EXIST "%msysloc%" call "%devroot%\%projectname%\buildscript\modules\msyspackages.cmd"
 
 @rem If using MSVC do LLVM build.
 @IF %toolchain%==msvc call "%devroot%\%projectname%\buildscript\modules\llvm.cmd"
