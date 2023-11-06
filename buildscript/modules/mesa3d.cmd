@@ -517,7 +517,7 @@
 @IF %intmesaver% GEQ 21100 if /I NOT "%llvmless%"=="y" if %buildconf:~-4%==true IF %disableootpatch%==1 IF %intmesaver% LSS 22352 IF /I NOT "%buildclover%"=="y" IF /I NOT "%mclc%"=="y" IF NOT %toolchain%==msvc IF EXIST "%msysloc%\%LMSYSTEM%\lib\cmake\llvm\LLVMConfig.cmake" FOR /F tokens^=^1^,2^ eol^= %%a IN ('type "%msysloc%\%LMSYSTEM%\lib\cmake\llvm\LLVMConfig.cmake"') DO @IF "%%a"=="set(LLVM_PACKAGE_VERSION" FOR /F tokens^=^1^ delims^=^.^ eol^= %%c IN ("%%b") DO @if %%c GEQ 15 set buildconf=%buildconf:~0,-4%false
 
 @rem Load MSVC specific build dependencies
-@IF %toolchain%==msvc IF %flexstate%==1 set PATH=%devroot%\flexbison\;%PATH%
+@IF %toolchain%==msvc IF %flexstate%==1 set PATH=%flexloc%\;%PATH%
 @IF %toolchain%==msvc set PATH=%pkgconfigloc%\;%PATH%
 
 :build_mesa

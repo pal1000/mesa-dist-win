@@ -1,10 +1,16 @@
 ### Build script
+- MSVC: Support building Mesa3D with MSYS2 flex and bison.
+- MSVC build: Update DirectX headers to what is expected to be 1.611.1 stable.
+# 23.3.0-rc2
+### Build script
+- CLI: Make prompt for Ninja build fit in one line at 800x600 resolution.
+# 23.3.0-rc1
+### Build script
 - MSVC build: Finish LLVM 17 support;
 - Mesa3D: Fix GLES build disabling logic;
 - Misc: Fetch Resource Hacker over HTTPS;
 - MSVC build: Update zlib and LLVM dependencies;
-- MSVC build: Update DirectX headers to what is expected to be 1.611.1 stable;
-- CLI: Make prompt for Ninja build fit in one line at 800x600 resolution.
+- MSVC build: Update DirectX headers to what is expected to be 1.611.0 stable.
 ### Release notes
 - Fix dead links to Mesa3D release notes.
 ### Sponsorship

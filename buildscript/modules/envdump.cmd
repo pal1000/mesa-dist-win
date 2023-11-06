@@ -104,7 +104,7 @@ echo CMake %%a>>"%devroot%\%projectname%\buildinfo\msvc.txt"
 @IF %toolchain%==msvc IF EXIST "%devroot%\spirv-tools\build\%abi%\bin\" for /f tokens^=1-2^ eol^= %%a IN ('type "%devroot%\spirv-tools\build\%abi%\lib\pkgconfig\SPIRV-Tools.pc"') do @IF /I "%%a"=="Version:" echo SPIRV Tools %%b>>"%devroot%\%projectname%\buildinfo\msvc.txt"
 
 @rem Get flex and bison version
-@IF %toolchain%==msvc IF %flexstate%==1 set PATH=%devroot%\flexbison\;%PATH%
+@IF %toolchain%==msvc IF %flexstate%==1 set PATH=%flexloc%\;%PATH%
 @IF %toolchain%==msvc IF NOT %flexstate%==0 set exitloop=1
 @IF %toolchain%==msvc IF NOT %flexstate%==0 for /f delims^=^ eol^= %%a IN ('where changelog.md 2^>nul') do @for /f tokens^=3^ skip^=6^ eol^= %%b IN ('type "%%~a"') do @if defined exitloop (
 set "exitloop="
