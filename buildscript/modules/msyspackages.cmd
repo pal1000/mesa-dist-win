@@ -12,4 +12,8 @@
 @%runmsys% /usr/bin/pacman -Rs git --noconfirm
 @echo.
 )
-@endlocal&set flexstate=2&set ninjastate=2&set pkgconfigstate=1&set cmakestate=2
+@endlocal
+@IF NOT %toolchain%==msvc set flexstate=2
+@IF NOT %toolchain%==msvc set ninjastate=2
+@IF NOT %toolchain%==msvc set pkgconfigstate=1
+@IF NOT %toolchain%==msvc set cmakestate=2
