@@ -1,3 +1,4 @@
+# 23.3.0-rc3
 ### Build script
 - MSVC: Support building Mesa3D with MSYS2 flex and bison.
 - MSVC build: Update DirectX headers to what is expected to be 1.611.1 stable;
