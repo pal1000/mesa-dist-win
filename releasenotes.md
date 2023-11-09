@@ -2,7 +2,8 @@
 - MSVC: Support building Mesa3D with MSYS2 flex and bison.
 - MSVC build: Update DirectX headers to what is expected to be 1.611.1 stable;
 - Misc/CMD syntax: Improve handling scenario where development root folder is a disk drive root;
-- Misc/CMD syntax: Fix 2 spots where unicode path support is missing.
+- Misc/CMD syntax: Fix 2 spots where quoted path support is missing;
+- MSYS2: Fix environment init when development root folder is a disk drive root.
 # 23.3.0-rc2
 ### Build script
 - CLI: Make prompt for Ninja build fit in one line at 800x600 resolution.
