@@ -3,7 +3,7 @@
 @if NOT EXIST "%devroot%\pkgconf\" IF %gitstate%==0 echo Couldn't get pkgconf. Falling back to pkg-config...
 @if NOT EXIST "%devroot%\pkgconf\" IF %gitstate%==0 echo.
 @if NOT EXIST "%devroot%\pkgconf\" IF %gitstate%==0 GOTO missingpkgconf
-@cd "%devroot%"
+@cd "%devroot%\"
 @if EXIST "%devroot%\pkgconf\" IF %gitstate% GTR 0 (
 @echo Updating pkgconf source code...
 @cd pkgconf
@@ -26,7 +26,7 @@
 @echo.
 @IF /I NOT "%buildpkgconf%"=="y" GOTO missingpkgconf
 @call %vsenv% %hostabi%
-@cd %devroot%\pkgconf
+@cd "%devroot%\pkgconf"
 @echo.
 @IF EXIST "pkgconf\" RD /S /Q pkgconf
 @call "%devroot%\%projectname%\buildscript\modules\useninja.cmd"
@@ -51,4 +51,4 @@
 
 :missingpkgconf
 @endlocal
-@cd "%devroot%"
+@cd "%devroot%\"

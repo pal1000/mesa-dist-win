@@ -80,7 +80,7 @@ SET pypath="%%~a"
 
 :pyver
 @rem Identify Python version.
-@cd "%devroot%"
+@cd "%devroot%\"
 @FOR /F tokens^=1^ eol^= %%a IN ('%pythonloc% %projectname%\buildscript\modules\pyver.py') DO @SET fpythonver=%%a
 
 @rem Check if Python version is not too old.

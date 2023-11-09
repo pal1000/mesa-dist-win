@@ -4,7 +4,7 @@
 @IF %flexstate%==0 echo.
 @IF %flexstate%==0 GOTO skipmesa
 
-@cd "%devroot%"
+@cd "%devroot%\"
 @if NOT EXIST "mesa\" if %gitstate%==0 echo Fatal: Both Mesa3D code and Git are missing. At least one is required. Execution halted.
 @if NOT EXIST "mesa\" if %gitstate%==0 echo.
 @if NOT EXIST "mesa\" if %gitstate%==0 GOTO skipmesa
@@ -530,7 +530,7 @@
 @rem Load MSVC environment if used.
 @IF %toolchain%==msvc echo.
 @IF %toolchain%==msvc call %vsenv% %vsabi%
-@IF %toolchain%==msvc cd %devroot%\mesa
+@IF %toolchain%==msvc cd "%devroot%\mesa"
 @IF %toolchain%==msvc echo.
 
 @rem Execute build configuration.

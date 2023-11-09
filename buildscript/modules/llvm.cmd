@@ -38,7 +38,7 @@
 )
 
 @rem Apply is_trivially_copyable patch
-@if NOT EXIST "%devroot%\llvm-project\" cd "%devroot%"
+@if NOT EXIST "%devroot%\llvm-project\" cd "%devroot%\"
 @if EXIST "%devroot%\llvm-project\" cd "%devroot%\llvm-project"
 
 @rem Uncomment next line if still using LLVM<11 and build goes on fire
@@ -141,4 +141,4 @@
 
 @rem Reset environment after LLVM build.
 @endlocal
-@cd "%devroot%"
+@cd "%devroot%\"

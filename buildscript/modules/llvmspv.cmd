@@ -83,4 +83,4 @@
 :skipspvllvm
 @rem Reset environment after SPIRV LLVM translator build.
 @endlocal
-@cd "%devroot%"
+@cd "%devroot%\"

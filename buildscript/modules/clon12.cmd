@@ -82,4 +82,4 @@
 :skipclon12
 @rem Reset environment after CLonD3D12 build.
 @endlocal
-@cd "%devroot%"
+@cd "%devroot%\"

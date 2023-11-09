@@ -95,4 +95,4 @@
 :skipspvtools
 @rem Reset environment after SPIRV Tools build.
 @endlocal
-@cd "%devroot%"
+@cd "%devroot%\"

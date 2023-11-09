@@ -38,4 +38,4 @@
 :finishclc
 @rem Reset environment after libclc build.
 @endlocal
-@cd "%devroot%"
+@cd "%devroot%\"

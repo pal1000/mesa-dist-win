@@ -1,7 +1,7 @@
 @setlocal
 @rem Get and build VA-API library.
 @if NOT EXIST "%devroot%\libva\" IF %gitstate%==0 GOTO nolibva
-@cd "%devroot%"
+@cd "%devroot%\"
 @if NOT EXIST "%devroot%\libva\" IF %gitstate% GTR 0 (
 @echo Getting VA-API source code...
 @git clone https://github.com/intel/libva.git --recurse-submodules libva
@@ -54,4 +54,4 @@
 
 :nolibva
 @endlocal
-@cd "%devroot%"
+@cd "%devroot%\"
