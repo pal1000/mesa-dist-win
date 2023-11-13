@@ -59,7 +59,6 @@
 @rem If using MSVC check for remaining dependencies: cmake, ninja, winflexbison, nuget and pkg-config if applies.
 @IF %toolchain%==msvc call "%devroot%\%projectname%\buildscript\modules\cmake.cmd"
 @IF %toolchain%==msvc call "%devroot%\%projectname%\buildscript\modules\ninja.cmd"
-@IF %toolchain%==msvc call "%devroot%\%projectname%\buildscript\modules\winflexbison.cmd"
 @IF %toolchain%==msvc call "%devroot%\%projectname%\buildscript\modules\nuget.cmd"
 @IF %toolchain%==msvc call "%devroot%\%projectname%\buildscript\modules\pkg-config.cmd"
 
@@ -77,6 +76,7 @@
 
 @rem Install MSYS2 necessary packages. Install MSYS packages even if using MSVC for alternative flex and bison support
 @IF EXIST "%msysloc%" call "%devroot%\%projectname%\buildscript\modules\msyspackages.cmd"
+@IF %toolchain%==msvc call "%devroot%\%projectname%\buildscript\modules\winflexbison.cmd"
 
 @rem If using MSVC do LLVM build.
 @IF %toolchain%==msvc call "%devroot%\%projectname%\buildscript\modules\llvm.cmd"
