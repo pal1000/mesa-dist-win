@@ -1,5 +1,6 @@
 ### Build script
-- MSVC build: Move flex and bison detection after MSYS2 packages setup to ensure they are detected on fresh build environment setup.
+- MSVC build: Move flex and bison detection after MSYS2 packages setup to ensure they are detected on fresh build environment setup;
+- MSVC: Be more exact about Visual Studio workload requirements.
 # 23.3.0-rc3
 ### Build script
 - MSVC: Support building Mesa3D with MSYS2 flex and bison.

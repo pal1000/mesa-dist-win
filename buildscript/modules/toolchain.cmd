@@ -69,8 +69,8 @@ IF "%%a"=="%selecttoolchain%" set msvcver=!msvcversions[%%a]!
 )
 
 :novcpp
-@IF NOT EXIST %vsenv% echo Error: Selected Visual Studio installation lacks Desktop development with C++ workload necessary to build Mesa3D.
-@IF NOT EXIST %vsenv% set /p addvcpp=Add Desktop development with C++ workload - y/n:
+@IF NOT EXIST %vsenv% echo Error: Selected Visual Studio installation lacks Desktop development with C++ Build Tools necessary to build Mesa3D.
+@IF NOT EXIST %vsenv% set /p addvcpp=Add Desktop development with C++ Build Tools - y/n:
 @IF NOT EXIST %vsenv% echo.
 @IF NOT EXIST %vsenv% IF /I NOT "%addvcpp%"=="y" pause
 @IF NOT EXIST %vsenv% IF /I NOT "%addvcpp%"=="y" GOTO findcompilers
