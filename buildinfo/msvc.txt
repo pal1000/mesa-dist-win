@@ -1,13 +1,13 @@
 Build environment
 -----------------
 Windows 10.0.20348
-Ressource Hacker 5.2.4.386
+Ressource Hacker 5.2.5.409
 7-Zip 23.01 ultra compression
 Git 2.42.0.2
-Visual Studio Build Tools 2022 v17.7.6
+Visual Studio Build Tools 2022 v17.8.0
 Windows SDK 10.1.22621.2428
 Windows Driver Kit 10.1.22621.2428
-Nuget Commandline tool 6.7.0.127
+Nuget Commandline tool 6.8.0.131
 Python 3.12.0
 
 Python packages
@@ -18,9 +18,9 @@ meson      1.2.3
 pip        23.3.1
 setuptools 68.2.2
 
-CMake 3.27.7
+CMake 3.27.8
 Ninja 1.11.1
-LLVM 17.0.4
+LLVM 17.0.5
 SPIRV Tools 2023.5.1
 flex 2.6.4
 Bison 3.8.2
