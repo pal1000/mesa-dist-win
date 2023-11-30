@@ -20,7 +20,7 @@ setuptools 69.0.2
 
 CMake 3.27.8
 Ninja 1.11.1
-LLVM 17.0.5
+LLVM 17.0.6
 SPIRV Tools 2023.5.1
 flex 2.6.4
 Bison 3.8.2
