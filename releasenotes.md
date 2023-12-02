@@ -1,5 +1,5 @@
 # 23.3.0
-- Updated Mesa3D to [23.3.0](https://gitlab.freedesktop.org/mesa/mesa/-/blob/23.3/docs/relnotes/23.3.0.rst?ref_type=heads&plain=0).
+- Updated Mesa3D to [23.3.0](https://docs.mesa3d.org/relnotes/23.3.0.html).
 # 23.3.0-rc5
 # 23.3.0-rc4
 ### Build script
