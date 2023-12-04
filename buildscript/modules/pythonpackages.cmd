@@ -1,3 +1,4 @@
+@set PATH=%pythonloc:~1,-11%Scripts\;%PATH%
 @setlocal
 @rem Install missing python packages.
 @rem State tracking is irrelevant for Python packages as they can easily be added via Pypi if missing.

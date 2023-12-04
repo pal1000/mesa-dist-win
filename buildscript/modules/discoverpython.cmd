@@ -45,6 +45,7 @@
 
 @rem Locate selected Python installation
 @FOR /F delims^=^ eol^= %%a IN ('py !pyl[%pyselect%]! -c "import sys; print(sys.executable)"') DO @set pythonloc="%%~a"
+@FOR /F tokens^=1^ eol^= %%a IN ('py !pyl[%pyselect%]! -c "import sys; print(sys.version)"') DO @SET fpythonver=%%a
 @GOTO loadpypath
 
 :nopylauncher
@@ -64,25 +65,16 @@
 set "exitloop="
 SET pythonloc="%%~a"
 )
-
-:loadpypath
-@REM Load Python in PATH to convince CMake to use the selected version and avoid other potential problems.
-@CMD /C EXIT 0
-@set pypath=1
-@where /q python.exe
-@if NOT "%ERRORLEVEL%"=="0" set pypath=0
-@IF %pypath%==1 set exitloop=1
-@IF %pypath%==1 FOR /F delims^=^ eol^= %%a IN ('where python.exe 2^>nul') DO @IF defined exitloop (
-set "exitloop="
-SET pypath="%%~a"
+@if EXIST "%pythonloc:~1,-11%pyvenv.cfg" (
+@echo Python virtual environments are ignored by this discovery tool. Cannot continue.
+@echo.
+@pause
+@exit
 )
-@IF NOT %pypath%==%pythonloc% set PATH=%pythonloc:~1,-11%Scripts\;%pythonloc:~1,-11%;%PATH%
 
-:pyver
 @rem Identify Python version.
 @cd "%devroot%\"
 @FOR /F tokens^=1^ eol^= %%a IN ('%pythonloc% %projectname%\buildscript\modules\pyver.py') DO @SET fpythonver=%%a
-
 @rem Check if Python version is not too old.
 @set goodpython=1
 @FOR /F tokens^=1-2^ delims^=.^ eol^= %%a IN ("%fpythonver%") DO @(
@@ -95,6 +87,19 @@ SET pypath="%%~a"
 @pause
 @exit
 )
+
+:loadpypath
+@REM Load Python in PATH to convince CMake to use the selected version and avoid other potential problems.
+@CMD /C EXIT 0
+@set pypath=1
+@where /q python.exe
+@if NOT "%ERRORLEVEL%"=="0" set pypath=0
+@IF %pypath%==1 set exitloop=1
+@IF %pypath%==1 FOR /F delims^=^ eol^= %%a IN ('where python.exe 2^>nul') DO @IF defined exitloop (
+set "exitloop="
+SET pypath="%%~a"
+)
+@IF NOT %pypath%==%pythonloc% set PATH=%pythonloc:~1,-11%;%PATH%
 
 @echo Using Python %fpythonver% from %pythonloc%.
 @echo.

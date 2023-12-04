@@ -1,3 +1,5 @@
+### Build script
+- MSVC Python discovery: Detect and ignore virtual environments from PATH as we'll eventually spawn our own virtual environment and we don't want the base to be another virtual environment.
 # 23.3.0
 - Updated Mesa3D to [23.3.0](https://docs.mesa3d.org/relnotes/23.3.0.html).
 # 23.3.0-rc5
