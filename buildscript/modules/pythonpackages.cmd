@@ -1,3 +1,13 @@
+@CMD /C EXIT 0
+@FC /B %pythonloc% "%devroot%\%projectname%\buildscript\assets\venv\python.exe.orig">NUL 2>&1
+@if NOT "%ERRORLEVEL%"=="0" IF EXIST "%devroot%\%projectname%\buildscript\assets\venv\pyvenv.cfg" RD /S /Q "%devroot%\%projectname%\buildscript\assets\venv\"
+@IF NOT EXIST "%devroot%\%projectname%\buildscript\assets\venv\pyvenv.cfg" (
+@echo Creating Python virtual environment...
+@%pythonloc% -m venv "%devroot%\%projectname%\buildscript\assets\venv"
+@copy %pythonloc% "%devroot%\%projectname%\buildscript\assets\venv\python.exe.orig"
+@echo.
+)
+
 @set PATH=%pythonloc:~1,-11%Scripts\;%PATH%
 @setlocal
 @rem Install missing python packages.
