@@ -81,7 +81,7 @@
 @IF %toolchain%==msvc echo.>>"%devroot%\%projectname%\buildinfo\msvc.txt"
 @IF %toolchain%==msvc echo Python packages>>"%devroot%\%projectname%\buildinfo\msvc.txt"
 @IF %toolchain%==msvc echo --------------->>"%devroot%\%projectname%\buildinfo\msvc.txt"
-@IF %toolchain%==msvc FOR /F skip^=2^ delims^=^ eol^= %%a IN ('%pythonloc% -W ignore -m pip list --disable-pip-version-check') do @echo %%a>>"%devroot%\%projectname%\buildinfo\msvc.txt"
+@IF %toolchain%==msvc FOR /F skip^=2^ delims^=^ eol^= %%a IN ('"%devroot%\%projectname%\buildscript\assets\venv\Scripts\python.exe" -W ignore -m pip list --disable-pip-version-check') do @echo %%a>>"%devroot%\%projectname%\buildinfo\msvc.txt"
 @IF %toolchain%==msvc echo.>>"%devroot%\%projectname%\buildinfo\msvc.txt"
 
 @rem Get CMake version
