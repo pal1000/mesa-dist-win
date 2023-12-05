@@ -8,7 +8,7 @@
 @copy %pythonloc% "%devroot%\%projectname%\buildscript\assets\venv\python.exe.orig"
 @echo.
 )
-@call "%devroot%\%projectname%\buildscript\assets\venv\activate.cmd"
+@call "%devroot%\%projectname%\buildscript\assets\venv\Scripts\activate.bat"
 
 @setlocal
 @rem Install missing python packages.
