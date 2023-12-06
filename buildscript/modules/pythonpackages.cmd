@@ -11,6 +11,7 @@
 )
 @IF NOT EXIST "%devroot%\%projectname%\buildscript\assets\venv\pyvenv.cfg" GOTO mkvenv
 @IF NOT EXIST "%devroot%\%projectname%\buildscript\assets\venv\python.exe.orig" (
+@echo Creating virtual environment...
 @copy %pythonloc% "%devroot%\%projectname%\buildscript\assets\venv\python.exe.orig"
 @echo.
 )
