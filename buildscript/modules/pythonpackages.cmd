@@ -2,9 +2,15 @@
 @CMD /C EXIT 0
 @FC /B %pythonloc% "%devroot%\%projectname%\buildscript\assets\venv\python.exe.orig">NUL 2>&1
 @if NOT "%ERRORLEVEL%"=="0" IF EXIST "%devroot%\%projectname%\buildscript\assets\venv\pyvenv.cfg" RD /S /Q "%devroot%\%projectname%\buildscript\assets\venv\"
+
+:mkvenv
+@IF NOT EXIST "%devroot%\%projectname%\buildscript\assets\venv\pyvenv.cfg" %pythonloc% -m venv "%devroot%\%projectname%\buildscript\assets\venv">nul 2>&1
 @IF NOT EXIST "%devroot%\%projectname%\buildscript\assets\venv\pyvenv.cfg" (
-@echo Creating Python virtual environment...
-@%pythonloc% -m venv --upgrade-deps "%devroot%\%projectname%\buildscript\assets\venv"
+@%pythonloc% -W ignore -m pip install --user -U setuptools
+@echo.
+)
+@IF NOT EXIST "%devroot%\%projectname%\buildscript\assets\venv\pyvenv.cfg" GOTO mkvenv
+@IF NOT EXIST "%devroot%\%projectname%\buildscript\assets\venv\python.exe.orig" (
 @copy %pythonloc% "%devroot%\%projectname%\buildscript\assets\venv\python.exe.orig"
 @echo.
 )
