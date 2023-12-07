@@ -20,7 +20,7 @@
 @setlocal
 @rem Install missing python packages.
 @rem State tracking is irrelevant for Python packages as they can easily be added via Pypi if missing.
-@rem Meson is the exception because it can be provided as an embedded Python distribution.
+@rem Meson also provides an alternative Windows installer that adds it to PATH but supporting it is totally not worth it.
 
 @set pypack=0
 @set firstpyinstall=1
@@ -35,11 +35,6 @@
 @set pypack=Mako
 @GOTO pypackinstall
 )
-
-@set mesonstate=2
-@CMD /C EXIT 0
-@where /q meson.exe
-@if NOT "%ERRORLEVEL%"=="0" set mesonstate=1
 @IF NOT EXIST "%devroot%\%projectname%\buildscript\assets\venv\Scripts\meson.py" IF NOT EXIST "%devroot%\%projectname%\buildscript\assets\venv\Scripts\meson.exe" (
 @set pypack=meson
 @GOTO pypackinstall
@@ -74,4 +69,4 @@ echo.
 )
 
 :endpython
-@endlocal&set mesonstate=%mesonstate%
+@endlocal
