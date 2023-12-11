@@ -457,19 +457,20 @@
 @IF %PKG_CONFIG_SPV% EQU 1 IF %intmesaver% GEQ 23200 IF /I NOT "%linkmingwdynamic%"=="y" set buildconf=%buildconf% -Dopencl-external-clang-headers=disabled
 
 @rem Build VA-API D3D12 driver
-@IF %intmesaver% GEQ 22200 set buildconf=%buildconf% -Dgallium-d3d12-video=auto
 @set canvaapi=0
 @IF /I "%d3d12%"=="y" IF %intmesaver% GEQ 22300 set canvaapi=1
 @IF %toolchain%==msvc IF NOT EXIST "%devroot%\libva\build\%abi%\lib\pkgconfig\" set canvaapi=0
 @IF %canvaapi% EQU 1 set /p buildvaapi=Build Mesa3D VA-API interface (y/n):
 @IF %canvaapi% EQU 1 echo.
-@IF /I "%buildvaapi%"=="y" set buildconf=%buildconf% -Dgallium-va=%mesonbooltrue%
-@IF /I "%buildvaapi%"=="y" set PKG_CONFIG_LIBVA=1
-@IF %intmesaver% GEQ 22200 set buildconf=%buildconf% -Dvideo-codecs=
 @IF /I "%buildvaapi%"=="y" set /p buildpatentedcodecs=Build Mesa3D video acceleration patented codecs (y/n):
 @IF /I "%buildvaapi%"=="y" echo.
-@IF /I "%buildpatentedcodecs%"=="y" set buildconf=%buildconf%h264dec,h264enc,h265dec,h265enc,vc1dec
+@IF /I "%buildvaapi%"=="y" set buildconf=%buildconf% -Dgallium-va=%mesonbooltrue%
+@IF /I "%buildvaapi%"=="y" set PKG_CONFIG_LIBVA=1
 @IF /I NOT "%buildvaapi%"=="y" set buildconf=%buildconf% -Dgallium-va=%mesonboolfalse%
+@IF %intmesaver% GEQ 22200 set buildconf=%buildconf% -Dgallium-d3d12-video=auto -Dvideo-codecs=
+@IF %intmesaver% GEQ 24000 set buildconf=%buildconf%all_free
+@IF /I "%buildpatentedcodecs%"=="y" IF %intmesaver% LSS 24000 set buildconf=%buildconf%h264dec,h264enc,h265dec,h265enc,vc1dec
+@IF /I "%buildpatentedcodecs%"=="y" IF %intmesaver% GEQ 24000 set buildconf=%buildconf:~0,-5%
 
 @rem Apply PKG_CONFIG search PATH adjustments on MSVC
 @IF %PKG_CONFIG_LIBCLC% EQU 1 set buildconf=%buildconf% -Dstatic-libclc=all

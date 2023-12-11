@@ -1,6 +1,7 @@
 ### Build script
 - MSVC build: Use a Python virtual environment, fixes [#163](https://github.com/pal1000/mesa-dist-win/issues/163);
-- MSVC build: Drop attempt at supporting Meson Windows installer that was broken anyway since e3c32000da2d77840c0f02cefb609f00881b3183.
+- MSVC build: Drop attempt at supporting Meson Windows installer that was broken anyway since e3c32000da2d77840c0f02cefb609f00881b3183;
+- VA-API: Add support for [new](https://gitlab.freedesktop.org/mesa/mesa/-/commit/d0c355601129fb0fcfb6039eee69217bc9597c77) [codecs build configuration options](https://gitlab.freedesktop.org/mesa/mesa/-/commit/7b22dd8bfdc380be2e4037c1207fcb30a46ad296) [24.0+].
 # 23.3.0
 - Updated Mesa3D to [23.3.0](https://docs.mesa3d.org/relnotes/23.3.0.html).
 # 23.3.0-rc5
