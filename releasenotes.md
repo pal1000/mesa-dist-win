@@ -1,3 +1,5 @@
+# 23.3.1
+- Updated Mesa3D to [23.3.1](https://gitlab.freedesktop.org/mesa/mesa/-/blob/23.3/docs/relnotes/23.3.1.rst?ref_type=heads&plain=0).
 ### Build script
 - MSVC build: Use a Python virtual environment, fixes [#163](https://github.com/pal1000/mesa-dist-win/issues/163);
 - MSVC build: Drop attempt at supporting Meson Windows installer that was broken anyway since e3c32000da2d77840c0f02cefb609f00881b3183;
