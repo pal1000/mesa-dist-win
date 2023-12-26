@@ -1,0 +1,142 @@
+From 8d630867bbf51ceb55acbc976f19ae4e6b930b97 Mon Sep 17 00:00:00 2001
+From: Max R <max8rr8@gmail.com>
+Date: Tue, 28 Nov 2023 17:35:31 +0300
+Subject: [PATCH] d3d10umd: Fix compilation
+
+Fixes: 4eb4c9bba ("d3d10umd: use cso_context to set vertex buffers and elements")
+Closes: https://gitlab.freedesktop.org/mesa/mesa/-/issues/10054
+---
+ src/gallium/frontends/d3d10umd/Draw.cpp          |  9 ++++++---
+ src/gallium/frontends/d3d10umd/InputAssembly.cpp | 16 ++++------------
+ src/gallium/frontends/d3d10umd/State.h           | 12 +++---------
+ 3 files changed, 13 insertions(+), 24 deletions(-)
+
+diff --git a/src/gallium/frontends/d3d10umd/Draw.cpp b/src/gallium/frontends/d3d10umd/Draw.cpp
+index f3fecb6370311..62954e41a29a9 100644
+--- a/src/gallium/frontends/d3d10umd/Draw.cpp
++++ b/src/gallium/frontends/d3d10umd/Draw.cpp
+@@ -59,9 +59,12 @@ update_velems(Device *pDevice)
+    if (!pDevice->velems_changed)
+       return;
+ 
+-   for (unsigned i = 0; i < pDevice->velems.count; i++)
+-      pDevice->element_layout->velems.velems[i].src_stride = pDevice->vertex_strides[pDevice->element_layout->velems.velems[i].vertex_buffer_index];
+-   cso_set_vertex_elements(pDevice->cso, &pDevice->element_layout->velems);
++   if(pDevice->element_layout) {
++      struct cso_velems_state *state = &pDevice->element_layout->state;
++      for (unsigned i = 0; i < state->count; i++)
++         state->velems[i].src_stride = pDevice->vertex_strides[state->velems[i].vertex_buffer_index];
++      cso_set_vertex_elements(pDevice->cso, state);
++   }
+ 
+    pDevice->velems_changed = false;
+ }
+diff --git a/src/gallium/frontends/d3d10umd/InputAssembly.cpp b/src/gallium/frontends/d3d10umd/InputAssembly.cpp
+index f9d191c3a1919..f40ba04b62626 100644
+--- a/src/gallium/frontends/d3d10umd/InputAssembly.cpp
++++ b/src/gallium/frontends/d3d10umd/InputAssembly.cpp
+@@ -126,7 +126,6 @@ IaSetVertexBuffers(D3D10DDI_HDEVICE hDevice,
+    LOG_ENTRYPOINT();
+ 
+    Device *pDevice = CastDevice(hDevice);
+-   struct pipe_context *pipe = pDevice->pipe;
+    unsigned i;
+ 
+    for (i = 0; i < NumBuffers; i++) {
+@@ -169,7 +168,7 @@ IaSetVertexBuffers(D3D10DDI_HDEVICE hDevice,
+ 
+       /* XXX this is odd... */
+       if (!vb->is_user_buffer && !vb->buffer.resource) {
+-         pDevice->vertex_strides[i]->stride = 0;
++         pDevice->vertex_strides[i] = 0;
+          vb->buffer_offset = 0;
+          vb->is_user_buffer = true;
+          vb->buffer.user = dummy;
+@@ -271,9 +270,7 @@ CreateElementLayout(
+    LOG_ENTRYPOINT();
+ 
+    ElementLayout *pElementLayout = CastElementLayout(hElementLayout);
+-
+-   struct cso_velems_state elements;
+-   memset(elements, 0, sizeof elements);
++   memset(pElementLayout, 0, sizeof *pElementLayout);
+ 
+    unsigned num_elements = pCreateElementLayout->NumElements;
+    unsigned max_elements = 0;
+@@ -281,7 +278,7 @@ CreateElementLayout(
+       const D3D10DDIARG_INPUT_ELEMENT_DESC* pVertexElement =
+             &pCreateElementLayout->pVertexElements[i];
+       struct pipe_vertex_element *ve =
+-            &elements.velems[pVertexElement->InputRegister];
++            &pElementLayout->state.velems[pVertexElement->InputRegister];
+ 
+       ve->src_offset          = pVertexElement->AlignedByteOffset;
+       ve->vertex_buffer_index = pVertexElement->InputSlot;
+@@ -312,8 +309,7 @@ CreateElementLayout(
+       DebugPrintf("%s: gap\n", __func__);
+    }
+ 
+-   elements.count = max_elements;
+-   pElementLayout->velems = mem_dup(elements, sizeof(elements));
++   pElementLayout->state.count = max_elements;
+ }
+ 
+ 
+@@ -335,10 +331,6 @@ DestroyElementLayout(D3D10DDI_HDEVICE hDevice,                 // IN
+ {
+    LOG_ENTRYPOINT();
+ 
+-   struct pipe_context *pipe = CastPipeContext(hDevice);
+-   ElementLayout *pElementLayout = CastElementLayout(hElementLayout);
+-
+-   free(pElementLayout->velems);
+ }
+ 
+ 
+diff --git a/src/gallium/frontends/d3d10umd/State.h b/src/gallium/frontends/d3d10umd/State.h
+index 46fde9c5c7825..dd8c3a83ca651 100644
+--- a/src/gallium/frontends/d3d10umd/State.h
++++ b/src/gallium/frontends/d3d10umd/State.h
+@@ -62,6 +62,7 @@ struct Shader
+ };
+ 
+ struct Query;
++struct ElementLayout;
+ 
+ struct Device
+ {
+@@ -105,6 +106,7 @@ struct Device
+    Query *pPredicate;
+    BOOL PredicateValue;
+ 
++   ElementLayout *element_layout;
+    BOOL velems_changed;
+ };
+ 
+@@ -326,7 +328,7 @@ CastPipeShader(D3D10DDI_HSHADER hShader)
+ 
+ struct ElementLayout
+ {
+-   struct cso_velems_state *velems;
++   struct cso_velems_state state;
+ };
+ 
+ 
+@@ -336,14 +338,6 @@ CastElementLayout(D3D10DDI_HELEMENTLAYOUT hElementLayout)
+    return static_cast<ElementLayout *>(hElementLayout.pDrvPrivate);
+ }
+ 
+-static inline void *
+-CastPipeInputLayout(D3D10DDI_HELEMENTLAYOUT hElementLayout)
+-{
+-   ElementLayout *pElementLayout = CastElementLayout(hElementLayout);
+-   return pElementLayout ? pElementLayout->handle : NULL;
+-}
+-
+-
+ struct SamplerState
+ {
+    void *handle;
+-- 
+GitLab
+

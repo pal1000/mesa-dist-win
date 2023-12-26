@@ -1,3 +1,5 @@
+### Out of tree patches
+- Add [patch fixing d3d10umd build](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/26370).
 # 23.3.1
 - Updated Mesa3D to [23.3.1](https://gitlab.freedesktop.org/mesa/mesa/-/blob/23.3/docs/relnotes/23.3.1.rst?ref_type=heads&plain=0).
 ### Build script

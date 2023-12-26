@@ -144,6 +144,7 @@
 @rem Fix d3d10sw MSVC build
 @IF %intmesaver% GEQ 21200 IF %intmesaver% LSS 22000 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" d3d10sw
 @IF %intmesaver% GEQ 21300 IF %intmesaver% LSS 22000 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" d3d10sw-2
+@IF %intmesaver% GEQ 23300 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" d3d10sw-3
 
 @rem Clover build on Windows
 @rem IF %intmesaver% GEQ 21300 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" clover
