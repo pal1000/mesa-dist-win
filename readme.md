@@ -26,7 +26,7 @@
 # Downloads
 Mesa 23.3.1 builds with Visual Studio and MSYS2 Mingw-w64 are now available in [releases section](https://github.com/pal1000/mesa-dist-win/releases).
 # Sponsorship
-mesa-dist-win project was given a sponsorship that was extended until November 1st 2024. Sponsorship consists in a free VPS to use as build machine with 12 GB RAM, 6 threads [AMD EPYC 7413](https://www.amd.com/en/products/cpu/amd-epyc-7413) and 150 GB NVMe SSD from [Petrosky](https://petrosky.io/pal1000), a virtual private server hosting company thanks to [@Directox01](https://github.com/Directox01).
+mesa-dist-win project was given a sponsorship that was extended until November 1st 2024. Sponsorship consists in a free VPS to use as build machine with 12 GB RAM, 6 threads [AMD EPYC 7542](https://www.amd.com/en/products/cpu/amd-epyc-7542) and 150 GB NVMe SSD from [Petrosky](https://petrosky.io/pal1000), a virtual private server hosting company thanks to [@Directox01](https://github.com/Directox01).
 
 ![Screenshot 2023-10-25 201821](https://github.com/pal1000/mesa-dist-win/assets/1138235/32ebb855-5f83-4043-a320-802385b38226)
 ![Screenshot_20221205_065713](https://user-images.githubusercontent.com/1138235/205717369-21062d47-7c66-4e6a-8427-6560f9aeaaf7.png)

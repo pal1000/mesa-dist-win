@@ -1,3 +1,5 @@
+### Sponsorship
+- VPS host CPU updated.
 ### Out of tree patches
 - Add [patch fixing d3d10umd build](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/26370).
 # 23.3.1
