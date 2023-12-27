@@ -1,5 +1,5 @@
 ### Sponsorship
-- VPS host CPU updated.
+- [VPS host CPU updated](https://www.amd.com/en/products/cpu/amd-epyc-7542).
 ### Out of tree patches
 - Add [patch fixing d3d10umd build](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/26370).
 # 23.3.1
