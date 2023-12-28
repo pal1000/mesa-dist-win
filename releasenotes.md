@@ -1,3 +1,5 @@
+# 23.3.2
+- Updated Mesa3D to [23.3.2](https://gitlab.freedesktop.org/mesa/mesa/-/blob/23.3/docs/relnotes/23.3.2.rst?ref_type=heads&plain=0).
 ### Sponsorship
 - [VPS host CPU updated](https://www.amd.com/en/products/cpu/amd-epyc-7542).
 ### Out of tree patches
