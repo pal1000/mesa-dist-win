@@ -1,3 +1,5 @@
+### Build script
+- LLVM MSVC build: Log start and finish timers.
 # 23.3.2
 - Updated Mesa3D to [23.3.2](https://gitlab.freedesktop.org/mesa/mesa/-/blob/23.3/docs/relnotes/23.3.2.rst?ref_type=heads&plain=0).
 ### Sponsorship
