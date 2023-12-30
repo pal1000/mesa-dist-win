@@ -12,7 +12,7 @@
 @set projectname=mesa-dist-win
 @set "ERRORLEVEL="
 
-@rem Create folder to store generated resource files, MSYS2 shell scripts and Python virtual environment
+@rem Create folder to store generated resource files, MSYS2 shell scripts, Python virtual environment and Powershell temporary downloads.
 @IF NOT EXIST "%devroot%\%projectname%\buildscript\assets\" md "%devroot%\%projectname%\buildscript\assets"
 
 @rem Command line option to disable out of tree patches for Mesa3D
