@@ -1,3 +1,5 @@
+### Binary versionning
+- Update for year 2024.
 ### Build script
 - LLVM MSVC build: Log start and finish timers;
 - Use build script assets folder for Powershell temporary downloads.
