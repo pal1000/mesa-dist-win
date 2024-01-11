@@ -144,7 +144,7 @@
 @rem Fix d3d10sw MSVC build
 @IF %intmesaver% GEQ 21200 IF %intmesaver% LSS 22000 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" d3d10sw
 @IF %intmesaver% GEQ 21300 IF %intmesaver% LSS 22000 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" d3d10sw-2
-@IF %intmesaver% GEQ 23300 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" d3d10sw-3
+@IF %intmesaver% GEQ 23300 IF %intmesaver% LSS 23354 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" d3d10sw-3
 
 @rem Clover build on Windows
 @rem IF %intmesaver% GEQ 21300 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" clover
@@ -357,6 +357,7 @@
 @if /I NOT "%glswrast%"=="y" set cand3d10umd=0
 @IF NOT %toolchain%==msvc set cand3d10umd=0
 @IF %intmesaver% LSS 22000 IF %disableootpatch% EQU 1 set cand3d10umd=0
+@IF %intmesaver% GEQ 23300 IF %intmesaver% LSS 23354 IF %disableootpatch% EQU 1 set cand3d10umd=0
 @IF %cand3d10umd% EQU 1 for /f delims^=^ eol^= %%a in ('@call "%devroot%\%projectname%\buildscript\modules\wdkcheck.cmd"') do @IF NOT "%%a"=="OK" set cand3d10umd=0
 @IF %cand3d10umd% EQU 1 set /p d3d10umd=Build Mesa3D D3D10 software renderer (y/n):
 @IF %cand3d10umd% EQU 1 echo.
