@@ -1,8 +1,8 @@
-## 23.3.3
+# 23.3.3
 - Updated Mesa3D to [23.3.3](https://gitlab.freedesktop.org/mesa/mesa/-/blob/23.3/docs/relnotes/23.3.3.rst?ref_type=heads&plain=0).
-## Out of tree patches
+### Out of tree patches
 - Adjust patch fixing d3d10umd build aplicability, it is expected to land in 23.3.4.
-### Binary versionning
+### Binary versioning
 - Update for year 2024.
 ### Build script
 - LLVM MSVC build: Log start and finish timers;
