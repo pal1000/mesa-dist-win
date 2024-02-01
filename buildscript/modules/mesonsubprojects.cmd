@@ -96,10 +96,10 @@ set "exitloop="
 )
 @if %gitstate% GTR 0 for /f delims^=^ eol^= %%a in ('dir /b /a^:d "%devroot%\mesa\subprojects\DirectX-Header*" 2^>^&1') do @IF EXIST "%devroot%\mesa\subprojects\%%~nxa\" (
 @cd "%devroot%\mesa\subprojects\%%~nxa"
-@echo Using DirectX-Headers stable release...
+@rem echo Using DirectX-Headers stable release...
 @for /f tokens^=2^ delims^=/^ eol^= %%a in ('git symbolic-ref --short refs/remotes/origin/HEAD 2^>^&^1') do @git checkout %%a
 @git pull -f --progress --tags --recurse-submodules origin
-@git checkout 48f23952bc08a6dce0727339c07cedbc4797356c
+@git checkout 05ada009b2d8a3d8a81869cb93cfc4c715f6788b
 @cd "%devroot%\mesa"
 )
 @if %gitstate% GTR 0 echo.

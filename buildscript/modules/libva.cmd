@@ -37,6 +37,8 @@
 
 @echo Configuring VA-API build with : %buildconf%
 @echo.
+@pause
+@echo.
 @%buildconf%
 @echo.
 @pause
