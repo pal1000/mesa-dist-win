@@ -1,7 +1,7 @@
 # 23.3.5 and 24.0.0
 - Updated Mesa3D to [23.3.5](https://gitlab.freedesktop.org/mesa/mesa/-/blob/23.3/docs/relnotes/23.3.5.rst?ref_type=heads&plain=0) and [24.0.0](https://gitlab.freedesktop.org/mesa/mesa/-/blob/24.0/docs/relnotes/24.0.0.rst?ref_type=heads&plain=0).
 ### Build configuration
-- OpenCL external clang headers option has been removed in 24.1.0-devel.
+- OpenCL external clang headers option [has been removed in 24.1.0-devel](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/25568).
 ### Out of tree patching
 - Disable llvmpipe headers compatibility patch with LLVM 17 pending figuring out when it stopped being necessary.
 # 23.3.4
