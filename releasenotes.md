@@ -1,3 +1,5 @@
+### Build script
+- Support configuring video acceleration codecs without VA-API dependency as this configuration is also used by Vulkan video exteensions.
 # 23.3.5 and 24.0.0
 - Updated Mesa3D to [23.3.5](https://gitlab.freedesktop.org/mesa/mesa/-/blob/23.3/docs/relnotes/23.3.5.rst?ref_type=heads&plain=0) and [24.0.0](https://gitlab.freedesktop.org/mesa/mesa/-/blob/24.0/docs/relnotes/24.0.0.rst?ref_type=heads&plain=0).
 ### Build configuration
