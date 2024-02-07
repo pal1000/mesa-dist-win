@@ -470,7 +470,9 @@
 @IF /I "%buildvaapi%"=="y" set buildconf=%buildconf% -Dgallium-va=%mesonbooltrue%
 @IF /I "%buildvaapi%"=="y" set PKG_CONFIG_LIBVA=1
 @IF /I NOT "%buildvaapi%"=="y" set buildconf=%buildconf% -Dgallium-va=%mesonboolfalse%
-@IF %intmesaver% GEQ 22200 set buildconf=%buildconf% -Dgallium-d3d12-video=auto -Dvideo-codecs=
+@IF /I "%d3d12%"=="y" IF %intmesaver% GEQ 22200 set buildconf=%buildconf% -Dgallium-d3d12-video=auto
+@IF /I NOT "%d3d12%"=="y" IF %intmesaver% GEQ 22200 set buildconf=%buildconf% -Dgallium-d3d12-video=%mesonboolfalse%
+@IF %intmesaver% GEQ 22200 set buildconf=%buildconf% -Dvideo-codecs=
 @IF %intmesaver% GEQ 24000 set buildconf=%buildconf%all_free
 
 @rem Configure video acceleration codecs
