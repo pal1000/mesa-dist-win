@@ -481,7 +481,6 @@
 @IF /I "%buildpatentedcodecs%"=="y" IF %intmesaver% LSS 24000 set buildconf=%buildconf%h264dec,h264enc,h265dec,h265enc,vc1dec
 @IF /I "%buildpatentedcodecs%"=="y" IF %intmesaver% GEQ 24000 set buildconf=%buildconf:~0,-5%
 
-
 @rem Apply PKG_CONFIG search PATH adjustments on MSVC
 @IF %PKG_CONFIG_LIBCLC% EQU 1 set buildconf=%buildconf% -Dstatic-libclc=all
 @IF %PKG_CONFIG_LIBCLC% EQU 1 IF %toolchain%==msvc set PKG_CONFIG_PATH=%PKG_CONFIG_PATH%%llvminstloc:\=/%/clc/share/pkgconfig;
