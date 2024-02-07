@@ -166,7 +166,6 @@
 @IF %intmesaver% LSS 23104 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" mclc-clang16
 
 @rem LLVM+clang 17 linking compatibility
-@rem IF %intmesaver% GEQ 23200 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" gallium-fix build-with-llvm-17
 @IF %intmesaver% LSS 23300 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" clover_llvm-move-to-modern-pass-manager
 
 @rem Fix vaon12 filename
