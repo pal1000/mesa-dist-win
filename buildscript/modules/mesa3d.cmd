@@ -361,6 +361,7 @@
 @IF %cand3d10umd% EQU 1 set /p d3d10umd=Build Mesa3D D3D10 software renderer (y/n):
 @IF %cand3d10umd% EQU 1 echo.
 @if /I "%d3d10umd%"=="y" set buildconf=%buildconf% -Dgallium-d3d10umd=true
+@if /I "%d3d10umd%"=="y" IF %intmesaver% GEQ 24100 set buildconf=%buildconf% -Dgallium-d3d10-dll-name=d3d10warp
 @if /I NOT "%d3d10umd%"=="y" IF %intmesaver% GEQ 21200 set buildconf=%buildconf% -Dgallium-d3d10umd=false
 
 @set spirvtodxil=n

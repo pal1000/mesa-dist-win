@@ -1,7 +1,8 @@
 ### Out of tree patching
 - Remove llvmpipe headers compatibility patch with LLVM 17 as it appears it stopped being necessary as of LLVM 17.0.5 or 17.0.6, maybe a fix in LLVM made [original patch](https://gitlab.freedesktop.org/mesa/mesa/-/commits/main?search=only+include+old+Transform+includes+when+needed) sufficient.
 ### Build script
-- Support configuring video acceleration codecs without VA-API dependency as this configuration is also used by Vulkan video extensions.
+- Support configuring video acceleration codecs without VA-API dependency as this configuration is also used by Vulkan video extensions;
+- Make d3d10umd deployment easier by matching Microsoft WARP filename when using 24.1.0-devel source or newer. 
 # 23.3.5 and 24.0.0
 - Updated Mesa3D to [23.3.5](https://gitlab.freedesktop.org/mesa/mesa/-/blob/23.3/docs/relnotes/23.3.5.rst?ref_type=heads&plain=0) and [24.0.0](https://gitlab.freedesktop.org/mesa/mesa/-/blob/24.0/docs/relnotes/24.0.0.rst?ref_type=heads&plain=0).
 ### Build configuration

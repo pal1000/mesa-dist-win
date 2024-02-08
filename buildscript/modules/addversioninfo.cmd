@@ -64,6 +64,7 @@
 
 @rem Add version info to Mesa3D D3D10 software rendering driver
 @call "%devroot%\%projectname%\buildscript\modules\rcgen.cmd" "Mesa3D D3D10 software rendering driver" "%devroot%\%projectname%\bin\%abi%\d3d10sw.dll" %abi% %mesaver% "VMware Inc."
+@call "%devroot%\%projectname%\buildscript\modules\rcgen.cmd" "Mesa3D D3D10 software rendering driver" "%devroot%\%projectname%\bin\%abi%\d3d10warp.dll" %abi% %mesaver% "VMware Inc."
 
 @rem Add version info to Gallium raw interface without API frontend
 @call "%devroot%\%projectname%\buildscript\modules\rcgen.cmd" "Gallium raw interface with GDI window support" "%devroot%\%projectname%\bin\%abi%\graw.dll" %abi% %mesaver% "Mesa/X.org"
