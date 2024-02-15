@@ -99,7 +99,7 @@ set "exitloop="
 @rem echo Using DirectX-Headers stable release...
 @for /f tokens^=2^ delims^=/^ eol^= %%a in ('git symbolic-ref --short refs/remotes/origin/HEAD 2^>^&^1') do @git checkout %%a
 @git pull -f --progress --tags --recurse-submodules origin
-@git checkout 05ada009b2d8a3d8a81869cb93cfc4c715f6788b
+@git checkout 7a9f4d06911d30eecb56a4956dab29dcca2709ed
 @cd "%devroot%\mesa"
 )
 @if %gitstate% GTR 0 echo.
