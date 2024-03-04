@@ -1,3 +1,5 @@
+### Distribution
+- There is no need to patch Vulkan drivers JSON files to fix them since 24.1.0-devel, [Vulkan JSON generation has been fixed](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/27468).
 # 24.0.2
 - Updated Mesa3D to [24.0.2](https://gitlab.freedesktop.org/mesa/mesa/-/blob/24.0/docs/relnotes/24.0.2.rst?ref_type=heads&plain=0).
 # 24.0.1

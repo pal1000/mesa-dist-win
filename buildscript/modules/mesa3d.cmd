@@ -180,7 +180,7 @@
 @if EXIST "build\%toolchain%-%abi%\" IF /I "%cleanmesabld%"=="y" RD /S /Q build\%toolchain%-%abi%
 @IF /I NOT "%cleanmesabld%"=="y" set buildconf=%mesonloc% configure
 @call "%devroot%\%projectname%\buildscript\modules\useninja.cmd"
-@set buildconf=%buildconf% build/%toolchain%-%abi% --libdir="lib/%abi%" --pkgconfig.relocatable
+@set buildconf=%buildconf% build/%toolchain%-%abi% --libdir="lib/%abi%" --bindir="bin/%abi%" --pkgconfig.relocatable
 @IF %intmesaver% GEQ 21200 IF %intmesaver% LSS 22100 set buildconf=%buildconf% -Dc_std=c17
 @IF %intmesaver% GEQ 22000 set RTTI=true
 
@@ -347,6 +347,7 @@
 @if /I "%radv%"=="y" set buildconf=%buildconf%amd,
 @if /I "%dozenmsvk%"=="y" set buildconf=%buildconf%microsoft-experimental,
 @IF %mesavkcount% GTR 0 set buildconf=%buildconf:~0,-1%
+@IF %mesavkcount% GTR 0 IF %intmesaver% GEQ 24100 set buildconf=%buildconf% -Dvulkan-icd-dir="bin/%abi%"
 
 @IF %msysregex%==1 IF %disableootpatch% EQU 1 IF /I NOT "%linkmingwdynamic%"=="y" set LDFLAGS=%LDFLAGS% -ltre -lintl -liconv
 
