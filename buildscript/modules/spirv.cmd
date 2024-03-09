@@ -4,7 +4,7 @@
 @IF EXIST "%devroot%\spirv-tools\DEPS" IF NOT EXIST "%devroot%\spirv-tools\external\spirv-headers\" IF %gitstate% EQU 0 set canspvtools=0
 @if %cmakestate% EQU 0 set canspvtools=0
 
-@set spvtoolsrel=v2023.6.rc1
+@set spvtoolsrel=v2024.1.rc1
 @IF EXIST "%devroot%\spirv-tools\external\" IF %gitstate% GTR 0 (
 @echo Updating SPIRV tools source code...
 @cd "%devroot%\spirv-tools"
