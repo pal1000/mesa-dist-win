@@ -1,3 +1,5 @@
+### Build script
+- LLVM MSVC build: Fix configuration for LLVM>=17 when its source is freshly cloned, LLVM 18 doesn't allow this defect anymore, fixes 6f33b110.
 ### Distribution
 - There is no need to patch Vulkan drivers JSON files to fix them since 24.1.0-devel, [Vulkan JSON generation has been fixed](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/27468).
 # 24.0.2

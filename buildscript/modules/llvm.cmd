@@ -35,6 +35,7 @@
 @git checkout -f FETCH_HEAD
 @git clean -df
 @echo.
+@set llvmsrcver=%updllvmsrcver:.=%
 )
 
 @rem Apply is_trivially_copyable patch
