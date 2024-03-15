@@ -1,3 +1,5 @@
+# 24.0.3
+- Updated Mesa3D to [24.0.3](https://gitlab.freedesktop.org/mesa/mesa/-/blob/24.0/docs/relnotes/24.0.3.rst?ref_type=heads&plain=0).
 ### Build script
 - LLVM MSVC build: Fix configuration for LLVM>=17 when its source is freshly cloned, LLVM 18 doesn't allow this defect anymore, fixes 6f33b110.
 ### Distribution
