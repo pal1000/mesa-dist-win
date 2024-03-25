@@ -1,0 +1,39 @@
+From cf754fe186e62b44a07c355e2f97ad85bfd50436 Mon Sep 17 00:00:00 2001
+From: Karol Herbst <kherbst@redhat.com>
+Date: Tue, 19 Mar 2024 14:31:04 +0100
+Subject: [PATCH] meson: fix link failure with llvm-18
+
+Closes: https://gitlab.freedesktop.org/mesa/mesa/-/issues/10739
+Closes: https://gitlab.freedesktop.org/mesa/mesa/-/issues/10775
+cc: mesa-stable
+Signed-off-by: Karol Herbst <kherbst@redhat.com>
+---
+ meson.build | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/meson.build b/meson.build
+index bde6ec6d5bac2..bbcb202344d2c 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1722,7 +1722,7 @@ if with_clc
+   # all-targets is needed to support static linking LLVM build with multiple targets.
+   # windowsdriver is needded with LLVM>=15 and frontendhlsl is needed with LLVM>=16,
+   # but we don't know what LLVM version we are using yet
+-  llvm_optional_modules += ['all-targets', 'windowsdriver', 'frontendhlsl']
++  llvm_optional_modules += ['all-targets', 'windowsdriver', 'frontendhlsl', 'frontenddriver']
+ endif
+ draw_with_llvm = get_option('draw-use-llvm')
+ if draw_with_llvm
+@@ -1862,6 +1862,9 @@ if with_clc
+     if dep_llvm.version().version_compare('>= 16.0')
+       clang_modules += 'clangASTMatchers'
+     endif
++    if dep_llvm.version().version_compare('>= 18.0')
++      clang_modules += 'clangAPINotes'
++    endif
+ 
+     dep_clang = []
+     foreach m : clang_modules
+-- 
+GitLab
+

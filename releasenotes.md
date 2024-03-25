@@ -1,3 +1,5 @@
+### Out of tree patching
+- Fix clc build unresolved symbols when static linking LLVM+clang 18.
 ### Documentation
 - Document dxil availability in DirectX shader compiler;
 - dozen driver depends on dxil;
