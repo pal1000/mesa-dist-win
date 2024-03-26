@@ -189,6 +189,7 @@
 
 @IF %toolchain%==msvc set buildconf=%buildconf% --prefix="%devroot:\=/%/%projectname%" -Db_vscrt=mt -Dzlib:default_library=static
 @IF %toolchain%==msvc IF %intmesaver% GEQ 21200 IF %intmesaver% LSS 22100 set buildconf=%buildconf% -Dcpp_std=vc++latest
+@IF %toolchain%==msvc set CFLAGS=
 
 @IF NOT %toolchain%==msvc IF %abi%==aarch64 set CFLAGS=-march^=armv8-a -pipe
 @IF NOT %toolchain%==msvc IF NOT %abi%==aarch64 set CFLAGS=-march^=core2 -pipe
@@ -221,7 +222,7 @@
 @echo.
 @if /I "%mesaenableasserts%"=="y" set buildconf=%buildconf% -Db_ndebug=false
 @if /I NOT "%mesaenableasserts%"=="y" set buildconf=%buildconf% -Db_ndebug=true
-@if /I NOT "%mesaenableasserts%"=="y" IF %toolchain%==msvc set CFLAGS=/wd4189
+@if /I NOT "%mesaenableasserts%"=="y" IF %toolchain%==msvc set CFLAGS=%CFLAGS% /wd4189
 
 @set linkmingwdynamic=n
 @IF NOT %toolchain%==msvc set /p linkmingwdynamic=Link dependencies dynamically for debuggging purposes (y/n):
@@ -437,6 +438,7 @@
 @IF /I "%mclc%"=="y" set PKG_CONFIG_LIBCLC=1
 @IF /I "%mclc%"=="y" set PKG_CONFIG_SPV=1
 @IF /I "%mclc%"=="y" set buildconf=%buildconf% -Dmicrosoft-clc=%mesonbooltrue%
+@IF /I "%mclc%"=="y" IF %toolchain%==msvc IF EXIST "%llvminstloc%\%abi%\lib\clang\" for /f tokens^=1^ delims^=.^ eol^= %%a IN ('dir /B /A:D "%llvminstloc%\%abi%\lib\clang\"') DO @IF %%a GEQ 18 set CFLAGS=%CFLAGS% /Zc^:preprocessor
 @IF /I NOT "%mclc%"=="y" IF %intmesaver% GEQ 21000 set buildconf=%buildconf% -Dmicrosoft-clc=%mesonboolfalse%
 
 @rem Build clover
@@ -501,6 +503,7 @@
 @set "PKG_CONFIG_PATH="
 
 @rem Pass additional compiler and linker flags
+@if defined CFLAGS IF %toolchain%==msvc set CFLAGS=%CFLAGS:~1%
 @if defined CFLAGS set buildconf=%buildconf% -Dc_args="%CFLAGS%" -Dcpp_args="%CFLAGS%"
 @if defined LDFLAGS IF NOT %toolchain%==msvc set LDFLAGS=%LDFLAGS:~1%
 @if defined LDFLAGS set buildconf=%buildconf% -Dc_link_args="%LDFLAGS%" -Dcpp_link_args="%LDFLAGS%"

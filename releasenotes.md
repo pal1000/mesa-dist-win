@@ -1,9 +1,11 @@
-### Out of tree patching
-- Fix clc build unresolved symbols when static linking LLVM+clang 18.
 ### Documentation
 - Document dxil availability in DirectX shader compiler;
 - dozen driver depends on dxil;
 - openclon12: Document CLON12_WARP_IS_HARDWARE variable.
+### Out of tree patching
+- Fix clc build unresolved symbols when static linking LLVM+clang 18.
+### Build script
+- clc: Build with preprocessor conformance mode when linking with clang>=18, workaround llvm/llvm-project#86028.
 # 24.0.3
 - Updated Mesa3D to [24.0.3](https://gitlab.freedesktop.org/mesa/mesa/-/blob/24.0/docs/relnotes/24.0.3.rst?ref_type=heads&plain=0).
 ### Build script
