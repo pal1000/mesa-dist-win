@@ -23,8 +23,10 @@
 @echo.
 )
 
-@rem Ask for Ninja use if exists. Load it if opted for it.
-@call "%devroot%\%projectname%\buildscript\modules\useninja.cmd" draft
+@rem Ask for Ninja use if exists and nuget packages are unused. Load it if opted for it.
+@cmd /c exit 0
+@find /i /c "t/d3d12t" "%devroot%\clon12\cmakelists.txt" >nul 2>&1
+@if NOT %ERRORLEVEL%==0 call "%devroot%\%projectname%\buildscript\modules\useninja.cmd"
 
 @rem Load cmake into build environment.
 @if %cmakestate%==1 set PATH=%devroot%\cmake\bin\;%PATH%
@@ -66,8 +68,7 @@
 
 @rem Configure and execute the build with the configuration made above.
 @%buildconf%
-@nuget sources Add -Name Official -Source https://api.nuget.org/v3/index.json
-@nuget restore openclon12.sln
+@if /I NOT "%useninja%"=="y" nuget restore openclon12.sln -Source https://api.nuget.org/v3/index.json
 @echo.
 @pause
 @echo.
