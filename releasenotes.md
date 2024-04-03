@@ -1,3 +1,5 @@
+### Out of tree patching
+- Narrow static link with LLVM+clang 18 build fix to [Mesa 24.0.4 and older](https://gitlab.freedesktop.org/mesa/mesa/-/commits/staging/24.0?search=fix%20link%20failure%20with%20llvm-18).
 # 24.0.4
 - Updated Mesa3D to [24.0.4](https://gitlab.freedesktop.org/mesa/mesa/-/blob/24.0/docs/relnotes/24.0.4.rst?ref_type=heads&plain=0).
 ### Documentation

@@ -420,8 +420,8 @@
 @IF NOT %toolchain%==msvc IF %disableootpatch%==1 IF %intmesaver% LSS 23050 IF EXIST "%msysloc%\%LMSYSTEM%\lib\clang\" for /f tokens^=1^ delims^=.^ eol^= %%a IN ('dir /B /A:D "%msysloc%\%LMSYSTEM%\lib\clang\"') DO @IF %%a GEQ 15 set canclspv=0
 @IF %toolchain%==msvc IF EXIST "%llvminstloc%\%abi%\lib\clang\" for /f tokens^=1^ delims^=.^ eol^= %%a IN ('dir /B /A:D "%llvminstloc%\%abi%\lib\clang\"') DO @IF %disableootpatch%==1 IF %intmesaver% LSS 23104 IF %%a GEQ 16 set canclspv=0
 @IF NOT %toolchain%==msvc IF EXIST "%msysloc%\%LMSYSTEM%\lib\clang\" for /f tokens^=1^ delims^=.^ eol^= %%a IN ('dir /B /A:D "%msysloc%\%LMSYSTEM%\lib\clang\"') DO @IF %disableootpatch%==1 IF %intmesaver% LSS 23104 IF %%a GEQ 16 set canclspv=0
-@IF %toolchain%==msvc IF EXIST "%llvminstloc%\%abi%\lib\clang\" for /f tokens^=1^ delims^=.^ eol^= %%a IN ('dir /B /A:D "%llvminstloc%\%abi%\lib\clang\"') DO @IF %disableootpatch%==1 IF %%a GEQ 18 set canclspv=0
-@IF NOT %toolchain%==msvc IF EXIST "%msysloc%\%LMSYSTEM%\lib\clang\" for /f tokens^=1^ delims^=.^ eol^= %%a IN ('dir /B /A:D "%msysloc%\%LMSYSTEM%\lib\clang\"') DO @IF %disableootpatch%==1 IF %%a GEQ 18 set canclspv=0
+@IF %toolchain%==msvc IF EXIST "%llvminstloc%\%abi%\lib\clang\" for /f tokens^=1^ delims^=.^ eol^= %%a IN ('dir /B /A:D "%llvminstloc%\%abi%\lib\clang\"') DO @IF %disableootpatch%==1 IF %intmesaver% LSS 24055 IF %%a GEQ 18 set canclspv=0
+@IF NOT %toolchain%==msvc IF EXIST "%msysloc%\%LMSYSTEM%\lib\clang\" for /f tokens^=1^ delims^=.^ eol^= %%a IN ('dir /B /A:D "%msysloc%\%LMSYSTEM%\lib\clang\"') DO @IF %disableootpatch%==1 IF %intmesaver% LSS 24055 IF %%a GEQ 18 set canclspv=0
 
 @rem Add flags tracking PKG_CONFIG search PATH adjustment needs
 @set PKG_CONFIG_LIBCLC=0
