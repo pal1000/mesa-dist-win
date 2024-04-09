@@ -186,7 +186,7 @@
 @set buildconf=%buildconf% build/%toolchain%-%abi% --libdir="lib/%abi%" --bindir="bin/%abi%" --pkgconfig.relocatable
 
 @set usezstd=n
-@IF %intmesaver% GTR 20000 set /p usezstd=Use ZSTD compression
+@IF %intmesaver% GTR 20000 set /p usezstd=Use ZSTD compression (y/n):
 @IF %intmesaver% GTR 20000 echo.
 @IF %intmesaver% GTR 20000 IF /I "%usezstd%"=="y" set buildconf=%buildconf% -Dzstd=%mesonbooltrue%
 @IF %intmesaver% GTR 20000 IF /I NOT "%usezstd%"=="y" set buildconf=%buildconf% -Dzstd=%mesonboolfalse%
