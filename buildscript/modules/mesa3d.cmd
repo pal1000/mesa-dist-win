@@ -184,10 +184,17 @@
 @IF /I NOT "%cleanmesabld%"=="y" set buildconf=%mesonloc% configure
 @call "%devroot%\%projectname%\buildscript\modules\useninja.cmd"
 @set buildconf=%buildconf% build/%toolchain%-%abi% --libdir="lib/%abi%" --bindir="bin/%abi%" --pkgconfig.relocatable
+
+@set usezstd=n
+@IF %intmesaver% GTR 20000 set /p usezstd=Use ZSTD compression
+@IF %intmesaver% GTR 20000 echo.
+@IF %intmesaver% GTR 20000 IF /I "%usezstd%"=="y" set buildconf=%buildconf% -Dzstd=%mesonbooltrue%
+@IF %intmesaver% GTR 20000 IF /I NOT "%usezstd%"=="y" set buildconf=%buildconf% -Dzstd=%mesonboolfalse%
 @IF %intmesaver% GEQ 21200 IF %intmesaver% LSS 22100 set buildconf=%buildconf% -Dc_std=c17
 @IF %intmesaver% GEQ 22000 set RTTI=true
 
 @IF %toolchain%==msvc set buildconf=%buildconf% --prefix="%devroot:\=/%/%projectname%" -Db_vscrt=mt -Dzlib:default_library=static
+@IF %toolchain%==msvc IF %intmesaver% GTR 20000 IF /I "%usezstd%"=="y" set buildconf=%buildconf% -Dlibzstd:default_library=static
 @IF %toolchain%==msvc IF %intmesaver% GEQ 21200 IF %intmesaver% LSS 22100 set buildconf=%buildconf% -Dcpp_std=vc++latest
 @IF %toolchain%==msvc set CFLAGS=
 
@@ -195,7 +202,6 @@
 @IF NOT %toolchain%==msvc IF NOT %abi%==aarch64 set CFLAGS=-march^=core2 -pipe
 @IF NOT %toolchain%==msvc set LDFLAGS=
 @IF NOT %toolchain%==msvc set buildcmd=%runmsys% /%LMSYSTEM%/bin/ninja -C "%devroot%\mesa\build\%toolchain%-%abi%" -j %throttle% -k 0
-@IF NOT %toolchain%==msvc IF %intmesaver% GTR 20000 set buildconf=%buildconf% -Dzstd=%mesonbooltrue%
 
 @if /I "%useninja%"=="y" set buildconf=%buildconf% --backend=ninja
 @if /I "%useninja%"=="y" IF %toolchain%==msvc set buildcmd=ninja -C "%devroot%\mesa\build\%toolchain%-%abi%" -j %throttle% -k 0
