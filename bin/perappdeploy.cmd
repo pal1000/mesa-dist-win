@@ -102,6 +102,8 @@
 @if EXIST "%dir%\va.dll" del "%dir%\va.dll"
 @if EXIST "%dir%\va_win32.dll" set foundvaapi=1
 @if EXIST "%dir%\va_win32.dll" del "%dir%\va_win32.dll"
+@if EXIST "%dir%\vaon12_drv_video.dll" set foundvaapi=1
+@if EXIST "%dir%\vaon12_drv_video.dll" del "%dir%\vaon12_drv_video.dll"
 @echo Done.
 @echo.
 
@@ -207,12 +209,13 @@
 @echo.
 
 :vaapi
-@if EXIST "%mesaloc%\%mesadll%\va.dll" if EXIST "%mesaloc%\%mesadll%\va_win32.dll" set /p vaapi=Deploy video acceleration support (y/n):
-@if EXIST "%mesaloc%\%mesadll%\va.dll" if EXIST "%mesaloc%\%mesadll%\va_win32.dll" echo.
+@if EXIST "%mesaloc%\%mesadll%\va.dll" if EXIST "%mesaloc%\%mesadll%\va_win32.dll" if EXIST "%mesaloc%\%mesadll%\vaon12_drv_video.dll" set /p vaapi=Deploy video acceleration support (y/n):
+@if EXIST "%mesaloc%\%mesadll%\va.dll" if EXIST "%mesaloc%\%mesadll%\va_win32.dll" if EXIST "%mesaloc%\%mesadll%\vaon12_drv_video.dll" echo.
 @if /I NOT "%vaapi%"=="y" GOTO restart
 @IF %foundvaapi% EQU 1 echo Updating VA-API interface deployment...
 @IF EXIST "%mesaloc%\%mesadll%\va.dll" if NOT EXIST "%dir%\va.dll" call modules\mklink.cmd va
 @IF EXIST "%mesaloc%\%mesadll%\va_win32.dll" if NOT EXIST "%dir%\va_win32.dll" call modules\mklink.cmd va_win32
+@IF EXIST "%mesaloc%\%mesadll%\vaon12_drv_video.dll" if NOT EXIST "%dir%\vaon12_drv_video.dll" call modules\mklink.cmd vaon12_drv_video
 @IF EXIST "%mesaloc%\%mesadll%\dxil.dll" IF EXIST "%dir%\dxil.dll" del "%dir%\dxil.dll"
 @IF EXIST "%mesaloc%\%mesadll%\dxil.dll" IF NOT EXIST "%dir%\dxil.dll" call modules\mklink.cmd dxil
 

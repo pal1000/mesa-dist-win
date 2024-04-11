@@ -1,3 +1,7 @@
+# 24.0.5
+- Updated Mesa3D to [24.0.5](https://gitlab.freedesktop.org/mesa/mesa/-/blob/24.0/docs/relnotes/24.0.5.rst?ref_type=heads&plain=0).
+### Deployment
+- Per application tool: VA-API D3D12 driver support.
 ### Build script
 - openclon12: Detect nuget packages usage and allow Ninja build if unused;
 - MSVC build: zstd compression support.

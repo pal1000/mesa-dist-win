@@ -24,7 +24,7 @@
 - [OpenGL context configuration override](#opengl-context-configuration-override)
 - [How to set environment variables](#how-to-set-environment-variables)
 # Downloads
-Mesa 24.0.4 builds with Visual Studio and MSYS2 Mingw-w64 are now available in [releases section](https://github.com/pal1000/mesa-dist-win/releases).
+Mesa 24.0.5 builds with Visual Studio and MSYS2 Mingw-w64 are now available in [releases section](https://github.com/pal1000/mesa-dist-win/releases).
 # Sponsorship
 mesa-dist-win project was given a sponsorship that was extended until November 1st 2024. Sponsorship consists in a free VPS to use as build machine with 12 GB RAM, 6 threads [AMD EPYC 7542](https://www.amd.com/en/products/cpu/amd-epyc-7542) and 150 GB NVMe SSD from [Petrosky](https://petrosky.io/pal1000), a virtual private server hosting company thanks to [@Directox01](https://github.com/Directox01).
 
@@ -59,8 +59,7 @@ To correct these errors regardless of cause you have to re-deploy. If you don't 
 Same problem with same solution applies to osmesa if you are upgrading from 17.3.5.501-1 or older.
 # Differences between MSVC and MinGW packages
 - MinGW package requires a CPU with [SSSE3](https://en.wikipedia.org/wiki/SSSE3#CPUs_with_SSSE3) with benefit of providing 3-5% performance boost with software rendering drivers;
-- d3d10sw introduced in 21.2.0 is only available in MSVC package;
-- MinGW package uses ZSTD for certain compression tasks since 20.1.8.
+- d3d10sw introduced in 21.2.0 is only available in MSVC package.
 
 If you need to migrate from Mingw to MSVC binaries you just need to replace Mesa binaries folder from Mingw package with MSVC counterpart.
 # Mingw and MSVC Package contents
@@ -93,7 +92,7 @@ The following Mesa3D drivers and build artifacts are shipped in each release:
 - D3D10 software renderer is available in MSVC package since 21.2.0. File name: `d3d10sw.dll`. This is a drop in replacement for Microsoft WARP and unfortunately there is no clean way of [deploying](https://gitlab.freedesktop.org/mesa/mesa/-/blob/main/src/gallium/targets/d3d10sw/README.md) it.
 - SPIR-V to DXIL tool and library are available in MSVC package since 21.0.0 and since 22.2.0 in MinGW package as well. File names: `libspirv_to_dxil.dll`, `spirv_to_dxil.dll` and `spirv2dxil.exe`.
 ### VA-API drivers
-- VA-API D3D12 driver. File names: `vaon12_drv_video.dll` (MSVC) and `libvaon12_drv_video.dll` (MinGW). This driver was made available in 22.3.0. Just like GLonD3D12, CLonD3D12 and dozen this is a layered driver running on top of Direct3D 12 API so it can use GPU acceleration if available. Deployment instructions have been [documented by Microsoft](https://devblogs.microsoft.com/directx/video-acceleration-api-va-api-now-available-on-windows/). Per application deployment tool has been updated to assist in this process.
+- VA-API D3D12 driver. File names: `vaon12_drv_video.dll`. This driver was made available in 22.3.0. Just like GLonD3D12, CLonD3D12 and dozen this is a layered driver running on top of Direct3D 12 API so it can use GPU acceleration if available. Deployment instructions have been [documented by Microsoft](https://devblogs.microsoft.com/directx/video-acceleration-api-va-api-now-available-on-windows/). Per application deployment tool has been updated to assist in this process.
 ### Testing library and tools
 - Gallium raw interface. This deprecated component has been [removed in Mesa3D 22.3.0](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/19099). File names: `graw.dll`, `graw_null.dll`. This is a dummy gallium driver without any graphics API mainly used for testing. Available for both x86 and x64 and in full (with window system support) and headless (no window) versions. Since 20.0.2 both windowed and windowless versions are available in both MSVC and MSYS2 Mingw-w64 packages.
 - test suite. Many executable unit tests.

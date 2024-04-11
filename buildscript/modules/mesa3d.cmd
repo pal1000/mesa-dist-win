@@ -169,7 +169,7 @@
 @IF %intmesaver% LSS 23300 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" clover_llvm-move-to-modern-pass-manager
 
 @rem LLVM+clang 18 linking compatibility
-@call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" mclc-llvm+clang18
+@IF %intmesaver% LSS 24055 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" mclc-llvm+clang18
 
 @rem Fix vaon12 filename
 @IF %intmesaver% LSS 23200 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" vaon12-strip-lib-prefix
