@@ -107,6 +107,11 @@
 @echo Done.
 @echo.
 
+@set continue_deploy=
+@set /p continue_deploy=Continue with deployment? (y=yes):
+@echo.
+@if /I NOT "%continue_deploy%"=="y" EXIT /b
+
 :askforappexe
 @set appexe=
 @set /p appexe=Application executable name with or without extension (optional, try leaving it blank first and only specify it if things don't work otherwise; it forces some programs to use Mesa3D which would otherwise bypass it):
