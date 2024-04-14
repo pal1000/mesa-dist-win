@@ -226,5 +226,7 @@
 
 :restart
 @set rerun=
+@echo.
 @set /p rerun=More Mesa deployment? (y=yes):
+@echo.
 @if /I "%rerun%"=="y" GOTO deploy
