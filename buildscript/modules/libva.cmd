@@ -25,8 +25,8 @@
 @IF NOT EXIST "build\" MD build
 @echo Cleanning VA-API library build...
 @echo.
-@IF EXIST "build\%abi%" RD /S /Q build\%abi%
-@IF EXIST "build\buildsys-%abi%" RD /S /Q build\buildsys-%abi%
+@IF EXIST "build\%abi%\" RD /S /Q build\%abi%
+@IF EXIST "build\buildsys-%abi%\" RD /S /Q build\buildsys-%abi%
 
 @call "%devroot%\%projectname%\buildscript\modules\useninja.cmd"
 @IF NOT "%pkgconfigstate%"=="0" set PATH=%pkgconfigloc%\;%PATH%

@@ -25,13 +25,14 @@
 @IF NOT EXIST "zstd\" MD zstd
 @echo Cleanning zstd compressor build...
 @echo.
-@IF EXIST "zstd\%abi%" RD /S /Q zstd\%abi%
-@IF EXIST "zstd\buildsys-%abi%" RD /S /Q zstd\buildsys-%abi%
+@IF EXIST "zstd\%abi%\" RD /S /Q zstd\%abi%
+@IF EXIST "zstd\buildsys-%abi%\" RD /S /Q zstd\buildsys-%abi%
+@cd build\meson
 
 @call "%devroot%\%projectname%\buildscript\modules\useninja.cmd"
 @IF NOT "%pkgconfigstate%"=="0" set PATH=%pkgconfigloc%\;%PATH%
 
-@set buildconf=%mesonloc% setup -C zstd/buildsys-%abi% --buildtype=release --pkgconfig.relocatable --prefix="%devroot:\=/%/zstd/zstd/%abi%" -Db_vscrt=mt
+@set buildconf=%mesonloc% setup "%devroot:\=/%/zstd/zstd/buildsys-%abi%" --buildtype=release --pkgconfig.relocatable --prefix="%devroot:\=/%/zstd/zstd/%abi%" -Db_vscrt=mt
 @IF /I NOT "%useninja%"=="y" set buildconf=%buildconf% --backend=vs
 @IF /I "%useninja%"=="y" set buildconf=%buildconf% --backend=ninja
 
@@ -43,7 +44,7 @@
 @echo.
 @pause
 @echo.
-@cd zstd\buildsys-%abi%
+@cd "%devroot%\zstd\zstd\buildsys-%abi%"
 
 @IF /I NOT "%useninja%"=="y" IF %abi%==x64 set buildcmd=msbuild /p^:Configuration=release,Platform=x64 zstd.sln /m^:%throttle% ^&^& msbuild /p^:Configuration=release,Platform=x64 RUN_INSTALL.vcxproj /m^:%throttle%
 @IF /I NOT "%useninja%"=="y" IF %abi%==x86 set buildcmd=msbuild /p^:Configuration=release,Platform=Win32 zstd.sln /m^:%throttle% ^&^& msbuild /p^:Configuration=release,Platform=Win32 RUN_INSTALL.vcxproj /m^:%throttle%
