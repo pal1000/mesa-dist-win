@@ -78,6 +78,9 @@
 @IF EXIST "%msysloc%" call "%devroot%\%projectname%\buildscript\modules\msyspackages.cmd"
 @IF %toolchain%==msvc call "%devroot%\%projectname%\buildscript\modules\winflexbison.cmd"
 
+@rem Build zstd compressor
+@IF %toolchain%==msvc call "%devroot%\%projectname%\buildscript\modules\zstd.cmd"
+
 @rem If using MSVC do LLVM build.
 @IF %toolchain%==msvc call "%devroot%\%projectname%\buildscript\modules\llvm.cmd"
 @IF %toolchain%==msvc call "%devroot%\%projectname%\buildscript\modules\libclc.cmd"
