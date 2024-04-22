@@ -185,11 +185,6 @@
 @call "%devroot%\%projectname%\buildscript\modules\useninja.cmd"
 @set buildconf=%buildconf% build/%toolchain%-%abi% --libdir="lib/%abi%" --bindir="bin/%abi%" --pkgconfig.relocatable
 
-@set usezstd=n
-@IF %intmesaver% GTR 20000 set /p usezstd=Use ZSTD compression (y/n):
-@IF %intmesaver% GTR 20000 echo.
-@IF /I "%usezstd%"=="y" set buildconf=%buildconf% -Dzstd=%mesonbooltrue%
-@IF %intmesaver% GTR 20000 IF /I NOT "%usezstd%"=="y" set buildconf=%buildconf% -Dzstd=%mesonboolfalse%
 @IF %intmesaver% GEQ 21200 IF %intmesaver% LSS 22100 set buildconf=%buildconf% -Dc_std=c17
 @IF %intmesaver% GEQ 22000 set RTTI=true
 
@@ -208,6 +203,17 @@
 @if /I NOT "%useninja%"=="y" set buildconf=%buildconf% --backend=vs
 @if /I NOT "%useninja%"=="y" set buildcmd=msbuild /p^:Configuration=release,Platform=Win32 mesa.sln /m^:%throttle%
 @if /I NOT "%useninja%"=="y" IF %abi%==x64 set buildcmd=%buildcmd:Win32=x64%
+
+@rem Add flags tracking PKG_CONFIG search PATH adjustment needs
+@set PKG_CONFIG_LIBCLC=0
+@set PKG_CONFIG_SPV=0
+@set "PKG_CONFIG_PATH="
+
+@set usezstd=n
+@IF %intmesaver% GTR 20000 set /p usezstd=Use ZSTD compression (y/n):
+@IF %intmesaver% GTR 20000 echo.
+@IF /I "%usezstd%"=="y" set buildconf=%buildconf% -Dzstd=%mesonbooltrue%
+@IF %intmesaver% GTR 20000 IF /I NOT "%usezstd%"=="y" set buildconf=%buildconf% -Dzstd=%mesonboolfalse%
 
 @set mesadbgbld=n
 @set mesadbgoptim=n
@@ -428,12 +434,6 @@
 @IF %toolchain%==msvc IF EXIST "%llvminstloc%\%abi%\lib\clang\" for /f tokens^=1^ delims^=.^ eol^= %%a IN ('dir /B /A:D "%llvminstloc%\%abi%\lib\clang\"') DO @IF %disableootpatch%==1 IF %intmesaver% LSS 24055 IF %%a GEQ 18 set canclspv=0
 @IF NOT %toolchain%==msvc IF EXIST "%msysloc%\%LMSYSTEM%\lib\clang\" for /f tokens^=1^ delims^=.^ eol^= %%a IN ('dir /B /A:D "%msysloc%\%LMSYSTEM%\lib\clang\"') DO @IF %disableootpatch%==1 IF %intmesaver% LSS 24055 IF %%a GEQ 18 set canclspv=0
 
-@rem Add flags tracking PKG_CONFIG search PATH adjustment needs
-@set PKG_CONFIG_LIBCLC=0
-@set PKG_CONFIG_SPV=0
-@set PKG_CONFIG_LIBVA=0
-@set "PKG_CONFIG_PATH="
-
 @rem Microsoft OpenCL compiler requires OpenCL SPIR-V, DirectX Headers and out of tree patches [21.3-22.2]
 @set canmclc=0
 @IF %canclspv% EQU 1 IF %canmcrdrvcom% EQU 1 set canmclc=1
@@ -481,7 +481,6 @@
 @IF %canvaapi% EQU 1 set /p buildvaapi=Build Mesa3D VA-API interface (y/n):
 @IF %canvaapi% EQU 1 echo.
 @IF /I "%buildvaapi%"=="y" set buildconf=%buildconf% -Dgallium-va=%mesonbooltrue%
-@IF /I "%buildvaapi%"=="y" set PKG_CONFIG_LIBVA=1
 @IF /I NOT "%buildvaapi%"=="y" set buildconf=%buildconf% -Dgallium-va=%mesonboolfalse%
 @IF %intmesaver% GEQ 22200 set buildconf=%buildconf% -Dgallium-d3d12-video=auto -Dvideo-codecs=
 @IF %intmesaver% GEQ 24000 set buildconf=%buildconf%all_free
@@ -499,12 +498,11 @@
 @IF %PKG_CONFIG_LIBCLC% EQU 1 set buildconf=%buildconf% -Dstatic-libclc=all
 @IF %PKG_CONFIG_LIBCLC% EQU 1 IF %toolchain%==msvc set PKG_CONFIG_PATH=%PKG_CONFIG_PATH%%llvminstloc:\=/%/clc/share/pkgconfig;
 @IF %PKG_CONFIG_SPV% EQU 1 IF %toolchain%==msvc set PKG_CONFIG_PATH=%PKG_CONFIG_PATH%%llvminstloc:\=/%/spv-%abi%/lib/pkgconfig;%devroot:\=/%/spirv-tools/build/%abi%/lib/pkgconfig;
-@IF %PKG_CONFIG_LIBVA% EQU 1 IF %toolchain%==msvc set PKG_CONFIG_PATH=%PKG_CONFIG_PATH%%devroot:\=/%/libva/build/%abi%/lib/pkgconfig;
+@IF /I "%buildvaapi%"=="y" IF %toolchain%==msvc set PKG_CONFIG_PATH=%PKG_CONFIG_PATH%%devroot:\=/%/libva/build/%abi%/lib/pkgconfig;
 @IF NOT defined PKG_CONFIG_PATH set PKG_CONFIG_PATH=;
 @set buildconf=%buildconf% --pkg-config-path="%PKG_CONFIG_PATH:~0,-1%"
 @set "PKG_CONFIG_LIBCLC="
 @set "PKG_CONFIG_SPV="
-@set "PKG_CONFIG_LIBVA="
 @set "PKG_CONFIG_PATH="
 
 @rem Pass additional compiler and linker flags
