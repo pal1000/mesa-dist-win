@@ -1,3 +1,7 @@
+### Build script
+- MSVC ZSTD support: Switch to standalone build.
+### Deployment
+- Per application tool: Prompt to continue after old deployment cleanup instead of beginning a new deployment right away.
 # 24.0.5
 - Updated Mesa3D to [24.0.5](https://gitlab.freedesktop.org/mesa/mesa/-/blob/24.0/docs/relnotes/24.0.5.rst?ref_type=heads&plain=0).
 ### Deployment
