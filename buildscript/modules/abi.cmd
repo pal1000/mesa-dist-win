@@ -17,6 +17,7 @@
 @set vsabi=%abi%
 @IF /I %PROCESSOR_ARCHITECTURE%==x86 set hostabi=x86
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 set hostabi=x64
+@IF /I %PROCESSOR_ARCHITECTURE%==ARM64 set hostabi=aarch64
 @IF NOT %abi%==%hostabi% set vsabi=%hostabi%_%abi%
 
 @set TITLE=%TITLE% targeting %abi%
