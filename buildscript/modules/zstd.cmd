@@ -32,7 +32,7 @@
 @call "%devroot%\%projectname%\buildscript\modules\useninja.cmd"
 @IF NOT "%pkgconfigstate%"=="0" set PATH=%pkgconfigloc%\;%PATH%
 
-@set buildconf=%mesonloc% setup "%devroot:\=/%/zstd/zstd/buildsys-%abi%" --buildtype=release --pkgconfig.relocatable --prefix="%devroot:\=/%/zstd/zstd/%abi%" -Db_vscrt=mt
+@set buildconf=%mesonloc% setup "%devroot:\=/%/zstd/zstd/buildsys-%abi%" --buildtype=release --pkgconfig.relocatable --prefix="%devroot:\=/%/zstd/zstd/%abi%" -Db_vscrt=mt -Dstatic_runtime=true
 @IF /I NOT "%useninja%"=="y" set buildconf=%buildconf% --backend=vs
 @IF /I "%useninja%"=="y" set buildconf=%buildconf% --backend=ninja
 
