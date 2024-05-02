@@ -1,3 +1,5 @@
+### Build script
+- d3d12: Support disabling graphics pipeline - [[24.1+](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/27997)].
 # 24.0.6
 - Updated Mesa3D to [24.0.6](https://gitlab.freedesktop.org/mesa/mesa/-/blob/24.0/docs/relnotes/24.0.6.rst?ref_type=heads&plain=0). Also includes 24.1.0-rc1 pre-release MSVC build.
 ### Build script

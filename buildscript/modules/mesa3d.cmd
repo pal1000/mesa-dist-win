@@ -301,7 +301,11 @@
 @IF NOT %toolchain%==msvc IF %intmesaver% LSS 22202 set cand3d12=0
 @IF %cand3d12% EQU 1 set /p d3d12=Do you want to build Mesa3D OpenGL driver over D3D12 - GLonD3D12 (y/n):
 @IF %cand3d12% EQU 1 echo.
+@IF %intmesaver% GEQ 24100 set buildconf=%buildconf% -Dgallium-d3d12-graphics=auto
 @IF /I "%d3d12%"=="y" set /a galliumcount+=1
+@IF /I "%d3d12%"=="y" IF %intmesaver% GEQ 24100 set /p gfxd3d12=Enable d3d12 graphics pipeline (y=default/n):
+@IF /I "%d3d12%"=="y" IF %intmesaver% GEQ 24100 echo.
+@IF /I "%gfxd3d12%"=="n" set buildconf=%buildconf:~0,-4%%mesonboolfalse%
 
 @set swrdrv=n
 @set canswr=0
