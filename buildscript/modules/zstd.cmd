@@ -11,7 +11,7 @@
 @cd zstd
 @for /f tokens^=2^ delims^=/^ eol^= %%a in ('git symbolic-ref --short refs/remotes/origin/HEAD 2^>^&^1') do @git checkout %%a
 @git pull --progress --tags --recurse-submodules origin
-@git checkout v1.5.6
+@git checkout 1232d4c45d18f124e44fe382b11dee095566b610
 )
 @IF %gitstate% GTR 0 echo.
 @IF "%pkgconfigstate%"=="0" GOTO nozstd

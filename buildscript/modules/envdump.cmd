@@ -158,6 +158,9 @@ set "exitloop="
 @set "exitloop="
 )
 
+@rem Add zstd to build environment info
+@IF %toolchain%==msvc if EXIST "%devroot%\zstd\zstd\%hostabi%\lib\pkgconfig\libzstd.pc" FOR /F tokens^=1-2^ eol^= %%a IN ('type "%devroot%\zstd\zstd\%hostabi%\lib\pkgconfig\libzstd.pc"') DO @IF /I "%%a"=="Version:" echo zstd %%b>>"%devroot%\%projectname%\buildinfo\msvc.txt"
+
 @rem Dump MSYS2 environment
 @IF NOT %toolchain%==msvc echo.>>"%devroot%\%projectname%\buildinfo\mingw.txt"
 @IF NOT %toolchain%==msvc echo MSYS2 environment>>"%devroot%\%projectname%\buildinfo\mingw.txt"
