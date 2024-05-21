@@ -1,3 +1,5 @@
+### Build script
+- MSVC build: Support disabling debug printf.
 # 24.0.7
 - Updated Mesa3D to [24.0.7](https://gitlab.freedesktop.org/mesa/mesa/-/blob/24.0/docs/relnotes/24.0.7.rst?ref_type=heads&plain=0).
 ### Build script

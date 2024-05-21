@@ -217,6 +217,7 @@
 
 @set mesadbgbld=n
 @set mesadbgoptim=n
+@aet nodebugprintf=n
 @if /I "%useninja%"=="y" IF %toolchain%==msvc set /p mesadbgbld=Debug friendly binaries (require a lot of RAM) (y/n):
 @IF NOT %toolchain%==msvc set /p mesadbgbld=Debug friendly binaries (y/n):
 @if /I "%useninja%"=="y" echo.
@@ -227,6 +228,9 @@
 @if /I "%mesadbgbld%"=="y" if /I NOT "%mesadbgoptim%"=="y" set buildconf=%buildconf% --buildtype=debug
 @if /I "%mesadbgoptim%"=="y" IF NOT %toolchain%==msvc set buildconf=%buildconf% --buildtype=debugoptimized
 @if /I "%mesadbgoptim%"=="y" IF %toolchain%==msvc set buildconf=%buildconf% -Ddebug=true -Doptimization=3
+@if /I "%mesadbgoptim%"=="y" IF %toolchain%==msvc set /p nodebugprintf=Disable debug printf (y/n):
+@if /I "%mesadbgoptim%"=="y" IF %toolchain%==msvc echo.
+@if /I "%nodebugprintf%"=="y" set buildconf=%buildconf% --buildtype=release
 
 @set mesaenableasserts=n
 @set /p mesaenableasserts=Enable asserts (y/n):
