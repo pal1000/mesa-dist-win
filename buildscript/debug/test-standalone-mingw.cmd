@@ -8,7 +8,8 @@
 @set PATH=%devroot%\flexbison\;%devroot%\ninja\;%devroot%\pkgconf\pkgconf\;%PATH%
 @call "%devroot%\%projectname%\buildscript\modules\abi.cmd"
 @set multilib=0
-@IF NOT "%multilib%"=="1" set PATH=%devroot%\%LMSYSTEM%\bin\;%PATH%
+@IF NOT "%multilib%"=="1" IF %abi%==x86 set PATH=%devroot%\mingw32\bin\;%PATH%
+@IF NOT "%multilib%"=="1" IF %abi%==x64 set PATH=%devroot%\mingw64\bin\;%PATH%
 @IF "%multilib%"=="1" set PATH=%devroot%\mingw64\bin\;%PATH%
 @call "%devroot%\%projectname%\buildscript\modules\discoverpython.cmd"
 @call "%devroot%\%projectname%\buildscript\modules\pythonpackages.cmd"
@@ -18,7 +19,7 @@
 @git clean -fd
 @copy /Y "%devroot%\%projectname%\buildscript\mesonsubprojects\zlib.wrap" "%devroot%\mesa\subprojects\zlib.wrap"
 @echo.
-@set buildconf=meson build/gcc-%abi% -Dbuildtype=debugoptimized -Dllvm=disabled -Dzlib:default_library=static -Dgallium-drivers=swrast,zink
+@set buildconf=meson build/gcc-%abi% -Dbuildtype=debugoptimized -Dllvm=disabled -Dzlib:default_library=static -Dshared-glapi=disabled -Dgallium-drivers=d3d12,swrast,zink
 @IF NOT EXIST "%VK_SDK_PATH%" IF NOT EXIST "%VULKAN_SDK%" set buildconf=%buildconf:~0,-5%
 @set LDFLAGS=-static
 @IF "%multilib%"=="1" set CFLAGS=-m32
