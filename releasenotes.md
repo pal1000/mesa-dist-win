@@ -1,5 +1,5 @@
 ### Debug
-- Standalone MinGW test: Minimal changges to unbreak it.
+- Standalone MinGW test: Minimal changes to unbreak it.
 ### Build script
 - MSVC build: Support disabling debug printf;
 - MinGW GCC x64 build: Support selecting between UCRT and MSVCRT toolchains.

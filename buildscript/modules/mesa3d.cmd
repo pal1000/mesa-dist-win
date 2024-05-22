@@ -217,7 +217,7 @@
 
 @set mesadbgbld=n
 @set mesadbgoptim=n
-@aet nodebugprintf=n
+@set nodebugprintf=n
 @if /I "%useninja%"=="y" IF %toolchain%==msvc set /p mesadbgbld=Debug friendly binaries (require a lot of RAM) (y/n):
 @IF NOT %toolchain%==msvc set /p mesadbgbld=Debug friendly binaries (y/n):
 @if /I "%useninja%"=="y" echo.
