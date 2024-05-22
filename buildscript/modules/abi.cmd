@@ -8,6 +8,10 @@
 @rem Select MinGW shell based on ABI
 @set MSYSTEM=UCRT64
 @set LMSYSTEM=ucrt64
+@if %abi%==x64 set /p gccmsvcrt=Use MSVCRT compatible toolchain for MinGW GCC x64 build (y/n):
+@if %abi%==x64 echo.
+@if /I "%gccmsvcrt%"=="y" set MSYSTEM=MINGW64
+@IF /I "%gccmsvcrt%"=="y" set LMSYSTEM=mingw64
 @IF %abi%==x86 set MSYSTEM=MINGW32
 @IF %abi%==x86 set LMSYSTEM=mingw32
 @IF %abi%==aarch64 set MSYSTEM=CLANGARM64
