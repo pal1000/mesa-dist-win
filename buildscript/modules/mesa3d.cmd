@@ -230,7 +230,7 @@
 @if /I "%mesadbgoptim%"=="y" IF %toolchain%==msvc set buildconf=%buildconf% -Ddebug=true -Doptimization=3
 @if /I "%mesadbgoptim%"=="y" IF %toolchain%==msvc set /p nodebugprintf=Disable debug printf (y/n):
 @if /I "%mesadbgoptim%"=="y" IF %toolchain%==msvc echo.
-@if /I "%nodebugprintf%"=="y" set buildconf=%buildconf% --buildtype=release
+@if /I "%nodebugprintf%"=="y" set buildconf=%buildconf:~0,-17% --buildtype=release
 
 @set mesaenableasserts=n
 @set /p mesaenableasserts=Enable asserts (y/n):

@@ -2,31 +2,31 @@ Build environment
 -----------------
 Windows 10.0.20348
 Ressource Hacker 5.2.7.427
-7-Zip 23.01 ultra compression
-Git 2.45.0.1
-Visual Studio Community 2022 v17.9.6
-Windows SDK 10.1.22621.3233
-Windows Driver Kit 10.1.22621.2428
-Nuget Commandline tool 6.9.1.3
+7-Zip 24.05 ultra compression
+Git 2.45.1.1
+Visual Studio Build Tools 2022 v17.9.7
+Windows SDK 10.1.26100.1
+Windows Driver Kit 10.1.26100.1
+Nuget Commandline tool 6.10.0.107
 Python 3.12.3
 
 Python packages
 ---------------
-Mako       1.3.3
+Mako       1.3.5
 MarkupSafe 2.1.5
 meson      1.4.0
 pip        24.0
-setuptools 69.5.1
+setuptools 70.0.0
 
 CMake 3.29.3
-Ninja 1.12.0
-LLVM 18.1.5
+Ninja 1.12.1
+LLVM 18.1.6
 SPIRV Tools 2024.2.1
 flex 2.6.4
 Bison 3.8.2
 pkgconf 2.2.0
 zlib 1.3.1
-OpenCLonD3D12 ICD 2024.04.04
+OpenCLonD3D12 ICD 2024.05.11
 libva 2.21.0
 VA-API 1.21.0
 DirectX headers 1.613.1
