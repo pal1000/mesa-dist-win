@@ -1,5 +1,5 @@
 # 24.1.1
-- Updated Mesa3D to [24.1.1](https://gitlab.freedesktop.org/mesa/mesa/-/blob/24.1/docs/relnotes/24.1.1.rst?ref_type=heads&plain=0). [24.0.9](https://gitlab.freedesktop.org/mesa/mesa/-/blob/24.0/docs/relnotes/24.0.9.rst?ref_type=heads&plain=0) MSVC build is also included.
+- Updated Mesa3D to [24.1.1](https://gitlab.freedesktop.org/mesa/mesa/-/blob/24.1/docs/relnotes/24.1.1.rst?ref_type=heads&plain=0). [24.0.9](https://gitlab.freedesktop.org/mesa/mesa/-/blob/staging/24.0/docs/relnotes/24.0.9.rst?ref_type=heads&plain=0) MSVC build is also included.
 # 24.1.0
 - Updated Mesa3D to [24.1.0](https://gitlab.freedesktop.org/mesa/mesa/-/blob/24.1/docs/relnotes/24.1.0.rst?ref_type=heads&plain=0). [24.0.8](https://gitlab.freedesktop.org/mesa/mesa/-/blob/24.0/docs/relnotes/24.0.8.rst?ref_type=heads&plain=0) MSVC build is also included.
 ### Debug
