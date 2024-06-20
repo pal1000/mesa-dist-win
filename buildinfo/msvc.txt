@@ -4,11 +4,11 @@ Windows 10.0.20348
 Ressource Hacker 5.2.7.427
 7-Zip 24.06 ultra compression
 Git 2.45.2.1
-Visual Studio Build Tools 2022 v17.10.1
+Visual Studio Build Tools 2022 v17.10.3
 Windows SDK 10.1.26100.1
 Windows Driver Kit 10.1.26100.1
 Nuget Commandline tool 6.10.0.107
-Python 3.12.3
+Python 3.12.4
 
 Python packages
 ---------------
@@ -18,9 +18,9 @@ meson      1.4.1
 pip        24.0
 setuptools 70.0.0
 
-CMake 3.29.4
+CMake 3.29.6
 Ninja 1.12.1
-LLVM 18.1.7
+LLVM 18.1.8
 SPIRV Tools 2024.2.1
 flex 2.6.4
 Bison 3.8.2
