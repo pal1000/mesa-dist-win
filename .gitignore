@@ -1,6 +1,8 @@
 # Binaries
 /bin/x86
 /bin/x64
+/tests/x86
+/tests/x64
 # 7-zip artifacts
 *.tmp
 *.7z

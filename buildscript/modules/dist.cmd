@@ -28,14 +28,17 @@
 @IF %toolchain%==msvc IF EXIST lib\%abi%\*.lib echo.
 @if NOT EXIST "bin\" MD bin
 @if NOT EXIST "lib\" MD lib
+@if NOT EXIST "tests\" MD tests
 @IF /I NOT "%keeplastbuild%"=="y" if EXIST "bin\%abi%\" RD /S /Q bin\%abi%
 @IF /I NOT "%keeplastbuild%"=="y" if EXIST "lib\%abi%\" RD /S /Q lib\%abi%
 @IF /I NOT "%keeplastbuild%"=="y" if EXIST "debug\%abi%\" RD /S /Q debug\%abi%
+@IF /I NOT "%keeplastbuild%"=="y" if EXIST "tests\%abi%\" RD /S /Q tests\%abi%
 @IF /I NOT "%keeplastbuild%"=="y" if EXIST "include\" RD /S /Q include
 @if NOT EXIST "bin\%abi%\" MD bin\%abi%
 @if NOT EXIST "lib\%abi%\" MD lib\%abi%
 @if NOT EXIST "lib\%abi%\pkgconfig\" MD lib\%abi%\pkgconfig
 @if NOT EXIST "debug\%abi%\" MD debug\%abi%
+@if NOT EXIST "tests\%abi%\" MD tests\%abi%
 @if NOT EXIST "include\" MD include
 
 :mesondist
@@ -60,6 +63,7 @@
 
 @echo Copying test suite and commandline utilities...
 @for /R "%devroot%\mesa\build\%toolchain%-%abi%\src" %%a IN (*.exe) do @IF EXIST "%%a" copy "%%a" "%devroot%\%projectname%\bin\%abi%"
+@for /R "%devroot%\%projectname%\bin\%abi%" %%a IN (*.exe) do @IF EXIST "%%a" IF /I NOT "%%~na"=="spirv2dxil" MOVE "%%a" "%devroot%\%projectname%\tests\%abi%\"
 @echo.
 
 @echo Copying Vulkan drivers initialization configuration files if needed...

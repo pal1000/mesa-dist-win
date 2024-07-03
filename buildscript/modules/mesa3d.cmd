@@ -530,7 +530,8 @@
 @set canmesatests=1
 @IF %disableootpatch%==1 IF %intmesaver% GEQ 20100 IF %intmesaver% LSS 20103 IF NOT %toolchain%==msvc set canmesatests=0
 @IF %canmesatests% EQU 1 IF %intmesaver% LSS 22300 set /p mesatests=Do you want to build unit tests and gallium raw interface (y/n):
-@IF %canmesatests% EQU 1 IF %intmesaver% GEQ 22300 set /p mesatests=Do you want to build unit tests (y/n):
+@IF %canmesatests% EQU 1 IF %intmesaver% GEQ 22300 IF %intmesaver% LSS 24153 set /p mesatests=Do you want to build unit tests (y/n):
+@IF %canmesatests% EQU 1 IF %intmesaver% GEQ 24153 set /p mesatests=Do you want to build unit tests and dynamic pipe loader (y/n):
 @IF %canmesatests% EQU 1 echo.
 @if /I "%mesatests%"=="y" set buildconf=%buildconf% -Dbuild-tests=true
 @if /I NOT "%mesatests%"=="y" set buildconf=%buildconf% -Dbuild-tests=false
