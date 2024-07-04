@@ -1,6 +1,7 @@
-### Distribution (NEW)
-- Unit tests package;
-- Dynamic pipe loader debut in release package.
+### Distribution
+- New unit tests package;
+- Dynamic pipe loader debut;
+- MSVC debug symbols collection logic has been improved to cover spirv2dxil tool and unit tests (.exe files).
 # 24.1.2
 - Updated Mesa3D to [24.1.2](https://gitlab.freedesktop.org/mesa/mesa/-/blob/24.1/docs/relnotes/24.1.2.rst?ref_type=heads&plain=0).
 # 24.1.1

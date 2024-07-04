@@ -60,7 +60,7 @@
 @rem Add version info to clover OpenCL driver and runtime
 @call "%devroot%\%projectname%\buildscript\modules\rcgen.cmd" "Mesa3D clover OpenCL driver" "%devroot%\%projectname%\bin\%abi%\MesaOpenCL.dll" %abi% %mesaver% "Mesa/X.org"
 @call "%devroot%\%projectname%\buildscript\modules\rcgen.cmd" "Mesa3D clover OpenCL runtime" "%devroot%\%projectname%\bin\%abi%\OpenCL.dll" %abi% %mesaver% "Mesa/X.org"
-@call "%devroot%\%projectname%\buildscript\modules\rcgen.cmd" "Mesa3D clover swrast backend" "%devroot%\%projectname%\bin\%abi%\pipe_swrast.dll" %abi% %mesaver% "Mesa/X.org"
+@call "%devroot%\%projectname%\buildscript\modules\rcgen.cmd" "Mesa3D swrast pipe-loader" "%devroot%\%projectname%\bin\%abi%\pipe_swrast.dll" %abi% %mesaver% "Mesa/X.org"
 
 @rem Add version info to Mesa3D D3D10 software rendering driver
 @call "%devroot%\%projectname%\buildscript\modules\rcgen.cmd" "Mesa3D D3D10 software rendering driver" "%devroot%\%projectname%\bin\%abi%\d3d10sw.dll" %abi% %mesaver% "VMware Inc."

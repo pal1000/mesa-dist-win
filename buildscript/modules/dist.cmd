@@ -61,9 +61,13 @@
 @IF EXIST "%devroot%\%projectname%\bin\%abi%\*aon12_drv_video.dll" IF NOT EXIST "%devroot%\%projectname%\bin\%abi%\va_win32.dll" IF EXIST "%devroot%\libva\build\%abi%\bin\va_win32.dll" copy "%devroot%\libva\build\%abi%\bin\va_win32.dll" "%devroot%\%projectname%\bin\%abi%"
 @echo.
 
-@echo Copying test suite and commandline utilities...
-@for /R "%devroot%\mesa\build\%toolchain%-%abi%\src" %%a IN (*.exe) do @IF EXIST "%%a" copy "%%a" "%devroot%\%projectname%\bin\%abi%"
-@for /R "%devroot%\%projectname%\bin\%abi%" %%a IN (*.exe) do @IF EXIST "%%a" IF /I NOT "%%~na"=="spirv2dxil" MOVE "%%a" "%devroot%\%projectname%\tests\%abi%\"
+@echo Copying test suite, commandline utilities and their PDB debug symbols...
+@for /R "%devroot%\mesa\build\%toolchain%-%abi%\src" %%a IN (*.exe) do @(
+@IF EXIST "%%a" IF /I "%%~na"=="spirv2dxil" copy "%%a" "%devroot%\%projectname%\bin\%abi%"
+@IF EXIST "%%~dpna.pdb" IF /I "%%~na"=="spirv2dxil" copy "%%~dpna.pdb" "%devroot%\%projectname%\debug\%abi%"
+@IF EXIST "%%a" IF /I NOT "%%~na"=="spirv2dxil" copy "%%a" "%devroot%\%projectname%\tests\%abi%"
+@IF EXIST "%%~dpna.pdb" IF /I NOT "%%~na"=="spirv2dxil" copy "%%~dpna.pdb" "%devroot%\%projectname%\tests\%abi%"
+)
 @echo.
 
 @echo Copying Vulkan drivers initialization configuration files if needed...
