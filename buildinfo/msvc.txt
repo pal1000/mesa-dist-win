@@ -2,7 +2,7 @@ Build environment
 -----------------
 Windows 10.0.20348
 Ressource Hacker 5.2.7.427
-7-Zip 24.06 ultra compression
+7-Zip 24.07 ultra compression
 Git 2.45.2.1
 Visual Studio Build Tools 2022 v17.10.3
 Windows SDK 10.1.26100.1
@@ -18,7 +18,7 @@ meson      1.4.1
 pip        24.1.1
 setuptools 70.2.0
 
-CMake 3.29.6
+CMake 3.30.0
 Ninja 1.12.1
 LLVM 18.1.8
 SPIRV Tools 2024.3.1

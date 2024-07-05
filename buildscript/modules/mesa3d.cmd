@@ -520,12 +520,6 @@
 @if defined LDFLAGS IF NOT %toolchain%==msvc set LDFLAGS=%LDFLAGS:~1%
 @if defined LDFLAGS set buildconf=%buildconf% -Dc_link_args="%LDFLAGS%" -Dcpp_link_args="%LDFLAGS%"
 
-@rem Control futex support - https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/17431
-@IF %intmesaver% GEQ 22200 set /p winfutex=Enable Futex (https://en.wikipedia.org/wiki/Futex) support, raises minimum requirements for Mesa3D overall to run to Windows 8/Server 2012 (y/n):
-@IF %intmesaver% GEQ 22200 echo.
-@IF /I NOT "%winfutex%"=="y" IF %intmesaver% GEQ 22200 set buildconf=%buildconf% -Dmin-windows-version=7
-@IF /I "%winfutex%"=="y" set buildconf=%buildconf% -Dmin-windows-version=8
-
 @set mesatests=n
 @set canmesatests=1
 @IF %disableootpatch%==1 IF %intmesaver% GEQ 20100 IF %intmesaver% LSS 20103 IF NOT %toolchain%==msvc set canmesatests=0
@@ -535,6 +529,12 @@
 @IF %canmesatests% EQU 1 echo.
 @if /I "%mesatests%"=="y" set buildconf=%buildconf% -Dbuild-tests=true
 @if /I NOT "%mesatests%"=="y" set buildconf=%buildconf% -Dbuild-tests=false
+
+@rem Control futex support - https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/17431
+@IF %intmesaver% GEQ 22200 set /p winfutex=Enable Futex (https://en.wikipedia.org/wiki/Futex) support, raises minimum requirements for Mesa3D overall to run to Windows 8/Server 2012 (y/n):
+@IF %intmesaver% GEQ 22200 echo.
+@IF /I NOT "%winfutex%"=="y" IF %intmesaver% GEQ 22200 set buildconf=%buildconf% -Dmin-windows-version=7
+@IF /I "%winfutex%"=="y" set buildconf=%buildconf% -Dmin-windows-version=8
 
 @rem Disable draw with LLVM if LLVM native module ends being unused but needed
 @rem workaround for https://gitlab.freedesktop.org/mesa/mesa/-/issues/6817
