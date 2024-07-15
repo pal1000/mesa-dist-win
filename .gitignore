@@ -10,7 +10,6 @@
 /lib/x64
 /lib/x86
 /include
-/dist
 # Build script assets
 /buildscript/assets
 # Debug scripts output
