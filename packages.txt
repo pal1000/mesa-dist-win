@@ -1,9 +1,0 @@
-mesa3d-24.1.3-development-pack-msvc.7z
-..\mesa3d-24.1.3-release-msvc.7z
-..\mesa3d-24.1.3-debug-info-msvc.7z
-..\mesa3d-24.1.3-tests-msvc.7z
-mesa3d-24.1.3-development-pack-mingw.7z
-..\mesa3d-24.1.3-release-mingw.7z
-..\mesa3d-24.1.3-debug-mingw.7z
-..\mesa3d-24.1.3-tests-mingw.7z
-..\mesa3d-24.1.3-tests-debug-mingw.7z

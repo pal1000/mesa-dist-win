@@ -1,5 +1,8 @@
 ### Build script
 - llvmpipe orcjit support (experimental)(24.2+).
+### Distribution
+- Automate packages creation;
+- Merge developmment packages with MSVC, MinGW release and debug binary packages.
 # 24.1.3
 - Updated Mesa3D to [24.1.3](https://gitlab.freedesktop.org/mesa/mesa/-/blob/24.1/docs/relnotes/24.1.3.rst?ref_type=heads&plain=0).
 ### Distribution
