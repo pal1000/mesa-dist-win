@@ -1,4 +1,7 @@
 @cd /d "%~dp0"
+@echo --------------------------------
+@echo Mesa-dist-win distribution maker
+@echo --------------------------------
 @echo Getting Mesa3D version...
 @set mesaver=0
 @IF EXIST ..\..\mesa\VERSION set /p mesaver=<..\..\mesa\VERSION
@@ -35,4 +38,9 @@
 @if %msvclibs% EQU 0 if %mingwlibs% EQU 0 exit /B
 @if %msvclibs% GTR 0 if %mingwlibs% GTR 0 pause
 @if %msvclibs% GTR 0 if %mingwlibs% GTR 0 exit /B
+
+@echo Detecting build type...
+@set buildtype=release
+@if %mingwlibs% GTR 0 for /f %%a IN ('dir /b /s ..\debug\*.dll 2^>nul') DO @set buildtype=debug
+@echo %buildtype%
 @pause
