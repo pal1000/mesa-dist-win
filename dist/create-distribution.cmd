@@ -45,4 +45,25 @@
 @set buildtype=release
 @if %mingwlibs% GTR 0 for /f %%a IN ('dir /b /s ..\debug\*.dll 2^>nul') DO @set buildtype=debug
 @echo %buildtype%
+@echo.
+
+@IF %buildtype%==debug echo Creating mesa-dist-win MinGW debug package...
+@if %msvclibs% GTR 0 echo Creating mesa-dist-win MSVC release package...
+@IF %buildtype%==release if %mingwlibs% GTR 0 echo Creating mesa-dist-win MinGW release package...
+@IF %buildtype%==debug %sevenzip% a mesa3d-%mesaver%%mesarev%-debug-mingw.7z -r ..\debug\*.* -m0=LZMA2 -mmt=off -mx=9
+@if %msvclibs% GTR 0 %sevenzip% a mesa3d-%mesaver%%mesarev%-release-msvc.7z ..\bin ..\lib ..\include -m0=LZMA2 -mmt=off -mx=9
+@IF %buildtype%==release if %mingwlibs% GTR 0 %sevenzip% a mesa3d-%mesaver%%mesarev%-release-mingw.7z ..\bin ..\lib ..\include -m0=LZMA2 -mmt=off -mx=9
+@echo.
+
+@IF %buildtype%==debug echo Creating mesa-dist-win MinGW debug test package...
+@if %msvclibs% GTR 0 echo Creating mesa-dist-win MSVC test package...
+@IF %buildtype%==release if %mingwlibs% GTR 0 echo Creating mesa-dist-win MinGW release test package...
+@IF %buildtype%==debug %sevenzip% a mesa3d-%mesaver%%mesarev%-tests-debug-mingw.7z -r ..\tests\*.* -m0=LZMA2 -mmt=off -mx=9
+@if %msvclibs% GTR 0 %sevenzip% a mesa3d-%mesaver%%mesarev%-tests-msvc.7z -r ..\tests\*.* -m0=LZMA2 -mmt=off -mx=9
+@IF %buildtype%==release if %mingwlibs% GTR 0 %sevenzip% a mesa3d-%mesaver%%mesarev%-tests-mingw.7z -r ..\tests\*.* -m0=LZMA2 -mmt=off -mx=9
+@echo.
+
+@if %msvclibs% GTR 0 echo Creating mesa-dist-win MSVC debug info package...
+@if %msvclibs% GTR 0 %sevenzip% a mesa3d-%mesaver%%mesarev%-debug-info-msvc.7z -r ..\debug\*.pdb -m0=LZMA2 -mmt=off -mx=9
+@echo.
 @pause
