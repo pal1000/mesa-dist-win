@@ -280,6 +280,10 @@
 @if /I "%llvmless%"=="y" set /p glswrast=Do you want to build Mesa3D softpipe driver (y/n):
 @IF %canglswrast% EQU 1 echo.
 @if /I "%glswrast%"=="y" set /a galliumcount+=1
+@if /I NOT "%llvmless%"=="y" IF /I "%glswrast%"=="y" IF %intmesaver% GEQ 24200 set /p orcjit=Use orcjit with llvmpipe (experimental)(y/n):
+@if /I NOT "%llvmless%"=="y" IF /I "%glswrast%"=="y" IF %intmesaver% GEQ 24200 echo.
+@IF /I "%orcjit%"=="y" set buildconf=%buildconf% -Dllvm-orcjit=true
+@IF /I NOT "%orcjit%"=="y" IF %intmesaver% GEQ 24200 set buildconf=%buildconf% -Dllvm-orcjit=false
 
 @set zink=n
 @set canzink=0
