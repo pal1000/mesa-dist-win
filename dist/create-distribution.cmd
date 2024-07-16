@@ -2,14 +2,6 @@
 @echo --------------------------------
 @echo Mesa-dist-win distribution maker
 @echo --------------------------------
-@echo Getting Mesa3D version...
-@set mesaver=0
-@IF EXIST ..\..\mesa\VERSION set /p mesaver=<..\..\mesa\VERSION
-@IF EXIST ..\..\mesa\VERSION IF "%mesaver:~-6%"=="-devel" IF EXIST ..\..\mesa\.git\refs\heads\main for /f %%a IN (..\..\mesa\.git\refs\heads\main) DO @set mesaver=%mesaver:~0,-6%-%%a
-@IF EXIST ..\..\mesa\VERSION echo %mesaver%
-@IF NOT EXIST ..\..\mesa\VERSION set /p mesaver=Enter Mesa3D version:
-@echo.
-
 @echo Checking 7-zip compressor availability...
 @set sevenzip=7z.exe
 @CMD /C EXIT 0
@@ -38,6 +30,16 @@
 @if %msvclibs% EQU 0 if %mingwlibs% EQU 0 exit /B
 @if %msvclibs% GTR 0 if %mingwlibs% GTR 0 pause
 @if %msvclibs% GTR 0 if %mingwlibs% GTR 0 exit /B
+
+@echo Getting Mesa3D version...
+@set mesaver=0
+@IF EXIST ..\..\mesa\VERSION set /p mesaver=<..\..\mesa\VERSION
+@IF EXIST ..\..\mesa\VERSION IF "%mesaver:~-6%"=="-devel" IF EXIST ..\..\mesa\.git\refs\heads\main for /f %%a IN (..\..\mesa\.git\refs\heads\main) DO @set mesaver=%mesaver:~0,-6%-%%a
+@IF EXIST ..\..\mesa\VERSION echo %mesaver%
+@IF NOT EXIST ..\..\mesa\VERSION set /p mesaver=Enter Mesa3D version:
+@echo.
+@set /p mesarev=Enter distribution revision (leave blank if first):
+@echo.
 
 @echo Detecting build type...
 @set buildtype=release
