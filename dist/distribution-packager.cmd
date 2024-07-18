@@ -1,7 +1,8 @@
 @cd /d "%~dp0"
-@echo --------------------------------
-@echo Mesa-dist-win distribution maker
-@echo --------------------------------
+@echo -----------------------------------
+@echo Mesa-dist-win distribution packager
+@echo -----------------------------------
+@TITLE Mesa-dist-win distribution packager
 @echo Checking 7-zip compressor availability...
 @set sevenzip=7z.exe
 @CMD /C EXIT 0
