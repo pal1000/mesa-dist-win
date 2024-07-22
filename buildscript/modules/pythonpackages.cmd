@@ -36,6 +36,10 @@
 @set pypack=Mako
 @GOTO pypackinstall
 )
+@IF NOT EXIST "%devroot%\%projectname%\buildscript\assets\venv\Lib\site-packages\yaml\" (
+@set pypack=pyyaml
+@GOTO pypackinstall
+)
 @IF NOT EXIST "%devroot%\%projectname%\buildscript\assets\venv\Scripts\meson.py" IF NOT EXIST "%devroot%\%projectname%\buildscript\assets\venv\Scripts\meson.exe" (
 @set pypack=meson
 @GOTO pypackinstall
@@ -64,10 +68,8 @@
 @echo.
 @if /I NOT "%pyupd%"=="y" GOTO endpython
 @if EXIST "%LOCALAPPDATA%\pip" RD /S /Q "%LOCALAPPDATA%\pip"
-@for /F skip^=2^ eol^= %%a in ('"%devroot%\%projectname%\buildscript\assets\venv\Scripts\python.exe" -W ignore -m pip list -o --disable-pip-version-check') do @(
-"%devroot%\%projectname%\buildscript\assets\venv\Scripts\python.exe" -W ignore -m pip install -U "%%a"
+@"%devroot%\%projectname%\buildscript\assets\venv\Scripts\python.exe" -W ignore -m pip install -U pip setuptools meson Mako MarkupSafe pyyaml
 echo.
-)
 
 :endpython
 @endlocal
