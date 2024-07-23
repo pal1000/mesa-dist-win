@@ -1,3 +1,9 @@
+# 24.2.0-rc1
+### Build script
+- Prepare for gallium OpenGL swrast alias removal;
+- Mesa3D now requires YAML parsing in Python [24.2+];
+### Distribution
+- packager: Include debug libraries in MinGW debug binary package.
 # 24.1.4
 - Updated Mesa3D to [24.1.4](https://gitlab.freedesktop.org/mesa/mesa/-/blob/24.1/docs/relnotes/24.1.4.rst?ref_type=heads&plain=0).
 ### Build script
