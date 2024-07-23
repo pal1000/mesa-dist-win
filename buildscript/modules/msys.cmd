@@ -8,4 +8,4 @@
 @IF NOT EXIST "%msysloc%" set msysloc=%devroot%\msys32
 @endlocal&set msysloc=%msysloc%
 @set runmsys=call "%devroot%\%projectname%\buildscript\modules\runmsys.cmd"
-@set mingwpkglst={cc,clang,cmake,directx-headers,gdb,glslang,libclc,libelf,libva,meson,pkgconf,polly,python-mako,spirv-headers,spirv-llvm-translator,spirv-tools,vulkan-headers,vulkan-loader,zstd}
+@set mingwpkglst={cc,clang,cmake,directx-headers,gdb,glslang,libclc,libelf,libva,meson,pkgconf,polly,python-mako,python-yaml,spirv-headers,spirv-llvm-translator,spirv-tools,vulkan-headers,vulkan-loader,zstd}
