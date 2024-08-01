@@ -1,3 +1,5 @@
+### Distribution
+packager: Create development packages for each build and restore binary packages layout from 24.1.3.
 ### Build script
 - Move RADV, clover and llvmpipe orcjit builds under experimental mode.
 # 24.2.0-rc1
