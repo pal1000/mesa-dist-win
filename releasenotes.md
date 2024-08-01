@@ -1,3 +1,5 @@
+### Build script
+- Move RADV, clover and llvmpipe orcjit builds under experimental mode.
 # 24.2.0-rc1
 ### Build script
 - Prepare for gallium OpenGL swrast alias removal;

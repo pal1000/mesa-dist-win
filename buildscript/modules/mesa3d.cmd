@@ -182,6 +182,10 @@
 @if NOT EXIST "build\%toolchain%-%abi%\" set cleanmesabld=y
 @if EXIST "build\%toolchain%-%abi%\" IF /I "%cleanmesabld%"=="y" RD /S /Q build\%toolchain%-%abi%
 @IF /I NOT "%cleanmesabld%"=="y" set buildconf=%mesonloc% configure
+
+@set /p experimental=Enable experimental/non-production ready components (y/n):
+@echo.
+
 @call "%devroot%\%projectname%\buildscript\modules\useninja.cmd"
 @set buildconf=%buildconf% build/%toolchain%-%abi% --libdir="lib/%abi%" --bindir="bin/%abi%" --pkgconfig.relocatable
 
@@ -280,8 +284,8 @@
 @if /I "%llvmless%"=="y" set /p glswrast=Do you want to build Mesa3D softpipe driver (y/n):
 @IF %canglswrast% EQU 1 echo.
 @if /I "%glswrast%"=="y" set /a galliumcount+=1
-@if /I NOT "%llvmless%"=="y" IF /I "%glswrast%"=="y" IF %intmesaver% GEQ 24200 set /p orcjit=Use orcjit with llvmpipe (experimental)(y/n):
-@if /I NOT "%llvmless%"=="y" IF /I "%glswrast%"=="y" IF %intmesaver% GEQ 24200 echo.
+@if /I NOT "%llvmless%"=="y" IF /I "%glswrast%"=="y" IF %intmesaver% GEQ 24200 IF /I "%experimental%"=="y" set /p orcjit=Use orcjit with llvmpipe (experimental)(y/n):
+@if /I NOT "%llvmless%"=="y" IF /I "%glswrast%"=="y" IF %intmesaver% GEQ 24200 IF /I "%experimental%"=="y" echo.
 @IF /I "%orcjit%"=="y" set buildconf=%buildconf% -Dllvm-orcjit=true
 @IF /I NOT "%orcjit%"=="y" IF %intmesaver% GEQ 24200 set buildconf=%buildconf% -Dllvm-orcjit=false
 
@@ -356,8 +360,8 @@
 @IF %toolchain%==msvc IF %disableootpatch%==1 IF %intmesaver% GEQ 21300 IF %intmesaver% LSS 21306 set canradv=0
 @IF %toolchain%==msvc IF NOT EXIST "%VK_SDK_PATH%" IF NOT EXIST "%VULKAN_SDK%" IF %intmesaver% GEQ 22200 set canradv=0
 @IF NOT %toolchain%==msvc IF %disableootpatch%==1 IF %intmesaver% LSS 21251 set canradv=0
-@rem Disable RADV build, see https://github.com/pal1000/mesa-dist-win/issues/103
-@set canradv=0
+@rem Only enable RADV under experimental mode, see https://github.com/pal1000/mesa-dist-win/issues/103
+@IF /I NOT "%experimental%"=="y" set canradv=0
 @IF %canradv% EQU 1 set /p radv=Build AMD Vulkan driver - radv (y/n):
 @IF %canradv% EQU 1 echo.
 @IF NOT %toolchain%==msvc if /I "%radv%"=="y" set msysregex=1
@@ -461,9 +465,9 @@
 
 @rem Build clover
 @rem Clover requirements: basic OpenCL support, Mesa 21.3 source code or newer, LLVM build with RTTI [Mesa 22.1 and older], gallium swrast and out of tree patches on 21.3.
-@rem Disabled on Mesa stable as it doesn't work - https://github.com/pal1000/mesa-dist-win/issues/88
+@rem Enabled under experimental mode only as it doesn't work - https://github.com/pal1000/mesa-dist-win/issues/88
 @set canclover=1
-@if %intmesaver:~-2,1% GEQ 5 set canclover=0
+@IF /I NOT "%experimental%"=="y" set canclover=0
 @IF %canopencl% EQU 0 set canclover=0
 @IF %intmesaver% LSS 21300 set canclover=0
 @IF %RTTI%==false set canclover=0
