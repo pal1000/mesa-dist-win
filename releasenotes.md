@@ -1,3 +1,5 @@
+### Build script
+- libva and zstd: Don't touch source code when freshly cloned when building for multiple ABI in parallel.
 ### Distribution
 packager: Create development packages for each build and restore binary packages layout from 24.1.3.
 ### Build script

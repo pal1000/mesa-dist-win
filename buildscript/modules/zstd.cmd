@@ -1,23 +1,30 @@
 @setlocal
 @rem Get and build zstd compressor.
 @if NOT EXIST "%devroot%\zstd\" IF %gitstate%==0 GOTO nozstd
-@cd "%devroot%\"
-@if NOT EXIST "%devroot%\zstd\" IF %gitstate% GTR 0 (
-@echo Getting zstd source code...
-@git clone https://github.com/facebook/zstd.git --recurse-submodules zstd
-)
+@IF "%pkgconfigstate%"=="0" GOTO nozstd
+
+@set zstd_ver=1232d4c45d18f124e44fe382b11dee095566b610
 @if EXIST "%devroot%\zstd\" IF %gitstate% GTR 0 (
 @echo Switching zstd source code to stable release...
-@cd zstd
+@cd "%devroot%\zstd"
 @for /f tokens^=2^ delims^=/^ eol^= %%a in ('git symbolic-ref --short refs/remotes/origin/HEAD 2^>^&^1') do @git checkout %%a
 @git pull --progress --tags --recurse-submodules origin
-@git checkout 1232d4c45d18f124e44fe382b11dee095566b610
+@git checkout %zstd_ver%
+@echo.
 )
-@IF %gitstate% GTR 0 echo.
-@IF "%pkgconfigstate%"=="0" GOTO nozstd
+
 @set /p buildzstd=Do you want to build zstd compressor (y/n):
 @echo.
 @IF /I NOT "%buildzstd%"=="y" GOTO nozstd
+
+@if NOT EXIST "%devroot%\zstd\" IF %gitstate% GTR 0 (
+@echo Getting zstd source code...
+@cd "%devroot%\"
+@git clone https://github.com/facebook/zstd.git --recurse-submodules zstd
+@cd zstd
+@git checkout %zstd_ver%
+@echo.
+)
 
 @call %vsenv% %vsabi%
 @cd "%devroot%\zstd"
