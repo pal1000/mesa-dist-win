@@ -1,9 +1,10 @@
+# 24.1.5
+- Updated Mesa3D to [24.1.5](https://gitlab.freedesktop.org/mesa/mesa/-/blob/24.1/docs/relnotes/24.1.5.rst?ref_type=heads&plain=0).
 ### Build script
+- Move RADV, clover and llvmpipe orcjit builds under experimental mode;
 - libva and zstd: Don't touch source code when freshly cloned when building for multiple ABI in parallel.
 ### Distribution
-packager: Create development packages for each build and restore binary packages layout from 24.1.3.
-### Build script
-- Move RADV, clover and llvmpipe orcjit builds under experimental mode.
+- packager: Create development packages for each build and restore binary packages layout from 24.1.3.
 # 24.2.0-rc1
 ### Build script
 - Prepare for gallium OpenGL swrast alias removal;
