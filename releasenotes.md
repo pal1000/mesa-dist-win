@@ -1,3 +1,5 @@
+### Sponsorship
+- Petrosky VPS [French node hardware has been updated](https://discord.com/channels/728362461761110138/728724093565927444/1267164820013191259).
 # 24.1.5
 - Updated Mesa3D to [24.1.5](https://gitlab.freedesktop.org/mesa/mesa/-/blob/24.1/docs/relnotes/24.1.5.rst?ref_type=heads&plain=0).
 ### Build script
