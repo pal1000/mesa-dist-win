@@ -16,7 +16,7 @@
 @cd pkgconf
 )
 @IF %gitstate% GTR 0 (
-@git checkout pkgconf-2.2.0
+@git checkout pkgconf-2.3.0
 @echo.
 )
 @IF EXIST pkgconf\pkg-config.exe set buildpkgconf=n
