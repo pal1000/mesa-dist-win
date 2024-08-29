@@ -1,3 +1,5 @@
+### Misc
+- Log Mesa3D build configuration commands for debug purposes.
 # 24.2.0 and 24.1.6
 - Updated Mesa3D to [24.2.0](https://gitlab.freedesktop.org/mesa/mesa/-/blob/24.2/docs/relnotes/24.2.0.rst?ref_type=heads&plain=0). [24.1.6](https://gitlab.freedesktop.org/mesa/mesa/-/blob/24.1/docs/relnotes/24.1.6.rst?ref_type=heads&plain=0) MSVC packages are also included.
 ### Sponsorship

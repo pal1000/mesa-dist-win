@@ -23,3 +23,7 @@
 /debug/x86
 # Debug patches
 /patches/test
+# Build config info
+/buildinfo/msvc-*.txt
+/buildinfo/release-mingw-*.txt
+/buildinfo/debug-mingw-*.txt
