@@ -1,3 +1,5 @@
+### Build script
+- d3d12: Do not count it as gallium OpenGL driver if its graphics pipeline is disabled.
 # 24.2.3
 - Updated Mesa3D to [24.2.3](https://gitlab.freedesktop.org/mesa/mesa/-/blob/24.2/docs/relnotes/24.2.3.rst?ref_type=heads&plain=0).
 # 24.2.2
