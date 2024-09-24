@@ -320,7 +320,6 @@
 @IF /I "%gfxd3d12%"=="n" set buildconf=%buildconf:~0,-4%%mesonboolfalse%
 @IF /I "%d3d12%"=="y" IF /I NOT "%gfxd3d12%"=="n" set /a galliumcount+=1
 
-
 @set swrdrv=n
 @set canswr=0
 @if /I NOT "%llvmless%"=="y" if %abi%==x64 IF %disableootpatch%==0 IF EXIST "%devroot%\mesa\src\gallium\drivers\swr\meson.build" if /I "%glswrast%"=="y" set canswr=1
@@ -335,7 +334,7 @@
 @IF /I "%zink%"=="y" set buildconf=%buildconf%zink,
 @IF /I "%d3d12%"=="y" set buildconf=%buildconf%d3d12,
 @if /I "%swrdrv%"=="y" set buildconf=%buildconf%swr,
-@IF %galliumcount% GTR 0 set buildconf=%buildconf:~0,-1%
+@IF "%buildconf:~-1%"=="," set buildconf=%buildconf:~0,-1%
 
 @set mesavkcount=0
 
