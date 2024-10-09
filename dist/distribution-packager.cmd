@@ -39,13 +39,14 @@
 @IF EXIST ..\..\mesa\VERSION echo %mesaver%
 @IF NOT EXIST ..\..\mesa\VERSION set /p mesaver=Enter Mesa3D version:
 @echo.
-@set /p mesarev=Enter distribution revision (leave blank if first):
-@echo.
 
 @echo Detecting build type...
 @set buildtype=release
 @if %mingwlibs% GTR 0 for /f %%a IN ('dir /b /s ..\debug\*.dll 2^>nul') DO @set buildtype=debug
 @echo %buildtype%
+@echo.
+
+@set /p mesarev=Enter distribution revision (leave blank if first):
 @echo.
 
 @IF %buildtype%==debug echo Creating mesa-dist-win MinGW debug package...

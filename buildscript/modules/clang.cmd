@@ -10,9 +10,9 @@
 @set useclang=n
 @IF NOT %toolchain%==msvc IF %abi%==aarch64 set useclang=y
 @IF %clangstate% GTR 0 IF %toolchain%==msvc set /p useclang=Use clang compiler with selected toolchain ^(y/n^):
-@IF %clangstate% GTR 0 IF NOT %toolchain%==msvc IF NOT %abi%==aarch64 set /p useclang=Use clang compiler with selected toolchain ^(y/n^):
+@IF %clangstate% GTR 0 IF NOT %toolchain%==msvc IF %abi%==x64 set /p useclang=Use clang compiler with selected toolchain ^(y/n^):
 @IF %clangstate% GTR 0 IF %toolchain%==msvc echo.
-@IF %clangstate% GTR 0 IF NOT %toolchain%==msvc IF NOT %abi%==aarch64 echo.
+@IF %clangstate% GTR 0 IF NOT %toolchain%==msvc IF %abi%==x64 echo.
 @endlocal&set useclang=%useclang%
 
 @set llvmalreadyloaded=0
@@ -23,8 +23,8 @@
 @if /I "%useclang%"=="y" IF %toolchain%==msvc IF %abi%==x86 IF /I %PROCESSOR_ARCHITECTURE%==x86 IF NOT EXIST "%llvminstloc%\%abi%\bin\clang-cl.exe" set PATH=%ProgramFiles%\LLVM\bin\;%PATH%
 @if /I "%useclang%"=="y" IF %toolchain%==msvc set CC=clang-cl.exe
 @if /I "%useclang%"=="y" IF %toolchain%==msvc set CXX=clang-cl.exe
-@if /I "%useclang%"=="y" IF NOT %toolchain%==msvc IF NOT %abi%==aarch64 set MSYSTEM=CLANG%MSYSTEM:~-2%
-@if /I "%useclang%"=="y" IF NOT %toolchain%==msvc IF NOT %abi%==aarch64 set LMSYSTEM=clang%MSYSTEM:~-2%
+@if /I "%useclang%"=="y" IF NOT %toolchain%==msvc IF %abi%==x64 set MSYSTEM=CLANG%MSYSTEM:~-2%
+@if /I "%useclang%"=="y" IF NOT %toolchain%==msvc IF %abi%==x64 set LMSYSTEM=clang%MSYSTEM:~-2%
 @if /I "%useclang%"=="y" IF NOT %toolchain%==msvc IF %abi%==aarch64 set MSYSTEM=CLANGARM64
 @if /I "%useclang%"=="y" IF NOT %toolchain%==msvc IF %abi%==aarch64 set LMSYSTEM=clangarm64
 @if /I "%useclang%"=="y" IF NOT %toolchain%==msvc set toolchain=clang

@@ -1,5 +1,8 @@
+# 24.2.4
+- Updated Mesa3D to [24.2.4](https://gitlab.freedesktop.org/mesa/mesa/-/blob/24.2/docs/relnotes/24.2.4.rst?ref_type=heads&plain=0).
 ### Build script
-- d3d12: Do not count it as gallium OpenGL driver if its graphics pipeline is disabled.
+- d3d12: Do not count it as gallium OpenGL driver if its graphics pipeline is disabled;
+- mingw/x86: Switch compiler back to gcc as MSYS2 clang32 prefix is discontinued.
 # 24.2.3
 - Updated Mesa3D to [24.2.3](https://gitlab.freedesktop.org/mesa/mesa/-/blob/24.2/docs/relnotes/24.2.3.rst?ref_type=heads&plain=0).
 # 24.2.2
