@@ -12,10 +12,11 @@
 @if /I NOT "%cfgllvmbuild%"=="y" GOTO skipllvm
 
 @rem Get/update LLVM source code
-@set updllvmsrcver=19.1.1
+@set updllvmsrcver=19.1.2
 @if /I "%legacyllvm%"=="y" set updllvmsrcver=18.1.8
 @set llvmsrcver=0
-@set llvmsrcloc="%devroot%\llvm-project\llvm\CMakeLists.txt"
+@set llvmsrcloc="%devroot%\llvm-project\cmake\Modules\LLVMVersion.cmake"
+@if NOT EXIST %llvmsrcloc% set llvmsrcloc="%devroot%\llvm-project\llvm\CMakeLists.txt"
 @if NOT EXIST %llvmsrcloc% set llvmsrcloc="%devroot%\llvm\CMakeLists.txt"
 @if NOT EXIST %llvmsrcloc% set llvmsrcloc=null
 @if NOT %llvmsrcloc%==null for /f tokens^=2^ delims^=^(^)^ eol^= %%a IN ('type %llvmsrcloc%') DO @for /f tokens^=1^,2^ eol^= %%b IN ("%%a") DO @(
