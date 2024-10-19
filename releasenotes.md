@@ -1,3 +1,5 @@
+# 24.2.5
+- Updated Mesa3D to [24.2.5](https://gitlab.freedesktop.org/mesa/mesa/-/blob/24.2/docs/relnotes/24.2.5.rst?ref_type=heads&plain=0).
 ### Build script
 - LLVM build: Fix source update check for [v19 and up](https://github.com/llvm/llvm-project/pull/84641).
 # 24.2.4
