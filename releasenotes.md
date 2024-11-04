@@ -1,3 +1,7 @@
+# 24.2.6
+- Updated Mesa3D to [24.2.6](https://gitlab.freedesktop.org/mesa/mesa/-/blob/24.2/docs/relnotes/24.2.6.rst?ref_type=heads&plain=0).
+### Build script
+- Create a CI capable prompt module (ported 2 of 30 modules to use it).
 # 24.2.5
 - Updated Mesa3D to [24.2.5](https://gitlab.freedesktop.org/mesa/mesa/-/blob/24.2/docs/relnotes/24.2.5.rst?ref_type=heads&plain=0).
 ### Build script
