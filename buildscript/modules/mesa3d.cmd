@@ -330,7 +330,8 @@
 
 @set buildconf=%buildconf% -Dgallium-drivers=
 @IF /I "%glswrast%"=="y" IF %intmesaver% LSS 24200 set buildconf=%buildconf%swrast,
-@IF /I "%glswrast%"=="y" IF %intmesaver% GEQ 24200 set buildconf=%buildconf%softpipe,llvmpipe,
+@IF /I "%glswrast%"=="y" IF %intmesaver% GEQ 24200 set buildconf=%buildconf%softpipe,
+@IF /I "%glswrast%"=="y" IF %intmesaver% GEQ 24200 if /I NOT "%llvmless%"=="y" set buildconf=%buildconf%llvmpipe,
 @IF /I "%zink%"=="y" set buildconf=%buildconf%zink,
 @IF /I "%d3d12%"=="y" set buildconf=%buildconf%d3d12,
 @if /I "%swrdrv%"=="y" set buildconf=%buildconf%swr,
