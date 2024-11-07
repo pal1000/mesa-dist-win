@@ -580,9 +580,9 @@
 
 @rem Execute build configuration.
 @echo Build configuration command: %buildconf%
-@IF %toolchain%==msvc echo %buildconf%>"%devroot%\%projectname%\buildinfo\%toolchain%-%abi%.txt"
-@IF NOT %toolchain%==msvc if /I NOT "%mesadbgbld%"=="y" echo %buildconf%>"%devroot%\%projectname%\buildinfo\release-%toolchain%-%abi%.txt"
-@IF NOT %toolchain%==msvc if /I "%mesadbgbld%"=="y" echo %buildconf%>"%devroot%\%projectname%\buildinfo\debug-%toolchain%-%abi%.txt"
+@IF %toolchain%==msvc echo %buildconf% >"%devroot%\%projectname%\buildinfo\%toolchain%-%abi%.txt"
+@IF NOT %toolchain%==msvc if /I NOT "%mesadbgbld%"=="y" echo %buildconf% >"%devroot%\%projectname%\buildinfo\release-%toolchain%-%abi%.txt"
+@IF NOT %toolchain%==msvc if /I "%mesadbgbld%"=="y" echo %buildconf% >"%devroot%\%projectname%\buildinfo\debug-%toolchain%-%abi%.txt"
 @echo.
 @IF /I "%cleanmesabld%"=="y" pause
 @IF /I "%cleanmesabld%"=="y" echo.
