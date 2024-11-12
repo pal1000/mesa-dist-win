@@ -2,7 +2,9 @@
 - Fix build configuration crash with LLVM disabled or unavailable - discovered in [#205](https://github.com/pal1000/mesa-dist-win/discussions/205);
 - [24.2 regression] Build script enables llvmpipe even if LLVM is disabled or unavailable;
 - debug: Fix logging Mesa3D build configuration command if it ends with a number;
-- MSYS2: Python>=3.12 support.
+- MSYS2: Python>=3.12 support;
+- clover loses spirv binary support in 25.0;
+- CI capable prompt module (ported 3 of 30 modules to use it).
 # 24.2.6
 - Updated Mesa3D to [24.2.6](https://gitlab.freedesktop.org/mesa/mesa/-/blob/24.2/docs/relnotes/24.2.6.rst?ref_type=heads&plain=0).
 ### Build script

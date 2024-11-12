@@ -14,15 +14,13 @@
 @IF %pkgconfigstate%==0 GOTO skipmesa
 
 @rem Ask for starting Mesa3D build and aquire source code if missing
-@if EXIST "mesa\" set /p buildmesa=Begin mesa build. Proceed - y/n :
+@if EXIST "mesa\" call "%devroot%\%projectname%\bin\modules\prompt.cmd" buildmesa "Begin mesa build. Proceed - y/n :"
 @if NOT EXIST "mesa\" echo Warning: Mesa3D source code not found.
 @if NOT EXIST "mesa\" echo.
-@if NOT EXIST "mesa\" set /p buildmesa=Download mesa code and build (y/n):
-@echo.
+@if NOT EXIST "mesa\" call "%devroot%\%projectname%\bin\modules\prompt.cmd" buildmesa "Download mesa code and build (y/n):"
 @if /i NOT "%buildmesa%"=="y" GOTO skipmesa
 @if NOT EXIST "mesa\" set branch=main
-@if NOT EXIST "mesa\" set /p branch=Enter Mesa source code branch name - defaults to main:
-@if NOT EXIST "mesa\" echo.
+@if NOT EXIST "mesa\" call "%devroot%\%projectname%\bin\modules\prompt.cmd" branch "Enter Mesa source code branch name - defaults to main:"
 @if NOT EXIST "mesa\" (
 @git clone --recurse-submodules https://gitlab.freedesktop.org/mesa/mesa.git mesa
 @echo.
@@ -177,14 +175,12 @@
 :configmesabuild
 @rem Configure Mesa build.
 @set buildconf=%mesonloc% setup
-@if EXIST "build\%toolchain%-%abi%\" set /p cleanmesabld=Perform clean build (y/n):
-@if EXIST "build\%toolchain%-%abi%\" echo.
+@if EXIST "build\%toolchain%-%abi%\" call "%devroot%\%projectname%\bin\modules\prompt.cmd" cleanmesabld "Perform clean build (y/n):"
 @if NOT EXIST "build\%toolchain%-%abi%\" set cleanmesabld=y
 @if EXIST "build\%toolchain%-%abi%\" IF /I "%cleanmesabld%"=="y" RD /S /Q build\%toolchain%-%abi%
 @IF /I NOT "%cleanmesabld%"=="y" set buildconf=%mesonloc% configure
 
-@set /p experimental=Enable experimental/non-production ready components (y/n):
-@echo.
+@call "%devroot%\%projectname%\bin\modules\prompt.cmd" experimental "Enable experimental/non-production ready components (y/n):"
 
 @call "%devroot%\%projectname%\buildscript\modules\useninja.cmd"
 @set buildconf=%buildconf% build/%toolchain%-%abi% --libdir="lib/%abi%" --bindir="bin/%abi%" --pkgconfig.relocatable
@@ -214,38 +210,32 @@
 @set "PKG_CONFIG_PATH="
 
 @set usezstd=n
-@IF %intmesaver% GTR 20000 set /p usezstd=Use ZSTD compression (y/n):
-@IF %intmesaver% GTR 20000 echo.
+@IF %intmesaver% GTR 20000 call "%devroot%\%projectname%\bin\modules\prompt.cmd" usezstd "Use ZSTD compression (y/n):"
 @IF /I "%usezstd%"=="y" set buildconf=%buildconf% -Dzstd=%mesonbooltrue%
 @IF %intmesaver% GTR 20000 IF /I NOT "%usezstd%"=="y" set buildconf=%buildconf% -Dzstd=%mesonboolfalse%
 
 @set mesadbgbld=n
 @set mesadbgoptim=n
 @set nodebugprintf=n
-@if /I "%useninja%"=="y" IF %toolchain%==msvc set /p mesadbgbld=Debug friendly binaries (require a lot of RAM) (y/n):
-@IF NOT %toolchain%==msvc set /p mesadbgbld=Debug friendly binaries (y/n):
-@if /I "%useninja%"=="y" echo.
+@if /I "%useninja%"=="y" IF %toolchain%==msvc call "%devroot%\%projectname%\bin\modules\prompt.cmd" mesadbgbld "Debug friendly binaries (require a lot of RAM) (y/n):"
+@IF NOT %toolchain%==msvc call "%devroot%\%projectname%\bin\modules\prompt.cmd" mesadbgbld "Debug friendly binaries (y/n):"
 @if /I NOT "%mesadbgbld%"=="y" set buildconf=%buildconf% --buildtype=release
 @if /I NOT "%mesadbgbld%"=="y" IF NOT %toolchain%==msvc set LDFLAGS=%LDFLAGS% -s
-@if /I "%mesadbgbld%"=="y" set /p mesadbgoptim=Optimize debug binaries (y/n):
-@if /I "%mesadbgbld%"=="y" echo.
+@if /I "%mesadbgbld%"=="y" call "%devroot%\%projectname%\bin\modules\prompt.cmd" mesadbgoptim "Optimize debug binaries (y/n):"
 @if /I "%mesadbgbld%"=="y" if /I NOT "%mesadbgoptim%"=="y" set buildconf=%buildconf% --buildtype=debug
 @if /I "%mesadbgoptim%"=="y" IF NOT %toolchain%==msvc set buildconf=%buildconf% --buildtype=debugoptimized
 @if /I "%mesadbgoptim%"=="y" IF %toolchain%==msvc set buildconf=%buildconf% -Ddebug=true -Doptimization=3
-@if /I "%mesadbgoptim%"=="y" IF %toolchain%==msvc set /p nodebugprintf=Disable debug printf (y/n):
-@if /I "%mesadbgoptim%"=="y" IF %toolchain%==msvc echo.
+@if /I "%mesadbgoptim%"=="y" IF %toolchain%==msvc call "%devroot%\%projectname%\bin\modules\prompt.cmd" nodebugprintf "Disable debug printf (y/n):"
 @if /I "%nodebugprintf%"=="y" set buildconf=%buildconf:~0,-17% --buildtype=release
 
 @set mesaenableasserts=n
-@set /p mesaenableasserts=Enable asserts (y/n):
-@echo.
+@call "%devroot%\%projectname%\bin\modules\prompt.cmd" mesaenableasserts "Enable asserts (y/n):"
 @if /I "%mesaenableasserts%"=="y" set buildconf=%buildconf% -Db_ndebug=false
 @if /I NOT "%mesaenableasserts%"=="y" set buildconf=%buildconf% -Db_ndebug=true
 @if /I NOT "%mesaenableasserts%"=="y" IF %toolchain%==msvc set CFLAGS=%CFLAGS% /wd4189
 
 @set linkmingwdynamic=n
-@IF NOT %toolchain%==msvc set /p linkmingwdynamic=Link dependencies dynamically for debuggging purposes (y/n):
-@IF NOT %toolchain%==msvc echo.
+@IF NOT %toolchain%==msvc call "%devroot%\%projectname%\bin\modules\prompt.cmd" linkmingwdynamic "Link dependencies dynamically for debuggging purposes (y/n):"
 @IF NOT %toolchain%==msvc IF /I NOT "%linkmingwdynamic%"=="y" set LDFLAGS=%LDFLAGS% -static
 @IF NOT %toolchain%==msvc IF /I NOT "%linkmingwdynamic%"=="y" set buildconf=%buildconf% --prefer-static
 
@@ -256,8 +246,7 @@
 @IF %toolchain%==msvc IF NOT EXIST "%llvminstloc%\%abi%\bin\llvm-config.exe" IF %cmakestate% GTR 0 set llvmmethod=cmake
 @set llvmless=n
 @if %havellvm%==0 set llvmless=y
-@if %havellvm%==1 set /p llvmless=Build Mesa without LLVM (y/n). llvmpipe, swr, RADV, lavapipe and all OpenCL drivers won't be available and high performance JIT won't be available for softpipe, osmesa and graw:
-@if %havellvm%==1 echo.
+@if %havellvm%==1 call "%devroot%\%projectname%\bin\modules\prompt.cmd" llvmless "Build Mesa without LLVM (y/n). llvmpipe, swr, RADV, lavapipe and all OpenCL drivers won't be available and high performance JIT won't be available for softpipe, osmesa and graw:"
 @call "%devroot%\%projectname%\buildscript\modules\mesonsubprojects.cmd"
 @IF NOT %toolchain%==msvc set buildconf=%buildconf% --force-fallback-for=
 @IF "%vksdkselect%"=="1" IF %toolchain%==clang set buildconf=%buildconf%,vulkan
@@ -280,12 +269,10 @@
 @set canglswrast=1
 @IF %abi%==aarch64 if /I NOT "%llvmless%"=="y" IF %disableootpatch%==1 set canglswrast=0
 @set glswrast=n
-@if /I NOT "%llvmless%"=="y" IF %canglswrast% EQU 1 set /p glswrast=Do you want to build Mesa3D softpipe and llvmpipe drivers (y/n):
-@if /I "%llvmless%"=="y" set /p glswrast=Do you want to build Mesa3D softpipe driver (y/n):
-@IF %canglswrast% EQU 1 echo.
+@if /I NOT "%llvmless%"=="y" IF %canglswrast% EQU 1 call "%devroot%\%projectname%\bin\modules\prompt.cmd" glswrast "Do you want to build Mesa3D softpipe and llvmpipe drivers (y/n):"
+@if /I "%llvmless%"=="y" call "%devroot%\%projectname%\bin\modules\prompt.cmd" glswrast "Do you want to build Mesa3D softpipe driver (y/n):"
 @if /I "%glswrast%"=="y" set /a galliumcount+=1
-@if /I NOT "%llvmless%"=="y" IF /I "%glswrast%"=="y" IF %intmesaver% GEQ 24200 IF /I "%experimental%"=="y" set /p orcjit=Use orcjit with llvmpipe (experimental)(y/n):
-@if /I NOT "%llvmless%"=="y" IF /I "%glswrast%"=="y" IF %intmesaver% GEQ 24200 IF /I "%experimental%"=="y" echo.
+@if /I NOT "%llvmless%"=="y" IF /I "%glswrast%"=="y" IF %intmesaver% GEQ 24200 IF /I "%experimental%"=="y" call "%devroot%\%projectname%\bin\modules\prompt.cmd" orcjit "Use orcjit with llvmpipe (experimental)(y/n):"
 @IF /I "%orcjit%"=="y" set buildconf=%buildconf% -Dllvm-orcjit=true
 @IF /I NOT "%orcjit%"=="y" IF %intmesaver% GEQ 24200 set buildconf=%buildconf% -Dllvm-orcjit=false
 
@@ -295,8 +282,7 @@
 @IF %toolchain%==msvc IF %intmesaver% GEQ 21200 set canzink=1
 @IF %toolchain%==msvc IF %intmesaver% GEQ 21301 IF %intmesaver% LSS 21303 IF %abi%==x86 IF %disableootpatch%==1 set canzink=0
 @IF %toolchain%==msvc IF NOT EXIST "%VK_SDK_PATH%" IF NOT EXIST "%VULKAN_SDK%" IF %intmesaver% LSS 22200 set canzink=0
-@IF %canzink% EQU 1 set /p zink=Do you want to build Mesa3D OpenGL driver over Vulkan - zink (y/n):
-@IF %canzink% EQU 1 echo.
+@IF %canzink% EQU 1 call "%devroot%\%projectname%\bin\modules\prompt.cmd" zink "Do you want to build Mesa3D OpenGL driver over Vulkan - zink (y/n):"
 @IF %toolchain%==msvc IF /I "%zink%"=="y" IF %intmesaver% LSS 22200 set LDFLAGS=-ldelayimp /DELAYLOAD^:vulkan-1.dll
 @IF /I "%zink%"=="y" set /a galliumcount+=1
 
@@ -311,20 +297,17 @@
 @set cand3d12=1
 @IF %canmcrdrvcom% EQU 0 set cand3d12=0
 @IF NOT %toolchain%==msvc IF %intmesaver% LSS 22202 set cand3d12=0
-@IF %cand3d12% EQU 1 set /p d3d12=Do you want to build Mesa3D OpenGL driver over D3D12 - GLonD3D12 (y/n):
-@IF %cand3d12% EQU 1 echo.
+@IF %cand3d12% EQU 1 call "%devroot%\%projectname%\bin\modules\prompt.cmd" d3d12 "Do you want to build Mesa3D OpenGL driver over D3D12 - GLonD3D12 (y/n):"
 @IF /I "%d3d12%"=="y" IF %intmesaver% LSS 24100 set gfxd3d12=y
 @IF %intmesaver% GEQ 24100 set buildconf=%buildconf% -Dgallium-d3d12-graphics=auto
-@IF /I "%d3d12%"=="y" IF %intmesaver% GEQ 24100 set /p gfxd3d12=Enable d3d12 graphics pipeline (y=default/n):
-@IF /I "%d3d12%"=="y" IF %intmesaver% GEQ 24100 echo.
+@IF /I "%d3d12%"=="y" IF %intmesaver% GEQ 24100 call "%devroot%\%projectname%\bin\modules\prompt.cmd" gfxd3d12 "Enable d3d12 graphics pipeline (y=default/n):"
 @IF /I "%gfxd3d12%"=="n" set buildconf=%buildconf:~0,-4%%mesonboolfalse%
 @IF /I "%d3d12%"=="y" IF /I NOT "%gfxd3d12%"=="n" set /a galliumcount+=1
 
 @set swrdrv=n
 @set canswr=0
 @if /I NOT "%llvmless%"=="y" if %abi%==x64 IF %disableootpatch%==0 IF EXIST "%devroot%\mesa\src\gallium\drivers\swr\meson.build" if /I "%glswrast%"=="y" set canswr=1
-@if %canswr% EQU 1 set /p swrdrv=Do you want to build swr drivers? (y=yes):
-@if %canswr% EQU 1 echo.
+@if %canswr% EQU 1 call "%devroot%\%projectname%\bin\modules\prompt.cmd" swrdrv "Do you want to build swr drivers? (y=yes):"
 @if /I "%swrdrv%"=="y" set buildconf=%buildconf% -Dswr-arches=avx,avx2,skx,knl
 @if /I "%swrdrv%"=="y" set /a galliumcount+=1
 
@@ -346,8 +329,7 @@
 @if /I NOT "%glswrast%"=="y" set canlavapipe=0
 @IF %intmesaver:~0,3% EQU 211 IF %intmesaver% LSS 21151 IF %toolchain%==msvc if %abi%==x86 IF %disableootpatch%==1 set canlavapipe=0
 @IF %toolchain%==msvc IF %intmesaver% GEQ 21301 IF %intmesaver% LSS 21303 IF %abi%==x86 IF %disableootpatch%==1 set canlavapipe=0
-@IF %canlavapipe% EQU 1 set /p lavapipe=Build Mesa3D Vulkan software renderer (y/n):
-@IF %canlavapipe% EQU 1 echo.
+@IF %canlavapipe% EQU 1 call "%devroot%\%projectname%\bin\modules\prompt.cmd" lavapipe "Build Mesa3D Vulkan software renderer (y/n):"
 @if NOT %toolchain%==msvc if /I "%lavapipe%"=="y" set msysregex=1
 @if /I "%lavapipe%"=="y" set /a mesavkcount+=1
 
@@ -364,16 +346,14 @@
 @IF NOT %toolchain%==msvc IF %disableootpatch%==1 IF %intmesaver% LSS 21251 set canradv=0
 @rem Only enable RADV under experimental mode, see https://github.com/pal1000/mesa-dist-win/issues/103
 @IF /I NOT "%experimental%"=="y" set canradv=0
-@IF %canradv% EQU 1 set /p radv=Build AMD Vulkan driver - radv (y/n):
-@IF %canradv% EQU 1 echo.
+@IF %canradv% EQU 1 call "%devroot%\%projectname%\bin\modules\prompt.cmd" radv "Build AMD Vulkan driver - radv (y/n):"
 @IF NOT %toolchain%==msvc if /I "%radv%"=="y" set msysregex=1
 @if /I "%radv%"=="y" set /a mesavkcount+=1
 
 @set candzn=0
 @IF %canmcrdrvcom% EQU 1 IF %intmesaver% GEQ 22100 set candzn=1
 @IF /I "%useclang%"=="y" IF %disableootpatch%==1 IF %intmesaver% LSS 23000 set candzn=0
-@IF %candzn% EQU 1 set /p dozenmsvk=Build Microsoft Dozen Vulkan driver (y/n):
-@IF %candzn% EQU 1 echo.
+@IF %candzn% EQU 1 call "%devroot%\%projectname%\bin\modules\prompt.cmd" dozenmsvk "Build Microsoft Dozen Vulkan driver (y/n):"
 @if /I "%dozenmsvk%"=="y" set /a mesavkcount+=1
 
 @set buildconf=%buildconf% -Dvulkan-drivers=
@@ -393,23 +373,20 @@
 @IF %intmesaver% LSS 22000 IF %disableootpatch% EQU 1 set cand3d10umd=0
 @IF %intmesaver% GEQ 23300 IF %intmesaver% LSS 23354 IF %disableootpatch% EQU 1 set cand3d10umd=0
 @IF %cand3d10umd% EQU 1 for /f delims^=^ eol^= %%a in ('@call "%devroot%\%projectname%\buildscript\modules\wdkcheck.cmd"') do @IF NOT "%%a"=="OK" set cand3d10umd=0
-@IF %cand3d10umd% EQU 1 set /p d3d10umd=Build Mesa3D D3D10 software renderer (y/n):
-@IF %cand3d10umd% EQU 1 echo.
+@IF %cand3d10umd% EQU 1 call "%devroot%\%projectname%\bin\modules\prompt.cmd" d3d10umd "Build Mesa3D D3D10 software renderer (y/n):"
 @if /I "%d3d10umd%"=="y" set buildconf=%buildconf% -Dgallium-d3d10umd=true
 @if /I "%d3d10umd%"=="y" IF %intmesaver% GEQ 24100 set buildconf=%buildconf% -Dgallium-d3d10-dll-name=d3d10warp
 @if /I NOT "%d3d10umd%"=="y" IF %intmesaver% GEQ 21200 set buildconf=%buildconf% -Dgallium-d3d10umd=false
 
 @set spirvtodxil=n
 @if /I "%dozenmsvk%"=="y" set spirvtodxil=y
-@IF %canmcrdrvcom% EQU 1 if /I NOT "%dozenmsvk%"=="y" set /p spirvtodxil=Do you want to build SPIR-V to DXIL tool (y/n):
-@IF %canmcrdrvcom% EQU 1 if /I NOT "%dozenmsvk%"=="y" echo.
+@IF %canmcrdrvcom% EQU 1 if /I NOT "%dozenmsvk%"=="y" call "%devroot%\%projectname%\bin\modules\prompt.cmd" spirvtodxil "Do you want to build SPIR-V to DXIL tool (y/n):"
 @IF /I "%spirvtodxil%"=="y" set buildconf=%buildconf% -Dspirv-to-dxil=true
 @IF /I NOT "%spirvtodxil%"=="y" IF %intmesaver% GEQ 21000 set buildconf=%buildconf% -Dspirv-to-dxil=false
 
 @set gles=n
-@IF %intmesaver% LSS 21300 IF %galliumcount% GTR 0 set /p gles=Do you want to build GLAPI as a shared library and standalone GLES drivers (y/n):
-@IF %intmesaver% GEQ 21300 IF %galliumcount% GTR 0 set /p gles=Do you want to build standalone GLES drivers (y/n):
-@IF %galliumcount% GTR 0 echo.
+@IF %intmesaver% LSS 21300 IF %galliumcount% GTR 0 call "%devroot%\%projectname%\bin\modules\prompt.cmd" gles "Do you want to build GLAPI as a shared library and standalone GLES drivers (y/n):"
+@IF %intmesaver% GEQ 21300 IF %galliumcount% GTR 0 call "%devroot%\%projectname%\bin\modules\prompt.cmd" gles "Do you want to build standalone GLES drivers (y/n):"
 @if /I "%gles%"=="y" set buildconf=%buildconf% -Dshared-glapi=%mesonbooltrue% -Dgles1=%mesonbooltrue% -Dgles2=%mesonbooltrue%
 @if /I "%gles%"=="y" IF %intmesaver% GEQ 21300 set buildconf=%buildconf% -Degl=%mesonbooltrue%
 @if /I NOT "%gles%"=="y" set buildconf=%buildconf% -Dgles1=%mesonboolfalse% -Dgles2=%mesonboolfalse% -Dshared-glapi=auto
@@ -419,9 +396,8 @@
 @set osmesa=n
 @set canosmesa=1
 @if /I NOT "%glswrast%"=="y" if /I NOT "%swrdrv%"=="y" set canosmesa=0
-@if %canosmesa% EQU 1 IF %intmesaver% LSS 21000 set /p osmesa=Do you want to build off-screen rendering drivers (y/n):
-@if %canosmesa% EQU 1 IF %intmesaver% GEQ 21000 set /p osmesa=Do you want to build off-screen rendering driver (y/n):
-@if %canosmesa% EQU 1 echo.
+@if %canosmesa% EQU 1 IF %intmesaver% LSS 21000 call "%devroot%\%projectname%\bin\modules\prompt.cmd" osmesa "Do you want to build off-screen rendering drivers (y/n):"
+@if %canosmesa% EQU 1 IF %intmesaver% GEQ 21000 call "%devroot%\%projectname%\bin\modules\prompt.cmd" osmesa "Do you want to build off-screen rendering driver (y/n):"
 @rem osmesa classic is gone in Mesa 21.0 and newer
 @IF /I "%osmesa%"=="y" IF %intmesaver% GEQ 21000 set buildconf=%buildconf% -Dosmesa=true
 @IF /I "%osmesa%"=="y" IF %intmesaver% LSS 21000 set buildconf=%buildconf% -Dosmesa=gallium,classic
@@ -457,8 +433,7 @@
 @set canmclc=0
 @IF %canclspv% EQU 1 IF %canmcrdrvcom% EQU 1 set canmclc=1
 @IF %disableootpatch%==1 IF %intmesaver% GEQ 21300 IF %intmesaver% LSS 22203 set canmclc=0
-@IF %canmclc% EQU 1 set /p mclc=Build Mesa3D Microsoft OpenCL compiler (y/n):
-@IF %canmclc% EQU 1 echo.
+@IF %canmclc% EQU 1 call "%devroot%\%projectname%\bin\modules\prompt.cmd" mclc "Build Mesa3D Microsoft OpenCL compiler (y/n):"
 @IF /I "%mclc%"=="y" set PKG_CONFIG_LIBCLC=1
 @IF /I "%mclc%"=="y" set PKG_CONFIG_SPV=1
 @IF /I "%mclc%"=="y" set buildconf=%buildconf% -Dmicrosoft-clc=%mesonbooltrue%
@@ -475,19 +450,16 @@
 @IF %RTTI%==false set canclover=0
 @if /I NOT "%glswrast%"=="y" set canclover=0
 @IF %intmesaver:~0,3% EQU 213 IF %disableootpatch%==1 set canclover=0
-@if %canclover% EQU 1 set /p buildclover=Build OpenCL clover driver (y/n):
-@if %canclover% EQU 1 echo.
+@if %canclover% EQU 1 call "%devroot%\%projectname%\bin\modules\prompt.cmd" buildclover "Build OpenCL clover driver (y/n):"
 @IF /I NOT "%buildclover%"=="y" set buildconf=%buildconf% -Dgallium-opencl=%mesonboolfalse%
 @IF /I "%buildclover%"=="y" set PKG_CONFIG_LIBCLC=1
-@IF /I "%buildclover%"=="y" set /p icdclover=Build clover in ICD format (y/n):
-@IF /I "%buildclover%"=="y" echo.
+@IF /I "%buildclover%"=="y" call "%devroot%\%projectname%\bin\modules\prompt.cmd" icdclover "Build clover in ICD format (y/n):"
 @IF /I "%icdclover%"=="y" set buildconf=%buildconf% -Dgallium-opencl=icd
 @IF /I "%buildclover%"=="y" IF /I NOT "%icdclover%"=="y" set buildconf=%buildconf% -Dgallium-opencl=standalone
-@IF /I "%buildclover%"=="y" IF %canclspv% EQU 1 set /p cloverspv=Build clover with SPIR-V binary support (y/n):
-@IF /I "%buildclover%"=="y" IF %canclspv% EQU 1 echo.
+@IF /I "%buildclover%"=="y" IF %canclspv% EQU 1 IF %intmesaver% LSS 25000 call "%devroot%\%projectname%\bin\modules\prompt.cmd" cloverspv "Build clover with SPIR-V binary support (y/n):"
 @IF /I "%cloverspv%"=="y" set PKG_CONFIG_SPV=1
 @IF /I "%cloverspv%"=="y" set buildconf=%buildconf% -Dopencl-spirv=true
-@IF /I "%buildclover%"=="y" IF /I NOT "%cloverspv%"=="y" set buildconf=%buildconf% -Dopencl-spirv=false
+@IF /I "%buildclover%"=="y" IF /I NOT "%cloverspv%"=="y" IF %intmesaver% LSS 25000 set buildconf=%buildconf% -Dopencl-spirv=false
 @IF /I "%buildclover%"=="y" IF %intmesaver% LSS 22300 set buildconf=%buildconf% -Dopencl-native=false
 @IF /I "%buildclover%"=="y" IF %intmesaver% GEQ 22100 IF %intmesaver% LSS 22300 set buildconf=%buildconf% -Dcpp_std=c++20
 
@@ -497,8 +469,7 @@
 @set canvaapi=0
 @IF /I "%d3d12%"=="y" IF %intmesaver% GEQ 22300 set canvaapi=1
 @IF %toolchain%==msvc IF NOT EXIST "%devroot%\libva\build\%abi%\lib\pkgconfig\" set canvaapi=0
-@IF %canvaapi% EQU 1 set /p buildvaapi=Build Mesa3D VA-API interface (y/n):
-@IF %canvaapi% EQU 1 echo.
+@IF %canvaapi% EQU 1 call "%devroot%\%projectname%\bin\modules\prompt.cmd" buildvaapi "Build Mesa3D VA-API interface (y/n):"
 @IF /I "%buildvaapi%"=="y" set buildconf=%buildconf% -Dgallium-va=%mesonbooltrue%
 @IF /I NOT "%buildvaapi%"=="y" set buildconf=%buildconf% -Dgallium-va=%mesonboolfalse%
 @IF %intmesaver% GEQ 22200 set buildconf=%buildconf% -Dgallium-d3d12-video=auto -Dvideo-codecs=
@@ -508,8 +479,7 @@
 @set canvideoaccel=0
 @IF /I "%buildvaapi%"=="y" IF %intmesaver% GEQ 22200 set canvideoaccel=1
 @IF %mesavkcount% GTR 0 IF %intmesaver% GEQ 22200 set canvideoaccel=1
-@IF %canvideoaccel% EQU 1 set /p buildpatentedcodecs=Build Mesa3D video acceleration patented codecs (y/n):
-@IF %canvideoaccel% EQU 1 echo.
+@IF %canvideoaccel% EQU 1 call "%devroot%\%projectname%\bin\modules\prompt.cmd" buildpatentedcodecs "Build Mesa3D video acceleration patented codecs (y/n):"
 @IF /I "%buildpatentedcodecs%"=="y" IF %intmesaver% LSS 24000 set buildconf=%buildconf%h264dec,h264enc,h265dec,h265enc,vc1dec
 @IF /I "%buildpatentedcodecs%"=="y" IF %intmesaver% GEQ 24000 set buildconf=%buildconf:~0,-5%
 
@@ -534,16 +504,14 @@
 @set mesatests=n
 @set canmesatests=1
 @IF %disableootpatch%==1 IF %intmesaver% GEQ 20100 IF %intmesaver% LSS 20103 IF NOT %toolchain%==msvc set canmesatests=0
-@IF %canmesatests% EQU 1 IF %intmesaver% LSS 22300 set /p mesatests=Do you want to build unit tests and gallium raw interface (y/n):
-@IF %canmesatests% EQU 1 IF %intmesaver% GEQ 22300 IF %intmesaver% LSS 24153 set /p mesatests=Do you want to build unit tests (y/n):
-@IF %canmesatests% EQU 1 IF %intmesaver% GEQ 24153 set /p mesatests=Do you want to build unit tests and dynamic pipe loader (y/n):
-@IF %canmesatests% EQU 1 echo.
+@IF %canmesatests% EQU 1 IF %intmesaver% LSS 22300 call "%devroot%\%projectname%\bin\modules\prompt.cmd" mesatests "Do you want to build unit tests and gallium raw interface (y/n):"
+@IF %canmesatests% EQU 1 IF %intmesaver% GEQ 22300 IF %intmesaver% LSS 24153 call "%devroot%\%projectname%\bin\modules\prompt.cmd" mesatests "Do you want to build unit tests (y/n):"
+@IF %canmesatests% EQU 1 IF %intmesaver% GEQ 24153 call "%devroot%\%projectname%\bin\modules\prompt.cmd" mesatests "Do you want to build unit tests and dynamic pipe loader (y/n):"
 @if /I "%mesatests%"=="y" set buildconf=%buildconf% -Dbuild-tests=true
 @if /I NOT "%mesatests%"=="y" set buildconf=%buildconf% -Dbuild-tests=false
 
 @rem Control futex support - https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/17431
-@IF %intmesaver% GEQ 22200 set /p winfutex=Enable Futex (https://en.wikipedia.org/wiki/Futex) support, raises minimum requirements for Mesa3D overall to run to Windows 8/Server 2012 (y/n):
-@IF %intmesaver% GEQ 22200 echo.
+@IF %intmesaver% GEQ 22200 call "%devroot%\%projectname%\bin\modules\prompt.cmd" winfutex "Enable Futex (https://en.wikipedia.org/wiki/Futex) support, raises minimum requirements for Mesa3D overall to run to Windows 8/Server 2012 (y/n):"
 @IF /I NOT "%winfutex%"=="y" IF %intmesaver% GEQ 22200 set buildconf=%buildconf% -Dmin-windows-version=7
 @IF /I "%winfutex%"=="y" set buildconf=%buildconf% -Dmin-windows-version=8
 
@@ -605,16 +573,12 @@
 @echo.
 
 :retrymesabld
-@if /I "%useninja%"=="y" if "%retrymesabld%"=="1" (
-@set /p retrymesabld=Number of Mesa3D build retries ^(0^=end, 1^=ask again, ^>1 automatically retry n-1 times^)^:
-@echo.
-@if "%retrymesabld%"=="1" GOTO retrymesabld
-)
+@if /I "%useninja%"=="y" if "%retrymesabld%"=="1" call "%devroot%\%projectname%\bin\modules\prompt.cmd" retrymesabld "Number of Mesa3D build retries (0=end, 1=ask again, ^>1 automatically retry n-1 times):"
 @if /I "%useninja%"=="y" if %retrymesabld% GTR 1 (
 @set /a retrymesabld-=1
-GOTO execmesabld
+@GOTO execmesabld
 )
-@if /I "%useninja%"=="y" echo.
+@if /I "%useninja%"=="y" if %retrymesabld% GTR 0 GOTO retrymesabld
 @if /I NOT "%useninja%"=="y" cd ..\..\
 
 :skipmesa
