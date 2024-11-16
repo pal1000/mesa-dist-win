@@ -1,3 +1,5 @@
+# 24.2.7
+- Updated Mesa3D to [24.2.7](https://gitlab.freedesktop.org/mesa/mesa/-/blob/24.2/docs/relnotes/24.2.7.rst?ref_type=heads&plain=0).
 ### Build script
 - Fix build configuration crash with LLVM disabled or unavailable - discovered in [#205](https://github.com/pal1000/mesa-dist-win/discussions/205);
 - [24.2 regression] Build script enables llvmpipe even if LLVM is disabled or unavailable;
