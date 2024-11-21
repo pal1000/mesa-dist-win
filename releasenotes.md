@@ -1,3 +1,4 @@
+- MSVC: Implement [workaround](https://github.com/mpv-player/mpv/pull/15325) for [lp_test_arit build failure](https://gitlab.freedesktop.org/mesa/mesa/-/issues/11462) with [Windows SDK 10.0.26100.x](https://developercommunity.visualstudio.com/t/NAN-is-no-longer-compile-time-constant-i/10688907).
 # 24.2.7
 - Updated Mesa3D to [24.2.7](https://gitlab.freedesktop.org/mesa/mesa/-/blob/24.2/docs/relnotes/24.2.7.rst?ref_type=heads&plain=0).
 ### Build script

@@ -495,20 +495,26 @@
 @set "PKG_CONFIG_SPV="
 @set "PKG_CONFIG_PATH="
 
-@rem Pass additional compiler and linker flags
-@if defined CFLAGS IF %toolchain%==msvc set CFLAGS=%CFLAGS:~1%
-@if defined CFLAGS set buildconf=%buildconf% -Dc_args="%CFLAGS%" -Dcpp_args="%CFLAGS%"
-@if defined LDFLAGS IF NOT %toolchain%==msvc set LDFLAGS=%LDFLAGS:~1%
-@if defined LDFLAGS set buildconf=%buildconf% -Dc_link_args="%LDFLAGS%" -Dcpp_link_args="%LDFLAGS%"
-
 @set mesatests=n
 @set canmesatests=1
 @IF %disableootpatch%==1 IF %intmesaver% GEQ 20100 IF %intmesaver% LSS 20103 IF NOT %toolchain%==msvc set canmesatests=0
 @IF %canmesatests% EQU 1 IF %intmesaver% LSS 22300 call "%devroot%\%projectname%\bin\modules\prompt.cmd" mesatests "Do you want to build unit tests and gallium raw interface (y/n):"
 @IF %canmesatests% EQU 1 IF %intmesaver% GEQ 22300 IF %intmesaver% LSS 24153 call "%devroot%\%projectname%\bin\modules\prompt.cmd" mesatests "Do you want to build unit tests (y/n):"
 @IF %canmesatests% EQU 1 IF %intmesaver% GEQ 24153 call "%devroot%\%projectname%\bin\modules\prompt.cmd" mesatests "Do you want to build unit tests and dynamic pipe loader (y/n):"
-@if /I "%mesatests%"=="y" set buildconf=%buildconf% -Dbuild-tests=true
 @if /I NOT "%mesatests%"=="y" set buildconf=%buildconf% -Dbuild-tests=false
+@if /I "%mesatests%"=="y" set buildconf=%buildconf% -Dbuild-tests=true
+
+@rem Workaround https://gitlab.freedesktop.org/mesa/mesa/-/issues/11462, see
+@rem https://github.com/mpv-player/mpv/pull/15325/files
+@rem https://developercommunity.visualstudio.com/t/NAN-is-no-longer-compile-time-constant-i/10688907
+@if /I "%mesatests%"=="y" IF %toolchain%==msvc set CFLAGS=%CFLAGS% -D_UCRT_NOISY_NAN
+
+
+@rem Pass additional compiler and linker flags
+@if defined CFLAGS IF %toolchain%==msvc set CFLAGS=%CFLAGS:~1%
+@if defined CFLAGS set buildconf=%buildconf% -Dc_args="%CFLAGS%" -Dcpp_args="%CFLAGS%"
+@if defined LDFLAGS IF NOT %toolchain%==msvc set LDFLAGS=%LDFLAGS:~1%
+@if defined LDFLAGS set buildconf=%buildconf% -Dc_link_args="%LDFLAGS%" -Dcpp_link_args="%LDFLAGS%"
 
 @rem Control futex support - https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/17431
 @IF %intmesaver% GEQ 22200 call "%devroot%\%projectname%\bin\modules\prompt.cmd" winfutex "Enable Futex (https://en.wikipedia.org/wiki/Futex) support, raises minimum requirements for Mesa3D overall to run to Windows 8/Server 2012 (y/n):"
