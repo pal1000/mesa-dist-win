@@ -507,7 +507,7 @@
 @rem Workaround https://gitlab.freedesktop.org/mesa/mesa/-/issues/11462, see
 @rem https://github.com/mpv-player/mpv/pull/15325/files
 @rem https://developercommunity.visualstudio.com/t/NAN-is-no-longer-compile-time-constant-i/10688907
-@if /I "%mesatests%"=="y" IF %toolchain%==msvc set CFLAGS=%CFLAGS% -D_UCRT_NOISY_NAN
+@if /I "%mesatests%"=="y" IF %toolchain%==msvc if /I NOT "%llvmless%"=="y" IF /I "%glswrast%"=="y" set CFLAGS=%CFLAGS% -D_UCRT_NOISY_NAN
 
 
 @rem Pass additional compiler and linker flags
