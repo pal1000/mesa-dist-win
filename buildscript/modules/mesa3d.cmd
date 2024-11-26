@@ -192,9 +192,12 @@
 @IF %toolchain%==msvc IF %intmesaver% GEQ 21200 IF %intmesaver% LSS 22100 set buildconf=%buildconf% -Dcpp_std=vc++latest
 @IF %toolchain%==msvc set CFLAGS=
 
-@IF NOT %toolchain%==msvc IF %abi%==aarch64 set CFLAGS=-march^=armv8-a -pipe
-@IF NOT %toolchain%==msvc IF NOT %abi%==aarch64 set CFLAGS=-march^=core2 -pipe
+@rem Use default stability and security cflags and ldflags from MSYS2 makeppkg-mingw tool configuration - https://github.com/msys2/MSYS2-packages/blob/master/pacman/makepkg_mingw.conf
+@IF NOT %toolchain%==msvc set CFLAGS=-pipe -Wp,-D_FORTIFY_SOURCE^=2 -fstack-protector-strong -Wp,-D__USE_MINGW_ANSI_STDIO^=1
+@IF NOT %toolchain%==msvc IF %abi%==aarch64 set CFLAGS=%CFLAGS% -march^=armv8-a
+@IF NOT %toolchain%==msvc IF NOT %abi%==aarch64 set CFLAGS=%CFLAGS% -march^=core2
 @IF NOT %toolchain%==msvc set LDFLAGS=
+@IF NOT %toolchain%==msvc IF %abi%==x86 set LDFLAGS=%LDFLAGS% -Wl,--no-seh -Wl,--large-address-aware
 @IF NOT %toolchain%==msvc set buildcmd=%runmsys% /%LMSYSTEM%/bin/ninja -C "%devroot%\mesa\build\%toolchain%-%abi%" -j %throttle% -k 0
 
 @if /I "%useninja%"=="y" set buildconf=%buildconf% --backend=ninja
