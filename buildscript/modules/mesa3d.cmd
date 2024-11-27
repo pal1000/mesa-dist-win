@@ -70,9 +70,6 @@
 @IF %disableootpatch%==1 GOTO configmesabuild
 
 @REM Collect information about Mesa3D code. Apply out of tree patches.
-@echo Ensure Python virtual environment compatibility...
-@"%devroot%\%projectname%\buildscript\assets\venv\Scripts\python.exe" "%devroot%\%projectname%\buildscript\modules\venvcompat.py"
-@echo.
 
 @rem Enable S3TC texture cache
 @IF %intmesaver% NEQ 23200 IF %intmesaver% NEQ 23201 IF %intmesaver% NEQ 23202 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" s3tc

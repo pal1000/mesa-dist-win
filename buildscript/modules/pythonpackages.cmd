@@ -18,6 +18,10 @@
 )
 @call "%devroot%\%projectname%\buildscript\assets\venv\Scripts\activate.bat"
 
+@echo Ensure Python virtual environment compatibility...
+@copy /Y "%devroot%\%projectname%\buildscript\assets\venv\Scripts\python.exe" "%devroot%\%projectname%\buildscript\assets\venv\Scripts\python3.exe"
+@echo.
+
 @setlocal
 @rem Install missing python packages.
 @rem State tracking is irrelevant for Python packages as they can easily be added via Pypi if missing.
