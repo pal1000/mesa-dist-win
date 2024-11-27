@@ -59,7 +59,8 @@ To correct these errors regardless of cause you have to re-deploy. If you don't 
 Same problem with same solution applies to osmesa if you are upgrading from 17.3.5.501-1 or older.
 # Differences between MSVC and MinGW packages
 - MinGW package requires a CPU with [SSSE3](https://en.wikipedia.org/wiki/SSSE3#CPUs_with_SSSE3) with benefit of providing 3-5% performance boost with software rendering drivers;
-- d3d10sw introduced in 21.2.0 is only available in MSVC package.
+- d3d10sw introduced in 21.2.0 is only available in MSVC package;
+- Support for x86 32-bit build in MinGW packages has ended since 24.3.0 as MSYS2 began removing depending packages.
 
 If you need to migrate from Mingw to MSVC binaries you just need to replace Mesa binaries folder from Mingw package with MSVC counterpart.
 # Mingw and MSVC Package contents

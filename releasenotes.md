@@ -2,6 +2,8 @@
 - MSVC: Implement [workaround](https://github.com/mpv-player/mpv/pull/15325) for [lp_test_arit build failure](https://gitlab.freedesktop.org/mesa/mesa/-/issues/11462) with [Windows SDK 10.0.26100.x](https://developercommunity.visualstudio.com/t/NAN-is-no-longer-compile-time-constant-i/10688907);
 - MSYS2: Use default stability and security cflags and ldflags from [makeppkg-mingw tool configuration](https://github.com/msys2/MSYS2-packages/blob/master/pacman/makepkg_mingw.conf);
 - MSVC build: Ensure Python virtual environment compatibility in a [cleaner way without patching Mesa3D source code](https://gitlab.freedesktop.org/mesa/mesa/-/issues/10319#note_2670841).
+### Changes
+- Support for x86 32-bit build in MinGW packages has ended as MSYS2 began removing depending packages.
 # 24.2.7
 - Updated Mesa3D to [24.2.7](https://gitlab.freedesktop.org/mesa/mesa/-/blob/24.2/docs/relnotes/24.2.7.rst?ref_type=heads&plain=0).
 ### Build script
