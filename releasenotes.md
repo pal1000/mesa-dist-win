@@ -1,3 +1,5 @@
+### Sponsorship
+- Extended till November 2025.
 ### Build script
 - MSVC: Implement [workaround](https://github.com/mpv-player/mpv/pull/15325) for [lp_test_arit build failure](https://gitlab.freedesktop.org/mesa/mesa/-/issues/11462) with [Windows SDK 10.0.26100.x](https://developercommunity.visualstudio.com/t/NAN-is-no-longer-compile-time-constant-i/10688907);
 - MSYS2: Use default stability and security cflags and ldflags from [makeppkg-mingw tool configuration](https://github.com/msys2/MSYS2-packages/blob/master/pacman/makepkg_mingw.conf);

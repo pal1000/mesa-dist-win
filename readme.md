@@ -28,7 +28,7 @@ Mesa 24.2.7 builds with Visual Studio and MSYS2 Mingw-w64 are now available in [
 # Sponsorship
 mesa-dist-win project was given a sponsorship that was extended until November 1st 2024. Sponsorship consists in a free VPS on French node to use as build machine with 12 GB RAM, 6 threads [AMD EPYC 7763](https://www.amd.com/en/products/cpu/amd-epyc-7763) and 150 GB NVMe SSD from [Petrosky](https://petrosky.io/pal1000), a virtual private server hosting company thanks to [@Directox01](https://github.com/Directox01).
 
-![Screenshot 2023-10-25 201821](https://github.com/pal1000/mesa-dist-win/assets/1138235/32ebb855-5f83-4043-a320-802385b38226)
+![sponsorship-petrosky-2025](https://github.com/user-attachments/assets/86b9856c-6b98-452c-947d-5cd8843981a6)
 ![Screenshot_20221205_065713](https://user-images.githubusercontent.com/1138235/205717369-21062d47-7c66-4e6a-8427-6560f9aeaaf7.png)
 # Known issues
 This is a list of all comonly encountered issues with known solutions or workarounds. A specific release is only affected by a subset of them.
