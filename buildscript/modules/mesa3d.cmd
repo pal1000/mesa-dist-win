@@ -244,6 +244,10 @@
 @IF %toolchain%==msvc IF NOT EXIST "%llvminstloc%\%abi%\lib\" set havellvm=0
 @IF %toolchain%==msvc IF NOT EXIST "%llvminstloc%\%abi%\bin\llvm-config.exe" IF %cmakestate% EQU 0 set havellvm=0
 @IF %toolchain%==msvc IF NOT EXIST "%llvminstloc%\%abi%\bin\llvm-config.exe" IF %cmakestate% GTR 0 set llvmmethod=cmake
+
+@rem Workaround https://github.com/pal1000/mesa-dist-win/issues/156 - disable LLVM for GCC static build
+@IF %toolchain%==gcc IF /I NOT "%linkmingwdynamic%"=="y" set havellvm=0
+
 @set llvmless=n
 @if %havellvm%==0 set llvmless=y
 @if %havellvm%==1 call "%devroot%\%projectname%\bin\modules\prompt.cmd" llvmless "Build Mesa without LLVM (y/n). llvmpipe, swr, RADV, lavapipe and all OpenCL drivers won't be available and high performance JIT won't be available for softpipe, osmesa and graw:"
