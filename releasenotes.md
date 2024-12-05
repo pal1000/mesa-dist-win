@@ -1,5 +1,6 @@
 ### Build script
-- MSYS2 toolchain setup: Allow partial package installation failure.
+- MSYS2 toolchain setup: Allow partial package installation failure;
+- MSYS2: Check OpenCL stack dependencies availability.
 # 24.3.0
 - Updated Mesa3D to [24.3.0](https://gitlab.freedesktop.org/mesa/mesa/-/blob/24.3/docs/relnotes/24.3.0.rst?ref_type=heads&plain=0).
 ### Sponsorship

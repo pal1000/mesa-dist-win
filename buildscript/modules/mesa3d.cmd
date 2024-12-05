@@ -414,6 +414,7 @@
 @IF %intmesaver% LSS 21000 set canopencl=0
 @if /I "%llvmless%"=="y" set canopencl=0
 @IF NOT %toolchain%==msvc IF %intmesaver% LSS 22200 set canopencl=0
+@IF NOT %toolchain%==msvc IF NOT EXIST "%msysloc%\%LMSYSTEM%\share\clc\*.spv" set canopencl=0
 @IF %toolchain%==msvc IF NOT EXIST "%llvminstloc%\clc\share\pkgconfig\" set canopencl=0
 
 @rem OpenCL SPIR-V requirements: basic OpenCL support + Clang, SPIRV LLVM translator, SPIRV tools
