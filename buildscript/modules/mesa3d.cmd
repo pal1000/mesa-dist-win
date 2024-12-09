@@ -169,6 +169,9 @@
 @rem Fix vaon12 filename
 @IF %intmesaver% LSS 23200 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" vaon12-strip-lib-prefix
 
+@rem Fix vaon12 build regression on 24.3 with MinGW
+@IF %intmesaver% GEQ 24300 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" va-include-missing-header
+
 :configmesabuild
 @rem Configure Mesa build.
 @set buildconf=%mesonloc% setup
