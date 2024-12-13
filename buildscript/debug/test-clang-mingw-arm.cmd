@@ -5,7 +5,7 @@
 @set devroot=%CD%
 @IF %devroot:~0,1%%devroot:~-1%=="" set devroot=%devroot:~1,-1%
 @IF "%devroot:~-1%"=="\" set devroot=%devroot:~0,-1%
-@set abi=aarch64
+@set abi=arm64
 @set PATH=%devroot%\flexbison\;%devroot%\llvm-mingw\bin\;%devroot%\ninja\;%devroot%\pkgconf\pkgconf\;%PATH%
 @call "%devroot%\%projectname%\buildscript\modules\discoverpython.cmd"
 @call "%devroot%\%projectname%\buildscript\modules\pythonpackages.cmd"

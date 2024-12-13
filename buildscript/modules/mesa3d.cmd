@@ -194,8 +194,8 @@
 
 @rem Use default stability and security cflags and ldflags from MSYS2 makeppkg-mingw tool configuration - https://github.com/msys2/MSYS2-packages/blob/master/pacman/makepkg_mingw.conf
 @IF NOT %toolchain%==msvc set CFLAGS=-pipe -Wp,-D_FORTIFY_SOURCE^=2 -fstack-protector-strong -Wp,-D__USE_MINGW_ANSI_STDIO^=1
-@IF NOT %toolchain%==msvc IF %abi%==aarch64 set CFLAGS=%CFLAGS% -march^=armv8-a
-@IF NOT %toolchain%==msvc IF NOT %abi%==aarch64 set CFLAGS=%CFLAGS% -march^=core2
+@IF NOT %toolchain%==msvc IF %abi%==arm64 set CFLAGS=%CFLAGS% -march^=armv8-a
+@IF NOT %toolchain%==msvc IF NOT %abi%==arm64 set CFLAGS=%CFLAGS% -march^=core2
 @IF NOT %toolchain%==msvc set LDFLAGS=
 @IF NOT %toolchain%==msvc IF %abi%==x86 set LDFLAGS=%LDFLAGS% -Wl,--no-seh -Wl,--large-address-aware
 @IF NOT %toolchain%==msvc set buildcmd=%runmsys% /%LMSYSTEM%/bin/ninja -C "%devroot%\mesa\build\%toolchain%-%abi%" -j %throttle% -k 0
@@ -206,6 +206,7 @@
 @if /I NOT "%useninja%"=="y" set buildconf=%buildconf% --backend=vs
 @if /I NOT "%useninja%"=="y" set buildcmd=msbuild /p^:Configuration=release,Platform=Win32 mesa.sln /m^:%throttle%
 @if /I NOT "%useninja%"=="y" IF %abi%==x64 set buildcmd=%buildcmd:Win32=x64%
+@if /I NOT "%useninja%"=="y" IF %abi%==arm64 set buildcmd=%buildcmd:Win32=ARM64%
 
 @rem Add flags tracking PKG_CONFIG search PATH adjustment needs
 @set PKG_CONFIG_LIBCLC=0
@@ -220,12 +221,13 @@
 @set mesadbgbld=n
 @set mesadbgoptim=n
 @set nodebugprintf=n
-@if /I "%useninja%"=="y" IF %toolchain%==msvc call "%devroot%\%projectname%\bin\modules\prompt.cmd" mesadbgbld "Debug friendly binaries (require a lot of RAM) (y/n):"
+@IF %toolchain%==msvc call "%devroot%\%projectname%\bin\modules\prompt.cmd" mesadbgbld "Debug friendly binaries (require a lot of RAM) (y/n):"
 @IF NOT %toolchain%==msvc call "%devroot%\%projectname%\bin\modules\prompt.cmd" mesadbgbld "Debug friendly binaries (y/n):"
 @if /I NOT "%mesadbgbld%"=="y" set buildconf=%buildconf% --buildtype=release
 @if /I NOT "%mesadbgbld%"=="y" IF NOT %toolchain%==msvc set LDFLAGS=%LDFLAGS% -s
 @if /I "%mesadbgbld%"=="y" call "%devroot%\%projectname%\bin\modules\prompt.cmd" mesadbgoptim "Optimize debug binaries (y/n):"
 @if /I "%mesadbgbld%"=="y" if /I NOT "%mesadbgoptim%"=="y" set buildconf=%buildconf% --buildtype=debug
+@if /I "%mesadbgbld%"=="y" if /I NOT "%mesadbgoptim%"=="y" if /I NOT "%useninja%"=="y" set buildcmd=%buildcmd:release=debug%
 @if /I "%mesadbgoptim%"=="y" IF NOT %toolchain%==msvc set buildconf=%buildconf% --buildtype=debugoptimized
 @if /I "%mesadbgoptim%"=="y" IF %toolchain%==msvc set buildconf=%buildconf% -Ddebug=true -Doptimization=3
 @if /I "%mesadbgoptim%"=="y" IF %toolchain%==msvc call "%devroot%\%projectname%\bin\modules\prompt.cmd" nodebugprintf "Disable debug printf (y/n):"
@@ -274,7 +276,7 @@
 @if NOT %toolchain%==msvc IF %intmesaver% GEQ 21300 set msysregex=1
 
 @set canglswrast=1
-@IF %abi%==aarch64 if /I NOT "%llvmless%"=="y" IF %disableootpatch%==1 set canglswrast=0
+@IF %abi%==arm64 if /I NOT "%llvmless%"=="y" IF %disableootpatch%==1 set canglswrast=0
 @set glswrast=n
 @if /I NOT "%llvmless%"=="y" IF %canglswrast% EQU 1 call "%devroot%\%projectname%\bin\modules\prompt.cmd" glswrast "Do you want to build Mesa3D softpipe and llvmpipe drivers (y/n):"
 @if /I "%llvmless%"=="y" call "%devroot%\%projectname%\bin\modules\prompt.cmd" glswrast "Do you want to build Mesa3D softpipe driver (y/n):"

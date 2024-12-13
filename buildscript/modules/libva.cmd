@@ -54,7 +54,7 @@
 
 @IF /I NOT "%useninja%"=="y" IF %abi%==x64 set buildcmd=msbuild /p^:Configuration=release,Platform=x64 libva.sln /m^:%throttle% ^&^& msbuild /p^:Configuration=release,Platform=x64 RUN_INSTALL.vcxproj /m^:%throttle%
 @IF /I NOT "%useninja%"=="y" IF %abi%==x86 set buildcmd=msbuild /p^:Configuration=release,Platform=Win32 libva.sln /m^:%throttle% ^&^& msbuild /p^:Configuration=release,Platform=Win32 RUN_INSTALL.vcxproj /m^:%throttle%
-@IF /I NOT "%useninja%"=="y" IF %abi%==aarch64 set buildcmd=msbuild /p^:Configuration=release,Platform=ARM64 libva.sln /m^:%throttle% ^&^& msbuild /p^:Configuration=release,Platform=ARM64 RUN_INSTALL.vcxproj /m^:%throttle%
+@IF /I NOT "%useninja%"=="y" IF %abi%==arm64 set buildcmd=msbuild /p^:Configuration=release,Platform=ARM64 libva.sln /m^:%throttle% ^&^& msbuild /p^:Configuration=release,Platform=ARM64 RUN_INSTALL.vcxproj /m^:%throttle%
 @IF /I "%useninja%"=="y" set buildcmd=ninja -j %throttle% install
 @echo Performing VA-API build with ^: %buildcmd%
 @echo.

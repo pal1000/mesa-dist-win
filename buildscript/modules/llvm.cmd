@@ -68,7 +68,7 @@
 @if /I NOT "%useninja%"=="y" set buildconf=%buildconf% "Visual Studio %toolset%"
 @if %abi%==x86 if /I NOT "%useninja%"=="y" set buildconf=%buildconf% -A Win32
 @if %abi%==x64 if /I NOT "%useninja%"=="y" set buildconf=%buildconf% -A x64
-@if %abi%==aarch64 if /I NOT "%useninja%"=="y" set buildconf=%buildconf% -A ARM64
+@if %abi%==arm64 if /I NOT "%useninja%"=="y" set buildconf=%buildconf% -A ARM64
 @if /I NOT "%useninja%"=="y" IF /I %PROCESSOR_ARCHITECTURE%==AMD64 set buildconf=%buildconf% -Thost=x64
 @if /I "%useninja%"=="y" set buildconf=%buildconf%Ninja
 @set buildconf=%buildconf% -DCMAKE_BUILD_TYPE=Release

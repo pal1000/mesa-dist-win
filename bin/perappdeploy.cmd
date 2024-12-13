@@ -130,7 +130,7 @@
 @echo Select processor architecture compatible with program you want to use Mesa3D with
 @call modules\abiselect.cmd
 @if %cpuchoice% EQU 2 set mesadll=x64
-@if %cpuchoice% EQU 3 set mesadll=aarch64
+@if %cpuchoice% EQU 3 set mesadll=arm64
 @echo.
 
 :desktopgl
