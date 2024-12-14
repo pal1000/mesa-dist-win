@@ -204,9 +204,7 @@
 @if /I "%useninja%"=="y" IF %toolchain%==msvc set buildcmd=ninja -C "%devroot%\mesa\build\%toolchain%-%abi%" -j %throttle% -k 0
 
 @if /I NOT "%useninja%"=="y" set buildconf=%buildconf% --backend=vs
-@if /I NOT "%useninja%"=="y" set buildcmd=msbuild /p^:Configuration=release,Platform=Win32 mesa.sln /m^:%throttle%
-@if /I NOT "%useninja%"=="y" IF %abi%==x64 set buildcmd=%buildcmd:Win32=x64%
-@if /I NOT "%useninja%"=="y" IF %abi%==arm64 set buildcmd=%buildcmd:Win32=ARM64%
+@if /I NOT "%useninja%"=="y" set buildcmd=msbuild mesa.sln /m^:%throttle% /v^:m
 
 @rem Add flags tracking PKG_CONFIG search PATH adjustment needs
 @set PKG_CONFIG_LIBCLC=0
@@ -227,7 +225,6 @@
 @if /I NOT "%mesadbgbld%"=="y" IF NOT %toolchain%==msvc set LDFLAGS=%LDFLAGS% -s
 @if /I "%mesadbgbld%"=="y" call "%devroot%\%projectname%\bin\modules\prompt.cmd" mesadbgoptim "Optimize debug binaries (y/n):"
 @if /I "%mesadbgbld%"=="y" if /I NOT "%mesadbgoptim%"=="y" set buildconf=%buildconf% --buildtype=debug
-@if /I "%mesadbgbld%"=="y" if /I NOT "%mesadbgoptim%"=="y" if /I NOT "%useninja%"=="y" set buildcmd=%buildcmd:release=debug%
 @if /I "%mesadbgoptim%"=="y" IF NOT %toolchain%==msvc set buildconf=%buildconf% --buildtype=debugoptimized
 @if /I "%mesadbgoptim%"=="y" IF %toolchain%==msvc set buildconf=%buildconf% -Ddebug=true -Doptimization=3
 @if /I "%mesadbgoptim%"=="y" IF %toolchain%==msvc call "%devroot%\%projectname%\bin\modules\prompt.cmd" nodebugprintf "Disable debug printf (y/n):"
@@ -575,8 +572,7 @@
 @%buildconf%
 @echo.
 @if /I NOT "%useninja%"=="y" cd build\%toolchain%-%abi%
-@echo Build command: %mesonloc% compile -C "%devroot%\mesa\build\%toolchain%-%abi%" -j %throttle%
-@echo.
+@echo Build command: %buildcmd%
 @pause
 @echo.
 @set retrymesabld=1
@@ -584,7 +580,7 @@
 :execmesabld
 @set "ERRORLEVEL="
 @CMD /C EXIT 0
-@%mesonloc% compile -C "%devroot%\mesa\build\%toolchain%-%abi%" -j %throttle%
+@%buildcmd%
 @if "%ERRORLEVEL%"=="0" set retrymesabld=0
 @echo.
 
