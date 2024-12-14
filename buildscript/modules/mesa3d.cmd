@@ -575,26 +575,26 @@
 @%buildconf%
 @echo.
 @if /I NOT "%useninja%"=="y" cd build\%toolchain%-%abi%
-@echo Build command: %buildcmd%
+@echo Build command: %mesonloc% compile -C "%devroot%\mesa\build\%toolchain%-%abi%" -j %throttle%
 @echo.
 @pause
 @echo.
-@set retrymesabld=0
+@set retrymesabld=1
 
 :execmesabld
 @set "ERRORLEVEL="
 @CMD /C EXIT 0
-@%buildcmd%
-@if NOT "%ERRORLEVEL%"=="0" if %retrymesabld% EQU 0 set retrymesabld=1
+@%mesonloc% compile -C "%devroot%\mesa\build\%toolchain%-%abi%" -j %throttle%
+@if "%ERRORLEVEL%"=="0" set retrymesabld=0
 @echo.
 
 :retrymesabld
-@if /I "%useninja%"=="y" if "%retrymesabld%"=="1" call "%devroot%\%projectname%\bin\modules\prompt.cmd" retrymesabld "Number of Mesa3D build retries (0=end, 1=ask again, greater than 1 automatically retry n-1 times):"
-@if /I "%useninja%"=="y" if %retrymesabld% GTR 1 (
+@if "%retrymesabld%"=="1" call "%devroot%\%projectname%\bin\modules\prompt.cmd" retrymesabld "Number of Mesa3D build retries (0=end, 1=ask again, greater than 1 automatically retry n-1 times):"
+@if "%retrymesabld%"=="1" GOTO retrymesabld
+@if %retrymesabld% GTR 1 (
 @set /a retrymesabld-=1
 @GOTO execmesabld
 )
-@if /I "%useninja%"=="y" if %retrymesabld% GTR 0 GOTO retrymesabld
 @if /I NOT "%useninja%"=="y" cd ..\..\
 
 :skipmesa

@@ -4,7 +4,7 @@ Windows 10.0.20348
 Ressource Hacker 5.2.7.427
 7-Zip 24.09 ultra compression
 Git 2.47.1.1
-Visual Studio Build Tools 2022 v17.12.3
+Visual Studio Community 2022 v17.12.3
 Windows SDK 10.1.26100.1742
 Windows Driver Kit 10.1.26100.2454
 Nuget Commandline tool 6.12.1.1
