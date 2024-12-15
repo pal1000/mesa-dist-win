@@ -49,17 +49,16 @@
 @echo.
 @%buildconf%
 @echo.
-@pause
-@echo.
 @cd "%devroot%\zstd\zstd\buildsys-%abi%"
 
-@IF /I NOT "%useninja%"=="y" IF %abi%==x64 set buildcmd=msbuild /p^:Configuration=release,Platform=x64 zstd.sln /m^:%throttle% ^&^& msbuild /p^:Configuration=release,Platform=x64 RUN_INSTALL.vcxproj /m^:%throttle%
-@IF /I NOT "%useninja%"=="y" IF %abi%==x86 set buildcmd=msbuild /p^:Configuration=release,Platform=Win32 zstd.sln /m^:%throttle% ^&^& msbuild /p^:Configuration=release,Platform=Win32 RUN_INSTALL.vcxproj /m^:%throttle%
-@IF /I NOT "%useninja%"=="y" IF %abi%==arm64 set buildcmd=msbuild /p^:Configuration=release,Platform=ARM64 zstd.sln /m^:%throttle% ^&^& msbuild /p^:Configuration=release,Platform=ARM64 RUN_INSTALL.vcxproj /m^:%throttle%
-@IF /I "%useninja%"=="y" set buildcmd=ninja -j %throttle% install
-@echo Performing zstd build with ^: %buildcmd%
+@IF /I "%useninja%"=="y" echo Performing zstd build with ^: ninja -j %throttle% install
+@IF /I NOT "%useninja%"=="y" echo Performing zstd build with ^: msbuild zstd.sln /m^:%throttle% /v^:m and msbuild RUN_INSTALL.vcxproj
 @echo.
-@%buildcmd%
+@pause
+@echo.
+@IF /I "%useninja%"=="y" ninja -j %throttle% install
+@IF /I NOT "%useninja%"=="y" msbuild zstd.sln /m^:%throttle% /v^:m
+@IF /I NOT "%useninja%"=="y" msbuild RUN_INSTALL.vcxproj
 @echo.
 
 :nozstd

@@ -573,6 +573,7 @@
 @echo.
 @if /I NOT "%useninja%"=="y" cd build\%toolchain%-%abi%
 @echo Build command: %buildcmd%
+@echo.
 @pause
 @echo.
 @set retrymesabld=1
