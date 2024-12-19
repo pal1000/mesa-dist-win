@@ -2,7 +2,8 @@
 - ARM64: Get MSVC build envvironment to initialize;
 - MSVC/MsBuild: Fix missing cases of ARM64 handling in solution setup;
 - MSVC/MsBuild: Debug build support;
-- Mesa3D retry build: Fix retry loop exit on successful build.
+- Retry build: Fix retry loop exit on successful build;
+- Retry build: Use it for dependencies build too.
 # 24.3.1
 - Updated Mesa3D to [24.3.1](https://gitlab.freedesktop.org/mesa/mesa/-/blob/24.3/docs/relnotes/24.3.1.rst?ref_type=heads&plain=0).
 ### Build script

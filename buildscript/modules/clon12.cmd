@@ -73,8 +73,8 @@
 @echo.
 @pause
 @echo.
-@if /I NOT "%useninja%"=="y" cmake --build . -j %throttle% --config Release
-@if /I "%useninja%"=="y" ninja -j %throttle%
+@if /I NOT "%useninja%"=="y" call "%devroot%\%projectname%\buildscript\modules\trybuild.cmd" cmake --build . -j %throttle% --config Release
+@if /I "%useninja%"=="y" call "%devroot%\%projectname%\buildscript\modules\trybuild.cmd" ninja -j %throttle%
 @echo.
 
 @rem Avoid race condition in SPIRV Tools sources checkout.

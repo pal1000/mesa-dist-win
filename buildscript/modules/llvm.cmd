@@ -121,11 +121,11 @@
 @pause
 @echo.
 @For /f "tokens=1-3 delims=/ " %%a in ('date /t') do @For /f "tokens=1-2 delims=/:" %%d in ('time /t') do @echo Build started at %%a-%%b-%%c_%%d%%e.
-@if /I NOT "%useninja%"=="y" cmake --build . -j %throttle% --config Release --target install
-@if /I NOT "%useninja%"=="y" IF /I NOT "%buildclang%"=="y" cmake --build . -j %throttle% --config Release --target llvm-config
+@if /I NOT "%useninja%"=="y" call "%devroot%\%projectname%\buildscript\modules\trybuild.cmd" cmake --build . -j %throttle% --config Release --target install
+@if /I NOT "%useninja%"=="y" IF /I NOT "%buildclang%"=="y" call "%devroot%\%projectname%\buildscript\modules\trybuild.cmd" cmake --build . -j %throttle% --config Release --target llvm-config
 @if /I NOT "%useninja%"=="y" IF /I NOT "%buildclang%"=="y" copy .\Release\bin\llvm-config.exe "%llvminstloc%\%abi%\bin\"
-@if /I "%useninja%"=="y" ninja -j %throttle% install
-@if /I "%useninja%"=="y" IF /I NOT "%buildclang%"=="y" ninja -j %throttle% llvm-config
+@if /I "%useninja%"=="y" call "%devroot%\%projectname%\buildscript\modules\trybuild.cmd" ninja -j %throttle% install
+@if /I "%useninja%"=="y" IF /I NOT "%buildclang%"=="y" call "%devroot%\%projectname%\buildscript\modules\trybuild.cmd" ninja -j %throttle% llvm-config
 @if /I "%useninja%"=="y" IF /I NOT "%buildclang%"=="y" copy .\bin\llvm-config.exe "%llvminstloc%\%abi%\bin\"
 @For /f "tokens=1-3 delims=/ " %%a in ('date /t') do @For /f "tokens=1-2 delims=/:" %%d in ('time /t') do @echo Build finished at %%a-%%b-%%c_%%d%%e.
 @echo.

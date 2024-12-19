@@ -40,10 +40,10 @@
 @echo.
 @cd pkgconf
 @IF /I NOT "%useninja%"=="y" echo Performing pkgconf build with : msbuild pkgconf.sln /m^:%throttle% /v^:m
-@IF /I "%useninja%"=="y" echo Performing pkgconf build with : ninja
+@IF /I "%useninja%"=="y" echo Performing pkgconf build with : ninja -j %throttle%
 @echo.
-@IF /I NOT "%useninja%"=="y" msbuild pkgconf.sln /m^:%throttle% /v^:m
-@IF /I "%useninja%"=="y" ninja
+@IF /I NOT "%useninja%"=="y" call "%devroot%\%projectname%\buildscript\modules\trybuild.cmd" msbuild pkgconf.sln /m^:%throttle% /v^:m
+@IF /I "%useninja%"=="y" call "%devroot%\%projectname%\buildscript\modules\trybuild.cmd" ninja -j %throttle%
 @echo.
 @IF EXIST pkgconf.exe REN pkgconf.exe pkg-config.exe
 

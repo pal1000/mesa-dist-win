@@ -56,8 +56,8 @@
 @echo.
 @pause
 @echo.
-@IF /I "%useninja%"=="y" ninja -j %throttle% install
-@IF /I NOT "%useninja%"=="y" msbuild zstd.sln /m^:%throttle% /v^:m
+@IF /I "%useninja%"=="y" call "%devroot%\%projectname%\buildscript\modules\trybuild.cmd" ninja -j %throttle% install
+@IF /I NOT "%useninja%"=="y" call "%devroot%\%projectname%\buildscript\modules\trybuild.cmd" msbuild zstd.sln /m^:%throttle% /v^:m
 @IF /I NOT "%useninja%"=="y" msbuild RUN_INSTALL.vcxproj
 @echo.
 

@@ -32,7 +32,7 @@
 @echo.
 @pause
 @echo.
-@ninja -j %throttle% install
+@call "%devroot%\%projectname%\buildscript\modules\trybuild.cmd" ninja -j %throttle% install
 @echo.
 
 :finishclc

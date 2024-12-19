@@ -84,8 +84,8 @@
 @echo.
 @pause
 @echo.
-@if /I NOT "%useninja%"=="y" cmake --build . -j %throttle% --config Release --target install
-@if /I "%useninja%"=="y" ninja -j %throttle% install
+@if /I NOT "%useninja%"=="y" call "%devroot%\%projectname%\buildscript\modules\trybuild.cmd" cmake --build . -j %throttle% --config Release --target install
+@if /I "%useninja%"=="y" call "%devroot%\%projectname%\buildscript\modules\trybuild.cmd" ninja -j %throttle% install
 @echo.
 
 @rem Avoid race condition in VA-API library sources checkout.
