@@ -1,6 +1,7 @@
 ### Build script
 - ARM64: Get MSVC build envvironment to initialize;
 - MSVC/MsBuild: Fix missing cases of ARM64 handling in solution setup;
+- Windows SDK/WDK detection: ARM64 support.
 - MSVC/MsBuild: Debug build support;
 - Retry build: Fix retry loop exit on successful build;
 - Retry build: Use it for dependencies build too.
