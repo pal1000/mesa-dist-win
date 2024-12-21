@@ -12,7 +12,7 @@
 @if /I NOT "%cfgllvmbuild%"=="y" GOTO skipllvm
 
 @rem Get/update LLVM source code
-@set updllvmsrcver=19.1.5
+@set updllvmsrcver=19.1.6
 @if /I "%legacyllvm%"=="y" set updllvmsrcver=18.1.8
 @set llvmsrcver=0
 @set llvmsrcloc="%devroot%\llvm-project\cmake\Modules\LLVMVersion.cmake"

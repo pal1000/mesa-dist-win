@@ -170,7 +170,7 @@
 @IF %intmesaver% LSS 23200 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" vaon12-strip-lib-prefix
 
 @rem Fix vaon12 build regression on 24.3 with MinGW
-@IF %intmesaver% GEQ 24300 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" va-include-missing-header
+@IF %intmesaver:~0,3% EQU 243 IF %intmesaver% LSS 24352 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" va-include-missing-header
 
 :configmesabuild
 @rem Configure Mesa build.
