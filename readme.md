@@ -24,7 +24,7 @@
 - [OpenGL context configuration override](#opengl-context-configuration-override)
 - [How to set environment variables](#how-to-set-environment-variables)
 # Downloads
-Mesa 24.3.3 builds with Visual Studio and MSYS2 Mingw-w64 are now available in [releases section](https://github.com/pal1000/mesa-dist-win/releases).
+Mesa 24.3.4 builds with Visual Studio and MSYS2 Mingw-w64 are now available in [releases section](https://github.com/pal1000/mesa-dist-win/releases).
 # Sponsorship
 mesa-dist-win project was given a sponsorship that was extended until November 1st 2024. Sponsorship consists in a free VPS on French node to use as build machine with 12 GB RAM, 6 threads [AMD EPYC 7763](https://www.amd.com/en/products/cpu/amd-epyc-7763) and 150 GB NVMe SSD from [Petrosky](https://petrosky.io/pal1000), a virtual private server hosting company thanks to [@Directox01](https://github.com/Directox01).
 
@@ -60,7 +60,8 @@ Same problem with same solution applies to osmesa if you are upgrading from 17.3
 # Differences between MSVC and MinGW packages
 - MinGW package requires a CPU with [SSSE3](https://en.wikipedia.org/wiki/SSSE3#CPUs_with_SSSE3) with benefit of providing 3-5% performance boost with software rendering drivers;
 - d3d10sw introduced in 21.2.0 is only available in MSVC package;
-- Support for x86 32-bit build in MinGW packages has ended since 24.3.0 as MSYS2 began removing depending packages.
+- Support for x86 32-bit build in MinGW has been restored but without LLVM support to workaround [#156](https://github.com/pal1000/mesa-dist-win/issues/156) so no openclon12, llvmpipe or lavapipe and performance is much lower in osmesa and for software fallback emulated features aka. NIR lowering in zink and d3d12 (both OpenGL and VA-API).
+.
 
 If you need to migrate from Mingw to MSVC binaries you just need to replace Mesa binaries folder from Mingw package with MSVC counterpart.
 # Mingw and MSVC Package contents
