@@ -255,8 +255,9 @@
 @if %havellvm%==1 call "%devroot%\%projectname%\bin\modules\prompt.cmd" llvmless "Build Mesa without LLVM (y/n). llvmpipe, swr, RADV, lavapipe and all OpenCL drivers won't be available and high performance JIT won't be available for softpipe, osmesa and graw:"
 @call "%devroot%\%projectname%\buildscript\modules\mesonsubprojects.cmd"
 @IF NOT %toolchain%==msvc set buildconf=%buildconf% --force-fallback-for=
-@IF "%vksdkselect%"=="1" IF %toolchain%==clang set buildconf=%buildconf%,vulkan
-@if /I NOT "%llvmless%"=="y" IF %llvmconfigbusted% EQU 1 set buildconf=%buildconf%,llvm
+@IF "%vksdkselect%"=="1" IF %toolchain%==clang set buildconf=%buildconf%vulkan,
+@if /I NOT "%llvmless%"=="y" IF %llvmconfigbusted% EQU 1 set buildconf=%buildconf%llvm,
+@if "%buildconf:~-1%"=="," set buildconf=%buildconf:~0,-1%
 @if /I NOT "%llvmless%"=="y" IF %intmesaver% GEQ 22000 IF %intmesaver% LSS 22200 IF NOT %toolchain%==msvc set RTTI=%LLVMRTTI%
 @IF %intmesaver% GEQ 22000 set buildconf=%buildconf% -Dcpp_rtti=%RTTI%
 @if /I NOT "%llvmless%"=="y" set buildconf=%buildconf% -Dllvm=%mesonbooltrue%
@@ -335,6 +336,7 @@
 @if /I NOT "%glswrast%"=="y" set canlavapipe=0
 @IF %intmesaver:~0,3% EQU 211 IF %intmesaver% LSS 21151 IF %toolchain%==msvc if %abi%==x86 IF %disableootpatch%==1 set canlavapipe=0
 @IF %toolchain%==msvc IF %intmesaver% GEQ 21301 IF %intmesaver% LSS 21303 IF %abi%==x86 IF %disableootpatch%==1 set canlavapipe=0
+@IF %toolchain%==msvc IF NOT EXIST "%VK_SDK_PATH%" IF NOT EXIST "%VULKAN_SDK%" IF %intmesaver% GEQ 25000 set canlavapipe=0
 @IF %canlavapipe% EQU 1 call "%devroot%\%projectname%\bin\modules\prompt.cmd" lavapipe "Build Mesa3D Vulkan software renderer (y/n):"
 @if NOT %toolchain%==msvc if /I "%lavapipe%"=="y" set msysregex=1
 @if /I "%lavapipe%"=="y" set /a mesavkcount+=1
