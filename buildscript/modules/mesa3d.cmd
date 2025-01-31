@@ -364,10 +364,17 @@
 @IF %candzn% EQU 1 call "%devroot%\%projectname%\bin\modules\prompt.cmd" dozenmsvk "Build Microsoft Dozen Vulkan driver (y/n):"
 @if /I "%dozenmsvk%"=="y" set /a mesavkcount+=1
 
+@set cangfxstream=1
+@IF %intmesaver% LSS 25000 set cangfxstream=0
+@IF %toolchain%==msvc set cangfxstream=0
+@IF /I NOT "%experimental%"=="y" set cangfxstream=0
+@IF %cangfxstream% EQU 1 call "%devroot%\%projectname%\bin\modules\prompt.cmd" gfxstream "Build VirtIO GfxStream Vulkan driver (y/n):"
+
 @set buildconf=%buildconf% -Dvulkan-drivers=
 @if /I "%lavapipe%"=="y" set buildconf=%buildconf%swrast,
 @if /I "%radv%"=="y" set buildconf=%buildconf%amd,
 @if /I "%dozenmsvk%"=="y" set buildconf=%buildconf%microsoft-experimental,
+@if /I "%gfxstream%"=="y" set buildconf=%buildconf%gfxstream,
 @IF %mesavkcount% GTR 0 set buildconf=%buildconf:~0,-1%
 @IF %mesavkcount% GTR 0 IF %intmesaver% GEQ 24100 set buildconf=%buildconf% -Dvulkan-icd-dir="bin/%abi%"
 

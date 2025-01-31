@@ -51,6 +51,10 @@
 @rem Add version info to Microsoft Vulkan over Direct3D 12 driver
 @call "%devroot%\%projectname%\buildscript\modules\rcgen.cmd" "Microsoft Vulkan over Direct3D 12 driver" "%devroot%\%projectname%\bin\%abi%\vulkan_dzn.dll" %abi% %mesaver% "Microsoft Corporation"
 
+@rem Add version info to Mesa3D Vulkan driver for gfxstream virtual GPU
+@call "%devroot%\%projectname%\buildscript\modules\rcgen.cmd" "Mesa3D Vulkan driver for gfxstream virtual GPU" "%devroot%\%projectname%\bin\%abi%\vulkan_gfxstream.dll" %abi% %mesaver% "Mesa/X.org"
+@call "%devroot%\%projectname%\buildscript\modules\rcgen.cmd" "Mesa3D Vulkan driver for gfxstream virtual GPU" "%devroot%\%projectname%\bin\%abi%\libvulkan_gfxstream.dll" %abi% %mesaver% "Mesa/X.org"
+
 @rem Add version info to Microsoft OpenCL compiler and driver
 @call "%devroot%\%projectname%\buildscript\modules\rcgen.cmd" "Microsoft OpenCL compiler" "%devroot%\%projectname%\bin\%abi%\clglon12compiler.dll" %abi% %mesaver% "Microsoft Corporation"
 @call "%devroot%\%projectname%\buildscript\modules\rcgen.cmd" "Microsoft OpenCL compiler" "%devroot%\%projectname%\bin\%abi%\clon12compiler.dll" %abi% %mesaver% "Microsoft Corporation"

@@ -1,5 +1,6 @@
 ### Build script
-- lavapipe: Require Vulkan SDK [25.0].
+- lavapipe: Require Vulkan SDK [>=25.0];
+- Experimental gfxstream Vulkan support [>=25.0].
 # 24.3.4
 - Updated Mesa3D to [24.3.4](https://gitlab.freedesktop.org/mesa/mesa/-/blob/24.3/docs/relnotes/24.3.4.rst?ref_type=heads&plain=0).
 # 24.3.3

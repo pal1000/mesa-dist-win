@@ -74,9 +74,10 @@
 @IF EXIST "%devroot%\%projectname%\bin\%abi%\vulkan_lvp.dll" for /R "%devroot%\mesa\build\%toolchain%-%abi%\src" %%a IN (lvp_icd.*.json) do @IF EXIST "%%a" copy "%%a" "%devroot%\%projectname%\bin\%abi%"
 @IF EXIST "%devroot%\%projectname%\bin\%abi%\*ulkan_radeon.dll" for /R "%devroot%\mesa\build\%toolchain%-%abi%\src" %%a IN (radeon_icd.*.json) do @IF EXIST "%%a" copy "%%a" "%devroot%\%projectname%\bin\%abi%"
 @IF EXIST "%devroot%\%projectname%\bin\%abi%\vulkan_dzn.dll" for /R "%devroot%\mesa\build\%toolchain%-%abi%\src" %%a IN (dzn_icd.*.json) do @IF EXIST "%%a" copy "%%a" "%devroot%\%projectname%\bin\%abi%"
+@IF EXIST "%devroot%\%projectname%\bin\%abi%\*ulkan_gfxstream.dll" for /R "%devroot%\mesa\build\%toolchain%-%abi%\src" %%a IN (gfxstream_vk_icd.*.json) do @IF EXIST "%%a" copy "%%a" "%devroot%\%projectname%\bin\%abi%"
 @echo.
 
-@rem Patch Vulkan drivers JSONs when using Mesa 24.0 or older
+@rem Patch Vulkan drivers JSONs when using Mesa 24.0 or older except gfxstream
 @set /p mesaver=<"%devroot%\mesa\VERSION"
 @if "%mesaver:~-7%"=="0-devel" set /a intmesaver=%mesaver:~0,2%%mesaver:~3,1%00
 @if "%mesaver:~5,4%"=="0-rc" set /a intmesaver=%mesaver:~0,2%%mesaver:~3,1%00+%mesaver:~9%
@@ -84,6 +85,7 @@
 @IF %intmesaver% LSS 24100 IF EXIST "%devroot%\%projectname%\bin\%abi%\lvp_icd.*.json" call "%devroot%\%projectname%\buildscript\modules\fixvulkanjsons.cmd" lvp
 @IF %intmesaver% LSS 24100 IF EXIST "%devroot%\%projectname%\bin\%abi%\radeon_icd.*.json" call "%devroot%\%projectname%\buildscript\modules\fixvulkanjsons.cmd" radeon
 @IF %intmesaver% LSS 24100 IF EXIST "%devroot%\%projectname%\bin\%abi%\dzn_icd.*.json" call "%devroot%\%projectname%\buildscript\modules\fixvulkanjsons.cmd" dzn
+@IF EXIST "%devroot%\%projectname%\bin\%abi%\gfxstream_vk_icd.*.json" call "%devroot%\%projectname%\buildscript\modules\fixvulkanjsons.cmd" gfxstream
 
 @echo Copying static libraries...
 @for /R "%devroot%\mesa\build\%toolchain%-%abi%" %%a IN (*.lib) do @IF EXIST "%%a" copy "%%a" "%devroot%\%projectname%\lib\%abi%"
