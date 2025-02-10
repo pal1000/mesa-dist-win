@@ -5,10 +5,8 @@
 @if NOT EXIST "%devroot%\llvm\cmake\" if NOT EXIST "%devroot%\llvm-project\" IF %gitstate EQU 0 set llvmsources=0
 
 @rem Ask to configure LLVM build
-@IF %llvmsources% EQU 1 IF %cmakestate% GTR 0 set /p cfgllvmbuild=Generate LLVM build configuration command (y/n):
-@IF %llvmsources% EQU 1 IF %cmakestate% GTR 0 echo.
-@IF %llvmsources% EQU 0 IF %cmakestate% GTR 0 IF EXIST "%llvminstloc%\%abi%\lib\" set /p cfgllvmbuild=Generate LLVM build configuration command (y/n):
-@IF %llvmsources% EQU 0 IF %cmakestate% GTR 0 IF EXIST "%llvminstloc%\%abi%\lib\" echo.
+@IF %llvmsources% EQU 1 IF %cmakestate% GTR 0 call "%devroot%\%projectname%\bin\modules\prompt.cmd" cfgllvmbuild "Generate LLVM build configuration command (y/n):"
+@IF %llvmsources% EQU 0 IF %cmakestate% GTR 0 IF EXIST "%llvminstloc%\%abi%\lib\" call "%devroot%\%projectname%\bin\modules\prompt.cmd" cfgllvmbuild "Generate LLVM build configuration command (y/n):"
 @if /I NOT "%cfgllvmbuild%"=="y" GOTO skipllvm
 
 @rem Get/update LLVM source code
@@ -42,9 +40,7 @@
 @rem Apply is_trivially_copyable patch
 @if NOT EXIST "%devroot%\llvm-project\" cd "%devroot%\"
 @if EXIST "%devroot%\llvm-project\" cd "%devroot%\llvm-project"
-
-@rem Uncomment next line if still using LLVM<11 and build goes on fire
-@rem IF %disableootpatch%==0 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" llvm-vs-16_7
+@if %llvmsrcver% LSS 1100 IF %disableootpatch%==0 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" llvm-vs-16_7
 @IF %disableootpatch%==1 if EXIST "%msysloc%\usr\bin\patch.exe" echo Reverting out of tree patches...
 @IF %disableootpatch%==1 IF EXIST "%msysloc%\usr\bin\patch.exe" %runmsys% patch -Np1 --no-backup-if-mismatch -R -r - -i "%devroot%\%projectname%\patches\llvm-vs-16_7.patch"
 @IF %disableootpatch%==1 if EXIST "%msysloc%\usr\bin\patch.exe" echo.
@@ -52,13 +48,11 @@
 @rem Ask for Ninja use if exists. Load it if opted for it.
 @call "%devroot%\%projectname%\buildscript\modules\useninja.cmd"
 
-@rem AMDGPU target (disabled, see https://github.com/pal1000/mesa-dist-win/issues/103)
-@rem set /p amdgpu=Build AMDGPU target - required by RADV (y/n):
-@rem echo.
+@rem AMDGPU target (needed for RADV)
+@call "%devroot%\%projectname%\bin\modules\prompt.cmd" amdgpu "Build AMDGPU target - required by RADV (y/n):"
 
 @rem Clang
-@if EXIST "%devroot%\llvm-project\" set /p buildclang=Build clang - required for OpenCL (y/n):
-@if EXIST "%devroot%\llvm-project\" echo.
+@if EXIST "%devroot%\llvm-project\" call "%devroot%\%projectname%\bin\modules\prompt.cmd" buildclang "Build clang - required for OpenCL (y/n):"
 
 @rem Load cmake into build environment.
 @if %cmakestate%==1 set PATH=%devroot%\cmake\bin\;%PATH%
@@ -78,20 +72,21 @@
 @IF /I "%buildclang%"=="y" set buildconf=%buildconf% -DLLVM_ENABLE_PROJECTS="clang"
 @set buildconf=%buildconf% -DLLVM_TARGETS_TO_BUILD=
 @IF /I "%amdgpu%"=="y" set buildconf=%buildconf%AMDGPU;
-@set buildconf=%buildconf%X86 -DLLVM_OPTIMIZED_TABLEGEN=TRUE -DLLVM_INCLUDE_UTILS=OFF -DLLVM_INCLUDE_RUNTIMES=OFF -DLLVM_INCLUDE_TESTS=OFF -DLLVM_INCLUDE_EXAMPLES=OFF -DLLVM_INCLUDE_BENCHMARKS=OFF -DLLVM_BUILD_LLVM_C_DYLIB=OFF -DLLVM_ENABLE_DIA_SDK=OFF
+@if NOT %abi%==arm64 set buildconf=%buildconf%X86
+@if %abi%==arm64 set buildconf=%buildconf%AArch64
+@set buildconf=%buildconf% -DLLVM_OPTIMIZED_TABLEGEN=TRUE -DLLVM_INCLUDE_UTILS=OFF -DLLVM_INCLUDE_RUNTIMES=OFF -DLLVM_INCLUDE_TESTS=OFF -DLLVM_INCLUDE_EXAMPLES=OFF -DLLVM_INCLUDE_BENCHMARKS=OFF -DLLVM_BUILD_LLVM_C_DYLIB=OFF -DLLVM_ENABLE_DIA_SDK=OFF
 @if EXIST "%devroot%\llvm-project\" IF /I NOT "%buildclang%"=="y" set buildconf=%buildconf% -DLLVM_BUILD_TOOLS=OFF
 @IF /I "%buildclang%"=="y" set buildconf=%buildconf% -DCLANG_BUILD_TOOLS=ON
-@set buildconf=%buildconf% -DLLVM_ENABLE_RTTI=ON -DLLVM_ENABLE_TERMINFO=OFF
+@set buildconf=%buildconf% -DLLVM_ENABLE_RTTI=ON
+@if %llvmsrcver% LSS 1900 set buildconf=%buildconf% -DLLVM_ENABLE_TERMINFO=OFF
 
 @if NOT EXIST "%devroot%\llvm-project\" echo LLVM build configuration command^: %buildconf% -DCMAKE_INSTALL_PREFIX="%llvminstloc%\%abi%" "%devroot%\llvm"
 @if EXIST "%devroot%\llvm-project\" echo LLVM build configuration command^: %buildconf% -DCMAKE_INSTALL_PREFIX="%llvminstloc%\%abi%" "%devroot%\llvm-project\llvm"
 @echo.
 
 @rem Ask to do LLVM build
-@if EXIST "%devroot%\llvm-project\" set /p buildllvm=Begin LLVM build (y/n):
-@if EXIST "%devroot%\llvm-project\" echo.
-@if NOT EXIST "%devroot%\llvm-project\" if EXIST "%devroot%\llvm\cmake\" set /p buildllvm=Begin LLVM build (y/n):
-@if NOT EXIST "%devroot%\llvm-project\" if EXIST "%devroot%\llvm\cmake\" echo.
+@if EXIST "%devroot%\llvm-project\" call "%devroot%\%projectname%\bin\modules\prompt.cmd" buildllvm "Begin LLVM build (y/n):"
+@if NOT EXIST "%devroot%\llvm-project\" if EXIST "%devroot%\llvm\cmake\" call "%devroot%\%projectname%\bin\modules\prompt.cmd" buildllvm "Begin LLVM build (y/n):"
 @IF /I NOT "%buildllvm%"=="y" GOTO skipllvm
 
 @rem Always clean build

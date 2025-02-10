@@ -2,7 +2,10 @@
 - lavapipe: Require Vulkan SDK [>=25.0];
 - Experimental gfxstream Vulkan support [>=25.0];
 - RADV: AMDGPU VirtIO backend support [>=25.0];
-- MSVC: '/Zc:preprocessor' is now set [>=25.1].
+- MSVC: '/Zc:preprocessor' flag is now set [>=25.1];
+- MSVC LLVM build: ARM64 native build support;
+- MSVC LLVM build: Restore AMDGPU target support;
+- MSVC LLVM build: Stop using LLVM_ENABLE_TERMINFO option [>=19].
 # 24.3.4
 - Updated Mesa3D to [24.3.4](https://gitlab.freedesktop.org/mesa/mesa/-/blob/24.3/docs/relnotes/24.3.4.rst?ref_type=heads&plain=0).
 # 24.3.3
