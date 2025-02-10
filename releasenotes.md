@@ -6,6 +6,8 @@
 - MSVC LLVM build: ARM64 native build support;
 - MSVC LLVM build: Restore AMDGPU target support;
 - MSVC LLVM build: Stop using LLVM_ENABLE_TERMINFO option [>=19].
+### Out of tree patching
+- RADV/MinGW: Add [patch](https://github.com/msys2/MINGW-packages/pull/17893) fixing build from MSYS2 [>=23.1].
 # 24.3.4
 - Updated Mesa3D to [24.3.4](https://gitlab.freedesktop.org/mesa/mesa/-/blob/24.3/docs/relnotes/24.3.4.rst?ref_type=heads&plain=0).
 # 24.3.3

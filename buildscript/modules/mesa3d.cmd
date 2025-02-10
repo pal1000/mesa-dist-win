@@ -128,6 +128,7 @@
 
 @rem Fix radv MinGW build
 @IF %intmesaver% GEQ 21200 IF %intmesaver% LSS 21251 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" radv-mingw
+@IF %intmesaver% GEQ 23100 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" addrlib-workaround-old-cpu-target
 
 @rem Fix radv MSVC build with LLVM 13
 @IF %intmesaver:~0,3% EQU 213 IF %intmesaver% LSS 21306 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" radv-msvc-llvm13
