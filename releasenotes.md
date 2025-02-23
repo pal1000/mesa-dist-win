@@ -1,3 +1,5 @@
+### Build script
+- MinGW GCC build: Disable EGL and GLES support on Mesa>=25.0 to workaround https://gitlab.freedesktop.org/mesa/mesa/-/issues/12573.
 # 25.0.0-rc3
 ### Build script
 - lavapipe: Require Vulkan SDK [>=25.0];

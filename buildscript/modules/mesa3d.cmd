@@ -404,12 +404,18 @@
 @IF /I NOT "%spirvtodxil%"=="y" IF %intmesaver% GEQ 21000 set buildconf=%buildconf% -Dspirv-to-dxil=false
 
 @set gles=n
-@IF %intmesaver% LSS 21300 IF %galliumcount% GTR 0 call "%devroot%\%projectname%\bin\modules\prompt.cmd" gles "Do you want to build GLAPI as a shared library and standalone GLES drivers (y/n):"
-@IF %intmesaver% GEQ 21300 IF %galliumcount% GTR 0 call "%devroot%\%projectname%\bin\modules\prompt.cmd" gles "Do you want to build standalone GLES drivers (y/n):"
+@set cangles=1
+@IF %galliumcount% EQU 0 set cangles=0
+
+@rem Also workaround https://gitlab.freedesktop.org/mesa/mesa/-/issues/12573
+@IF %intmesaver% GEQ 25000 IF %toolchain%==gcc set cangles=0
+
+@IF %intmesaver% LSS 21300 IF %cangles% EQU 1 call "%devroot%\%projectname%\bin\modules\prompt.cmd" gles "Do you want to build GLAPI as a shared library and standalone GLES drivers (y/n):"
+@IF %intmesaver% GEQ 21300 IF %cangles% EQU 1 call "%devroot%\%projectname%\bin\modules\prompt.cmd" gles "Do you want to build standalone GLES drivers (y/n):"
 @if /I "%gles%"=="y" set buildconf=%buildconf% -Dshared-glapi=%mesonbooltrue% -Dgles1=%mesonbooltrue% -Dgles2=%mesonbooltrue%
 @if /I "%gles%"=="y" IF %intmesaver% GEQ 21300 set buildconf=%buildconf% -Degl=%mesonbooltrue%
 @if /I NOT "%gles%"=="y" set buildconf=%buildconf% -Dgles1=%mesonboolfalse% -Dgles2=%mesonboolfalse% -Dshared-glapi=auto
-@if /I NOT "%gles%"=="y" IF %intmesaver% GEQ 21300 IF %galliumcount% GTR 0 set buildconf=%buildconf:~0,-4%%mesonbooltrue%
+@if /I NOT "%gles%"=="y" IF %intmesaver% GEQ 21300 IF %cangles% EQU 1 set buildconf=%buildconf:~0,-4%%mesonbooltrue%
 @if /I NOT "%gles%"=="y" IF %intmesaver% GEQ 21300 set buildconf=%buildconf% -Degl=%mesonboolfalse%
 
 @set osmesa=n
@@ -528,7 +534,6 @@
 @rem https://github.com/mpv-player/mpv/pull/15325/files
 @rem https://developercommunity.visualstudio.com/t/NAN-is-no-longer-compile-time-constant-i/10688907
 @if /I "%mesatests%"=="y" IF %toolchain%==msvc if /I NOT "%llvmless%"=="y" IF /I "%glswrast%"=="y" set CFLAGS=%CFLAGS% -D_UCRT_NOISY_NAN
-
 
 @rem Pass additional compiler and linker flags
 @if defined CFLAGS IF %toolchain%==msvc set CFLAGS=%CFLAGS:~1%

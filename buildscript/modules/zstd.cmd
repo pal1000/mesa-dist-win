@@ -3,7 +3,7 @@
 @if NOT EXIST "%devroot%\zstd\" IF %gitstate%==0 GOTO nozstd
 @IF "%pkgconfigstate%"=="0" GOTO nozstd
 
-@set zstd_ver=1232d4c45d18f124e44fe382b11dee095566b610
+@set zstd_ver=v1.5.7
 @if EXIST "%devroot%\zstd\" IF %gitstate% GTR 0 (
 @echo Switching zstd source code to stable release...
 @cd "%devroot%\zstd"
