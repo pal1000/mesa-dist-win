@@ -1,3 +1,5 @@
+### Build script
+- Workaround https://gitlab.freedesktop.org/mesa/mesa/-/issues/12573 by using LLD linker with GCC.
 # 25.0.0
 - Updated Mesa3D to [25.0.0](https://gitlab.freedesktop.org/mesa/mesa/-/blob/25.0/docs/relnotes/25.0.0.rst?ref_type=heads&plain=0).
 ### Build script

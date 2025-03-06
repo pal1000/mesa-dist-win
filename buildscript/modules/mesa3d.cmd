@@ -407,8 +407,9 @@
 @set cangles=1
 @IF %galliumcount% EQU 0 set cangles=0
 
-@rem Also workaround https://gitlab.freedesktop.org/mesa/mesa/-/issues/12573
-@IF %intmesaver% GEQ 25000 IF %toolchain%==gcc set cangles=0
+@rem Workaround https://gitlab.freedesktop.org/mesa/mesa/-/issues/12573 by using LLD linker with GCC
+@IF %intmesaver% GEQ 25000 IF %toolchain%==gcc set CC_LD=lld
+@IF %intmesaver% GEQ 25000 IF %toolchain%==gcc set CXX_LD=lld
 
 @IF %intmesaver% LSS 21300 IF %cangles% EQU 1 call "%devroot%\%projectname%\bin\modules\prompt.cmd" gles "Do you want to build GLAPI as a shared library and standalone GLES drivers (y/n):"
 @IF %intmesaver% GEQ 21300 IF %cangles% EQU 1 call "%devroot%\%projectname%\bin\modules\prompt.cmd" gles "Do you want to build standalone GLES drivers (y/n):"
