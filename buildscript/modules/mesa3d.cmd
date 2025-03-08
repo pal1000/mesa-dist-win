@@ -407,9 +407,8 @@
 @set cangles=1
 @IF %galliumcount% EQU 0 set cangles=0
 
-@rem Workaround https://gitlab.freedesktop.org/mesa/mesa/-/issues/12573 by using LLD linker with GCC
-@IF %intmesaver% GEQ 25000 IF %toolchain%==gcc set CC_LD=lld
-@IF %intmesaver% GEQ 25000 IF %toolchain%==gcc set CXX_LD=lld
+@rem Workaround https://gitlab.freedesktop.org/mesa/mesa/-/issues/12573 by disabling EGL and GLES
+@IF %intmesaver:~0,3% EQU 250 IF %toolchain%==gcc set cangles=0
 
 @IF %intmesaver% LSS 21300 IF %cangles% EQU 1 call "%devroot%\%projectname%\bin\modules\prompt.cmd" gles "Do you want to build GLAPI as a shared library and standalone GLES drivers (y/n):"
 @IF %intmesaver% GEQ 21300 IF %cangles% EQU 1 call "%devroot%\%projectname%\bin\modules\prompt.cmd" gles "Do you want to build standalone GLES drivers (y/n):"
@@ -422,6 +421,7 @@
 @set osmesa=n
 @set canosmesa=1
 @if /I NOT "%glswrast%"=="y" if /I NOT "%swrdrv%"=="y" set canosmesa=0
+@IF %intmesaver% GEQ 25100 set canosmesa=0
 @if %canosmesa% EQU 1 IF %intmesaver% LSS 21000 call "%devroot%\%projectname%\bin\modules\prompt.cmd" osmesa "Do you want to build off-screen rendering drivers (y/n):"
 @if %canosmesa% EQU 1 IF %intmesaver% GEQ 21000 call "%devroot%\%projectname%\bin\modules\prompt.cmd" osmesa "Do you want to build off-screen rendering driver (y/n):"
 @rem osmesa classic is gone in Mesa 21.0 and newer
