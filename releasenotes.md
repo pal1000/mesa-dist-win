@@ -1,3 +1,5 @@
+# 25.0.2
+- Updated Mesa3D to [25.0.2](https://gitlab.freedesktop.org/mesa/mesa/-/blob/25.0/docs/relnotes/25.0.2.rst?ref_type=heads&plain=0).
 ### Build script
 - shared-glapi code path is always enabled and build option is deprecated [>=25.1].
 # 25.0.1
