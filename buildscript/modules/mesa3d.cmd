@@ -427,6 +427,7 @@
 @if %canosmesa% EQU 1 IF %intmesaver% LSS 21000 call "%devroot%\%projectname%\bin\modules\prompt.cmd" osmesa "Do you want to build off-screen rendering drivers (y/n):"
 @if %canosmesa% EQU 1 IF %intmesaver% GEQ 21000 call "%devroot%\%projectname%\bin\modules\prompt.cmd" osmesa "Do you want to build off-screen rendering driver (y/n):"
 @rem osmesa classic is gone in Mesa 21.0 and newer
+@rem osmesa is gone in 25.1
 @IF /I "%osmesa%"=="y" IF %intmesaver% GEQ 21000 set buildconf=%buildconf% -Dosmesa=true
 @IF /I "%osmesa%"=="y" IF %intmesaver% LSS 21000 set buildconf=%buildconf% -Dosmesa=gallium,classic
 @rem Building both osmesa gallium and classic requires out of tree patches
@@ -435,7 +436,7 @@
 @IF /I "%osmesa%"=="y" IF %intmesaver% LSS 21000 IF NOT %toolchain%==msvc set buildconf=%buildconf:~0,-8%
 @rem Explicitly disable osmesa when asked, for incremental build consistency
 @IF /I NOT "%osmesa%"=="y" IF %intmesaver% LSS 21000 set buildconf=%buildconf% -Dosmesa=
-@IF /I NOT "%osmesa%"=="y" IF %intmesaver% GEQ 21000 set buildconf=%buildconf% -Dosmesa=false
+@IF /I NOT "%osmesa%"=="y" IF %intmesaver% GEQ 21000 IF %intmesaver% LSS 25100 set buildconf=%buildconf% -Dosmesa=false
 
 @rem Basic OpenCL requirements: Mesa 21.0+, LLVM and libclc
 @set canopencl=1
