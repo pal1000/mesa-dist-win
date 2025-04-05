@@ -358,9 +358,6 @@
 @IF %canradv% EQU 1 call "%devroot%\%projectname%\bin\modules\prompt.cmd" radv "Build AMD Vulkan driver - radv (y/n):"
 @IF NOT %toolchain%==msvc if /I "%radv%"=="y" set msysregex=1
 @if /I "%radv%"=="y" set /a mesavkcount+=1
-@if /I "%radv%"=="y" IF %intmesaver% GEQ 25000 call "%devroot%\%projectname%\bin\modules\prompt.cmd" amdgpu-virtio "Build AMDGPU VirtIO backend (y/n):"
-@if /I "%amdgpu-virtio%"=="y" set buildconf=%buildconf% -Damdgpu-virtio=true
-@if /I "%radv%"=="y" if /I NOT "%amdgpu-virtio%"=="y" IF %intmesaver% GEQ 25000 set buildconf=%buildconf% -Damdgpu-virtio=false
 
 @set candzn=0
 @IF %canmcrdrvcom% EQU 1 IF %intmesaver% GEQ 22100 set candzn=1
