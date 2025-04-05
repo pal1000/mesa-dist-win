@@ -530,6 +530,10 @@
 @IF %canmesatests% EQU 1 IF %intmesaver% GEQ 24153 call "%devroot%\%projectname%\bin\modules\prompt.cmd" mesatests "Do you want to build unit tests and dynamic pipe loader (y/n):"
 @if /I NOT "%mesatests%"=="y" set buildconf=%buildconf% -Dbuild-tests=false
 @if /I "%mesatests%"=="y" set buildconf=%buildconf% -Dbuild-tests=true
+@set buildconf=%buildconf% -Dbuild-aco-tests=false
+@if /I "%radv%"=="y" if /I "%mesatests%"=="y" set buildconf=%buildconf:~0,-5%true
+@IF %intmesaver% GEQ 25100 set buildconf=%buildconf% -Dbuild-radv-tests=false
+@IF %intmesaver% GEQ 25100 if /I "%radv%"=="y" if /I "%mesatests%"=="y" set buildconf=%buildconf:~0,-5%true
 
 @rem Workaround https://gitlab.freedesktop.org/mesa/mesa/-/issues/11462, see
 @rem https://github.com/mpv-player/mpv/pull/15325/files

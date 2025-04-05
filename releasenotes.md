@@ -2,7 +2,8 @@
 - Updated Mesa3D to [25.0.3](https://gitlab.freedesktop.org/mesa/mesa/-/blob/25.0/docs/relnotes/25.0.3.rst?ref_type=heads&plain=0).
 ### Build script
 - osmesa: supress setting build option [>=25.1];
-- AMDGPU virttio backend doesn't support Windows at the moment.
+- AMDGPU virttio backend doesn't support Windows at the moment;
+- RADV: Add ACO and 25.1 new additional tests build.
 # 25.0.2
 - Updated Mesa3D to [25.0.2](https://gitlab.freedesktop.org/mesa/mesa/-/blob/25.0/docs/relnotes/25.0.2.rst?ref_type=heads&plain=0).
 ### Build script
