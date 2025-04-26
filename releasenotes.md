@@ -1,3 +1,5 @@
+# 25.0.4
+- Updated Mesa3D to [25.0.4](https://gitlab.freedesktop.org/mesa/mesa/-/blob/25.0/docs/relnotes/25.0.4.rst?ref_type=heads&plain=0).
 ### Build script
 - openclon12 ICD: Fix build configure with CMake>=4.0.
 # 25.0.3
