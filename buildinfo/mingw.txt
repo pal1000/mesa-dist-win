@@ -51,7 +51,7 @@ libgcrypt 1.11.0-1
 libgdbm 1.25-1
 libgettextpo 0.22.5-1
 libgnutls 3.8.9-1
-libgpg-error 1.54-1
+libgpg-error 1.55-1
 libhogweed 3.10.1-1
 libiconv 1.18-1
 libidn2 2.3.8-1
@@ -110,7 +110,7 @@ mingw-w64-clang-x86_64-libtasn1 4.20.0-1
 mingw-w64-clang-x86_64-libtre 0.9.0-1
 mingw-w64-clang-x86_64-libunistring 1.3-1
 mingw-w64-clang-x86_64-libunwind 20.1.3-1
-mingw-w64-clang-x86_64-libuv 1.50.0-2
+mingw-w64-clang-x86_64-libuv 1.51.0-1
 mingw-w64-clang-x86_64-libva 2.22.0-2
 mingw-w64-clang-x86_64-libwinpthread-git 12.0.0.r679.g71699efcb-1
 mingw-w64-clang-x86_64-libxml2 2.12.10-1
@@ -165,8 +165,8 @@ mingw-w64-i686-crt-git 12.0.0.r679.g71699efcb-1
 mingw-w64-i686-curl 8.13.0-2
 mingw-w64-i686-directx-headers 1.615.0-1
 mingw-w64-i686-expat 2.7.1-2
-mingw-w64-i686-gcc 14.2.0-3
-mingw-w64-i686-gcc-libs 14.2.0-3
+mingw-w64-i686-gcc 15.1.0-1
+mingw-w64-i686-gcc-libs 15.1.0-1
 mingw-w64-i686-gdb 16.3-1
 mingw-w64-i686-gettext-runtime 0.24-2
 mingw-w64-i686-gmp 6.3.0-2
@@ -185,7 +185,7 @@ mingw-w64-i686-libsystre 1.0.2-1
 mingw-w64-i686-libtasn1 4.20.0-1
 mingw-w64-i686-libtre 0.9.0-1
 mingw-w64-i686-libunistring 1.3-1
-mingw-w64-i686-libuv 1.50.0-2
+mingw-w64-i686-libuv 1.51.0-1
 mingw-w64-i686-libva 2.22.0-2
 mingw-w64-i686-libwinpthread-git 12.0.0.r679.g71699efcb-1
 mingw-w64-i686-libxml2 2.12.10-1
