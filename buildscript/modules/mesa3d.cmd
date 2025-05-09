@@ -228,7 +228,8 @@
 @if /I "%mesadbgbld%"=="y" if /I NOT "%mesadbgoptim%"=="y" set buildconf=%buildconf% --buildtype=debug
 @if /I "%mesadbgoptim%"=="y" IF NOT %toolchain%==msvc set buildconf=%buildconf% --buildtype=debugoptimized
 @if /I "%mesadbgoptim%"=="y" IF %toolchain%==msvc set buildconf=%buildconf% -Ddebug=true -Doptimization=3
-@if /I "%mesadbgoptim%"=="y" IF %toolchain%==msvc call "%devroot%\%projectname%\bin\modules\prompt.cmd" nodebugprintf "Disable debug printf (y/n):"
+@rem Keep MSVC debug printf enabled until we find another way to disable it without relying on Meson undefined behavior. Behavior changed unexpectedly in Meson 1.8.0 breaking debug info activation. 25.0.5 is first affected release
+@rem if /I "%mesadbgoptim%"=="y" IF %toolchain%==msvc call "%devroot%\%projectname%\bin\modules\prompt.cmd" nodebugprintf "Disable debug printf (y/n):"
 @if /I "%nodebugprintf%"=="y" set buildconf=%buildconf:~0,-17% --buildtype=release
 
 @set mesaenableasserts=n

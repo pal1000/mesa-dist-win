@@ -1,3 +1,5 @@
+### Build script
+- MSVC: Keep debug printf enabled until we find another way to disable it without relying on Meson undefined behavior; behavior changed unexpectedly in Meson 1.8.0 breaking debug info activation.
 # 25.0.5
 - Updated Mesa3D to [25.0.5](https://gitlab.freedesktop.org/mesa/mesa/-/blob/25.0/docs/relnotes/25.0.5.rst?ref_type=heads&plain=0).
 # 25.0.4
