@@ -4,7 +4,7 @@ Windows 10.0.20348
 Ressource Hacker 5.2.8.448
 7-Zip 24.09 ultra compression
 Git 2.49.0.1
-LunarG Vulkan SDK 1.4.309.0
+LunarG Vulkan SDK 1.4.313.0
 OpenCLonD3D12 ICD 2024.12.04
 
 MSYS2 environment
@@ -18,7 +18,7 @@ bsdtar 3.7.9-1
 bzip2 1.0.8-4
 ca-certificates 20241223-1
 coreutils 8.32-5
-curl 8.13.0-1
+curl 8.13.0-2
 dash 0.5.12-1
 db 6.2.32-5
 file 5.46-2
@@ -36,13 +36,13 @@ grep 1~3.0-7
 gzip 1.14-1
 heimdal-libs 7.8.0-5
 inetutils 2.5-2
-info 7.1.1-1
+info 7.2-1
 less 668-1
 libargp 20241207-1
 libasprintf 0.22.5-1
 libassuan 3.0.2-1
 libbz2 1.0.8-4
-libcurl 8.13.0-1
+libcurl 8.13.0-2
 libdb 6.2.32-5
 libedit 20240808_3.1-1
 libexpat 2.7.1-1
@@ -68,7 +68,7 @@ libpcre 8.45-5
 libpcre2_8 10.45-1
 libpsl 0.21.5-2
 libreadline 8.2.013-1
-libsqlite 3.46.1-1
+libsqlite 3.49.1-2
 libssh2 1.11.1-1
 libtasn1 4.20.0-1
 libunistring 1.3-1
@@ -82,18 +82,18 @@ mingw-w64-clang-x86_64-c-ares 1.34.5-1
 mingw-w64-clang-x86_64-ca-certificates 20241223-1
 mingw-w64-clang-x86_64-clang 20.1.3-1
 mingw-w64-clang-x86_64-clang-libs 20.1.3-1
-mingw-w64-clang-x86_64-cmake 4.0.1-1
+mingw-w64-clang-x86_64-cmake 4.0.2-1
 mingw-w64-clang-x86_64-compiler-rt 20.1.3-1
 mingw-w64-clang-x86_64-cppdap 1.65-1
-mingw-w64-clang-x86_64-crt-git 12.0.0.r679.g71699efcb-1
+mingw-w64-clang-x86_64-crt-git 12.0.0.r720.g01c28cf2e-1
 mingw-w64-clang-x86_64-curl 8.13.0-2
 mingw-w64-clang-x86_64-directx-headers 1.615.0-1
 mingw-w64-clang-x86_64-expat 2.7.1-2
 mingw-w64-clang-x86_64-gdb 16.3-1
-mingw-w64-clang-x86_64-gettext-runtime 0.24-2
+mingw-w64-clang-x86_64-gettext-runtime 0.25-1
 mingw-w64-clang-x86_64-glslang 15.2.0-2
 mingw-w64-clang-x86_64-gmp 6.3.0-2
-mingw-w64-clang-x86_64-headers-git 12.0.0.r679.g71699efcb-1
+mingw-w64-clang-x86_64-headers-git 12.0.0.r720.g01c28cf2e-1
 mingw-w64-clang-x86_64-jsoncpp 1.9.6-3
 mingw-w64-clang-x86_64-libarchive 3.7.9-2
 mingw-w64-clang-x86_64-libb2 0.98.1-2
@@ -112,7 +112,7 @@ mingw-w64-clang-x86_64-libunistring 1.3-1
 mingw-w64-clang-x86_64-libunwind 20.1.3-1
 mingw-w64-clang-x86_64-libuv 1.51.0-1
 mingw-w64-clang-x86_64-libva 2.22.0-2
-mingw-w64-clang-x86_64-libwinpthread-git 12.0.0.r679.g71699efcb-1
+mingw-w64-clang-x86_64-libwinpthread-git 12.0.0.r720.g01c28cf2e-1
 mingw-w64-clang-x86_64-libxml2 2.12.10-1
 mingw-w64-clang-x86_64-libyaml 0.2.5-2
 mingw-w64-clang-x86_64-lld 20.1.3-1
@@ -120,7 +120,7 @@ mingw-w64-clang-x86_64-llvm 20.1.3-1
 mingw-w64-clang-x86_64-llvm-libs 20.1.3-1
 mingw-w64-clang-x86_64-lz4 1.10.0-1
 mingw-w64-clang-x86_64-meson 1.7.2-1
-mingw-w64-clang-x86_64-mpdecimal 4.0.0-1
+mingw-w64-clang-x86_64-mpdecimal 4.0.1-1
 mingw-w64-clang-x86_64-mpfr 4.2.2-1
 mingw-w64-clang-x86_64-ncurses 6.5.20241228-3
 mingw-w64-clang-x86_64-nghttp2 1.65.0-1
@@ -137,17 +137,17 @@ mingw-w64-clang-x86_64-python-packaging 24.2-1
 mingw-w64-clang-x86_64-python-yaml 6.0.2-3
 mingw-w64-clang-x86_64-readline 8.2.013-1
 mingw-w64-clang-x86_64-rhash 1.4.5-1
-mingw-w64-clang-x86_64-spirv-headers 2~1.4.309.0-1
+mingw-w64-clang-x86_64-spirv-headers 2~1.4.313.0-1
 mingw-w64-clang-x86_64-spirv-llvm-translator 20.1.0-1
-mingw-w64-clang-x86_64-spirv-tools 3~1.4.309.0-1
-mingw-w64-clang-x86_64-sqlite3 3.47.2-1
+mingw-w64-clang-x86_64-spirv-tools 3~1.4.313.0-1
+mingw-w64-clang-x86_64-sqlite3 3.49.1-1
 mingw-w64-clang-x86_64-tcl 8.6.16-1
 mingw-w64-clang-x86_64-termcap 1.3.1-7
 mingw-w64-clang-x86_64-tk 8.6.16-1
 mingw-w64-clang-x86_64-tzdata 2025b-1
-mingw-w64-clang-x86_64-vulkan-headers 1.4.309.0-1
-mingw-w64-clang-x86_64-vulkan-loader 1.4.309.0-1
-mingw-w64-clang-x86_64-winpthreads-git 12.0.0.r679.g71699efcb-1
+mingw-w64-clang-x86_64-vulkan-headers 1.4.313.0-1
+mingw-w64-clang-x86_64-vulkan-loader 1.4.313.0-1
+mingw-w64-clang-x86_64-winpthreads-git 12.0.0.r720.g01c28cf2e-1
 mingw-w64-clang-x86_64-xxhash 0.8.3-1
 mingw-w64-clang-x86_64-xz 5.8.1-2
 mingw-w64-clang-x86_64-zlib 1.3.1-1
@@ -159,18 +159,18 @@ mingw-w64-i686-c-ares 1.34.5-1
 mingw-w64-i686-ca-certificates 20241223-1
 mingw-w64-i686-clang 20.1.3-1
 mingw-w64-i686-clang-libs 20.1.3-1
-mingw-w64-i686-cmake 4.0.1-1
+mingw-w64-i686-cmake 4.0.2-1
 mingw-w64-i686-cppdap 1.65-1
-mingw-w64-i686-crt-git 12.0.0.r679.g71699efcb-1
+mingw-w64-i686-crt-git 12.0.0.r720.g01c28cf2e-1
 mingw-w64-i686-curl 8.13.0-2
 mingw-w64-i686-directx-headers 1.615.0-1
 mingw-w64-i686-expat 2.7.1-2
-mingw-w64-i686-gcc 15.1.0-1
-mingw-w64-i686-gcc-libs 15.1.0-1
+mingw-w64-i686-gcc 15.1.0-2
+mingw-w64-i686-gcc-libs 15.1.0-2
 mingw-w64-i686-gdb 16.3-1
-mingw-w64-i686-gettext-runtime 0.24-2
+mingw-w64-i686-gettext-runtime 0.25-1
 mingw-w64-i686-gmp 6.3.0-2
-mingw-w64-i686-headers-git 12.0.0.r679.g71699efcb-1
+mingw-w64-i686-headers-git 12.0.0.r720.g01c28cf2e-1
 mingw-w64-i686-isl 0.27-1
 mingw-w64-i686-jsoncpp 1.9.6-3
 mingw-w64-i686-libarchive 3.7.9-2
@@ -187,7 +187,7 @@ mingw-w64-i686-libtre 0.9.0-1
 mingw-w64-i686-libunistring 1.3-1
 mingw-w64-i686-libuv 1.51.0-1
 mingw-w64-i686-libva 2.22.0-2
-mingw-w64-i686-libwinpthread-git 12.0.0.r679.g71699efcb-1
+mingw-w64-i686-libwinpthread-git 12.0.0.r720.g01c28cf2e-1
 mingw-w64-i686-libxml2 2.12.10-1
 mingw-w64-i686-libyaml 0.2.5-2
 mingw-w64-i686-llvm 20.1.3-1
@@ -195,7 +195,7 @@ mingw-w64-i686-llvm-libs 20.1.3-1
 mingw-w64-i686-lz4 1.10.0-1
 mingw-w64-i686-meson 1.7.2-1
 mingw-w64-i686-mpc 1.3.1-2
-mingw-w64-i686-mpdecimal 4.0.0-1
+mingw-w64-i686-mpdecimal 4.0.1-1
 mingw-w64-i686-mpfr 4.2.2-1
 mingw-w64-i686-ncurses 6.5.20241228-3
 mingw-w64-i686-nghttp2 1.65.0-1
@@ -210,15 +210,15 @@ mingw-w64-i686-python-packaging 24.2-1
 mingw-w64-i686-python-yaml 6.0.2-3
 mingw-w64-i686-readline 8.2.013-1
 mingw-w64-i686-rhash 1.4.5-1
-mingw-w64-i686-sqlite3 3.47.2-1
+mingw-w64-i686-sqlite3 3.49.1-1
 mingw-w64-i686-tcl 8.6.16-1
 mingw-w64-i686-termcap 1.3.1-7
 mingw-w64-i686-tk 8.6.16-1
 mingw-w64-i686-tzdata 2025b-1
-mingw-w64-i686-vulkan-headers 1.4.309.0-1
-mingw-w64-i686-vulkan-loader 1.4.309.0-1
+mingw-w64-i686-vulkan-headers 1.4.313.0-1
+mingw-w64-i686-vulkan-loader 1.4.313.0-1
 mingw-w64-i686-windows-default-manifest 6.4-4
-mingw-w64-i686-winpthreads-git 12.0.0.r679.g71699efcb-1
+mingw-w64-i686-winpthreads-git 12.0.0.r720.g01c28cf2e-1
 mingw-w64-i686-xxhash 0.8.3-1
 mingw-w64-i686-xz 5.8.1-2
 mingw-w64-i686-zlib 1.3.1-1
