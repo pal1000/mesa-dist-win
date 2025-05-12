@@ -475,11 +475,12 @@
 @IF /I NOT "%experimental%"=="y" set canclover=0
 @IF %canopencl% EQU 0 set canclover=0
 @IF %intmesaver% LSS 21300 set canclover=0
+@IF %intmesaver% GEQ 25200 set canclover=0
 @IF %RTTI%==false set canclover=0
 @if /I NOT "%glswrast%"=="y" set canclover=0
 @IF %intmesaver:~0,3% EQU 213 IF %disableootpatch%==1 set canclover=0
 @if %canclover% EQU 1 call "%devroot%\%projectname%\bin\modules\prompt.cmd" buildclover "Build OpenCL clover driver (y/n):"
-@IF /I NOT "%buildclover%"=="y" set buildconf=%buildconf% -Dgallium-opencl=%mesonboolfalse%
+@IF /I NOT "%buildclover%"=="y" IF %intmesaver% LSS 25200 set buildconf=%buildconf% -Dgallium-opencl=%mesonboolfalse%
 @IF /I "%buildclover%"=="y" set PKG_CONFIG_LIBCLC=1
 @IF /I "%buildclover%"=="y" call "%devroot%\%projectname%\bin\modules\prompt.cmd" icdclover "Build clover in ICD format (y/n):"
 @IF /I "%icdclover%"=="y" set buildconf=%buildconf% -Dgallium-opencl=icd
