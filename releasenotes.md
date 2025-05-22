@@ -1,6 +1,9 @@
+# 25.1.1
+- Updated Mesa3D to [25.1.1](https://gitlab.freedesktop.org/mesa/mesa/-/blob/25.1/docs/relnotes/25.1.1.rst?ref_type=heads&plain=0).
 ### Build script
-- clover: removed in 25.2.
-### 25.1.0
+- clover: removed in 25.2;
+- openclon12 ICD: go back to build from master branch.
+# 25.1.0
 - Updated Mesa3D to [25.1.0](https://gitlab.freedesktop.org/mesa/mesa/-/blob/25.1/docs/relnotes/25.1.0.rst?ref_type=heads&plain=0).
 ### Build script
 - MSVC: Re-enable debug printf until we find another way to disable it without relying on Meson undefined behavior; behavior changed unexpectedly in Meson 1.8.0 breaking debug info activation.

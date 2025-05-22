@@ -19,8 +19,7 @@
 @IF /I NOT "%buildclon12%"=="y" GOTO skipclon12
 @IF NOT EXIST "%devroot%\clon12\" (
 @echo Getting CLonD3D12 ICD source code...
-@rem Use secondary branch with MSVC 17.12 build fix
-@git clone -b user/tvandewalle/fixCompileError https://github.com/microsoft/OpenCLOn12 "%devroot%\clon12"
+@git clone https://github.com/microsoft/OpenCLOn12 "%devroot%\clon12"
 @echo.
 )
 
