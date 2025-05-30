@@ -2,7 +2,7 @@
 @rem Get dependencies
 @%runmsys% /usr/bin/pacman -S flex bison patch tar --needed --noconfirm --disable-download-timeout
 @echo.
-@IF NOT %toolchain%==msvc for /f tokens^=1-21^ delims^={^,}^ eol^= %%a IN ("%mingwpkglst%") DO @(
+@IF NOT %toolchain%==msvc for /f tokens^=1-22^ delims^={^,}^ eol^= %%a IN ("%mingwpkglst%") DO @(
 %runmsys% pacman -S ${MINGW_PACKAGE_PREFIX}-%%a --needed --noconfirm --disable-download-timeout
 %runmsys% pacman -S ${MINGW_PACKAGE_PREFIX}-%%b --needed --noconfirm --disable-download-timeout
 %runmsys% pacman -S ${MINGW_PACKAGE_PREFIX}-%%c --needed --noconfirm --disable-download-timeout
