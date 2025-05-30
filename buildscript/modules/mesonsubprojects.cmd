@@ -7,6 +7,22 @@
 @rem Use pure subproject without wrap for DirectX headers
 @IF EXIST "%devroot%\mesa\subprojects\DirectX-Headers.wrap" del "%devroot%\mesa\subprojects\DirectX-Headers.wrap"
 
+@rem Setup DirectX headers as Meson subproject in case runtime dependency is missing
+@if %gitstate% GTR 0 for /f delims^=^ eol^= %%a in ('dir /b /a^:d "%devroot%\mesa\subprojects\DirectX-Header*" 2^>^&1') do @IF NOT EXIST "%devroot%\mesa\subprojects\%%~nxa\" (
+@echo Obtaining DirectX-Headers...
+@git clone --recurse-submodules https://github.com/microsoft/DirectX-Headers.git "%devroot%\mesa\subprojects\DirectX-Headers"
+@echo.
+)
+@if %gitstate% GTR 0 for /f delims^=^ eol^= %%a in ('dir /b /a^:d "%devroot%\mesa\subprojects\DirectX-Header*" 2^>^&1') do @IF EXIST "%devroot%\mesa\subprojects\%%~nxa\" (
+@cd "%devroot%\mesa\subprojects\%%~nxa"
+@echo Using DirectX-Headers stable release...
+@for /f tokens^=2^ delims^=/^ eol^= %%a in ('git symbolic-ref --short refs/remotes/origin/HEAD 2^>^&^1') do @git checkout %%a
+@git pull -f --progress --tags --recurse-submodules origin
+@git checkout v1.615.0
+@cd "%devroot%\mesa"
+)
+@if %gitstate% GTR 0 echo.
+
 @rem Always use runtime zstd dependency
 @for /f delims^=^ eol^= %%a in ('dir /b /a^:d "%devroot%\mesa\subprojects\zstd-*" 2^>^&1') do @IF EXIST "%devroot%\mesa\subprojects\%%~nxa\" RD /S /Q "%devroot%\mesa\subprojects\%%~nxa"
 @IF EXIST "%devroot%\mesa\subprojects\zstd.wrap" del "%devroot%\mesa\subprojects\zstd.wrap"
@@ -92,26 +108,9 @@ set "exitloop="
 @cd /D "%devroot%\mesa"
 )
 
-@rem Setup DirectX headers as Meson subproject
-@if %gitstate% GTR 0 for /f delims^=^ eol^= %%a in ('dir /b /a^:d "%devroot%\mesa\subprojects\DirectX-Header*" 2^>^&1') do @IF NOT EXIST "%devroot%\mesa\subprojects\%%~nxa\" (
-@echo Obtaining DirectX-Headers...
-@git clone --recurse-submodules https://github.com/microsoft/DirectX-Headers.git "%devroot%\mesa\subprojects\DirectX-Headers"
-@echo.
-)
-@if %gitstate% GTR 0 for /f delims^=^ eol^= %%a in ('dir /b /a^:d "%devroot%\mesa\subprojects\DirectX-Header*" 2^>^&1') do @IF EXIST "%devroot%\mesa\subprojects\%%~nxa\" (
-@cd "%devroot%\mesa\subprojects\%%~nxa"
-@echo Using DirectX-Headers stable release...
-@for /f tokens^=2^ delims^=/^ eol^= %%a in ('git symbolic-ref --short refs/remotes/origin/HEAD 2^>^&^1') do @git checkout %%a
-@git pull -f --progress --tags --recurse-submodules origin
-@git checkout v1.615.0
-@cd "%devroot%\mesa"
-)
-@if %gitstate% GTR 0 echo.
-
 :mingwwraps
 @IF %toolchain%==msvc GOTO donewrap
-@rem Use runtime MinGW DirectX Headers, libelf and zlib dependencies
-@for /f delims^=^ eol^= %%a in ('dir /b /a^:d "%devroot%\mesa\subprojects\DirectX-Header*" 2^>^&1') do @IF EXIST "%devroot%\mesa\subprojects\%%~nxa\" RD /S /Q "%devroot%\mesa\subprojects\%%~nxa\"
+@rem Use runtime MinGW libelf and zlib dependencies
 @for /f delims^=^ eol^= %%a in ('dir /b /a^:d "%devroot%\mesa\subprojects\libelf-*" 2^>^&1') do @IF EXIST "%devroot%\mesa\subprojects\%%~nxa\" RD /S /Q "%devroot%\mesa\subprojects\%%~nxa"
 @IF EXIST "%devroot%\mesa\subprojects\libelf.wrap" del "%devroot%\mesa\subprojects\libelf.wrap"
 @for /f delims^=^ eol^= %%a in ('dir /b /a^:d "%devroot%\mesa\subprojects\zlib-*" 2^>^&1') do @IF EXIST "%devroot%\mesa\subprojects\%%~nxa\" RD /S /Q "%devroot%\mesa\subprojects\%%~nxa"
