@@ -69,6 +69,7 @@
 %runmsys% pacman -S ${MINGW_PACKAGE_PREFIX}-%%s --needed
 %runmsys% pacman -S ${MINGW_PACKAGE_PREFIX}-%%t --needed
 %runmsys% pacman -S ${MINGW_PACKAGE_PREFIX}-%%u --needed
+%runmsys% pacman -S ${MINGW_PACKAGE_PREFIX}-%%v --needed
 )
 @IF /I NOT "%msyscmd%"=="clearcache" IF /I NOT "%msyscmd%"=="cleancache" IF /I NOT "%msyscmd%"=="setup" %runmsys% %msyscmd%
 @echo.

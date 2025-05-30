@@ -24,6 +24,7 @@
 %runmsys% pacman -S ${MINGW_PACKAGE_PREFIX}-%%s --needed --noconfirm --disable-download-timeout
 %runmsys% pacman -S ${MINGW_PACKAGE_PREFIX}-%%t --needed --noconfirm --disable-download-timeout
 %runmsys% pacman -S ${MINGW_PACKAGE_PREFIX}-%%u --needed --noconfirm --disable-download-timeout
+%runmsys% pacman -S ${MINGW_PACKAGE_PREFIX}-%%v --needed --noconfirm --disable-download-timeout
 )
 @IF NOT %toolchain%==msvc echo.
 @IF EXIST "%msysloc%\usr\bin\git.exe" IF %gitstate% GTR 0 (
