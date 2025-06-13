@@ -4,15 +4,16 @@
 @if NOT EXIST "%devroot%\pkgconf\" IF %gitstate%==0 echo.
 @if NOT EXIST "%devroot%\pkgconf\" IF %gitstate%==0 GOTO missingpkgconf
 @cd "%devroot%\"
-@if EXIST "%devroot%\pkgconf\" IF %gitstate% GTR 0 (
+@if EXIST "%devroot%\pkgconf\.git\" IF %gitstate% GTR 0 (
 @echo Updating pkgconf source code...
 @cd pkgconf
 @for /f tokens^=2^ delims^=/^ eol^= %%a in ('git symbolic-ref --short refs/remotes/origin/HEAD 2^>^&^1') do @git checkout %%a
 @git pull --progress --tags --recurse-submodules origin
 )
-@if NOT EXIST "%devroot%\pkgconf\" IF %gitstate% GTR 0 (
+@if NOT EXIST "%devroot%\pkgconf\.git\" IF %gitstate% GTR 0 (
 @echo Getting pkgconf source code...
 @git clone https://gitea.treehouse.systems/ariadne/pkgconf.git --recurse-submodules pkgconf
+@if NOT EXIST "pkgconf\.git\" git clone https://github.com/pkgconf/pkgconf.git --recurse-submodules pkgconf
 @cd pkgconf
 )
 @IF %gitstate% GTR 0 (

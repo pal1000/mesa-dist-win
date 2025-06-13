@@ -61,6 +61,10 @@
 @IF /I NOT "%useninja%"=="y" msbuild RUN_INSTALL.vcxproj
 @echo.
 
+@rem Avoid race condition in LLVM sources checkout.
+@pause
+@echo.
+
 :nozstd
 @endlocal
 @cd "%devroot%\"
