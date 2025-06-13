@@ -9,6 +9,7 @@
 @set descriptionfield=%1
 @IF NOT %3==null set descriptionfield=%descriptionfield:~0,-1% (%3)"
 @set prodver=%4.%mesabldrev%
+@FOR /F "skip=1 tokens=2" %%a IN ('WMIC Path Win32_LocalTime Get Second^,Year /Format^:table') DO @if "%%a" NEQ "" set year=%%a
 
 @(echo.
 echo 1 VERSIONINFO
@@ -25,7 +26,7 @@ echo VALUE "CompanyName", %5
 echo VALUE "FileDescription", %descriptionfield%
 echo VALUE "FileVersion", "%prodver%"
 echo VALUE "InternalName", "%~n2.dll"
-echo VALUE "LegalCopyright", "Copyright (C) 2024"
+echo VALUE "LegalCopyright", "Copyright (C) %year%"
 echo VALUE "OriginalFilename", "%~n2.dll"
 echo VALUE "ProductName", "Mesa3D"
 echo VALUE "ProductVersion", "%prodver%"
