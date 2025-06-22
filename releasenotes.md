@@ -1,5 +1,6 @@
 ### Distribution
-- Binary metadata: Fix copyright year and automate its update.
+- Binary metadata: Fix copyright year and automate its update;
+- Vulkan JSON patch tool: Make it more robust to Mesa3D changes.
 # 25.1.3
 - Updated Mesa3D to [25.1.3](https://gitlab.freedesktop.org/mesa/mesa/-/blob/25.1/docs/relnotes/25.1.3.rst?ref_type=heads&plain=0).
 ### Build script
