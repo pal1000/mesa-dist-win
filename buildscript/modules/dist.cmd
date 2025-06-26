@@ -101,9 +101,9 @@
 @IF /I NOT "%keeplastbuild%"=="y" echo.
 
 :donedist
-@IF EXIST "%devroot%\%projectname%\bin\%abi%\*.dll" IF NOT EXIST "%devroot%\%projectname%\lib\%abi%\*.lib" set /p getdebugbin=Collect MinGW debug binaries (y/n):
-@IF EXIST "%devroot%\%projectname%\bin\%abi%\*.dll" IF NOT EXIST "%devroot%\%projectname%\lib\%abi%\*.lib" echo.
-@if /I "%getdebugbin%"=="y" echo Moving debug binaries to distinct location...
-@if /I "%getdebugbin%"=="y" MOVE "%devroot%\%projectname%\bin\%abi%\*.*" "%devroot%\%projectname%\debug\%abi%\"
-@if /I "%getdebugbin%"=="y" echo.
+@IF EXIST "%devroot%\%projectname%\bin\%abi%\*.dll" IF NOT EXIST "%devroot%\%projectname%\lib\%abi%\*.lib" IF EXIST "%devroot%\mesa\build\%toolchain%-%abi%\meson-logs\meson-log.txt" for /f delims^= %%i in ('type "%devroot%\mesa\build\%toolchain%-%abi%\meson-logs\meson-log.txt" ^| find "-Dbuildtype=d"') do @(
+@echo Moving debug binaries to distinct location...
+@MOVE "%devroot%\%projectname%\bin\%abi%\*.*" "%devroot%\%projectname%\debug\%abi%\"
+@echo.
+)
 @endlocal
