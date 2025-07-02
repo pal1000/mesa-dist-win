@@ -17,37 +17,42 @@
 @if NOT %sevenzip%==7z.exe if NOT EXIST %sevenzip% pause
 @if NOT %sevenzip%==7z.exe if NOT EXIST %sevenzip% exit /B
 
+@set corrupt=0
+
+@echo Detecting build type...
+@set buildtype=release
+@for /f %%a IN ('dir /b /s ..\debug\*.dll 2^>nul') DO @set buildtype=debug
+@for /f %%a IN ('dir /b /s ..\bin\*.dll 2^>nul') DO @if %buildtype%==debug (
+@set corrupt=1
+@set buildtype=ERROR
+)
+@echo %buildtype%
+@echo.
+
 @echo Detecting binary toolchain...
 @set msvclibs=0
 @for /f %%a IN ('dir /b /s ..\lib\*.lib 2^>nul') DO @set /a msvclibs+=1
 @set mingwlibs=0
 @for /f %%a IN ('dir /b /s ..\lib\*.dll.a 2^>nul') DO @set /a mingwlibs+=1
 @if %msvclibs% EQU 0 if %mingwlibs% EQU 0 echo FATAL ERROR^: Missing binaries!
-@if %msvclibs% GTR 0 if %mingwlibs% GTR 0 echo FATAL ERROR^: Binaries are corrupt!
-@if %msvclibs% GTR 0 if %mingwlibs% EQU 0 echo MSVC
-@if %msvclibs% EQU 0 if %mingwlibs% GTR 0 echo MINGW
+@if %msvclibs% GTR 0 if %mingwlibs% GTR 0 set corrupt=1
+@if %corrupt% EQU 1 echo FATAL ERROR^: Binaries are corrupt!
+@if %corrupt% EQU 0 if %msvclibs% GTR 0 if %mingwlibs% EQU 0 echo MSVC
+@if %corrupt% EQU 0 if %msvclibs% EQU 0 if %mingwlibs% GTR 0 echo MINGW
 @echo.
 @if %msvclibs% EQU 0 if %mingwlibs% EQU 0 pause
 @if %msvclibs% EQU 0 if %mingwlibs% EQU 0 exit /B
-@if %msvclibs% GTR 0 if %mingwlibs% GTR 0 pause
-@if %msvclibs% GTR 0 if %mingwlibs% GTR 0 exit /B
+@if %corrupt% EQU 1 pause
+@if %corrupt% EQU 1 exit /B
 
 @echo Getting Mesa3D version...
 @set mesaver=0
 @IF EXIST ..\..\mesa\VERSION set /p mesaver=<..\..\mesa\VERSION
 @IF EXIST ..\..\mesa\VERSION IF "%mesaver:~-6%"=="-devel" IF EXIST ..\..\mesa\.git\refs\heads\main for /f %%a IN (..\..\mesa\.git\refs\heads\main) DO @set mesaver=%mesaver:~0,-6%-%%a
 @IF EXIST ..\..\mesa\VERSION echo %mesaver%
-@IF NOT EXIST ..\..\mesa\VERSION set /p mesaver=Enter Mesa3D version:
-@echo.
+@IF NOT EXIST ..\..\mesa\VERSION call "%devroot%\%projectname%\bin\modules\prompt.cmd" mesaver "Enter Mesa3D version:"
 
-@echo Detecting build type...
-@set buildtype=release
-@if %mingwlibs% GTR 0 for /f %%a IN ('dir /b /s ..\debug\*.dll 2^>nul') DO @set buildtype=debug
-@echo %buildtype%
-@echo.
-
-@set /p mesarev=Enter distribution revision (leave blank if first):
-@echo.
+@call "%devroot%\%projectname%\bin\modules\prompt.cmd" mesarev "Enter distribution revision (leave blank if first):"
 
 @IF %buildtype%==debug echo Creating mesa-dist-win MinGW debug package...
 @if %msvclibs% GTR 0 echo Creating mesa-dist-win MSVC release package...

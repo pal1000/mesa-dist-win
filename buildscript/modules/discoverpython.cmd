@@ -28,8 +28,7 @@
 @IF %pythontotal% GTR 0 echo.
 
 :pyselect
-@set /p pyselect=Select Python version by entering its index from the table above:
-@echo.
+@call "%devroot%\%projectname%\bin\modules\prompt.cmd" pyselect "Select Python version by entering its index from the table above:"
 @IF "%pyselect%"=="" echo Invalid entry.
 @IF "%pyselect%"=="" pause
 @IF "%pyselect%"=="" echo.

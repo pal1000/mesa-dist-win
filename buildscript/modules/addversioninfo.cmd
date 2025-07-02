@@ -8,9 +8,7 @@
 @IF %rhstate%==0 GOTO nomesaverinfo
 @IF %rhstate%==1 SET PATH=%devroot%\resource-hacker\;%PATH%
 
-@set mesabldrev=
-@set /p mesabldrev=Mesa3D build revision (default:blank, positive integer or blank expected, leaving blank disables adding version information to binaries, MinGW debug binaries should have this left blank as GDB is intolerant to any binary tampering):
-@echo.
+@call "%devroot%\%projectname%\bin\modules\prompt.cmd" mesabldrev "Mesa3D build revision (default:blank, positive integer or blank expected, leaving blank disables adding version information to binaries, MinGW debug binaries should have this left blank as GDB is intolerant to any binary tampering):"
 @IF NOT defined mesabldrev GOTO nomesaverinfo
 @echo Adding version information to binaries. Please wait...
 @echo.

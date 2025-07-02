@@ -9,10 +9,8 @@
 
 @set useclang=n
 @IF NOT %toolchain%==msvc IF %abi%==arm64 set useclang=y
-@IF %clangstate% GTR 0 IF %toolchain%==msvc set /p useclang=Use clang compiler with selected toolchain ^(y/n^):
-@IF %clangstate% GTR 0 IF NOT %toolchain%==msvc IF %abi%==x64 set /p useclang=Use clang compiler with selected toolchain ^(y/n^):
-@IF %clangstate% GTR 0 IF %toolchain%==msvc echo.
-@IF %clangstate% GTR 0 IF NOT %toolchain%==msvc IF %abi%==x64 echo.
+@IF %clangstate% GTR 0 IF %toolchain%==msvc call "%devroot%\%projectname%\bin\modules\prompt.cmd" useclang "Use clang compiler with selected toolchain (y/n):"
+@IF %clangstate% GTR 0 IF NOT %toolchain%==msvc IF %abi%==x64 call "%devroot%\%projectname%\bin\modules\prompt.cmd" useclang "Use clang compiler with selected toolchain (y/n):"
 @endlocal&set useclang=%useclang%
 
 @set llvmalreadyloaded=0

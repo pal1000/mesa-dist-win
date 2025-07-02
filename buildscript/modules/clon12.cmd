@@ -14,8 +14,7 @@
 @echo.
 )
 
-@IF %canclon12% EQU 1 set /p buildclon12=Build Microsoft OpenCL over D3D12 driver (y/n):
-@IF %canclon12% EQU 1 echo.
+@IF %canclon12% EQU 1 call "%devroot%\%projectname%\bin\modules\prompt.cmd" buildclon12 "Build Microsoft OpenCL over D3D12 driver (y/n):"
 @IF /I NOT "%buildclon12%"=="y" GOTO skipclon12
 @IF NOT EXIST "%devroot%\clon12\" (
 @echo Getting CLonD3D12 ICD source code...
