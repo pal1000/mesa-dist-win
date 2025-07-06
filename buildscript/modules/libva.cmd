@@ -13,8 +13,7 @@
 @echo.
 )
 
-@set /p buildlibva=Do you want to build VA-API library (y/n):
-@echo.
+@call "%devroot%\%projectname%\bin\modules\prompt.cmd" buildlibva "Do you want to build VA-API library (y/n):"
 @IF /I NOT "%buildlibva%"=="y" GOTO nolibva
 
 @if NOT EXIST "%devroot%\libva\" IF %gitstate% GTR 0 (

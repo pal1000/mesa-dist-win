@@ -13,8 +13,7 @@
 @echo.
 )
 
-@set /p buildzstd=Do you want to build zstd compressor (y/n):
-@echo.
+@call "%devroot%\%projectname%\bin\modules\prompt.cmd" buildzstd "Do you want to build zstd compressor (y/n):"
 @IF /I NOT "%buildzstd%"=="y" GOTO nozstd
 
 @if NOT EXIST "%devroot%\zstd\" IF %gitstate% GTR 0 (

@@ -7,7 +7,7 @@
 @IF EXIST "%devroot%\mesa\build\%toolchain%-%abi%\src\gallium\targets\opencl\libMesaOpenCL-1.dll" REN "%devroot%\mesa\build\%toolchain%-%abi%\src\gallium\targets\opencl\libMesaOpenCL-1.dll" MesaOpenCL.dll
 @IF EXIST "%devroot%\mesa\build\%toolchain%-%abi%\src\gallium\targets\opencl\libOpenCL-1.dll" REN "%devroot%\mesa\build\%toolchain%-%abi%\src\gallium\targets\opencl\libOpenCL-1.dll" OpenCL.dll
 
-@set dist=n
+@if %cimode% EQU 0 set dist=n
 @call "%devroot%\%projectname%\bin\modules\prompt.cmd" dist "Create or update Mesa3D distribution package (y/n):
 @if /I NOT "%dist%"=="y" GOTO donedist
 @cd "%devroot%\%projectname%"
@@ -22,6 +22,7 @@
 @GOTO donedist
 
 :normaldist
+@if %cimode% EQU 0 set keeplastbuild=n
 @IF %toolchain%==msvc IF EXIST lib\%abi%\*.lib call "%devroot%\%projectname%\bin\modules\prompt.cmd" keeplastbuild "Keep binaries and libraries from previous build (y/n):"
 @if NOT EXIST "bin\" MD bin
 @if NOT EXIST "lib\" MD lib

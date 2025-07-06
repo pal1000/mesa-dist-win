@@ -41,8 +41,7 @@
 @echo manually.
 @echo.
 @set dir=
-@set /p dir=Path to folder holding application executable:
-@echo.
+@call modules\prompt.cmd dir "Path to folder holding application executable:"
 @IF %dir:~0,1%%dir:~-1%=="" set dir=%dir:~1,-1%
 @IF "%dir:~-1%"=="\" set dir=%dir:~0,-1%
 @IF NOT EXIST "%dir%" echo Error: That location doesn't exist.
@@ -82,6 +81,7 @@
 @if defined overwritewarn echo.
 @IF EXIST "%dir%\libgallium_wgl.dll" del "%dir%\libgallium_wgl.dll"
 @IF EXIST "%dir%\libglapi.dll" del "%dir%\libglapi.dll"
+@IF EXIST "%dir%\libGLESv3.dll" del "%dir%\libGLESv3.dll"
 @if EXIST "%dir%\swrAVX.dll" set foundswr=1
 @if EXIST "%dir%\swrAVX.dll" del "%dir%\swrAVX.dll"
 @if EXIST "%dir%\swrAVX2.dll" set foundswr=1
@@ -108,14 +108,12 @@
 @echo.
 
 @set continue_deploy=
-@set /p continue_deploy=Continue with deployment? (y=yes):
-@echo.
+@call modules\prompt.cmd continue_deploy "Continue with deployment? (y=yes):"
 @if /I NOT "%continue_deploy%"=="y" EXIT /b
 
 :askforappexe
 @set appexe=
-@set /p appexe=Application executable name with or without extension (optional, try leaving it blank first and only specify it if things don't work otherwise; it forces some programs to use Mesa3D which would otherwise bypass it):
-@echo.
+@call modules\prompt.cmd appexe "Application executable name with or without extension (optional, try leaving it blank first and only specify it if things don't work otherwise; it forces some programs to use Mesa3D which would otherwise bypass it):"
 @IF "%appexe%"=="" GOTO ask_for_app_abi
 @IF /I NOT "%appexe:~-4%"==".exe" set appexe=%appexe%.exe
 @IF NOT EXIST "%dir%\%appexe%" echo Error: File not found.
@@ -136,8 +134,7 @@
 :desktopgl
 @set desktopgl=n
 @IF EXIST "%mesaloc%\%mesadll%\opengl32.dll" set desktopgl=y
-@IF EXIST "%mesaloc%\%mesadll%\opengl32.dll" set /p desktopgl=Do you want Desktop OpenGL drivers (y/n, defaults to yes):
-@IF EXIST "%mesaloc%\%mesadll%\opengl32.dll" echo.
+@IF EXIST "%mesaloc%\%mesadll%\opengl32.dll" call modules\prompt.cmd desktopgl "Do you want Desktop OpenGL drivers (y/n, defaults to yes):"
 @IF /I "%desktopgl%"=="n" GOTO opengles
 @IF %founddesktopgl% EQU 1 echo Updating core desktop OpenGL deployment...
 @IF EXIST "%mesaloc%\%mesadll%\dxil.dll" IF EXIST "%dir%\dxil.dll" del "%dir%\dxil.dll"
@@ -151,8 +148,7 @@
 @IF NOT "%dir%\%appexe%"=="%dir%\" echo dummy > "%dir%\%appexe%.local"
 @echo.
 @set swr=n
-@IF EXIST "%mesaloc%\%mesadll%\swr*.dll" if %mesadll%==x64 set /p swr=Do you want swr driver - the new desktop OpenGL driver made by Intel (y/n):
-@IF EXIST "%mesaloc%\%mesadll%\swr*.dll" if %mesadll%==x64 echo.
+@IF EXIST "%mesaloc%\%mesadll%\swr*.dll" if %mesadll%==x64 call modules\prompt.cmd swr "Do you want swr driver - the new desktop OpenGL driver made by Intel (y/n):"
 @IF /I NOT "%swr%"=="y" GOTO opengles
 @IF %foundswr% EQU 1 echo Updating swr driver deployment...
 @IF EXIST "%mesaloc%\%mesadll%\swrAVX.dll" IF NOT EXIST "%dir%\swrAVX.dll" call modules\mklink.cmd swrAVX
@@ -163,8 +159,7 @@
 
 :opengles
 @set opengles=
-@IF EXIST "%mesaloc%\%mesadll%\libGLESv2.dll" IF EXIST "%mesaloc%\%mesadll%\libglapi.dll" set /p opengles=Do you need OpenGL ES support (y/n):
-@IF EXIST "%mesaloc%\%mesadll%\libGLESv2.dll" IF EXIST "%mesaloc%\%mesadll%\libglapi.dll" echo.
+@IF EXIST "%mesaloc%\%mesadll%\libGLESv2.dll" call modules\prompt.cmd opengles "Do you need OpenGL ES support (y/n):"
 @IF /I NOT "%opengles%"=="y" GOTO clover
 @IF EXIST "%dir%\libEGL.dll" del "%dir%\libEGL.dll"
 @if EXIST "%dir%\libGLESv1_CM.dll" del "%dir%\libGLESv1_CM.dll"
@@ -178,12 +173,12 @@
 @IF NOT EXIST "%mesaloc%\%mesadll%\libgallium_wgl.dll" IF EXIST "%mesaloc%\%mesadll%\opengl32.dll" IF NOT EXIST "%dir%\opengl32sw.dll" call modules\mklink.cmd opengl32sw
 @IF EXIST "%mesaloc%\%mesadll%\libGLESv1_CM.dll" IF NOT EXIST "%dir%\libGLESv1_CM.dll" call modules\mklink.cmd libGLESv1_CM
 @IF EXIST "%mesaloc%\%mesadll%\libGLESv2.dll" IF NOT EXIST "%dir%\libGLESv2.dll" call modules\mklink.cmd libGLESv2
+@IF EXIST "%mesaloc%\%mesadll%\libGLESv2.dll" IF NOT EXIST "%dir%\libGLESv3.dll" call modules\mklink.cmd libGLESv3
 @echo.
 
 :clover
 @set deploy_clover=
-@IF EXIST "%mesaloc%\%mesadll%\OpenCL.dll" IF EXIST "%mesaloc%\%mesadll%\pipe_*.dll" set /p deploy_clover=Deploy Mesa3D OpenCL clover driver as the only OpenCL driver for this program hiding all other drivers registered system-wide (y/n):
-@IF EXIST "%mesaloc%\%mesadll%\OpenCL.dll" IF EXIST "%mesaloc%\%mesadll%\pipe_*.dll" echo.
+@IF EXIST "%mesaloc%\%mesadll%\OpenCL.dll" IF EXIST "%mesaloc%\%mesadll%\pipe_*.dll" call modules\prompt.cmd deploy_clover "Deploy Mesa3D OpenCL clover driver as the only OpenCL driver for this program hiding all other drivers registered system-wide (y/n):"
 @if /I NOT "%deploy_clover%"=="y" GOTO osmesa
 @IF %foundclover% EQU 1 echo Updating Mesa3D clover deployment...
 @IF EXIST "%dir%\OpenCL.dll" del "%dir%\OpenCL.dll"
@@ -193,8 +188,7 @@
 
 :osmesa
 @set osmesa=
-@IF EXIST "%mesaloc%\%mesadll%\osmesa.dll" set /p osmesa=Do you need off-screen rendering (y/n):
-@IF EXIST "%mesaloc%\%mesadll%\osmesa.dll" echo.
+@IF EXIST "%mesaloc%\%mesadll%\osmesa.dll" call modules\prompt.cmd osmesa "Do you need off-screen rendering (y/n):"
 @if /I NOT "%osmesa%"=="y" GOTO graw
 @IF %foundosmesa% EQU 1 echo Updating Mesa3D off-screen rendering interface deployment...
 @call modules\mklink.cmd osmesa
@@ -204,8 +198,7 @@
 :graw
 @set graw=
 @if NOT EXIST "%mesaloc%\%mesadll%\graw.dll" if NOT EXIST "%mesaloc%\%mesadll%\graw_null.dll" GOTO vaapi
-@set /p graw=Do you need gallium raw interface (y/n):
-@echo.
+@call modules\prompt.cmd graw "Do you need gallium raw interface (y/n):"
 @if /I NOT "%graw%"=="y" GOTO vaapi
 @IF %foundgraw% EQU 1 echo Updating Gallium raw interface deployment...
 @IF EXIST "%mesaloc%\%mesadll%\graw.dll" if NOT EXIST "%dir%\graw.dll" call modules\mklink.cmd graw
@@ -214,8 +207,7 @@
 @echo.
 
 :vaapi
-@if EXIST "%mesaloc%\%mesadll%\va.dll" if EXIST "%mesaloc%\%mesadll%\va_win32.dll" if EXIST "%mesaloc%\%mesadll%\vaon12_drv_video.dll" set /p vaapi=Deploy video acceleration support (y/n):
-@if EXIST "%mesaloc%\%mesadll%\va.dll" if EXIST "%mesaloc%\%mesadll%\va_win32.dll" if EXIST "%mesaloc%\%mesadll%\vaon12_drv_video.dll" echo.
+@if EXIST "%mesaloc%\%mesadll%\va.dll" if EXIST "%mesaloc%\%mesadll%\va_win32.dll" if EXIST "%mesaloc%\%mesadll%\vaon12_drv_video.dll" call modules\prompt.cmd vaapi "Deploy video acceleration support (y/n):"
 @if /I NOT "%vaapi%"=="y" GOTO restart
 @IF %foundvaapi% EQU 1 echo Updating VA-API interface deployment...
 @IF EXIST "%mesaloc%\%mesadll%\va.dll" if NOT EXIST "%dir%\va.dll" call modules\mklink.cmd va
@@ -227,6 +219,5 @@
 :restart
 @set rerun=
 @echo.
-@set /p rerun=More Mesa deployment? (y=yes):
-@echo.
+@call modules\prompt.cmd rerun "More Mesa deployment? (y=yes):"
 @if /I "%rerun%"=="y" GOTO deploy

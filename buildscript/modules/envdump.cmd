@@ -1,7 +1,6 @@
 @setlocal
 @IF NOT EXIST "%devroot%\%projectname%\buildinfo\" md "%devroot%\%projectname%\buildinfo"
-@set /p enableenvdump=Do you want to dump build environment information to a text file (y/n):
-@echo.
+@call "%devroot%\%projectname%\bin\modules\prompt.cmd" enableenvdump "Do you want to dump build environment information to a text file (y/n):"
 @IF /I NOT "%enableenvdump%"=="y" GOTO skipenvdump
 @echo Dumping build environment information. This will take a short while...
 @echo.

@@ -23,8 +23,7 @@
 @IF %cmakestate%==0 set canllvmspirv=0
 @IF NOT EXIST "%devroot%\SPIRV-LLVM-Translator\" IF %gitstate% EQU 0 set canllvmspirv=0
 @IF EXIST "%devroot%\SPIRV-LLVM-Translator\spirv-headers-tag.conf" IF NOT EXIST "%devroot%\SPIRV-Headers\" IF %gitstate% EQU 0 set canllvmspirv=0
-@IF %canllvmspirv% EQU 1 set /p buildllvmspirv=Build SPIRV LLVM Translator - required for OpenCL (y/n):
-@IF %canllvmspirv% EQU 1 echo.
+@IF %canllvmspirv% EQU 1 call "%devroot%\%projectname%\bin\modules\prompt.cmd" buildllvmspirv "Build SPIRV LLVM Translator - required for OpenCL (y/n):"
 @if /I NOT "%buildllvmspirv%"=="y" GOTO skipspvllvm
 
 @IF NOT EXIST "%devroot%\SPIRV-LLVM-Translator\" (
@@ -42,8 +41,7 @@
 
 @rem SPIRV Tools integration for SPIRV LLVM translator. This is a feature introduced in SPIRV LLVM translator 14.x.
 @rem However it fails to link SPIRV Tools for some reason.
-@rem IF EXIST "%devroot%\spirv-tools\build\%abi%\" IF %pkgconfigstate% GTR 0 set /p integratespvtools=Build with SPIRV Tools integration (y/n):
-@rem IF EXIST "%devroot%\spirv-tools\build\%abi%\" IF %pkgconfigstate% GTR 0 echo.
+@rem IF EXIST "%devroot%\spirv-tools\build\%abi%\" IF %pkgconfigstate% GTR 0 call "%devroot%\%projectname%\bin\modules\prompt.cmd" integratespvtools "Build with SPIRV Tools integration (y/n):"
 @IF /I "%integratespvtools%"=="y" set PATH=%pkgconfigloc%\;%PATH%
 @IF /I "%integratespvtools%"=="y" set PKG_CONFIG_PATH=%devroot:\=/%/spirv-tools/build/%abi%/lib/pkgconfig
 @IF /I NOT "%integratespvtools%"=="y" set PKG_CONFIG_PATH=

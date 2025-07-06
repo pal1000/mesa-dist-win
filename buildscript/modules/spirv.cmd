@@ -22,8 +22,7 @@
 @echo.
 )
 
-@IF %canspvtools% EQU 1 set /p buildspvtools=Build SPIRV Tools (y/n):
-@IF %canspvtools% EQU 1 echo.
+@IF %canspvtools% EQU 1 call "%devroot%\%projectname%\bin\modules\prompt.cmd" buildspvtools "Build SPIRV Tools (y/n):"
 @IF /I NOT "%buildspvtools%"=="y" GOTO skipspvtools
 
 @IF NOT EXIST "%devroot%\spirv-tools\external\" IF %gitstate% GTR 0 (

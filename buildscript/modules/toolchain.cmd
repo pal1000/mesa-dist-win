@@ -36,9 +36,8 @@ set msvcnames[!msvccount!]=%%a
 @echo.
 
 @rem Select toolchain
-@set selecttoolchain=0
-@set /p selecttoolchain=Select toolchain:
-@echo.
+@if %cimode% EQU 0 set selecttoolchain=0
+@call "%devroot%\%projectname%\bin\modules\prompt.cmd" selecttoolchain "Select toolchain:"
 @IF "%selecttoolchain%"=="%totaltoolchains%" IF EXIST "%msysloc%" (
 @set toolchain=gcc
 @GOTO selectedgcc
@@ -70,8 +69,7 @@ IF "%%a"=="%selecttoolchain%" set msvcver=!msvcversions[%%a]!
 
 :novcpp
 @IF NOT EXIST %vsenv% echo Error: Selected Visual Studio installation lacks Desktop development with C++ Build Tools necessary to build Mesa3D.
-@IF NOT EXIST %vsenv% set /p addvcpp=Add Desktop development with C++ Build Tools - y/n:
-@IF NOT EXIST %vsenv% echo.
+@IF NOT EXIST %vsenv% call "%devroot%\%projectname%\bin\modules\prompt.cmd" addvcpp "Add Desktop development with C++ Build Tools - y/n:"
 @IF NOT EXIST %vsenv% IF /I NOT "%addvcpp%"=="y" pause
 @IF NOT EXIST %vsenv% IF /I NOT "%addvcpp%"=="y" GOTO findcompilers
 @IF NOT EXIST %vsenv% %vswhere:~0,-12%vs_installer.exe"

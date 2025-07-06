@@ -86,7 +86,7 @@
 @IF EXIST "%SystemDrive%\Program Files\WindowsApps\Microsoft.D3DMappingLayers*" echo WARNING: System-wide Mesa3D desktop OpenGL drivers deployment won't work on your computer until you uninstall Microsoft OpenCL and OpenGL Compatibility Pack Windows store application. You are free to perform the deployment right now, but it won't take effect until conflicting software is removed.
 @IF EXIST "%SystemDrive%\Program Files\WindowsApps\Microsoft.D3DMappingLayers*" echo.
 
-@IF "%1"=="" set /p deploychoice=Enter choice:
+@IF "%1"=="" call modules\prompt.cmd deploychoice "Enter choice:"
 @IF NOT "%1"=="" echo Enter choice:%1
 @IF NOT "%1"=="" set deploychoice=%1
 @if "%deploychoice%"=="1" IF %option1% EQU 1 GOTO desktopgl
@@ -216,8 +216,7 @@
 
 :uninstall
 @IF "%1"=="" set keepdxil=y
-@IF "%1"=="" set /p keepdxil=Do you want to keep DirectX IL for redistribution (y/n, default - y):
-@IF "%1"=="" echo.
+@IF "%1"=="" call modules\prompt.cmd keepdxil "Do you want to keep DirectX IL for redistribution (y/n, default - y):"
 @IF NOT "%1"=="" set keepdxil=n
 @call modules\unreggl.cmd mesadrv
 @call modules\unreggl.cmd openglon12

@@ -67,9 +67,8 @@
 
 :pyupdate
 @rem Check for python packages updates.
-@set pyupd=n
-@set /p pyupd=Update python packages (y/n):
-@echo.
+@if %cimode% EQU 0 set pyupd=n
+@call "%devroot%\%projectname%\bin\modules\prompt.cmd" pyupd "Update python packages (y/n):"
 @if /I NOT "%pyupd%"=="y" GOTO endpython
 @if EXIST "%LOCALAPPDATA%\pip" RD /S /Q "%LOCALAPPDATA%\pip"
 @"%devroot%\%projectname%\buildscript\assets\venv\Scripts\python.exe" -W ignore -m pip install -U pip setuptools meson Mako MarkupSafe pyyaml

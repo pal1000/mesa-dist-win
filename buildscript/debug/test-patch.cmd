@@ -5,6 +5,7 @@
 @IF %devroot:~0,1%%devroot:~-1%=="" set devroot=%devroot:~1,-1%
 @IF "%devroot:~-1%"=="\" set devroot=%devroot:~0,-1%
 @set projectname=mesa-dist-win
+@set cimode=0
 @call "%devroot%\mesa-dist-win\buildscript\modules\git.cmd"
 @call "%devroot%\mesa-dist-win\buildscript\modules\msys.cmd"
 @call "%devroot%\mesa-dist-win\buildscript\modules\msysupdate.cmd"
@@ -20,9 +21,8 @@
 @cd "%devroot%\mesa"
 
 :command
-@set ptstcmd=
-@set /p ptstcmd=Enter patch testing command:
-@echo.
+@if %cimode% EQU 0 set ptstcmd=
+@call "%devroot%\%projectname%\bin\modules\prompt.cmd" ptstcmd "Enter patch testing command:"
 @IF /I "%ptstcmd%"=="exit" exit
 @IF /I "%ptstcmd:~0,3%"=="cd " %ptstcmd%
 @IF /I "%ptstcmd:~0,3%"=="cd " echo.

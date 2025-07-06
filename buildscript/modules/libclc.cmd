@@ -10,8 +10,7 @@
 @if %canclc% EQU 0 echo libclc requires cmake, ninja and %hostabi% LLVM build with clang and SPIRV translator.
 @if %canclc% EQU 0 echo.
 @if %canclc% EQU 0 GOTO finishclc
-@if %canclc% EQU 1 set /p buildclc=Build LLVM libclc project (y/n):
-@if %canclc% EQU 1 echo.
+@if %canclc% EQU 1 call "%devroot%\%projectname%\bin\modules\prompt.cmd" buildclc "Build LLVM libclc project (y/n):"
 @if /I NOT "%buildclc%"=="y" GOTO finishclc
 @call %vsenv% %hostabi%
 @echo.
