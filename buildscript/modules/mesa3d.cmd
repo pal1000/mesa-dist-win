@@ -512,6 +512,11 @@
 @IF /I "%buildpatentedcodecs%"=="y" IF %intmesaver% LSS 24000 set buildconf=%buildconf%h264dec,h264enc,h265dec,h265enc,vc1dec
 @IF /I "%buildpatentedcodecs%"=="y" IF %intmesaver% GEQ 24000 set buildconf=%buildconf:~0,-5%
 
+@IF %intmesaver% GEQ 25200 set buildconf=%buildconf% -Dmediafoundation-codecs=all -Dmediafoundation-store-dll=false
+@IF /I "%buildpatentedcodecs%"=="y" IF %intmesaver% GEQ 25200 IF /I "%d3d12%"=="y" call "%devroot%\%projectname%\bin\modules\prompt.cmd" buildmftcodecs "Build Microsoft Foundation Transform codecs (y/n):"
+@if /I "%buildmftcodecs%"=="y" set buildconf=%buildconf% -Dgallium-mediafoundation=%mesonbooltrue%
+@IF %intmesaver% GEQ 25200 if /I NOT "%buildmftcodecs%"=="y" set buildconf=%buildconf% -Dgallium-mediafoundation=%mesonboolfalse%
+
 @rem Apply PKG_CONFIG search PATH adjustments on MSVC
 @IF %PKG_CONFIG_LIBCLC% EQU 1 set buildconf=%buildconf% -Dstatic-libclc=all
 @IF %PKG_CONFIG_LIBCLC% EQU 1 IF %toolchain%==msvc set PKG_CONFIG_PATH=%PKG_CONFIG_PATH%%llvminstloc:\=/%/clc/share/pkgconfig;
@@ -536,6 +541,8 @@
 @if /I "%radv%"=="y" if /I "%mesatests%"=="y" set buildconf=%buildconf:~0,-5%true
 @IF %intmesaver% GEQ 25100 set buildconf=%buildconf% -Dbuild-radv-tests=false
 @IF %intmesaver% GEQ 25100 if /I "%radv%"=="y" if /I "%mesatests%"=="y" set buildconf=%buildconf:~0,-5%true
+@IF %intmesaver% GEQ 25200 set buildconf=%buildconf% -Dgallium-mediafoundation-test=false
+@if /I "%buildmftcodecs%"=="y" if /I "%mesatests%"=="y" set buildconf=%buildconf:~0,-5%true
 
 @rem Workaround https://gitlab.freedesktop.org/mesa/mesa/-/issues/11462, see
 @rem https://github.com/mpv-player/mpv/pull/15325/files
