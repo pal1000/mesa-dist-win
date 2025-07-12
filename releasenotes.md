@@ -2,7 +2,7 @@
 - Updated Mesa3D to [25.1.5](https://gitlab.freedesktop.org/mesa/mesa/-/blob/25.1/docs/relnotes/25.1.5.rst?ref_type=heads&plain=0).
 ### Distribution
 - Packager: Detect and error on build type mixing;
-- Per app tool: Fix OpenGL ES support broken since [25.0 development cycle](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/32789).
+- Per app tool: Fix OpenGL ES support broken since [25.0 development cycle](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/32789) and improve GLES3 software compatibility by deploying non-standard `libGLESv3.dll`.
 ### Build script
 - MFT codecs: Initial build.
 # 25.1.4
