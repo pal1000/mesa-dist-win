@@ -50,9 +50,10 @@
 @IF EXIST ..\..\mesa\VERSION set /p mesaver=<..\..\mesa\VERSION
 @IF EXIST ..\..\mesa\VERSION IF "%mesaver:~-6%"=="-devel" IF EXIST ..\..\mesa\.git\refs\heads\main for /f %%a IN (..\..\mesa\.git\refs\heads\main) DO @set mesaver=%mesaver:~0,-6%-%%a
 @IF EXIST ..\..\mesa\VERSION echo %mesaver%
-@IF NOT EXIST ..\..\mesa\VERSION call "%devroot%\%projectname%\bin\modules\prompt.cmd" mesaver "Enter Mesa3D version:"
+@IF EXIST ..\..\mesa\VERSION echo.
+@IF NOT EXIST ..\..\mesa\VERSION call ..\bin\modules\prompt.cmd mesaver "Enter Mesa3D version:"
 
-@call "%devroot%\%projectname%\bin\modules\prompt.cmd" mesarev "Enter distribution revision (leave blank if first):"
+@call ..\bin\modules\prompt.cmd mesarev "Enter distribution revision (leave blank if first):"
 
 @IF %buildtype%==debug echo Creating mesa-dist-win MinGW debug package...
 @if %msvclibs% GTR 0 echo Creating mesa-dist-win MSVC release package...
