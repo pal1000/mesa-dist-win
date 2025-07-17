@@ -541,6 +541,12 @@
 @if /I "%radv%"=="y" if /I "%mesatests%"=="y" set buildconf=%buildconf:~0,-5%true
 @IF %intmesaver% GEQ 25100 set buildconf=%buildconf% -Dbuild-radv-tests=false
 @IF %intmesaver% GEQ 25100 if /I "%radv%"=="y" if /I "%mesatests%"=="y" set buildconf=%buildconf:~0,-5%true
+@set buildconf=%buildconf% -Dtools=
+@if /I "%mesatests%"=="y" set buildconf=%buildconf%dlclose-skip,
+@if /I "%radv%"=="y" if /I "%mesatests%"=="y" set buildconf=%buildconf%drm-shim,
+@if /I "%mesatests%"=="y" set buildconf=%buildconf%glsl,nir,
+@if /I "%mesatests%"=="y" IF %mesavkcount% EQU 0 IF %galliumcount% EQU 0 set buildconf=%buildconf:~0,-9%
+@IF "%buildconf:~-1%"=="," set buildconf=%buildconf:~0,-1%
 @IF %intmesaver% GEQ 25200 set buildconf=%buildconf% -Dgallium-mediafoundation-test=false
 @if /I "%buildmftcodecs%"=="y" if /I "%mesatests%"=="y" set buildconf=%buildconf:~0,-5%true
 
