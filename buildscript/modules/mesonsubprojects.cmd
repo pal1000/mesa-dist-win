@@ -89,6 +89,19 @@ set "exitloop="
 @echo.
 )
 
+@rem Use updated libpng wrap
+@CMD /C EXIT 0
+@FC /B "%devroot%\%projectname%\buildscript\mesonsubprojects\libpng.wrap" "%devroot%\mesa\subprojects\libpng.wrap">NUL 2>&1
+@if NOT "%ERRORLEVEL%"=="0" (
+@set exitloop=1
+@for /f tokens^=2^ delims^=^=^ eol^= %%a IN ('type "%devroot%\%projectname%\buildscript\mesonsubprojects\libpng.wrap"') DO @for /f tokens^=2^ delims^=_^ eol^= %%b IN ("%%a") DO @for /f tokens^=1^ delims^=/^ eol^= %%c IN ("%%b") DO @IF defined exitloop (
+@echo Using wrap file version %%c from Meson wrapdb to build libpng...
+set "exitloop="
+)
+@copy /Y "%devroot%\%projectname%\buildscript\mesonsubprojects\libpng.wrap" "%devroot%\mesa\subprojects\libpng.wrap"
+@echo.
+)
+
 @rem Use up-to-date libelf-lfg-win32
 @CMD /C EXIT 0
 @FC /B "%devroot%\%projectname%\buildscript\mesonsubprojects\libelf.wrap" "%devroot%\mesa\subprojects\libelf.wrap">NUL 2>&1
@@ -110,11 +123,13 @@ set "exitloop="
 
 :mingwwraps
 @IF %toolchain%==msvc GOTO donewrap
-@rem Use runtime MinGW libelf and zlib dependencies
+@rem Use runtime MinGW libelf,libpng and zlib dependencies
 @for /f delims^=^ eol^= %%a in ('dir /b /a^:d "%devroot%\mesa\subprojects\libelf-*" 2^>^&1') do @IF EXIST "%devroot%\mesa\subprojects\%%~nxa\" RD /S /Q "%devroot%\mesa\subprojects\%%~nxa"
 @IF EXIST "%devroot%\mesa\subprojects\libelf.wrap" del "%devroot%\mesa\subprojects\libelf.wrap"
 @for /f delims^=^ eol^= %%a in ('dir /b /a^:d "%devroot%\mesa\subprojects\zlib-*" 2^>^&1') do @IF EXIST "%devroot%\mesa\subprojects\%%~nxa\" RD /S /Q "%devroot%\mesa\subprojects\%%~nxa"
 @IF EXIST "%devroot%\mesa\subprojects\zlib.wrap" del "%devroot%\mesa\subprojects\zlib.wrap"
+@for /f delims^=^ eol^= %%a in ('dir /b /a^:d "%devroot%\mesa\subprojects\libpng-*" 2^>^&1') do @IF EXIST "%devroot%\mesa\subprojects\%%~nxa\" RD /S /Q "%devroot%\mesa\subprojects\%%~nxa"
+@IF EXIST "%devroot%\mesa\subprojects\libpng.wrap" del "%devroot%\mesa\subprojects\libpng.wrap"
 
 @rem Link clang in same way as LLVM
 @if /I NOT "%linkmingwdynamic%"=="y" IF %disableootpatch%==1 IF EXIST "%msysloc%\%LMSYSTEM%\lib\libclang-cpp.dll.a" del "%msysloc%\%LMSYSTEM%\lib\libclang-cpp.dll.a"

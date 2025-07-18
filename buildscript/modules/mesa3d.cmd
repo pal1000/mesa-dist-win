@@ -382,6 +382,10 @@
 
 @IF %msysregex%==1 IF %disableootpatch% EQU 1 IF /I NOT "%linkmingwdynamic%"=="y" set LDFLAGS=%LDFLAGS% -ltre -lintl -liconv
 
+@set buildconf=%buildconf% -Dvulkan-layers=
+@IF %mesavkcount% GTR 0 call "%devroot%\%projectname%\bin\modules\prompt.cmd" vulkanlayers "Build Vulkan layers (y/n):"
+@IF /I "%vulkanlayers%"=="y" set buildconf=%buildconf%device-select,overlay,screenshot,vram-report-limit
+
 @if %cimode% EQU 0 set d3d10umd=n
 @set cand3d10umd=1
 @IF %intmesaver% LSS 21200 set cand3d10umd=0

@@ -46,7 +46,7 @@
 @IF /I "%msyscmd%"=="clearcache" call "%devroot%\%projectname%\buildscript\modules\msyspkgclean.cmd"
 @IF /I "%msyscmd%"=="cleancache" call "%devroot%\%projectname%\buildscript\modules\msyspkgclean.cmd"
 @IF /I "%msyscmd%"=="setup" IF %shell% EQU 1 %runmsys% pacman -S flex bison patch tar --needed
-@IF /I "%msyscmd%"=="setup" IF %shell% GTR 1 for /f tokens^=1-22^ delims^={^,}^ eol^= %%a IN ("%mingwpkglst%") DO @(
+@IF /I "%msyscmd%"=="setup" IF %shell% GTR 1 for /f tokens^=1-23^ delims^={^,}^ eol^= %%a IN ("%mingwpkglst%") DO @(
 %runmsys% pacman -S ${MINGW_PACKAGE_PREFIX}-%%a --needed
 %runmsys% pacman -S ${MINGW_PACKAGE_PREFIX}-%%b --needed
 %runmsys% pacman -S ${MINGW_PACKAGE_PREFIX}-%%c --needed
@@ -69,6 +69,7 @@
 %runmsys% pacman -S ${MINGW_PACKAGE_PREFIX}-%%t --needed
 %runmsys% pacman -S ${MINGW_PACKAGE_PREFIX}-%%u --needed
 %runmsys% pacman -S ${MINGW_PACKAGE_PREFIX}-%%v --needed
+%runmsys% pacman -S ${MINGW_PACKAGE_PREFIX}-%%w --needed
 )
 @IF /I NOT "%msyscmd%"=="clearcache" IF /I NOT "%msyscmd%"=="cleancache" IF /I NOT "%msyscmd%"=="setup" %runmsys% %msyscmd%
 @echo.
