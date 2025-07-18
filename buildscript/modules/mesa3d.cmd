@@ -529,6 +529,13 @@
 @set "PKG_CONFIG_SPV="
 @set "PKG_CONFIG_PATH="
 
+@set buildconf=%buildconf% -Dgallium-extra-hud=false
+@set canextrahud=1
+@IF %mesavkcount% EQU 0 IF %galliumcount% EQU 0 set canextrahud=0
+@IF /I NOT "%experimental%"=="y" set canextrahud=0
+@IF %canextrahud% EQU 1 call "%devroot%\%projectname%\bin\modules\prompt.cmd" extrahud "Do you want to build Gallium Extra HUD (y/n):"
+@IF /I "%extrahud%"=="y" set buildconf=%buildconf:~0,-5%true
+
 @if %cimode% EQU 0 set mesatests=n
 @set canmesatests=1
 @IF %disableootpatch%==1 IF %intmesaver% GEQ 20100 IF %intmesaver% LSS 20103 IF NOT %toolchain%==msvc set canmesatests=0
