@@ -339,6 +339,7 @@
 @IF %intmesaver:~0,3% EQU 211 IF %intmesaver% LSS 21151 IF %toolchain%==msvc if %abi%==x86 IF %disableootpatch%==1 set canlavapipe=0
 @IF %toolchain%==msvc IF %intmesaver% GEQ 21301 IF %intmesaver% LSS 21303 IF %abi%==x86 IF %disableootpatch%==1 set canlavapipe=0
 @IF %toolchain%==msvc IF NOT EXIST "%VK_SDK_PATH%" IF NOT EXIST "%VULKAN_SDK%" IF %intmesaver% GEQ 25000 set canlavapipe=0
+@IF %glslang% EQU 0 IF %intmesaver% GEQ 25000 set canlavapipe=0
 @IF %canlavapipe% EQU 1 call "%devroot%\%projectname%\bin\modules\prompt.cmd" lavapipe "Build Mesa3D Vulkan software renderer (y/n):"
 @if NOT %toolchain%==msvc if /I "%lavapipe%"=="y" set msysregex=1
 @if /I "%lavapipe%"=="y" set /a mesavkcount+=1
@@ -353,6 +354,7 @@
 @IF %toolchain%==msvc IF %disableootpatch%==1 IF %intmesaver% LSS 21256 set canradv=0
 @IF %toolchain%==msvc IF %disableootpatch%==1 IF %intmesaver% GEQ 21300 IF %intmesaver% LSS 21306 set canradv=0
 @IF %toolchain%==msvc IF NOT EXIST "%VK_SDK_PATH%" IF NOT EXIST "%VULKAN_SDK%" IF %intmesaver% GEQ 22200 set canradv=0
+@IF %glslang% EQU 0 IF %intmesaver% GEQ 22200 set canradv=0
 @IF NOT %toolchain%==msvc IF %disableootpatch%==1 IF %intmesaver% LSS 21251 set canradv=0
 @rem Only enable RADV under experimental mode, see https://github.com/pal1000/mesa-dist-win/issues/103
 @IF /I NOT "%experimental%"=="y" set canradv=0
@@ -384,7 +386,8 @@
 
 @set buildconf=%buildconf% -Dvulkan-layers=
 @IF %mesavkcount% GTR 0 call "%devroot%\%projectname%\bin\modules\prompt.cmd" vulkanlayers "Build Vulkan layers (y/n):"
-@IF /I "%vulkanlayers%"=="y" set buildconf=%buildconf%device-select,overlay,screenshot,vram-report-limit
+@IF /I "%vulkanlayers%"=="y" set buildconf=%buildconf%device-select,screenshot,vram-report-limit
+@IF /I "%vulkanlayers%"=="y" IF %glslang% EQU 1 set buildconf=%buildconf%,overlay
 
 @if %cimode% EQU 0 set d3d10umd=n
 @set cand3d10umd=1
@@ -550,7 +553,7 @@
 @if /I NOT "%mesatests%"=="y" set buildconf=%buildconf% -Dbuild-tests=false
 @if /I "%mesatests%"=="y" set buildconf=%buildconf% -Dbuild-tests=true
 @set buildconf=%buildconf% -Dbuild-aco-tests=false
-@if /I "%radv%"=="y" if /I "%mesatests%"=="y" set buildconf=%buildconf:~0,-5%true
+@if /I "%radv%"=="y" if /I "%mesatests%"=="y" IF %glslang% EQU 1 set buildconf=%buildconf:~0,-5%true
 @IF %intmesaver% GEQ 25100 set buildconf=%buildconf% -Dbuild-radv-tests=false
 @IF %intmesaver% GEQ 25100 if /I "%radv%"=="y" if /I "%mesatests%"=="y" set buildconf=%buildconf:~0,-5%true
 @set buildconf=%buildconf% -Dtools=

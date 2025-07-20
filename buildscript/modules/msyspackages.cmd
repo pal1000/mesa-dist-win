@@ -37,7 +37,9 @@
 @echo.
 )
 @endlocal
+@set glslang=1
 @IF NOT %toolchain%==msvc set flexstate=2
 @IF NOT %toolchain%==msvc set ninjastate=2
 @IF NOT %toolchain%==msvc set pkgconfigstate=1
 @IF NOT %toolchain%==msvc set cmakestate=2
+@IF NOT %toolchain%==msvc IF NOT EXIST "%msysloc%\%LMSYSTEM%\bin\glslangValidator.exe" set glslang=0
