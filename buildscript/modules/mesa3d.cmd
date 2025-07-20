@@ -517,7 +517,7 @@
 @IF /I "%buildpatentedcodecs%"=="y" IF %intmesaver% GEQ 24000 set buildconf=%buildconf:~0,-5%
 
 @IF %intmesaver% GEQ 25200 set buildconf=%buildconf% -Dmediafoundation-codecs=all -Dmediafoundation-store-dll=false
-@IF /I "%buildpatentedcodecs%"=="y" IF %intmesaver% GEQ 25200 IF /I "%d3d12%"=="y" call "%devroot%\%projectname%\bin\modules\prompt.cmd" buildmftcodecs "Build Microsoft Foundation Transform codecs (y/n):"
+@IF /I "%buildpatentedcodecs%"=="y" IF %intmesaver% GEQ 25200 IF /I "%d3d12%"=="y" IF %toolchain%==msvc call "%devroot%\%projectname%\bin\modules\prompt.cmd" buildmftcodecs "Build Microsoft Foundation Transform codecs (y/n):"
 @if /I "%buildmftcodecs%"=="y" set buildconf=%buildconf% -Dgallium-mediafoundation=%mesonbooltrue%
 @IF %intmesaver% GEQ 25200 if /I NOT "%buildmftcodecs%"=="y" set buildconf=%buildconf% -Dgallium-mediafoundation=%mesonboolfalse%
 

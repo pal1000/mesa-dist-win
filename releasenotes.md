@@ -1,7 +1,8 @@
 ### Build script
 - Add tools and Vulkan layers that should theoretically build on Windows;
 - Experimental: Add extrahud build;
-- tests build prompt: [dynamic pipe loader has been removed during 25.2 cycle](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/833).
+- tests build prompt: [dynamic pipe loader has been removed during 25.2 cycle](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/833);
+- MFT codecs only build with MSVC.
 # 25.1.5
 - Updated Mesa3D to [25.1.5](https://gitlab.freedesktop.org/mesa/mesa/-/blob/25.1/docs/relnotes/25.1.5.rst?ref_type=heads&plain=0).
 ### Distribution
