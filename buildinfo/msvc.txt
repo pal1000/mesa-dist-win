@@ -4,9 +4,9 @@ Windows 10.0.26100
 Ressource Hacker 5.2.8.448
 7-Zip 25.00 ultra compression
 Git 2.50.1.1
-LunarG Vulkan SDK 1.4.313.2
-Visual Studio Build Tools 2022 v17.14.8
-Windows SDK 10.1.26100.4188
+LunarG Vulkan SDK 1.4.321.0
+Visual Studio Build Tools 2022 v17.14.9 (July 2025)
+Windows SDK 10.1.26100.4654
 Windows Driver Kit 10.1.26100.4202
 Nuget Commandline tool 6.14.0.116
 Python 3.13.5
