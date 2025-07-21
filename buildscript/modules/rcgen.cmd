@@ -9,9 +9,6 @@
 @set descriptionfield=%1
 @IF NOT %3==null set descriptionfield=%descriptionfield:~0,-1% (%3)"
 @set prodver=%4.%mesabldrev%
-@set year=
-@FOR /F "skip=1 tokens=2" %%a IN ('WMIC Path Win32_LocalTime Get Second^,Year /Format^:table 2^>nul') DO @if "%%a" NEQ "" set year=%%a
-@if not defined year for /f %%i in ('"powershell (Get-Date).ToString(\"yyyy\")" 2^>nul') do @set year=%%i
 
 @(echo.
 echo 1 VERSIONINFO

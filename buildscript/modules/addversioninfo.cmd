@@ -13,6 +13,9 @@
 @IF NOT defined mesabldrev GOTO nomesaverinfo
 @echo Adding version information to binaries. Please wait...
 @echo.
+@set year=
+@FOR /F "skip=1 tokens=2" %%a IN ('WMIC Path Win32_LocalTime Get Second^,Year /Format^:table 2^>nul') DO @if "%%a" NEQ "" set year=%%a
+@if not defined year for /f %%i in ('"powershell (Get-Date).ToString(\"yyyy\")" 2^>nul') do @set year=%%i
 
 @rem Add version info to desktop OpenGL drivers stack
 @IF NOT EXIST "%devroot%\%projectname%\bin\%abi%\libgallium_wgl.dll" call "%devroot%\%projectname%\buildscript\modules\rcgen.cmd" "Mesa3D desktop OpenGL drivers stack" "%devroot%\%projectname%\bin\%abi%\opengl32.dll" %abi% %mesaver% "Mesa/X.org"
@@ -53,6 +56,10 @@
 @rem Add version info to Mesa3D Vulkan driver for gfxstream virtual GPU
 @call "%devroot%\%projectname%\buildscript\modules\rcgen.cmd" "Mesa3D Vulkan driver for gfxstream virtual GPU" "%devroot%\%projectname%\bin\%abi%\vulkan_gfxstream.dll" %abi% %mesaver% "Mesa/X.org"
 @call "%devroot%\%projectname%\buildscript\modules\rcgen.cmd" "Mesa3D Vulkan driver for gfxstream virtual GPU" "%devroot%\%projectname%\bin\%abi%\libvulkan_gfxstream.dll" %abi% %mesaver% "Mesa/X.org"
+
+@rem Add version info to Mesa3D Vulkan VRAM report limit layer
+@call "%devroot%\%projectname%\buildscript\modules\rcgen.cmd" "Mesa3D Vulkan VRAM report limit layer" "%devroot%\%projectname%\bin\%abi%\libVkLayer_MESA_vram_report_limit.dll" %abi% %mesaver% "Mesa/X.org"
+@call "%devroot%\%projectname%\buildscript\modules\rcgen.cmd" "Mesa3D Vulkan VRAM report limit layer" "%devroot%\%projectname%\bin\%abi%\VkLayer_MESA_vram_report_limit.dll" %abi% %mesaver% "Mesa/X.org"
 
 @rem Add version info to Microsoft OpenCL compiler and driver
 @call "%devroot%\%projectname%\buildscript\modules\rcgen.cmd" "Microsoft OpenCL compiler" "%devroot%\%projectname%\bin\%abi%\clglon12compiler.dll" %abi% %mesaver% "Microsoft Corporation"
