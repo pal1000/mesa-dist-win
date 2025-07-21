@@ -38,6 +38,7 @@
 )
 @endlocal
 @set glslang=1
+@IF %toolchain%==msvc IF NOT EXIST "%VK_SDK_PATH%" IF NOT EXIST "%VULKAN_SDK%" set glslang=0
 @IF NOT %toolchain%==msvc set flexstate=2
 @IF NOT %toolchain%==msvc set ninjastate=2
 @IF NOT %toolchain%==msvc set pkgconfigstate=1

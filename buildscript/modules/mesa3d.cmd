@@ -338,7 +338,6 @@
 @if /I NOT "%glswrast%"=="y" set canlavapipe=0
 @IF %intmesaver:~0,3% EQU 211 IF %intmesaver% LSS 21151 IF %toolchain%==msvc if %abi%==x86 IF %disableootpatch%==1 set canlavapipe=0
 @IF %toolchain%==msvc IF %intmesaver% GEQ 21301 IF %intmesaver% LSS 21303 IF %abi%==x86 IF %disableootpatch%==1 set canlavapipe=0
-@IF %toolchain%==msvc IF NOT EXIST "%VK_SDK_PATH%" IF NOT EXIST "%VULKAN_SDK%" IF %intmesaver% GEQ 25000 set canlavapipe=0
 @IF %glslang% EQU 0 IF %intmesaver% GEQ 25000 set canlavapipe=0
 @IF %canlavapipe% EQU 1 call "%devroot%\%projectname%\bin\modules\prompt.cmd" lavapipe "Build Mesa3D Vulkan software renderer (y/n):"
 @if NOT %toolchain%==msvc if /I "%lavapipe%"=="y" set msysregex=1
@@ -353,7 +352,6 @@
 @IF %toolchain%==msvc IF NOT EXIST "%devroot%\mesa\subprojects\libelf-lfg-win32\" IF %gitstate% EQU 0 set canradv=0
 @IF %toolchain%==msvc IF %disableootpatch%==1 IF %intmesaver% LSS 21256 set canradv=0
 @IF %toolchain%==msvc IF %disableootpatch%==1 IF %intmesaver% GEQ 21300 IF %intmesaver% LSS 21306 set canradv=0
-@IF %toolchain%==msvc IF NOT EXIST "%VK_SDK_PATH%" IF NOT EXIST "%VULKAN_SDK%" IF %intmesaver% GEQ 22200 set canradv=0
 @IF %glslang% EQU 0 IF %intmesaver% GEQ 22200 set canradv=0
 @IF NOT %toolchain%==msvc IF %disableootpatch%==1 IF %intmesaver% LSS 21251 set canradv=0
 @rem Only enable RADV under experimental mode, see https://github.com/pal1000/mesa-dist-win/issues/103
