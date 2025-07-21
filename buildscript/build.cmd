@@ -81,6 +81,9 @@
 @IF EXIST "%msysloc%" call "%devroot%\%projectname%\buildscript\modules\msyspackages.cmd"
 @IF %toolchain%==msvc call "%devroot%\%projectname%\buildscript\modules\winflexbison.cmd"
 
+@rem Check glslangValidator availability
+@call "%devroot%\%projectname%\buildscript\modules\glslangval.cmd"
+
 @rem Build zstd compressor
 @IF %toolchain%==msvc call "%devroot%\%projectname%\buildscript\modules\zstd.cmd"
 
