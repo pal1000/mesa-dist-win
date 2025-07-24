@@ -1,3 +1,5 @@
+### Distribution
+- Vulkan JSONs collection and patching: layers support.
 # 25.1.6
 - Updated Mesa3D to [25.1.6](https://gitlab.freedesktop.org/mesa/mesa/-/blob/25.1/docs/relnotes/25.1.6.rst?ref_type=heads&plain=0).
 ### Build script

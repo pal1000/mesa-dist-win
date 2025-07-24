@@ -68,22 +68,28 @@
 )
 @echo.
 
-@echo Copying Vulkan drivers initialization configuration files if needed...
-@IF EXIST "%devroot%\%projectname%\bin\%abi%\vulkan_lvp.dll" for /R "%devroot%\mesa\build\%toolchain%-%abi%\src" %%a IN (lvp_icd.*.json) do @IF EXIST "%%a" copy "%%a" "%devroot%\%projectname%\bin\%abi%"
-@IF EXIST "%devroot%\%projectname%\bin\%abi%\*ulkan_radeon.dll" for /R "%devroot%\mesa\build\%toolchain%-%abi%\src" %%a IN (radeon_icd.*.json) do @IF EXIST "%%a" copy "%%a" "%devroot%\%projectname%\bin\%abi%"
-@IF EXIST "%devroot%\%projectname%\bin\%abi%\vulkan_dzn.dll" for /R "%devroot%\mesa\build\%toolchain%-%abi%\src" %%a IN (dzn_icd.*.json) do @IF EXIST "%%a" copy "%%a" "%devroot%\%projectname%\bin\%abi%"
-@IF EXIST "%devroot%\%projectname%\bin\%abi%\*ulkan_gfxstream.dll" for /R "%devroot%\mesa\build\%toolchain%-%abi%\src" %%a IN (gfxstream_vk_icd.*.json) do @IF EXIST "%%a" copy "%%a" "%devroot%\%projectname%\bin\%abi%"
-@echo.
-
-@rem Patch Vulkan drivers JSONs when using Mesa 24.0 or older except gfxstream
+@echo Copying Vulkan drivers and layers initialization configuration files if needed...
+@rem Patch Vulkan drivers and layers JSONs when using Mesa 24.0 or older except gfxstream driver and layers which always need patching
 @set /p mesaver=<"%devroot%\mesa\VERSION"
 @if "%mesaver:~-7%"=="0-devel" set /a intmesaver=%mesaver:~0,2%%mesaver:~3,1%00
 @if "%mesaver:~5,4%"=="0-rc" set /a intmesaver=%mesaver:~0,2%%mesaver:~3,1%00+%mesaver:~9%
 @if NOT "%mesaver:~5,2%"=="0-" set /a intmesaver=%mesaver:~0,2%%mesaver:~3,1%50+%mesaver:~5%
-@IF %intmesaver% LSS 24100 IF EXIST "%devroot%\%projectname%\bin\%abi%\lvp_icd.*.json" call "%devroot%\%projectname%\buildscript\modules\fixvulkanjsons.cmd" lvp
-@IF %intmesaver% LSS 24100 IF EXIST "%devroot%\%projectname%\bin\%abi%\radeon_icd.*.json" call "%devroot%\%projectname%\buildscript\modules\fixvulkanjsons.cmd" radeon
-@IF %intmesaver% LSS 24100 IF EXIST "%devroot%\%projectname%\bin\%abi%\dzn_icd.*.json" call "%devroot%\%projectname%\buildscript\modules\fixvulkanjsons.cmd" dzn
-@IF EXIST "%devroot%\%projectname%\bin\%abi%\gfxstream_vk_icd.*.json" call "%devroot%\%projectname%\buildscript\modules\fixvulkanjsons.cmd" gfxstream
+@for /R "%devroot%\%projectname%\bin\%abi%" %%a IN (vulkan_*.dll, libvulkan_*.dll, libVkLayer_*.dll, VkLayer_*.dll) do @for /f tokens^=1*^ delims^=_^ eol^= %%b IN ("%%~na") DO @(
+@for /R "%devroot%\mesa\build\%toolchain%-%abi%\src" %%d IN (%%c*.json) do @for /f tokens^=*^ eol^= %%e IN ('echo %%~nd ^| find /V "devenv"') DO @(
+@copy "%%~d" "%devroot%\%projectname%\bin\%abi%"
+@if /I "%%c"=="lvp" IF %intmesaver% LSS 24100 call "%devroot%\%projectname%\buildscript\modules\fixvulkanjsons.cmd" "%%~na" "%%~nd"
+@if /I "%%c"=="radeon" IF %intmesaver% LSS 24100 call "%devroot%\%projectname%\buildscript\modules\fixvulkanjsons.cmd" "%%~na" "%%~nd"
+@if /I "%%c"=="dzn" IF %intmesaver% LSS 24100 call "%devroot%\%projectname%\buildscript\modules\fixvulkanjsons.cmd" "%%~na" "%%~nd"
+@if /I NOT "%%c"=="lvp" if /I NOT "%%c"=="radeon" if /I NOT "%%c"=="dzn" call "%devroot%\%projectname%\buildscript\modules\fixvulkanjsons.cmd" "%%~na" "%%~nd"
+)
+@for /R "%devroot%\mesa\src" %%d IN (*%%c.json) DO @(
+@copy "%%~d" "%devroot%\%projectname%\bin\%abi%"
+@if /I "%%c"=="lvp" IF %intmesaver% LSS 24100 call "%devroot%\%projectname%\buildscript\modules\fixvulkanjsons.cmd" "%%~na" "%%~nd"
+@if /I "%%c"=="radeon" IF %intmesaver% LSS 24100 call "%devroot%\%projectname%\buildscript\modules\fixvulkanjsons.cmd" "%%~na" "%%~nd"
+@if /I "%%c"=="dzn" IF %intmesaver% LSS 24100 call "%devroot%\%projectname%\buildscript\modules\fixvulkanjsons.cmd" "%%~na" "%%~nd"
+@if /I NOT "%%c"=="lvp" if /I NOT "%%c"=="radeon" if /I NOT "%%c"=="dzn" call "%devroot%\%projectname%\buildscript\modules\fixvulkanjsons.cmd" "%%~na" "%%~nd"
+)
+)
 
 @echo Copying static libraries...
 @for /R "%devroot%\mesa\build\%toolchain%-%abi%" %%a IN (*.lib) do @IF EXIST "%%a" copy "%%a" "%devroot%\%projectname%\lib\%abi%"
