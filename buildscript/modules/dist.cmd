@@ -82,12 +82,9 @@
 @if /I "%%c"=="dzn" IF %intmesaver% LSS 24100 call "%devroot%\%projectname%\buildscript\modules\fixvulkanjsons.cmd" "%%~na" "%%~nd"
 @if /I NOT "%%c"=="lvp" if /I NOT "%%c"=="radeon" if /I NOT "%%c"=="dzn" call "%devroot%\%projectname%\buildscript\modules\fixvulkanjsons.cmd" "%%~na" "%%~nd"
 )
-@for /R "%devroot%\mesa\src" %%d IN (*%%c.json) DO @(
+@for /R "%devroot%\mesa\src" %%d IN (*%%c.json, *%%c.json.in) DO @(
 @copy "%%~d" "%devroot%\%projectname%\bin\%abi%"
-@if /I "%%c"=="lvp" IF %intmesaver% LSS 24100 call "%devroot%\%projectname%\buildscript\modules\fixvulkanjsons.cmd" "%%~na" "%%~nd"
-@if /I "%%c"=="radeon" IF %intmesaver% LSS 24100 call "%devroot%\%projectname%\buildscript\modules\fixvulkanjsons.cmd" "%%~na" "%%~nd"
-@if /I "%%c"=="dzn" IF %intmesaver% LSS 24100 call "%devroot%\%projectname%\buildscript\modules\fixvulkanjsons.cmd" "%%~na" "%%~nd"
-@if /I NOT "%%c"=="lvp" if /I NOT "%%c"=="radeon" if /I NOT "%%c"=="dzn" call "%devroot%\%projectname%\buildscript\modules\fixvulkanjsons.cmd" "%%~na" "%%~nd"
+@call "%devroot%\%projectname%\buildscript\modules\fixvulkanjsons.cmd" "%%~na" "%%~nd"
 )
 )
 
