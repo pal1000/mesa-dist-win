@@ -83,8 +83,8 @@
 @if /I NOT "%%c"=="lvp" if /I NOT "%%c"=="radeon" if /I NOT "%%c"=="dzn" call "%devroot%\%projectname%\buildscript\modules\fixvulkanjsons.cmd" "%%~na" "%%~nd"
 )
 @for /R "%devroot%\mesa\src" %%d IN (*%%c.json, *%%c.json.in) DO @(
-@copy "%%~d" "%devroot%\%projectname%\bin\%abi%"
-@call "%devroot%\%projectname%\buildscript\modules\fixvulkanjsons.cmd" "%%~na" "%%~nd"
+@copy "%%~d" "%devroot%\%projectname%\bin\%abi%\VkLayer_%%c.json"
+@call "%devroot%\%projectname%\buildscript\modules\fixvulkanjsons.cmd" "%%~na" "VkLayer_%%c"
 )
 )
 
