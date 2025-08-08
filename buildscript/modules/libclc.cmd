@@ -3,7 +3,7 @@
 @IF %cmakestate% EQU 0 set canclc=0
 @IF %cmakestate% EQU 1 set PATH=%devroot%\cmake\bin\;%PATH%
 @if %ninjastate% EQU 0 set canclc=0
-@if %ninjastate% EQU 1 set PATH=%devroot%\ninja\;%PATH%
+@if %ninjastate% EQU 1 call "%devroot%\%projectname%\buildscript\modules\useninja.cmd" noprompt
 @if NOT EXIST "%llvminstloc%\spv-%hostabi%\bin\llvm-spirv.exe" set canclc=0
 @if NOT EXIST "%llvminstloc%\%hostabi%\bin\clang.exe" set canclc=0
 @if NOT EXIST "%devroot%\llvm-project\" set canclc=0

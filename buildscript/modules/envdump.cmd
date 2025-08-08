@@ -92,7 +92,7 @@ echo CMake %%a>>"%devroot%\%projectname%\buildinfo\msvc.txt"
 )
 
 @rem Get Ninja version
-@IF %toolchain%==msvc IF "%ninjastate%"=="1" set PATH=%devroot%\ninja\;%PATH%
+@IF %toolchain%==msvc IF "%ninjastate%"=="1" call "%devroot%\%projectname%\buildscript\modules\useninja.cmd" noprompt
 @IF %toolchain%==msvc IF NOT "%ninjastate%"=="0" IF NOT "%ninjastate%"=="" for /f eol^= %%a IN ('ninja --version') do @echo Ninja %%a>>"%devroot%\%projectname%\buildinfo\msvc.txt"
 
 @rem Get LLVM version

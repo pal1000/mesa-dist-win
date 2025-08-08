@@ -13,7 +13,7 @@
 @call "%devroot%\%projectname%\buildscript\modules\throttle.cmd"
 @call "%devroot%\%projectname%\buildscript\modules\cmake.cmd"
 @call "%devroot%\%projectname%\buildscript\modules\ninja.cmd"
-@IF %ninjastate% EQU 1 SET PATH=%devroot%\ninja\;%PATH%
+@IF %ninjastate% EQU 1 call "%devroot%\%projectname%\buildscript\modules\useninja.cmd" noprompt
 @IF %cmakestate% EQU 1 SET PATH=%devroot%\cmake\bin\;%PATH%
 @call %vsenv% %vsabi%
 @set llvmloc=%devroot%\llvm-project
