@@ -39,6 +39,9 @@
 @echo.
 )
 
+@rem Build with Ninja if LLVM was also built with Ninja
+@for /f tokens^=*^ delims^= %%a IN ('echo "%llvmbuildconf%" ^| find "-GNinja"') DO @call "%devroot%\%projectname%\buildscript\modules\useninja.cmd" noprompt
+
 @rem SPIRV Tools integration for SPIRV LLVM translator. This is a feature introduced in SPIRV LLVM translator 14.x.
 @rem However it fails to link SPIRV Tools for some reason.
 @rem IF EXIST "%devroot%\spirv-tools\build\%abi%\" IF %pkgconfigstate% GTR 0 call "%devroot%\%projectname%\bin\modules\prompt.cmd" integratespvtools "Build with SPIRV Tools integration (y/n):"
@@ -46,7 +49,7 @@
 @IF /I "%integratespvtools%"=="y" set PKG_CONFIG_PATH=%devroot:\=/%/spirv-tools/build/%abi%/lib/pkgconfig
 @IF /I NOT "%integratespvtools%"=="y" set PKG_CONFIG_PATH=
 
-@set buildconf=%buildconf% -DLLVM_EXTERNAL_SPIRV_HEADERS_SOURCE_DIR="%devroot%\SPIRV-Headers" -DCMAKE_INSTALL_PREFIX="%llvminstloc%\spv-%abi%" -DCMAKE_PREFIX_PATH="%llvminstloc%\%abi%" -DLLVM_SPIRV_INCLUDE_TESTS=OFF
+@set buildconf=%llvmbuildconf% -DLLVM_EXTERNAL_SPIRV_HEADERS_SOURCE_DIR="%devroot%\SPIRV-Headers" -DCMAKE_INSTALL_PREFIX="%llvminstloc%\spv-%abi%" -DCMAKE_PREFIX_PATH="%llvminstloc%\%abi%" -DLLVM_SPIRV_INCLUDE_TESTS=OFF
 @FOR /F tokens^=^1^,2^ eol^= %%a IN ('type "%llvminstloc%\%abi%\lib\cmake\llvm\LLVMConfig.cmake"') DO @IF "%%a"=="set(LLVM_PACKAGE_VERSION" FOR /F tokens^=^1^ delims^=^.^ eol^= %%c IN ("%%b") DO @IF %%c GEQ 17 set buildconf=%buildconf% -DCMAKE_POLICY_DEFAULT_CMP0091=NEW
 @set buildconf=%buildconf% "%devroot%\SPIRV-LLVM-Translator"
 @echo SPIRV LLVM translator build configuration command^: %buildconf%

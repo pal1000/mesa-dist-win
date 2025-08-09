@@ -136,8 +136,7 @@
 @IF %llvmsources% EQU 0 echo.
 @IF %llvmsources% EQU 1 IF %cmakestate% EQU 0 echo.
 @IF %llvmsources% EQU 1 IF %cmakestate% GTR 0 IF NOT EXIST "%llvminstloc%\%abi%\lib\" echo.
-@IF EXIST "%llvminstloc%\%abi%\lib\cmake\llvm\LLVMConfig.cmake" if /I "%cfgllvmbuild%"=="y" call "%devroot%\%projectname%\buildscript\modules\llvmspv.cmd"
 
 @rem Reset environment after LLVM build.
-@endlocal
+@endlocal&set llvmbuildconf=%buildconf%
 @cd "%devroot%\"

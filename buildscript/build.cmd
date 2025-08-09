@@ -44,9 +44,6 @@
 @rem MSVC: Select between legacy and current LLVM version
 @IF %toolchain%==msvc call "%devroot%\%projectname%\buildscript\modules\selectllvm.cmd"
 
-@rem Offer option to build with clang
-@call "%devroot%\%projectname%\buildscript\modules\clang.cmd"
-
 @rem If using MSVC search for Python. State tracking is pointless as it is loaded once and we are done. Hard fail if missing.
 @IF %toolchain%==msvc call "%devroot%\%projectname%\buildscript\modules\discoverpython.cmd"
 
@@ -59,10 +56,18 @@
 @rem Get Meson build location
 @call "%devroot%\%projectname%\buildscript\modules\locatemeson.cmd"
 
-@rem If using MSVC check for remaining dependencies: cmake, ninja, winflexbison, nuget and pkg-config if applies.
+@rem If using MSVC check for additional dependencies: cmake, ninja and nuget.
 @IF %toolchain%==msvc call "%devroot%\%projectname%\buildscript\modules\cmake.cmd"
 @IF %toolchain%==msvc call "%devroot%\%projectname%\buildscript\modules\ninja.cmd"
 @IF %toolchain%==msvc call "%devroot%\%projectname%\buildscript\modules\nuget.cmd"
+
+@rem If using MSVC do LLVM build.
+@IF %toolchain%==msvc call "%devroot%\%projectname%\buildscript\modules\llvm.cmd"
+
+@rem Offer option to build with clang
+@call "%devroot%\%projectname%\buildscript\modules\clang.cmd"
+
+@rem MSVC: Lookup/build a pkg-config implementation
 @IF %toolchain%==msvc call "%devroot%\%projectname%\buildscript\modules\pkg-config.cmd"
 
 @rem If using MSVC do CLonD3D12 build
@@ -87,8 +92,8 @@
 @rem Build zstd compressor
 @IF %toolchain%==msvc call "%devroot%\%projectname%\buildscript\modules\zstd.cmd"
 
-@rem If using MSVC do LLVM build.
-@IF %toolchain%==msvc call "%devroot%\%projectname%\buildscript\modules\llvm.cmd"
+@rem Build LLVM OpenCL stack
+@IF %toolchain%==msvc IF EXIST "%llvminstloc%\%abi%\lib\cmake\llvm\LLVMConfig.cmake" if defined llvmbuildconf call "%devroot%\%projectname%\buildscript\modules\llvmspv.cmd"
 @IF %toolchain%==msvc call "%devroot%\%projectname%\buildscript\modules\libclc.cmd"
 
 @rem If using MSYS2 Mingw-w64 select Vulkan SDK
