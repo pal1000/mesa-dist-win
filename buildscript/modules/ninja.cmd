@@ -1,8 +1,9 @@
-@setlocal
+@setlocal EnableDelayedExpansion
 @rem Ninja build system. Can have all states.
-@set ninjastate=2
-@CMD /C EXIT 0
-@where /q ninja.exe
-@if NOT "%ERRORLEVEL%"=="0" set ninjastate=1
+@set ninjastate=1
+@set mlpath=!PATH:;=^
+
+!
+@for /f tokens^=*^ eol^= %%a IN ("!mlpath!") DO @IF EXIST "%%~a\ninja.exe" set ninjastate=2
 @IF %ninjastate%==1 IF NOT EXIST "%devroot%\ninja.exe" IF NOT EXIST "%devroot%\ninja\ninja.exe" set ninjastate=0
 @endlocal&set ninjastate=%ninjastate%
