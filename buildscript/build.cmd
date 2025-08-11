@@ -53,9 +53,6 @@
 @rem Build throttle.
 @call "%devroot%\%projectname%\buildscript\modules\throttle.cmd"
 
-@rem Get Meson build location
-@call "%devroot%\%projectname%\buildscript\modules\locatemeson.cmd"
-
 @rem If using MSVC check for additional dependencies: cmake, ninja and nuget.
 @IF %toolchain%==msvc call "%devroot%\%projectname%\buildscript\modules\cmake.cmd"
 @IF %toolchain%==msvc call "%devroot%\%projectname%\buildscript\modules\ninja.cmd"
@@ -66,6 +63,9 @@
 
 @rem Offer option to build with clang
 @call "%devroot%\%projectname%\buildscript\modules\clang.cmd"
+
+@rem Get Meson build location
+@call "%devroot%\%projectname%\buildscript\modules\locatemeson.cmd"
 
 @rem MSVC: Lookup/build a pkg-config implementation
 @IF %toolchain%==msvc call "%devroot%\%projectname%\buildscript\modules\pkg-config.cmd"

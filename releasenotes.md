@@ -1,9 +1,11 @@
+# 25.1.7
+- Updated Mesa3D to [25.1.7](https://gitlab.freedesktop.org/mesa/mesa/-/blob/25.1/docs/relnotes/25.1.7.rst?ref_type=heads&plain=0).
 ### Distribution
 - Vulkan JSONs collection and patching: layers support.
 ### Build script and debug
 - Misc/refactor: Use a script module for MinGW packages install and share it between build script and MSYS2 debug shell;
 - MSVC: Support looking for Ninja build in mesa-dist-win parent folder;
-- MSVC: Build LLVM early to mmake clang-cl available on first build.
+- MSVC: Build LLVM early to make clang-cl available on first build.
 # 25.1.6
 - Updated Mesa3D to [25.1.6](https://gitlab.freedesktop.org/mesa/mesa/-/blob/25.1/docs/relnotes/25.1.6.rst?ref_type=heads&plain=0).
 ### Build script
