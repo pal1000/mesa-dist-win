@@ -1,3 +1,5 @@
+### Build script
+- Try building anti-lag layer [25.3-devel and up].
 # 25.1.7
 - Updated Mesa3D to [25.1.7](https://gitlab.freedesktop.org/mesa/mesa/-/blob/25.1/docs/relnotes/25.1.7.rst?ref_type=heads&plain=0).
 ### Distribution

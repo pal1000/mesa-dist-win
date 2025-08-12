@@ -386,6 +386,7 @@
 @IF %mesavkcount% GTR 0 call "%devroot%\%projectname%\bin\modules\prompt.cmd" vulkanlayers "Build Vulkan layers (y/n):"
 @IF /I "%vulkanlayers%"=="y" set buildconf=%buildconf%device-select,screenshot,vram-report-limit
 @IF /I "%vulkanlayers%"=="y" IF %glslangval% EQU 1 set buildconf=%buildconf%,overlay
+@IF /I "%vulkanlayers%"=="y" IF %intmesaver% GEQ 25300 set buildconf=%buildconf%,anti-lag
 
 @if %cimode% EQU 0 set d3d10umd=n
 @set cand3d10umd=1
