@@ -146,7 +146,7 @@ mingw-w64-clang-x86_64-python-yaml 6.0.2-4
 mingw-w64-clang-x86_64-readline 8.3.001-1
 mingw-w64-clang-x86_64-rhash 1.4.5-1
 mingw-w64-clang-x86_64-spirv-headers 2~1.4.321.0-1
-mingw-w64-clang-x86_64-spirv-llvm-translator 20.1.0-1
+mingw-w64-clang-x86_64-spirv-llvm-translator 20.1.5-1
 mingw-w64-clang-x86_64-spirv-tools 3~1.4.321.0-1
 mingw-w64-clang-x86_64-sqlite3 3.50.4-1
 mingw-w64-clang-x86_64-tcl 8.6.16-1
