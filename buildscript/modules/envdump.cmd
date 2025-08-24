@@ -54,19 +54,15 @@
 @rem Dump Visual Studio environment
 @IF %toolchain%==msvc echo %msvcname% v%msvcver%>>"%devroot%\%projectname%\buildinfo\msvc.txt"
 
-@set wsdkcount=0
-@IF %toolchain%==msvc for /f delims^=^ eol^= %%a IN ('REG QUERY HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Installer /s /d /f "Windows SDK" /e 2^>^&1 ^| find "HKEY_"') DO @for /f delims^=^ eol^= %%b IN ('REG QUERY %%a /s /v DisplayVersion 2^>^&1 ^| find "DisplayVersion"') DO @for /f tokens^=3^ eol^= %%c IN ("%%b") DO @(
-@set /a wsdkcount+=1
-@set vwsdk=%%c
+@for /f delims^=^ eol^= %%a IN ('REG QUERY HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Installer /s /d /f "Windows SDK" /e 2^>nul ^| find "HKEY_"') DO @for /f delims^=^ eol^= %%b IN ('REG QUERY %%a /s /v DisplayVersion 2^>nul ^| find "DisplayVersion"') DO @for /f tokens^=3^ eol^= %%c IN ("%%b") DO @for /f tokens^=3^ delims^=.^ eol^= %%d IN ("%%c") DO @for /f tokens^=3^ delims^=.^ eol^= %%e IN ("%VSCMD_ARG_WINSDK%") DO @IF "%%d"=="%%e" (
+@IF %toolchain%==msvc echo Windows SDK %%c>>"%devroot%\%projectname%\buildinfo\msvc.txt"
+@IF NOT %toolchain%==msvc echo Windows SDK %%c>>"%devroot%\%projectname%\buildinfo\mingw.txt"
 )
-@if %wsdkcount% EQU 1 echo Windows SDK %vwsdk%>>"%devroot%\%projectname%\buildinfo\msvc.txt"
 
-@set wdkcount=0
-@IF %toolchain%==msvc for /f delims^=^ eol^= %%a IN ('REG QUERY HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Installer /s /d /f "Windows Driver Kit" /e 2^>^&1 ^| find "HKEY_"') DO @for /f delims^=^ eol^= %%b IN ('REG QUERY %%a /s /v DisplayVersion 2^>^&1 ^| find "DisplayVersion"') DO @for /f tokens^=3^ eol^= %%c IN ("%%b") DO @(
-@set /a wdkcount+=1
-@set vwdk=%%c
+@for /f delims^=^ eol^= %%a IN ('REG QUERY HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Installer /s /d /f "Windows Driver Kit" /e 2^>nul ^| find "HKEY_"') DO @for /f delims^=^ eol^= %%b IN ('REG QUERY %%a /s /v DisplayVersion 2^>nul ^| find "DisplayVersion"') DO @for /f tokens^=3^ eol^= %%c IN ("%%b") DO @for /f tokens^=3^ delims^=.^ eol^= %%d IN ("%%c") DO @for /f tokens^=3^ delims^=.^ eol^= %%e IN ("%VSCMD_ARG_WINSDK%") DO @IF "%%d"=="%%e" (
+@IF %toolchain%==msvc echo Windows Driver Kit %%c>>"%devroot%\%projectname%\buildinfo\msvc.txt"
+@IF NOT %toolchain%==msvc echo Windows Driver Kit %%c>>"%devroot%\%projectname%\buildinfo\mingw.txt"
 )
-@if %wdkcount% EQU 1 echo Windows Driver Kit %vwdk%>>"%devroot%\%projectname%\buildinfo\msvc.txt"
 
 @if NOT defined nugetstate set nugetstate=0
 @IF %rhstate% GTR 0 IF %nugetstate%==1 SET PATH=%devroot%\nuget\;%PATH%

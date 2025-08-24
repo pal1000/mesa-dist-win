@@ -392,7 +392,7 @@
 @set cand3d10umd=1
 @IF %intmesaver% LSS 21200 set cand3d10umd=0
 @if /I NOT "%glswrast%"=="y" set cand3d10umd=0
-@IF NOT %toolchain%==msvc set cand3d10umd=0
+@IF NOT %toolchain%==msvc IF %intmesaver% LSS 25300 set cand3d10umd=0
 @IF %intmesaver% LSS 22000 IF %disableootpatch% EQU 1 set cand3d10umd=0
 @IF %intmesaver% GEQ 23300 IF %intmesaver% LSS 23354 IF %disableootpatch% EQU 1 set cand3d10umd=0
 @IF %cand3d10umd% EQU 1 for /f delims^=^ eol^= %%a in ('@call "%devroot%\%projectname%\buildscript\modules\wdkcheck.cmd"') do @IF NOT "%%a"=="OK" set cand3d10umd=0

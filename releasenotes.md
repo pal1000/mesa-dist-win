@@ -1,3 +1,10 @@
+### Build script
+- Support multiple Windows SDK and WDK installs;
+- Enable d3d10umd build with MinGW [25.3-devel and up].
+### Build environment information
+- MinGW: Add selected Windows SDK and WDK.
+### Distribution
+- dxil: Use DirectX Shader Compiler build or if not found then use latest version available regardless of Windows SDK selected.
 # 25.1.8
 - Updated Mesa3D to [25.1.8](https://gitlab.freedesktop.org/mesa/mesa/-/blob/25.1/docs/relnotes/25.1.8.rst?ref_type=heads&plain=0).
 # 25.2.0

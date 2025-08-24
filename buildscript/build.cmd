@@ -35,6 +35,9 @@
 @rem Search for compiler toolchain. Hard fail if none found
 @call "%devroot%\%projectname%\buildscript\modules\toolchain.cmd"
 
+@rem Locate Windows SDK even when building with MinGW
+@call "%devroot%\%projectname%\buildscript\modules\winsdkloc.cmd"
+
 @rem Verify if out of tree patches can be applied.
 @call "%devroot%\%projectname%\buildscript\modules\patching.cmd"
 

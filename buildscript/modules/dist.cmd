@@ -8,7 +8,7 @@
 @IF EXIST "%devroot%\mesa\build\%toolchain%-%abi%\src\gallium\targets\opencl\libOpenCL-1.dll" REN "%devroot%\mesa\build\%toolchain%-%abi%\src\gallium\targets\opencl\libOpenCL-1.dll" OpenCL.dll
 
 @if %cimode% EQU 0 set dist=n
-@call "%devroot%\%projectname%\bin\modules\prompt.cmd" dist "Create or update Mesa3D distribution package (y/n):
+@call "%devroot%\%projectname%\bin\modules\prompt.cmd" dist "Create or update Mesa3D distribution package (y/n):"
 @if /I NOT "%dist%"=="y" GOTO donedist
 @cd "%devroot%\%projectname%"
 
