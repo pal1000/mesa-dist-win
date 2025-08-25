@@ -60,12 +60,12 @@
 @rem Construct build configuration command.
 @set buildconf=cmake -G
 @if /I NOT "%useninja%"=="y" set buildconf=%buildconf% "Visual Studio %toolset%"
-@if %abi%==x86 if /I NOT "%useninja%"=="y" set buildconf=%buildconf% -A Win32
-@if %abi%==x64 if /I NOT "%useninja%"=="y" set buildconf=%buildconf% -A x64
-@if %abi%==arm64 if /I NOT "%useninja%"=="y" set buildconf=%buildconf% -A ARM64
+@if %abi%==x86 if /I NOT "%useninja%"=="y" set buildconf=%buildconf% -A Win32,version=%WINSDK_VER%
+@if %abi%==x64 if /I NOT "%useninja%"=="y" set buildconf=%buildconf% -A x64,version=%WINSDK_VER%
+@if %abi%==arm64 if /I NOT "%useninja%"=="y" set buildconf=%buildconf% -A ARM64,version=%WINSDK_VER%
 @if /I NOT "%useninja%"=="y" IF /I %PROCESSOR_ARCHITECTURE%==AMD64 set buildconf=%buildconf% -Thost=x64
 @if /I "%useninja%"=="y" set buildconf=%buildconf%Ninja
-@set buildconf=%buildconf% -DCMAKE_SYSTEM_VERSION="%WINSDK_VER%" -DCMAKE_BUILD_TYPE=Release
+@set buildconf=%buildconf% -DCMAKE_BUILD_TYPE=Release
 @if %llvmsrcver% LSS 1700 set buildconf=%buildconf% -DLLVM_USE_CRT_RELEASE=MT
 @if %llvmsrcver% GEQ 1700 set buildconf=%buildconf% -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
 @if EXIST "%devroot%\llvm-project\" IF /I NOT "%buildclang%"=="y" set buildconf=%buildconf% -DLLVM_ENABLE_PROJECTS=""

@@ -49,12 +49,12 @@
 @rem Construct build configuration command.
 @set buildconf=cmake "%devroot%\spirv-tools" -G
 @if /I NOT "%useninja%"=="y" set buildconf=%buildconf% "Visual Studio %toolset%"
-@if %abi%==x86 if /I NOT "%useninja%"=="y" set buildconf=%buildconf% -A Win32
-@if %abi%==x64 if /I NOT "%useninja%"=="y" set buildconf=%buildconf% -A x64
-@if %abi%==arm64 if /I NOT "%useninja%"=="y" set buildconf=%buildconf% -A ARM64
+@if %abi%==x86 if /I NOT "%useninja%"=="y" set buildconf=%buildconf% -A Win32,version=%WINSDK_VER%
+@if %abi%==x64 if /I NOT "%useninja%"=="y" set buildconf=%buildconf% -A x64,version=%WINSDK_VER%
+@if %abi%==arm64 if /I NOT "%useninja%"=="y" set buildconf=%buildconf% -A ARM64,version=%WINSDK_VER%
 @if /I NOT "%useninja%"=="y" IF /I %PROCESSOR_ARCHITECTURE%==AMD64 set buildconf=%buildconf% -Thost=x64
 @if /I "%useninja%"=="y" set buildconf=%buildconf%Ninja
-@set buildconf=%buildconf% -DCMAKE_SYSTEM_VERSION="%WINSDK_VER%" -DCMAKE_BUILD_TYPE=Release -DCMAKE_POLICY_DEFAULT_CMP0091=NEW -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded -DCMAKE_INSTALL_PREFIX="%devroot%\spirv-tools\build\%abi%"
+@set buildconf=%buildconf% -DCMAKE_BUILD_TYPE=Release -DCMAKE_POLICY_DEFAULT_CMP0091=NEW -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded -DCMAKE_INSTALL_PREFIX="%devroot%\spirv-tools\build\%abi%"
 
 @echo SPIRV Tools build configuration command^: %buildconf%
 @echo.
