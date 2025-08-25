@@ -1,26 +1,29 @@
 @setlocal
 @set canclon12=1
-@IF %gitstate% EQU 0 set canclon12=0
+@IF NOT EXIST "%devroot%\clon12\" IF %gitstate% EQU 0 set canclon12=0
 @if %cmakestate% EQU 0 set canclon12=0
-@set wdkcount=0
-@for /f delims^=^ eol^= %%a IN ('REG QUERY HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Installer /s /d /f "Windows Driver Kit" /e 2^>^&1 ^| find "HKEY_"') DO @set /a wdkcount+=1
-@if %wdkcount% NEQ 1 set canclon12=0
-@if %nugetstate%==0 set canclon12=0
-
+@set haswdk=0
+@for /f delims^=^ eol^= %%a IN ('REG QUERY HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Installer /s /d /f "Windows Driver Kit" /e 2^>nul ^| find "HKEY_"') DO @for /f delims^=^ eol^= %%b IN ('REG QUERY %%a /s /v DisplayVersion 2^>nul ^| find "DisplayVersion"') DO @for /f tokens^=3^ eol^= %%c IN ("%%b") DO @for /f tokens^=3^ delims^=.^ eol^= %%d IN ("%%c") DO @for /f tokens^=3^ delims^=.^ eol^= %%e IN ("%WINSDK_VER%") DO @IF "%%d"=="%%e" set haswdk=1
 @IF EXIST "%devroot%\clon12\" IF %gitstate% GTR 0 (
 @echo Updating CLonD3D12 ICD source code...
 @cd "%devroot%\clon12"
 @git pull --progress --tags --recurse-submodules origin
 @echo.
 )
-
-@IF %canclon12% EQU 1 call "%devroot%\%projectname%\bin\modules\prompt.cmd" buildclon12 "Build Microsoft OpenCL over D3D12 driver (y/n):"
-@IF /I NOT "%buildclon12%"=="y" GOTO skipclon12
-@IF NOT EXIST "%devroot%\clon12\" (
+@IF NOT EXIST "%devroot%\clon12\" IF %gitstate% GTR 0 (
 @echo Getting CLonD3D12 ICD source code...
 @git clone https://github.com/microsoft/OpenCLOn12 "%devroot%\clon12"
 @echo.
 )
+@cmd /c exit 0
+@find /i /c "t/d3d12t" "%devroot%\clon12\cmakelists.txt" >nul 2>&1
+@if NOT %ERRORLEVEL%==0 (
+@if %haswdk%==0 set canclon12=0
+@if %nugetstate%==0 set canclon12=0
+)
+
+@IF %canclon12% EQU 1 call "%devroot%\%projectname%\bin\modules\prompt.cmd" buildclon12 "Build Microsoft OpenCL over D3D12 driver (y/n):"
+@IF /I NOT "%buildclon12%"=="y" GOTO skipclon12
 
 @rem Ask for Ninja use if exists and nuget packages are unused. Load it if opted for it.
 @cmd /c exit 0
@@ -41,7 +44,7 @@
 @if %abi%==arm64 if /I NOT "%useninja%"=="y" set buildconf=%buildconf% -A ARM64
 @if /I NOT "%useninja%"=="y" IF /I %PROCESSOR_ARCHITECTURE%==AMD64 set buildconf=%buildconf% -Thost=x64
 @if /I "%useninja%"=="y" set buildconf=%buildconf%Ninja
-@set buildconf=%buildconf% -DBUILD_TESTS=OFF -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DCMAKE_INSTALL_PREFIX="%devroot%\clon12\build\%abi%"
+@set buildconf=%buildconf% -DCMAKE_SYSTEM_VERSION="%WINSDK_VER%" -DBUILD_TESTS=OFF -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DCMAKE_INSTALL_PREFIX="%devroot%\clon12\build\%abi%"
 
 @echo CLonD3D12 build configuration command^: %buildconf%
 @echo.
@@ -61,7 +64,7 @@
 @echo.
 
 @rem Load Visual Studio environment. Can only be loaded in the background when using MsBuild.
-@if /I "%useninja%"=="y" call %vsenv% %vsabi%
+@if /I "%useninja%"=="y" call %vsenv% %WINSDK_VER% %vsabi%
 @if /I "%useninja%"=="y" cd "%devroot%\clon12\out\%abi%"
 @if /I "%useninja%"=="y" echo.
 

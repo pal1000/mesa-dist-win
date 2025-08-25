@@ -25,7 +25,7 @@
 @echo.
 )
 
-@call %vsenv% %vsabi%
+@call %vsenv% %WINSDK_VER% %vsabi%
 @cd "%devroot%\libva"
 @echo.
 @IF NOT EXIST "build\" MD build

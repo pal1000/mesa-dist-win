@@ -607,7 +607,7 @@
 
 @rem Load MSVC environment if used.
 @IF %toolchain%==msvc echo.
-@IF %toolchain%==msvc call %vsenv% %vsabi%
+@IF %toolchain%==msvc call %vsenv% %WINSDK_VER% %vsabi%
 @IF %toolchain%==msvc cd "%devroot%\mesa"
 @IF %toolchain%==msvc echo.
 

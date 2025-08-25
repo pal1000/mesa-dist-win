@@ -25,7 +25,7 @@
 @echo.
 )
 
-@call %vsenv% %vsabi%
+@call %vsenv% %WINSDK_VER% %vsabi%
 @cd "%devroot%\zstd"
 @echo.
 @IF NOT EXIST "zstd\" MD zstd

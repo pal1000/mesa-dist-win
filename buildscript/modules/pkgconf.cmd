@@ -26,7 +26,7 @@
 @IF NOT EXIST pkgconf\pkg-config.exe echo Begin pkgconf build...
 @IF NOT EXIST pkgconf\pkg-config.exe echo.
 @IF /I NOT "%buildpkgconf%"=="y" GOTO missingpkgconf
-@call %vsenv% %hostabi%
+@call %vsenv% %WINSDK_VER% %hostabi%
 @cd "%devroot%\pkgconf"
 @echo.
 @IF EXIST "pkgconf\" RD /S /Q pkgconf
