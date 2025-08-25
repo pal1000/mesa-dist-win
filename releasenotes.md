@@ -1,6 +1,7 @@
 ### Build script
 - Support multiple Windows SDK and WDK installs;
-- Enable d3d10umd build with MinGW [25.3-devel and up].
+- Enable d3d10umd build with MinGW [25.3-devel and up];
+- clon12: Don't bother running nuget when it has nothing to do.
 ### Build environment information
 - MinGW: Add selected Windows SDK and WDK.
 ### Distribution

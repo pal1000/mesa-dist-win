@@ -17,7 +17,7 @@
 )
 @cmd /c exit 0
 @find /i /c "t/d3d12t" "%devroot%\clon12\cmakelists.txt" >nul 2>&1
-@if NOT %ERRORLEVEL%==0 (
+@if %ERRORLEVEL%==0 (
 @if %haswdk%==0 set canclon12=0
 @if %nugetstate%==0 set canclon12=0
 )
@@ -70,7 +70,9 @@
 
 @rem Configure and execute the build with the configuration made above.
 @%buildconf%
-@if /I NOT "%useninja%"=="y" nuget restore openclon12.sln -Source https://api.nuget.org/v3/index.json
+@cmd /c exit 0
+@find /i /c "t/d3d12t" "%devroot%\clon12\cmakelists.txt" >nul 2>&1
+@if %ERRORLEVEL%==0 nuget restore openclon12.sln -Source https://api.nuget.org/v3/index.json
 @echo.
 @pause
 @echo.
