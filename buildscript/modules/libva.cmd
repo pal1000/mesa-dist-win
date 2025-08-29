@@ -59,6 +59,10 @@
 @IF /I NOT "%useninja%"=="y" msbuild RUN_INSTALL.vcxproj
 @echo.
 
+@rem Avoid race condition in MSYS2 packages install.
+@pause
+@echo.
+
 :nolibva
 @endlocal
 @cd "%devroot%\"

@@ -1,3 +1,5 @@
+ # 25.1.9
+- Updated Mesa3D to [25.1.9](https://gitlab.freedesktop.org/mesa/mesa/-/blob/25.1/docs/relnotes/25.1.9.rst?ref_type=heads&plain=0).
 ### Build script
 - Support multiple Windows SDK and WDK installs;
 - Enable d3d10umd build with MinGW [25.3-devel and up];
