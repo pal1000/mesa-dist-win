@@ -21,7 +21,7 @@ bsdtar 3.8.1-1
 bzip2 1.0.8-4
 ca-certificates 20250419-1
 coreutils 8.32-5
-curl 8.15.0-1
+curl 8.15.0-2
 dash 0.5.12-1
 db 6.2.32-5
 file 5.46-2
@@ -45,7 +45,7 @@ libargp 20241207-1
 libasprintf 0.22.5-1
 libassuan 3.0.2-1
 libbz2 1.0.8-4
-libcurl 8.15.0-1
+libcurl 8.15.0-2
 libdb 6.2.32-5
 libedit 20240808_3.1-1
 libexpat 2.7.1-1
@@ -65,12 +65,12 @@ liblzma 5.8.1-1
 libnettle 3.10.2-1
 libnghttp2 1.66.0-1
 libnghttp3 1.11.0-1
-libngtcp2 1.14.0-1
+libngtcp2 1.15.0-1
 libnpth 1.8-1
 libopenssl 3.5.2-1
 libp11-kit 0.25.5-2
 libpcre 8.45-5
-libpcre2_8 10.45-1
+libpcre2_8 10.46-1
 libpsl 0.21.5-2
 libreadline 8.3.001-1
 libsqlite 3.50.4-1
