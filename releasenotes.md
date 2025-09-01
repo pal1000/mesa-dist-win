@@ -1,5 +1,6 @@
 ### Distribution
-- MSVC/pkg-config: Exclude libpng, fixes 0fb1078c424fe1284ac1625dc9f1ec3f831ae198.
+- MSVC/pkg-config: Exclude libpng, fixes 0fb1078c424fe1284ac1625dc9f1ec3f831ae198;
+- Add version info to anti-lag and overlay layers.
 # 25.2.1
 - Updated Mesa3D to [25.2.1](https://gitlab.freedesktop.org/mesa/mesa/-/blob/25.2/docs/relnotes/25.2.1.rst?ref_type=heads&plain=0).
 # 25.1.9

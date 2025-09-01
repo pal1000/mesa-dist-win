@@ -61,6 +61,14 @@
 @call "%devroot%\%projectname%\buildscript\modules\rcgen.cmd" "Mesa3D Vulkan VRAM report limit layer" "%devroot%\%projectname%\bin\%abi%\libVkLayer_MESA_vram_report_limit.dll" %abi% %mesaver% "Mesa/X.org"
 @call "%devroot%\%projectname%\buildscript\modules\rcgen.cmd" "Mesa3D Vulkan VRAM report limit layer" "%devroot%\%projectname%\bin\%abi%\VkLayer_MESA_vram_report_limit.dll" %abi% %mesaver% "Mesa/X.org"
 
+@rem Add version info to Mesa3D Vulkan Anti lag layer
+@call "%devroot%\%projectname%\buildscript\modules\rcgen.cmd" "Mesa3D Vulkan Anti lag layer" "%devroot%\%projectname%\bin\%abi%\libVkLayer_MESA_anti_lag.dll" %abi% %mesaver% "Mesa/X.org"
+@call "%devroot%\%projectname%\buildscript\modules\rcgen.cmd" "Mesa3D Vulkan Anti lag layer" "%devroot%\%projectname%\bin\%abi%\VkLayer_MESA_anti_lag.dll" %abi% %mesaver% "Mesa/X.org"
+
+@rem Add version info to Mesa3D Vulkan overlay layer
+@call "%devroot%\%projectname%\buildscript\modules\rcgen.cmd" "Mesa3D Vulkan overlay layer" "%devroot%\%projectname%\bin\%abi%\libVkLayer_MESA_overlay.dll" %abi% %mesaver% "Mesa/X.org"
+@call "%devroot%\%projectname%\buildscript\modules\rcgen.cmd" "Mesa3D Vulkan overlay layer" "%devroot%\%projectname%\bin\%abi%\VkLayer_MESA_overlay.dll" %abi% %mesaver% "Mesa/X.org"
+
 @rem Add version info to Microsoft OpenCL compiler and driver
 @call "%devroot%\%projectname%\buildscript\modules\rcgen.cmd" "Microsoft OpenCL compiler" "%devroot%\%projectname%\bin\%abi%\clglon12compiler.dll" %abi% %mesaver% "Microsoft Corporation"
 @call "%devroot%\%projectname%\buildscript\modules\rcgen.cmd" "Microsoft OpenCL compiler" "%devroot%\%projectname%\bin\%abi%\clon12compiler.dll" %abi% %mesaver% "Microsoft Corporation"
