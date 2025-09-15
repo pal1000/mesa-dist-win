@@ -1,3 +1,5 @@
+### Documentation
+-  Update end user docs.
 ### Distribution
 - MSVC/pkg-config: Exclude libpng, fixes 0fb1078c424fe1284ac1625dc9f1ec3f831ae198;
 - Add version info to anti-lag and overlay layers.
