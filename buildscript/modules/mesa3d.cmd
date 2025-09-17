@@ -558,6 +558,7 @@
 @set buildconf=%buildconf% -Dtools=
 @if /I "%mesatests%"=="y" set buildconf=%buildconf%dlclose-skip,
 @if /I "%radv%"=="y" if /I "%mesatests%"=="y" set buildconf=%buildconf%drm-shim,
+@IF /I "%zink%"=="y" if /I "%mesatests%"=="y" IF %intmesaver% GEQ 25300 set buildconf=%buildconf%zink,
 @if /I "%mesatests%"=="y" set buildconf=%buildconf%glsl,nir,
 @if /I "%mesatests%"=="y" IF %mesavkcount% EQU 0 IF %galliumcount% EQU 0 set buildconf=%buildconf:~0,-9%
 @IF "%buildconf:~-1%"=="," set buildconf=%buildconf:~0,-1%

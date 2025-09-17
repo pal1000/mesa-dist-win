@@ -1,3 +1,5 @@
+### Build script
+- Add [zink debug tool](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/36061) [>=25.3].
 ### Documentation
 -  Update end user docs.
 ### Distribution
