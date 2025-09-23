@@ -209,7 +209,8 @@
 
 @rem Add flags tracking PKG_CONFIG search PATH adjustment needs
 @set PKG_CONFIG_LIBCLC=0
-@set PKG_CONFIG_SPV=0
+@set PKG_CONFIG_LS=0
+@set PKG_CONFIG_ST=0
 @set "PKG_CONFIG_PATH="
 
 @if %cimode% EQU 0 set usezstd=n
@@ -320,6 +321,10 @@
 @if /I "%swrdrv%"=="y" set buildconf=%buildconf% -Dswr-arches=avx,avx2,skx,knl
 @if /I "%swrdrv%"=="y" set /a galliumcount+=1
 
+@set canvirgl=1
+@if %intmesaver% LSS 25300 set canvirgl=0
+@if %canvirgl% EQU 1 call "%devroot%\%projectname%\bin\modules\prompt.cmd" virgl "Do you want to build VirtIO OpenGL driver? (y=yes):"
+
 @set buildconf=%buildconf% -Dgallium-drivers=
 @IF /I "%glswrast%"=="y" IF %intmesaver% LSS 24200 set buildconf=%buildconf%swrast,
 @IF /I "%glswrast%"=="y" IF %intmesaver% GEQ 24200 set buildconf=%buildconf%softpipe,
@@ -327,6 +332,7 @@
 @IF /I "%zink%"=="y" set buildconf=%buildconf%zink,
 @IF /I "%d3d12%"=="y" set buildconf=%buildconf%d3d12,
 @if /I "%swrdrv%"=="y" set buildconf=%buildconf%swr,
+@if /I "%virgl%"=="y" set buildconf=%buildconf%virgl,
 @IF "%buildconf:~-1%"=="," set buildconf=%buildconf:~0,-1%
 
 @set mesavkcount=0
@@ -469,7 +475,8 @@
 @IF %disableootpatch%==1 IF %intmesaver% GEQ 21300 IF %intmesaver% LSS 22203 set canmclc=0
 @IF %canmclc% EQU 1 call "%devroot%\%projectname%\bin\modules\prompt.cmd" mclc "Build Mesa3D Microsoft OpenCL compiler (y/n):"
 @IF /I "%mclc%"=="y" set PKG_CONFIG_LIBCLC=1
-@IF /I "%mclc%"=="y" set PKG_CONFIG_SPV=1
+@IF /I "%mclc%"=="y" set PKG_CONFIG_LS=1
+@IF /I "%mclc%"=="y" set PKG_CONFIG_ST=1
 @IF /I "%mclc%"=="y" set buildconf=%buildconf% -Dmicrosoft-clc=%mesonbooltrue%
 @IF /I "%mclc%"=="y" IF %toolchain%==msvc IF EXIST "%llvminstloc%\%abi%\lib\clang\" for /f tokens^=1^ delims^=.^ eol^= %%a IN ('dir /B /A:D "%llvminstloc%\%abi%\lib\clang\"') DO @IF %%a GEQ 18 IF %intmesaver% LSS 25100 set CFLAGS=%CFLAGS% /Zc^:preprocessor
 @IF /I NOT "%mclc%"=="y" IF %intmesaver% GEQ 21000 set buildconf=%buildconf% -Dmicrosoft-clc=%mesonboolfalse%
@@ -492,13 +499,14 @@
 @IF /I "%icdclover%"=="y" set buildconf=%buildconf% -Dgallium-opencl=icd
 @IF /I "%buildclover%"=="y" IF /I NOT "%icdclover%"=="y" set buildconf=%buildconf% -Dgallium-opencl=standalone
 @IF /I "%buildclover%"=="y" IF %canclspv% EQU 1 IF %intmesaver% LSS 25000 call "%devroot%\%projectname%\bin\modules\prompt.cmd" cloverspv "Build clover with SPIR-V binary support (y/n):"
-@IF /I "%cloverspv%"=="y" set PKG_CONFIG_SPV=1
+@IF /I "%cloverspv%"=="y" set PKG_CONFIG_LS=1
+@IF /I "%cloverspv%"=="y" set PKG_CONFIG_ST=1
 @IF /I "%cloverspv%"=="y" set buildconf=%buildconf% -Dopencl-spirv=true
 @IF /I "%buildclover%"=="y" IF /I NOT "%cloverspv%"=="y" IF %intmesaver% LSS 25000 set buildconf=%buildconf% -Dopencl-spirv=false
 @IF /I "%buildclover%"=="y" IF %intmesaver% LSS 22300 set buildconf=%buildconf% -Dopencl-native=false
 @IF /I "%buildclover%"=="y" IF %intmesaver% GEQ 22100 IF %intmesaver% LSS 22300 set buildconf=%buildconf% -Dcpp_std=c++20
 
-@IF %PKG_CONFIG_SPV% EQU 1 IF %intmesaver% GEQ 23200 IF %intmesaver% LSS 24100 IF /I NOT "%linkmingwdynamic%"=="y" set buildconf=%buildconf% -Dopencl-external-clang-headers=disabled
+@IF %PKG_CONFIG_LS% EQU 1 IF %PKG_CONFIG_ST% EQU 1 IF %intmesaver% GEQ 23200 IF %intmesaver% LSS 24100 IF /I NOT "%linkmingwdynamic%"=="y" set buildconf=%buildconf% -Dopencl-external-clang-headers=disabled
 
 @rem Build VA-API D3D12 driver
 @set canvaapi=0
@@ -526,13 +534,15 @@
 @rem Apply PKG_CONFIG search PATH adjustments on MSVC
 @IF %PKG_CONFIG_LIBCLC% EQU 1 set buildconf=%buildconf% -Dstatic-libclc=all
 @IF %PKG_CONFIG_LIBCLC% EQU 1 IF %toolchain%==msvc set PKG_CONFIG_PATH=%PKG_CONFIG_PATH%%llvminstloc:\=/%/clc/share/pkgconfig;
-@IF %PKG_CONFIG_SPV% EQU 1 IF %toolchain%==msvc set PKG_CONFIG_PATH=%PKG_CONFIG_PATH%%llvminstloc:\=/%/spv-%abi%/lib/pkgconfig;%devroot:\=/%/spirv-tools/build/%abi%/lib/pkgconfig;
+@IF %PKG_CONFIG_LS% EQU 1 IF %toolchain%==msvc set PKG_CONFIG_PATH=%PKG_CONFIG_PATH%%llvminstloc:\=/%/spv-%abi%/lib/pkgconfig;
+@IF %PKG_CONFIG_ST% EQU 1 IF %toolchain%==msvc set PKG_CONFIG_PATH=%PKG_CONFIG_PATH%%devroot:\=/%/spirv-tools/build/%abi%/lib/pkgconfig;
 @IF /I "%buildvaapi%"=="y" IF %toolchain%==msvc set PKG_CONFIG_PATH=%PKG_CONFIG_PATH%%devroot:\=/%/libva/build/%abi%/lib/pkgconfig;
 @IF /I "%usezstd%"=="y" IF %toolchain%==msvc set PKG_CONFIG_PATH=%PKG_CONFIG_PATH%%devroot:\=/%/zstd/zstd/%abi%/lib/pkgconfig;
 @IF NOT defined PKG_CONFIG_PATH set PKG_CONFIG_PATH=;
 @set buildconf=%buildconf% --pkg-config-path="%PKG_CONFIG_PATH:~0,-1%"
 @set "PKG_CONFIG_LIBCLC="
-@set "PKG_CONFIG_SPV="
+@set "PKG_CONFIG_LS="
+@set "PKG_CONFIG_ST="
 @set "PKG_CONFIG_PATH="
 
 @set buildconf=%buildconf% -Dgallium-extra-hud=false
