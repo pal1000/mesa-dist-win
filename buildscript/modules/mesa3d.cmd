@@ -531,6 +531,13 @@
 @if /I "%buildmftcodecs%"=="y" set buildconf=%buildconf% -Dgallium-mediafoundation=%mesonbooltrue%
 @IF %intmesaver% GEQ 25200 if /I NOT "%buildmftcodecs%"=="y" set buildconf=%buildconf% -Dgallium-mediafoundation=%mesonboolfalse%
 
+@rem Support enabling SPIRV Tools without building OpenCL stack
+@IF %PKG_CONFIG_ST% EQU 0 IF %toolchain%==msvc IF EXIST "%devroot%\spirv-tools\build\%abi%\lib\pkgconfig\" call "%devroot%\%projectname%\bin\modules\prompt.cmd" buildspvtint "Build SPIRV Tools integration (y/n):"
+@IF %PKG_CONFIG_ST% EQU 0 IF NOT %toolchain%==msvc IF %intmesaver% GEQ 25300 IF EXIST "%msysloc%\%LMSYSTEM%\lib\pkgconfig\SPIRV-Tools.pc" call "%devroot%\%projectname%\bin\modules\prompt.cmd" buildspvtint "Build SPIRV Tools integration (y/n):"
+@if /I "%buildspvtint%"=="y" set PKG_CONFIG_ST=1
+@if /I "%buildspvtint%"=="y" IF %intmesaver% GEQ 25300 set buildconf=%buildconf% -Dspirv-tools=%mesonbooltrue%
+@if /I NOT "%buildspvtint%"=="y" IF %intmesaver% GEQ 25300 set buildconf=%buildconf% -Dspirv-tools=%mesonboolfalse%
+
 @rem Apply PKG_CONFIG search PATH adjustments on MSVC
 @IF %PKG_CONFIG_LIBCLC% EQU 1 set buildconf=%buildconf% -Dstatic-libclc=all
 @IF %PKG_CONFIG_LIBCLC% EQU 1 IF %toolchain%==msvc set PKG_CONFIG_PATH=%PKG_CONFIG_PATH%%llvminstloc:\=/%/clc/share/pkgconfig;

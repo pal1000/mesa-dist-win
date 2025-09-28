@@ -1,6 +1,7 @@
 ### Build script
 - Add [zink debug tool](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/36061) [>=25.3];
-- Enable virGL driver [>=25.3].
+- Enable virGL driver [>=25.3];
+- Support enabling SPIRV Tools without building OpenCL stack.
 ### Documentation
 -  Update end user docs.
 ### Distribution
