@@ -2,7 +2,8 @@
 - Add [zink debug tool](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/36061) [>=25.3];
 - Enable virGL driver [>=25.3];
 - Support enabling SPIRV Tools without building OpenCL stack;
-- Mesa3D: shallow clone compatibility.
+- Mesa3D: shallow clone compatibility;
+- LLVM MSVC build: [Non-english locale compatibility](https://gitlab.freedesktop.org/mesa/mesa/-/commit/5dc8468014014c9c295183bf9fe1f1ab8a4cc435).
 ### Documentation
 -  Update end user docs.
 ### Distribution

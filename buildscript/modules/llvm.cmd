@@ -65,7 +65,7 @@
 @if %abi%==arm64 if /I NOT "%useninja%"=="y" set buildconf=%buildconf% -A ARM64,version=%WINSDK_VER%
 @if /I NOT "%useninja%"=="y" IF /I %PROCESSOR_ARCHITECTURE%==AMD64 set buildconf=%buildconf% -Thost=x64
 @if /I "%useninja%"=="y" set buildconf=%buildconf%Ninja
-@set buildconf=%buildconf% -DCMAKE_BUILD_TYPE=Release
+@set buildconf=%buildconf% -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS="/utf-8"
 @if %llvmsrcver% LSS 1700 set buildconf=%buildconf% -DLLVM_USE_CRT_RELEASE=MT
 @if %llvmsrcver% GEQ 1700 set buildconf=%buildconf% -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
 @if EXIST "%devroot%\llvm-project\" IF /I NOT "%buildclang%"=="y" set buildconf=%buildconf% -DLLVM_ENABLE_PROJECTS=""
