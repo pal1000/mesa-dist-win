@@ -19,8 +19,8 @@
 @if NOT EXIST "mesa\" echo.
 @if NOT EXIST "mesa\" call "%devroot%\%projectname%\bin\modules\prompt.cmd" buildmesa "Download mesa code and build (y/n):"
 @if /i NOT "%buildmesa%"=="y" GOTO skipmesa
-@if NOT EXIST "mesa\" if %cimode% EQU 0 set branch= -b main
-@if NOT EXIST "mesa\" call "%devroot%\%projectname%\bin\modules\prompt.cmd" branch "Enter Mesa source code branch name - defaults to main:"
+@if %cimode% EQU 0 set branch= -b main
+@if NOT EXIST "mesa\" call "%devroot%\%projectname%\bin\modules\prompt.cmd" branch "Enter Mesa source code branch name and additional options - defaults to main branch with no extra options:"
 @IF NOT "%branch:~0,3%"==" -b" set branch= -b %branch%
 @if NOT EXIST "mesa\" (
 @git clone%branch: -b main=% --recurse-submodules https://gitlab.freedesktop.org/mesa/mesa.git mesa
