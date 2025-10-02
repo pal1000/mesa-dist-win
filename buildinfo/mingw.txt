@@ -67,7 +67,7 @@ libnghttp2 1.67.1-1
 libnghttp3 1.12.0-1
 libngtcp2 1.16.0-1
 libnpth 1.8-1
-libopenssl 3.5.3-1
+libopenssl 3.5.4-1
 libp11-kit 0.25.10-1
 libpcre 8.45-5
 libpcre2_8 10.46-1
@@ -246,7 +246,7 @@ msys2-runtime 3.6.4-2
 nano 8.6-1
 ncurses 6.5.20240831-2
 nettle 3.10.2-1
-openssl 3.5.3-1
+openssl 3.5.4-1
 p11-kit 0.25.10-1
 pacman 6.1.0-19
 pacman-contrib 1.10.6-1
