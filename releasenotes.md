@@ -1,3 +1,5 @@
+### Build script
+- MinGW: Install dlfcn, may get at least one more vulkan layer building.
 # 25.2.4
 - Updated Mesa3D to [25.2.4](https://gitlab.freedesktop.org/mesa/mesa/-/blob/25.2/docs/relnotes/25.2.4.rst?ref_type=heads&plain=0).
 # 25.2.3
