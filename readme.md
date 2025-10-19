@@ -192,3 +192,7 @@ Documentation of most environment variables used by Mesa is available [here](htt
 Complete examples are available [here](https://github.com/pal1000/mesa-dist-win/tree/master/examples).
 
 You can set multiple environment variables on same batch script to mix the functionality provided by Mesa3D.
+
+If you want to avoid BAT files and set the variables system-wide, you can add STRING entries into the registry:
+- For all users, in: `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment`
+- For just the current user, in: `HKEY_CURRENT_USER\Environment`
