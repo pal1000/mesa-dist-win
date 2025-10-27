@@ -3,13 +3,13 @@ Build environment
 Windows 10.0.26100
 Ressource Hacker 5.2.8.448
 7-Zip 25.01 ultra compression
-Git 2.51.0.1
-LunarG Vulkan SDK 1.4.321.1
-Visual Studio Build Tools 2022 v17.14.16
-Windows SDK 10.1.26100.6584
+Git 2.51.1.1
+LunarG Vulkan SDK 1.4.328.1
+Visual Studio Build Tools 2022 v17.14.18 (October 2025)
+Windows SDK 10.1.26100.6901
 Windows Driver Kit 10.1.26100.6584
 Nuget Commandline tool 6.14.0.116
-Python 3.13.7
+Python 3.14.0
 
 Python packages
 ---------------
@@ -20,9 +20,9 @@ pip        25.2
 PyYAML     6.0.3
 setuptools 80.9.0
 
-CMake 4.1.1
+CMake 4.1.2
 Ninja 1.13.1
-LLVM 21.1.2
+LLVM 21.1.4
 SPIRV Tools 2025.4.1
 flex 2.6.4
 Bison 3.8.2
@@ -31,5 +31,5 @@ zlib 1.3.1
 OpenCLonD3D12 ICD 2025.08.26
 libva 2.22.0
 VA-API 1.22.0
-DirectX headers 1.618.1
+DirectX headers 1.618.2
 zstd 1.5.7
