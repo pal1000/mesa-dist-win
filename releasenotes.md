@@ -1,3 +1,7 @@
+### Sponsorship
+- Extended till January 2027.
+### Build script
+- Fix spirv tools integration failing if clc enabled [>=25.3], regression from 83f71f11a958739af75b1e7a2716d087782766a7.
 # 25.2.5
 - Updated Mesa3D to [25.2.5](https://gitlab.freedesktop.org/mesa/mesa/-/blob/25.2/docs/relnotes/25.2.5.rst?ref_type=heads&plain=0).
 ### Build script

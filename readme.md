@@ -28,9 +28,9 @@
 # Downloads
 Mesa 25.2.5 builds with Visual Studio and MSYS2 Mingw-w64 are now available in [releases section](https://github.com/pal1000/mesa-dist-win/releases).
 # Sponsorship
-mesa-dist-win project was given a sponsorship that was extended until November 1st 2025. Sponsorship consists in a free VPS on French node to use as build machine with 12 GB RAM, 6 threads [AMD EPYC 7763](https://www.amd.com/en/products/cpu/amd-epyc-7763) and 150 GB NVMe SSD from [Petrosky](https://petrosky.io/pal1000), a virtual private server hosting company thanks to [@Directox01](https://github.com/Directox01).
+mesa-dist-win project was given a sponsorship that was extended until January 1st 2027. Sponsorship consists in a free VPS on French node to use as build machine with 12 GB RAM, 6 threads [AMD EPYC 7763](https://www.amd.com/en/products/cpu/amd-epyc-7763) and 150 GB NVMe SSD from [Petrosky](https://petrosky.io/pal1000), a virtual private server hosting company thanks to [@Directox01](https://github.com/Directox01).
 
-![sponsorship-petrosky-2025](https://github.com/user-attachments/assets/86b9856c-6b98-452c-947d-5cd8843981a6)
+![sponsorship-petrosky-2025-2027](https://github.com/user-attachments/assets/63b155db-cce7-474f-b044-4b27d47a77b6)
 ![Screenshot_20221205_065713](https://user-images.githubusercontent.com/1138235/205717369-21062d47-7c66-4e6a-8427-6560f9aeaaf7.png)
 # Known issues
 This is a list of all comonly encountered issues with known solutions or workarounds. A specific release is only affected by a subset of them.
@@ -192,3 +192,4 @@ Documentation of most environment variables used by Mesa is available [here](htt
 Complete examples are available [here](https://github.com/pal1000/mesa-dist-win/tree/master/examples).
 
 You can set multiple environment variables on same batch script to mix the functionality provided by Mesa3D.
+
