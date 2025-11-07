@@ -1,3 +1,5 @@
+### Build script
+- zink tool: cannot build with MSVC for x86 32-bit due to Vulkan SDK no longer providing 32-bit libraries [>=25.3].
 # 25.2.6
 - Updated Mesa3D to [25.2.6](https://gitlab.freedesktop.org/mesa/mesa/-/blob/25.2/docs/relnotes/25.2.6.rst?ref_type=heads&plain=0).
 ### Sponsorship
