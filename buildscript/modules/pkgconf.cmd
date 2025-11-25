@@ -12,8 +12,7 @@
 )
 @if NOT EXIST "%devroot%\pkgconf\.git\" IF %gitstate% GTR 0 (
 @echo Getting pkgconf source code...
-@git clone https://gitea.treehouse.systems/ariadne/pkgconf.git --recurse-submodules pkgconf
-@if NOT EXIST "pkgconf\.git\" git clone https://github.com/pkgconf/pkgconf.git --recurse-submodules pkgconf
+@git clone https://github.com/pkgconf/pkgconf.git --recurse-submodules pkgconf
 @cd pkgconf
 )
 @IF %gitstate% GTR 0 (

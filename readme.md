@@ -26,7 +26,7 @@
 - [OpenGL context configuration override](#opengl-context-configuration-override)
 - [How to set environment variables](#how-to-set-environment-variables)
 # Downloads
-Mesa 25.2.6 builds with Visual Studio and MSYS2 Mingw-w64 are now available in [releases section](https://github.com/pal1000/mesa-dist-win/releases).
+Mesa 25.2.7 builds with Visual Studio and MSYS2 Mingw-w64 are now available in [releases section](https://github.com/pal1000/mesa-dist-win/releases).
 # Sponsorship
 mesa-dist-win project was given a sponsorship that was extended until January 1st 2027. Sponsorship consists in a free VPS on French node to use as build machine with 12 GB RAM, 6 threads [AMD EPYC 7763](https://www.amd.com/en/products/cpu/amd-epyc-7763) and 150 GB NVMe SSD from [Petrosky](https://petrosky.io/pal1000), a virtual private server hosting company thanks to [@Directox01](https://github.com/Directox01).
 
