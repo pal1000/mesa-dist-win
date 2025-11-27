@@ -5,7 +5,7 @@ Ressource Hacker 5.2.8.448
 7-Zip 25.01 ultra compression
 Git 2.52.0.1
 LunarG Vulkan SDK 1.4.328.1
-Visual Studio Build Tools 2026 v18.0.1
+Visual Studio Build Tools 2026 v18.0.2
 Windows SDK 10.1.26100.7175
 Windows Driver Kit 10.1.26100.6584
 Nuget Commandline tool 7.0.0.289

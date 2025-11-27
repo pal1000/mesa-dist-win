@@ -1,0 +1,44 @@
+From 7a358187adc3839f1bf460a3838a3467d76ecab8 Mon Sep 17 00:00:00 2001
+From: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+Date: Thu, 23 Oct 2025 15:22:31 +0200
+Subject: [PATCH] mesa: fix function prototype
+
+Replace void* by GLvoid* and add GLAPIENTRY to match the gl_API.xml
+version.
+
+Closes: https://gitlab.freedesktop.org/mesa/mesa/-/issues/14164
+Fixes: ae75b59cb52 ("glthread, tc: Fix buffer release with glthread and tc")
+---
+ src/mesa/main/glthread.h           | 2 +-
+ src/mesa/main/glthread_bufferobj.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/mesa/main/glthread.h b/src/mesa/main/glthread.h
+index 1447d686ce1ae..c2debd7e87ed9 100644
+--- a/src/mesa/main/glthread.h
++++ b/src/mesa/main/glthread.h
+@@ -405,7 +405,7 @@ void _mesa_glthread_unbind_uploaded_vbos(struct gl_context *ctx);
+ void _mesa_glthread_PixelStorei(struct gl_context *ctx, GLenum pname,
+                                 GLint param);
+ 
+-void _mesa_InternalReleaseBufferMESA(void *buffer);
++void GLAPIENTRY _mesa_InternalReleaseBufferMESA(GLvoid *buffer);
+ 
+ #ifdef __cplusplus
+ }
+diff --git a/src/mesa/main/glthread_bufferobj.c b/src/mesa/main/glthread_bufferobj.c
+index 66499a9c90fb3..a92ca40a86012 100644
+--- a/src/mesa/main/glthread_bufferobj.c
++++ b/src/mesa/main/glthread_bufferobj.c
+@@ -64,7 +64,7 @@ new_upload_buffer(struct gl_context *ctx, GLsizeiptr size, uint8_t **ptr)
+    return obj;
+ }
+ 
+-void _mesa_InternalReleaseBufferMESA(void *buffer)
++void GLAPIENTRY _mesa_InternalReleaseBufferMESA(GLvoid *buffer)
+ {
+    GET_CURRENT_CONTEXT(ctx);
+    struct gl_buffer_object *buf = buffer;
+-- 
+GitLab
+

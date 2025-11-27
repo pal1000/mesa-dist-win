@@ -1,3 +1,7 @@
+# 25.3.0
+- Updated Mesa3D to [25.3.0](https://gitlab.freedesktop.org/mesa/mesa/-/blob/25.3/docs/relnotes/25.3.0.rst?ref_type=heads&plain=0).
+### Out of tree patching
+- Add [fix](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/38029) for [32-bit build of OpenGL/GLES stack regressed in 25.3 cycle](https://gitlab.freedesktop.org/mesa/mesa/-/issues/14164).
 # 25.2.7
 - Updated Mesa3D to [25.2.7](https://gitlab.freedesktop.org/mesa/mesa/-/blob/25.2/docs/relnotes/25.2.7.rst?ref_type=heads&plain=0).
 ### Build script

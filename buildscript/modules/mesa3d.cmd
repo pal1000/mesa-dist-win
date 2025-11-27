@@ -170,6 +170,9 @@
 @rem Fix vaon12 build regression on 24.3 with MinGW
 @IF %intmesaver:~0,3% EQU 243 IF %intmesaver% LSS 24352 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" va-include-missing-header
 
+@rem Fix OpenGL/GLES build failure on 32-bit regressed in 25.3
+@IF %intmesaver% GEQ 25300 IF %intmesaver% LSS 25351 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" fix-gl-stack-32-bit-build-253
+
 :configmesabuild
 @rem Configure Mesa build.
 @set buildconf=%mesonloc% setup
