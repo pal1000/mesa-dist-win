@@ -15,7 +15,7 @@ Python packages
 ---------------
 Mako       1.3.10
 MarkupSafe 3.0.3
-meson      1.9.1
+meson      1.9.2
 pip        25.3
 PyYAML     6.0.3
 setuptools 80.9.0
