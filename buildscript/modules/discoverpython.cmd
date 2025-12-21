@@ -1,7 +1,4 @@
 @setlocal ENABLEDELAYEDEXPANSION
-@rem First remove Python UWP loader from PATH (see https://github.com/pal1000/mesa-dist-win/issues/23)
-@SET PATH=!PATH:;%LOCALAPPDATA%\Microsoft\WindowsApps=!
-
 @REM Try locating all Python versions via Python Launcher.
 @SET pythonloc=python.exe
 
@@ -12,17 +9,17 @@
 
 @rem Count and list supported python installations
 @set pythontotal=0
-@FOR /F delims^=^ eol^= %%a IN ('py -0 2^>nul') do @IF NOT "%%a"=="" FOR /F tokens^=1^ eol^= %%b IN ("%%a") do @FOR /F "tokens=1-2 delims=. " %%c IN ('py %%b -c "import sys; print(sys.version)"') DO @(
+@FOR /F delims^=^ eol^= %%a IN ('py -0 2^>nul') do @IF NOT "%%a"=="" FOR /F tokens^=1-3^ delims^=-vV^:^[.^]^  %%b IN ("%%a") do @(
 @set goodpython=1
-@if %%c LSS 3 set goodpython=0
-@if %%c EQU 3 if %%d LSS 7 set goodpython=0
+@if %%b LSS %1 set goodpython=0
+@if %%b EQU %1 if %%c LSS %2 set goodpython=0
 @IF !goodpython!==1 set /a pythontotal+=1
 @IF !pythontotal!==1 echo Select Python installation
 @IF !goodpython!==1 echo !pythontotal!. %%a
-@IF !goodpython!==1 set pyl[!pythontotal!]=%%b
+@IF !goodpython!==1 set pyl[!pythontotal!]=%%b.%%c-%%d
 )
 @IF %pythontotal%==0 echo WARNING: No suitable Python installation found by Python launcher.
-@IF %pythontotal%==0 echo Python 3.7 and newer is required.
+@IF %pythontotal%==0 echo Python %1.%2 and newer is required.
 @IF %pythontotal%==0 echo.
 @IF %pythontotal%==0 GOTO nopylauncher
 @IF %pythontotal% GTR 0 echo.
@@ -48,6 +45,8 @@
 @GOTO loadpypath
 
 :nopylauncher
+@rem Remove Python UWP loader from PATH (see https://github.com/pal1000/mesa-dist-win/issues/23)
+@SET PATH=!PATH:;%LOCALAPPDATA%\Microsoft\WindowsApps=!
 @rem Missing Python launcher fallback code path.
 @rem Check if Python is in PATH or if it is provided as a local depedency.
 @CMD /C EXIT 0
@@ -77,11 +76,11 @@ SET pythonloc="%%~a"
 @rem Check if Python version is not too old.
 @set goodpython=1
 @FOR /F tokens^=1-2^ delims^=.^ eol^= %%a IN ("%fpythonver%") DO @(
-@if %%a LSS 3 set goodpython=0
-@if %%a EQU 3 if %%b LSS 7 set goodpython=0
+@if %%a LSS %1 set goodpython=0
+@if %%a EQU %1 if %%b LSS %2 set goodpython=0
 )
 @IF %goodpython% EQU 0 (
-@echo Your Python version is too old. Only Python 3.7 and newer is supported.
+@echo Your Python version is too old. Only Python %1.%2 and newer is supported.
 @echo.
 @pause
 @exit

@@ -11,7 +11,7 @@
 @IF NOT "%multilib%"=="1" IF %abi%==x86 set PATH=%devroot%\mingw32\bin\;%PATH%
 @IF NOT "%multilib%"=="1" IF %abi%==x64 set PATH=%devroot%\mingw64\bin\;%PATH%
 @IF "%multilib%"=="1" set PATH=%devroot%\mingw64\bin\;%PATH%
-@call "%devroot%\%projectname%\buildscript\modules\discoverpython.cmd"
+@call "%devroot%\%projectname%\buildscript\modules\discoverpython.cmd" 3 9
 @call "%devroot%\%projectname%\buildscript\modules\pythonpackages.cmd"
 @cd mesa
 @echo Undoing out of tree patches...

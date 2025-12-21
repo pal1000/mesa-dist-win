@@ -7,7 +7,7 @@
 @IF "%devroot:~-1%"=="\" set devroot=%devroot:~0,-1%
 @set abi=arm64
 @set PATH=%devroot%\flexbison\;%devroot%\llvm-mingw\bin\;%devroot%\ninja\;%devroot%\pkgconf\pkgconf\;%PATH%
-@call "%devroot%\%projectname%\buildscript\modules\discoverpython.cmd"
+@call "%devroot%\%projectname%\buildscript\modules\discoverpython.cmd" 3 9
 @call "%devroot%\%projectname%\buildscript\modules\pythonpackages.cmd"
 @cd mesa
 @echo Undoing out of tree patches...

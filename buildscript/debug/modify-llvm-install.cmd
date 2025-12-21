@@ -8,7 +8,7 @@
 @set TITLE=Modify LLVM build
 @call "%devroot%\%projectname%\buildscript\modules\toolchain.cmd"
 @call "%devroot%\%projectname%\buildscript\modules\abi.cmd"
-@call "%devroot%\%projectname%\buildscript\modules\discoverpython.cmd"
+@call "%devroot%\%projectname%\buildscript\modules\discoverpython.cmd" 3 9
 @call "%devroot%\%projectname%\buildscript\modules\pythonpackages.cmd"
 @call "%devroot%\%projectname%\buildscript\modules\throttle.cmd"
 @call "%devroot%\%projectname%\buildscript\modules\cmake.cmd"
