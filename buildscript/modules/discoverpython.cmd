@@ -16,7 +16,7 @@
 @IF !goodpython!==1 set /a pythontotal+=1
 @IF !pythontotal!==1 echo Select Python installation
 @IF !goodpython!==1 echo !pythontotal!. %%a
-@IF !goodpython!==1 set pyl[!pythontotal!]=%%b.%%c-%%d
+@IF !goodpython!==1 set pyl[!pythontotal!]=-%%b.%%c-%%d
 )
 @IF %pythontotal%==0 echo WARNING: No suitable Python installation found by Python launcher.
 @IF %pythontotal%==0 echo Python %1.%2 and newer is required.
