@@ -9,7 +9,7 @@
 
 @rem Count and list supported python installations
 @set pythontotal=0
-@FOR /F delims^=^ eol^= %%a IN ('py -0 2^>nul') do @IF NOT "%%a"=="" FOR /F tokens^=1-3^ delims^=-vV^:^[.^]^  %%b IN ("%%a") do @(
+@FOR /F delims^=^ eol^= %%a IN ('py -0 2^>nul') do @IF NOT "%%a"=="" FOR /F tokens^=1-3^ delims^=-vV^:^[.^]Ppython^  %%b IN ("%%a") do @(
 @set goodpython=1
 @if %%b LSS %1 set goodpython=0
 @if %%b EQU %1 if %%c LSS %2 set goodpython=0

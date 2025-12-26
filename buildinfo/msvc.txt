@@ -4,32 +4,32 @@ Windows 10.0.26100
 Ressource Hacker 5.2.8.448
 7-Zip 25.01 ultra compression
 Git 2.52.0.1
-LunarG Vulkan SDK 1.4.328.1
-Visual Studio Build Tools 2026 v18.0.2
-Windows SDK 10.1.26100.7175
+LunarG Vulkan SDK 1.4.335.0
+Visual Studio Build Tools 2026 v18.1.1
+Windows SDK 10.1.26100.7463
 Windows Driver Kit 10.1.26100.6584
 Nuget Commandline tool 7.0.1.1
-Python 3.14.0
+Python 3.14.2
 
 Python packages
 ---------------
 Mako       1.3.10
 MarkupSafe 3.0.3
-meson      1.9.2
+meson      1.10.0
 pip        25.3
 PyYAML     6.0.3
 setuptools 80.9.0
 
-CMake 4.2.0
+CMake 4.2.1
 Ninja 1.13.2
-LLVM 21.1.7
+LLVM 21.1.8
 SPIRV Tools 2025.5.1
 flex 2.6.4
 Bison 3.8.2
 pkgconf 2.5.1
 zlib 1.3.1
 OpenCLonD3D12 ICD 2025.08.26
-libva 2.22.0
-VA-API 1.22.0
+libva 2.23.0
+VA-API 1.23.0
 DirectX headers 1.618.2
 zstd 1.5.7

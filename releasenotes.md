@@ -1,5 +1,7 @@
+# 25.3.2
+- Updated Mesa3D to [25.3.2](https://gitlab.freedesktop.org/mesa/mesa/-/blob/25.3/docs/relnotes/25.3.2.rst?ref_type=heads&plain=0).
 ### Build script
-- MSVC: Python discovery: Support UWP launcher and install manager.
+- MSVC: Python discovery: Support UWP Python, launcher and install manager.
 # 25.3.1
 - Updated Mesa3D to [25.3.1](https://gitlab.freedesktop.org/mesa/mesa/-/blob/25.3/docs/relnotes/25.3.1.rst?ref_type=heads&plain=0).
 # 25.3.0

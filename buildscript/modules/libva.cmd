@@ -3,7 +3,7 @@
 @if NOT EXIST "%devroot%\libva\" IF %gitstate%==0 GOTO nolibva
 @IF "%pkgconfigstate%"=="0" GOTO nolibva
 
-@set libva_ver=2.22.0
+@set libva_ver=2.23.0
 @if EXIST "%devroot%\libva\" IF %gitstate% GTR 0 (
 @echo Switching VA-API source code to stable release...
 @cd "%devroot%\libva"
