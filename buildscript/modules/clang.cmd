@@ -7,7 +7,7 @@
 @IF %toolchain%==msvc IF %abi%==x86 IF /I %PROCESSOR_ARCHITECTURE%==x86 IF EXIST "%ProgramFiles%\LLVM\bin\clang-cl.exe" set clangstate=1
 @IF NOT %toolchain%==msvc set clangstate=1
 
-@if %cimode% EQU 0 set useclang=n
+@if %botmode% EQU 0 set useclang=n
 @IF NOT %toolchain%==msvc IF %abi%==arm64 set useclang=y
 @IF %clangstate% GTR 0 IF %toolchain%==msvc call "%devroot%\%projectname%\bin\modules\prompt.cmd" useclang "Use clang compiler with selected toolchain (y/n):"
 @IF %clangstate% GTR 0 IF NOT %toolchain%==msvc IF %abi%==x64 call "%devroot%\%projectname%\bin\modules\prompt.cmd" useclang "Use clang compiler with selected toolchain (y/n):"

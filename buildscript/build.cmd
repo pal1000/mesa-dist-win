@@ -21,7 +21,7 @@
 @IF "%disableootpatch%"=="1" TITLE %TITLE%
 
 @rem Default CI mode disabled
-@IF NOT defined cimode set cimode=0
+@IF NOT defined botmode set botmode=0
 
 @rem Analyze environment. Get each dependency status: 0=missing, 1=standby/load manually in PATH, 2=cannot be unloaded.
 @rem Not all dependencies can have all these states.

@@ -4,7 +4,7 @@
 @CMD /C EXIT 0
 @where /q nuget.exe
 @if NOT "%ERRORLEVEL%"=="0" set nugetstate=1
-@if %cimode% EQU 0 set updnuget=n
+@if %botmode% EQU 0 set updnuget=n
 @IF %nugetstate%==1 IF EXIST "%devroot%\nuget\nuget.exe" call "%devroot%\%projectname%\bin\modules\prompt.cmd" updnuget "Update Nuget CLI tool (y/n):"
 @IF %nugetstate%==1 IF NOT EXIST "%devroot%\nuget\" MD "%devroot%\nuget"
 @IF %nugetstate%==1 IF NOT EXIST "%devroot%\nuget\nuget.exe" echo Getting Nuget CLI tool...

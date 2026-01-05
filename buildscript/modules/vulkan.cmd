@@ -1,6 +1,6 @@
 @setlocal
 @set vksdkstd=1
-@if %cimode% EQU 0 set vksdkselect=0
+@if %botmode% EQU 0 set vksdkselect=0
 @IF NOT EXIST "%VK_SDK_PATH%" IF NOT EXIST "%VULKAN_SDK%" set vksdkstd=0
 
 :selectvksdk

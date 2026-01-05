@@ -5,7 +5,7 @@
 @IF %devroot:~0,1%%devroot:~-1%=="" set devroot=%devroot:~1,-1%
 @IF "%devroot:~-1%"=="\" set devroot=%devroot:~0,-1%
 @set projectname=mesa-dist-win
-@set cimode=0
+@set botmode=0
 
 @rem Create folder to store generated resource files and MSYS2 shell scripts
 @IF NOT EXIST "%devroot%\%projectname%\buildscript\assets\" md "%devroot%\%projectname%\buildscript\assets"
@@ -27,7 +27,7 @@
 @echo 4. CLANG32
 @echo 5. CLANG64
 @echo 6. UCRT64
-@if %cimode% EQU 0 set "shell="
+@if %botmode% EQU 0 set "shell="
 @call "%devroot%\%projectname%\bin\modules\prompt.cmd" shell "Enter choice:"
 @if "%shell%"=="" set shell=1
 @IF "%shell%"=="1" set "MSYSTEM="
@@ -39,7 +39,7 @@
 @IF NOT "%shell%"=="1" IF NOT "%shell%"=="2" IF NOT "%shell%"=="3" IF NOT "%shell%"=="4" IF NOT "%shell%"=="5" IF NOT "%shell%"=="6" GOTO selectshell
 
 :command
-@if %cimode% EQU 0 set msyscmd=
+@if %botmode% EQU 0 set msyscmd=
 @call "%devroot%\%projectname%\bin\modules\prompt.cmd" msyscmd "Enter MSYS2 command:"
 @IF /I "%msyscmd%"=="exit" exit
 @IF /I "%msyscmd%"=="shell" GOTO selectshell

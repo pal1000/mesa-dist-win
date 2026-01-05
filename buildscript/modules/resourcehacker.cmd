@@ -3,7 +3,7 @@
 @CMD /C EXIT 0
 @where /q ResourceHacker.exe
 @if NOT "%ERRORLEVEL%"=="0" set rhstate=1
-@if %cimode% EQU 0 set updrh=n
+@if %botmode% EQU 0 set updrh=n
 @IF %rhstate%==1 IF EXIST "%devroot%\resource-hacker\ResourceHacker.exe" call "%devroot%\%projectname%\bin\modules\prompt.cmd" updrh "Update Resource Hacker (y/n):"
 @IF %rhstate%==1 IF NOT EXIST "%devroot%\resource-hacker\" MD "%devroot%\resource-hacker"
 @IF %rhstate%==1 IF NOT EXIST "%devroot%\resource-hacker\ResourceHacker.exe" echo Getting Resource Hacker...

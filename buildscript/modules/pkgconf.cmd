@@ -19,7 +19,7 @@
 @git checkout pkgconf-2.5.1
 @echo.
 )
-@IF EXIST pkgconf\pkg-config.exe if %cimode% EQU 0 set buildpkgconf=n
+@IF EXIST pkgconf\pkg-config.exe if %botmode% EQU 0 set buildpkgconf=n
 @IF EXIST pkgconf\pkg-config.exe call "%devroot%\%projectname%\bin\modules\prompt.cmd" buildpkgconf "Do you want to rebuild pkgconf (y/n):"
 @IF NOT EXIST pkgconf\pkg-config.exe set buildpkgconf=y
 @IF NOT EXIST pkgconf\pkg-config.exe echo Begin pkgconf build...
