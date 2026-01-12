@@ -1,3 +1,5 @@
+### Deployment
+- [Improve containner compatibility](https://github.com/pal1000/mesa-dist-win/pull/231).
 ### Build script
 - Interactive mode: Generate timestamped unattended mode configuration during execution.
 # 25.3.3
