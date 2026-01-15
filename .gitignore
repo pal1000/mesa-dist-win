@@ -27,3 +27,5 @@
 /buildinfo/msvc-*.txt
 /buildinfo/release-*.txt
 /buildinfo/debug-*.txt
+# Auto generated bot configuration
+/buildscript/bots/bot-*.cmd

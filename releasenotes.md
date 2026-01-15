@@ -1,3 +1,5 @@
+### Build script
+- Interactive mode: Generate timestamped unattended mode configuration during execution.
 # 25.3.3
 - Updated Mesa3D to [25.3.3](https://gitlab.freedesktop.org/mesa/mesa/-/blob/25.3/docs/relnotes/25.3.3.rst?ref_type=heads&plain=0).
 # 25.3.2
