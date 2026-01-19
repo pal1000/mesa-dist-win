@@ -9,24 +9,25 @@
 @GOTO exit
 )
 :--------------------------------------
-@IF "%*"=="" TITLE Mesa3D system-wide deployment utility
-@IF "%*"=="" echo -------------------------------------
-@IF "%*"=="" echo Mesa3D system-wide deployment utility
-@IF "%*"=="" echo -------------------------------------
-@IF "%*"=="" echo This deployment utility targets systems without working GPUs and any use case
-@IF "%*"=="" echo where hardware accelerated OpenGL is not available. This mainly covers
-@IF "%*"=="" echo virtual machines in cloud environments and RDP connections. It can be
-@IF "%*"=="" echo used to replace Microsoft Windows inbox OpenGL 1.1 software render
-@IF "%*"=="" echo driver with Mesa3D OpenGL drivers.
-@IF "%*"=="" echo.
-@IF "%*"=="" pause
+@set botmode=0
+@IF NOT "%*"=="" set botmode=1
+@IF %botmode% EQU 0 TITLE Mesa3D system-wide deployment utility
+@IF %botmode% EQU 0 echo -------------------------------------
+@IF %botmode% EQU 0 echo Mesa3D system-wide deployment utility
+@IF %botmode% EQU 0 echo -------------------------------------
+@IF %botmode% EQU 0 echo This deployment utility targets systems without working GPUs and any use case
+@IF %botmode% EQU 0 echo where hardware accelerated OpenGL is not available. This mainly covers
+@IF %botmode% EQU 0 echo virtual machines in cloud environments and RDP connections. It can be
+@IF %botmode% EQU 0 echo used to replace Microsoft Windows inbox OpenGL 1.1 software render
+@IF %botmode% EQU 0 echo driver with Mesa3D OpenGL drivers.
+@call modules\break.cmd 1
 @set CD=
 @set mesaloc=%CD%
 @IF %mesaloc:~0,1%%mesaloc:~-1%=="" set mesaloc=%mesaloc:~1,-1%
 @IF "%mesaloc:~-1%"=="\" set mesaloc=%mesaloc:~0,-1%
 
 :deploy
-@IF "%*"=="" cls
+@IF %botmode% EQU 0 cls
 @echo -------------------------------------
 @echo Mesa3D system-wide deployment utility
 @echo -------------------------------------
@@ -73,22 +74,21 @@
 @IF NOT EXIST "%windir%\System32\openglon12.dll" IF NOT EXIST "%windir%\System32\mesadrv.dll" IF NOT EXIST "%windir%\System32\graw.dll" IF NOT EXIST "%windir%\System32\graw_null.dll" IF NOT EXIST "%windir%\System32\osmesa.dll" set /a mesainstalled-=1
 @IF NOT EXIST "%windir%\SysWOW64\openglon12.dll" IF NOT EXIST "%windir%\SysWOW64\mesadrv.dll" IF NOT EXIST "%windir%\SysWOW64\graw.dll" IF NOT EXIST "%windir%\SysWOW64\graw_null.dll" IF NOT EXIST "%windir%\SysWOW64\osmesa.dll" set /a mesainstalled-=1
 @IF %mesainstalled% GTR 0 echo 7. Update system-wide deployment
-@IF "%1"=="" IF %mesainstalled% EQU 0 echo 7. Exit
+@IF %botmode% EQU 0 IF %mesainstalled% EQU 0 echo 7. Exit
 
 :option_8
 @IF %mesainstalled% GTR 0 echo 8. Remove system-wide deployments (uninstall)
 
 :option_9
-@IF "%1"=="" IF %mesainstalled% GTR 0 echo 9. Exit
+@IF %botmode% EQU 0 IF %mesainstalled% GTR 0 echo 9. Exit
 @echo.
 
 @set SystemDrive=
 @IF EXIST "%SystemDrive%\Program Files\WindowsApps\Microsoft.D3DMappingLayers*" echo WARNING: System-wide Mesa3D desktop OpenGL drivers deployment won't work on your computer until you uninstall Microsoft OpenCL and OpenGL Compatibility Pack Windows store application. You are free to perform the deployment right now, but it won't take effect until conflicting software is removed.
 @IF EXIST "%SystemDrive%\Program Files\WindowsApps\Microsoft.D3DMappingLayers*" echo.
 
-@IF "%1"=="" call modules\prompt.cmd deploychoice "Enter choice:"
-@IF NOT "%1"=="" echo Enter choice:%1
-@IF NOT "%1"=="" set deploychoice=%1
+@IF %botmode% EQU 1 set deploychoice=%1
+@call modules\prompt.cmd deploychoice "Enter choice:"
 @if "%deploychoice%"=="1" IF %option1% EQU 1 GOTO desktopgl
 @if "%deploychoice%"=="2" IF %option2% EQU 1 GOTO desktopgl
 @if "%deploychoice%"=="3" IF %option3% EQU 1 GOTO instdxil
@@ -96,9 +96,9 @@
 @if "%deploychoice%"=="5" IF %option5% EQU 1 GOTO osmesa
 @if "%deploychoice%"=="6" IF %option6% EQU 1 GOTO graw
 @if "%deploychoice%"=="7" IF %mesainstalled% GTR 0 GOTO update
-@if "%deploychoice%"=="7" IF %mesainstalled% EQU 0 IF "%1"=="" GOTO bye
+@if "%deploychoice%"=="7" IF %mesainstalled% EQU 0 IF %botmode% EQU 0 GOTO bye
 @if "%deploychoice%"=="8" IF %mesainstalled% GTR 0 GOTO uninstall
-@if "%deploychoice%"=="9" IF %mesainstalled% GTR 0 IF "%1"=="" GOTO bye
+@if "%deploychoice%"=="9" IF %mesainstalled% GTR 0 IF %botmode% EQU 0 GOTO bye
 @set deployerror=
 @if "%deploychoice%"=="1" IF %option1% EQU 0 set deployerror=Invalid choice. Mesa3D desktop OpenGL drivers are not included in this Mesa3D release package.
 @if "%deploychoice%"=="2" IF %option2% EQU 0 if /I NOT %PROCESSOR_ARCHITECTURE%==AMD64 set deployerror=Invalid choice. swr driver is only supported on x64/AMD64 systems.
@@ -107,9 +107,9 @@
 @if "%deploychoice%"=="4" IF %option4% EQU 0 set deployerror=Invalid choice. Microsoft OpenGL over D3D12 driver is not available in this release package.
 @if "%deploychoice%"=="5" IF %option5% EQU 0 set deployerror=Invalid choice. osmesa gallium is not available in this release package.
 @if "%deploychoice%"=="6" IF %option6% EQU 0 set deployerror=Invalid choice. Gallium raw interface is not available in this release package.
-@if "%deploychoice%"=="7" IF %mesainstalled% EQU 0 IF NOT "%1"=="" set deployerror=Unattended mode does not support exit command.
+@if "%deploychoice%"=="7" IF %mesainstalled% EQU 0 IF %botmode% EQU 1 set deployerror=Unattended mode does not support exit command.
 @if "%deploychoice%"=="8" IF %mesainstalled% EQU 0 set deployerror=Error^: No Mesa3D drivers installed.
-@if "%deploychoice%"=="9" IF %mesainstalled% GTR 0 IF NOT "%1"=="" set deployerror=Unattended mode does not support exit command.
+@if "%deploychoice%"=="9" IF %mesainstalled% GTR 0 IF %botmode% EQU 1 set deployerror=Unattended mode does not support exit command.
 @IF NOT defined deployerror set deployerror=Invaild choice.
 @echo %deployerror%
 @GOTO enddeploy
@@ -215,9 +215,10 @@
 @GOTO enddeploy
 
 :uninstall
-@IF "%1"=="" set keepdxil=y
-@IF "%1"=="" call modules\prompt.cmd keepdxil "Do you want to keep DirectX IL for redistribution (y/n, default - y):"
-@IF NOT "%1"=="" set keepdxil=n
+@IF %botmode% EQU 0 set keepdxil=y
+@IF %botmode% EQU 1 set keepdxil=n
+@call modules\prompt.cmd keepdxil "Do you want to keep DirectX IL for redistribution (y/n, default - y):"
+
 @call modules\unreggl.cmd mesadrv
 @call modules\unreggl.cmd openglon12
 @IF EXIST "%windir%\System32\mesadrv.dll" del "%windir%\System32\mesadrv.dll"
@@ -242,12 +243,12 @@
 @echo Uninstall complete.
 
 :enddeploy
-@IF "%1"=="" pause
-@IF "%1"=="" GOTO deploy
-@IF NOT "%1"=="" GOTO exit
+@call modules\break.cmd
+@IF %botmode% EQU 0 GOTO deploy
+@IF %botmode% EQU 1 GOTO exit
 
 :bye
 @echo Good Bye!
-@IF "%1"=="" pause
+@call modules\break.cmd
 
 :exit
