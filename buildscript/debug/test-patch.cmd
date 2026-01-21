@@ -15,7 +15,7 @@
 )
 @if %gitstate%==0 IF NOT EXIST "%msysloc%\usr\bin\patch.exe" (
 @echo Fatal error: No patch tool found.
-@pause
+@call "%devroot%\%projectname%\bin\modules\break.cmd"
 @exit
 )
 @cd "%devroot%\mesa"

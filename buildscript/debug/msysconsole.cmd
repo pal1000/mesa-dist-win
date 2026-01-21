@@ -15,7 +15,7 @@
 @call "%devroot%\%projectname%\buildscript\modules\msysupdate.cmd"
 @IF NOT EXIST "%msysloc%" (
 @echo Fatal error: MSYS2 is missing.
-@pause
+@call "%devroot%\%projectname%\bin\modules\break.cmd"
 @exit
 )
 

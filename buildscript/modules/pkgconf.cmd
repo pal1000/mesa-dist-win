@@ -36,8 +36,7 @@
 @IF /I NOT "%useninja%"=="y" %mesonloc% setup pkgconf --backend=vs --buildtype=release
 @IF /I "%useninja%"=="y" %mesonloc% setup pkgconf --backend=ninja --buildtype=release
 @echo.
-@pause
-@echo.
+@call "%devroot%\%projectname%\bin\modules\break.cmd"
 @cd pkgconf
 @IF /I NOT "%useninja%"=="y" echo Performing pkgconf build with : msbuild pkgconf.sln /m^:%throttle% /v^:m
 @IF /I "%useninja%"=="y" echo Performing pkgconf build with : ninja -j %throttle%

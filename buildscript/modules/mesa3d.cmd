@@ -638,8 +638,7 @@
 @IF NOT %toolchain%==msvc if /I NOT "%mesadbgbld%"=="y" echo %buildconf% >"%devroot%\%projectname%\buildinfo\release-%toolchain%-%abi%.txt"
 @IF NOT %toolchain%==msvc if /I "%mesadbgbld%"=="y" echo %buildconf% >"%devroot%\%projectname%\buildinfo\debug-%toolchain%-%abi%.txt"
 @echo.
-@IF /I "%cleanmesabld%"=="y" pause
-@IF /I "%cleanmesabld%"=="y" echo.
+@IF /I "%cleanmesabld%"=="y" call "%devroot%\%projectname%\bin\modules\break.cmd"
 @set CFLAGS=
 @set LDFLAGS=
 @%buildconf%
@@ -647,8 +646,7 @@
 @if /I NOT "%useninja%"=="y" cd build\%toolchain%-%abi%
 @echo Build command: %buildcmd%
 @echo.
-@pause
-@echo.
+@call "%devroot%\%projectname%\bin\modules\break.cmd"
 @call "%devroot%\%projectname%\buildscript\modules\trybuild.cmd" %buildcmd%
 @if /I NOT "%useninja%"=="y" cd ..\..\
 

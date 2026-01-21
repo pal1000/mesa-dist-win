@@ -100,8 +100,7 @@
 @cd build
 @if NOT EXIST "buildsys-%abi%\" md buildsys-%abi%
 @cd buildsys-%abi%
-@pause
-@echo.
+@call "%devroot%\%projectname%\bin\modules\break.cmd"
 
 @rem Load Visual Studio environment. Can only be loaded in the background when using MsBuild.
 @if /I "%useninja%"=="y" call %vsenv% %WINSDK_VER% %vsabi%
@@ -113,8 +112,7 @@
 @if NOT EXIST "%devroot%\llvm-project\" %buildconf% -DCMAKE_INSTALL_PREFIX="%llvminstloc%\%abi%" "%devroot%\llvm"
 @if EXIST "%devroot%\llvm-project\" %buildconf% -DCMAKE_INSTALL_PREFIX="%llvminstloc%\%abi%" "%devroot%\llvm-project\llvm"
 @echo.
-@pause
-@echo.
+@call "%devroot%\%projectname%\bin\modules\break.cmd"
 @For /f "tokens=1-3 delims=/ " %%a in ('date /t') do @For /f "tokens=1-2 delims=/:" %%d in ('time /t') do @echo Build started at %%a-%%b-%%c_%%d%%e.
 @if /I NOT "%useninja%"=="y" call "%devroot%\%projectname%\buildscript\modules\trybuild.cmd" cmake --build . -j %throttle% --config Release --target install
 @if /I NOT "%useninja%"=="y" IF /I NOT "%buildclang%"=="y" call "%devroot%\%projectname%\buildscript\modules\trybuild.cmd" cmake --build . -j %throttle% --config Release --target llvm-config
@@ -126,8 +124,7 @@
 @echo.
 
 @rem Avoid race condition in SPIRV LLVM translator sources checkout.
-@pause
-@echo.
+@call "%devroot%\%projectname%\bin\modules\break.cmd"
 
 :skipllvm
 @IF %llvmsources% EQU 0 echo WARNING: LLVM source code not found and it couldn't be obtained.

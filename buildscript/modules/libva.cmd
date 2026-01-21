@@ -43,8 +43,7 @@
 
 @echo Configuring VA-API build with : %buildconf%
 @echo.
-@pause
-@echo.
+@call "%devroot%\%projectname%\bin\modules\break.cmd"
 @%buildconf%
 @echo.
 @cd build\buildsys-%abi%
@@ -52,16 +51,14 @@
 @IF /I "%useninja%"=="y" echo Performing VA-API build with ^: ninja -j %throttle% install
 @IF /I NOT "%useninja%"=="y" echo Performing VA-API build with ^: msbuild libva.sln /m^:%throttle% /v^:m and msbuild RUN_INSTALL.vcxproj
 @echo.
-@pause
-@echo.
+@call "%devroot%\%projectname%\bin\modules\break.cmd"
 @IF /I "%useninja%"=="y" call "%devroot%\%projectname%\buildscript\modules\trybuild.cmd" ninja -j %throttle% install
 @IF /I NOT "%useninja%"=="y" call "%devroot%\%projectname%\buildscript\modules\trybuild.cmd" msbuild libva.sln /m^:%throttle% /v^:m
 @IF /I NOT "%useninja%"=="y" msbuild RUN_INSTALL.vcxproj
 @echo.
 
 @rem Avoid race condition in MSYS2 packages install.
-@pause
-@echo.
+@call "%devroot%\%projectname%\bin\modules\break.cmd"
 
 :nolibva
 @endlocal

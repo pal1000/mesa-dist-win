@@ -14,7 +14,7 @@
 @if %sevenzip%==7z.exe echo OK.
 @if NOT %sevenzip%==7z.exe if EXIST %sevenzip% echo OK.
 @echo.
-@if NOT %sevenzip%==7z.exe if NOT EXIST %sevenzip% pause
+@if NOT %sevenzip%==7z.exe if NOT EXIST %sevenzip% call ..\bin\modules\break.cmd
 @if NOT %sevenzip%==7z.exe if NOT EXIST %sevenzip% exit /B
 
 @set corrupt=0
@@ -40,9 +40,9 @@
 @if %corrupt% EQU 0 if %msvclibs% GTR 0 if %mingwlibs% EQU 0 echo MSVC
 @if %corrupt% EQU 0 if %msvclibs% EQU 0 if %mingwlibs% GTR 0 echo MINGW
 @echo.
-@if %msvclibs% EQU 0 if %mingwlibs% EQU 0 pause
+@if %msvclibs% EQU 0 if %mingwlibs% EQU 0 call ..\bin\modules\break.cmd
 @if %msvclibs% EQU 0 if %mingwlibs% EQU 0 exit /B
-@if %corrupt% EQU 1 pause
+@if %corrupt% EQU 1 call ..\bin\modules\break.cmd
 @if %corrupt% EQU 1 exit /B
 
 @echo Getting Mesa3D version...
@@ -81,5 +81,4 @@
 
 @if %msvclibs% GTR 0 echo Creating mesa-dist-win MSVC debug info package...
 @if %msvclibs% GTR 0 %sevenzip% a mesa3d-%mesaver%%mesarev%-debug-info-msvc.7z -r ..\debug\*.pdb -m0=LZMA2 -mmt=off -mx=9
-@echo.
-@pause
+@call ..\bin\modules\break.cmd 1

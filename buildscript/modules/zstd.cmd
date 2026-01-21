@@ -44,8 +44,7 @@
 
 @echo Configuring zstd build with : %buildconf%
 @echo.
-@pause
-@echo.
+@call "%devroot%\%projectname%\bin\modules\break.cmd"
 @%buildconf%
 @echo.
 @cd "%devroot%\zstd\zstd\buildsys-%abi%"
@@ -53,16 +52,15 @@
 @IF /I "%useninja%"=="y" echo Performing zstd build with ^: ninja -j %throttle% install
 @IF /I NOT "%useninja%"=="y" echo Performing zstd build with ^: msbuild zstd.sln /m^:%throttle% /v^:m and msbuild RUN_INSTALL.vcxproj
 @echo.
-@pause
-@echo.
+@call "%devroot%\%projectname%\bin\modules\break.cmd"
+
 @IF /I "%useninja%"=="y" call "%devroot%\%projectname%\buildscript\modules\trybuild.cmd" ninja -j %throttle% install
 @IF /I NOT "%useninja%"=="y" call "%devroot%\%projectname%\buildscript\modules\trybuild.cmd" msbuild zstd.sln /m^:%throttle% /v^:m
 @IF /I NOT "%useninja%"=="y" msbuild RUN_INSTALL.vcxproj
 @echo.
 
 @rem Avoid race condition in LLVM sources checkout.
-@pause
-@echo.
+@call "%devroot%\%projectname%\bin\modules\break.cmd"
 
 :nozstd
 @endlocal

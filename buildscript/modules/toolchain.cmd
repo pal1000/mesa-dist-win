@@ -20,8 +20,7 @@ set msvcversions[!totalmsvc!]=%%a
 @IF EXIST "%msysloc%" set /a totaltoolchains+=1
 @IF %totaltoolchains%==0 (
 @echo Error: No compiler found. Cannot continue.
-@echo.
-@pause
+@call "%devroot%\%projectname%\bin\modules\break.cmd" 1
 @exit
 )
 @set msvccount=0
@@ -45,14 +44,14 @@ set msvcnames[!msvccount!]=%%a
 @set validtoolchain=1
 @IF "%selecttoolchain%"=="" (
 @echo Invalid entry
-@pause
+@call "%devroot%\%projectname%\bin\modules\break.cmd"
 @GOTO findcompilers
 )
 @IF %selecttoolchain% LEQ 0 set validtoolchain=0
 @IF %selecttoolchain% GTR %totaltoolchains% set validtoolchain=0
 @IF %validtoolchain%==0 (
 @echo Invalid entry
-@pause
+@call "%devroot%\%projectname%\bin\modules\break.cmd"
 @GOTO findcompilers
 )
 
@@ -70,7 +69,7 @@ IF "%%a"=="%selecttoolchain%" set msvcver=!msvcversions[%%a]!
 :novcpp
 @IF NOT EXIST %vsenv% echo Error: Selected Visual Studio installation lacks Desktop development with C++ Build Tools necessary to build Mesa3D.
 @IF NOT EXIST %vsenv% call "%devroot%\%projectname%\bin\modules\prompt.cmd" addvcpp "Add Desktop development with C++ Build Tools - y/n:"
-@IF NOT EXIST %vsenv% IF /I NOT "%addvcpp%"=="y" pause
+@IF NOT EXIST %vsenv% IF /I NOT "%addvcpp%"=="y" call "%devroot%\%projectname%\bin\modules\break.cmd"
 @IF NOT EXIST %vsenv% IF /I NOT "%addvcpp%"=="y" GOTO findcompilers
 @IF NOT EXIST %vsenv% %vswhere:~0,-12%vs_installer.exe"
 @IF NOT EXIST %vsenv% GOTO findcompilers

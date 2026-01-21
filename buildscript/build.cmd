@@ -129,5 +129,5 @@
 @rem Finish bot mode configuration
 @if %botmode% EQU 0 echo @call "%%~dp0..\build.cmd">>"%devroot%\%projectname%\buildscript\bots\bot-%bottimestamp%.cmd"
 
-@pause
+@call "%devroot%\%projectname%\bin\modules\break.cmd"
 @exit

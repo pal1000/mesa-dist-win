@@ -27,16 +27,13 @@
 :pyselect
 @call "%devroot%\%projectname%\bin\modules\prompt.cmd" pyselect "Select Python version by entering its index from the table above:"
 @IF "%pyselect%"=="" echo Invalid entry.
-@IF "%pyselect%"=="" pause
-@IF "%pyselect%"=="" echo.
+@IF "%pyselect%"=="" call "%devroot%\%projectname%\bin\modules\break.cmd"
 @IF "%pyselect%"=="" GOTO pyselect
 @IF %pyselect% LEQ 0 echo Invalid entry.
-@IF %pyselect% LEQ 0 pause
-@IF %pyselect% LEQ 0 echo.
+@IF %pyselect% LEQ 0 call "%devroot%\%projectname%\bin\modules\break.cmd"
 @IF %pyselect% LEQ 0 GOTO pyselect
 @IF %pyselect% GTR %pythontotal% echo Invalid entry.
-@IF %pyselect% GTR %pythontotal% pause
-@IF %pyselect% GTR %pythontotal% echo.
+@IF %pyselect% GTR %pythontotal% call "%devroot%\%projectname%\bin\modules\break.cmd"
 @IF %pyselect% GTR %pythontotal% GOTO pyselect
 
 @rem Locate selected Python installation
@@ -54,8 +51,7 @@
 @if NOT "%ERRORLEVEL%"=="0" set pythonloc="%devroot%\python\python.exe"
 @IF %pythonloc%=="%devroot%\python\python.exe" IF NOT EXIST %pythonloc% (
 @echo Python is unreachable. Cannot continue.
-@echo.
-@pause
+@call "%devroot%\%projectname%\bin\modules\break.cmd" 1
 @exit
 )
 @IF %pythonloc%==python.exe set exitloop=1
@@ -65,8 +61,7 @@ SET pythonloc="%%~a"
 )
 @if EXIST "%pythonloc:~1,-11%pyvenv.cfg" (
 @echo Python virtual environments are ignored by this discovery tool. Cannot continue.
-@echo.
-@pause
+@call "%devroot%\%projectname%\bin\modules\break.cmd" 1
 @exit
 )
 
@@ -81,8 +76,7 @@ SET pythonloc="%%~a"
 )
 @IF %goodpython% EQU 0 (
 @echo Your Python version is too old. Only Python %1.%2 and newer is supported.
-@echo.
-@pause
+@call "%devroot%\%projectname%\bin\modules\break.cmd" 1
 @exit
 )
 

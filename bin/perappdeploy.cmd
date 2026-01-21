@@ -22,8 +22,7 @@
 @echo However Mesainjector does not work with Windows 10 Version 1803 and newer.
 @echo Download: https://downloads.fdossena.com/Projects/Mesa3D/Injector/index.php
 @echo Build Mesainjector - https://fdossena.com/?p=mesa/injector_build.frag
-@echo.
-@pause
+@call modules\break.cmd 1
 @set CD=
 @set mesaloc=%CD%
 @IF %mesaloc:~0,1%%mesaloc:~-1%=="" set mesaloc=%mesaloc:~1,-1%
@@ -45,7 +44,7 @@
 @IF %dir:~0,1%%dir:~-1%=="" set dir=%dir:~1,-1%
 @IF "%dir:~-1%"=="\" set dir=%dir:~0,-1%
 @IF NOT EXIST "%dir%" echo Error: That location doesn't exist.
-@IF NOT EXIST "%dir%" pause
+@IF NOT EXIST "%dir%" call modules\break.cmd
 @IF NOT EXIST "%dir%" GOTO deploy
 
 @echo Removing existing Mesa3D deployments for this folder...
@@ -117,7 +116,7 @@
 @IF "%appexe%"=="" GOTO ask_for_app_abi
 @IF /I NOT "%appexe:~-4%"==".exe" set appexe=%appexe%.exe
 @IF NOT EXIST "%dir%\%appexe%" echo Error: File not found.
-@IF NOT EXIST "%dir%\%appexe%" pause
+@IF NOT EXIST "%dir%\%appexe%" call modules\break.cmd
 @IF NOT EXIST "%dir%\%appexe%" cls
 @IF NOT EXIST "%dir%\%appexe%" GOTO askforappexe
 @IF EXIST "%dir%\%appexe%.local" del "%dir%\%appexe%.local"

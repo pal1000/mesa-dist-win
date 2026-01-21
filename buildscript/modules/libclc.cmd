@@ -25,12 +25,10 @@
 @FOR /F tokens^=^1^,2^ eol^= %%a IN ('type "%devroot%\llvm-project\llvm\CMakeLists.txt"') DO @IF "%%a"=="set(LLVM_VERSION_MAJOR" FOR /F tokens^=^1^ delims^=^)^ eol^= %%c IN ("%%b") DO @IF %%c LSS 17 set buildconf=%buildconf% -DCMAKE_POLICY_DEFAULT_CMP0091=NEW
 @echo Build configuration command: %buildconf%
 @echo.
-@pause
-@echo.
+@call "%devroot%\%projectname%\bin\modules\break.cmd"
 @%buildconf%
 @echo.
-@pause
-@echo.
+@call "%devroot%\%projectname%\bin\modules\break.cmd"
 @call "%devroot%\%projectname%\buildscript\modules\trybuild.cmd" ninja -j %throttle% install
 @echo.
 

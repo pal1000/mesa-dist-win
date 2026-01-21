@@ -36,6 +36,6 @@ IF NOT "!libname:~0,5!"=="llvm-" SET llvmlibs=!llvmlibs! !libname!
 @echo LLVM is not built yet. Cannot determine required libraries for requested configuration.
 
 :finished
-@pause
+@call "%devroot%\mesa-dist-win\bin\modules\break.cmd"
 @"%devroot%\mesa-dist-win\debug\llvm-config.txt"
 @exit

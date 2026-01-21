@@ -61,8 +61,7 @@
 
 @rem Always clean build
 @cd "%devroot%\spirv-tools"
-@pause
-@echo.
+@call "%devroot%\%projectname%\bin\modules\break.cmd"
 @echo Cleanning SPIRV Tools build. Please wait...
 @echo.
 @if EXIST "build\%abi%\" RD /S /Q build\%abi%
@@ -70,8 +69,7 @@
 @if NOT EXIST "out\" md out
 @md out\%abi%
 @cd out\%abi%
-@pause
-@echo.
+@call "%devroot%\%projectname%\bin\modules\break.cmd"
 
 @rem Load Visual Studio environment. Can only be loaded in the background when using MsBuild.
 @if /I "%useninja%"=="y" call %vsenv% %WINSDK_VER% %vsabi%
@@ -81,15 +79,13 @@
 @rem Configure and execute the build with the configuration made above.
 @%buildconf%
 @echo.
-@pause
-@echo.
+@call "%devroot%\%projectname%\bin\modules\break.cmd"
 @if /I NOT "%useninja%"=="y" call "%devroot%\%projectname%\buildscript\modules\trybuild.cmd" cmake --build . -j %throttle% --config Release --target install
 @if /I "%useninja%"=="y" call "%devroot%\%projectname%\buildscript\modules\trybuild.cmd" ninja -j %throttle% install
 @echo.
 
 @rem Avoid race condition in VA-API library sources checkout.
-@pause
-@echo.
+@call "%devroot%\%projectname%\bin\modules\break.cmd"
 
 :skipspvtools
 @rem Reset environment after SPIRV Tools build.

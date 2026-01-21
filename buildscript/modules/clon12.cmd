@@ -51,8 +51,7 @@
 
 @rem Always clean build
 @cd "%devroot%\clon12"
-@pause
-@echo.
+@call "%devroot%\%projectname%\bin\modules\break.cmd"
 @echo Cleanning CLonD3D12 build. Please wait...
 @echo.
 @if EXIST "build\%abi%\" RD /S /Q build\%abi%
@@ -60,8 +59,7 @@
 @if NOT EXIST "out\" md out
 @md out\%abi%
 @cd out\%abi%
-@pause
-@echo.
+@call "%devroot%\%projectname%\bin\modules\break.cmd"
 
 @rem Load Visual Studio environment. Can only be loaded in the background when using MsBuild.
 @if /I "%useninja%"=="y" call %vsenv% %WINSDK_VER% %vsabi%
@@ -74,15 +72,13 @@
 @find /i /c "t/d3d12t" "%devroot%\clon12\cmakelists.txt" >nul 2>&1
 @if %ERRORLEVEL%==0 nuget restore openclon12.sln -Source https://api.nuget.org/v3/index.json
 @echo.
-@pause
-@echo.
+@call "%devroot%\%projectname%\bin\modules\break.cmd"
 @if /I NOT "%useninja%"=="y" call "%devroot%\%projectname%\buildscript\modules\trybuild.cmd" cmake --build . -j %throttle% --config Release
 @if /I "%useninja%"=="y" call "%devroot%\%projectname%\buildscript\modules\trybuild.cmd" ninja -j %throttle%
 @echo.
 
 @rem Avoid race condition in SPIRV Tools sources checkout.
-@pause
-@echo.
+@call "%devroot%\%projectname%\bin\modules\break.cmd"
 
 :skipclon12
 @rem Reset environment after CLonD3D12 build.
