@@ -25,7 +25,7 @@
 @echo.
 )
 
-@call %vsenv% %WINSDK_VER% %vsabi%
+@call %vsenv% %WINSDK_VER% %vsabi% -vcvars_ver=%msvcpp%
 @cd "%devroot%\zstd"
 @echo.
 @IF NOT EXIST "zstd\" MD zstd

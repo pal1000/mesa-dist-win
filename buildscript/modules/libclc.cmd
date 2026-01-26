@@ -12,7 +12,7 @@
 @if %canclc% EQU 0 GOTO finishclc
 @if %canclc% EQU 1 call "%devroot%\%projectname%\bin\modules\prompt.cmd" buildclc "Build LLVM libclc project (y/n):"
 @if /I NOT "%buildclc%"=="y" GOTO finishclc
-@call %vsenv% %WINSDK_VER% %hostabi%
+@call %vsenv% %WINSDK_VER% %hostabi% -vcvars_ver=%msvcpp%
 @echo.
 @cd "%devroot%\llvm-project\build"
 @echo Cleanning libclc build...

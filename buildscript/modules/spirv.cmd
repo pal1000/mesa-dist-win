@@ -72,7 +72,7 @@
 @call "%devroot%\%projectname%\bin\modules\break.cmd"
 
 @rem Load Visual Studio environment. Can only be loaded in the background when using MsBuild.
-@if /I "%useninja%"=="y" call %vsenv% %WINSDK_VER% %vsabi%
+@if /I "%useninja%"=="y" call %vsenv% %WINSDK_VER% %vsabi% -vcvars_ver=%msvcpp%
 @if /I "%useninja%"=="y" cd "%devroot%\spirv-tools\out\%abi%"
 @if /I "%useninja%"=="y" echo.
 
