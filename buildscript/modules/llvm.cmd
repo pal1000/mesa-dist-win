@@ -59,11 +59,10 @@
 
 @rem Construct build configuration command.
 @set buildconf=cmake -G
-@if /I NOT "%useninja%"=="y" set buildconf=%buildconf% "Visual Studio %toolset%"
+@if /I NOT "%useninja%"=="y" set buildconf=%buildconf% "Visual Studio %toolset%" -Thost=%hostabi:arm=ARM%,version=%msvcpp%
 @if %abi%==x86 if /I NOT "%useninja%"=="y" set buildconf=%buildconf% -A Win32,version=%WINSDK_VER%
 @if %abi%==x64 if /I NOT "%useninja%"=="y" set buildconf=%buildconf% -A x64,version=%WINSDK_VER%
 @if %abi%==arm64 if /I NOT "%useninja%"=="y" set buildconf=%buildconf% -A ARM64,version=%WINSDK_VER%
-@if /I NOT "%useninja%"=="y" IF /I %PROCESSOR_ARCHITECTURE%==AMD64 set buildconf=%buildconf% -Thost=x64
 @if /I "%useninja%"=="y" set buildconf=%buildconf%Ninja
 @set buildconf=%buildconf% -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS="/utf-8"
 @if %llvmsrcver% LSS 1700 set buildconf=%buildconf% -DLLVM_USE_CRT_RELEASE=MT

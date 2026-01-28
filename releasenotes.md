@@ -2,7 +2,9 @@
 - [Improve containner compatibility](https://github.com/pal1000/mesa-dist-win/pull/231).
 ### Build script
 - Interactive mode: Generate timestamped unattended mode configuration during execution;
-- Implement and use an unattended aware pause module.
+- Implement and use an unattended aware pause module;
+- Implement C/C++ toolset selection support to [fix Windows 7/Server 2008 R2 support when building with VS 2026](https://github.com/pal1000/mesa-dist-win/issues/233);
+- Improve compilation performance with cmake VS backend on ARM64 by no longer running the compiler through emulation layer when making x86 or x64 binaries.
 # 25.3.3
 - Updated Mesa3D to [25.3.3](https://gitlab.freedesktop.org/mesa/mesa/-/blob/25.3/docs/relnotes/25.3.3.rst?ref_type=heads&plain=0).
 # 25.3.2

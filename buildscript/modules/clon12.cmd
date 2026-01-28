@@ -38,11 +38,10 @@
 
 @rem Construct build configuration command.
 @set buildconf=cmake "%devroot%\clon12" -G
-@if /I NOT "%useninja%"=="y" set buildconf=%buildconf% "Visual Studio %toolset%"
+@if /I NOT "%useninja%"=="y" set buildconf=%buildconf% "Visual Studio %toolset%" -Thost=%hostabi:arm=ARM%,version=%msvcpp%
 @if %abi%==x86 if /I NOT "%useninja%"=="y" set buildconf=%buildconf% -A Win32,version=%WINSDK_VER%
 @if %abi%==x64 if /I NOT "%useninja%"=="y" set buildconf=%buildconf% -A x64,version=%WINSDK_VER%
 @if %abi%==arm64 if /I NOT "%useninja%"=="y" set buildconf=%buildconf% -A ARM64,version=%WINSDK_VER%
-@if /I NOT "%useninja%"=="y" IF /I %PROCESSOR_ARCHITECTURE%==AMD64 set buildconf=%buildconf% -Thost=x64
 @if /I "%useninja%"=="y" set buildconf=%buildconf%Ninja
 @set buildconf=%buildconf% -DBUILD_TESTS=OFF -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DCMAKE_INSTALL_PREFIX="%devroot%\clon12\build\%abi%"
 
