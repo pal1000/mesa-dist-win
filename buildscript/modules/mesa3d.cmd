@@ -173,6 +173,11 @@
 @rem Fix OpenGL/GLES build failure on 32-bit regressed in 25.3
 @IF %intmesaver% GEQ 25300 IF %intmesaver% LSS 25351 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" fix-gl-stack-32-bit-build-253
 
+@rem Fix SPIRV-Tools static link - #234
+@IF EXIST "%devroot%\mesa\meson.build" type "%devroot%\mesa\meson.build" | find /V "static : host">"%devroot%\mesa\meson.build.patch"
+@IF EXIST "%devroot%\mesa\meson.build" del "%devroot%\mesa\meson.build" >nul
+@IF EXIST "%devroot%\mesa\meson.build.patch" REN "%devroot%\mesa\meson.build.patch" meson.build
+
 :configmesabuild
 @rem Configure Mesa build.
 @set buildconf=%mesonloc% setup
