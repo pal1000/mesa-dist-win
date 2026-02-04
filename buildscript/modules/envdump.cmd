@@ -53,6 +53,7 @@
 
 @rem Dump Visual Studio environment
 @IF %toolchain%==msvc echo %msvcname% v%msvcver%>>"%devroot%\%projectname%\buildinfo\msvc.txt"
+@if defined msvcpp echo Visual Studio C/C++ toolset %msvcpp%>>"%devroot%\%projectname%\buildinfo\msvc.txt"
 
 @for /f delims^=^ eol^= %%a IN ('REG QUERY HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Installer /s /d /f "Windows SDK" /e 2^>nul ^| find "HKEY_"') DO @for /f delims^=^ eol^= %%b IN ('REG QUERY %%a /s /v DisplayVersion 2^>nul ^| find "DisplayVersion"') DO @for /f tokens^=3^ eol^= %%c IN ("%%b") DO @for /f tokens^=3^ delims^=.^ eol^= %%d IN ("%%c") DO @for /f tokens^=3^ delims^=.^ eol^= %%e IN ("%WINSDK_VER%") DO @IF "%%d"=="%%e" (
 @IF %toolchain%==msvc echo Windows SDK %%c>>"%devroot%\%projectname%\buildinfo\msvc.txt"

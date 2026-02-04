@@ -4,5 +4,5 @@
 @setlocal ENABLEDELAYEDEXPANSION
 @if %botmode% EQU 0 echo @set %1=!%1!>>"%~dp0..\..\buildscript\bots\bot-%bottimestamp%.cmd"
 @if %botmode% EQU 1 IF NOT "!%1!"=="" echo %~2!%1!
-@if %botmode% EQU 1 IF "!%1!"=="" echo WARNING: Variable '%1' is undefined in CI build configuration script.
+@if %botmode% EQU 1 IF "!%1!"=="" echo WARNING: Variable '%1' is undefined in build bot configuration script.
 @echo.
