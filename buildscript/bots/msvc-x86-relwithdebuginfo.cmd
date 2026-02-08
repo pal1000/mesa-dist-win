@@ -5,9 +5,7 @@
 @set cpuchoice=1
 @set legacyllvm=n
 @set pyselect=1
-@set pyupd=y
 @set throttle=%NUMBER_OF_PROCESSORS%
-@set updnuget=y
 @set cfgllvmbuild=y
 @set useninja=y
 @set amdgpu=y
@@ -18,14 +16,10 @@
 @set buildclon12=y
 @set buildspvtools=y
 @set buildlibva=y
-@set msysupdate=y
-@set msyspkgclear=y
 @set buildzstd=y
 @set buildllvmspirv=y
 @set buildclc=n
-@set updrh=y
 @set buildmesa=y
-@set branch=25.3 --depth=1
 @set cleanmesabld=y
 @set experimental=n
 @set usezstd=y
@@ -52,5 +46,4 @@
 @set retrybld=0
 @set dist=y
 @set mesabldrev=0
-@set enableenvdump=y
 @call "%~dp0..\build.cmd"

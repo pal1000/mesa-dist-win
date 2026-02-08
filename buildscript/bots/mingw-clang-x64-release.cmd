@@ -5,12 +5,8 @@
 @set gccmsvcrt=n
 @set throttle=%NUMBER_OF_PROCESSORS%
 @set useclang=y
-@set msysupdate=y
-@set msyspkgclear=y
 @set vksdkselect=2
-@set updrh=y
 @set buildmesa=y
-@set branch=25.3 --depth=1
 @set cleanmesabld=y
 @set experimental=n
 @set usezstd=y
@@ -36,5 +32,4 @@
 @set retrybld=0
 @set dist=y
 @set mesabldrev=0
-@set enableenvdump=y
 @call "%~dp0..\build.cmd"
