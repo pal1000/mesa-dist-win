@@ -133,4 +133,4 @@
 @if %botmode% EQU 0 echo @call "%%~dp0..\build.cmd">>"%devroot%\%projectname%\buildscript\bots\bot-%bottimestamp%.cmd"
 
 @call "%devroot%\%projectname%\bin\modules\break.cmd"
-@exit
+@exit /B

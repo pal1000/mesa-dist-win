@@ -1,10 +1,12 @@
+# 25.3.5
+- Updated Mesa3D to [25.3.5](https://gitlab.freedesktop.org/mesa/mesa/-/blob/25.3/docs/relnotes/25.3.5.rst?ref_type=heads&plain=0).
 ### Build script
-- Unattended: Split out binary update and Mesa source pull choices into pre-build modules;
+- Unattended: Split out configuration into modules;
 - Unattended: Fix retry build infinite loop.
 # 25.3.4
 - Updated Mesa3D to [25.3.4](https://gitlab.freedesktop.org/mesa/mesa/-/blob/25.3/docs/relnotes/25.3.4.rst?ref_type=heads&plain=0).
 ### Deployment
-- [Improve containner compatibility](https://github.com/pal1000/mesa-dist-win/pull/231).
+- [Improve container compatibility](https://github.com/pal1000/mesa-dist-win/pull/231).
 ### Build script
 - Interactive mode: Generate timestamped unattended mode configuration during execution;
 - Implement and use an unattended aware pause module;

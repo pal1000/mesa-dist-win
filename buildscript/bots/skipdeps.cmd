@@ -1,0 +1,11 @@
+@set cfgllvmbuild=n
+@set amdgpu=n
+@set buildclang=n
+@set buildllvm=n
+@set buildpkgconf=n
+@set buildclon12=n
+@set buildspvtools=n
+@set buildlibva=n
+@set buildzstd=n
+@set buildllvmspirv=n
+@set buildclc=n

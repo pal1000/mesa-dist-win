@@ -1,0 +1,1 @@
+@set cpuchoice=3

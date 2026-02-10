@@ -1,17 +1,10 @@
 @set botmode=1
-@set selecttoolchain=2
 @set selectwinsdk=1
-@set cpuchoice=1
 @set throttle=%NUMBER_OF_PROCESSORS%
-@set vksdkselect=2
 @set buildmesa=y
 @set cleanmesabld=y
 @set experimental=n
 @set usezstd=y
-@set mesadbgbld=y
-@set mesadbgoptim=y
-@set mesaenableasserts=y
-@set linkmingwdynamic=n
 @set glswrast=y
 @set zink=y
 @set d3d12=y
