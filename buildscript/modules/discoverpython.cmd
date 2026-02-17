@@ -9,14 +9,14 @@
 
 @rem Count and list supported python installations
 @set pythontotal=0
-@FOR /F delims^=^ eol^= %%a IN ('py -0 2^>nul') do @IF NOT "%%a"=="" FOR /F tokens^=1-3^ delims^=-vV^:^[.^]Ppython^  %%b IN ("%%a") do @(
+@FOR /F delims^=^ eol^= %%a IN ('py -0 2^>nul') do @IF NOT "%%a"=="" FOR /F tokens^=1^ delims^=^  %%b IN ("%%a") do @FOR /F tokens^=1-3^ delims^=[] %%c IN ("%%b") do @FOR /F tokens^=1^ delims^=-aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQsStTuUvVwWxXyYzZ^:^*^(^) %%f IN ("%%c%%d%%e") do @FOR /F tokens^=1^*^ delims^=. %%g IN ("%%f") do @(
 @set goodpython=1
-@if %%b LSS %1 set goodpython=0
-@if %%b EQU %1 if %%c LSS %2 set goodpython=0
+@if %%g LSS %1 set goodpython=0
+@if %%g EQU %1 if %%h LSS %2 set goodpython=0
 @IF !goodpython!==1 set /a pythontotal+=1
 @IF !pythontotal!==1 echo Select Python installation
 @IF !goodpython!==1 echo !pythontotal!. %%a
-@IF !goodpython!==1 set pyl[!pythontotal!]=-%%b.%%c-%%d
+@IF !goodpython!==1 set pyl[!pythontotal!]=%%c%%d%%e
 )
 @IF %pythontotal%==0 echo WARNING: No suitable Python installation found by Python launcher.
 @IF %pythontotal%==0 echo Python %1.%2 and newer is required.
