@@ -2,14 +2,14 @@ Build environment
 -----------------
 Windows 10.0.26100
 Ressource Hacker 5.2.8.448
-7-Zip 25.01 ultra compression
+7-Zip 26.00 ultra compression
 Git 2.53.0.1
 LunarG Vulkan SDK 1.4.341.1
-Visual Studio Build Tools 2026 v18.2.1
+Visual Studio Build Tools 2026 v18.3.1
 Visual Studio C/C++ toolset 14.44.35207
 Windows SDK 10.1.26100.7705
 Windows Driver Kit 10.1.26100.6584
-Nuget Commandline tool 7.0.1.1
+Nuget Commandline tool 7.3.0.70
 Python 3.14.3
 
 Python packages
