@@ -5,7 +5,7 @@ Ressource Hacker 5.2.8.448
 7-Zip 26.00 ultra compression
 Git 2.53.0.1
 LunarG Vulkan SDK 1.4.341.1
-Visual Studio Build Tools 2026 v18.3.1
+Visual Studio Build Tools 2026 v18.3.2
 Visual Studio C/C++ toolset 14.44.35207
 Windows SDK 10.1.26100.7705
 Windows Driver Kit 10.1.26100.6584
@@ -23,14 +23,14 @@ setuptools 82.0.0
 
 CMake 4.2.3
 Ninja 1.13.2
-LLVM 21.1.8
+LLVM 22.1.0
 SPIRV Tools 2026.1.1
 flex 2.6.4
 Bison 3.8.2
 pkgconf 2.5.1
-zlib 1.3.1
+zlib 1.3.2
 OpenCLonD3D12 ICD 2026.02.02
 libva 2.23.0
 VA-API 1.23.0
-DirectX headers 1.618.2
+DirectX headers 1.619.1
 zstd 1.5.7

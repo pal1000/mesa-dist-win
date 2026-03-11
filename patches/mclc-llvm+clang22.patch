@@ -1,0 +1,14 @@
+diff --git a/meson.build b/meson.build
+index 2471af52470..d72e983a027 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1965,6 +1965,9 @@ if with_clc
+     if dep_llvm.version().version_compare('>= 18.0')
+       clang_modules += 'clangAPINotes'
+     endif
++    if dep_llvm.version().version_compare('>= 22.0')
++      clang_modules += ['clangAnalysisLifetimeSafety', 'clangOptions']
++    endif
+ 
+     dep_clang = []
+     foreach m : clang_modules
