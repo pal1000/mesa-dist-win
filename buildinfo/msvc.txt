@@ -3,9 +3,9 @@ Build environment
 Windows 10.0.26100
 Ressource Hacker 5.2.8.448
 7-Zip 26.00 ultra compression
-Git 2.53.0.1
+Git 2.53.0.2
 LunarG Vulkan SDK 1.4.341.1
-Visual Studio Build Tools 2026 v18.3.2
+Visual Studio Build Tools 2026 v18.4.1
 Visual Studio C/C++ toolset 14.44.35207
 Windows SDK 10.1.26100.7705
 Windows Driver Kit 10.1.26100.6584
@@ -16,14 +16,14 @@ Python packages
 ---------------
 Mako       1.3.10
 MarkupSafe 3.0.3
-meson      1.10.1
+meson      1.10.2
 pip        26.0.1
 PyYAML     6.0.3
-setuptools 82.0.0
+setuptools 82.0.1
 
-CMake 4.2.3
+CMake 4.3.0
 Ninja 1.13.2
-LLVM 22.1.0
+LLVM 22.1.1
 SPIRV Tools 2026.1.1
 flex 2.6.4
 Bison 3.8.2

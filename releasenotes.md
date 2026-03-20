@@ -1,9 +1,19 @@
+# 26.0.3
+- Updated Mesa3D to [26.0.3](https://gitlab.freedesktop.org/mesa/mesa/-/blob/26.0/docs/relnotes/26.0.3.rst?ref_type=heads&plain=0).
+### Out of tree patching
+- Add [fix for libmesa_util build with clang for 26.0 and up](https://gitlab.freedesktop.org/mesa/mesa/-/issues/14805).
+### Build environment
+- MinGW: Switch x64 build back to clang toolset.
+### Build script
+- MSVC: Raise minimum Python requirement to 3.10 [like upstream](https://gitlab.freedesktop.org/mesa/mesa/-/commit/e1b20bb883d36b1a00003b538cdbaae1a5d3440d).
 # 26.0.1
 - Updated Mesa3D to [26.0.1](https://gitlab.freedesktop.org/mesa/mesa/-/blob/26.0/docs/relnotes/26.0.1.rst?ref_type=heads&plain=0).
 ### Build environment
 - MinGW: Switch x64 build to GCC UCRT toolset to workaround - https://gitlab.freedesktop.org/mesa/mesa/-/issues/14805.
 ### Build script
 - Require Directx-headers for all Vulkan drivers builds [like upstream](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/39860).
+### Out of tree patching
+- Add static link fix for clang>=22.
 # 25.3.6
 - Updated Mesa3D to [25.3.6](https://gitlab.freedesktop.org/mesa/mesa/-/blob/25.3/docs/relnotes/25.3.6.rst?ref_type=heads&plain=0).
 ### Build script
