@@ -1,3 +1,5 @@
+### Patching
+- [2](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/40549) [patches](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/40548) got upstreamed in time for 26.0.4.
 # 26.0.3
 - Updated Mesa3D to [26.0.3](https://gitlab.freedesktop.org/mesa/mesa/-/blob/26.0/docs/relnotes/26.0.3.rst?ref_type=heads&plain=0).
 ### Out of tree patching

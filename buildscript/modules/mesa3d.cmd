@@ -84,7 +84,7 @@
 @rem Fix MinGW clang build
 @IF %intmesaver% GEQ 21254 IF %intmesaver% LSS 22100 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" clang
 @IF %intmesaver% GEQ 21254 IF EXIST "%devroot%\mesa\src\gallium\drivers\swr\meson.build" call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" clang-swr
-@IF %intmesaver% GEQ 26000 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" libmesa_util-clang
+@IF %intmesaver% GEQ 26000 IF %intmesaver% LSS 26054 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" libmesa_util-clang
 
 @rem Fix MinGW static link with regex
 @IF %intmesaver% GEQ 21100 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" fix-regex-static-link
@@ -166,7 +166,7 @@
 @IF %intmesaver% LSS 24055 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" mclc-llvm+clang18
 
 @rem LLVM+clang 22 linking compatibility
-@call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" mclc-llvm+clang22
+@IF %intmesaver% LSS 26054 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" mclc-llvm+clang22
 
 @rem Fix vaon12 filename
 @IF %intmesaver% LSS 23200 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" vaon12-strip-lib-prefix
