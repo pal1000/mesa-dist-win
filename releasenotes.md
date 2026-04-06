@@ -1,3 +1,5 @@
+### Build environment
+- Allow different Windows SDK and Driver Kit minor versions.
 ### Patching
 - [2](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/40549) [patches](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/40548) got upstreamed in time for 26.0.4.
 # 26.0.3

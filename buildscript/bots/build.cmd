@@ -1,5 +1,6 @@
 @set botmode=1
 @set selectwinsdk=1
+@set selectwdk=1
 @set throttle=%NUMBER_OF_PROCESSORS%
 @set buildmesa=y
 @set cleanmesabld=y

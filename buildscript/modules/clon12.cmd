@@ -3,7 +3,7 @@
 @IF NOT EXIST "%devroot%\clon12\" IF %gitstate% EQU 0 set canclon12=0
 @if %cmakestate% EQU 0 set canclon12=0
 @set haswdk=0
-@for /f delims^=^ eol^= %%a IN ('REG QUERY HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Installer /s /d /f "Windows Driver Kit" /e 2^>nul ^| find "HKEY_"') DO @for /f delims^=^ eol^= %%b IN ('REG QUERY %%a /s /v DisplayVersion 2^>nul ^| find "DisplayVersion"') DO @for /f tokens^=3^ eol^= %%c IN ("%%b") DO @for /f tokens^=3^ delims^=.^ eol^= %%d IN ("%%c") DO @for /f tokens^=3^ delims^=.^ eol^= %%e IN ("%WINSDK_VER%") DO @IF "%%d"=="%%e" set haswdk=1
+@IF DEFINED WDK_VER IF "%WINSDK_VER%"=="%WDK_VER%" set haswdk=1
 @IF EXIST "%devroot%\clon12\" IF %gitstate% GTR 0 (
 @echo Updating CLonD3D12 ICD source code...
 @cd "%devroot%\clon12"

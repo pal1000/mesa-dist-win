@@ -44,17 +44,19 @@
 @rem Search for compiler toolchain. Hard fail if none found
 @call "%devroot%\%projectname%\buildscript\modules\toolchain.cmd"
 
+@rem Select target architecture
+@call "%devroot%\%projectname%\buildscript\modules\abi.cmd"
+
 @rem Locate Windows SDK even when building with MinGW
 @call "%devroot%\%projectname%\buildscript\modules\winsdkloc.cmd"
+@call "%devroot%\%projectname%\buildscript\modules\winsdk.cmd"
+@call "%devroot%\%projectname%\buildscript\modules\wdk.cmd"
 
 @rem MSVC: Select C/C++ toolset
 @IF %toolchain%==msvc call "%devroot%\%projectname%\buildscript\modules\msvcpp.cmd"
 
 @rem Verify if out of tree patches can be applied.
 @call "%devroot%\%projectname%\buildscript\modules\patching.cmd"
-
-@rem Select target architecture
-@call "%devroot%\%projectname%\buildscript\modules\abi.cmd"
 
 @rem MSVC: Select between legacy and current LLVM version
 @IF %toolchain%==msvc call "%devroot%\%projectname%\buildscript\modules\selectllvm.cmd"

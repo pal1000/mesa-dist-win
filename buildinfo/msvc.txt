@@ -5,9 +5,9 @@ Ressource Hacker 5.2.8.448
 7-Zip 26.00 ultra compression
 Git 2.53.0.2
 LunarG Vulkan SDK 1.4.341.1
-Visual Studio Build Tools 2026 v18.4.1
+Visual Studio Community 2026 v18.4.3
 Visual Studio C/C++ toolset 14.44.35207
-Windows SDK 10.1.26100.7705
+Windows SDK 10.1.28000.1721
 Windows Driver Kit 10.1.26100.6584
 Nuget Commandline tool 7.3.0.70
 Python 3.14.3
@@ -29,7 +29,7 @@ flex 2.6.4
 Bison 3.8.2
 pkgconf 2.5.1
 zlib 1.3.2
-OpenCLonD3D12 ICD 2026.02.02
+OpenCLonD3D12 ICD 2026.04.03
 libva 2.23.0
 VA-API 1.23.0
 DirectX headers 1.619.1

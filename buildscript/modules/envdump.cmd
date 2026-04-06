@@ -60,7 +60,7 @@
 @IF NOT %toolchain%==msvc echo Windows SDK %%c>>"%devroot%\%projectname%\buildinfo\mingw.txt"
 )
 
-@for /f delims^=^ eol^= %%a IN ('REG QUERY HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Installer /s /d /f "Windows Driver Kit" /e 2^>nul ^| find "HKEY_"') DO @for /f delims^=^ eol^= %%b IN ('REG QUERY %%a /s /v DisplayVersion 2^>nul ^| find "DisplayVersion"') DO @for /f tokens^=3^ eol^= %%c IN ("%%b") DO @for /f tokens^=3^ delims^=.^ eol^= %%d IN ("%%c") DO @for /f tokens^=3^ delims^=.^ eol^= %%e IN ("%WINSDK_VER%") DO @IF "%%d"=="%%e" (
+@for /f delims^=^ eol^= %%a IN ('REG QUERY HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Installer /s /d /f "Windows Driver Kit" /e 2^>nul ^| find "HKEY_"') DO @for /f delims^=^ eol^= %%b IN ('REG QUERY %%a /s /v DisplayVersion 2^>nul ^| find "DisplayVersion"') DO @for /f tokens^=3^ eol^= %%c IN ("%%b") DO @for /f tokens^=3^ delims^=.^ eol^= %%d IN ("%%c") DO @for /f tokens^=3^ delims^=.^ eol^= %%e IN ("%WDK_VER%") DO @IF "%%d"=="%%e" (
 @IF %toolchain%==msvc echo Windows Driver Kit %%c>>"%devroot%\%projectname%\buildinfo\msvc.txt"
 @IF NOT %toolchain%==msvc echo Windows Driver Kit %%c>>"%devroot%\%projectname%\buildinfo\mingw.txt"
 )
