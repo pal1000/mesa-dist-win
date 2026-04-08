@@ -8,7 +8,7 @@ LunarG Vulkan SDK 1.4.341.1
 Visual Studio Community 2026 v18.4.3
 Visual Studio C/C++ toolset 14.44.35207
 Windows SDK 10.1.28000.1721
-Windows Driver Kit 10.1.26100.6584
+Windows Driver Kit 10.1.28000.1
 Nuget Commandline tool 7.3.0.70
 Python 3.14.3
 
@@ -21,9 +21,9 @@ pip        26.0.1
 PyYAML     6.0.3
 setuptools 82.0.1
 
-CMake 4.3.0
+CMake 4.3.1
 Ninja 1.13.2
-LLVM 22.1.1
+LLVM 22.1.2
 SPIRV Tools 2026.1.1
 flex 2.6.4
 Bison 3.8.2
