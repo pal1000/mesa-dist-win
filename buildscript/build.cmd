@@ -50,7 +50,7 @@
 @rem Locate Windows SDK even when building with MinGW
 @call "%devroot%\%projectname%\buildscript\modules\winsdkloc.cmd"
 @call "%devroot%\%projectname%\buildscript\modules\winsdk.cmd"
-@call "%devroot%\%projectname%\buildscript\modules\wdk.cmd"
+@rem call "%devroot%\%projectname%\buildscript\modules\wdk.cmd"
 
 @rem MSVC: Select C/C++ toolset
 @IF %toolchain%==msvc call "%devroot%\%projectname%\buildscript\modules\msvcpp.cmd"

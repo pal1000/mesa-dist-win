@@ -8,6 +8,10 @@ set /a windrvkitcheck+=1
 @IF NOT %toolchain%==msvc copy "%%~b" "%devroot%\mesa\include\winddk" >nul 2>&1
 @IF %toolchain%==msvc IF NOT "%WINSDK_VER%"=="%WDK_VER%" copy "%%~b" "%devroot%\mesa\include\winddk" >nul 2>&1
 )
+@IF NOT "%WINSDK_VER%"=="%WDK_VER%" for /f delims^=^ eol^= %%b in ('dir /b /s "%winsdkloc%\Include\%WINSDK_VER%\%%a" 2^>nul') do @(
+set /a windrvkitcheck+=1
+copy "%%~b" "%devroot%\mesa\include\winddk" >nul 2>&1
+)
 )
 @IF "%windrvkitcheck%"=="0" echo OK
 @IF NOT "%windrvkitcheck%"=="0" echo null

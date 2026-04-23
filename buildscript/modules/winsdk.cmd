@@ -14,4 +14,4 @@
 :selectwinsdk
 @if %winsdkcount% GTR 0 call "%devroot%\%projectname%\bin\modules\prompt.cmd" selectwinsdk "Enter choice:"
 @if %winsdkcount% GTR 0 set WINSDK_VER=!winsdk[%selectwinsdk%]!
-@endlocal&set WINSDK_VER=%WINSDK_VER%
+@endlocal&set WINSDK_VER=%WINSDK_VER%&set WDK_VER=%WINSDK_VER%

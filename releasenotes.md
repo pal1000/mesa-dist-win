@@ -1,3 +1,10 @@
+# 26.0.5
+- Updated Mesa3D to [26.0.5](https://gitlab.freedesktop.org/mesa/mesa/-/blob/26.0/docs/relnotes/26.0.5.rst?ref_type=heads&plain=0).
+### Build script
+- Experimental: Add AMD ac_ib_parser tool build [>=26.1].
+### Build environment
+- Downgrade Windows SDK to 10.0.26100 series and LLVM to 21.1.8 to workaround [MFT codecs build problem](https://gitlab.freedesktop.org/mesa/mesa/-/work_items/15244) and [lavapipe runtime crashes](https://gitlab.freedesktop.org/mesa/mesa/-/work_items/15275) respectively;
+- Revert "Allow different Windows SDK and Driver Kit minor versions" - it doesn't work for d3d10umd in practice.
 # 26.0.4
 - Updated Mesa3D to [26.0.4](https://gitlab.freedesktop.org/mesa/mesa/-/blob/26.0/docs/relnotes/26.0.4.rst?ref_type=heads&plain=0).
 ### Build environment

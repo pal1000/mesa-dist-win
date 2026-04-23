@@ -585,6 +585,7 @@
 @set buildconf=%buildconf% -Dtools=
 @if /I "%mesatests%"=="y" set buildconf=%buildconf%dlclose-skip,
 @if /I "%radv%"=="y" if /I "%mesatests%"=="y" set buildconf=%buildconf%drm-shim,
+@if /I "%radv%"=="y" if /I "%mesatests%"=="y" IF %intmesaver% GEQ 26100 set buildconf=%buildconf%amd,
 @IF /I "%zink%"=="y" if /I "%mesatests%"=="y" IF %intmesaver% GEQ 25300 set buildconf=%buildconf%zink,
 
 @rem zink tool cannot be built with MSVC for x86 32-bit due to Vulkan SDK no longer providing 32-bit libraries
