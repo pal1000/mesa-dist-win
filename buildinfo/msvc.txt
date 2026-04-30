@@ -5,7 +5,7 @@ Ressource Hacker 5.2.8.448
 7-Zip 26.00 ultra compression
 Git 2.54.0.1
 LunarG Vulkan SDK 1.4.341.1
-Visual Studio Community 2026 v18.5.0
+Visual Studio Community 2026 v18.5.1
 Visual Studio C/C++ toolset 14.44.35207
 Windows SDK 10.1.26100.8038
 Windows Driver Kit 10.1.26100.6584
@@ -17,14 +17,14 @@ Python packages
 Mako       1.3.11
 MarkupSafe 3.0.3
 meson      1.11.1
-pip        26.0.1
+pip        26.1
 PyYAML     6.0.3
 setuptools 82.0.1
 
-CMake 4.3.1
+CMake 4.3.2
 Ninja 1.13.2
 Old LLVM 21.1.8
-SPIRV Tools 2026.1.1
+SPIRV Tools 2026.2.1
 flex 2.6.4
 Bison 3.8.2
 pkgconf 2.5.1

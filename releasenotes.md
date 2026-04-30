@@ -1,3 +1,9 @@
+# 26.0.6
+- Updated Mesa3D to [26.0.6](https://gitlab.freedesktop.org/mesa/mesa/-/blob/26.0/docs/relnotes/26.0.6.rst?ref_type=heads&plain=0).
+### Build environment information
+- Use a more reliable way of retrieving selected Windows SDK and Driver Kit versions.
+### Build script
+- Python launcher: Keep retrying if `py <version> -c "import sys; print(sys.executable)"` fails.
 # 26.0.5
 - Updated Mesa3D to [26.0.5](https://gitlab.freedesktop.org/mesa/mesa/-/blob/26.0/docs/relnotes/26.0.5.rst?ref_type=heads&plain=0).
 ### Build script

@@ -36,8 +36,11 @@
 @IF %pyselect% GTR %pythontotal% call "%devroot%\%projectname%\bin\modules\break.cmd"
 @IF %pyselect% GTR %pythontotal% GOTO pyselect
 
-@rem Locate selected Python installation
-@FOR /F delims^=^ eol^= %%a IN ('py !pyl[%pyselect%]! -c "import sys; print(sys.executable)"') DO @set pythonloc="%%~a"
+:pythonloc
+@rem Locate selected Python installation. This sometimes fails inexplicably with UWP Python build .
+@FOR /F delims^=^ eol^= %%a IN ('py !pyl[%pyselect%]! -c "import sys; print(sys.executable)" 2^>nul') DO @set pythonloc="%%~a"
+@IF %pythonloc%==python.exe GOTO pythonloc
+
 @FOR /F tokens^=1^ eol^= %%a IN ('py !pyl[%pyselect%]! -c "import sys; print(sys.version)"') DO @SET fpythonver=%%a
 @GOTO loadpypath
 
