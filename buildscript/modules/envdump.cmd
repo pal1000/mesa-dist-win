@@ -162,6 +162,10 @@ set "exitloop="
 @IF NOT %toolchain%==msvc echo MSYS2 environment>>"%devroot%\%projectname%\buildinfo\mingw.txt"
 @IF NOT %toolchain%==msvc echo ----------------->>"%devroot%\%projectname%\buildinfo\mingw.txt"
 @IF NOT %toolchain%==msvc %runmsys% /usr/bin/pacman -Q>>"%devroot%\%projectname%\buildinfo\mingw.txt"
+@IF %toolchain%==msvc IF EXIST "%msysloc%" echo.>>"%devroot%\%projectname%\buildinfo\msvc.txt"
+@IF %toolchain%==msvc IF EXIST "%msysloc%" echo MSYS2 environment>>"%devroot%\%projectname%\buildinfo\msvc.txt"
+@IF %toolchain%==msvc IF EXIST "%msysloc%" echo ----------------->>"%devroot%\%projectname%\buildinfo\msvc.txt"
+@IF %toolchain%==msvc IF EXIST "%msysloc%" %runmsys% /usr/bin/pacman -Q | "%windir%\system32\find.exe" /V "mingw">>"%devroot%\%projectname%\buildinfo\msvc.txt"
 
 @rem Finished environment information dump.
 @echo Done.

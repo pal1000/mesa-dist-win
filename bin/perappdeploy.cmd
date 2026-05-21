@@ -27,6 +27,7 @@
 @set mesaloc=%CD%
 @IF %mesaloc:~0,1%%mesaloc:~-1%=="" set mesaloc=%mesaloc:~1,-1%
 @IF "%mesaloc:~-1%"=="\" set mesaloc=%mesaloc:~0,-1%
+@IF EXIST "%mesaloc%\build\native\bin\" set mesaloc=%mesaloc%\build\native\bin
 
 :deploy
 @cls
@@ -57,6 +58,7 @@
 @set foundosmesa=0
 @set foundgraw=0
 @set foundvaapi=0
+@set foundd3d=0
 @set overwritewarn=
 @for /f delims^=^ eol^= %%a IN ('dir /A:L /B "%dir%" 2^>^&1') DO @(
 @IF /I "%%~nxa"=="opengl32.dll" set founddesktopgl=1
@@ -103,6 +105,8 @@
 @if EXIST "%dir%\va_win32.dll" del "%dir%\va_win32.dll"
 @if EXIST "%dir%\vaon12_drv_video.dll" set foundvaapi=1
 @if EXIST "%dir%\vaon12_drv_video.dll" del "%dir%\vaon12_drv_video.dll"
+@if EXIST "%dir%\d3d10warp.dll" set foundd3d=1
+@if EXIST "%dir%\d3d10warp.dll" del "%dir%\d3d10warp.dll"
 @echo Done.
 @echo.
 
@@ -123,6 +127,7 @@
 
 :ask_for_app_abi
 @set mesadll=x86
+@IF EXIST "%mesaloc%\win32\" set mesadll=win32
 @if /I NOT %PROCESSOR_ARCHITECTURE%==AMD64 if /I NOT %PROCESSOR_ARCHITECTURE%==ARM64 GOTO desktopgl
 @echo Select processor architecture compatible with program you want to use Mesa3D with
 @call modules\abiselect.cmd
@@ -207,13 +212,19 @@
 
 :vaapi
 @if EXIST "%mesaloc%\%mesadll%\va.dll" if EXIST "%mesaloc%\%mesadll%\va_win32.dll" if EXIST "%mesaloc%\%mesadll%\vaon12_drv_video.dll" call modules\prompt.cmd vaapi "Deploy video acceleration support (y/n):"
-@if /I NOT "%vaapi%"=="y" GOTO restart
+@if /I NOT "%vaapi%"=="y" GOTO direct3d
 @IF %foundvaapi% EQU 1 echo Updating VA-API interface deployment...
 @IF EXIST "%mesaloc%\%mesadll%\va.dll" if NOT EXIST "%dir%\va.dll" call modules\mklink.cmd va
 @IF EXIST "%mesaloc%\%mesadll%\va_win32.dll" if NOT EXIST "%dir%\va_win32.dll" call modules\mklink.cmd va_win32
 @IF EXIST "%mesaloc%\%mesadll%\vaon12_drv_video.dll" if NOT EXIST "%dir%\vaon12_drv_video.dll" call modules\mklink.cmd vaon12_drv_video
 @IF EXIST "%mesaloc%\%mesadll%\dxil.dll" IF EXIST "%dir%\dxil.dll" del "%dir%\dxil.dll"
 @IF EXIST "%mesaloc%\%mesadll%\dxil.dll" IF NOT EXIST "%dir%\dxil.dll" call modules\mklink.cmd dxil
+
+:direct3d
+@if EXIST "%mesaloc%\%mesadll%\d3d10warp.dll" call modules\prompt.cmd d3ddrv "Deploy VMWare d3d10umd / Microsoft WARP Direct3D driver (y/n):"
+@IF /I NOT "%d3ddrv%"=="y" GOTO restart
+@IF %foundd3d% EQU 1 echo Updating Direct3D driver deployment...
+@IF EXIST "%mesaloc%\%mesadll%\d3d10warp.dll" if NOT EXIST "%dir%\d3d10warp.dll" call modules\mklink.cmd d3d10warp
 
 :restart
 @set rerun=
