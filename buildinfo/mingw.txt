@@ -22,7 +22,7 @@ bzip2 1.0.8-4
 ca-certificates 20250419-1
 coreutils 8.32-5
 curl 8.20.0-1
-dash 0.5.13.2-1
+dash 0.5.13.4-1
 db 6.2.32-5
 file 5.47-1
 filesystem 2026.03.06-1
@@ -52,7 +52,7 @@ libgcrypt 1.12.2-1
 libgdbm 1.26-1
 libgettextpo 0.22.5-1
 libgnutls 3.8.13-1
-libgpg-error 1.60-1
+libgpg-error 1.61-1
 libhogweed 3.10.2-1
 libiconv 1.19-1
 libidn2 2.3.8-1
@@ -175,8 +175,8 @@ mingw-w64-i686-crt 14.0.0.r37.g2bfe61fba-1
 mingw-w64-i686-curl 8.20.0-1
 mingw-w64-i686-dlfcn 1.4.2-1
 mingw-w64-i686-expat 2.8.1-1
-mingw-w64-i686-gcc 16.1.0-3
-mingw-w64-i686-gcc-libs 16.1.0-3
+mingw-w64-i686-gcc 16.1.0-5
+mingw-w64-i686-gcc-libs 16.1.0-5
 mingw-w64-i686-gdb 17.2-1
 mingw-w64-i686-gettext-runtime 1.0-1
 mingw-w64-i686-gmp 6.3.0-2
@@ -257,7 +257,7 @@ rebase 4.5.0-5
 sed 4.9-1
 tar 1.35-3
 time 1.10-1
-tzcode 2026a-1
+tzcode 2026b-1
 util-linux 2.40.2-2
 wget 1.25.0-1
 which 2.23-4
