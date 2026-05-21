@@ -35,7 +35,7 @@ set msvcnames[!msvccount!]=%%a
 @echo.
 
 @rem Select toolchain
-@if %botmode% EQU 0 set selecttoolchain=0
+@if %botmode% LEQ 0 set selecttoolchain=0
 @call "%devroot%\%projectname%\bin\modules\prompt.cmd" selecttoolchain "Select toolchain:"
 @IF "%selecttoolchain%"=="%totaltoolchains%" IF EXIST "%msysloc%" (
 @set toolchain=gcc

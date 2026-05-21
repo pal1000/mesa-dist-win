@@ -4,6 +4,8 @@
 - Per app tool: Add support for VMWare d3d10umd and [Microsoft WARP nuget build](https://www.nuget.org/packages/Microsoft.Direct3D.WARP) Direct3D drivers.
 ### Build environment information
 - MSVC: Add MSYS prefix as it may provide flex and bison.
+### Build script
+- Interactive prompt module: Generate unattended profile only when called from build script.
 # 26.0.7
 - Updated Mesa3D to [26.0.7](https://gitlab.freedesktop.org/mesa/mesa/-/blob/26.0/docs/relnotes/26.0.7.rst?ref_type=heads&plain=0).
 # 26.0.6

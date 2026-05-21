@@ -1,4 +1,4 @@
-@IF %botmode% EQU 0 set retrybld=1
+@IF %botmode% LEQ 0 set retrybld=1
 
 :execbld
 @set "ERRORLEVEL="
