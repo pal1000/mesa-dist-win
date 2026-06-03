@@ -37,11 +37,15 @@
 @IF %pyselect% GTR %pythontotal% GOTO pyselect
 
 :pythonloc
-@rem Locate selected Python installation. This sometimes fails inexplicably with UWP Python build .
+@rem Locate selected Python installation. This sometimes fails inexplicably with UWP Python build.
 @FOR /F delims^=^ eol^= %%a IN ('py !pyl[%pyselect%]! -c "import sys; print(sys.executable)" 2^>nul') DO @set pythonloc="%%~a"
 @IF %pythonloc%==python.exe GOTO pythonloc
 
-@FOR /F tokens^=1^ eol^= %%a IN ('py !pyl[%pyselect%]! -c "import sys; print(sys.version)"') DO @SET fpythonver=%%a
+:pythonver
+@rem This sometimes fails inexplicably with UWP Python build.
+@set fpythonver=1.1
+@FOR /F tokens^=1^ eol^= %%a IN ('py !pyl[%pyselect%]! -c "import sys; print(sys.version)" 2^>nul') DO @SET fpythonver=%%a
+@IF %fpythonver%==1.1 GOTO pythonver
 @GOTO loadpypath
 
 :nopylauncher
