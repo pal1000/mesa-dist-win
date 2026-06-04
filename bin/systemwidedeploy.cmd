@@ -70,17 +70,21 @@
 @set option6=1
 
 :option_7
+
+:option_8
+
+:option_9
 @set mesainstalled=2
 @IF NOT EXIST "%windir%\System32\openglon12.dll" IF NOT EXIST "%windir%\System32\mesadrv.dll" IF NOT EXIST "%windir%\System32\graw.dll" IF NOT EXIST "%windir%\System32\graw_null.dll" IF NOT EXIST "%windir%\System32\osmesa.dll" set /a mesainstalled-=1
 @IF NOT EXIST "%windir%\SysWOW64\openglon12.dll" IF NOT EXIST "%windir%\SysWOW64\mesadrv.dll" IF NOT EXIST "%windir%\SysWOW64\graw.dll" IF NOT EXIST "%windir%\SysWOW64\graw_null.dll" IF NOT EXIST "%windir%\SysWOW64\osmesa.dll" set /a mesainstalled-=1
-@IF %mesainstalled% GTR 0 echo 7. Update system-wide deployment
-@IF %botmode% LEQ 0 IF %mesainstalled% EQU 0 echo 7. Exit
+@IF %mesainstalled% GTR 0 echo 9. Update system-wide deployment
+@IF %botmode% LEQ 0 IF %mesainstalled% EQU 0 echo 9. Exit
 
-:option_8
-@IF %mesainstalled% GTR 0 echo 8. Remove system-wide deployments (uninstall)
+:option_10
+@IF %mesainstalled% GTR 0 echo 10. Remove system-wide deployments (uninstall)
 
-:option_9
-@IF %botmode% LEQ 0 IF %mesainstalled% GTR 0 echo 9. Exit
+:option_11
+@IF %botmode% LEQ 0 IF %mesainstalled% GTR 0 echo 11. Exit
 @echo.
 
 @set SystemDrive=
@@ -95,10 +99,10 @@
 @if "%deploychoice%"=="4" IF %option4% EQU 1 GOTO instglon12
 @if "%deploychoice%"=="5" IF %option5% EQU 1 GOTO osmesa
 @if "%deploychoice%"=="6" IF %option6% EQU 1 GOTO graw
-@if "%deploychoice%"=="7" IF %mesainstalled% GTR 0 GOTO update
-@if "%deploychoice%"=="7" IF %mesainstalled% EQU 0 IF %botmode% LEQ 0 GOTO bye
-@if "%deploychoice%"=="8" IF %mesainstalled% GTR 0 GOTO uninstall
-@if "%deploychoice%"=="9" IF %mesainstalled% GTR 0 IF %botmode% LEQ 0 GOTO bye
+@if "%deploychoice%"=="9" IF %mesainstalled% GTR 0 GOTO update
+@if "%deploychoice%"=="9" IF %mesainstalled% EQU 0 IF %botmode% LEQ 0 GOTO bye
+@if "%deploychoice%"=="10" IF %mesainstalled% GTR 0 GOTO uninstall
+@if "%deploychoice%"=="11" IF %mesainstalled% GTR 0 IF %botmode% LEQ 0 GOTO bye
 @set deployerror=
 @if "%deploychoice%"=="1" IF %option1% EQU 0 set deployerror=Invalid choice. Mesa3D desktop OpenGL drivers are not included in this Mesa3D release package.
 @if "%deploychoice%"=="2" IF %option2% EQU 0 if /I NOT %PROCESSOR_ARCHITECTURE%==AMD64 set deployerror=Invalid choice. swr driver is only supported on x64/AMD64 systems.
@@ -107,9 +111,9 @@
 @if "%deploychoice%"=="4" IF %option4% EQU 0 set deployerror=Invalid choice. Microsoft OpenGL over D3D12 driver is not available in this release package.
 @if "%deploychoice%"=="5" IF %option5% EQU 0 set deployerror=Invalid choice. osmesa gallium is not available in this release package.
 @if "%deploychoice%"=="6" IF %option6% EQU 0 set deployerror=Invalid choice. Gallium raw interface is not available in this release package.
-@if "%deploychoice%"=="7" IF %mesainstalled% EQU 0 IF %botmode% EQU 1 set deployerror=Unattended mode does not support exit command.
-@if "%deploychoice%"=="8" IF %mesainstalled% EQU 0 set deployerror=Error^: No Mesa3D drivers installed.
-@if "%deploychoice%"=="9" IF %mesainstalled% GTR 0 IF %botmode% EQU 1 set deployerror=Unattended mode does not support exit command.
+@if "%deploychoice%"=="9" IF %mesainstalled% EQU 0 IF %botmode% EQU 1 set deployerror=Unattended mode does not support exit command.
+@if "%deploychoice%"=="10" IF %mesainstalled% EQU 0 set deployerror=Error^: No Mesa3D drivers installed.
+@if "%deploychoice%"=="11" IF %mesainstalled% GTR 0 IF %botmode% EQU 1 set deployerror=Unattended mode does not support exit command.
 @IF NOT defined deployerror set deployerror=Invaild choice.
 @echo %deployerror%
 @GOTO enddeploy
