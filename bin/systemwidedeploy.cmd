@@ -70,8 +70,15 @@
 @set option6=1
 
 :option_7
+@set option7=0
+@IF NOT EXIST "%mesaloc%\x86\vulkan_lvp.dll" IF NOT EXIST "%mesaloc%\x64\vulkan_lvp.dll" IF NOT EXIST "%mesaloc%\x86\lvp_icd.*.json" IF NOT EXIST "%mesaloc%\x64\lvp_icd.*.json" GOTO option_8
+@echo 7. Mesa3D Vulkan software renderer driver (lvp)
+@set option7=1
 
 :option_8
+@set option8=0
+@IF NOT EXIST "%mesaloc%\x86\vulkan_dzn.dll" IF NOT EXIST "%mesaloc%\x64\vulkan_dzn.dll" IF NOT EXIST "%mesaloc%\x86\dzn_icd.*.json" IF NOT EXIST "%mesaloc%\x64\dzn_icd.*.json" GOTO option_9
+@set option8=1
 
 :option_9
 @set mesainstalled=2
@@ -99,6 +106,8 @@
 @if "%deploychoice%"=="4" IF %option4% EQU 1 GOTO instglon12
 @if "%deploychoice%"=="5" IF %option5% EQU 1 GOTO osmesa
 @if "%deploychoice%"=="6" IF %option6% EQU 1 GOTO graw
+@if "%deploychoice%"=="7" IF %option7% EQU 1 GOTO lvp
+@if "%deploychoice%"=="8" IF %option8% EQU 1 GOTO dzn
 @if "%deploychoice%"=="9" IF %mesainstalled% GTR 0 GOTO update
 @if "%deploychoice%"=="9" IF %mesainstalled% EQU 0 IF %botmode% LEQ 0 GOTO bye
 @if "%deploychoice%"=="10" IF %mesainstalled% GTR 0 GOTO uninstall
@@ -111,6 +120,8 @@
 @if "%deploychoice%"=="4" IF %option4% EQU 0 set deployerror=Invalid choice. Microsoft OpenGL over D3D12 driver is not available in this release package.
 @if "%deploychoice%"=="5" IF %option5% EQU 0 set deployerror=Invalid choice. osmesa gallium is not available in this release package.
 @if "%deploychoice%"=="6" IF %option6% EQU 0 set deployerror=Invalid choice. Gallium raw interface is not available in this release package.
+@if "%deploychoice%"=="7" IF %option7% EQU 0 set deployerror=Invalid choice. lvp driver is not available in this release package.
+@if "%deploychoice%"=="8" IF %option8% EQU 0 set deployerror=Invalid choice. dzn driver is not available in this release package.
 @if "%deploychoice%"=="9" IF %mesainstalled% EQU 0 IF %botmode% EQU 1 set deployerror=Unattended mode does not support exit command.
 @if "%deploychoice%"=="10" IF %mesainstalled% EQU 0 set deployerror=Error^: No Mesa3D drivers installed.
 @if "%deploychoice%"=="11" IF %mesainstalled% GTR 0 IF %botmode% EQU 1 set deployerror=Unattended mode does not support exit command.
@@ -185,6 +196,22 @@
 @echo Gallium raw interface deploy complete.
 @GOTO enddeploy
 
+:lvp
+@IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%mesaloc%\x64\vulkan_lvp.dll" REG ADD "HKLM\SOFTWARE\Khronos\Vulkan\Drivers" /v "%mesaloc%\x64\lvp_icd.x86_64.json" /t REG_DWORD /d 0 /f
+@IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%mesaloc%\x86\vulkan_lvp.dll" REG ADD "HKLM\SOFTWARE\WOW6432Node\Khronos\Vulkan\Drivers" /v "%mesaloc%\x86\lvp_icd.x86.json" /t REG_DWORD /d 0 /f
+@IF /I %PROCESSOR_ARCHITECTURE%==X86 IF EXIST "%mesaloc%\x86\vulkan_lvp.dll" REG ADD "HKLM\SOFTWARE\Khronos\Vulkan\Drivers" /v "%mesaloc%\x86\lvp_icd.x86.json" /t REG_DWORD /d 0 /f
+@echo.
+@echo lvp Vulkan driver deploy complete.
+@GOTO enddeploy
+
+:dzn
+@IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%mesaloc%\x64\vulkan_dzn.dll" REG ADD "HKLM\SOFTWARE\Khronos\Vulkan\Drivers" /v "%mesaloc%\x64\dzn_icd.x86_64.json" /t REG_DWORD /d 0 /f
+@IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%mesaloc%\x86\vulkan_dzn.dll" REG ADD "HKLM\SOFTWARE\WOW6432Node\Khronos\Vulkan\Drivers" /v "%mesaloc%\x86\dzn_icd.x86.json" /t REG_DWORD /d 0 /f
+@IF /I %PROCESSOR_ARCHITECTURE%==X86 IF EXIST "%mesaloc%\x86\vulkan_dzn.dll" REG ADD "HKLM\SOFTWARE\Khronos\Vulkan\Drivers" /v "%mesaloc%\x86\dzn_icd.x86.json" /t REG_DWORD /d 0 /f
+@echo.
+@echo dzn Vulkan driver deploy complete.
+@GOTO enddeploy
+
 :update
 @IF /I %PROCESSOR_ARCHITECTURE%==X86 IF EXIST "%windir%\System32\mesadrv.dll" IF NOT EXIST "%mesaloc%\x86\libgallium_wgl.dll" IF EXIST "%mesaloc%\x86\opengl32.dll" copy "%mesaloc%\x86\opengl32.dll" "%windir%\System32\mesadrv.dll"
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%windir%\SysWOW64\mesadrv.dll" IF NOT EXIST "%mesaloc%\x86\libgallium_wgl.dll" IF EXIST "%mesaloc%\x86\opengl32.dll" copy "%mesaloc%\x86\opengl32.dll" "%windir%\SysWOW64\mesadrv.dll"
@@ -229,6 +256,10 @@
 @IF EXIST "%windir%\System32\libglapi.dll" del "%windir%\System32\libglapi.dll"
 @IF /I "%keepdxil%"=="n" IF EXIST "%windir%\System32\dxil.dll" del "%windir%\System32\dxil.dll"
 @IF EXIST "%windir%\System32\openglon12.dll" del "%windir%\System32\openglon12.dll"
+@REG DELETE "HKLM\SOFTWARE\Khronos\Vulkan\Drivers" /v "%mesaloc%\x64\dzn_icd.x86_64.json" /f 2>nul
+@REG DELETE "HKLM\SOFTWARE\Khronos\Vulkan\Drivers" /v "%mesaloc%\x86\dzn_icd.x86.json" /f 2>nul
+@REG DELETE "HKLM\SOFTWARE\Khronos\Vulkan\Drivers" /v "%mesaloc%\x64\lvp_icd.x86_64.json" /f 2>nul
+@REG DELETE "HKLM\SOFTWARE\Khronos\Vulkan\Drivers" /v "%mesaloc%\x86\lvp_icd.x86.json" /f 2>nul
 @IF EXIST "%windir%\System32\graw.dll" del "%windir%\System32\graw.dll"
 @IF EXIST "%windir%\System32\graw_null.dll" del "%windir%\System32\graw_null.dll"
 @IF EXIST "%windir%\System32\osmesa.dll" del "%windir%\System32\osmesa.dll"
@@ -243,6 +274,8 @@
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%windir%\SysWOW64\osmesa.dll" del "%windir%\SysWOW64\osmesa.dll"
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%windir%\SysWOW64\graw.dll" del "%windir%\SysWOW64\graw.dll"
 @IF /I %PROCESSOR_ARCHITECTURE%==AMD64 IF EXIST "%windir%\SysWOW64\graw_null.dll" del "%windir%\SysWOW64\graw_null.dll"
+@REG DELETE "HKLM\SOFTWARE\WOW6432Node\Khronos\Vulkan\Drivers" /v "%mesaloc%\x86\dzn_icd.x86.json" /f 2>nul
+@REG DELETE "HKLM\SOFTWARE\WOW6432Node\Khronos\Vulkan\Drivers" /v "%mesaloc%\x86\lvp_icd.x86.json" /f 2>nul
 @echo.
 @echo Uninstall complete.
 

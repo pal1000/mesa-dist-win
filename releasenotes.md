@@ -1,3 +1,7 @@
+# 26.1.2
+- Updated Mesa3D to [26.1.2](https://gitlab.freedesktop.org/mesa/mesa/-/blob/26.1/docs/relnotes/26.1.2.rst?ref_type=heads&plain=0).
+### Deployment
+- System-wide deployment: Add lvp and dzn drivers support.
 ### Build script
 - Python launcher: Keep retrying if `py <version> -c "import sys; print(sys.version)"` fails.
 # 26.1.1
