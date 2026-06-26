@@ -583,15 +583,16 @@
 @IF %intmesaver% GEQ 25100 set buildconf=%buildconf% -Dbuild-radv-tests=false
 @IF %intmesaver% GEQ 25100 if /I "%radv%"=="y" if /I "%mesatests%"=="y" set buildconf=%buildconf:~0,-5%true
 @set buildconf=%buildconf% -Dtools=
-@if /I "%mesatests%"=="y" set buildconf=%buildconf%dlclose-skip,
+@if /I "%mesatests%"=="y" set buildconf=%buildconf%dlclose-skip,glsl,nir,
+@if /I "%mesatests%"=="y" IF %mesavkcount% EQU 0 IF %galliumcount% EQU 0 set buildconf=%buildconf:~0,-9%
 @if /I "%radv%"=="y" if /I "%mesatests%"=="y" set buildconf=%buildconf%drm-shim,
 @if /I "%radv%"=="y" if /I "%mesatests%"=="y" IF %intmesaver% GEQ 26100 set buildconf=%buildconf%amd,
 @IF /I "%zink%"=="y" if /I "%mesatests%"=="y" IF %intmesaver% GEQ 25300 set buildconf=%buildconf%zink,
 
 @rem zink tool cannot be built with MSVC for x86 32-bit due to Vulkan SDK no longer providing 32-bit libraries
 @IF /I "%zink%"=="y" if /I "%mesatests%"=="y" IF %intmesaver% GEQ 25300 IF %toolchain%==msvc IF %abi%==x86 set buildconf=%buildconf:~0,-5%
-@if /I "%mesatests%"=="y" set buildconf=%buildconf%glsl,nir,
-@if /I "%mesatests%"=="y" IF %mesavkcount% EQU 0 IF %galliumcount% EQU 0 set buildconf=%buildconf:~0,-9%
+@IF %intmesaver% GEQ 26200 if /I "%mesatests%"=="y" set buildconf=%buildconf%rti,
+@IF %intmesaver% GEQ 26200 if /I "%mesatests%"=="y" IF %mesavkcount% EQU 0 IF %galliumcount% EQU 0 set buildconf=%buildconf:~0,-4%
 @IF "%buildconf:~-1%"=="," set buildconf=%buildconf:~0,-1%
 @IF %intmesaver% GEQ 25200 set buildconf=%buildconf% -Dgallium-mediafoundation-test=false
 @if /I "%buildmftcodecs%"=="y" if /I "%mesatests%"=="y" set buildconf=%buildconf:~0,-5%true

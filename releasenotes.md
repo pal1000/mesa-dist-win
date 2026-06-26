@@ -1,3 +1,7 @@
+# 26.1.3
+- Updated Mesa3D to [26.1.3](https://gitlab.freedesktop.org/mesa/mesa/-/blob/26.1/docs/relnotes/26.1.3.rst?ref_type=heads&plain=0).
+### Build script
+- Add rti tool [>=26.2].
 # 26.1.2
 - Updated Mesa3D to [26.1.2](https://gitlab.freedesktop.org/mesa/mesa/-/blob/26.1/docs/relnotes/26.1.2.rst?ref_type=heads&plain=0).
 ### Deployment
