@@ -1,3 +1,9 @@
+# 26.1.4
+- Updated Mesa3D to [26.1.4](https://gitlab.freedesktop.org/mesa/mesa/-/blob/26.1/docs/relnotes/26.1.4.rst?ref_type=heads&plain=0).
+### Build script
+- Rename rti tool to gamma [>=26.2];
+- Add radv u_trace profiler [>=26.2];
+- zink tool requires C++20.
 # 26.1.3
 - Updated Mesa3D to [26.1.3](https://gitlab.freedesktop.org/mesa/mesa/-/blob/26.1/docs/relnotes/26.1.3.rst?ref_type=heads&plain=0).
 ### Build script

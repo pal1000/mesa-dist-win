@@ -197,9 +197,11 @@
 
 @IF %intmesaver% GEQ 21200 IF %intmesaver% LSS 22100 set buildconf=%buildconf% -Dc_std=c17
 @IF %intmesaver% GEQ 22000 set RTTI=true
+@for /f %%a IN ('type "%devroot%\mesa\meson.build" ^| find "cpp_std="') DO @set CPPSTD=%%a
+@set CPPSTD=%CPPSTD:~12,-2%
 
 @IF %toolchain%==msvc set buildconf=%buildconf% --prefix="%devroot:\=/%/%projectname%" -Db_vscrt=mt -Dzlib:default_library=static
-@IF %toolchain%==msvc IF %intmesaver% GEQ 21200 IF %intmesaver% LSS 22100 set buildconf=%buildconf% -Dcpp_std=vc++latest
+@IF %toolchain%==msvc IF %intmesaver% GEQ 21200 IF %intmesaver% LSS 22100 set CPPSTD=99999
 @IF %toolchain%==msvc set CFLAGS=
 
 @rem Use default stability and security cflags and ldflags from MSYS2 makeppkg-mingw tool configuration - https://github.com/msys2/MSYS2-packages/blob/master/pacman/makepkg_mingw.conf
@@ -395,6 +397,8 @@
 @if /I "%gfxstream%"=="y" set buildconf=%buildconf%gfxstream,
 @IF %mesavkcount% GTR 0 set buildconf=%buildconf:~0,-1%
 @IF %mesavkcount% GTR 0 IF %intmesaver% GEQ 24100 set buildconf=%buildconf% -Dvulkan-icd-dir="bin/%abi%"
+@if /I "%radv%"=="y" IF %intmesaver% GEQ 26200 set buildconf=%buildconf% -Dradv-u_trace=true
+@if /I NOT "%radv%"=="y" IF %intmesaver% GEQ 26200 set buildconf=%buildconf% -Dradv-u_trace=false
 
 @IF %msysregex%==1 IF %disableootpatch% EQU 1 IF /I NOT "%linkmingwdynamic%"=="y" set LDFLAGS=%LDFLAGS% -ltre -lintl -liconv
 
@@ -514,7 +518,7 @@
 @IF /I "%cloverspv%"=="y" set buildconf=%buildconf% -Dopencl-spirv=true
 @IF /I "%buildclover%"=="y" IF /I NOT "%cloverspv%"=="y" IF %intmesaver% LSS 25000 set buildconf=%buildconf% -Dopencl-spirv=false
 @IF /I "%buildclover%"=="y" IF %intmesaver% LSS 22300 set buildconf=%buildconf% -Dopencl-native=false
-@IF /I "%buildclover%"=="y" IF %intmesaver% GEQ 22100 IF %intmesaver% LSS 22300 set buildconf=%buildconf% -Dcpp_std=c++20
+@IF /I "%buildclover%"=="y" IF %intmesaver% GEQ 22100 IF %intmesaver% LSS 22300 IF %CPPSTD% LSS 20 set CPPSTD=20
 
 @IF %PKG_CONFIG_LS% EQU 1 IF %PKG_CONFIG_ST% EQU 1 IF %intmesaver% GEQ 23200 IF %intmesaver% LSS 24100 IF /I NOT "%linkmingwdynamic%"=="y" set buildconf=%buildconf% -Dopencl-external-clang-headers=disabled
 
@@ -591,8 +595,9 @@
 
 @rem zink tool cannot be built with MSVC for x86 32-bit due to Vulkan SDK no longer providing 32-bit libraries
 @IF /I "%zink%"=="y" if /I "%mesatests%"=="y" IF %intmesaver% GEQ 25300 IF %toolchain%==msvc IF %abi%==x86 set buildconf=%buildconf:~0,-5%
-@IF %intmesaver% GEQ 26200 if /I "%mesatests%"=="y" set buildconf=%buildconf%rti,
-@IF %intmesaver% GEQ 26200 if /I "%mesatests%"=="y" IF %mesavkcount% EQU 0 IF %galliumcount% EQU 0 set buildconf=%buildconf:~0,-4%
+@IF "%buildconf:~-5%"=="zink," IF %CPPSTD% LSS 20 set CPPSTD=20
+@IF %intmesaver% GEQ 26200 if /I "%mesatests%"=="y" set buildconf=%buildconf%gamma,
+@IF %intmesaver% GEQ 26200 if /I "%mesatests%"=="y" IF %mesavkcount% EQU 0 IF %galliumcount% EQU 0 set buildconf=%buildconf:~0,-6%
 @IF "%buildconf:~-1%"=="," set buildconf=%buildconf:~0,-1%
 @IF %intmesaver% GEQ 25200 set buildconf=%buildconf% -Dgallium-mediafoundation-test=false
 @if /I "%buildmftcodecs%"=="y" if /I "%mesatests%"=="y" set buildconf=%buildconf:~0,-5%true
@@ -607,6 +612,10 @@
 @if defined CFLAGS set buildconf=%buildconf% -Dc_args="%CFLAGS%" -Dcpp_args="%CFLAGS%"
 @if defined LDFLAGS IF NOT %toolchain%==msvc set LDFLAGS=%LDFLAGS:~1%
 @if defined LDFLAGS set buildconf=%buildconf% -Dc_link_args="%LDFLAGS%" -Dcpp_link_args="%LDFLAGS%"
+
+@rem Set C++ standard
+@IF %CPPSTD% LSS 99999 set buildconf=%buildconf% -Dcpp_std=c++%CPPSTD%
+@IF %CPPSTD% EQU 99999 set buildconf=%buildconf% -Dcpp_std=vc++latest
 
 @rem Control futex support - https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/17431
 @IF %intmesaver% GEQ 22200 call "%devroot%\%projectname%\bin\modules\prompt.cmd" winfutex "Enable Futex (https://en.wikipedia.org/wiki/Futex) support, raises minimum requirements for Mesa3D overall to run to Windows 8/Server 2012 (y/n):"

@@ -2,12 +2,12 @@ Build environment
 -----------------
 Windows 10.0.26100
 Ressource Hacker 5.2.8.448
-7-Zip 26.01 ultra compression
-Git 2.54.0.1
+7-Zip 26.02 ultra compression
+Git 2.55.0.2
 LunarG Vulkan SDK 1.4.350.0
-Visual Studio Community 2026 v18.7.1
+Visual Studio Community 2026 v18.7.3
 Visual Studio C/C++ toolset 14.44.35207
-Windows SDK 10.1.28000.2114
+Windows SDK 10.1.28000.2270
 Windows Driver Kit 10.1.28000.1839
 Nuget Commandline tool 7.6.0.59
 Python 3.14.6
@@ -19,7 +19,7 @@ MarkupSafe 3.0.3
 meson      1.11.1
 pip        26.1.2
 PyYAML     6.0.3
-setuptools 82.0.1
+setuptools 83.0.0
 
 CMake 4.3.4
 Ninja 1.13.2
@@ -27,12 +27,12 @@ LLVM 22.1.8
 SPIRV Tools 2026.2.1
 flex 2.6.4
 Bison 3.8.2
-pkgconf 2.5.1
+pkgconf 2.9.98
 zlib 1.3.2
 OpenCLonD3D12 ICD 2026.05.12
-libva 2.23.0
-VA-API 1.23.0
-DirectX headers 1.619.1
+libva 2.24.0
+VA-API 1.24.0
+DirectX headers 1.619.4
 zstd 1.5.7
 
 MSYS2 environment
@@ -42,16 +42,16 @@ bash 5.3.015-1
 bash-completion 2.17.0-2
 bison 3.8.2-5
 brotli 1.2.0-1
-bsdtar 3.8.7-2
+bsdtar 3.8.8-1
 bzip2 1.0.8-4
 ca-certificates 20250419-1
 coreutils 8.32-5
-curl 8.20.0-1
+curl 8.21.0-1
 dash 0.5.13.4-1
 db 6.2.32-6
 file 5.48-1
 filesystem 2026.03.06-1
-findutils 4.10.0-2
+findutils 4.10.0-3
 flex 2.6.4-4
 gawk 5.4.0-1
 gcc-libs 15.3.0-1
@@ -69,10 +69,10 @@ libargp 20260115-1
 libasprintf 0.22.5-1
 libassuan 3.0.2-1
 libbz2 1.0.8-4
-libcurl 8.20.0-1
+libcurl 8.21.0-1
 libdb 6.2.32-6
-libexpat 2.8.1-1
-libffi 3.5.2-1
+libexpat 2.8.2-1
+libffi 3.6.0-1
 libgcrypt 1.12.2-1
 libgdbm 1.26-1
 libgettextpo 0.22.5-1
@@ -87,8 +87,8 @@ liblz4 1.10.0-1
 liblzma 5.8.3-1
 libnettle 4.0-1
 libnghttp2 1.69.0-1
-libnghttp3 1.16.0-1
-libngtcp2 1.23.0-1
+libnghttp3 1.17.0-1
+libngtcp2 1.24.0-1
 libnpth 1.8-1
 libopenssl 3.6.3-1
 libp11-kit 0.26.2-1
@@ -96,7 +96,7 @@ libpcre 8.45-5
 libpcre2_8 10.47-1
 libpsl 0.21.5-2
 libreadline 8.3.003-1
-libsqlite 3.53.2-1
+libsqlite 3.53.3-1
 libssh2 1.11.1-1
 libtasn1 4.21.0-1
 libunistring 1.4.2-1
@@ -109,7 +109,7 @@ mpfr 4.2.2-1
 msys2-keyring 1~20260214-1
 msys2-launcher 1.5-3
 msys2-runtime 3.6.9-2
-nano 9.0-1
+nano 9.1-1
 ncurses 6.6-2
 nettle 4.0-1
 openssl 3.6.3-1
