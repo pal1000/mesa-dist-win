@@ -3,12 +3,12 @@ Build environment
 Windows 10.0.26100
 Ressource Hacker 5.2.8.448
 7-Zip 26.02 ultra compression
-Git 2.55.0.2
-LunarG Vulkan SDK 1.4.350.0
-Windows SDK 10.1.28000.2270
-Windows Driver Kit 10.1.28000.1839
+Git 2.55.0.3
+LunarG Vulkan SDK 1.4.357.0
+Windows SDK 10.1.28000.2526
+Windows Driver Kit 10.1.28000.2526
 OpenCLonD3D12 ICD 2026.05.12
-DirectX headers 1.619.4
+DirectX headers 1.619.5
 
 MSYS2 environment
 -----------------
@@ -85,7 +85,7 @@ mingw-w64-clang-x86_64-c-ares 1.34.8-1
 mingw-w64-clang-x86_64-ca-certificates 20250419-1
 mingw-w64-clang-x86_64-clang 22.1.8-2
 mingw-w64-clang-x86_64-clang-libs 22.1.8-2
-mingw-w64-clang-x86_64-cmake 4.4.0-1
+mingw-w64-clang-x86_64-cmake 4.4.2-1
 mingw-w64-clang-x86_64-compiler-rt 22.1.8-2
 mingw-w64-clang-x86_64-cppdap 1.65-1
 mingw-w64-clang-x86_64-crt 14.0.0.r220.gd999af622-1
@@ -100,7 +100,7 @@ mingw-w64-clang-x86_64-gmp 6.3.0-2
 mingw-w64-clang-x86_64-gnutls 3.8.13-3
 mingw-w64-clang-x86_64-headers 14.0.0.r220.gd999af622-1
 mingw-w64-clang-x86_64-jsoncpp 1.9.6-3
-mingw-w64-clang-x86_64-libarchive 3.8.8-2
+mingw-w64-clang-x86_64-libarchive 3.8.9-1
 mingw-w64-clang-x86_64-libb2 0.98.1-3
 mingw-w64-clang-x86_64-libc++ 22.1.8-1
 mingw-w64-clang-x86_64-libclc 22.1.8-1
@@ -169,14 +169,14 @@ mingw-w64-i686-brotli 1.2.0-1
 mingw-w64-i686-bzip2 1.0.8-3
 mingw-w64-i686-c-ares 1.34.8-1
 mingw-w64-i686-ca-certificates 20250419-1
-mingw-w64-i686-cmake 4.4.0-1
+mingw-w64-i686-cmake 4.4.2-1
 mingw-w64-i686-cppdap 1.65-1
 mingw-w64-i686-crt 14.0.0.r220.gd999af622-1
 mingw-w64-i686-curl 8.21.0-2
 mingw-w64-i686-dlfcn 1.4.2-1
 mingw-w64-i686-expat 2.8.2-1
-mingw-w64-i686-gcc 16.1.0-5
-mingw-w64-i686-gcc-libs 16.1.0-5
+mingw-w64-i686-gcc 16.1.0-6
+mingw-w64-i686-gcc-libs 16.1.0-6
 mingw-w64-i686-gdb 17.2-1
 mingw-w64-i686-gettext-runtime 1.0-1
 mingw-w64-i686-gmp 6.3.0-2
@@ -184,7 +184,7 @@ mingw-w64-i686-gnutls 3.8.13-3
 mingw-w64-i686-headers 14.0.0.r220.gd999af622-1
 mingw-w64-i686-isl 0.28-1
 mingw-w64-i686-jsoncpp 1.9.6-3
-mingw-w64-i686-libarchive 3.8.8-2
+mingw-w64-i686-libarchive 3.8.9-1
 mingw-w64-i686-libb2 0.98.1-3
 mingw-w64-i686-libffi 3.7.1-1
 mingw-w64-i686-libiconv 1.19-1

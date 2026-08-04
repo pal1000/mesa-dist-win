@@ -7,7 +7,7 @@
 @if EXIST "%devroot%\pkgconf\.git\" IF %gitstate% GTR 0 (
 @echo Updating pkgconf source code...
 @cd pkgconf
-@for /f tokens^=2^ delims^=/^ eol^= %%a in ('git symbolic-ref --short refs/remotes/origin/HEAD 2^>^&^1') do @git checkout %%a
+@git checkout main
 @git pull --progress --tags --recurse-submodules origin
 )
 @if NOT EXIST "%devroot%\pkgconf\.git\" IF %gitstate% GTR 0 (
@@ -16,7 +16,7 @@
 @cd pkgconf
 )
 @IF %gitstate% GTR 0 (
-@git checkout pkgconf-2.9.98
+@git checkout pkgconf-3.0.5
 @echo.
 )
 @IF EXIST pkgconf\pkg-config.exe if %botmode% LEQ 0 set buildpkgconf=n
