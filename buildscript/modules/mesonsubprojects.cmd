@@ -27,6 +27,19 @@
 @for /f delims^=^ eol^= %%a in ('dir /b /a^:d "%devroot%\mesa\subprojects\zstd-*" 2^>^&1') do @IF EXIST "%devroot%\mesa\subprojects\%%~nxa\" RD /S /Q "%devroot%\mesa\subprojects\%%~nxa"
 @IF EXIST "%devroot%\mesa\subprojects\zstd.wrap" del "%devroot%\mesa\subprojects\zstd.wrap"
 
+@rem Use sdl3 wrap in case runtime is missing
+@CMD /C EXIT 0
+@FC /B "%devroot%\%projectname%\buildscript\mesonsubprojects\sdl3.wrap" "%devroot%\mesa\subprojects\sdl3.wrap">NUL 2>&1
+@if NOT "%ERRORLEVEL%"=="0" (
+@set exitloop=1
+@for /f tokens^=2^ delims^=^=^ eol^= %%a IN ('type "%devroot%\%projectname%\buildscript\mesonsubprojects\sdl3.wrap"') DO @for /f tokens^=2^ delims^=_^ eol^= %%b IN ("%%a") DO @for /f tokens^=1^ delims^=/^ eol^= %%c IN ("%%b") DO @IF defined exitloop (
+@echo Using wrap file version %%c from Meson wrapdb to build sdl3...
+set "exitloop="
+)
+@copy /Y "%devroot%\%projectname%\buildscript\mesonsubprojects\sdl3.wrap" "%devroot%\mesa\subprojects\sdl3.wrap"
+@echo.
+)
+
 @rem Find LLVM dependency
 @set LLVMRTTI=false
 @set llvmconfigbusted=0

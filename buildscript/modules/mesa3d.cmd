@@ -591,13 +591,15 @@
 @if /I "%mesatests%"=="y" IF %mesavkcount% EQU 0 IF %galliumcount% EQU 0 set buildconf=%buildconf:~0,-9%
 @if /I "%radv%"=="y" if /I "%mesatests%"=="y" set buildconf=%buildconf%drm-shim,
 @if /I "%radv%"=="y" if /I "%mesatests%"=="y" IF %intmesaver% GEQ 26100 set buildconf=%buildconf%amd,
-@IF /I "%zink%"=="y" if /I "%mesatests%"=="y" IF %intmesaver% GEQ 25300 set buildconf=%buildconf%zink,
 
 @rem zink tool cannot be built with MSVC for x86 32-bit due to Vulkan SDK no longer providing 32-bit libraries
+@IF /I "%zink%"=="y" if /I "%mesatests%"=="y" IF %intmesaver% GEQ 25300 set buildconf=%buildconf%zink,
 @IF /I "%zink%"=="y" if /I "%mesatests%"=="y" IF %intmesaver% GEQ 25300 IF %toolchain%==msvc IF %abi%==x86 set buildconf=%buildconf:~0,-5%
 @IF "%buildconf:~-5%"=="zink," IF %CPPSTD% LSS 20 set CPPSTD=20
-@IF %intmesaver% GEQ 26200 if /I "%mesatests%"=="y" set buildconf=%buildconf%gamma,
-@IF %intmesaver% GEQ 26200 if /I "%mesatests%"=="y" IF %mesavkcount% EQU 0 IF %galliumcount% EQU 0 set buildconf=%buildconf:~0,-6%
+
+@rem Gamma tool requires Vulkan runtime, glslangvalidator, a Vulkan driver and sdl 3
+@IF %intmesaver% GEQ 26200 if /I "%mesatests%"=="y" IF %mesavkcount% GTR 0 IF %glslangval% EQU 1 set buildconf=%buildconf%gamma,
+@IF "%buildconf:~-6%"=="gamma," IF %toolchain%==msvc IF %abi%==x86 set buildconf=%buildconf:~0,-6%
 @IF "%buildconf:~-1%"=="," set buildconf=%buildconf:~0,-1%
 @IF %intmesaver% GEQ 25200 set buildconf=%buildconf% -Dgallium-mediafoundation-test=false
 @if /I "%buildmftcodecs%"=="y" if /I "%mesatests%"=="y" set buildconf=%buildconf:~0,-5%true

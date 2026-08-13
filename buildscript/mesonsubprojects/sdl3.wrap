@@ -1,0 +1,14 @@
+[wrap-file]
+directory = SDL3-3.4.12
+source_url = https://github.com/libsdl-org/SDL/releases/download/release-3.4.12/SDL3-3.4.12.tar.gz
+source_filename = SDL3-3.4.12.tar.gz
+source_hash = f07b958a9ac5020fb7a44cadb957f658b2149c3c8abb4f63145fac9303249db7
+source_fallback_url = https://wrapdb.mesonbuild.com/v2/sdl3_3.4.12-1/get_source/SDL3-3.4.12.tar.gz
+patch_filename = sdl3_3.4.12-1_patch.zip
+patch_url = https://wrapdb.mesonbuild.com/v2/sdl3_3.4.12-1/get_patch
+patch_fallback_url = https://github.com/mesonbuild/wrapdb/releases/download/sdl3_3.4.12-1/sdl3_3.4.12-1_patch.zip
+patch_hash = 67e859d280c9cc2de422efebc4f1edf954984b59e79eddf6c92ab61d89cd874d
+wrapdb_version = 3.4.12-1
+
+[provide]
+dependency_names = sdl3

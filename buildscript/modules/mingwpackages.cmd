@@ -1,4 +1,4 @@
-@for /f tokens^=1-25^ delims^={^,}^ eol^= %%a IN ("%mingwpkglst%") DO @(
+@for /f tokens^=1-26^ delims^={^,}^ eol^= %%a IN ("%mingwpkglst%") DO @(
 %runmsys% pacman -S ${MINGW_PACKAGE_PREFIX}-%%a --needed --disable-download-timeout %*
 %runmsys% pacman -S ${MINGW_PACKAGE_PREFIX}-%%b --needed --disable-download-timeout %*
 %runmsys% pacman -S ${MINGW_PACKAGE_PREFIX}-%%c --needed --disable-download-timeout %*
@@ -24,4 +24,5 @@
 %runmsys% pacman -S ${MINGW_PACKAGE_PREFIX}-%%w --needed --disable-download-timeout %*
 %runmsys% pacman -S ${MINGW_PACKAGE_PREFIX}-%%x --needed --disable-download-timeout %*
 %runmsys% pacman -S ${MINGW_PACKAGE_PREFIX}-%%y --needed --disable-download-timeout %*
+%runmsys% pacman -S ${MINGW_PACKAGE_PREFIX}-%%z --needed --disable-download-timeout %*
 )
