@@ -1,3 +1,5 @@
+# 26.1.7
+- Updated Mesa3D to [26.1.7](https://gitlab.freedesktop.org/mesa/mesa/-/blob/26.1/docs/relnotes/26.1.7.rst?ref_type=heads&plain=0).
 # 26.2.0
 - Updated Mesa3D to [26.2.0](https://gitlab.freedesktop.org/mesa/mesa/-/blob/26.2/docs/relnotes/26.2.0.rst?ref_type=heads&plain=0).
 ### Build script
