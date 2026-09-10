@@ -93,8 +93,8 @@ echo CMake %%a>>"%devroot%\%projectname%\buildinfo\msvc.txt"
 @IF %toolchain%==msvc IF NOT "%ninjastate%"=="0" IF NOT "%ninjastate%"=="" for /f eol^= %%a IN ('ninja --version') do @echo Ninja %%a>>"%devroot%\%projectname%\buildinfo\msvc.txt"
 
 @rem Get LLVM version
-@IF %toolchain%==msvc IF EXIST "%devroot%\llvm\build\%hostabi%\bin\llvm-config.exe" FOR /F eol^= %%a IN ('"%devroot%\llvm\build\%hostabi%\bin\llvm-config.exe" --version') do @echo LLVM %%a>>"%devroot%\%projectname%\buildinfo\msvc.txt"
-@IF %toolchain%==msvc IF EXIST "%devroot%\llvmold\build\%hostabi%\bin\llvm-config.exe" FOR /F eol^= %%a IN ('"%devroot%\llvmold\build\%hostabi%\bin\llvm-config.exe" --version') do @echo Old LLVM %%a>>"%devroot%\%projectname%\buildinfo\msvc.txt"
+@IF %toolchain%==msvc IF EXIST "%devroot%\llvm\build\%abi%\lib\cmake\llvm\LLVMConfig.cmake" FOR /F tokens^=^1^,2^ eol^= %%a IN ('type "%devroot%\llvm\build\%abi%\lib\cmake\llvm\LLVMConfig.cmake"') DO @IF "%%a"=="set(LLVM_PACKAGE_VERSION" FOR /F tokens^=^1^ delims^=^)^ eol^= %%c IN ("%%b") DO @echo LLVM %%c>>"%devroot%\%projectname%\buildinfo\msvc.txt"
+@IF %toolchain%==msvc IF EXIST "%devroot%\llvmold\build\%abi%\lib\cmake\llvm\LLVMConfig.cmake" FOR /F tokens^=^1^,2^ eol^= %%a IN ('type "%devroot%\llvmold\build\%abi%\lib\cmake\llvm\LLVMConfig.cmake"') do @IF "%%a"=="set(LLVM_PACKAGE_VERSION" FOR /F tokens^=^1^ delims^=^)^ eol^= %%c IN ("%%b") DO @echo Old LLVM %%c>>"%devroot%\%projectname%\buildinfo\msvc.txt"
 
 @rem Get SPIRV Tools version
 @IF %toolchain%==msvc IF EXIST "%devroot%\spirv-tools\build\%abi%\bin\" for /f tokens^=1-2^ eol^= %%a IN ('type "%devroot%\spirv-tools\build\%abi%\lib\pkgconfig\SPIRV-Tools.pc"') do @IF /I "%%a"=="Version:" echo SPIRV Tools %%b>>"%devroot%\%projectname%\buildinfo\msvc.txt"
