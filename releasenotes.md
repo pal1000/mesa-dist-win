@@ -1,5 +1,6 @@
 ### Build script
-- libclc: Retrieve LLVM major version from prebuilt cmake files.
+- libclc: Retrieve LLVM major version from prebuilt cmake files;
+- MSVC/OpenCL: Implement Mesa-libclc fork build.
 # 26.1.7
 - Updated Mesa3D to [26.1.7](https://gitlab.freedesktop.org/mesa/mesa/-/blob/26.1/docs/relnotes/26.1.7.rst?ref_type=heads&plain=0).
 # 26.2.0
