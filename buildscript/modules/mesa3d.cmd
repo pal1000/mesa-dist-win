@@ -467,8 +467,7 @@
 @IF %intmesaver% LSS 21000 set canopencl=0
 @if /I "%llvmless%"=="y" set canopencl=0
 @IF NOT %toolchain%==msvc IF %intmesaver% LSS 22200 set canopencl=0
-@IF NOT %toolchain%==msvc IF NOT EXIST "%msysloc%\%LMSYSTEM%\share\clc\*.spv" set canopencl=0
-@IF %toolchain%==msvc IF NOT EXIST "%llvminstloc%\clc\share\pkgconfig\" set canopencl=0
+@IF NOT EXIST "%llvminstloc%\clc\share\pkgconfig\" set canopencl=0
 
 @rem OpenCL SPIR-V requirements: basic OpenCL support + Clang, SPIRV LLVM translator, SPIRV tools
 @set canclspv=1
@@ -554,7 +553,7 @@
 
 @rem Apply PKG_CONFIG search PATH adjustments on MSVC
 @IF %PKG_CONFIG_LIBCLC% EQU 1 set buildconf=%buildconf% -Dstatic-libclc=all
-@IF %PKG_CONFIG_LIBCLC% EQU 1 IF %toolchain%==msvc set PKG_CONFIG_PATH=%PKG_CONFIG_PATH%%llvminstloc:\=/%/clc/share/pkgconfig;
+@IF %PKG_CONFIG_LIBCLC% EQU 1 set PKG_CONFIG_PATH=%PKG_CONFIG_PATH%%llvminstloc:\=/%/clc/share/pkgconfig;
 @IF %PKG_CONFIG_LS% EQU 1 IF %toolchain%==msvc set PKG_CONFIG_PATH=%PKG_CONFIG_PATH%%llvminstloc:\=/%/spv-%abi%/lib/pkgconfig;
 @IF %PKG_CONFIG_ST% EQU 1 IF %toolchain%==msvc set PKG_CONFIG_PATH=%PKG_CONFIG_PATH%%devroot:\=/%/spirv-tools/build/%abi%/lib/pkgconfig;
 @IF /I "%buildvaapi%"=="y" IF %toolchain%==msvc set PKG_CONFIG_PATH=%PKG_CONFIG_PATH%%devroot:\=/%/libva/build/%abi%/lib/pkgconfig;

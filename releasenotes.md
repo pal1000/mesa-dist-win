@@ -1,6 +1,5 @@
 ### Build script
-- libclc: Retrieve LLVM major version from prebuilt cmake files;
-- MSVC/OpenCL: Implement Mesa-libclc fork build.
+- OpenCL: Use Mesa-libclc fork binaries for both MinGW and MSVC builds and decouple from LLVM major version.
 ### Build environment
 - MSVC/LLVM: Get version from prebuilt cmake files instead of config tool.
 # 26.1.7

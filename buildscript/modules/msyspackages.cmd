@@ -3,6 +3,7 @@
 @%runmsys% /usr/bin/pacman -S flex bison patch tar --needed --noconfirm --disable-download-timeout
 @echo.
 @IF NOT %toolchain%==msvc call "%devroot%\%projectname%\buildscript\modules\mingwpackages.cmd" --noconfirm
+@IF NOT %toolchain%==msvc %runmsys% /usr/bin/pacman -Rs ${MINGW_PACKAGE_PREFIX}-libclc --noconfirm
 @IF NOT %toolchain%==msvc echo.
 @IF EXIST "%msysloc%\usr\bin\git.exe" IF %gitstate% GTR 0 (
 @%runmsys% /usr/bin/pacman -Rs git --noconfirm

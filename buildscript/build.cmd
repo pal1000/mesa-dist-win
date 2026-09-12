@@ -111,8 +111,8 @@
 
 @rem Build LLVM OpenCL stack
 @IF %toolchain%==msvc IF EXIST "%llvminstloc%\%abi%\lib\cmake\llvm\LLVMConfig.cmake" if defined llvmbuildconf call "%devroot%\%projectname%\buildscript\modules\llvmspv.cmd"
-@IF %toolchain%==msvc call "%devroot%\%projectname%\buildscript\modules\libclc.cmd"
-@IF %toolchain%==msvc call "%devroot%\%projectname%\buildscript\modules\mesalibclc.cmd"
+@rem IF %toolchain%==msvc call "%devroot%\%projectname%\buildscript\modules\libclc.cmd"
+@call "%devroot%\%projectname%\buildscript\modules\mesalibclc.cmd"
 
 @rem If using MSYS2 Mingw-w64 select Vulkan SDK
 @IF NOT %toolchain%==msvc call "%devroot%\%projectname%\buildscript\modules\vulkan.cmd"
