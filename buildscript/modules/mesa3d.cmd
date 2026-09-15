@@ -168,6 +168,9 @@
 @rem LLVM+clang 22 linking compatibility
 @IF %intmesaver% LSS 26054 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" mclc-llvm+clang22
 
+@rem LLVM+clang 23 linking compatibility
+@call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" mclc-llvm+clang23
+
 @rem Fix vaon12 filename
 @IF %intmesaver% LSS 23200 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" vaon12-strip-lib-prefix
 

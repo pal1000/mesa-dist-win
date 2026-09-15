@@ -58,8 +58,8 @@
 @rem Verify if out of tree patches can be applied.
 @call "%devroot%\%projectname%\buildscript\modules\patching.cmd"
 
-@rem MSVC: Select between legacy and current LLVM version
-@IF %toolchain%==msvc call "%devroot%\%projectname%\buildscript\modules\selectllvm.cmd"
+@rem Select between legacy and current LLVM version, always use current with MinGW
+@call "%devroot%\%projectname%\buildscript\modules\selectllvm.cmd"
 
 @rem If using MSVC search for Python. State tracking is pointless as it is loaded once and we are done. Hard fail if missing.
 @IF %toolchain%==msvc call "%devroot%\%projectname%\buildscript\modules\discoverpython.cmd" 3 10

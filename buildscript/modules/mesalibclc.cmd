@@ -13,7 +13,7 @@
 @MOVE "%USERPROFILE%\Downloads\spirv64-mesa3d-.spv" "%llvminstloc%\clc\share\mesa-clc"
 @IF EXIST "%llvminstloc%\clc\share\mesa-clc\spirv-mesa3d-.spv" del "%llvminstloc%\clc\share\mesa-clc\spirv-mesa3d-.spv"
 @MOVE "%USERPROFILE%\Downloads\spirv-mesa3d-.spv" "%llvminstloc%\clc\share\mesa-clc"
-@echo libexecdir=../mesa-clc >"%llvminstloc%\clc\share\pkgconfig\mesa-libclc.pc"
+@echo libexecdir=${pcfiledir}/../mesa-clc >"%llvminstloc%\clc\share\pkgconfig\mesa-libclc.pc"
 @for /f skip^=1^ delims^= %%a IN ('type "%llvminstloc%\clc\share\pkgconfig\mesa-libclc.pc.in"') DO @echo %%a >>"%llvminstloc%\clc\share\pkgconfig\mesa-libclc.pc"
 @echo.
 
@@ -21,3 +21,4 @@
 @rem Reset environment after Mesa-libclc build.
 @endlocal
 @cd "%devroot%\"
+@IF EXIST "%llvminstloc%\clc\share\pkgconfig\mesa-libclc.pc" set mesaliibclcver=22.1.8.3

@@ -1,7 +1,11 @@
+# 26.1.8
+- Updated Mesa3D to [26.1.8](https://gitlab.freedesktop.org/mesa/mesa/-/blob/26.1/docs/relnotes/26.1.8.rst?ref_type=heads&plain=0).
 ### Build script
 - OpenCL: Use Mesa-libclc fork binaries for both MinGW and MSVC builds and decouple from LLVM major version.
 ### Build environment
 - MSVC/LLVM: Get version from prebuilt cmake files instead of config tool.
+### Pending upstream patches
+- clc: Fix static link with LLVM+clang>=23.
 # 26.1.7
 - Updated Mesa3D to [26.1.7](https://gitlab.freedesktop.org/mesa/mesa/-/blob/26.1/docs/relnotes/26.1.7.rst?ref_type=heads&plain=0).
 # 26.2.0
