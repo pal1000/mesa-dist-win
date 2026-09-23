@@ -525,6 +525,7 @@
 @set canvaapi=0
 @IF /I "%d3d12%"=="y" IF %intmesaver% GEQ 22300 set canvaapi=1
 @IF %toolchain%==msvc IF NOT EXIST "%devroot%\libva\build\%abi%\lib\pkgconfig\" set canvaapi=0
+@IF NOT %toolchain%==msvc IF NOT EXIST "%msysloc%\%LMSYSTEM%\lib\pkgconfig\libva-win32.pc" set buildconf=%buildconf% -Dallow-fallback-for=libva
 @IF %canvaapi% EQU 1 call "%devroot%\%projectname%\bin\modules\prompt.cmd" buildvaapi "Build Mesa3D VA-API interface (y/n):"
 @IF /I "%buildvaapi%"=="y" set buildconf=%buildconf% -Dgallium-va=%mesonbooltrue%
 @IF /I NOT "%buildvaapi%"=="y" set buildconf=%buildconf% -Dgallium-va=%mesonboolfalse%

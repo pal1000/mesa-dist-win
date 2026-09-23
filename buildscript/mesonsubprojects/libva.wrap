@@ -1,0 +1,9 @@
+[wrap-git]
+directory = libva
+
+url = https://github.com/intel/libva.git
+revision = 2.24.1
+
+[provide]
+libva = libva_dep
+libva-win32 = libva_win32_dep

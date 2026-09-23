@@ -8,13 +8,14 @@ LunarG Vulkan SDK 1.4.357.0
 Windows SDK 10.1.28000.2705
 Windows Driver Kit 10.1.28000.2526
 OpenCLonD3D12 ICD 2026.09.14
+libva MINGW32 2.24.1
 DirectX headers 1.619.5
 Mesa-libclc 22.1.8.3
 
 MSYS2 environment
 -----------------
 base 2022.06-1
-bash 5.3.015-1
+bash 5.3.020-1
 bash-completion 2.18.0-1
 bison 3.8.2-5
 brotli 1.2.0-1
@@ -35,16 +36,16 @@ gettext 0.22.5-1
 gmp 6.3.0-2
 gnupg 2.4.9-3
 grep 1~3.0-7
-gzip 1.14-2
+gzip 1.15-1
 inetutils 2.8-1
 info 7.2-3
-less 704-1
+less 710-1
 libargp 20260115-1
 libasprintf 0.22.5-1
 libassuan 3.0.2-1
 libbz2 1.0.8-4
 libcurl 8.22.0-1
-libexpat 2.8.4-1
+libexpat 2.8.5-1
 libffi 3.8.0-1
 libgcrypt 1.12.4-1
 libgettextpo 0.22.5-1
@@ -85,17 +86,17 @@ mingw-w64-clang-x86_64-clang-libs 22.1.8-3
 mingw-w64-clang-x86_64-cmake 4.4.3-3
 mingw-w64-clang-x86_64-compiler-rt 22.1.8-3
 mingw-w64-clang-x86_64-cppdap 1.65.r11.g6464cd7-1
-mingw-w64-clang-x86_64-crt 14.0.0.r409.g6de5d3b4d-1
+mingw-w64-clang-x86_64-crt 14.0.0.r420.g61d40c4c0-1
 mingw-w64-clang-x86_64-curl 8.22.0-1
 mingw-w64-clang-x86_64-directx-headers 1~1.619.5-1
 mingw-w64-clang-x86_64-dlfcn 1.4.2-1
-mingw-w64-clang-x86_64-expat 2.8.4-2
+mingw-w64-clang-x86_64-expat 2.8.5-1
 mingw-w64-clang-x86_64-gdb 17.2-1
 mingw-w64-clang-x86_64-gettext-runtime 1.0-1
 mingw-w64-clang-x86_64-glslang 16.3.0-1
 mingw-w64-clang-x86_64-gmp 6.3.0-2
 mingw-w64-clang-x86_64-gnutls 3.8.13-3
-mingw-w64-clang-x86_64-headers 14.0.0.r409.g6de5d3b4d-1
+mingw-w64-clang-x86_64-headers 14.0.0.r420.g61d40c4c0-1
 mingw-w64-clang-x86_64-jsoncpp 1.9.8-1
 mingw-w64-clang-x86_64-libarchive 3.8.9-6
 mingw-w64-clang-x86_64-libb2 0.98.1-3
@@ -114,7 +115,7 @@ mingw-w64-clang-x86_64-libunistring 1.4.2-1
 mingw-w64-clang-x86_64-libunwind 22.1.8-1
 mingw-w64-clang-x86_64-libuv 1.52.1-1
 mingw-w64-clang-x86_64-libva 2.24.1-1
-mingw-w64-clang-x86_64-libwinpthread 14.0.0.r409.g6de5d3b4d-1
+mingw-w64-clang-x86_64-libwinpthread 14.0.0.r420.g61d40c4c0-1
 mingw-w64-clang-x86_64-libxml2 2.15.4-1
 mingw-w64-clang-x86_64-libyaml 0.2.5-2
 mingw-w64-clang-x86_64-lld 22.1.8-3
@@ -122,7 +123,7 @@ mingw-w64-clang-x86_64-llvm 22.1.8-3
 mingw-w64-clang-x86_64-llvm-libs 22.1.8-3
 mingw-w64-clang-x86_64-llvm-tools 22.1.8-3
 mingw-w64-clang-x86_64-lz4 1.10.0-1
-mingw-w64-clang-x86_64-meson 1.12.0-1
+mingw-w64-clang-x86_64-meson 1.12.1-1
 mingw-w64-clang-x86_64-mman-win32 r31.fedbdbf-1
 mingw-w64-clang-x86_64-mpdecimal 4.0.1-3
 mingw-w64-clang-x86_64-mpfr 4.2.2-3
@@ -156,7 +157,7 @@ mingw-w64-clang-x86_64-tzdata 2026d-1
 mingw-w64-clang-x86_64-vulkan-headers 1~1.4.357.0-1
 mingw-w64-clang-x86_64-vulkan-loader 1~1.4.357.0-1
 mingw-w64-clang-x86_64-wineditline 2.208-1
-mingw-w64-clang-x86_64-winpthreads 14.0.0.r409.g6de5d3b4d-1
+mingw-w64-clang-x86_64-winpthreads 14.0.0.r420.g61d40c4c0-1
 mingw-w64-clang-x86_64-xxhash 0.8.4-1
 mingw-w64-clang-x86_64-xz 5.8.4-1
 mingw-w64-clang-x86_64-zlib 1.3.2-2
@@ -171,7 +172,7 @@ mingw-w64-i686-cmake 4.4.3-3
 mingw-w64-i686-cppdap 1.65.r11.g6464cd7-1
 mingw-w64-i686-crt 14.0.0.r420.g61d40c4c0-1
 mingw-w64-i686-curl 8.22.0-1
-mingw-w64-i686-expat 2.8.4-2
+mingw-w64-i686-expat 2.8.5-1
 mingw-w64-i686-gcc 16.2.0-4
 mingw-w64-i686-gcc-libs 16.2.0-4
 mingw-w64-i686-gdb 17.2-1
@@ -199,11 +200,10 @@ mingw-w64-i686-libtasn1 4.21.0-1
 mingw-w64-i686-libtre 0.9.0-2
 mingw-w64-i686-libunistring 1.4.2-1
 mingw-w64-i686-libuv 1.52.1-1
-mingw-w64-i686-libva 2.24.1-1
 mingw-w64-i686-libwinpthread 14.0.0.r420.g61d40c4c0-1
 mingw-w64-i686-libyaml 0.2.5-2
 mingw-w64-i686-lz4 1.10.0-1
-mingw-w64-i686-meson 1.12.0-1
+mingw-w64-i686-meson 1.12.1-1
 mingw-w64-i686-mpc 1.4.1-1
 mingw-w64-i686-mpdecimal 4.0.1-3
 mingw-w64-i686-mpfr 4.2.2-3

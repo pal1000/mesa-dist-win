@@ -136,6 +136,24 @@ set "exitloop="
 
 :mingwwraps
 @IF %toolchain%==msvc GOTO donewrap
+
+@echo Add libva git wrap...
+@CMD /C EXIT 0
+@FC /B "%devroot%\%projectname%\buildscript\mesonsubprojects\libva.wrap" "%devroot%\mesa\subprojects\libva.wrap">NUL 2>&1
+@if NOT "%ERRORLEVEL%"=="0" (
+@copy /Y "%devroot%\%projectname%\buildscript\mesonsubprojects\libva.wrap" "%devroot%\mesa\subprojects\libva.wrap"
+@echo.
+)
+@IF EXIST "%devroot%\mesa\subprojects\libva\" IF %gitstate% GTR 0 (
+@cd /D "%devroot%\mesa\subprojects\libva"
+@git remote set-url origin https://github.com/intel/libva.git
+@for /f tokens^=2^ delims^=/^ eol^= %%a in ('git symbolic-ref --short refs/remotes/origin/HEAD 2^>^&^1') do @git checkout %%a
+@git pull --progress --tags --recurse-submodules origin
+@git checkout 2.24.1
+@echo.
+@cd /D "%devroot%\mesa"
+)
+
 @rem Use runtime MinGW libelf,libpng and zlib dependencies
 @for /f delims^=^ eol^= %%a in ('dir /b /a^:d "%devroot%\mesa\subprojects\libelf-*" 2^>^&1') do @IF EXIST "%devroot%\mesa\subprojects\%%~nxa\" RD /S /Q "%devroot%\mesa\subprojects\%%~nxa"
 @IF EXIST "%devroot%\mesa\subprojects\libelf.wrap" del "%devroot%\mesa\subprojects\libelf.wrap"

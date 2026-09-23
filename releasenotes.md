@@ -1,3 +1,7 @@
+# 26.2.2
+- Updated Mesa3D to [26.2.2](https://gitlab.freedesktop.org/mesa/mesa/-/blob/26.2/docs/relnotes/26.2.2.rst?ref_type=heads&plain=0).
+### Build script
+- Replace defunct mingw-w64-i686-libva with Meson wrap based build.
 # 26.2.1
 - Updated Mesa3D to [26.2.1](https://gitlab.freedesktop.org/mesa/mesa/-/blob/26.2/docs/relnotes/26.2.1.rst?ref_type=heads&plain=0).
 ### Build script
