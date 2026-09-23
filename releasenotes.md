@@ -1,3 +1,7 @@
+# 26.2.1
+- Updated Mesa3D to [26.2.1](https://gitlab.freedesktop.org/mesa/mesa/-/blob/26.2/docs/relnotes/26.2.1.rst?ref_type=heads&plain=0).
+### Build script
+- MinGW: Keep both release and debug build folders.
 # 26.1.8
 - Updated Mesa3D to [26.1.8](https://gitlab.freedesktop.org/mesa/mesa/-/blob/26.1/docs/relnotes/26.1.8.rst?ref_type=heads&plain=0).
 ### Build script

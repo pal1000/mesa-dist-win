@@ -169,7 +169,7 @@
 @IF %intmesaver% LSS 26054 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" mclc-llvm+clang22
 
 @rem LLVM+clang 23 linking compatibility
-@call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" mclc-llvm+clang23
+@IF %intmesaver% LSS 26253 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" mclc-llvm+clang23
 
 @rem Fix vaon12 filename
 @IF %intmesaver% LSS 23200 call "%devroot%\%projectname%\buildscript\modules\applypatch.cmd" vaon12-strip-lib-prefix
@@ -188,15 +188,15 @@
 :configmesabuild
 @rem Configure Mesa build.
 @set buildconf=%mesonloc% setup
-@if EXIST "build\%toolchain%-%abi%\" call "%devroot%\%projectname%\bin\modules\prompt.cmd" cleanmesabld "Perform clean build (y/n):"
-@if NOT EXIST "build\%toolchain%-%abi%\" set cleanmesabld=y
-@if EXIST "build\%toolchain%-%abi%\" IF /I "%cleanmesabld%"=="y" RD /S /Q build\%toolchain%-%abi%
+@if EXIST "build\%toolchain%-%abi%%builddirsufix%\" call "%devroot%\%projectname%\bin\modules\prompt.cmd" cleanmesabld "Perform clean build (y/n):"
+@if NOT EXIST "build\%toolchain%-%abi%%builddirsufix%\" set cleanmesabld=y
+@if EXIST "build\%toolchain%-%abi%%builddirsufix%\" IF /I "%cleanmesabld%"=="y" RD /S /Q build\%toolchain%-%abi%%builddirsufix%
 @IF /I NOT "%cleanmesabld%"=="y" set buildconf=%mesonloc% configure
 
 @call "%devroot%\%projectname%\bin\modules\prompt.cmd" experimental "Enable experimental/non-production ready components (y/n):"
 
 @call "%devroot%\%projectname%\buildscript\modules\useninja.cmd"
-@set buildconf=%buildconf% build/%toolchain%-%abi% --libdir="lib/%abi%" --bindir="bin/%abi%" --pkgconfig.relocatable
+@set buildconf=%buildconf% build/%toolchain%-%abi%%builddirsufix% --libdir="lib/%abi%" --bindir="bin/%abi%" --pkgconfig.relocatable
 
 @IF %intmesaver% GEQ 21200 IF %intmesaver% LSS 22100 set buildconf=%buildconf% -Dc_std=c17
 @IF %intmesaver% GEQ 22000 set RTTI=true
@@ -213,10 +213,10 @@
 @IF NOT %toolchain%==msvc IF NOT %abi%==arm64 set CFLAGS=%CFLAGS% -march^=core2
 @IF NOT %toolchain%==msvc set LDFLAGS=
 @IF NOT %toolchain%==msvc IF %abi%==x86 set LDFLAGS=%LDFLAGS% -Wl,--no-seh -Wl,--large-address-aware
-@IF NOT %toolchain%==msvc set buildcmd=%runmsys% /%LMSYSTEM%/bin/ninja -C "%devroot%\mesa\build\%toolchain%-%abi%" -j %throttle% -k 0
+@IF NOT %toolchain%==msvc set buildcmd=%runmsys% /%LMSYSTEM%/bin/ninja -C "%devroot%\mesa\build\%toolchain%-%abi%%builddirsufix%" -j %throttle% -k 0
 
 @if /I "%useninja%"=="y" set buildconf=%buildconf% --backend=ninja
-@if /I "%useninja%"=="y" IF %toolchain%==msvc set buildcmd=ninja -C "%devroot%\mesa\build\%toolchain%-%abi%" -j %throttle% -k 0
+@if /I "%useninja%"=="y" IF %toolchain%==msvc set buildcmd=ninja -C "%devroot%\mesa\build\%toolchain%-%abi%%builddirsufix%" -j %throttle% -k 0
 
 @if /I NOT "%useninja%"=="y" set buildconf=%buildconf% --backend=vs
 @if /I NOT "%useninja%"=="y" set buildcmd=msbuild mesa.sln /m^:%throttle% /v^:m
@@ -232,23 +232,20 @@
 @IF /I "%usezstd%"=="y" set buildconf=%buildconf% -Dzstd=%mesonbooltrue%
 @IF %intmesaver% GTR 20000 IF /I NOT "%usezstd%"=="y" set buildconf=%buildconf% -Dzstd=%mesonboolfalse%
 
-@if %botmode% LEQ 0 set mesadbgbld=n
 @if %botmode% LEQ 0 set mesadbgoptim=n
+@if /I "%mesadbgbld%"=="y" call "%devroot%\%projectname%\bin\modules\prompt.cmd" mesadbgoptim "Optimize debug binaries (y/n):"
+@rem Keep MSVC debug printf enabled until we find another way to disable it without relying on Meson undefined behavior. Behavior changed unexpectedly in Meson 1.8.0 breaking debug info activation. 25.0.5 is first affected release
 @if %botmode% LEQ 0 set nodebugprintf=n
-@IF %toolchain%==msvc call "%devroot%\%projectname%\bin\modules\prompt.cmd" mesadbgbld "Debug friendly binaries (require a lot of RAM) (y/n):"
-@IF NOT %toolchain%==msvc call "%devroot%\%projectname%\bin\modules\prompt.cmd" mesadbgbld "Debug friendly binaries (y/n):"
+@rem if /I "%mesadbgoptim%"=="y" IF %toolchain%==msvc call "%devroot%\%projectname%\bin\modules\prompt.cmd" nodebugprintf "Disable debug printf (y/n):"
 @if /I NOT "%mesadbgbld%"=="y" set buildconf=%buildconf% --buildtype=release
 @if /I NOT "%mesadbgbld%"=="y" IF NOT %toolchain%==msvc set LDFLAGS=%LDFLAGS% -s
-@if /I "%mesadbgbld%"=="y" call "%devroot%\%projectname%\bin\modules\prompt.cmd" mesadbgoptim "Optimize debug binaries (y/n):"
-@if /I "%mesadbgbld%"=="y" if /I NOT "%mesadbgoptim%"=="y" set buildconf=%buildconf% --buildtype=debug
-@if /I "%mesadbgoptim%"=="y" IF NOT %toolchain%==msvc set buildconf=%buildconf% --buildtype=debugoptimized
-@if /I "%mesadbgoptim%"=="y" IF %toolchain%==msvc set buildconf=%buildconf% -Ddebug=true -Doptimization=3
-@rem Keep MSVC debug printf enabled until we find another way to disable it without relying on Meson undefined behavior. Behavior changed unexpectedly in Meson 1.8.0 breaking debug info activation. 25.0.5 is first affected release
-@rem if /I "%mesadbgoptim%"=="y" IF %toolchain%==msvc call "%devroot%\%projectname%\bin\modules\prompt.cmd" nodebugprintf "Disable debug printf (y/n):"
+@if /I "%mesadbgbld%"=="y" IF %toolchain%==msvc set buildconf=%buildconf% -Ddebug=true
+@if /I "%mesadbgbld%"=="y" IF NOT %toolchain%==msvc set buildconf=%buildconf% --buildtype=debug
+@if /I "%mesadbgoptim%"=="y" IF NOT %toolchain%==msvc set buildconf=%buildconf%optimized
+@if /I "%mesadbgoptim%"=="y" IF %toolchain%==msvc set buildconf=%buildconf% -Doptimization=3
 @if /I "%nodebugprintf%"=="y" set buildconf=%buildconf:~0,-17% --buildtype=release
-
 @if %botmode% LEQ 0 set mesaenableasserts=n
-@call "%devroot%\%projectname%\bin\modules\prompt.cmd" mesaenableasserts "Enable asserts (y/n):"
+@if /I "%mesadbgbld%"=="y" call "%devroot%\%projectname%\bin\modules\prompt.cmd" mesaenableasserts "Enable asserts (y/n):"
 @if /I "%mesaenableasserts%"=="y" set buildconf=%buildconf% -Db_ndebug=false
 @if /I NOT "%mesaenableasserts%"=="y" set buildconf=%buildconf% -Db_ndebug=true
 @if /I NOT "%mesaenableasserts%"=="y" IF %toolchain%==msvc set CFLAGS=%CFLAGS% /wd4189
@@ -647,9 +644,9 @@
 :build_mesa
 @rem Generate dummy header for MSVC build when git is missing.
 @IF %toolchain%==msvc if NOT EXIST "build\" md build
-@IF %toolchain%==msvc if NOT EXIST "build\%toolchain%-%abi%\" md build\%toolchain%-%abi%
-@IF %toolchain%==msvc if NOT EXIST "build\%toolchain%-%abi%\src\" md build\%toolchain%-%abi%\src
-@IF %toolchain%==msvc if NOT EXIST build\%toolchain%-%abi%\src\git_sha1.h echo 0 > build\%toolchain%-%abi%\src\git_sha1.h
+@IF %toolchain%==msvc if NOT EXIST "build\%toolchain%-%abi%%builddirsufix%\" md build\%toolchain%-%abi%%builddirsufix%
+@IF %toolchain%==msvc if NOT EXIST "build\%toolchain%-%abi%%builddirsufix%\src\" md build\%toolchain%-%abi%%builddirsufix%\src
+@IF %toolchain%==msvc if NOT EXIST build\%toolchain%-%abi%%builddirsufix%\src\git_sha1.h echo 0 > build\%toolchain%-%abi%%builddirsufix%\src\git_sha1.h
 
 @rem Load MSVC environment if used.
 @IF %toolchain%==msvc echo.
@@ -659,16 +656,14 @@
 
 @rem Execute build configuration.
 @echo Build configuration command: %buildconf%
-@IF %toolchain%==msvc echo %buildconf% >"%devroot%\%projectname%\buildinfo\%toolchain%-%abi%.txt"
-@IF NOT %toolchain%==msvc if /I NOT "%mesadbgbld%"=="y" echo %buildconf% >"%devroot%\%projectname%\buildinfo\release-%toolchain%-%abi%.txt"
-@IF NOT %toolchain%==msvc if /I "%mesadbgbld%"=="y" echo %buildconf% >"%devroot%\%projectname%\buildinfo\debug-%toolchain%-%abi%.txt"
+@echo %buildconf% >"%devroot%\%projectname%\buildinfo\%toolchain%-%abi%%builddirsufix%.txt"
 @echo.
 @IF /I "%cleanmesabld%"=="y" call "%devroot%\%projectname%\bin\modules\break.cmd"
 @set CFLAGS=
 @set LDFLAGS=
 @%buildconf%
 @echo.
-@if /I NOT "%useninja%"=="y" cd build\%toolchain%-%abi%
+@if /I NOT "%useninja%"=="y" cd build\%toolchain%-%abi%%builddirsufix%
 @echo Build command: %buildcmd%
 @echo.
 @call "%devroot%\%projectname%\bin\modules\break.cmd"

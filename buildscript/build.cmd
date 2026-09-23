@@ -120,11 +120,14 @@
 @rem Binary resource editor
 @call "%devroot%\%projectname%\buildscript\modules\resourcehacker.cmd"
 
+@rem Select build type to use for distribution even if skiping rebuild
+@call "%devroot%\%projectname%\buildscript\modules\buildtype.cmd"
+
 @rem Mesa3D build.
 @call "%devroot%\%projectname%\buildscript\modules\mesa3d.cmd"
 
 @rem Create distribution
-@IF EXIST "%devroot%\mesa\build\%toolchain%-%abi%\" call "%devroot%\%projectname%\buildscript\modules\dist.cmd"
+@IF EXIST "%devroot%\mesa\build\%toolchain%-%abi%%builddirsufix%\" call "%devroot%\%projectname%\buildscript\modules\dist.cmd"
 
 @rem Add version info to binaries
 @call "%devroot%\%projectname%\buildscript\modules\addversioninfo.cmd"
