@@ -145,7 +145,7 @@ set "exitloop="
 @if "%%a"=="libva_version" echo libva %%b>>"%devroot%\%projectname%\buildinfo\msvc.txt"
 @if "%%a"=="va_api_version" echo VA-API %%b>>"%devroot%\%projectname%\buildinfo\msvc.txt"
 )
-@IF NOT %toolchain%==msvc IF NOT EXIST "%msysloc%\%LMSYSTEM%\lib\pkgconfig\libva-win32.pc" for /f tokens^=1^-2^ delims^=^=^  %%a IN ('type "%devroot%\%projectname%\buildscript\mesonsubprojects\libva.wrap"') DO @IF "%%a"=="revision" echo libva MINGW32 %%b>>"%devroot%\%projectname%\buildinfo\mingw.txt"
+@IF NOT %toolchain%==msvc for /f tokens^=1^-2^ delims^=^=^  %%a IN ('type "%devroot%\%projectname%\buildscript\mesonsubprojects\libva.wrap"') DO @IF "%%a"=="revision" echo libva MINGW32 %%b>>"%devroot%\%projectname%\buildinfo\mingw.txt"
 
 @rem Get DirectX headers version
 @set exitloop=1

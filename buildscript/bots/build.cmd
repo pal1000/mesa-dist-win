@@ -20,6 +20,9 @@
 @set mesatests=y
 @set winfutex=n
 @set retrybld=0
+
+@rem Assume vaon12 GCC build only suceeds on second try.
+@IF %toolchain%==gcc set retrybld=2
 @set dist=y
 @set mesabldrev=0
 @call "%~dp0..\build.cmd"

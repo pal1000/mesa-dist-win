@@ -1,3 +1,8 @@
+# 26.2.3
+- Updated Mesa3D to [26.2.3](https://gitlab.freedesktop.org/mesa/mesa/-/blob/26.2/docs/relnotes/26.2.3.rst?ref_type=heads&plain=0).
+### Build script
+- Retry build: Implement support for hardcoded number of automatic retries; 
+- vaon12 GCC build: Automatically retry once.
 # 26.2.2
 - Updated Mesa3D to [26.2.2](https://gitlab.freedesktop.org/mesa/mesa/-/blob/26.2/docs/relnotes/26.2.2.rst?ref_type=heads&plain=0).
 ### Build script

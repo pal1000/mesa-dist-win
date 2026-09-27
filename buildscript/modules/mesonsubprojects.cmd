@@ -140,10 +140,8 @@ set "exitloop="
 @echo Add libva git wrap...
 @CMD /C EXIT 0
 @FC /B "%devroot%\%projectname%\buildscript\mesonsubprojects\libva.wrap" "%devroot%\mesa\subprojects\libva.wrap">NUL 2>&1
-@if NOT "%ERRORLEVEL%"=="0" (
-@copy /Y "%devroot%\%projectname%\buildscript\mesonsubprojects\libva.wrap" "%devroot%\mesa\subprojects\libva.wrap"
+@if NOT "%ERRORLEVEL%"=="0" copy /Y "%devroot%\%projectname%\buildscript\mesonsubprojects\libva.wrap" "%devroot%\mesa\subprojects\libva.wrap"
 @echo.
-)
 @IF EXIST "%devroot%\mesa\subprojects\libva\" IF %gitstate% GTR 0 (
 @cd /D "%devroot%\mesa\subprojects\libva"
 @git remote set-url origin https://github.com/intel/libva.git
