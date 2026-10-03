@@ -1,3 +1,7 @@
+# 26.2.4
+- Updated Mesa3D to [26.2.4](https://gitlab.freedesktop.org/mesa/mesa/-/blob/26.2/docs/relnotes/26.2.4.rst?ref_type=heads&plain=0).
+### Build script
+- Use MSYS2 curl to install Mesa libclc fork.
 # 26.2.3
 - Updated Mesa3D to [26.2.3](https://gitlab.freedesktop.org/mesa/mesa/-/blob/26.2/docs/relnotes/26.2.3.rst?ref_type=heads&plain=0).
 ### Build script

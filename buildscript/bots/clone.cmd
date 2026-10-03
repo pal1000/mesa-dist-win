@@ -1,1 +1,1 @@
-@set branch=mesa-26.2.3 --depth=1
+@set branch=mesa-26.2.4 --depth=1
