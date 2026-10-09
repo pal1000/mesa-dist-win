@@ -416,6 +416,8 @@
 @IF %intmesaver% LSS 22000 IF %disableootpatch% EQU 1 set cand3d10umd=0
 @IF %intmesaver% GEQ 23300 IF %intmesaver% LSS 23354 IF %disableootpatch% EQU 1 set cand3d10umd=0
 @IF %cand3d10umd% EQU 1 for /f delims^=^ eol^= %%a in ('@call "%devroot%\%projectname%\buildscript\modules\wdkcheck.cmd"') do @IF NOT "%%a"=="OK" set cand3d10umd=0
+@rem Removed in 26.3 cycle - https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/44717
+@IF %intmesaver% GEQ 26300 set cand3d10umd=0
 @IF %cand3d10umd% EQU 1 call "%devroot%\%projectname%\bin\modules\prompt.cmd" d3d10umd "Build Mesa3D D3D10 software renderer (y/n):"
 @if /I "%d3d10umd%"=="y" set buildconf=%buildconf% -Dgallium-d3d10umd=true
 @if /I "%d3d10umd%"=="y" IF %intmesaver% GEQ 24100 set buildconf=%buildconf% -Dgallium-d3d10-dll-name=d3d10warp
