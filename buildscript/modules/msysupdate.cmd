@@ -1,8 +1,6 @@
 @setlocal
 @rem Check for updates
-@rem Initial upgrade
-@IF EXIST "%msysloc%" IF NOT EXIST "%msysloc%\usr\bin\bison.exe" set msysupdate=y
-@IF EXIST "%msysloc%\usr\bin\bison.exe" call "%devroot%\%projectname%\bin\modules\prompt.cmd" msysupdate "Update MSYS2 packages (y/n):"
+@call "%devroot%\%projectname%\bin\modules\prompt.cmd" msysupdate "Update MSYS2 packages (y/n):"
 @IF /I "%msysupdate%"=="y" %runmsys% /usr/bin/pacman -Sy --noconfirm --disable-download-timeout
 @IF /I "%msysupdate%"=="y" %runmsys% /usr/bin/pacman -Su --noconfirm --disable-download-timeout
 @IF /I "%msysupdate%"=="y" echo.

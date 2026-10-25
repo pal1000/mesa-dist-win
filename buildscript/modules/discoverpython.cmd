@@ -103,3 +103,9 @@ SET pypath="%%~a"
 @echo Using Python %fpythonver% from %pythonloc%.
 @echo.
 @endlocal&SET PATH=%PATH%&set pythonver=%fpythonver%&set pythonloc=%pythonloc%
+
+@rem Disable C library in PyYAML - https://github.com/yaml/pyyaml/issues/951
+@FOR /F tokens^=1-2^ delims^=.^ eol^= %%a IN ("%pythonver%") DO @(
+@if %%a GTR %1 set PYYAML_FORCE_LIBYAML=0
+@if %%a EQU %1 if %%b GTR 14 set PYYAML_FORCE_LIBYAML=0
+)

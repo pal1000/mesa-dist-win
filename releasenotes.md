@@ -1,6 +1,9 @@
 ### Build script
 - [d3d10umd: Removed in 26.3 cycle](https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/44717);
-- [VK_AMD_anti_lag support has been integrated during 26.3 cycle, no longer needing Vulkan layer based enablement](https://gitlab.freedesktop.org/mesa/mesa/-/commit/b99595dedb854de80aaaf87c06c93940e90b4122).
+- [VK_AMD_anti_lag support has been integrated during 26.3 cycle, no longer needing Vulkan layer based enablement](https://gitlab.freedesktop.org/mesa/mesa/-/commit/b99595dedb854de80aaaf87c06c93940e90b4122);
+- MSVC build/[Python: Disable C library in PyYAML](https://github.com/yaml/pyyaml/issues/951);
+- mesa-libclc/install: Remove user downloads folder round trip as curl is more robust than powershell;
+- mingw/deps: Avoid automatic update if GNU bison is not yet installed.
 # 26.2.4
 - Updated Mesa3D to [26.2.4](https://gitlab.freedesktop.org/mesa/mesa/-/blob/26.2/docs/relnotes/26.2.4.rst?ref_type=heads&plain=0).
 ### Build script
