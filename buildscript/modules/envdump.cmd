@@ -80,6 +80,12 @@
 @IF %toolchain%==msvc FOR /F skip^=2^ delims^=^ eol^= %%a IN ('"%devroot%\%projectname%\buildscript\assets\venv\Scripts\python.exe" -W ignore -m pip list --disable-pip-version-check') do @echo %%a>>"%devroot%\%projectname%\buildinfo\msvc.txt"
 @IF %toolchain%==msvc echo.>>"%devroot%\%projectname%\buildinfo\msvc.txt"
 
+@IF NOT %toolchain%==msvc IF EXIST "%msysloc%\mingw32\bin\pip.exe" echo.>>"%devroot%\%projectname%\buildinfo\mingw.txt"
+@IF NOT %toolchain%==msvc IF EXIST "%msysloc%\mingw32\bin\pip.exe" echo Python packages - MINGW32>>"%devroot%\%projectname%\buildinfo\mingw.txt"
+@IF NOT %toolchain%==msvc IF EXIST "%msysloc%\mingw32\bin\pip.exe" echo ------------------------->>"%devroot%\%projectname%\buildinfo\mingw.txt"
+@IF NOT %toolchain%==msvc IF EXIST "%msysloc%\mingw32\bin\pip.exe" FOR /F skip^=2^ delims^=^ eol^= %%a IN ('%runmsys% /mingw32/bin/pip.exe list --disable-pip-version-check') do @FOR /F eol^= %%b IN ("%%a") do @IF /I "%%b"=="pyyaml" echo %%a>>"%devroot%\%projectname%\buildinfo\mingw.txt"
+@IF NOT %toolchain%==msvc IF EXIST "%msysloc%\mingw32\bin\pip.exe" echo.>>"%devroot%\%projectname%\buildinfo\mingw.txt"
+
 @rem Get CMake version
 @IF %toolchain%==msvc IF "%cmakestate%"=="1" set PATH=%devroot%\cmake\bin\;%PATH%
 @IF %toolchain%==msvc IF NOT "%cmakestate%"=="0" IF NOT "%cmakestate%"=="" set exitloop=1

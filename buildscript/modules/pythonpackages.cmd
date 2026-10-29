@@ -72,7 +72,7 @@
 @if /I NOT "%pyupd%"=="y" GOTO endpython
 @if EXIST "%LOCALAPPDATA%\pip" RD /S /Q "%LOCALAPPDATA%\pip"
 @"%devroot%\%projectname%\buildscript\assets\venv\Scripts\python.exe" -W ignore -m pip install -U pip setuptools meson Mako MarkupSafe pyyaml
-echo.
+@echo.
 
 :endpython
 @endlocal
