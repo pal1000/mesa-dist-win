@@ -13,20 +13,16 @@
 @%runmsys% /usr/bin/pacman -Rs git --noconfirm
 @echo.
 )
-@for /f delims^= %%a IN ('dir /b "%msysloc%\%LMSYSTEM%\lib\python*"') do @(
 @set pyyaml=1
 @set pythonpip=1
+@for /f delims^= %%a IN ('dir /b "%msysloc%\%LMSYSTEM%\lib\python*" 2^>nul') do @(
 @IF NOT EXIST "%msysloc%\%LMSYSTEM%\lib\%%~a\site-packages\yaml\" set pyyaml=0
 @IF NOT EXIST "%msysloc%\%LMSYSTEM%\lib\%%~a\site-packages\pip\" set pythonpip=0
 )
-@IF %pyyaml% EQU 0 IF %pythonpip% EQU 0 (
-@%rumsys% pacman -S ${MINGW_PACKAGE_PREFIX}-python-pip --needed --noconfirm
-@echo.
-)
-@IF %pyyaml% EQU 0 (
-@%rumsys% pip install pyyaml --break-system-packages
-@echo.
-)
+@IF %pyyaml% EQU 0 IF %pythonpip% EQU 0 %runmsys% pacman -S ${MINGW_PACKAGE_PREFIX}-python-pip --needed --noconfirm
+@IF %pyyaml% EQU 0 IF %pythonpip% EQU 0 echo.
+@IF %pyyaml% EQU 0 %runmsys% pip install pyyaml --break-system-packages
+@IF %pyyaml% EQU 0 echo.
 @endlocal
 @IF NOT %toolchain%==msvc set flexstate=2
 @IF NOT %toolchain%==msvc set ninjastate=2
