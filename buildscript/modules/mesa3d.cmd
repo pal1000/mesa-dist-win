@@ -228,9 +228,10 @@
 @set "PKG_CONFIG_PATH="
 
 @if %botmode% LEQ 0 set usezstd=n
-@IF %intmesaver% GTR 20000 call "%devroot%\%projectname%\bin\modules\prompt.cmd" usezstd "Use ZSTD compression (y/n):"
+@call "%devroot%\%projectname%\buildscript\modules\valmesonoption.cmd" mesa zstd
+@IF %mesonoption% EQU 1 call "%devroot%\%projectname%\bin\modules\prompt.cmd" usezstd "Use ZSTD compression (y/n):"
 @IF /I "%usezstd%"=="y" set buildconf=%buildconf% -Dzstd=%mesonbooltrue%
-@IF %intmesaver% GTR 20000 IF /I NOT "%usezstd%"=="y" set buildconf=%buildconf% -Dzstd=%mesonboolfalse%
+@IF %mesonoption% EQU 1 IF /I NOT "%usezstd%"=="y" set buildconf=%buildconf% -Dzstd=%mesonboolfalse%
 
 @if %botmode% LEQ 0 set mesadbgoptim=n
 @if /I "%mesadbgbld%"=="y" call "%devroot%\%projectname%\bin\modules\prompt.cmd" mesadbgoptim "Optimize debug binaries (y/n):"
@@ -293,9 +294,10 @@
 @if /I NOT "%llvmless%"=="y" IF %canglswrast% EQU 1 call "%devroot%\%projectname%\bin\modules\prompt.cmd" glswrast "Do you want to build Mesa3D softpipe and llvmpipe drivers (y/n):"
 @if /I "%llvmless%"=="y" call "%devroot%\%projectname%\bin\modules\prompt.cmd" glswrast "Do you want to build Mesa3D softpipe driver (y/n):"
 @if /I "%glswrast%"=="y" set /a galliumcount+=1
-@if /I NOT "%llvmless%"=="y" IF /I "%glswrast%"=="y" IF %intmesaver% GEQ 24200 IF /I "%experimental%"=="y" call "%devroot%\%projectname%\bin\modules\prompt.cmd" orcjit "Use orcjit with llvmpipe (experimental)(y/n):"
+@call "%devroot%\%projectname%\buildscript\modules\valmesonoption.cmd" mesa llvm-orcjit
+@IF %mesonoption% EQU 1 if /I NOT "%llvmless%"=="y" IF /I "%glswrast%"=="y" IF /I "%experimental%"=="y" call "%devroot%\%projectname%\bin\modules\prompt.cmd" orcjit "Use orcjit with llvmpipe (experimental)(y/n):"
 @IF /I "%orcjit%"=="y" set buildconf=%buildconf% -Dllvm-orcjit=true
-@IF /I NOT "%orcjit%"=="y" IF %intmesaver% GEQ 24200 set buildconf=%buildconf% -Dllvm-orcjit=false
+@IF /I NOT "%orcjit%"=="y" IF %mesonoption% EQU 1 set buildconf=%buildconf% -Dllvm-orcjit=false
 
 @if %botmode% LEQ 0 set zink=n
 @set canzink=0
@@ -319,10 +321,11 @@
 @IF %canmcrdrvcom% EQU 0 set cand3d12=0
 @IF NOT %toolchain%==msvc IF %intmesaver% LSS 22202 set cand3d12=0
 @IF %cand3d12% EQU 1 call "%devroot%\%projectname%\bin\modules\prompt.cmd" d3d12 "Do you want to build Mesa3D OpenGL driver over D3D12 - GLonD3D12 (y/n):"
-@IF /I "%d3d12%"=="y" IF %intmesaver% LSS 24100 set gfxd3d12=y
-@IF %intmesaver% GEQ 24100 set buildconf=%buildconf% -Dgallium-d3d12-graphics=auto
-@IF /I "%d3d12%"=="y" IF %intmesaver% GEQ 24100 call "%devroot%\%projectname%\bin\modules\prompt.cmd" gfxd3d12 "Enable d3d12 graphics pipeline (y=default/n):"
-@IF /I "%gfxd3d12%"=="n" set buildconf=%buildconf:~0,-4%%mesonboolfalse%
+@call "%devroot%\%projectname%\buildscript\modules\valmesonoption.cmd" mesa gallium-d3d12-graphics
+@IF /I "%d3d12%"=="y" IF %mesonoption% EQU 0 set gfxd3d12=y
+@IF %mesonoption% EQU 1 set buildconf=%buildconf% -Dgallium-d3d12-graphics=auto
+@IF /I "%d3d12%"=="y" IF %mesonoption% EQU 1 call "%devroot%\%projectname%\bin\modules\prompt.cmd" gfxd3d12 "Enable d3d12 graphics pipeline (y=default/n):"
+@IF /I "%gfxd3d12%"=="n" IF %mesonoption% EQU 1 set buildconf=%buildconf:~0,-4%%mesonboolfalse%
 @IF /I "%d3d12%"=="y" IF /I NOT "%gfxd3d12%"=="n" set /a galliumcount+=1
 
 @if %botmode% LEQ 0 set swrdrv=n
@@ -396,9 +399,11 @@
 @if /I "%dozenmsvk%"=="y" set buildconf=%buildconf%microsoft-experimental,
 @if /I "%gfxstream%"=="y" set buildconf=%buildconf%gfxstream,
 @IF %mesavkcount% GTR 0 set buildconf=%buildconf:~0,-1%
-@IF %mesavkcount% GTR 0 IF %intmesaver% GEQ 24100 set buildconf=%buildconf% -Dvulkan-icd-dir="bin/%abi%"
-@if /I "%radv%"=="y" IF %intmesaver% GEQ 26200 set buildconf=%buildconf% -Dradv-u_trace=true
-@if /I NOT "%radv%"=="y" IF %intmesaver% GEQ 26200 set buildconf=%buildconf% -Dradv-u_trace=false
+@call "%devroot%\%projectname%\buildscript\modules\valmesonoption.cmd" mesa vulkan-icd-dir
+@IF %mesavkcount% GTR 0 IF %mesonoption% EQU 1 set buildconf=%buildconf% -Dvulkan-icd-dir="bin/%abi%"
+@call "%devroot%\%projectname%\buildscript\modules\valmesonoption.cmd" mesa radv-u_trace
+@if /I "%radv%"=="y" IF %mesonoption% EQU 1 set buildconf=%buildconf% -Dradv-u_trace=true
+@if /I NOT "%radv%"=="y" IF %mesonoption% EQU 1 set buildconf=%buildconf% -Dradv-u_trace=false
 
 @IF %msysregex%==1 IF %disableootpatch% EQU 1 IF /I NOT "%linkmingwdynamic%"=="y" set LDFLAGS=%LDFLAGS% -ltre -lintl -liconv
 
@@ -410,19 +415,18 @@
 @IF /I "%vulkanlayers%"=="y" IF %intmesaver% GEQ 25300 IF %intmesaver% LSS 26300 set buildconf=%buildconf%,anti-lag
 
 @if %botmode% LEQ 0 set d3d10umd=n
-@set cand3d10umd=1
-@IF %intmesaver% LSS 21200 set cand3d10umd=0
+@call "%devroot%\%projectname%\buildscript\modules\valmesonoption.cmd" mesa gallium-d3d10umd
+@set cand3d10umd=%mesonoption%
 @if /I NOT "%glswrast%"=="y" set cand3d10umd=0
 @IF NOT %toolchain%==msvc IF %intmesaver% LSS 25300 set cand3d10umd=0
 @IF %intmesaver% LSS 22000 IF %disableootpatch% EQU 1 set cand3d10umd=0
 @IF %intmesaver% GEQ 23300 IF %intmesaver% LSS 23354 IF %disableootpatch% EQU 1 set cand3d10umd=0
 @IF %cand3d10umd% EQU 1 for /f delims^=^ eol^= %%a in ('@call "%devroot%\%projectname%\buildscript\modules\wdkcheck.cmd"') do @IF NOT "%%a"=="OK" set cand3d10umd=0
-@rem Removed in 26.3 cycle - https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/44717
-@IF %intmesaver% GEQ 26300 set cand3d10umd=0
 @IF %cand3d10umd% EQU 1 call "%devroot%\%projectname%\bin\modules\prompt.cmd" d3d10umd "Build Mesa3D D3D10 software renderer (y/n):"
 @if /I "%d3d10umd%"=="y" set buildconf=%buildconf% -Dgallium-d3d10umd=true
-@if /I "%d3d10umd%"=="y" IF %intmesaver% GEQ 24100 set buildconf=%buildconf% -Dgallium-d3d10-dll-name=d3d10warp
-@if /I NOT "%d3d10umd%"=="y" IF %intmesaver% GEQ 21200 set buildconf=%buildconf% -Dgallium-d3d10umd=false
+@if /I NOT "%d3d10umd%"=="y" IF %mesonoption% EQU 1 set buildconf=%buildconf% -Dgallium-d3d10umd=false
+@call "%devroot%\%projectname%\buildscript\modules\valmesonoption.cmd" mesa gallium-d3d10-dll-name
+@if /I "%d3d10umd%"=="y" IF %mesonoption% EQU 1 set buildconf=%buildconf% -Dgallium-d3d10-dll-name=d3d10warp
 
 @if %botmode% LEQ 0 set spirvtodxil=n
 @if /I "%dozenmsvk%"=="y" set spirvtodxil=y
