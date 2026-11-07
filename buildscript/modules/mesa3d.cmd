@@ -553,11 +553,19 @@
 @IF %intmesaver% GEQ 25200 if /I NOT "%buildmftcodecs%"=="y" set buildconf=%buildconf% -Dgallium-mediafoundation=%mesonboolfalse%
 
 @rem Support enabling SPIRV Tools without building OpenCL stack
+@call "%devroot%\%projectname%\buildscript\modules\valmesonoption.cmd" mesa spirv-tools
 @IF %PKG_CONFIG_ST% EQU 0 IF %toolchain%==msvc IF EXIST "%devroot%\spirv-tools\build\%abi%\lib\pkgconfig\" call "%devroot%\%projectname%\bin\modules\prompt.cmd" buildspvtint "Build SPIRV Tools integration (y/n):"
-@IF %PKG_CONFIG_ST% EQU 0 IF NOT %toolchain%==msvc IF %intmesaver% GEQ 25300 IF EXIST "%msysloc%\%LMSYSTEM%\lib\pkgconfig\SPIRV-Tools.pc" call "%devroot%\%projectname%\bin\modules\prompt.cmd" buildspvtint "Build SPIRV Tools integration (y/n):"
+@IF %PKG_CONFIG_ST% EQU 0 IF NOT %toolchain%==msvc IF %mesonoption% EQU 1 IF EXIST "%msysloc%\%LMSYSTEM%\lib\pkgconfig\SPIRV-Tools.pc" call "%devroot%\%projectname%\bin\modules\prompt.cmd" buildspvtint "Build SPIRV Tools integration (y/n):"
 @if /I "%buildspvtint%"=="y" set PKG_CONFIG_ST=1
-@if %PKG_CONFIG_ST% EQU 1 IF %intmesaver% GEQ 25300 set buildconf=%buildconf% -Dspirv-tools=%mesonbooltrue%
-@if %PKG_CONFIG_ST% EQU 0 IF %intmesaver% GEQ 25300 set buildconf=%buildconf% -Dspirv-tools=%mesonboolfalse%
+@if %PKG_CONFIG_ST% EQU 1 IF %mesonoption% EQU 1 set buildconf=%buildconf% -Dspirv-tools=%mesonbooltrue%
+@if %PKG_CONFIG_ST% EQU 0 IF %mesonoption% EQU 1 set buildconf=%buildconf% -Dspirv-tools=%mesonboolfalse%
+
+@rem apitrace build is experimental due to requiring EGL disabling
+@call "%devroot%\%projectname%\buildscript\modules\valmesonoption.cmd" mesa apitrace
+@IF %mesonoption% EQU 1 IF /I "%experimental%"=="y" IF %galliumcount% GTR 0 call "%devroot%\%projectname%\bin\modules\prompt.cmd" apitrace "Build OpenGL apitrace support (y/n):"
+@if /I "%apitrace%"=="y" set buildconf=%buildconf% -Dapitrace=true
+@if /I NOT "%apitrace%"=="y" IF %mesonoption% EQU 1 set buildconf=%buildconf% -Dapitrace=false
+
 
 @rem Apply PKG_CONFIG search PATH adjustments on MSVC
 @IF %PKG_CONFIG_LIBCLC% EQU 1 set buildconf=%buildconf% -Dstatic-libclc=all

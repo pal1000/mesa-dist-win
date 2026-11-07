@@ -1,7 +1,8 @@
 ### Build script
 - Begin validating meson build option names against options file instead of version number - it's more precise and provides automatic build options removal handling;
 - gamma: Requires C++20 since 26.3;
-- Fix C++ standard read from meson.build being broken by apitrace addition.
+- Fix C++ standard read from meson.build being broken by apitrace upstream addition;
+- apitrace: Add experimental build support.
 # 26.2.6
 - Updated Mesa3D to [26.2.6](https://gitlab.freedesktop.org/mesa/mesa/-/blob/26.2/docs/relnotes/26.2.6.rst?ref_type=heads&plain=0).
 ### Build script
