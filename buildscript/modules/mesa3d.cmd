@@ -200,7 +200,7 @@
 
 @IF %intmesaver% GEQ 21200 IF %intmesaver% LSS 22100 set buildconf=%buildconf% -Dc_std=c17
 @IF %intmesaver% GEQ 22000 set RTTI=true
-@for /f %%a IN ('type "%devroot%\mesa\meson.build" ^| find "cpp_std="') DO @set CPPSTD=%%a
+@for /f %%a IN ('type "%devroot%\mesa\meson.build" ^| find "cpp_std=c++"') DO @set CPPSTD=%%a
 @set CPPSTD=%CPPSTD:~12,-2%
 
 @IF %toolchain%==msvc set buildconf=%buildconf% --prefix="%devroot:\=/%/%projectname%" -Db_vscrt=mt -Dzlib:default_library=static
@@ -604,9 +604,10 @@
 @IF /I "%zink%"=="y" if /I "%mesatests%"=="y" IF %intmesaver% GEQ 25300 IF %toolchain%==msvc IF %abi%==x86 set buildconf=%buildconf:~0,-5%
 @IF "%buildconf:~-5%"=="zink," IF %CPPSTD% LSS 20 set CPPSTD=20
 
-@rem Gamma tool requires Vulkan runtime, glslangvalidator, a Vulkan driver and sdl 3
+@rem Gamma tool requires Vulkan runtime, glslangvalidator, a Vulkan driver, sdl 3 and since 26.3 C++20
 @IF %intmesaver% GEQ 26200 if /I "%mesatests%"=="y" IF %mesavkcount% GTR 0 IF %glslangval% EQU 1 set buildconf=%buildconf%gamma,
 @IF "%buildconf:~-6%"=="gamma," IF %toolchain%==msvc IF %abi%==x86 set buildconf=%buildconf:~0,-6%
+@IF "%buildconf:~-6%"=="gamma," IF %intmesaver% GEQ 26300 IF %CPPSTD% LSS 20 set CPPSTD=20
 @IF "%buildconf:~-1%"=="," set buildconf=%buildconf:~0,-1%
 @IF %intmesaver% GEQ 25200 set buildconf=%buildconf% -Dgallium-mediafoundation-test=false
 @if /I "%buildmftcodecs%"=="y" if /I "%mesatests%"=="y" set buildconf=%buildconf:~0,-5%true
