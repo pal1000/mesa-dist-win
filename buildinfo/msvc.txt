@@ -2,14 +2,14 @@ Build environment
 -----------------
 Windows 10.0.26100
 Ressource Hacker 5.2.8.448
-7-Zip 26.05 ultra compression
-Git 2.56.0.4
-LunarG Vulkan SDK 1.4.363.0
-Visual Studio Community 2026 v18.11.3
+7-Zip 26.06 ultra compression
+Git 2.56.1.1
+LunarG Vulkan SDK 1.4.363.1
+Visual Studio Community 2026 v18.12.0
 Visual Studio C/C++ toolset 14.44.35207
 Windows SDK 10.1.28000.2957
 Windows Driver Kit 10.1.28000.2526
-Nuget Commandline tool 7.9.0.83
+Nuget Commandline tool 8.0.0.137
 Python 3.15.2
 
 Python packages
@@ -21,18 +21,18 @@ pip        26.3
 PyYAML     6.0.3
 setuptools 84.2.1
 
-CMake 4.4.5
+CMake 4.5.0
 Ninja 1.13.2
-LLVM 23.1.4
+LLVM 23.1.5
 SPIRV Tools 2026.4.1
 flex 2.6.4
 Bison 3.8.2
-pkgconf 3.0.10
+pkgconf 3.0.11
 zlib 1.3.2
 OpenCLonD3D12 ICD 2026.09.14
 libva 2.24.1
 VA-API 1.24.0
-DirectX headers 1.620.1
+DirectX headers 1.620.2
 zstd 1.5.7
 Mesa-libclc 22.1.8.3
 
@@ -43,11 +43,11 @@ bash 5.3.20-3
 bash-completion 2.18.0-1
 bison 3.8.2-5
 brotli 1.2.1-1
-bsdtar 3.8.11-1
+bsdtar 3.8.11-2
 bzip2 1.0.8-4
 ca-certificates 20260816-4
 coreutils 9.0-1
-curl 8.23.0-1
+curl 8.23.0-2
 dash 0.5.13.5-1
 file 5.48-2
 filesystem 2026.10.18-3
@@ -68,7 +68,7 @@ libargp 20260115-1
 libasprintf 0.22.5-1
 libassuan 3.0.2-1
 libbz2 1.0.8-4
-libcurl 8.23.0-1
+libcurl 8.23.0-2
 libexpat 2.10.0-1
 libffi 3.8.0-1
 libgcrypt 1.12.4-1
@@ -80,21 +80,21 @@ libiconv 1.19-1
 libidn2 2.3.8-1
 libintl 0.22.5-1
 libksba 1.8.1-1
-liblz4 1.11.0-1
+liblz4 1.11.1-1
 liblzma 5.8.4-1
 libnettle 4.0-1
-libnghttp2 1.71.0-1
+libnghttp2 1.71.0-2
 libnghttp3 1.19.0-1
-libngtcp2 1.26.0-1
+libngtcp2 1.26.0-2
 libnpth 1.8-1
-libopenssl 3.6.5-1
+libopenssl 4.1.0-1
 libp11-kit 0.26.5-1
 libpcre 8.45-5
 libpcre2_8 10.49-1
 libpsl 0.23.2-2
 libreadline 8.3.006-2
 libsqlite 3.54.1-1
-libssh2 1.11.1-1
+libssh2 1.11.1-2
 libtasn1 4.21.0-1
 libunistring 1.4.2-1
 libutil-linux 2.40.2-2
@@ -109,7 +109,7 @@ msys2-runtime 3.6.12-1
 nano 9.3-1
 ncurses 6.6-2
 nettle 4.0-1
-openssl 3.6.5-1
+openssl 4.1.0-1
 p11-kit 0.26.5-1
 pacman 6.1.0-29
 pacman-contrib 1.10.6-2
@@ -125,5 +125,5 @@ util-linux 2.40.2-2
 wget 1.25.0-5
 which 2.25-1
 xz 5.8.4-1
-zlib 1.3.2-1
+zlib 1.4-1
 zstd 1.5.7-1

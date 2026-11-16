@@ -83,7 +83,12 @@
 @IF NOT %toolchain%==msvc IF EXIST "%msysloc%\mingw32\bin\pip.exe" echo.>>"%devroot%\%projectname%\buildinfo\mingw.txt"
 @IF NOT %toolchain%==msvc IF EXIST "%msysloc%\mingw32\bin\pip.exe" echo Python packages - MINGW32>>"%devroot%\%projectname%\buildinfo\mingw.txt"
 @IF NOT %toolchain%==msvc IF EXIST "%msysloc%\mingw32\bin\pip.exe" echo ------------------------->>"%devroot%\%projectname%\buildinfo\mingw.txt"
-@IF NOT %toolchain%==msvc IF EXIST "%msysloc%\mingw32\bin\pip.exe" FOR /F skip^=2^ delims^=^ eol^= %%a IN ('%runmsys% /mingw32/bin/pip.exe list --disable-pip-version-check') do @FOR /F eol^= %%b IN ("%%a") do @IF /I "%%b"=="pyyaml" echo %%a>>"%devroot%\%projectname%\buildinfo\mingw.txt"
+@IF NOT %toolchain%==msvc IF EXIST "%msysloc%\mingw32\bin\pip.exe" FOR /F skip^=2^ delims^=^ eol^= %%a IN ('%runmsys% /mingw32/bin/pip.exe list --disable-pip-version-check') do @FOR /F eol^= %%b IN ("%%a") do @(
+IF /I "%%b"=="Mako" echo %%a>>"%devroot%\%projectname%\buildinfo\mingw.txt"
+IF /I "%%b"=="MarkupSafe" echo %%a>>"%devroot%\%projectname%\buildinfo\mingw.txt"
+IF /I "%%b"=="pip" echo %%a>>"%devroot%\%projectname%\buildinfo\mingw.txt"
+IF /I "%%b"=="pyyaml" echo %%a>>"%devroot%\%projectname%\buildinfo\mingw.txt"
+)
 @IF NOT %toolchain%==msvc IF EXIST "%msysloc%\mingw32\bin\pip.exe" echo.>>"%devroot%\%projectname%\buildinfo\mingw.txt"
 
 @rem Get CMake version
