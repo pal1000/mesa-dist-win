@@ -1,3 +1,5 @@
+# 26.3.1
+- Updated Mesa3D to [26.3.1](https://gitlab.freedesktop.org/mesa/mesa/-/blob/26.3/docs/relnotes/26.3.1.rst?ref_type=heads&plain=0).
 # 26.3.0
 - Updated Mesa3D to [26.3.0](https://gitlab.freedesktop.org/mesa/mesa/-/blob/26.3/docs/relnotes/26.3.0.rst?ref_type=heads&plain=0).
 # 26.2.7

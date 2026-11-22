@@ -6,14 +6,14 @@ Ressource Hacker 5.2.8.448
 Git 2.56.1.1
 LunarG Vulkan SDK 1.4.363.1
 Windows SDK 10.1.28000.2957
-Windows Driver Kit 10.1.28000.2526
+Windows Driver Kit 10.1.28000.3231
 
 Python packages - MINGW32
 -------------------------
 Mako       1.4.3
 MarkupSafe 3.0.4
 pip        26.3
-PyYAML     6.0.3
+PyYAML     6.0.4
 
 OpenCLonD3D12 ICD 2026.09.14
 libva MINGW32 2.24.1
@@ -29,7 +29,7 @@ bison 3.8.2-5
 brotli 1.2.1-1
 bsdtar 3.8.11-3
 bzip2 1.0.8-4
-ca-certificates 20260816-4
+ca-certificates 20260816-5
 coreutils 9.0-1
 curl 8.23.0-2
 dash 0.5.13.5-1
@@ -37,7 +37,7 @@ file 5.48-2
 filesystem 2026.10.18-3
 findutils 4.11.0-2
 flex 2.6.4-5
-gawk 5.4.1-1
+gawk 5.4.2-1
 gcc-libs 16.2.0-1
 getent 2.18.90-6
 gettext 0.22.5-1
@@ -46,21 +46,20 @@ gnupg 2.4.9-3
 grep 1~3.0-7
 gzip 1.15-1
 inetutils 2.8-1
-info 7.2-3
+info 7.2-4
 less 710-1
 libargp 20260115-1
 libasprintf 0.22.5-1
 libassuan 3.0.2-1
 libbz2 1.0.8-4
 libcurl 8.23.0-2
-libexpat 2.10.0-1
 libffi 3.8.1-1
 libgcrypt 1.12.4-1
 libgettextpo 0.22.5-1
-libgnutls 3.8.13-2
+libgnutls 3.8.14-1
 libgpg-error 1.61-1
 libhogweed 4.0-1
-libiconv 1.19-1
+libiconv 1.19.1-1
 libidn2 2.3.8-1
 libintl 0.22.5-1
 libksba 1.8.1-1
@@ -80,17 +79,17 @@ libreadline 8.3.006-2
 libsqlite 3.54.1-1
 libssh2 1.11.1-2
 libtasn1 4.21.0-1
-libunistring 1.4.2-1
+libunistring 1.5-1
 libutil-linux 2.42.4-1
 libxcrypt 4.5.2-1
 libzstd 1.5.7-1
 m4 1.4.21-1
 mingw-w64-clang-x86_64-brotli 1.2.1-1
 mingw-w64-clang-x86_64-bzip2 1.0.8-4
-mingw-w64-clang-x86_64-ca-certificates 20260816-3
+mingw-w64-clang-x86_64-ca-certificates 20260816-5
 mingw-w64-clang-x86_64-clang 23.1.5-1
 mingw-w64-clang-x86_64-clang-libs 23.1.5-1
-mingw-w64-clang-x86_64-cmake 4.5.0-1
+mingw-w64-clang-x86_64-cmake 4.5.1-1
 mingw-w64-clang-x86_64-compiler-rt 23.1.5-1
 mingw-w64-clang-x86_64-cppdap 1.65.r11.g6464cd7-1
 mingw-w64-clang-x86_64-crt 14.0.0.r598.ge3d18511f-1
@@ -102,7 +101,7 @@ mingw-w64-clang-x86_64-gdb 18.1-4
 mingw-w64-clang-x86_64-gettext-runtime 1.0-1
 mingw-w64-clang-x86_64-glslang 16.6.0-1
 mingw-w64-clang-x86_64-gmp 6.3.0-2
-mingw-w64-clang-x86_64-gnutls 3.8.13-3
+mingw-w64-clang-x86_64-gnutls 3.8.14-1
 mingw-w64-clang-x86_64-headers 14.0.0.r598.ge3d18511f-1
 mingw-w64-clang-x86_64-jsoncpp 1.9.8-1
 mingw-w64-clang-x86_64-libarchive 3.8.11-3
@@ -118,7 +117,7 @@ mingw-w64-clang-x86_64-libssh2 1.11.1-4
 mingw-w64-clang-x86_64-libsystre 1.0.2-3
 mingw-w64-clang-x86_64-libtasn1 4.21.0-2
 mingw-w64-clang-x86_64-libtre 0.9.0-2
-mingw-w64-clang-x86_64-libunistring 1.4.2-1
+mingw-w64-clang-x86_64-libunistring 1.5-1
 mingw-w64-clang-x86_64-libunwind 23.1.5-1
 mingw-w64-clang-x86_64-libuv 1.53.0-1
 mingw-w64-clang-x86_64-libva 2.24.1-1
@@ -169,12 +168,12 @@ mingw-w64-clang-x86_64-xxhash 0.8.4-1
 mingw-w64-clang-x86_64-xz 5.8.4-1
 mingw-w64-clang-x86_64-zlib 1.4-2
 mingw-w64-clang-x86_64-zstd 1.5.7-2
-mingw-w64-i686-binutils 2.47-4
+mingw-w64-i686-binutils 2.47-5
 mingw-w64-i686-brotli 1.2.1-1
 mingw-w64-i686-bzip2 1.0.8-4
-mingw-w64-i686-ca-certificates 20260816-3
+mingw-w64-i686-ca-certificates 20260816-5
 mingw-w64-i686-cc-libs 16.2.0-7
-mingw-w64-i686-cmake 4.5.0-1
+mingw-w64-i686-cmake 4.5.1-1
 mingw-w64-i686-cppdap 1.65.r11.g6464cd7-1
 mingw-w64-i686-crt 14.0.0.r598.ge3d18511f-1
 mingw-w64-i686-curl 8.23.0-3
@@ -197,7 +196,7 @@ mingw-w64-i686-libstdc++ 16.2.0-7
 mingw-w64-i686-libsystre 1.0.2-3
 mingw-w64-i686-libtasn1 4.21.0-2
 mingw-w64-i686-libtre 0.9.0-2
-mingw-w64-i686-libunistring 1.4.2-1
+mingw-w64-i686-libunistring 1.5-1
 mingw-w64-i686-libuv 1.53.0-1
 mingw-w64-i686-libwinpthread 14.0.0.r598.ge3d18511f-1
 mingw-w64-i686-lz4 1.11.1-2
@@ -237,12 +236,12 @@ ncurses 6.6-2
 nettle 4.0-1
 openssl 4.1.0-1
 p11-kit 0.26.6-1
-pacman 6.1.0-29
-pacman-contrib 1.13.1-1
+pacman 6.1.0-30
+pacman-contrib 1.13.1-2
 pacman-mirrors 20260129-1
 patch 2.8.1-1
 pinentry 1.3.3-1
-rebase 4.5.0-5
+rebase 4.6.6-1
 sed 4.10-1
 tar 1.35-3
 time 1.10-1
